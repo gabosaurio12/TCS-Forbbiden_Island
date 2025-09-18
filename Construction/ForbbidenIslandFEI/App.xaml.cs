@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
 
 namespace ForbbidenIslandFEI
@@ -13,5 +10,14 @@ namespace ForbbidenIslandFEI
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
+
+            var win = new RegisterWindow();
+            win.Show();
+        }
     }
 }

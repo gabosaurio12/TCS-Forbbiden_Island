@@ -1,3 +1,5 @@
+CREATE DATABASE Forbbiden_FEI
+GO
 CREATE TABLE player (
 player_id int identity(1,1) primary key,
 player_name nvarchar(100) not null,
@@ -28,7 +30,6 @@ CREATE TABLE card (
 card_id int identity(1,1) primary key,
 card_name nvarchar(30) not null,
 description nvarchar(150) not null,
-type nvarchar not null,
 type nvarchar(10) not null
 )
 
@@ -53,7 +54,7 @@ CONSTRAINT FK_players_player FOREIGN KEY (player_id) REFERENCES player(player_id
 CREATE TABLE match_tiles (
 match_tiles_id int identity(1,1) primary key,
 match_id int not null,
-tile_id not null,
+tile_id int not null,
 CONSTRAINT FK_match_tiles_match FOREIGN KEY (match_id) REFERENCES matches(match_id),
 CONSTRAINT FK_tile_match_tile FOREIGN KEY (tile_id) REFERENCES tile(tile_id)
 )
@@ -61,7 +62,7 @@ CONSTRAINT FK_tile_match_tile FOREIGN KEY (tile_id) REFERENCES tile(tile_id)
 CREATE TABLE match_cards (
 match_cards_id int identity(1,1) primary key,
 match_id int not null,
-card_id not null,
+card_id int not null,
 CONSTRAINT FK_match_cards_match FOREIGN KEY (match_id) REFERENCES matches(match_id),
 CONSTRAINT FK_match_cards_card FOREIGN KEY (card_id) REFERENCES card(card_id)
 )
@@ -69,7 +70,7 @@ CONSTRAINT FK_match_cards_card FOREIGN KEY (card_id) REFERENCES card(card_id)
 CREATE TABLE match_minigames (
 match_minigames_id int identity(1,1) primary key,
 match_id int not null,
-minigame_id not null,
+minigame_id int not null,
 CONSTRAINT FK_match_minigames_match FOREIGN KEY (match_id) REFERENCES matches(match_id),
 CONSTRAINT FK_match_minigame_minigame FOREIGN KEY (minigame_id) REFERENCES minigame(minigame_id)
 )
