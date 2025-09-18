@@ -1,21 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\",
+  "WorkspaceRootPath": "C:\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|c:\\users\\leona\\downloads\\proyecto\\construction\\forbbidenislandfei\\registerwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|solutionrelative:registerwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|c:\\users\\leona\\downloads\\proyecto\\construction\\forbbidenislandfei\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|c:\\mac\\home\\documents\\uv\\5\u00B0 semestre\\tcs\\tcs-forbbiden_island\\construction\\forbbidenislandfei\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|c:\\users\\leona\\downloads\\proyecto\\construction\\forbbidenislandfei\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|c:\\users\\leona\\downloads\\proyecto\\construction\\forbbidenislandfei\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|C:\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{456C74D2-C6F3-40C8-9953-56C69F9A8238}|ForbbidenIslandFEI.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -26,54 +18,29 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "App.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\App.xaml.cs",
-              "RelativeDocumentMoniker": "App.xaml.cs",
-              "ToolTip": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\App.xaml.cs",
-              "RelativeToolTip": "App.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-18T04:45:16.517Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "RegisterWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\RegisterWindow.xaml",
-              "RelativeDocumentMoniker": "RegisterWindow.xaml",
-              "ToolTip": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\RegisterWindow.xaml",
-              "RelativeToolTip": "RegisterWindow.xaml",
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-09-18T04:36:50.008Z",
+              "WhenOpened": "2025-09-18T04:02:28.411Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml",
-              "RelativeToolTip": "MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-09-18T04:19:13.531Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\leona\\Downloads\\Proyecto\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-18T04:02:16.711Z",
               "EditorCaption": ""
