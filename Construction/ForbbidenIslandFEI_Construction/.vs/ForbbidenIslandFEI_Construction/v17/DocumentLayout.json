@@ -1,7 +1,16 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\gabosaurio\\source\\repos\\ForbbidenIslandFEI_Construction\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|d:\\mazin\\documents\\codigos\\proyectos\\tcs-forbbiden_island\\construction\\forbbidenislandfei_construction\\signupwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|solutionrelative:signupwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|d:\\mazin\\documents\\codigos\\proyectos\\tcs-forbbiden_island\\construction\\forbbidenislandfei_construction\\signupwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|solutionrelative:signupwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +18,31 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SignupWindow.xaml.cs",
+              "DocumentMoniker": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml.cs",
+              "RelativeDocumentMoniker": "SignupWindow.xaml.cs",
+              "ToolTip": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml.cs",
+              "RelativeToolTip": "SignupWindow.xaml.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T07:09:34.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SignupWindow.xaml",
+              "DocumentMoniker": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml",
+              "RelativeDocumentMoniker": "SignupWindow.xaml",
+              "ToolTip": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml",
+              "RelativeToolTip": "SignupWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-19T07:07:14.522Z",
+              "EditorCaption": ""
             }
           ]
         }

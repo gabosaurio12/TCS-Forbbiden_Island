@@ -1,0 +1,52 @@
+﻿<Window x:Class="ForbbidenIslandFEI_Construction.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ForbbidenIslandFEI_Construction"
+        xmlns:p ="clr-namespace:ForbbidenIslandFEI_Construction.Properties"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="350" Width="450">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Text="{x:Static p:Resources.login_title}"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+        <!-- User -->
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
+            <TextBlock Text="{x:Static p:Resources.username}" HorizontalAlignment="Center"/>
+            <TextBox x:Name="txtBUsername" Height="25" Width="300"/>
+        </StackPanel>
+
+        <!-- Email -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0">
+            <TextBlock Text="{x:Static p:Resources.email}" HorizontalAlignment="Center"/>
+            <TextBox x:Name="txtBEmail" Height="25" Width="300"/>
+        </StackPanel>
+
+        <!-- Password -->
+        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,5,0,0">
+            <TextBlock Text="{x:Static p:Resources.password}" HorizontalAlignment="Center"/>
+            <PasswordBox x:Name="pwdBPassword" Height="25" Width="300"/>
+        </StackPanel>
+
+        <!-- Register Button -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal"
+                    HorizontalAlignment="Center" Margin="0,0,0,0">
+            <Button x:Name="signupButton" Content="{x:Static p:Resources.signup_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="signupButton_Click"/>
+        </StackPanel>
+    </Grid>
+    
+</Window>
