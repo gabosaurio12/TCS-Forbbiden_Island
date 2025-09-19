@@ -1,4 +1,4 @@
-CREATE DATABASE Forbbiden_FEI
+USE Forbbiden_FEI
 GO
 CREATE TABLE player (
 player_id int identity(1,1) primary key,
