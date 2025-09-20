@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:ForbbidenIslandFEI_Construction"
         xmlns:p ="clr-namespace:ForbbidenIslandFEI_Construction.Properties"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="350" Width="450">
+        Title="LoginWindow" Height="330" Width="450">
 
-    <Grid Margin="20">
+    <Grid Margin="70,15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- Title -->
-        <TextBlock Text="{x:Static p:Resources.login_title}"
+        <TextBlock Text="{x:Static p:Resources.signup_title}"
                    FontSize="20"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
@@ -26,25 +26,25 @@
 
         <!-- User -->
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock Text="{x:Static p:Resources.username}" HorizontalAlignment="Center"/>
-            <TextBox x:Name="txtBUsername" Height="25" Width="300"/>
+            <TextBlock Text="{x:Static p:Resources.username}" HorizontalAlignment="Left" />
+            <TextBox x:Name="txtBUsername" Height="25" Width="280" Margin="0,5" />
         </StackPanel>
 
         <!-- Email -->
         <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock Text="{x:Static p:Resources.email}" HorizontalAlignment="Center"/>
-            <TextBox x:Name="txtBEmail" Height="25" Width="300"/>
+            <TextBlock Text="{x:Static p:Resources.email}" HorizontalAlignment="Left" />
+            <TextBox x:Name="txtBEmail" Height="25" Width="280" Margin="0,5"/>
         </StackPanel>
 
         <!-- Password -->
         <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock Text="{x:Static p:Resources.password}" HorizontalAlignment="Center"/>
-            <PasswordBox x:Name="pwdBPassword" Height="25" Width="300"/>
+            <TextBlock Text="{x:Static p:Resources.password}" HorizontalAlignment="Left" />
+            <PasswordBox x:Name="pwdBPassword" Height="25" Width="280" Margin="0,5" />
         </StackPanel>
 
         <!-- Register Button -->
         <StackPanel Grid.Row="4" Orientation="Horizontal"
-                    HorizontalAlignment="Center" Margin="0,0,0,0">
+                    HorizontalAlignment="Center" Margin="0,15,0,0">
             <Button x:Name="signupButton" Content="{x:Static p:Resources.signup_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="signupButton_Click"/>
         </StackPanel>
     </Grid>

@@ -129,6 +129,9 @@
   <data name="signup_button" xml:space="preserve">
     <value>Registrar</value>
   </data>
+  <data name="signup_title" xml:space="preserve">
+    <value>Registro</value>
+  </data>
   <data name="username" xml:space="preserve">
     <value>Nombre de usuario</value>
   </data>

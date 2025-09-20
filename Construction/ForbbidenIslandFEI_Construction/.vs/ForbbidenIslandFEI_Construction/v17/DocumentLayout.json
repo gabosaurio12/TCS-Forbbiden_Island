@@ -1,14 +1,15 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\",
+  "WorkspaceRootPath": "\\\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|d:\\mazin\\documents\\codigos\\proyectos\\tcs-forbbiden_island\\construction\\forbbidenislandfei_construction\\signupwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|solutionrelative:signupwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|\\\\mac\\home\\documents\\uv\\5\u00B0 semestre\\tcs\\tcs-forbbiden_island\\construction\\forbbidenislandfei_construction\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|d:\\mazin\\documents\\codigos\\proyectos\\tcs-forbbiden_island\\construction\\forbbidenislandfei_construction\\signupwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|solutionrelative:signupwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|\\\\mac\\home\\documents\\uv\\5\u00B0 semestre\\tcs\\tcs-forbbiden_island\\construction\\forbbidenislandfei_construction\\signupwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}|ForbbidenIslandFEI_Construction.csproj|\\\\mac\\home\\documents\\uv\\5\u00B0 semestre\\tcs\\tcs-forbbiden_island\\construction\\forbbidenislandfei_construction\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -21,28 +22,43 @@
           "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SignupWindow.xaml.cs",
-              "DocumentMoniker": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml.cs",
-              "RelativeDocumentMoniker": "SignupWindow.xaml.cs",
-              "ToolTip": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml.cs",
-              "RelativeToolTip": "SignupWindow.xaml.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-19T07:09:34.604Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "LoginWindow.xaml",
+              "DocumentMoniker": "\\\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\LoginWindow.xaml",
+              "RelativeDocumentMoniker": "LoginWindow.xaml",
+              "ToolTip": "\\\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\LoginWindow.xaml",
+              "RelativeToolTip": "LoginWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-19T22:47:38.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "SignupWindow.xaml",
-              "DocumentMoniker": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml",
+              "DocumentMoniker": "\\\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml",
               "RelativeDocumentMoniker": "SignupWindow.xaml",
-              "ToolTip": "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml",
+              "ToolTip": "\\\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\SignupWindow.xaml",
               "RelativeToolTip": "SignupWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-09-19T07:07:14.522Z",
+              "WhenOpened": "2025-09-19T16:50:35.656Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Resources.resx",
+              "DocumentMoniker": "\\\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\Properties\\Resources.resx",
+              "RelativeDocumentMoniker": "Properties\\Resources.resx",
+              "ToolTip": "\\\\Mac\\Home\\Documents\\UV\\5\u00B0 Semestre\\TCS\\TCS-Forbbiden_Island\\Construction\\ForbbidenIslandFEI_Construction\\Properties\\Resources.resx",
+              "RelativeToolTip": "Properties\\Resources.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-09-19T17:47:32.876Z"
             }
           ]
         }

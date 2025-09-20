@@ -15,33 +15,13 @@ using System.Windows.Shapes;
 namespace ForbbidenIslandFEI_Construction
 {
     /// <summary>
-    /// Lógica de interacción para LoginWindow.xaml
+    /// Interaction logic for LoginWindow.xaml
     /// </summary>
     public partial class LoginWindow : Window
     {
         public LoginWindow()
         {
             InitializeComponent();
-        }
-
-        private string[] GetTextFieldsData()
-        {
-            string username = txtBUsername.Text;
-            string email = txtBEmail.Text;
-            string password = pwdBPassword.Password;
-
-            return new String[] { username, email, password };
-        }
-
-        private void signupButton_Click(object sender, RoutedEventArgs e)
-        {
-            string[] userData = GetTextFieldsData();
-
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
