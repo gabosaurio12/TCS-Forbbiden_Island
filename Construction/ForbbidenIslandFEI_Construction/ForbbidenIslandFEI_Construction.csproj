@@ -190,9 +190,6 @@
     <None Include="Forbbiden_FEI_model.edmx.diagram">
       <DependentUpon>Forbbiden_FEI_model.edmx</DependentUpon>
     </None>
-    <None Include="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Player.datasource" />
     <None Include="Properties\Settings.settings">
