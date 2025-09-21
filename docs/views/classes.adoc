@@ -1,0 +1,6 @@
+
+== Modelo de Dominio
+image::domain.png[Modelo de dominio, width=600, align=center]
+
+== Diagrama de clases
+image::classes.png[Diagrama de clases, widht=600, align=center]

@@ -1,0 +1,8 @@
+
+= Introducción
+La base del juego de mesa son cartas (casillas) y cada una tiene un diseño distinto, el
+tablero está formado de un cuadrado de 4 x 4 y luego se agregan dos cartas en el centro
+de cada cara.
+Existe una barra que indica el nivel de agua, que va en aumento durante la partida.
+En la FEI Editon el objetivo ya no es cooperar, es demostrar quién es el mejor y quién si es capaz de
+escapar primero.
