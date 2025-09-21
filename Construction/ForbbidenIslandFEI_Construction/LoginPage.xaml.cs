@@ -48,7 +48,7 @@ namespace ForbbidenIslandFEI_Construction
             }
             else
             {
-                if (player.player_password == pwdBPassword.Password)
+                if (BCrypt.Net.BCrypt.Verify(pwdBPassword.Password, player.player_password))
                 {
                     MessageBox.Show("Inicio de sesión exitoso.");
                 }
