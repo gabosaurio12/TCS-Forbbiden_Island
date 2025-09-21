@@ -29,7 +29,7 @@ namespace ForbbidenIslandFEI_Construction
             InitializeComponent();
         }
         
-        private bool SetPlayer(Player player)
+        private bool SetPlayer(out Player player)
         {
             player = new Player()
             {
@@ -68,7 +68,7 @@ namespace ForbbidenIslandFEI_Construction
         {
             Player player = new Player();
 
-            if (SetPlayer(player))
+            if (SetPlayer(out player))
             {
                 using (var db = new Forbbiden_FEIEntities())
                 {
