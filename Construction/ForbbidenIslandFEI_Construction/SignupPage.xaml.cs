@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,10 +21,10 @@ namespace ForbbidenIslandFEI_Construction
     /// <summary>
     /// Lógica de interacción para LoginWindow.xaml
     /// </summary>
-    public partial class SignupWindow : Window
+    public partial class SignupPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(SignupWindow));
-        public SignupWindow()
+        private static readonly ILog log = LogManager.GetLogger(typeof(SignupPage));
+        public SignupPage()
         {
             InitializeComponent();
         }
@@ -80,24 +81,25 @@ namespace ForbbidenIslandFEI_Construction
                     catch (DbEntityValidationException ex)
                     {
                         MessageBox.Show("Error al registrar el usuario.");
-                        log.Error("ERROR: SignupWindow.xaml.cs", ex);
+                        log.Error("SignupWindow.xaml.cs", ex);
                     }
                     catch (DbUpdateException ex)
                     {
                         MessageBox.Show("Error al registrar el usuario.");
-                        log.Error("ERROR: SignupWindow.xaml.cs", ex);
+                        log.Error("SignupWindow.xaml.cs", ex);
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("No se registró al usuario");
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.NavigationService.Navigate(new LoginPage());
         }
     }
 }

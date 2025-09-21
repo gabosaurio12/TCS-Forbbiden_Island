@@ -25,7 +25,7 @@ namespace ForbbidenIslandFEI_Construction
 
             XmlConfigurator.Configure(new FileInfo("log4net.config"));
 
-            log.Info("Aplicación iniciada");
+            log.Info("App running");
         }
     }
 }

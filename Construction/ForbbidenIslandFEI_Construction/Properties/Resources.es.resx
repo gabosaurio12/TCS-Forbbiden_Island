@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -119,11 +120,17 @@
   <data name="email" xml:space="preserve">
     <value>Correo</value>
   </data>
+  <data name="login_button" xml:space="preserve">
+    <value>Iniciar Sesión</value>
+  </data>
   <data name="login_title" xml:space="preserve">
     <value>Inicio de sesión</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Contraseña</value>
+  </data>
+  <data name="show_password" xml:space="preserve">
+    <value>Ver</value>
   </data>
   <data name="signup_button" xml:space="preserve">
     <value>Registrar</value>
@@ -133,5 +140,8 @@
   </data>
   <data name="username" xml:space="preserve">
     <value>Nombre de usuario</value>
+  </data>
+  <data name="username_email" xml:space="preserve">
+    <value>Nombre de usuario o correo</value>
   </data>
 </root>

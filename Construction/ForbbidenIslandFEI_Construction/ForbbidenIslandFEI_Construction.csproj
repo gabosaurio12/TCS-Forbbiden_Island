@@ -110,8 +110,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Forbbiden_FEI_model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Matches.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
@@ -140,11 +140,11 @@
     <Compile Include="Tile.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
     </Compile>
-    <Page Include="LoginWindow.xaml">
+    <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignupWindow.xaml">
+    <Page Include="SignupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,8 +156,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SignupWindow.xaml.cs">
-      <DependentUpon>SignupWindow.xaml</DependentUpon>
+    <Compile Include="SignupPage.xaml.cs">
+      <DependentUpon>SignupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -189,6 +189,9 @@
     </EntityDeploy>
     <None Include="Forbbiden_FEI_model.edmx.diagram">
       <DependentUpon>Forbbiden_FEI_model.edmx</DependentUpon>
+    </None>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Player.datasource" />

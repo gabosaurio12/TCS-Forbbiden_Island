@@ -70,6 +70,15 @@ namespace ForbbidenIslandFEI_Construction.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log In.
+        /// </summary>
+        public static string login_button {
+            get {
+                return ResourceManager.GetString("login_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string login_title {
@@ -84,6 +93,15 @@ namespace ForbbidenIslandFEI_Construction.Properties {
         public static string password {
             get {
                 return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string show_password {
+            get {
+                return ResourceManager.GetString("show_password", resourceCulture);
             }
         }
         
@@ -111,6 +129,15 @@ namespace ForbbidenIslandFEI_Construction.Properties {
         public static string username {
             get {
                 return ResourceManager.GetString("username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username or email.
+        /// </summary>
+        public static string username_email {
+            get {
+                return ResourceManager.GetString("username_email", resourceCulture);
             }
         }
     }
