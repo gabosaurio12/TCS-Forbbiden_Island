@@ -120,11 +120,17 @@
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="login_button" xml:space="preserve">
+    <value>Log In</value>
+  </data>
   <data name="login_title" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="show_password" xml:space="preserve">
+    <value>Show</value>
   </data>
   <data name="signup_button" xml:space="preserve">
     <value>Sign Up</value>
@@ -134,5 +140,8 @@
   </data>
   <data name="username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="username_email" xml:space="preserve">
+    <value>Username or email</value>
   </data>
 </root>

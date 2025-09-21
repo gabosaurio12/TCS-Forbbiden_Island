@@ -2,11 +2,11 @@ USE Forbbiden_FEI
 GO
 CREATE TABLE player (
 player_id int identity(1,1) primary key,
-player_name nvarchar(100) not null,
+player_name nvarchar(100) null,
 player_username nvarchar(30) unique,
-player_password nvarchar(64) not null,
+player_password nvarchar(64) no null,
 player_email nvarchar(320) unique,
-player_avatar nvarchar(500),
+player_avatar nvarchar(500) null,
 )
 
 CREATE TABLE player_socialmedia (

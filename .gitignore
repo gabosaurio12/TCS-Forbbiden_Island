@@ -57,6 +57,13 @@ ipch/
 *.vsp
 *.vspx
 
+# Visual Studio temporary files, build results, etc
+.vs/
+*.db
+*.db-shm
+*.db-wal
+*.vsidx
+
 # Guidance Automation Toolkit
 *.gpState
 
@@ -129,5 +136,3 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
-
-_NCrunch*
