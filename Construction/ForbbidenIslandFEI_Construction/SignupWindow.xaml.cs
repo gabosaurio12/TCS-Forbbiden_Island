@@ -1,6 +1,9 @@
-﻿using System;
+﻿using log4net;
+using log4net.Repository.Hierarchy;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,26 +20,79 @@ namespace ForbbidenIslandFEI_Construction
     /// <summary>
     /// Lógica de interacción para LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class SignupWindow : Window
     {
-        public LoginWindow()
+        private static readonly ILog log = LogManager.GetLogger(typeof(SignupWindow));
+        public SignupWindow()
         {
             InitializeComponent();
         }
-
-        private string[] GetTextFieldsData()
+        
+        private bool SetPlayer(Player player)
         {
-            string username = txtBUsername.Text;
-            string email = txtBEmail.Text;
-            string password = pwdBPassword.Password;
+            player = new Player()
+            {
+                player_username = txtBUsername.Text,
+                player_email = txtBEmail.Text,
+                player_password = txtBPassword.Text
+            };
+            bool isValid = true;
 
-            return new String[] { username, email, password };
+            if (!player.ValidateUsername())
+            {
+                MessageBox.Show("El nombre de usuario ya existe.");
+                isValid = false;
+            }
+
+            if (!player.ValidateEmail())
+            {
+                MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
+                isValid = false;
+            }
+
+            if (!player.ValidatePassword())
+            {
+                MessageBox.Show("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+                isValid = false;
+            }
+            else
+            {
+                player.hashPassword();
+            }
+
+            return isValid;
         }
 
         private void signupButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] userData = GetTextFieldsData();
-            
+            Player player = new Player();
+
+            if (SetPlayer(player))
+            {
+                using (var db = new Forbbiden_FEIEntities())
+                {
+                    try
+                    {
+                        db.Player.Add(player);
+                        db.SaveChanges();
+                        MessageBox.Show("Éxito!");
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        MessageBox.Show("Error al registrar el usuario.");
+                        log.Error("ERROR: SignupWindow.xaml.cs", ex);
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        MessageBox.Show("Error al registrar el usuario.");
+                        log.Error("ERROR: SignupWindow.xaml.cs", ex);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se registró al usuario");
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

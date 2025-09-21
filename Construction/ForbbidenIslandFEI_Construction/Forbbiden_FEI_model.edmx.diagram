@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f0c53444f5ef4d7fb400a8fdb1cb1e1a" Name="Diagram1">
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.card" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+      <Diagram DiagramId="0ce35c9dba3c4de1b56d89ef2b0aee86" Name="Diagram1">
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Card" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.card_catalog" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.match_cards" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.match_minigames" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.match_players" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.match_tiles" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.matches" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.minigame" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.player" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Matches" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Minigame" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Player" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.player_socialmedia" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.tile" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Tile" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_cards_card" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_cards_match" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_minigame_minigame" ManuallyRouted="false" />
