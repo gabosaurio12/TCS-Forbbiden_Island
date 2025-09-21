@@ -58,8 +58,11 @@ ipch/
 *.vspx
 
 # Visual Studio temporary files, build results, etc
-
-
+.vs/
+*.db
+*.db-shm
+*.db-wal
+*.vsidx
 
 # Guidance Automation Toolkit
 *.gpState
@@ -133,6 +136,3 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
-
-Construction/ForbbidenIslandFEI_Construction/.vs/ForbbidenIslandFEI_Construction/CopilotIndices/17.14.1204.46620/CodeChunks.db
-Construction/ForbbidenIslandFEI_Construction/.vs/ForbbidenIslandFEI_Construction/CopilotIndices/17.14.1204.46620/SemanticSymbols.db
