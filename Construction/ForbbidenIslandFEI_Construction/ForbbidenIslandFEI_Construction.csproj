@@ -137,10 +137,22 @@
     <Compile Include="player_socialmedia.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Langs\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SelectLanguageWindow.xaml.cs">
+      <DependentUpon>SelectLanguageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tile.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
     </Compile>
     <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectLanguageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,6 +190,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Langs\Resources.es.resx" />
+    <EmbeddedResource Include="Properties\Langs\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.es.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -217,6 +234,26 @@
       <DependentUpon>Forbbiden_FEI_model.edmx</DependentUpon>
       <LastGenOutput>Forbbiden_FEI_model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\codebackground.png" />
+    <Resource Include="Images\FEI MainPage.png" />
+    <Resource Include="Images\flames.jpg" />
+    <Resource Include="Images\half_flames.jpg" />
+    <Resource Include="Images\librarypx.png" />
+    <Resource Include="Images\mach128px.png" />
+    <Resource Include="Images\mach2128px.png" />
+    <Resource Include="Images\mach248px.png" />
+    <Resource Include="Images\mach264px.png" />
+    <Resource Include="Images\mach28px.png" />
+    <Resource Include="Images\mach3128px.png" />
+    <Resource Include="Images\mach364px.png" />
+    <Resource Include="Images\mach4128px.png" />
+    <Resource Include="Images\mach448px.png" />
+    <Resource Include="Images\mach464px.png" />
+    <Resource Include="Images\mach48px.png" />
+    <Resource Include="Images\mach64px.png" />
+    <Resource Include="Images\park2px.png" />
+    <Resource Include="Images\parkpx1080.png" />
+    <Resource Include="Images\revo128px.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

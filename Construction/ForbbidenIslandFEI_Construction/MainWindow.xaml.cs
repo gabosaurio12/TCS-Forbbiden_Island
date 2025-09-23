@@ -18,12 +18,39 @@ namespace ForbbidenIslandFEI_Construction
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            this.Navigate(new LoginPage());
+            WindowState = WindowState.Maximized;
+        }
+
+        private void playButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectLanguageWindow selectLanguageWindow = new SelectLanguageWindow();
+            selectLanguageWindow.ShowDialog();
+        }
+
+
+        private void quitGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void profileButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void logInButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

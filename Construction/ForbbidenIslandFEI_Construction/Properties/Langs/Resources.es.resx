@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,14 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="change_language" xml:space="preserve">
+    <value>Cambiar lenguaje</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Correo</value>
+  </data>
+  <data name="english" xml:space="preserve">
+    <value>Inglés</value>
   </data>
   <data name="guest" xml:space="preserve">
     <value>Invitado</value>
   </data>
   <data name="login_button" xml:space="preserve">
-    <value>Iniciar Sesión</value>
+    <value>Iniciar sesión</value>
   </data>
   <data name="login_title" xml:space="preserve">
     <value>Inicio de sesión</value>
@@ -139,7 +145,10 @@
     <value>Perfil</value>
   </data>
   <data name="quit_game" xml:space="preserve">
-    <value>Cerrar juego</value>
+    <value>Salir del juego</value>
+  </data>
+  <data name="select_language" xml:space="preserve">
+    <value>Selecciona un lenguaje</value>
   </data>
   <data name="settings" xml:space="preserve">
     <value>Configuración</value>
@@ -147,11 +156,17 @@
   <data name="show_password" xml:space="preserve">
     <value>Ver</value>
   </data>
+  <data name="signin" xml:space="preserve">
+    <value>Registro</value>
+  </data>
   <data name="signup_button" xml:space="preserve">
     <value>Registrar</value>
   </data>
   <data name="signup_title" xml:space="preserve">
     <value>Registro</value>
+  </data>
+  <data name="spanish" xml:space="preserve">
+    <value>Español</value>
   </data>
   <data name="username" xml:space="preserve">
     <value>Nombre de usuario</value>
