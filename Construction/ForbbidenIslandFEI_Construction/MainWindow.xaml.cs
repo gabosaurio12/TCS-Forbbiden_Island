@@ -50,7 +50,8 @@ namespace ForbbidenIslandFEI_Construction
 
         private void logInButton_Click(object sender, RoutedEventArgs e)
         {
-
+            LogWindow login = new LogWindow();
+            login.Show();
         }
     }
 }
