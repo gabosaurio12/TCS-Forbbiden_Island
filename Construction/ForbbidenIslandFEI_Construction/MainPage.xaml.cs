@@ -44,6 +44,7 @@ namespace ForbbidenIslandFEI_Construction
 
         private void profileButton_Click(object sender, RoutedEventArgs e)
         {
+            this.NavigationService.Navigate(new ProfilePage());
         }
 
         private void logInButton_Click(object sender, RoutedEventArgs e)

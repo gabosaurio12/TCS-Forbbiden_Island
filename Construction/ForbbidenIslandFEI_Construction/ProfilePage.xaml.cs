@@ -24,5 +24,10 @@ namespace ForbbidenIslandFEI_Construction
         {
             InitializeComponent();
         }
+
+        private void btnDiscard_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new MainPage());
+        }
     }
 }

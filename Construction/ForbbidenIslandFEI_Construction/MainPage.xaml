@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ForbbidenIslandFEI_Construction"
       xmlns:language="clr-namespace:ForbbidenIslandFEI_Construction.Properties.Langs"
-
+      ShowsNavigationUI="False"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">

@@ -70,7 +70,7 @@
             <!-- Buttons -->
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,0,0">
                 <Button x:Name="btnSave" Content="{x:Static p:Resources.saveChanges}" Width="345" Height="100" Margin="0,0,50,0" Background="#83EC38" FontSize="36" VerticalAlignment="Center" />
-                <Button x:Name="btnDiscard" Content="{x:Static p:Resources.discardChanges}" Width="345" Height="100" Margin="0,0,50,0" Background="#FFCB2F" FontSize="36" VerticalAlignment="Center" />
+                <Button x:Name="btnDiscard" Content="{x:Static p:Resources.discardChanges}" Width="345" Height="100" Margin="0,0,50,0" Background="#FFCB2F" FontSize="36" VerticalAlignment="Center" Click="btnDiscard_Click" />
             </StackPanel>
         </Grid>
     </Grid>
