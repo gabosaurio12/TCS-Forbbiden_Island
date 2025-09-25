@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace ForbbidenIslandFEI_Construction
+{
+    /// <summary>
+    /// Interaction logic for MainPage.xaml
+    /// </summary>
+    public partial class MainPage : Page
+    {
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+
+        private void playButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectLanguageWindow selectLanguageWindow = new SelectLanguageWindow();
+            selectLanguageWindow.ShowDialog();
+        }
+
+
+        private void quitGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void profileButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void logInButton_Click(object sender, RoutedEventArgs e)
+        {
+            LogWindow login = new LogWindow();
+            login.Show();
+        }
+    }
+}
