@@ -117,17 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="avatarExplanation" xml:space="preserve">
+    <value>Importa una imagen desde tu dispositivo para usarla como avatar</value>
+  </data>
+  <data name="discardChanges" xml:space="preserve">
+    <value>Descartar Cambios</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Correo</value>
   </data>
   <data name="guest" xml:space="preserve">
     <value>Invitado</value>
   </data>
+  <data name="lastName" xml:space="preserve">
+    <value>Apellido(s)</value>
+  </data>
   <data name="login_button" xml:space="preserve">
     <value>Iniciar Sesión</value>
   </data>
   <data name="login_title" xml:space="preserve">
     <value>Inicio de sesión</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Nombre</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Contraseña</value>
@@ -141,6 +153,9 @@
   <data name="quit_game" xml:space="preserve">
     <value>Cerrar juego</value>
   </data>
+  <data name="saveChanges" xml:space="preserve">
+    <value>Guardar Cambios</value>
+  </data>
   <data name="settings" xml:space="preserve">
     <value>Configuración</value>
   </data>
@@ -152,6 +167,9 @@
   </data>
   <data name="signup_title" xml:space="preserve">
     <value>Registro</value>
+  </data>
+  <data name="uploadAvatar" xml:space="preserve">
+    <value>Subir Nuevo Avatar</value>
   </data>
   <data name="username" xml:space="preserve">
     <value>Nombre de usuario</value>

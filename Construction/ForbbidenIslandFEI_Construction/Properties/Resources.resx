@@ -117,17 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="avatarExplanation" xml:space="preserve">
+    <value>Import an image from your device to use as an avatar</value>
+  </data>
+  <data name="discardChanges" xml:space="preserve">
+    <value>Discard Changes</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="guest" xml:space="preserve">
     <value>Guest</value>
   </data>
+  <data name="lastName" xml:space="preserve">
+    <value>Last Name(s)</value>
+  </data>
   <data name="login_button" xml:space="preserve">
     <value>Log In</value>
   </data>
   <data name="login_title" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Password</value>
@@ -141,6 +153,9 @@
   <data name="quit_game" xml:space="preserve">
     <value>Quit game</value>
   </data>
+  <data name="saveChanges" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
   </data>
@@ -152,6 +167,9 @@
   </data>
   <data name="signup_title" xml:space="preserve">
     <value>Sign Up</value>
+  </data>
+  <data name="uploadAvatar" xml:space="preserve">
+    <value>Upload New Avatar</value>
   </data>
   <data name="username" xml:space="preserve">
     <value>Username</value>
