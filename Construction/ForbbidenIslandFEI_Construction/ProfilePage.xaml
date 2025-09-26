@@ -13,13 +13,14 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <Rectangle Fill="#6BB6E4" Opacity="1" Height="270" />
-            <Rectangle Fill="White" Opacity="1" Height="830" />
+            <Rectangle Fill="White" Opacity="1" Height="810" />
         </StackPanel>
         <TextBlock Text="{x:Static p:Resources.profile}" FontSize="96" HorizontalAlignment="Center" Margin="80" FontFamily="Irish Gover" />
 
-        <Grid Margin="100,400,0,0">
+        <Grid Margin="50,350,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="600" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -36,42 +37,51 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
-                <TextBlock Text="{x:Static p:Resources.guest}" FontSize="57" Margin="0,0,0,0" FontFamily="Irish Gover" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" />
-                <Ellipse Height="300" Width="300" Fill="#969696" Margin="0,25,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" />
+                <TextBlock Text="{x:Static p:Resources.guest}" FontSize="57" Margin="0,0,0,0"
+                           FontFamily="Irish Gover" Grid.Row="0" Grid.Column="0"
+                           HorizontalAlignment="Center" />
+                <Ellipse Height="300" Width="300" Fill="#969696" Margin="0,25,0,0" Grid.Row="1"
+                         Grid.Column="0" HorizontalAlignment="Center" />
             </Grid>
 
             <!-- User Info Form -->
             
-            <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="250,0,0,0" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="80,0,0,0" >
+                <TextBlock x:Name="txtBkUsername" Text="{x:Static p:Resources.username}" FontSize="48" FontFamily="Irish Gover"
+                           VerticalAlignment="Center" Margin="20,30,0,0" />
+                <TextBlock x:Name="txtBkName" Text="{x:Static p:Resources.name}" FontSize="48" FontFamily="Irish Gover"
+                           VerticalAlignment="Center"  Margin="20,30,0,0" />
+                <TextBlock x:Name="txtBkEmail" Text="{x:Static p:Resources.email}" FontSize="48" FontFamily="Irish Gover"
+                           VerticalAlignment="Center" Margin="20,30,0,0" />
+                <TextBlock Text="{x:Static p:Resources.socialMedia}" FontSize="48" FontFamily="Irish Gover"
+                           VerticalAlignment="Center" Margin="20,30,0,0" />
+            </StackPanel>
 
-                <TextBlock Text="{x:Static p:Resources.username}" Grid.Column="0" Grid.Row="0" FontSize="57" FontFamily="Irish Gover" VerticalAlignment="Center" Margin="20,40,0,0" />
-                <TextBox x:Name="txtBxTag" Grid.Column="1" Grid.Row="0" Width="360" Height="66" VerticalAlignment="Center" Margin="20,40,0,0" />
-
-                <TextBlock Text="{x:Static p:Resources.name}" Grid.Column="0" Grid.Row="1" FontSize="57" VerticalAlignment="Center" FontFamily="Irish Gover" Margin="20,40,0,0" />
-                <TextBox x:Name="txtBxName" Grid.Column="1" Grid.Row="1" Width="360" Height="66" VerticalAlignment="Center" Margin="20,40,0,0" />
-
-                <TextBlock Text="{x:Static p:Resources.lastName}" Grid.Column="0" Grid.Row="2" FontSize="57" VerticalAlignment="Center" FontFamily="Irish Gover" Margin="20,40,0,0" />
-                <TextBox x:Name="txtBxLastName" Grid.Column="1" Grid.Row="2" Width="360" Height="66" VerticalAlignment="Center" Margin="20,40,0,0" />
-            </Grid>
+            <StackPanel Grid.Column="2" Orientation="Vertical" >
+                <TextBox x:Name="txtBxUsername" Width="360" Height="45" VerticalAlignment="Center" Margin="20,40,0,0" FontSize="30" />
+                <TextBox x:Name="txtBxName" Width="360" Height="45" VerticalAlignment="Center" Margin="20,40,0,0" FontSize="30" />
+                <TextBox x:Name="txtBxEmail" Width="360" Height="45" VerticalAlignment="Center" Margin="20,40,0,0" FontSize="30" />
+                <TextBox x:Name="txtBxSocialMedia" Width="360" Height="45" VerticalAlignment="Center" Margin="20,40,0,0" FontSize="30" />
+            </StackPanel>
             
             <!-- Avatar -->
-            <TextBlock Text="{x:Static p:Resources.avatarExplanation}" Grid.Column="0" Grid.Row="1" FontSize="20" FontFamily="Irish Gover" VerticalAlignment="Center" Margin="20,40,0,0" />
-            <Button x:Name="btnAvatar" Grid.Column="0" Grid.Row="2" Content="{x:Static p:Resources.uploadAvatar}" Width="238" Height="63" FontSize="24" Margin="0,25,0,0" VerticalAlignment="Center" />
+            <TextBlock Text="{x:Static p:Resources.avatarExplanation}" Grid.Column="0" Grid.Row="1" 
+                       FontSize="20" FontFamily="Irish Gover" VerticalAlignment="Center" Margin="20,20,0,0" />
+            <Button x:Name="btnAvatar" Content="{x:Static p:Resources.uploadAvatar}"
+                    Grid.Column="0" Grid.Row="2" Margin="0,25,0,0"
+                    Width="238" Height="63" FontSize="24"
+                    VerticalAlignment="Center" />
             
             <!-- Buttons -->
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,0,0">
-                <Button x:Name="btnSave" Content="{x:Static p:Resources.saveChanges}" Width="345" Height="100" Margin="0,0,50,0" Background="#83EC38" FontSize="36" VerticalAlignment="Center" />
-                <Button x:Name="btnDiscard" Content="{x:Static p:Resources.discardChanges}" Width="345" Height="100" Margin="0,0,50,0" Background="#FFCB2F" FontSize="36" VerticalAlignment="Center" Click="btnDiscard_Click" />
-            </StackPanel>
+            <Button x:Name="btnSave" Content="{x:Static p:Resources.saveChanges}" 
+                    Grid.Column="1" Grid.Row="2" Margin="0,20,0,0"
+                    Width="345" Height="100" Background="#83EC38"
+                    FontSize="36" VerticalAlignment="Center" Click="BtnSave_Click" />
+            <Button x:Name="btnDiscard" Content="{x:Static p:Resources.discardChanges}"
+                    Grid.Column="2" Grid.Row="2" Margin="0,20,0,0"
+                    Width="345" Height="100"
+                    Background="#FFCB2F" FontSize="36"
+                    Click="BtnDiscard_Click" />
         </Grid>
     </Grid>
 </Page>

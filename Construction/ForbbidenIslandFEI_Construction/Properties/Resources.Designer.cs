@@ -214,6 +214,15 @@ namespace ForbbidenIslandFEI_Construction.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Social Media.
+        /// </summary>
+        public static string socialMedia {
+            get {
+                return ResourceManager.GetString("socialMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload New Avatar.
         /// </summary>
         public static string uploadAvatar {

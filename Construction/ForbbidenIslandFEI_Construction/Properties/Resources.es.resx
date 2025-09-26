@@ -168,6 +168,9 @@
   <data name="signup_title" xml:space="preserve">
     <value>Registro</value>
   </data>
+  <data name="socialMedia" xml:space="preserve">
+    <value>Redes Sociales</value>
+  </data>
   <data name="uploadAvatar" xml:space="preserve">
     <value>Subir Nuevo Avatar</value>
   </data>
