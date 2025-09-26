@@ -1,5 +1,8 @@
+using log4net;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +22,8 @@ namespace ForbbidenIslandFEI_Construction
     /// </summary>
     public partial class LoginPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
+
         private bool _passwordVisible = false;
         public LoginPage()
         {
@@ -48,19 +53,55 @@ namespace ForbbidenIslandFEI_Construction
             }
             else
             {
-                if (BCrypt.Net.BCrypt.Verify(pwdBPassword.Password, player.player_password))
+                string password = "";
+                if (chkPassword.IsChecked == true)
                 {
-                    MessageBox.Show("Inicio de sesión exitoso.");
+                    password = txtBPasswordVisible.Text;
+                }
+                else
+                {
+                    password = pwdBPassword.Password;
+                }
+
+                if (BCrypt.Net.BCrypt.Verify(password, player.player_password))
+                {
+                    using (var db = new Forbbiden_FEIEntities())
+                    {
+                        db.LoginPlayer.Add(new LoginPlayer
+                        {
+                            login_player_id = player.player_id,
+                        });
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            MessageBox.Show("Error al iniciar sesión.");
+                            log.Error("SignupWindow.xaml.cs", ex);
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            MessageBox.Show("Error al iniciasr sesión.");
+                            log.Error("SignupWindow.xaml.cs", ex);
+                        }
+                    }
+
+                    var logWindow = Window.GetWindow(this) as LogWindow;
+                    if (logWindow != null)
+                    {
+                        logWindow.Close();
+                    }
                 }
                 else
                 {
                     txtBkPassword.Foreground = Brushes.Red;
+                    MessageBox.Show("Contraseña incorrecta");
                 }
             }
-            
         }
 
-        private void btnTogglePassword_Click(object sender, RoutedEventArgs e)
+        private void TogglePassword_Click(object sender, RoutedEventArgs e)
         {
             if (!_passwordVisible)
             {
@@ -78,7 +119,7 @@ namespace ForbbidenIslandFEI_Construction
             }
         }
 
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Signup_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.NavigationService.Navigate(new SignupPage());
         }

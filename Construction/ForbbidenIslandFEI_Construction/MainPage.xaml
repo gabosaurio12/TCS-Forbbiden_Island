@@ -45,17 +45,17 @@
                         Width="500" Height="80" Margin="0,10"
                         BorderThickness="5" BorderBrush="#3C6671"
                         FontFamily="Bahnschrift Light" FontSize="30" Foreground="Black"
-                        Click="playButton_Click" Background="#69B6C9"/>
+                        Click="PlayButton_Click" Background="#69B6C9"/>
                 <Button x:Name="settingsButton" Content="{x:Static language:Resources.settings}"
                         Width="500" Height="80" Margin="0,10"
                         BorderThickness="5" BorderBrush="#3C6671"
                         FontFamily="Bahnschrift Light" FontSize="30" Foreground="Black"
-                        Click="settingsButton_Click" Background="#69B6C9" />
+                        Click="SettingsButton_Click" Background="#69B6C9" />
                 <Button x:Name="quitGameButton" Content="{x:Static language:Resources.quit_game}"
                         Width="500" Height="80" Margin="0,10"
                         BorderThickness="5" BorderBrush="#3C6671"
                         FontFamily="Bahnschrift Light" FontSize="30" Foreground="Black"
-                        Click="quitGameButton_Click" Background="#69B6C9" />
+                        Click="QuitGameButton_Click" Background="#69B6C9" />
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1"
@@ -82,7 +82,7 @@
                         FontFamily="Bahnschrift Light" FontSize="30" Foreground="Black"
                         BorderThickness="5" BorderBrush="#3C6671"
                         HorizontalAlignment="Center"
-                        Click="profileButton_Click" Background="#69B6C9" />
+                        Click="ProfileButton_Click" Background="#69B6C9" />
             </StackPanel>
 
             <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
@@ -96,7 +96,7 @@
                         HorizontalAlignment="Left" Margin="20"
                         BorderThickness="5" BorderBrush="#3C6671"
                         FontFamily="Bahnschrift Light" FontSize="30" Foreground="Black"
-                        Click="logInButton_Click" Background="#69B6C9" />
+                        Click="LogInButton_Click" Background="#69B6C9" />
             </Grid>
         </Grid>
     </Viewbox>

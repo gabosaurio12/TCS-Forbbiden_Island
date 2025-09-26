@@ -1,6 +1,10 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,34 +24,92 @@ namespace ForbbidenIslandFEI_Construction
     /// </summary>
     public partial class MainPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
+
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void playButton_Click(object sender, RoutedEventArgs e)
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             SelectLanguageWindow selectLanguageWindow = new SelectLanguageWindow();
             selectLanguageWindow.ShowDialog();
         }
 
+        private void ClearCurrentLogin()
+        {
+            using (var db = new Forbbiden_FEIEntities())
+            {
+                try
+                {
+                    var loggedInPlayers = db.LoginPlayer.ToList();
+                    db.LoginPlayer.RemoveRange(loggedInPlayers);
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    MessageBox.Show("Error al cerrar sesión.");
+                    log.Error("SignupWindow.xaml.cs", ex);
+                }
+                catch (DbUpdateException ex)
+                {
+                    MessageBox.Show("Error al cerrar sesión.");
+                    log.Error("SignupWindow.xaml.cs", ex);
+                }
+            }
+        }
 
-        private void quitGameButton_Click(object sender, RoutedEventArgs e)
+        private void QuitGameButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+            ClearCurrentLogin();            
+            log.Info("App clossed");
         }
 
-        private void profileButton_Click(object sender, RoutedEventArgs e)
+        private Player GetCurrentLogin()
         {
-            this.NavigationService.Navigate(new ProfilePage());
+            Player player = new Player();
+            using (var db = new Forbbiden_FEIEntities())
+            {
+                try
+                {
+                    int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).SingleOrDefault();
+                    player = db.Player.Find(current_id);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show("Error al leer usuario de la base de datos.");
+                    log.Error("MainPage.xaml.cs", ex);
+                }
+                catch (ArgumentException ex)
+                {
+                    MessageBox.Show("Error al cargar el perfil.");
+                    log.Error("MainPage.xaml.cs", ex);
+                }
+            }
+            return player;
         }
 
-        private void logInButton_Click(object sender, RoutedEventArgs e)
+        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            Player player = GetCurrentLogin();
+            if (player == null)
+            {
+                NavigationService.Navigate(new ProfilePage());
+            }
+            else
+            {
+                NavigationService.Navigate(new ProfilePage(player));
+            }
+        }
+
+        private void LogInButton_Click(object sender, RoutedEventArgs e)
         {
             LogWindow login = new LogWindow();
             login.Show();

@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="SignupPage" Height="360" Width="450">
 
+
     <Grid Margin="70,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -45,10 +46,14 @@
         <!-- Register Button -->
         <StackPanel Grid.Row="4" Orientation="Vertical"
                     HorizontalAlignment="Center" Margin="0,15,0,0">
-            <Button x:Name="signupButton" Content="{x:Static p:Resources.signup_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="signupButton_Click"/>
-            <Label Content="{x:Static p:Resources.login_title}" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Label_MouseDown" Cursor="Hand" />
+            <Button x:Name="signupButton" Content="{x:Static p:Resources.signup_button}" 
+                    Height="30" Width="150" Background="#39B349" 
+                    Foreground="White" FontWeight="Bold"
+                    Click="SignupButton_Click" Margin="0,0,0,0"/>
+            <Label Content="{x:Static p:Resources.login_title}" Margin="0,5,0,0" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" 
+                   MouseDown="Login_MouseDown" Cursor="Hand" />
         </StackPanel>
 
     </Grid>
-    
 </Page>

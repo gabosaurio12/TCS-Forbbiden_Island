@@ -36,7 +36,8 @@
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                 <PasswordBox x:Name="pwdBPassword" Height="25" Width="280" Margin="5" />
                 <TextBox x:Name="txtBPasswordVisible" Height="25" Width="280" Visibility="Collapsed"  Margin="5"/>
-                <Button x:Name="btnTogglePassword" Content="{x:Static p:Resources.show_password}" Width="50" Height="25" Margin="5" Click="btnTogglePassword_Click"/>
+                <CheckBox x:Name="chkPassword" Content="{x:Static p:Resources.show_password}" VerticalAlignment="Center" Click="TogglePassword_Click" />
+                <!--<Button x:Name="btnTogglePassword" Content="{x:Static p:Resources.show_password}" Width="50" Height="25" Margin="5" Click="btnTogglePassword_Click"/> -->
             </StackPanel>
         </StackPanel>
 
@@ -44,7 +45,7 @@
         <StackPanel Grid.Row="3" Orientation="Vertical"
             HorizontalAlignment="Center" Margin="0,25,0,0">
             <Button x:Name="signupButton" Content="{x:Static p:Resources.login_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="btnLogin_Click"/>
-            <Label Content="{x:Static p:Resources.signup_title}" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Label_MouseDown" Cursor="Hand" />
+            <Label Content="{x:Static p:Resources.signup_title}" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Signup_MouseDown" Cursor="Hand" />
         </StackPanel>
     </Grid>
 </Page>
