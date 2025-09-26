@@ -36,5 +36,6 @@ namespace ForbbidenIslandFEI_Construction
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<player_socialmedia> player_socialmedia { get; set; }
         public virtual DbSet<Tile> Tile { get; set; }
+        public virtual DbSet<LoginPlayer> LoginPlayer { get; set; }
     }
 }

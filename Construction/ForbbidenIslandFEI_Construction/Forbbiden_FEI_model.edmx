@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Forbbiden_FEIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Forbbiden_FEIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="card_id" />
@@ -19,6 +19,12 @@
             <PropertyRef Name="card_type" />
           </Key>
           <Property Name="card_type" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginPlayer">
+          <Key>
+            <PropertyRef Name="login_player_id" />
+          </Key>
+          <Property Name="login_player_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="match_cards">
           <Key>
@@ -93,6 +99,18 @@
           <Property Name="flooded_level" Type="int" Nullable="false" />
           <Property Name="type" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <Association Name="FK_LoginPlayer_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="LoginPlayer" Type="Self.LoginPlayer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="LoginPlayer">
+              <PropertyRef Name="login_player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_match_cards_card">
           <End Role="Card" Type="Self.Card" Multiplicity="1" />
           <End Role="match_cards" Type="Self.match_cards" Multiplicity="*" />
@@ -204,6 +222,7 @@
         <EntityContainer Name="Forbbiden_FEIModelStoreContainer">
           <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="card_catalog" EntityType="Self.card_catalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginPlayer" EntityType="Self.LoginPlayer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="match_cards" EntityType="Self.match_cards" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="match_minigames" EntityType="Self.match_minigames" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="match_players" EntityType="Self.match_players" Schema="dbo" store:Type="Tables" />
@@ -213,6 +232,10 @@
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="player_socialmedia" EntityType="Self.player_socialmedia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tile" EntityType="Self.Tile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LoginPlayer_Player" Association="Self.FK_LoginPlayer_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="LoginPlayer" EntitySet="LoginPlayer" />
+          </AssociationSet>
           <AssociationSet Name="FK_match_cards_card" Association="Self.FK_match_cards_card">
             <End Role="Card" EntitySet="Card" />
             <End Role="match_cards" EntitySet="match_cards" />
@@ -250,8 +273,7 @@
             <End Role="match_tiles" EntitySet="match_tiles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Forbbiden_FEIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -342,6 +364,7 @@
           <Property Name="player_avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
           <NavigationProperty Name="player_socialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="player_socialmedia" />
+          <NavigationProperty Name="LoginPlayer" Relationship="Forbbiden_FEIModel.FK_LoginPlayer_Player" FromRole="Player" ToRole="LoginPlayer" />
         </EntityType>
         <EntityType Name="player_socialmedia">
           <Key>
@@ -517,7 +540,31 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="player_socialmedia" EntitySet="player_socialmedia" />
           </AssociationSet>
+          <EntitySet Name="LoginPlayer" EntityType="Forbbiden_FEIModel.LoginPlayer" />
+          <AssociationSet Name="FK_LoginPlayer_Player" Association="Forbbiden_FEIModel.FK_LoginPlayer_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="LoginPlayer" EntitySet="LoginPlayer" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="LoginPlayer">
+          <Key>
+            <PropertyRef Name="login_player_id" />
+          </Key>
+          <Property Name="login_player_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="Forbbiden_FEIModel.FK_LoginPlayer_Player" FromRole="LoginPlayer" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK_LoginPlayer_Player">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="Forbbiden_FEIModel.LoginPlayer" Role="LoginPlayer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="LoginPlayer">
+              <PropertyRef Name="login_player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -620,6 +667,13 @@
                 <ScalarProperty Name="tile_id" ColumnName="tile_id" />
                 <ScalarProperty Name="flooded_level" ColumnName="flooded_level" />
                 <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginPlayer">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.LoginPlayer">
+              <MappingFragment StoreEntitySet="LoginPlayer">
+                <ScalarProperty Name="login_player_id" ColumnName="login_player_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

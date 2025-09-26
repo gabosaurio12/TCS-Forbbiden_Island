@@ -11,8 +11,6 @@ namespace ForbbidenIslandFEI_Construction
 {
     using System;
     using System.Collections.Generic;
-    using BCrypt;
-    using System.Linq;
     
     public partial class Player
     {
@@ -34,56 +32,6 @@ namespace ForbbidenIslandFEI_Construction
         public virtual ICollection<match_players> match_players { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_socialmedia> player_socialmedia { get; set; }
-
-        public bool ValidateUsername()
-        {
-            using (var db = new Forbbiden_FEIEntities())
-            {
-                var player = db.Player.FirstOrDefault(u => u.player_username == this.player_username);
-                return player == null;
-            }
-        }
-
-        public bool ValidateEmail()
-        {
-            if (string.IsNullOrWhiteSpace(this.player_email))
-            {
-                return false;
-            }
-            if (this.player_email.Contains("@"))
-            {
-                using (var db = new Forbbiden_FEIEntities())
-                {
-                    var email = db.Player.FirstOrDefault(p => p.player_email == this.player_email);
-                    return email == null;
-                }
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-
-        public bool ValidatePassword()
-        {
-            if (!string.IsNullOrWhiteSpace(this.player_password) && this.player_password.Length > 7)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.player_password, @"[A-Z]")) return false;
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.player_password, @"[a-z]")) return false;
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.player_password, @"[0-9]")) return false;
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.player_password, @"[\W_]")) return false;
-            }
-            else
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public void hashPassword()
-        {
-            this.player_password = BCrypt.Net.BCrypt.HashPassword(this.player_password);
-        }
+        public virtual LoginPlayer LoginPlayer { get; set; }
     }
 }

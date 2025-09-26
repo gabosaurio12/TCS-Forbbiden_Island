@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ForbbidenIslandFEI_Construction"
         mc:Ignorable="d"
         Title="LogWindow" Height="360" Width="450"
-        Source="LoginPage.xaml" >
+        Source="LoginPage.xaml" ShowsNavigationUI="False"
+        WindowStartupLocation="CenterScreen">
 
 </NavigationWindow>

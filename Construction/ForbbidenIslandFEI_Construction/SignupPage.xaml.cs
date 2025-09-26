@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Net.Mail;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,33 +39,71 @@ namespace ForbbidenIslandFEI_Construction
                 player_password = txtBPassword.Text
             };
             bool isValid = true;
+            PlayerValidation playerValidation = new PlayerValidation();
 
-            if (!player.ValidateUsername())
+            try
             {
-                MessageBox.Show("El nombre de usuario ya existe.");
-                isValid = false;
-            }
+                if (!playerValidation.ValidateUsername(player))
+                {
+                    MessageBox.Show("El nombre de usuario ya existe.");
+                    isValid = false;
+                }
 
-            if (!player.ValidateEmail())
-            {
-                MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
-                isValid = false;
-            }
+                if (!playerValidation.ValidateEmail(player))
+                {
+                    MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
+                    isValid = false;
+                }
 
-            if (!player.ValidatePassword())
-            {
-                MessageBox.Show("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
-                isValid = false;
+                if (!playerValidation.ValidatePassword(player))
+                {
+                    MessageBox.Show("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+                    isValid = false;
+                }
+                else
+                {
+                    playerValidation.hashPassword(player);
+                }
             }
-            else
+            catch (DbEntityValidationException ex)
             {
-                player.hashPassword();
+                MessageBox.Show("Error al registrar el usuario.");
+                log.Error("SignupWindow.xaml.cs", ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show("Error al registrar el usuario.");
+                log.Error("SignupWindow.xaml.cs", ex);
             }
 
             return isValid;
         }
 
-        private void signupButton_Click(object sender, RoutedEventArgs e)
+        private void SendEmail()
+        {
+            string receiver = txtBEmail.Text;
+            string emisor = "forbbidenislandfei@gmail.com";
+            MailMessage message = new MailMessage(emisor, receiver);
+            message.Subject = "Register confirmation";
+            message.Body = "Your account has been succesfully created, welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.Credentials = new System.Net.NetworkCredential(emisor, "uqeosliojdotaitq");
+            client.EnableSsl = true;
+
+            try
+            {
+                client.Send(message);
+                MessageBox.Show("Correo de confirmación enviado.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al enviar el correo de confirmación.");
+                log.Error("SignupWindow.xaml.cs", ex);
+            }
+        }
+
+        private void SignupButton_Click(object sender, RoutedEventArgs e)
         {
             Player player = new Player();
 
@@ -76,7 +115,7 @@ namespace ForbbidenIslandFEI_Construction
                     {
                         db.Player.Add(player);
                         db.SaveChanges();
-                        MessageBox.Show("Éxito!");
+                        SendEmail();
                     }
                     catch (DbEntityValidationException ex)
                     {
@@ -97,7 +136,7 @@ namespace ForbbidenIslandFEI_Construction
 
         }
 
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Login_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.NavigationService.Navigate(new LoginPage());
         }

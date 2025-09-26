@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0ce35c9dba3c4de1b56d89ef2b0aee86" Name="Diagram1">
+      <Diagram DiagramId="0ce35c9dba3c4de1b56d89ef2b0aee86" Name="Diagram1" ZoomLevel="71">
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Card" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.card_catalog" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.match_cards" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
@@ -13,8 +13,8 @@
         <EntityTypeShape EntityType="Forbbiden_FEIModel.match_tiles" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Matches" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Minigame" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.Player" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.player_socialmedia" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Player" Width="1.5" PointX="3.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.player_socialmedia" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Tile" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_cards_card" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_cards_match" ManuallyRouted="false" />
@@ -25,6 +25,8 @@
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_tiles_match" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_tile_match_tile" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_player_socialmedia" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.LoginPlayer" Width="1.5" PointX="5.5" PointY="14" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_LoginPlayer_Player" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
