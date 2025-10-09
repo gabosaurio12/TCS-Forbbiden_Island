@@ -33,8 +33,19 @@ namespace ForbbidenIslandFEI_Construction
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                // Navega a la página PlayPage
+                NavigationService.Navigate(new PlayPage());
+                log.Info("Navegación a PlayPage desde MainPage.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir la página de juego.");
+                log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
+            }
         }
+
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
