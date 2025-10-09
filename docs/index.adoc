@@ -22,4 +22,6 @@
 :warning-caption: Advertencia
 
 include::introduction.adoc[]
+include::advances.adoc[]
 include::views/classes.adoc[]
+include::views/database.adoc[]
