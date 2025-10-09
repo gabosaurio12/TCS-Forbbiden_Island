@@ -232,6 +232,7 @@
     <None Include="Forbbiden_FEI_model.edmx.diagram">
       <DependentUpon>Forbbiden_FEI_model.edmx</DependentUpon>
     </None>
+    <Resource Include="Fuentes\IrishGrover.ttf" />
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
