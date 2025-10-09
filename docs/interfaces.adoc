@@ -1,0 +1,90 @@
+
+== Agrupación de interfaces y funcionalidades
+
+=== IHostGameManager
+
+==== NewGame()
+
+* Dificultad
+* Cantidad de jugadores máxima
+* Pública o privada
+
+==== InviteFriend()
+
+* Username del amigo
+
+=== IOnlineGame
+
+==== JoinGame()
+* Regresa: Estado de la conexión
+
+==== ExitGame()
+
+=== IProfileManager
+
+==== Login()
+
+* Username
+* Contraseña
+
+==== Signup()
+
+* Username
+* Contraseña
+* Correo electrónico
+
+==== UpdateUsername()
+
+* Nueva TAG
+* Regresa: Si se actualizó con éxito
+
+==== UpdatePersonalInfo()
+
+* Nombre
+* Apellidos
+* Regresa: Si se actualizó con éxito
+
+==== UpdateSocialLinks()
+
+* Nueva red social
+* Regresa: Si se actualizó con éxito
+
+==== UpdateAvatar()
+
+* Nuevo ávatar
+* Regresa: Si se actualizó con éxito
+
+=== IFriends
+
+==== AddFriend()
+
+* Username del amigo
+
+==== DeleteFriend()
+
+* Username del amigo
+
+==== GetFriends()
+
+* Retorno: Lista de amigos
+
+==== AcceptFriendship()
+
+==== DeclineFrindship()
+
+==== SearchGame()
+
+* ID de la partida
+
+=== IChat
+
+==== SendMessage()
+
+* Username del destinatario
+* Mensaje
+* Regresa: Si se entregó con éxito
+
+==== SendGroupMessage()
+
+* Mensaje
+* Regresa: Si se entregó con éxito

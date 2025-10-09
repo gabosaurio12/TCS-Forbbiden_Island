@@ -1,0 +1,5 @@
+
+== Modelo de la base de datos
+
+.Modelo EDMX
+image::../images/ForbbidenIslandFEI-EDMX.jpeg[Modelo EDMX, width=600, align=left]
