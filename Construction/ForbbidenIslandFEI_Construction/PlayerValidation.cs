@@ -54,7 +54,7 @@ namespace ForbbidenIslandFEI_Construction
             return true;
         }
 
-        public void hashPassword(Player player)
+        public void HashPassword(Player player)
         {
             player.player_password = BCrypt.Net.BCrypt.HashPassword(player.player_password);
         }

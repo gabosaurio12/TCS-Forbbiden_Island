@@ -110,16 +110,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Forbbiden_FEI_model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="LoginPage.xaml.cs">
+    <Compile Include="view\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginPlayer.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
     </Compile>
-    <Compile Include="LogWindow.xaml.cs">
+    <Compile Include="view\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="view\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Matches.cs">
@@ -147,7 +147,7 @@
     <Compile Include="player_socialmedia.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProfilePage.xaml.cs">
+    <Compile Include="view\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Langs\Resources.Designer.cs">
@@ -155,37 +155,37 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SelectLanguageWindow.xaml.cs">
+    <Compile Include="view\SelectLanguageWindow.xaml.cs">
       <DependentUpon>SelectLanguageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tile.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
     </Compile>
-    <Page Include="LoginPage.xaml">
+    <Page Include="view\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LogWindow.xaml">
+    <Page Include="view\LogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="view\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProfilePage.xaml">
+    <Page Include="view\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SelectLanguageWindow.xaml">
+    <Page Include="view\SelectLanguageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignupPage.xaml">
+    <Page Include="view\SignupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="view\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -193,10 +193,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SignupPage.xaml.cs">
+    <Compile Include="view\SignupPage.xaml.cs">
       <DependentUpon>SignupPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="view\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

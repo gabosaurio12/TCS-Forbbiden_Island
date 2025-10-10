@@ -62,7 +62,7 @@ namespace ForbbidenIslandFEI_Construction
                 }
                 else
                 {
-                    playerValidation.hashPassword(player);
+                    playerValidation.HashPassword(player);
                 }
             }
             catch (DbEntityValidationException ex)
