@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ForbbidenIslandFEI_Construction.model;
 
 namespace ForbbidenIslandFEI_Construction
 {
@@ -30,105 +31,35 @@ namespace ForbbidenIslandFEI_Construction
             InitializeComponent();
         }
         
-        private bool SetPlayer(out Player player)
+        private bool SetPlayer(out PlayerClient player)
         {
-            player = new Player()
+         
+            player = new PlayerClient()
             {
                 player_username = txtBUsername.Text,
                 player_email = txtBEmail.Text,
                 player_password = txtBPassword.Text
             };
             bool isValid = true;
-            PlayerValidation playerValidation = new PlayerValidation();
 
-            try
+            if (!player.ValidatePassword(player.player_password))
             {
-                if (!playerValidation.ValidateUsername(player))
-                {
-                    MessageBox.Show("El nombre de usuario ya existe.");
-                    isValid = false;
-                }
-
-                if (!playerValidation.ValidateEmail(player))
-                {
-                    MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
-                    isValid = false;
-                }
-
-                if (!playerValidation.ValidatePassword(player))
-                {
-                    MessageBox.Show("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
-                    isValid = false;
-                }
-                else
-                {
-                    playerValidation.HashPassword(player);
-                }
+                MessageBox.Show("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+                isValid = false;
             }
-            catch (DbEntityValidationException ex)
+            else
             {
-                MessageBox.Show("Error al registrar el usuario.");
-                log.Error("SignupWindow.xaml.cs", ex);
+                player.HashPassword(player);
             }
-            catch (DbUpdateException ex)
-            {
-                MessageBox.Show("Error al registrar el usuario.");
-                log.Error("SignupWindow.xaml.cs", ex);
-            }
-
+           
             return isValid;
-        }
-
-        private void SendEmail()
-        {
-            string receiver = txtBEmail.Text;
-            string emisor = "forbbidenislandfei@gmail.com";
-            MailMessage message = new MailMessage(emisor, receiver);
-            message.Subject = "Register confirmation";
-            message.Body = "Your account has been succesfully created, welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
-            SmtpClient client = new SmtpClient("smtp.gmail.com");
-            client.Port = 587;
-            client.Credentials = new System.Net.NetworkCredential(emisor, "uqeosliojdotaitq");
-            client.EnableSsl = true;
-
-            try
-            {
-                client.Send(message);
-                MessageBox.Show("Correo de confirmación enviado.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al enviar el correo de confirmación.");
-                log.Error("SignupWindow.xaml.cs", ex);
-            }
         }
 
         private void SignupButton_Click(object sender, RoutedEventArgs e)
         {
-            Player player = new Player();
+            PlayerClient player = new PlayerClient();
 
-            if (SetPlayer(out player))
-            {
-                using (var db = new Forbbiden_FEIEntities())
-                {
-                    try
-                    {
-                        db.Player.Add(player);
-                        db.SaveChanges();
-                        SendEmail();
-                    }
-                    catch (DbEntityValidationException ex)
-                    {
-                        MessageBox.Show("Error al registrar el usuario.");
-                        log.Error("SignupWindow.xaml.cs", ex);
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        MessageBox.Show("Error al registrar el usuario.");
-                        log.Error("SignupWindow.xaml.cs", ex);
-                    }
-                }
-            }
+            SetPlayer(out player);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
