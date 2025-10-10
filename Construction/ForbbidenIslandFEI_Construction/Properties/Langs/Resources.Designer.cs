@@ -61,11 +61,29 @@ namespace ForbbidenIslandFEI_Construction.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Public.
+        /// </summary>
+        public static string _public {
+            get {
+                return ResourceManager.GetString("public", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Change Language.
         /// </summary>
         public static string change_language {
             get {
                 return ResourceManager.GetString("change_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Difficulty.
+        /// </summary>
+        public static string difficulty {
+            get {
+                return ResourceManager.GetString("difficulty", resourceCulture);
             }
         }
         
@@ -88,11 +106,47 @@ namespace ForbbidenIslandFEI_Construction.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Friends.
+        /// </summary>
+        public static string friends {
+            get {
+                return ResourceManager.GetString("friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Guest.
         /// </summary>
         public static string guest {
             get {
                 return ResourceManager.GetString("guest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hard.
+        /// </summary>
+        public static string hard {
+            get {
+                return ResourceManager.GetString("hard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The water level starts at 3.
+        /// </summary>
+        public static string hard_message {
+            get {
+                return ResourceManager.GetString("hard_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Host Game.
+        /// </summary>
+        public static string host_game {
+            get {
+                return ResourceManager.GetString("host_game", resourceCulture);
             }
         }
         
@@ -115,6 +169,51 @@ namespace ForbbidenIslandFEI_Construction.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Max number of Players.
+        /// </summary>
+        public static string max_players {
+            get {
+                return ResourceManager.GetString("max_players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a New Game.
+        /// </summary>
+        public static string new_game {
+            get {
+                return ResourceManager.GetString("new_game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Normal.
+        /// </summary>
+        public static string normal {
+            get {
+                return ResourceManager.GetString("normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The water level starts at 1.
+        /// </summary>
+        public static string normal_message {
+            get {
+                return ResourceManager.GetString("normal_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Online.
+        /// </summary>
+        public static string online {
+            get {
+                return ResourceManager.GetString("online", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Password.
         /// </summary>
         public static string password {
@@ -133,11 +232,29 @@ namespace ForbbidenIslandFEI_Construction.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Only the players with invitation can join .
+        /// </summary>
+        public static string private_message {
+            get {
+                return ResourceManager.GetString("private_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Profile.
         /// </summary>
         public static string profile {
             get {
                 return ResourceManager.GetString("profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Any player can join in your game.
+        /// </summary>
+        public static string public_message {
+            get {
+                return ResourceManager.GetString("public_message", resourceCulture);
             }
         }
         

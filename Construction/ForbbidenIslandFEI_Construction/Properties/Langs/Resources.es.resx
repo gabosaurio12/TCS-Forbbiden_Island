@@ -120,14 +120,29 @@
   <data name="change_language" xml:space="preserve">
     <value>Cambiar lenguaje</value>
   </data>
+  <data name="difficulty" xml:space="preserve">
+    <value>Dificultad</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Correo</value>
   </data>
   <data name="english" xml:space="preserve">
     <value>Inglés</value>
   </data>
+  <data name="friends" xml:space="preserve">
+    <value>Amigos</value>
+  </data>
   <data name="guest" xml:space="preserve">
     <value>Invitado</value>
+  </data>
+  <data name="hard" xml:space="preserve">
+    <value>Difícil</value>
+  </data>
+  <data name="hard_message" xml:space="preserve">
+    <value>El nivel del agua comienza en 3</value>
+  </data>
+  <data name="host_game" xml:space="preserve">
+    <value>Crear un juego</value>
   </data>
   <data name="login_button" xml:space="preserve">
     <value>Iniciar sesión</value>
@@ -135,14 +150,38 @@
   <data name="login_title" xml:space="preserve">
     <value>Inicio de sesión</value>
   </data>
+  <data name="max_players" xml:space="preserve">
+    <value>Número máximo de jugadores</value>
+  </data>
+  <data name="new_game" xml:space="preserve">
+    <value>Nuevo Juego</value>
+  </data>
+  <data name="normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="normal_message" xml:space="preserve">
+    <value>El nivel del agua comienza en 1</value>
+  </data>
+  <data name="online" xml:space="preserve">
+    <value>Juego en línea</value>
+  </data>
   <data name="password" xml:space="preserve">
     <value>Contraseña</value>
   </data>
   <data name="play" xml:space="preserve">
     <value>Jugar</value>
   </data>
+  <data name="private_message" xml:space="preserve">
+    <value>Solo los jugadores con una invitación pueden unirse</value>
+  </data>
   <data name="profile" xml:space="preserve">
     <value>Perfil</value>
+  </data>
+  <data name="public" xml:space="preserve">
+    <value>Pública</value>
+  </data>
+  <data name="public_message" xml:space="preserve">
+    <value>Cualquier jugador puede entrar a tu juego</value>
   </data>
   <data name="quit_game" xml:space="preserve">
     <value>Salir del juego</value>

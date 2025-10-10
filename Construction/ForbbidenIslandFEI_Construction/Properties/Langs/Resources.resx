@@ -120,14 +120,29 @@
   <data name="change_language" xml:space="preserve">
     <value>Change Language</value>
   </data>
+  <data name="difficulty" xml:space="preserve">
+    <value>Difficulty</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="english" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="friends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
   <data name="guest" xml:space="preserve">
     <value>Guest</value>
+  </data>
+  <data name="hard" xml:space="preserve">
+    <value>Hard</value>
+  </data>
+  <data name="hard_message" xml:space="preserve">
+    <value>The water level starts at 3</value>
+  </data>
+  <data name="host_game" xml:space="preserve">
+    <value>Host Game</value>
   </data>
   <data name="login_button" xml:space="preserve">
     <value>Log In</value>
@@ -135,14 +150,38 @@
   <data name="login_title" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="max_players" xml:space="preserve">
+    <value>Max number of Players</value>
+  </data>
+  <data name="new_game" xml:space="preserve">
+    <value>New Game</value>
+  </data>
+  <data name="normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="normal_message" xml:space="preserve">
+    <value>The water level starts at 1</value>
+  </data>
+  <data name="online" xml:space="preserve">
+    <value>Online</value>
+  </data>
   <data name="password" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="play" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="private_message" xml:space="preserve">
+    <value>Only the players with invitation can join </value>
+  </data>
   <data name="profile" xml:space="preserve">
     <value>Profile</value>
+  </data>
+  <data name="public" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="public_message" xml:space="preserve">
+    <value>Any player can join in your game</value>
   </data>
   <data name="quit_game" xml:space="preserve">
     <value>Quit game</value>
