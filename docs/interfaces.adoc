@@ -10,13 +10,16 @@
 * Pública o privada
 
 ==== InviteFriend()
-
+|
 * Username del amigo
 
-=== IOnlineGame
+=== IGameManager
 
 ==== JoinGame()
 * Regresa: Estado de la conexión
+
+==== SearchMatches()
+* Regresa: Partidas disponibles en la red
 
 ==== ExitGame()
 
@@ -54,7 +57,7 @@
 * Nuevo ávatar
 * Regresa: Si se actualizó con éxito
 
-=== IFriends
+=== IFriendsManager
 
 ==== AddFriend()
 
@@ -76,7 +79,7 @@
 
 * ID de la partida
 
-=== IChat
+=== IChatManager
 
 ==== SendMessage()
 
