@@ -23,7 +23,7 @@
             <!-- Encabezado -->
             <DockPanel Grid.Row="0" Background="#3CB7FF" LastChildFill="True">
                 <!-- Botón de retroceso -->
-                <Button Content="⮜" Width="80" Height="80" FontSize="36" Margin="10" DockPanel.Dock="Left" Click="Button_Click_1"/>
+                <Button Content="⮜" Width="80" Height="80" FontSize="36" Margin="10" DockPanel.Dock="Left"/>
 
                 <!-- Botón de amigos -->
                 <Button Content="{x:Static language:Resources.friends}" 

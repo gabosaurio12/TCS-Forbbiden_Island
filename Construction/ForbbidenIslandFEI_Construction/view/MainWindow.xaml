@@ -1,18 +1,107 @@
-﻿<NavigationWindow x:Class="ForbbidenIslandFEI_Construction.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:language="clr-namespace:ForbbidenIslandFEI_Construction.Properties.Langs"
-        mc:Ignorable="d"
-        Title="Forbidden Island FEI"
-        WindowState="Maximized"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        Source="MainPage.xaml">
+﻿<Window x:Class="ForbbidenIslandFEI_Construction.MainWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ForbbidenIslandFEI_Construction"
+      xmlns:language="clr-namespace:ForbbidenIslandFEI_Construction.Properties.Langs"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      WindowState="Maximized"
+      WindowStyle="None"
+      ResizeMode="NoResize"
+      Title="MainWindow">
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/FEI MainPage2.png" Stretch="Fill"/>
+    </Window.Background>
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1920" Height="1080"
+>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-    <NavigationWindow.Background>
-        <ImageBrush ImageSource="/Images/FEI MainPage.png" Stretch="Fill"/>
-    </NavigationWindow.Background>
-    
-</NavigationWindow>
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="FORBIDDEN ISLAND"
+                           FontSize="96"
+                           FontFamily="Irish Grover"
+                           TextAlignment="Center"
+                           Foreground="#5FD733"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="FEI EDITION"
+                           FontSize="64"
+                           Foreground="#96FF5D"
+                           TextAlignment="Right"
+                           FontFamily="Arial Black"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0"
+                        VerticalAlignment="Center" HorizontalAlignment="Left" Margin="710,0,0,0">
+                <Button x:Name="playButton" Content="{x:Static language:Resources.play}"
+                        Width="500" Height="80" Margin="0,10"
+                        BorderThickness="5" BorderBrush="Black"
+                        FontFamily="Bahnschrift Light" FontSize="30" Foreground="White"
+                        Click="PlayButton_Click" Background="#A1A1A1"/>
+                <Button x:Name="settingsButton" Content="{x:Static language:Resources.settings}"
+                        Width="500" Height="80" Margin="0,10"
+                        BorderThickness="5" BorderBrush="Black"
+                        FontFamily="Bahnschrift Light" FontSize="30" Foreground="White"
+                        Click="SettingsButton_Click" Background="#A1A1A1" />
+                <Button x:Name="quitGameButton" Content="{x:Static language:Resources.quit_game}"
+                        Width="500" Height="80" Margin="0,10"
+                        BorderThickness="5" BorderBrush="Black"
+                        FontFamily="Bahnschrift Light" FontSize="30" Foreground="White"
+                        Click="QuitGameButton_Click" Background="#A1A1A1" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="{x:Static language:Resources.guest}"
+                           Foreground="White"
+                           FontSize="32"
+                           TextAlignment="Center"
+                           FontFamily="Georgia"
+                           FontStyle="Italic"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"
+                           Opacity="0.8"/>
+                <Grid Width="220" Height="220" Margin="0,0,0,10">
+                    <Ellipse Fill="Gray"/>
+                    <Ellipse Margin="5">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Images/mach248px.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>
+                <Button x:Name="profileButton" Content="{x:Static language:Resources.profile}"
+                        Width="200" Height="60"
+                        FontFamily="Bahnschrift Light" FontSize="30" Foreground="White"
+                        BorderThickness="5" BorderBrush="Black"
+                        HorizontalAlignment="Center"
+                        Click="ProfileButton_Click" Background="#A1A1A1" />
+            </StackPanel>
+
+            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="logInButton" Grid.Column="0" Content="{x:Static language:Resources.login_title}" 
+                        Width="230" Height="80"
+                        HorizontalAlignment="Left" Margin="20"
+                        BorderThickness="5" BorderBrush="Black"
+                        FontFamily="Bahnschrift Light" FontSize="30" Foreground="White"
+                        Click="LogInButton_Click" Background="#A1A1A1" />
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Window>

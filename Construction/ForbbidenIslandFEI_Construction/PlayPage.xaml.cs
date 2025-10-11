@@ -8,6 +8,7 @@ namespace ForbbidenIslandFEI_Construction
         public PlayPage()
         {
             InitializeComponent();
+            // Al cargar, mostramos por defecto Host Game
             ShowHostGame();
         }
 
@@ -23,6 +24,7 @@ namespace ForbbidenIslandFEI_Construction
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Aquí se implementará la lógica para "New Game"
             MessageBox.Show("Funcionalidad de 'New Game' aún no implementada.");
         }
 
@@ -35,6 +37,7 @@ namespace ForbbidenIslandFEI_Construction
 
         private void ShowOnline()
         {
+            // Por ahora un placeholder, luego se sustituye con OnlineControl
             TabContent.Content = new TextBlock
             {
                 Text = "Online mode (en construcción)",
@@ -45,11 +48,6 @@ namespace ForbbidenIslandFEI_Construction
 
             OnlineButton.Background = System.Windows.Media.Brushes.LightGray;
             HostButton.Background = System.Windows.Media.Brushes.Gainsboro;
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

@@ -17,6 +17,7 @@ namespace ForbbidenIslandFEI_Construction
             Properties.Settings.Default.languageCode = "en-US";
             Properties.Settings.Default.Save();
 
+            new MainWindow().ShowDialog();
             this.Close();
         }
         private void spanishButton_Click(object sender, RoutedEventArgs e)
@@ -24,6 +25,7 @@ namespace ForbbidenIslandFEI_Construction
             Properties.Settings.Default.languageCode = "es-MX";
             Properties.Settings.Default.Save();
 
+            new MainWindow().ShowDialog();
             this.Close();
         }
         private void backButton_Click(object sender, RoutedEventArgs e)
