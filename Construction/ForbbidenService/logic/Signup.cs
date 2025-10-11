@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ForbbidenServer.logic
+namespace ForbbidenService.logic
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     internal class Signup

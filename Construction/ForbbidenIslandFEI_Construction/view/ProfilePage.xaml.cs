@@ -62,7 +62,7 @@ namespace ForbbidenIslandFEI_Construction
             PlayerValidation playerValidation = new PlayerValidation();
 
             if (player.player_username != _player.player_username)
-            {
+            {/*
                 if (!playerValidation.ValidateUsername(player))
                 {
                     MessageBox.Show("El nombre de usuario ya existe.");
@@ -78,7 +78,7 @@ namespace ForbbidenIslandFEI_Construction
                     MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
                     txtBkEmail.Foreground = Brushes.Red;
                     isValid = false;
-                }
+                }*/
             }
 
             return isValid;
