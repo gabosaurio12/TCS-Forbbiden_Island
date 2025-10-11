@@ -114,8 +114,8 @@
       <DependentUpon>HostGameControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\PlayerClient.cs" />
-    <Compile Include="view\PlayPage.xaml.cs">
-      <DependentUpon>PlayPage.xaml</DependentUpon>
+    <Compile Include="view\PlayWindow.xaml.cs">
+      <DependentUpon>PlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -126,8 +126,8 @@
     <Compile Include="view\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="view\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Matches.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
@@ -154,8 +154,8 @@
     <Compile Include="player_socialmedia.cs">
       <DependentUpon>Forbbiden_FEI_model.tt</DependentUpon>
     </Compile>
-    <Compile Include="view\ProfilePage.xaml.cs">
-      <DependentUpon>ProfilePage.xaml</DependentUpon>
+    <Compile Include="view\ProfileWindow.xaml.cs">
+      <DependentUpon>ProfileWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Langs\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -172,7 +172,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\PlayPage.xaml">
+    <Page Include="view\PlayWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -184,11 +184,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\MainPage.xaml">
+    <Page Include="view\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\ProfilePage.xaml">
+    <Page Include="view\ProfileWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,20 +200,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="view\SignupPage.xaml.cs">
       <DependentUpon>SignupPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +266,11 @@
       <DependentUpon>Forbbiden_FEI_model.edmx</DependentUpon>
       <LastGenOutput>Forbbiden_FEI_model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\x.png" />
+    <Resource Include="Images\instagram.png" />
+    <Resource Include="Images\discord.png" />
+    <Resource Include="Images\facebook.png" />
+    <Resource Include="Images\FEI MainPage2.png" />
     <Resource Include="Images\codebackground.png" />
     <Resource Include="Images\FEI MainPage.png" />
     <Resource Include="Images\flames.jpg" />
