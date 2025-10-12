@@ -72,5 +72,10 @@ namespace ForbbidenIslandFEI_Construction
             if (PublicMessage != null) PublicMessage.Visibility = Visibility.Collapsed;
             if (PrivateMessage != null) PrivateMessage.Visibility = Visibility.Visible;
         }
+        
+        private void PlayerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

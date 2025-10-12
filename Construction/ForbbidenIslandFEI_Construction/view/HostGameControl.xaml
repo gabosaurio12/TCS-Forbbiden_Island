@@ -3,33 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:language="clr-namespace:ForbbidenIslandFEI_Construction.Properties.Langs">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Styles/ToggleButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Panel Izquierdo -->
         <StackPanel Grid.Column="0" Margin="20">
 
-            <!-- Número de jugadores -->
-            <StackPanel Orientation="Horizontal" Margin="0,20">
-                <TextBlock Text="{x:Static language:Resources.max_players}" FontSize="28" VerticalAlignment="Center"/>
-                <ComboBox Width="120" Height="50" FontSize="24" Margin="20,0,0,0">
-                    <ComboBoxItem Content="2" IsSelected="True"/>
+            <StackPanel Orientation="Vertical" Margin="0,20">
+                <TextBlock Text="{x:Static language:Resources.max_players}"
+               FontSize="28"
+               VerticalAlignment="Center"/>
+                <ComboBox x:Name="PlayerComboBox"
+              Width="120"
+              Height="50"
+              FontSize="24"
+              SelectedIndex="0" SelectionChanged="PlayerComboBox_SelectionChanged" HorizontalAlignment="Left">
+                    <ComboBoxItem Content="2"/>
                     <ComboBoxItem Content="3"/>
                     <ComboBoxItem Content="4"/>
                 </ComboBox>
             </StackPanel>
 
-            <!-- Dificultad -->
             <TextBlock Text="{x:Static language:Resources.difficulty}" FontSize="28" Margin="0,30,0,10"/>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="NormalButton" Content="{x:Static language:Resources.normal}" 
-                        Width="160" Height="80" Background="LightGreen" FontSize="24" 
+                        Width="160" Height="80" Background="LightGreen" FontSize="24"
+                        Style="{StaticResource ButtonStyle}"
                         Margin="0,0,20,0" Click="NormalButton_Click"/>
                 <Button x:Name="HardButton" Content="{x:Static language:Resources.hard}" 
-                        Width="160" Height="80" Background="LightCoral" FontSize="24" 
+                        Width="160" Height="80" Background="LightCoral" FontSize="24"
+                        Style="{StaticResource ButtonStyle}"
                         Click="HardButton_Click"/>
             </StackPanel>
             <TextBlock x:Name="NormalMessage" Text="{x:Static language:Resources.normal_message}" 
@@ -37,23 +50,12 @@
             <TextBlock x:Name="HardMessage" Text="{x:Static language:Resources.hard_message}" 
                        FontSize="18" Foreground="Gray" Margin="0,10,0,0" Visibility="Collapsed"/>
 
-            <!-- Público -->
             <TextBlock Text="{x:Static language:Resources._public}" FontSize="28" Margin="0,30,0,10"/>
-            <ToggleButton x:Name="PublicToggle" Width="120" Height="60" IsChecked="True" Checked="PublicToggle_Checked" Unchecked="PublicToggle_Unchecked">
-                <ToggleButton.Style>
-                    <Style TargetType="ToggleButton">
-                        <Setter Property="Content" Value="OFF"/>
-                        <Setter Property="Background" Value="DarkGray"/>
-                        <Setter Property="FontSize" Value="24"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Content" Value="ON"/>
-                                <Setter Property="Background" Value="LightGreen"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ToggleButton.Style>
-            </ToggleButton>
+            <ToggleButton x:Name="PublicToggle" HorizontalAlignment="Left"
+              Style="{StaticResource ToggleStyle}"
+              IsChecked="True"
+              Checked="PublicToggle_Checked"
+              Unchecked="PublicToggle_Unchecked"/>
             <TextBlock x:Name="PublicMessage" Text="{x:Static language:Resources.public_message}" 
                        FontSize="18" Foreground="Gray" Margin="0,10,0,0" Visibility="Visible"/>
             <TextBlock x:Name="PrivateMessage" Text="{x:Static language:Resources.private_message}" 
@@ -61,10 +63,8 @@
 
         </StackPanel>
 
-        <!-- Panel Derecho: multimedia -->
         <Border Grid.Column="1" Background="LightGray" Margin="20" CornerRadius="10" BorderBrush="Gray" BorderThickness="2">
             <Grid>
-                <!-- Imagen de ejemplo -->
                 <Image Source="/Images/FEI MainPage.png" Stretch="Uniform"/>
             </Grid>
         </Border>
