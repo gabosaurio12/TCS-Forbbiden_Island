@@ -5,9 +5,9 @@ VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForbbidenClient", "ForbbidenClient.csproj", "{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForbbidenService", "..\ForbbidenService\ForbbidenService.csproj", "{2CDAACD2-62F5-45C4-ADF7-59EC7FE5CDA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forbbiden.Server", "..\Forbbiden.Server\Forbbiden.Server.csproj", "{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForbbidenHost", "C:\Mac\Home\Documents\UV\5° Semestre\TCS\TCS-Forbbiden_Island\Construction\ForbbidenHost\ForbbidenHost.csproj", "{AFB28521-0709-4E3F-86DF-736128FF4D8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forbbiden.Contracts", "..\Forbbiden.Contracts\Forbbiden.Contracts.csproj", "{3D56B418-3592-4374-9801-1D99B563F9DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E0286A9-A6B3-4BAB-9FE3-8969262D0509}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CDAACD2-62F5-45C4-ADF7-59EC7FE5CDA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CDAACD2-62F5-45C4-ADF7-59EC7FE5CDA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CDAACD2-62F5-45C4-ADF7-59EC7FE5CDA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CDAACD2-62F5-45C4-ADF7-59EC7FE5CDA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFB28521-0709-4E3F-86DF-736128FF4D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFB28521-0709-4E3F-86DF-736128FF4D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFB28521-0709-4E3F-86DF-736128FF4D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFB28521-0709-4E3F-86DF-736128FF4D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D56B418-3592-4374-9801-1D99B563F9DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D56B418-3592-4374-9801-1D99B563F9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D56B418-3592-4374-9801-1D99B563F9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D56B418-3592-4374-9801-1D99B563F9DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,21 +1,7 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ForbbidenIslandFEI_Construction.ProfileManager;
+using log4net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ForbbidenIslandFEI_Construction
 {
@@ -36,15 +22,16 @@ namespace ForbbidenIslandFEI_Construction
         {
             InitializeComponent();
             _player = player;
-            txtBxUsername.Text = player.player_username;
-            txtBxEmail.Text = player.player_email;
-            txtBxName.Text = player.player_name;
+            txtBxUsername.Text = player.PlayerUsername;
+            txtBxEmail.Text = player.PlayerEmail;
+            txtBxName.Text = player.PlayerName;
         }
 
         private void BtnDiscard_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
         private void ResetFieldColors()
         {
             txtBkUsername.Foreground = Brushes.Black;
@@ -52,68 +39,94 @@ namespace ForbbidenIslandFEI_Construction
             txtBkEmail.Foreground = Brushes.Black;
         }
 
-        private bool SetPlayer(ref Player player)
+        private void ValidateUsername(string username, ref bool isValid)
         {
-            player.player_username = txtBxUsername.Text;
-            player.player_email = txtBxEmail.Text;
-            player.player_name = txtBxName.Text;
+            var client = new ProfileManagerClient();
 
-            bool isValid = true;
-            PlayerValidation playerValidation = new PlayerValidation();
-
-            if (player.player_username != _player.player_username)
+            if (string.IsNullOrEmpty(username))
             {
-                if (!playerValidation.ValidateUsername(player))
+                MessageBox.Show("El nombre de usuario no puede estar vacío.");
+                txtBkUsername.Foreground = Brushes.Red;
+                isValid = false;
+            }
+            else
+            {
+                if (!client.IsUsernameAvailable(username))
                 {
                     MessageBox.Show("El nombre de usuario ya existe.");
                     txtBkUsername.Foreground = Brushes.Red;
                     isValid = false;
-                }              
+                }
             }
+        }
 
-            if (player.player_email != _player.player_email)
+        private void ValidateEmail(string email, ref bool isValid)
+        {
+            var client = new ProfileManagerClient();
+
+            if (string.IsNullOrEmpty(email))
             {
-                if (!playerValidation.ValidateEmail(player))
+                MessageBox.Show("El correo no puede estar vació.");
+                txtBkEmail.Foreground = Brushes.Red;
+                isValid = false;
+            }
+            else
+            {
+                if (!client.IsEmailAvailable(email))
                 {
                     MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
                     txtBkEmail.Foreground = Brushes.Red;
                     isValid = false;
                 }
             }
+        }
+
+        private bool SetPlayer(ref Player player)
+        {
+            player.PlayerUsername = txtBxUsername.Text;
+            player.PlayerEmail = txtBxEmail.Text;
+            player.PlayerName = txtBxName.Text;
+
+            bool isValid = true;
+
+            if (player.PlayerUsername != _player.PlayerUsername)
+            {
+                ValidateUsername(player.PlayerUsername, ref isValid);
+            }
+
+            if (player.PlayerEmail != _player.PlayerEmail)
+            {
+                ValidateEmail(player.PlayerEmail, ref isValid);
+            }
 
             return isValid;
         }
+        
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             ResetFieldColors();
-            using (var db = new Forbbiden_FEIEntities())
+            var client = new ProfileManagerClient();
+
+            Player updatedPlayer = new Player();
+            
+            if (SetPlayer(ref updatedPlayer))
             {
-                try
+                updatedPlayer.PlayerId = _player.PlayerId;
+                if (client.UpdatePlayer(updatedPlayer))
                 {
-                    Player updatePlayer = db.Player.Find(_player.player_id);
-                    if (updatePlayer != null && SetPlayer(ref updatePlayer))
-                    {
-                        db.SaveChanges();
-                        MessageBox.Show("Usuario actualizado!");
-                    }
+                    MessageBox.Show("Perfil actualizado correctamente.");
                 }
-                catch (DbEntityValidationException ex)
+                else
                 {
-                    MessageBox.Show("Error al cerrar sesión.");
-                    log.Error("SignupWindow.xaml.cs", ex);
-                }
-                catch (DbUpdateException ex)
-                {
-                    MessageBox.Show("Error al cerrar sesión.");
-                    log.Error("SignupWindow.xaml.cs", ex);
+                    MessageBox.Show("Error al actualizar el perfil.");
                 }
             }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

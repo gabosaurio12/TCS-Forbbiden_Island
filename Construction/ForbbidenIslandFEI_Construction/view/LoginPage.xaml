@@ -44,7 +44,7 @@
         <!-- Register Button -->
         <StackPanel Grid.Row="3" Orientation="Vertical"
             HorizontalAlignment="Center" Margin="0,25,0,0">
-            <Button x:Name="signupButton" Content="{x:Static p:Resources.login_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="btnLogin_Click"/>
+            <Button x:Name="signupButton" Content="{x:Static p:Resources.login_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="BtnLogin_Click"/>
             <Label Content="{x:Static p:Resources.signup_title}" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Signup_MouseDown" Cursor="Hand" />
         </StackPanel>
     </Grid>

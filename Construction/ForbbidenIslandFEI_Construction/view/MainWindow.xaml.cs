@@ -1,21 +1,7 @@
 ﻿using log4net;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ForbbidenIslandFEI_Construction.ProfileManager;
 
 namespace ForbbidenIslandFEI_Construction
 {
@@ -35,10 +21,10 @@ namespace ForbbidenIslandFEI_Construction
         {
             try
             {
-                this.Hide();
+                Hide();
                 var ventana = new PlayWindow();
                 ventana.ShowDialog();
-                this.Show();
+                Show();
             }
             catch (Exception ex)
             {
@@ -49,94 +35,44 @@ namespace ForbbidenIslandFEI_Construction
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            Hide();
             var selectLanguageWindow = new SelectLanguageWindow();
             selectLanguageWindow.ShowDialog();
-            this.Show();
-        }
-
-        private void ClearCurrentLogin()
-        {
-            using (var db = new Forbbiden_FEIEntities())
-            {
-                try
-                {
-                    var loggedInPlayers = db.LoginPlayer.ToList();
-                    db.LoginPlayer.RemoveRange(loggedInPlayers);
-                    db.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    MessageBox.Show("Error al cerrar sesión.");
-                    log.Error("SignupWindow.xaml.cs", ex);
-                }
-                catch (DbUpdateException ex)
-                {
-                    MessageBox.Show("Error al cerrar sesión.");
-                    log.Error("SignupWindow.xaml.cs", ex);
-                }
-            }
+            Show();
         }
 
         private void QuitGameButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
-            ClearCurrentLogin();            
-            log.Info("App clossed");
-        }
-
-        private Player GetCurrentLogin()
-        {
-            Player player = new Player();
-            using (var db = new Forbbiden_FEIEntities())
+            var client = new ProfileManagerClient();
+            if (!client.ClearCurrentLogin())
             {
-                try
-                {
-                    int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).SingleOrDefault();
-                    player = db.Player.Find(current_id);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    MessageBox.Show("Error al leer usuario de la base de datos.");
-                    log.Error("MainPage.xaml.cs", ex);
-                }
-                catch (ArgumentException ex)
-                {
-                    MessageBox.Show("Error al cargar el perfil.");
-                    log.Error("MainPage.xaml.cs", ex);
-                }
+                MessageBox.Show("Error al cerrar sesión en la base de datos.");
             }
-            return player;
-        }
+            Application.Current.Shutdown();
+            log.Info("App clossed");
+        }       
 
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+
+            var client = new ProfileManagerClient();
+            Player player = client.GetCurrentLogin();
+            Hide(); 
+
+            Window ventana;
+
+            if (player == null)
             {
-                Player player = GetCurrentLogin();
-                this.Hide(); 
-
-                Window ventana;
-
-                if (player == null)
-                {
-                    ventana = new ProfileWindow(); 
-                }
-                else
-                {
-                    ventana = new ProfileWindow(player); 
-                }
-
-                ventana.ShowDialog(); 
-                this.Show(); 
+                ventana = new ProfileWindow(); 
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Error al abrir la ventana de perfil.");
-                log.Error("Error en ProfileButton_Click", ex);
+                ventana = new ProfileWindow(player); 
             }
+
+            ventana.ShowDialog(); 
+            Show(); 
         }
-
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)
         {

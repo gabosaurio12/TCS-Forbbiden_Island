@@ -1,19 +1,9 @@
 using log4net;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using ForbbidenIslandFEI_Construction.ProfileManager;
 
 namespace ForbbidenIslandFEI_Construction
 {
@@ -36,17 +26,15 @@ namespace ForbbidenIslandFEI_Construction
             txtBkPassword.Foreground = Brushes.Black;
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             ResetFieldColors();
 
-            Player player = new Player();
-            using (var db = new Forbbiden_FEIEntities())
-            {
-                player = db.Player.FirstOrDefault(p => p.player_username == txtBUsername.Text);
-            }
+            var client = new ProfileManagerClient();
 
-            if (player == null)
+            Player searchPlayer = client.GetPlayerByUsername(txtBUsername.Text);
+
+            if (searchPlayer == null)
             {
                 MessageBox.Show("El nombre de usuario no existe.");
                 txtBkUser.Foreground = Brushes.Red;
@@ -63,34 +51,18 @@ namespace ForbbidenIslandFEI_Construction
                     password = pwdBPassword.Password;
                 }
 
-                if (BCrypt.Net.BCrypt.Verify(password, player.player_password))
+                if (BCrypt.Net.BCrypt.Verify(password, searchPlayer.PlayerPassword))
                 {
-                    using (var db = new Forbbiden_FEIEntities())
+                    if (client.Login(searchPlayer))
                     {
-                        db.LoginPlayer.Add(new LoginPlayer
-                        {
-                            login_player_id = player.player_id,
-                        });
-                        try
-                        {
-                            db.SaveChanges();
-                        }
-                        catch (DbEntityValidationException ex)
-                        {
-                            MessageBox.Show("Error al iniciar sesión.");
-                            log.Error("SignupWindow.xaml.cs", ex);
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            MessageBox.Show("Error al iniciasr sesión.");
-                            log.Error("SignupWindow.xaml.cs", ex);
-                        }
+                        var logWindow = Window.GetWindow(this) as LogWindow;
+                        logWindow?.Close();
+                        log.Info($"Usuario '{searchPlayer.PlayerUsername}' logged in.");
                     }
-
-                    var logWindow = Window.GetWindow(this) as LogWindow;
-                    if (logWindow != null)
+                    else
                     {
-                        logWindow.Close();
+                        log.Warn($"Login failed for user '{searchPlayer.PlayerUsername}'.");
+                        MessageBox.Show("Error al iniciar sesión. Por favor, inténtelo de nuevo.");
                     }
                 }
                 else
@@ -121,7 +93,7 @@ namespace ForbbidenIslandFEI_Construction
 
         private void Signup_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.NavigationService.Navigate(new SignupPage());
+            NavigationService.Navigate(new SignupPage());
         }
     }
 }
