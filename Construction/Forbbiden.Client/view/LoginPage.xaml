@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forbbiden.Client"
-        xmlns:p ="clr-namespace:Forbbiden.Client.Properties"
+        xmlns:p ="clr-namespace:Forbbiden.Client.Properties.Langs"
         mc:Ignorable="d"
-        Title="LoginPage" Height="280" Width="450">
+        Title="LoginPage" Height="300" Width="450">
         
     <Grid Margin="50,10">
         <Grid.RowDefinitions>
@@ -43,7 +43,8 @@
 
         <!-- Register Button -->
         <StackPanel Grid.Row="3" Orientation="Vertical"
-            HorizontalAlignment="Center" Margin="0,25,0,0">
+            HorizontalAlignment="Center" Margin="0,20,0,0">
+            <CheckBox x:Name="chkRememberMe" Content="{x:Static p:Resources.remember_me}" HorizontalAlignment="Center" Margin="0,0,0,10" />
             <Button x:Name="signupButton" Content="{x:Static p:Resources.login_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="BtnLogin_Click"/>
             <Label Content="{x:Static p:Resources.signup_title}" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Signup_MouseDown" Cursor="Hand" />
         </StackPanel>

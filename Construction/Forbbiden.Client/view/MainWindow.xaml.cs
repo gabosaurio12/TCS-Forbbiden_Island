@@ -16,6 +16,10 @@ namespace Forbbiden.Client
         public MainWindow()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.rememberLogin)
+            {
+                ReloadMainPage();
+            }
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -45,10 +49,14 @@ namespace Forbbiden.Client
         private void QuitGameButton_Click(object sender, RoutedEventArgs e)
         {
             var client = new ProfileManagerClient();
-            if (!client.ClearCurrentLogin())
+            if (!Properties.Settings.Default.rememberLogin)
             {
-                MessageBox.Show("Error al cerrar sesión en la base de datos.");
+                if (!client.ClearCurrentLogin())
+                {
+                    MessageBox.Show("Error al cerrar sesión en la base de datos.");
+                }
             }
+            
             Application.Current.Shutdown();
             log.Info("App clossed");
         }       

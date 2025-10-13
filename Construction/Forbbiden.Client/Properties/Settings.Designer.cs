@@ -34,5 +34,17 @@ namespace Forbbiden.Client.Properties {
                 this["languageCode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool rememberLogin {
+            get {
+                return ((bool)(this["rememberLogin"]));
+            }
+            set {
+                this["rememberLogin"] = value;
+            }
+        }
     }
 }

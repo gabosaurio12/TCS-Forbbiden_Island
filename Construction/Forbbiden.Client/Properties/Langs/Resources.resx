@@ -186,6 +186,9 @@
   <data name="quit_game" xml:space="preserve">
     <value>Quit game</value>
   </data>
+  <data name="remember_me" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
   <data name="select_language" xml:space="preserve">
     <value>Select Language</value>
   </data>

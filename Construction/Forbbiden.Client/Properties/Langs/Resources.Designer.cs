@@ -268,6 +268,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remember Me.
+        /// </summary>
+        public static string remember_me {
+            get {
+                return ResourceManager.GetString("remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string select_language {

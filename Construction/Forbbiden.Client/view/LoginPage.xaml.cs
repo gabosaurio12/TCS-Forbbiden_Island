@@ -55,6 +55,10 @@ namespace Forbbiden.Client
                 {
                     if (client.Login(searchPlayer))
                     {
+
+                        Properties.Settings.Default.rememberLogin = chkRememberMe.IsChecked == true;
+                        Properties.Settings.Default.Save();
+
                         var logWindow = Window.GetWindow(this) as LogWindow;
                         logWindow?.Close();
                         log.Info($"Usuario '{searchPlayer.PlayerUsername}' logged in.");
