@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Forbbiden.Client
+namespace ForbbidenIslandFEI_Construction
 {
     public partial class HostGameControl : UserControl
     {
@@ -72,7 +72,7 @@ namespace Forbbiden.Client
             if (PublicMessage != null) PublicMessage.Visibility = Visibility.Collapsed;
             if (PrivateMessage != null) PrivateMessage.Visibility = Visibility.Visible;
         }
-
+        
         private void PlayerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

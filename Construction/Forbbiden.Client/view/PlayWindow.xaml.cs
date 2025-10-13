@@ -14,11 +14,15 @@ namespace Forbbiden.Client
         private void HostButton_Click(object sender, RoutedEventArgs e)
         {
             ShowHostGame();
+            HostButton.IsDefault = true;
+            OnlineButton.IsDefault = false;
         }
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)
         {
             ShowOnline();
+            OnlineButton.IsDefault = true;
+            HostButton.IsDefault = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

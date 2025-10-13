@@ -11,6 +11,13 @@
       WindowStyle="None"
       ResizeMode="NoResize">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Viewbox Stretch="Uniform">
         <Grid Width="1920" Height="1080" Background="White">
 
@@ -42,15 +49,15 @@
                     <ColumnDefinition Width="309*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Orientation="Horizontal">
                     <Button x:Name="HostButton" Content="{x:Static language:Resources.host_game}" Width="927" Height="80" FontSize="28" 
-                            Background="LightGray" Click="HostButton_Click"/>
-                    <Button x:Name="OnlineButton" Content="{x:Static language:Resources.online}" Width="927" Height="80" FontSize="28"
-                            Background="Gainsboro" Click="OnlineButton_Click" Margin="10,0,0,0"/>
+                            Background="LightGray" Click="HostButton_Click" IsDefault="True" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="OnlineButton" Content="{x:Static language:Resources.online}" Width="919" Height="80" FontSize="28"
+                            Background="Gainsboro" Click="OnlineButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyle}"/>
                 </StackPanel>
 
                 <ContentControl x:Name="TabContent" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
