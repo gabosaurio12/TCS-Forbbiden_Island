@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Forbbiden_FEIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Forbbiden_FEIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="card_id" />
@@ -83,6 +83,14 @@
           <Property Name="player_email" Type="nvarchar" MaxLength="320" />
           <Property Name="player_avatar" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="Player_Friends">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="friend_id" />
+          </Key>
+          <Property Name="player_id" Type="int" Nullable="false" />
+          <Property Name="friend_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="player_socialmedia">
           <Key>
             <PropertyRef Name="social_media" />
@@ -90,6 +98,7 @@
           <Property Name="social_media" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="player_id" Type="int" />
           <Property Name="social_link" Type="nvarchar" MaxLength="50" />
+          <Property Name="social_media_name" Type="nchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tile">
           <Key>
@@ -195,6 +204,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PlayerFriends_Friend">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Player_Friends" Type="Self.Player_Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Player_Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerFriends_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Player_Friends" Type="Self.Player_Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Player_Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_players_player">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
@@ -230,6 +263,7 @@
           <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Minigame" EntityType="Self.Minigame" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player_Friends" EntityType="Self.Player_Friends" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="player_socialmedia" EntityType="Self.player_socialmedia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tile" EntityType="Self.Tile" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_LoginPlayer_Player" Association="Self.FK_LoginPlayer_Player">
@@ -264,6 +298,14 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="player_socialmedia" EntitySet="player_socialmedia" />
           </AssociationSet>
+          <AssociationSet Name="FK_PlayerFriends_Friend" Association="Self.FK_PlayerFriends_Friend">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Player_Friends" EntitySet="Player_Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerFriends_Player" Association="Self.FK_PlayerFriends_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Player_Friends" EntitySet="Player_Friends" />
+          </AssociationSet>
           <AssociationSet Name="FK_players_player" Association="Self.FK_players_player">
             <End Role="Player" EntitySet="Player" />
             <End Role="match_players" EntitySet="match_players" />
@@ -273,8 +315,7 @@
             <End Role="match_tiles" EntitySet="match_tiles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Forbbiden_FEIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -373,6 +414,8 @@
           <NavigationProperty Name="LoginPlayer" Relationship="Self.FK_LoginPlayer_Player" FromRole="Player" ToRole="LoginPlayer" />
           <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
           <NavigationProperty Name="player_socialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="player_socialmedia" />
+          <NavigationProperty Name="Player1" Relationship="Forbbiden_FEIModel.Player_Friends" FromRole="Player" ToRole="Player1" />
+          <NavigationProperty Name="Player2" Relationship="Forbbiden_FEIModel.Player_Friends" FromRole="Player1" ToRole="Player" />
         </EntityType>
         <EntityType Name="player_socialmedia">
           <Key>
@@ -382,6 +425,7 @@
           <Property Name="player_id" Type="Int32" />
           <Property Name="social_link" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Player" Relationship="Self.FK_player_socialmedia" FromRole="player_socialmedia" ToRole="Player" />
+          <Property Name="social_media_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Tile">
           <Key>
@@ -565,7 +609,15 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="player_socialmedia" EntitySet="player_socialmedia" />
           </AssociationSet>
+          <AssociationSet Name="Player_Friends" Association="Forbbiden_FEIModel.Player_Friends">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Player1" EntitySet="Player" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="Player_Friends">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="*" />
+          <End Type="Forbbiden_FEIModel.Player" Role="Player1" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -663,6 +715,7 @@
           <EntitySetMapping Name="player_socialmedia">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.player_socialmedia">
               <MappingFragment StoreEntitySet="player_socialmedia">
+                <ScalarProperty Name="social_media_name" ColumnName="social_media_name" />
                 <ScalarProperty Name="social_media" ColumnName="social_media" />
                 <ScalarProperty Name="player_id" ColumnName="player_id" />
                 <ScalarProperty Name="social_link" ColumnName="social_link" />
@@ -678,6 +731,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="Player_Friends" TypeName="Forbbiden_FEIModel.Player_Friends" StoreEntitySet="Player_Friends">
+            <EndProperty Name="Player1">
+              <ScalarProperty Name="player_id" ColumnName="player_id" />
+            </EndProperty>
+            <EndProperty Name="Player">
+              <ScalarProperty Name="player_id" ColumnName="friend_id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

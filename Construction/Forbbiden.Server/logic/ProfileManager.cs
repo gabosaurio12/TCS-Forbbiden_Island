@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using log4net;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -158,8 +159,8 @@ namespace Forbbiden.Server.logic
             {
                 try
                 {
-                    int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).SingleOrDefault();
-                    Player searchPlayer = db.Player.Find(current_id);
+                    int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).FirstOrDefault();
+                    Player searchPlayer = db.Player.Include("player_socialmedia").FirstOrDefault(p => p.player_id == current_id);
 
                     if (searchPlayer != null)
                     {
@@ -167,8 +168,17 @@ namespace Forbbiden.Server.logic
                         {
                             PlayerId = searchPlayer.player_id,
                             PlayerUsername = searchPlayer.player_username,
+                            PlayerName = searchPlayer.player_name,
                             PlayerPassword = searchPlayer.player_password,
-                            PlayerEmail = searchPlayer.player_email
+                            PlayerEmail = searchPlayer.player_email,
+                            PlayerAvatarPath = searchPlayer.player_avatar,
+                            SocialMedia = searchPlayer.player_socialmedia.Select(sm => new SocialMedia
+                            {
+                                PlayerId = sm.player_id ?? 0,
+                                SocialMediaId = sm.social_media,
+                                SocialMediaName = sm.social_media_name.Trim(),
+                                SocialLink = sm.social_link
+                            }).ToList()
                         };
                     }
                 }
@@ -177,6 +187,10 @@ namespace Forbbiden.Server.logic
                     log.Error("ProfileManager.cs", ex);
                 }
                 catch (ArgumentException ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                }
+                catch (Exception ex)
                 {
                     log.Error("ProfileManager.cs", ex);
                 }
@@ -224,7 +238,8 @@ namespace Forbbiden.Server.logic
                         PlayerName = playerResult.player_name,
                         PlayerUsername = playerResult.player_username,
                         PlayerPassword = playerResult.player_password,
-                        PlayerEmail = playerResult.player_email
+                        PlayerEmail = playerResult.player_email,
+                        PlayerAvatarPath = playerResult.player_avatar
                     };
                 }
             }
@@ -244,7 +259,23 @@ namespace Forbbiden.Server.logic
                     formerPlayer.player_name = updatedPlayer.PlayerName;
                     formerPlayer.player_username = updatedPlayer.PlayerUsername;
                     formerPlayer.player_email = updatedPlayer.PlayerEmail;
-                    
+                    formerPlayer.player_avatar = updatedPlayer.PlayerAvatarPath;
+
+                    formerPlayer.player_socialmedia.Clear();
+
+                    foreach(var social in updatedPlayer.SocialMedia)
+                    {
+                        if (!string.IsNullOrWhiteSpace(social.SocialLink))
+                        {
+                            db.player_socialmedia.Add(new player_socialmedia
+                            {
+                                social_media_name = social.SocialMediaName,
+                                social_link = social.SocialLink,
+                                player_id = formerPlayer.player_id
+                            });
+                        }
+                    }
+
                     db.SaveChanges();
                 }
                 catch (DbEntityValidationException ex)
@@ -253,6 +284,11 @@ namespace Forbbiden.Server.logic
                     log.Error("ProfileManager.cs", ex);
                 }
                 catch (DbUpdateException ex)
+                {
+                    success = false;
+                    log.Error("ProfileManager.cs", ex);
+                }
+                catch (Exception ex)
                 {
                     success = false;
                     log.Error("ProfileManager.cs", ex);

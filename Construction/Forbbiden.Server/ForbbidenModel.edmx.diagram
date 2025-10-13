@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e8fb32fd64264ad087e5823a95de23b2" Name="Diagram1">
+      <Diagram DiagramId="e8fb32fd64264ad087e5823a95de23b2" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Card" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.card_catalog" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.LoginPlayer" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
@@ -27,6 +27,7 @@
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_tiles_match" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_tile_match_tile" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_player_socialmedia" ManuallyRouted="false" />
+        <AssociationConnector Association="Forbbiden_FEIModel.Player_Friends" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

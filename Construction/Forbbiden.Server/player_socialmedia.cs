@@ -17,6 +17,7 @@ namespace Forbbiden.Server
         public int social_media { get; set; }
         public Nullable<int> player_id { get; set; }
         public string social_link { get; set; }
+        public string social_media_name { get; set; }
     
         public virtual Player Player { get; set; }
     }
