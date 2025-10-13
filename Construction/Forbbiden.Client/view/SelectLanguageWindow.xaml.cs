@@ -17,18 +17,18 @@ namespace Forbbiden.Client
             Properties.Settings.Default.languageCode = "en-US";
             Properties.Settings.Default.Save();
 
-            this.Close();
+            Close();
         }
         private void SpanishButton_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.languageCode = "es-MX";
             Properties.Settings.Default.Save();
 
-            this.Close();
+            Close();
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
