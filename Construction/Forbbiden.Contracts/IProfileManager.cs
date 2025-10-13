@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Forbbiden.Contracts
@@ -43,12 +45,29 @@ namespace Forbbiden.Contracts
         [DataMember]
         public int PlayerId { get; set; }
         [DataMember]
+        public string PlayerName { get; set; }
+        [DataMember]
         public string PlayerUsername { get; set; }
         [DataMember]
         public string PlayerPassword { get; set; }
         [DataMember]
         public string PlayerEmail { get; set; }
         [DataMember]
-        public string PlayerName { get; set; }
+        public string PlayerAvatarPath { get; set; }
+        [DataMember]
+        public List<SocialMedia> SocialMedia { get; set; }
+    }
+
+    [DataContract]
+    public class SocialMedia
+    {
+        [DataMember]
+        public int SocialMediaId { get; set; }
+        [DataMember]
+        public int PlayerId { get; set; }
+        [DataMember]
+        public string SocialLink { get; set; }
+        [DataMember]
+        public string SocialMediaName { get; set; }
     }
 }
