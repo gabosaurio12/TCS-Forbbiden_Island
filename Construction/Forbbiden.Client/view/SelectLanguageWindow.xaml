@@ -1,0 +1,80 @@
+﻿<Window x:Class="Forbbiden.Client.SelectLanguageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
+        mc:Ignorable="d"
+        Title="Select Language"
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="NoResize">
+
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/FEI MainPage.png" Stretch="Fill"/>
+    </Window.Background>
+
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1920" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Barra superior -->
+            <DockPanel Grid.Row="0" Background="White" LastChildFill="True">
+                <Button x:Name="backButton"
+                        Content="&lt;"
+                        Width="100" Height="100"
+                        FontSize="40"
+                        FontFamily="Bahnschrift Light"
+                        BorderThickness="5" BorderBrush="#FFB7B7B7"
+                        Background="Transparent"
+                        Foreground="Black"
+                        Margin="20,0,0,0"
+                        Cursor="Hand"
+                        DockPanel.Dock="Left"
+                        Click="BackButton_Click"/>
+
+                <TextBlock Text="{x:Static language:Resources.select_language}"
+                           FontSize="60"
+                           FontWeight="Bold"
+                           Foreground="Black"
+                           FontFamily="Bahnschrift Light"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+            </DockPanel>
+
+            <!-- Botones de lenguajes -->
+            <StackPanel Grid.Row="1"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Orientation="Vertical">
+
+                <Button x:Name="englishButton"
+                        Content="{x:Static language:Resources.english}"
+                        Width="500" Height="80"
+                        BorderThickness="5" BorderBrush="#FFB7B7B7"
+                        FontFamily="Bahnschrift Light"
+                        FontSize="30"
+                        Background="LightGray"
+                        Foreground="Black"
+                        Cursor="Hand"
+                        Click="EnglishButton_Click"/>
+
+                <Button x:Name="spanishButton"
+                        Content="{x:Static language:Resources.spanish}"
+                        Width="500" Height="80"
+                        BorderThickness="5" BorderBrush="#FFB7B7B7"
+                        FontFamily="Bahnschrift Light"
+                        FontSize="30"
+                        Background="LightGray"
+                        Foreground="Black"
+                        Cursor="Hand"
+                        Click="SpanishButton_Click"/>
+
+            </StackPanel>
+
+        </Grid>
+    </Viewbox>
+</Window>
