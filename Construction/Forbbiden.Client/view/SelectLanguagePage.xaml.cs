@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace Forbbiden.Client
 {
     /// <summary>
-    /// Lógica de interacción para SelectLanguageWindow.xaml
+    /// SelectLanguageWindow.xaml interaction logic
     /// </summary>
     public partial class SelectLanguagePage : Page
     {

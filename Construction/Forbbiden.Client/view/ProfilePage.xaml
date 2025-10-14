@@ -16,7 +16,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Barra superior con botón de regreso -->
+            <!-- Upper bar and go back button -->
             <DockPanel Grid.Row="0" Background="#3CB7FF" LastChildFill="True">
                 <Button Content="&lt;" Width="80" Height="80" FontSize="36" Margin="10"
                         DockPanel.Dock="Left" Click="BtnDiscard_Click"/>

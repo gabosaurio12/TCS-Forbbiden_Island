@@ -21,4 +21,3 @@ Se planea abarcar los siguientes puntos en la próxima iteración.
 
 * Mejorar el manejo de excepciones
 * Internacionalizar todos los pop ups
-* Estandarizar comentarios (al idioma inglés)

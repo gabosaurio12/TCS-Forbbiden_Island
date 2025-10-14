@@ -4,7 +4,7 @@ using System.Windows.Navigation;
 namespace Forbbiden.Client.view
 {
     /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
+    /// MainWindow.xaml interaction logic
     /// </summary>
     public partial class MainWindow : NavigationWindow
     {

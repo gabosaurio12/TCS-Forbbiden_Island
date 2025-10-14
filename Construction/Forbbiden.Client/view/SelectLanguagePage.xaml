@@ -18,7 +18,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Barra superior -->
+            <!-- Upper bar -->
             <DockPanel Grid.Row="0" Background="White" LastChildFill="True">
                 <Button x:Name="backButton"
                         Content="&lt;"
@@ -42,7 +42,7 @@
                            HorizontalAlignment="Center"/>
             </DockPanel>
 
-            <!-- Botones de lenguajes -->
+            <!-- Language Buttons -->
             <StackPanel Grid.Row="1"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"

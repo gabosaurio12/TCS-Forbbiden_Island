@@ -74,7 +74,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="logic\Login.cs" />
     <Compile Include="logic\ProfileManager.cs" />
     <Compile Include="LoginPlayer.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>

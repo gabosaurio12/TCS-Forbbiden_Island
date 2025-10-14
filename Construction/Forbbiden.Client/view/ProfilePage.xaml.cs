@@ -11,7 +11,7 @@ using System.Windows.Media;
 namespace Forbbiden.Client
 {
     /// <summary>
-    /// Interaction logic for ProfilePage.xaml
+    /// ProfilePage.xaml interaction logic
     /// </summary>
     public partial class ProfilePage : Page
     {

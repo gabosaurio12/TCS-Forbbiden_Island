@@ -8,7 +8,7 @@ using Forbbiden.Client.ProfileManager;
 namespace Forbbiden.Client
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// LoginWindow.xaml interaction logic
     /// </summary>
     public partial class LoginPage : Page
     {
