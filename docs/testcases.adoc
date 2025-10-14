@@ -1,0 +1,57 @@
+
+[cols="1,1,1,1,1,1,1,1,1"]
+
+|===
+|ID
+|Nombre
+|Objetivo
+|Prioridad
+|Precondiciones
+|Entradas
+|Resultados Esperados
+|Resultados Observados
+|Resultado
+
+|PMT01
+|TestIsEmailAvailableSuccess
+|Comprobar si el email ingresado tiene un formato *válido* y *no* está registrado en la base de datos
+|*Alta*
+|PRE01: Haber ingresado un email
+|_randomEmail@email.net_
+|_True_
+|Regresa _true_
+|*Pasó*
+
+|PMT02
+|TestIsEmailAvailableInvalidEmail
+|Comprobar que no se acepten emails sin un *@*
+|*Alta*
+|PRE01: Haber ingresado un email
+|_randomEmail.com_
+|_False_
+|Resultados Observados
+|Resultado
+
+|PMT03
+|TestIsEmailAvailableEmailEmptyEmail
+|Comprobar que no se acepte un email *vacío*
+|*Alta*
+|PRE01: Haber ingresado un email
+|_""_
+|_False_
+|Resultados Observados
+|Resultado
+
+|PMT04
+|TestIsEmailAvailableEmailTakenEmail
+|Comprobar que no se acepte un email que ya esté *registrado*
+|*Alta*
+|PRE01: Haber ingresado un email +
+PRE02: Tener el email _testuser@email.net_ registrado
+|_testuser@email.net_
+|_False_
+|Resultados Observados
+|Resultado
+
+
+|===
