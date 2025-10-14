@@ -37,6 +37,9 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         bool UpdatePlayer(Player updatedPlayer);
+
+        [OperationContract]
+        bool DeletePlayerByUsername(string username);
     }
 
     [DataContract]

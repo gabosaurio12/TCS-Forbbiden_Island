@@ -225,6 +225,9 @@ namespace ProfileManager
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
         System.Threading.Tasks.Task<bool> UpdatePlayerAsync(ProfileManager.Player updatedPlayer);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse")]
+        System.Threading.Tasks.Task<bool> DeletePlayerByUsernameAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -325,6 +328,11 @@ namespace ProfileManager
         public System.Threading.Tasks.Task<bool> UpdatePlayerAsync(ProfileManager.Player updatedPlayer)
         {
             return base.Channel.UpdatePlayerAsync(updatedPlayer);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeletePlayerByUsernameAsync(string username)
+        {
+            return base.Channel.DeletePlayerByUsernameAsync(username);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

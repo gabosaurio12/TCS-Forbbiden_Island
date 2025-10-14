@@ -7,7 +7,7 @@ namespace Forbbiden.Test
     public class TestProfileManager
     {
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             var client = new ProfileManagerClient();
@@ -20,6 +20,14 @@ namespace Forbbiden.Test
             };
 
             client.SignUpAsync(player);
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            var client = new ProfileManagerClient();
+            string username = "testUser";
+            client.DeletePlayerByUsernameAsync(username);
         }
 
         [Test]
@@ -61,5 +69,6 @@ namespace Forbbiden.Test
             var result = await client.IsEmailAvailableAsync(email);
             Assert.That(result, Is.False, "result should be false");
         }
+
     }
 }

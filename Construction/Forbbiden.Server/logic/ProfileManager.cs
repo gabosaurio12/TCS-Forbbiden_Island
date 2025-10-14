@@ -295,5 +295,36 @@ namespace Forbbiden.Server.logic
 
             return success;
         }
+
+        public bool DeletePlayerByUsername(string username)
+        {
+            using (var db = new Forbbiden_FEIEntities())
+            {
+                try
+                {
+                    var playerToDelete = db.Player.FirstOrDefault(dp => dp.player_username == username);
+                    if (playerToDelete != null)
+                    {
+                        db.Player.Remove(playerToDelete);
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                }
+                catch (DbUpdateException ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                }
+                catch (Exception ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                }
+            }
+
+            return false;
+        }
     }
 }
