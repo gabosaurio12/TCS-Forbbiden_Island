@@ -376,6 +376,15 @@ image::images/screenshots/avance13-10/mainpage-logged-es.png[Menú principal en 
 .Menú pirncipal loggeado en inglés
 image::images/screenshots/avance13-10/mainpage-logged-en.png[Menú principal en español, width=600, align=left]
 
+=== Nuevo juego (Nuevas funciones)
+Reponsable: Leonardo
+
+.Nuevo juego en español
+image::images/screenshots/version2/newgame-es.png[Nuevo juego en español, width=600, align=left]
+.Nuevo juego en inglés
+image::images/screenshots/version2/newgame-en.png[Nuevo juego en inglés, width=600, align=left]
+
+
 === Forbbiden.Test
 Responsable: Gabriel
 
