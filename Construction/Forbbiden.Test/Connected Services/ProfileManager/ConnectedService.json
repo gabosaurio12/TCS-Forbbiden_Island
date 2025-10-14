@@ -1,0 +1,31 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://localhost:8080/ProfileManager"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, ProfileManager"
+    ],
+    "references": [
+      "Microsoft.TestPlatform.CommunicationUtilities, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.TestPlatform.CoreUtilities, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Microsoft.TestPlatform.CrossPlatEngine, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.TestPlatform.PlatformAbstractions, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Microsoft.TestPlatform.Utilities, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.VisualStudio.CodeCoverage.Shim, {Microsoft.CodeCoverage, 17.8.0}",
+      "Microsoft.VisualStudio.TestPlatform.Common, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.VisualStudio.TestPlatform.ObjectModel, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Newtonsoft.Json, {Newtonsoft.Json, 13.0.1}",
+      "NuGet.Frameworks, {NuGet.Frameworks, 6.5.0}",
+      "nunit.framework, {NUnit, 3.14.0}",
+      "System.Reflection.Metadata, {System.Reflection.Metadata, 1.6.0}",
+      "testhost, {Microsoft.TestPlatform.TestHost, 17.8.0}"
+    ],
+    "targetFramework": "net8.0",
+    "typeReuseMode": "All"
+  }
+}
