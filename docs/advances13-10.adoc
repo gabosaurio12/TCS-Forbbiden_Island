@@ -47,6 +47,15 @@ image::images/screenshots/version2/mainpage-es.png[Menú principal en español, 
 .Menú principal en inglés
 image::images/screenshots/version2/mainpage-en.png[Menú principal en inglés, width=600, align=left]
 
+=== Nuevo juego (Nuevas funciones)
+Reponsable: Leonardo
+
+.Nuevo juego en español
+image::images/screenshots/version2/newgame-es.png[Nuevo juego en español, width=600, align=left]
+.Nuevo juego en inglés
+image::images/screenshots/version2/newgame-en.png[Nuevo juego en inglés, width=600, align=left]
+
+
 === Forbbiden.Test
 Responsable: Leonardo y Gabriel
 
