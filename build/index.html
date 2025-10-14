@@ -441,146 +441,38 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>Forbbiden Island FEI Edition</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
-<li><a href="#_introducción">Introducción</a>
 <ul class="sectlevel1">
-<li><a href="#_casos_de_prueba">1. Casos de Prueba</a></li>
-<li><a href="#_avances_26_de_septiembre_de_2025">2. Avances 26 de septiembre de 2025</a>
+<li><a href="#_avances_26_de_septiembre_de_2025">1. Avances 26 de septiembre de 2025</a>
 <ul class="sectlevel2">
-<li><a href="#_casos_de_uso">2.1. Casos de uso</a></li>
-<li><a href="#_porcentajes_de_contribución">2.2. Porcentajes de contribución</a></li>
-<li><a href="#_forbbiden_server">2.3. Forbbiden.Server</a></li>
-<li><a href="#_iniciar_sesión_como_servicio">2.4. Iniciar sesión como servicio</a></li>
-<li><a href="#_registrar_usuario_como_servicio">2.5. Registrar usuario como servicio</a></li>
-<li><a href="#_editar_perfil_de_usuario_como_servicio">2.6. Editar perfil de usuario como servicio</a></li>
-<li><a href="#_menú_principal_nuevas_funciones">2.7. Menú principal (Nuevas funciones)</a></li>
-<li><a href="#_nuevo_juego_nuevas_funciones">2.8. Nuevo juego (Nuevas funciones)</a></li>
-<li><a href="#_forbbiden_test">2.9. Forbbiden.Test</a></li>
-<li><a href="#_uso_de_ia">2.10. Uso de IA</a></li>
+<li><a href="#_casos_de_uso">1.1. Casos de uso</a></li>
+<li><a href="#_porcentajes_de_contribución">1.2. Porcentajes de contribución</a></li>
+<li><a href="#_forbbiden_server">1.3. Forbbiden.Server</a></li>
+<li><a href="#_iniciar_sesión_como_servicio">1.4. Iniciar sesión como servicio</a></li>
+<li><a href="#_registrar_usuario_como_servicio">1.5. Registrar usuario como servicio</a></li>
+<li><a href="#_editar_perfil_de_usuario_como_servicio">1.6. Editar perfil de usuario como servicio</a></li>
+<li><a href="#_menú_principal_nuevas_funciones">1.7. Menú principal (Nuevas funciones)</a></li>
+<li><a href="#_nuevo_juego_nuevas_funciones">1.8. Nuevo juego (Nuevas funciones)</a></li>
+<li><a href="#_forbbiden_test">1.9. Forbbiden.Test</a></li>
+<li><a href="#_uso_de_ia">1.10. Uso de IA</a></li>
 </ul>
 </li>
+<li><a href="#_casos_de_prueba">2. Casos de Prueba</a></li>
+<li><a href="#_objetivos_de_la_próxima_iteración">3. Objetivos de la próxima iteración</a>
+<ul class="sectlevel2">
+<li><a href="#_diseño">3.1. Diseño</a></li>
+<li><a href="#_implementación_de_casos_de_uso">3.2. Implementación de casos de uso</a></li>
+<li><a href="#_deuda_técnica">3.3. Deuda técnica</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<h1 id="_introducción" class="sect0">Introducción</h1>
-<div class="openblock partintro">
-<div class="content">
-<div class="paragraph">
-<p>La base del juego de mesa son cartas (casillas) y cada una tiene un diseño distinto, el
-tablero está formado de un cuadrado de 4 x 4 y luego se agregan dos cartas en el centro
-de cada cara.
-Existe una barra que indica el nivel de agua, que va en aumento durante la partida.
-En la FEI Editon el objetivo ya no es cooperar, es demostrar quién es el mejor y quién si es capaz de
-escapar primero.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="_casos_de_prueba">1. Casos de Prueba</h2>
-<div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 11.1112%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nombre</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Objetivo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Prioridad</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Precondiciones</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Entradas</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resultados Esperados</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resultados Observados</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resultado</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PMT01</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailSuccess</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar si el email ingresado tiene un formato <strong>válido</strong> y <strong>no</strong> está registrado en la base de datos</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>randomEmail@email.net</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>True</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>true</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PMT02</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailInvalidEmail</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepten emails sin un <strong>@</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>randomEmail.com</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>false</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PMT03</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailEmailEmptyEmail</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepte un email <strong>vacío</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>""</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>false</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PMT04</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailEmailTakenEmail</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepte un email que ya esté <strong>registrado</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email<br>
-PRE02: Tener el email <em>testuser@email.net</em> registrado</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>testuser@email.net</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>false</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PMT05</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TestIsUsernameAvailableSuccess</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que el username no esté <strong>registrado</strong> en la base de datos</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>testUser098</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>True</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>true</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PMT06</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TestIsUsernameAvailableTakenUsername</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepte un username <strong>registrado</strong> en la base de datos</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>testUser</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>true</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_avances_26_de_septiembre_de_2025">2. Avances 26 de septiembre de 2025</h2>
+<h2 id="_avances_26_de_septiembre_de_2025">1. Avances 26 de septiembre de 2025</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_casos_de_uso">2.1. Casos de uso</h3>
+<h3 id="_casos_de_uso">1.1. Casos de uso</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -608,7 +500,7 @@ PRE02: Tener el email <em>testuser@email.net</em> registrado</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_porcentajes_de_contribución">2.2. Porcentajes de contribución</h3>
+<h3 id="_porcentajes_de_contribución">1.2. Porcentajes de contribución</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -621,11 +513,11 @@ PRE02: Tener el email <em>testuser@email.net</em> registrado</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_forbbiden_server">2.3. Forbbiden.Server</h3>
+<h3 id="_forbbiden_server">1.3. Forbbiden.Server</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_iniciar_sesión_como_servicio">2.4. Iniciar sesión como servicio</h3>
+<h3 id="_iniciar_sesión_como_servicio">1.4. Iniciar sesión como servicio</h3>
 <div class="paragraph">
 <p>Responsables:</p>
 </div>
@@ -655,7 +547,7 @@ PRE02: Tener el email <em>testuser@email.net</em> registrado</p></td>
 <div class="title">Figura 2. Inicio de sesión en inglés</div>
 </div>
 <div class="sect3">
-<h4 id="_código_del_cliente">2.4.1. Código del cliente</h4>
+<h4 id="_código_del_cliente">1.4.1. Código del cliente</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">public partial class LoginPage : Page
@@ -717,7 +609,7 @@ PRE02: Tener el email <em>testuser@email.net</em> registrado</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_código_del_servidor">2.4.2. Código del servidor</h4>
+<h4 id="_código_del_servidor">1.4.2. Código del servidor</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -782,7 +674,7 @@ public class ProfileManager : IProfileManager
 </div>
 </div>
 <div class="sect2">
-<h3 id="_registrar_usuario_como_servicio">2.5. Registrar usuario como servicio</h3>
+<h3 id="_registrar_usuario_como_servicio">1.5. Registrar usuario como servicio</h3>
 <div class="paragraph">
 <p>Responsables:</p>
 </div>
@@ -812,7 +704,7 @@ public class ProfileManager : IProfileManager
 <div class="title">Figura 4. Registro de usuario en inglés</div>
 </div>
 <div class="sect3">
-<h4 id="_código_del_cliente_2">2.5.1. Código del cliente</h4>
+<h4 id="_código_del_cliente_2">1.5.1. Código del cliente</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">public partial class SignupPage : Page
@@ -883,7 +775,7 @@ public class ProfileManager : IProfileManager
 </div>
 </div>
 <div class="sect3">
-<h4 id="_código_del_servidor_2">2.5.2. Código del servidor</h4>
+<h4 id="_código_del_servidor_2">1.5.2. Código del servidor</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c# hljs" data-lang="c#">[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -989,7 +881,7 @@ public class ProfileManager : IProfileManager
 </div>
 </div>
 <div class="sect2">
-<h3 id="_editar_perfil_de_usuario_como_servicio">2.6. Editar perfil de usuario como servicio</h3>
+<h3 id="_editar_perfil_de_usuario_como_servicio">1.6. Editar perfil de usuario como servicio</h3>
 <div class="paragraph">
 <p>Responsables:</p>
 </div>
@@ -1026,7 +918,7 @@ public class ProfileManager : IProfileManager
 </div>
 </div>
 <div class="sect2">
-<h3 id="_menú_principal_nuevas_funciones">2.7. Menú principal (Nuevas funciones)</h3>
+<h3 id="_menú_principal_nuevas_funciones">1.7. Menú principal (Nuevas funciones)</h3>
 <div class="paragraph">
 <p>Responsables:</p>
 </div>
@@ -1063,7 +955,7 @@ public class ProfileManager : IProfileManager
 </div>
 </div>
 <div class="sect2">
-<h3 id="_nuevo_juego_nuevas_funciones">2.8. Nuevo juego (Nuevas funciones)</h3>
+<h3 id="_nuevo_juego_nuevas_funciones">1.8. Nuevo juego (Nuevas funciones)</h3>
 <div class="paragraph">
 <p>Reponsables:</p>
 </div>
@@ -1088,7 +980,7 @@ public class ProfileManager : IProfileManager
 </div>
 </div>
 <div class="sect2">
-<h3 id="_forbbiden_test">2.9. Forbbiden.Test</h3>
+<h3 id="_forbbiden_test">1.9. Forbbiden.Test</h3>
 <div class="paragraph">
 <p>Responsables:</p>
 </div>
@@ -1100,7 +992,7 @@ public class ProfileManager : IProfileManager
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_testprofilemanager">2.9.1. TestProfileManager</h4>
+<h4 id="_testprofilemanager">1.9.1. TestProfileManager</h4>
 <div class="paragraph">
 <p>Para más detalle sobre las pruebas ver el reporte de casos de prueba.</p>
 </div>
@@ -1207,9 +1099,9 @@ public class TestProfileManager
 </div>
 </div>
 <div class="sect2">
-<h3 id="_uso_de_ia">2.10. Uso de IA</h3>
+<h3 id="_uso_de_ia">1.10. Uso de IA</h3>
 <div class="sect3">
-<h4 id="_gabriel">2.10.1. Gabriel</h4>
+<h4 id="_gabriel">1.10.1. Gabriel</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1241,7 +1133,7 @@ public class TestProfileManager
 </div>
 </div>
 <div class="sect3">
-<h4 id="_leonardo">2.10.2. Leonardo</h4>
+<h4 id="_leonardo">1.10.2. Leonardo</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1275,10 +1167,170 @@ public class TestProfileManager
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_casos_de_prueba">2. Casos de Prueba</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1112%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nombre</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Objetivo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prioridad</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Precondiciones</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entradas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resultados Esperados</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resultados Observados</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resultado</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMT01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailSuccess</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar si el email ingresado tiene un formato <strong>válido</strong> y <strong>no</strong> está registrado en la base de datos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>randomEmail@email.net</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>True</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>true</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMT02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailInvalidEmail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepten emails sin un <strong>@</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>randomEmail.com</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>false</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMT03</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailEmailEmptyEmail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepte un email <strong>vacío</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>""</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>false</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMT04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TestValidateEmailEmailTakenEmail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepte un email que ya esté <strong>registrado</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un email<br>
+PRE02: Tener el email <em>testuser@email.net</em> registrado</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>testuser@email.net</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>false</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMT05</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TestIsUsernameAvailableSuccess</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que el username no esté <strong>registrado</strong> en la base de datos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>testUser098</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>True</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>true</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMT06</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TestIsUsernameAvailableTakenUsername</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comprobar que no se acepte un username <strong>registrado</strong> en la base de datos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alta</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRE01: Haber ingresado un username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>testUser</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>False</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regresa <em>true</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Pasó</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_objetivos_de_la_próxima_iteración">3. Objetivos de la próxima iteración</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Se planea abarcar los siguientes puntos en la próxima iteración.</p>
+</div>
+<div class="sect2">
+<h3 id="_diseño">3.1. Diseño</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Descripciones de caso de uso principales (más o menos 5)</p>
+</li>
+<li>
+<p>Diagramas de clases (más o menos 3 casos de uso)</p>
+</li>
+<li>
+<p>Diagramas de secuencia (más o menos 3 casos de uso)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implementación_de_casos_de_uso">3.2. Implementación de casos de uso</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Lista de amigos</p>
+</li>
+<li>
+<p>Chat entre amigos</p>
+</li>
+<li>
+<p>Lobby</p>
+</li>
+<li>
+<p>Decorar GUI Login y Registro</p>
+</li>
+<li>
+<p>Terminar GUI Nueva Partida</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deuda_técnica">3.3. Deuda técnica</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Mejorar el manejo de excepciones</p>
+</li>
+<li>
+<p>Internacionalizar todos los pop ups</p>
+</li>
+<li>
+<p>Estandarizar comentarios (al idioma inglés)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-14 00:12:17 -0600
+Last updated 2025-10-14 00:16:14 -0600
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
