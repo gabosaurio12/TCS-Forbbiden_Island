@@ -355,12 +355,12 @@ image::images/screenshots/avance13-10/profile_select_avatar-en.png[Subir avatar 
 Responsable: Leonardo
 
 .Menú principal en español
-image::images/screenshots/mainwindow-es.png[Menú principal en español, width=600, align=left]
+image::images/screenshots/version2/mainpage-es.png[Menú principal en español, width=600, align=left]
 .Menú principal en inglés
-image::images/screenshots/mainwindow-en.png[Menú principal en inglés, width=600, align=left]
+image::images/screenshots/version2/mainpage-en.png[Menú principal en inglés, width=600, align=left]
 
 === Forbbiden.Test
-Responsable: Lenoardo y Gabriel
+Responsable: Leonardo y Gabriel
 
 ==== TestProfileManager
 
@@ -476,3 +476,12 @@ public class TestProfileManager
 ** Aquí incluyo el solicitar una Cheat-Sheet de los generales de los elementos (le pedí que los comparara con los de JavaFX para entender un poco mejor)
 
 Nota: No uso la IA para que resuelva los problemas que surgen, la uso para entenderlos y yo poder encontrar una solución, así que generalmente le pregunto cosas como "Qué hace este fragmento del App.config" o "Leí sobre esta forma de hacer consultas con EF, cuál es la diferencia con esta otra" o cosas por el estilo. Me gusta leer primero documentación o soluciones de algún usuario en foros y ya después si me agrada alguna pero no la entiendo al 100% le pido a ChatGPT que me explique lo que no entiendo, esto con la intención de usarlo como una herramienta y no como una solución.
+
+==== Leonardo
+* Uso de ChatGPT para entender qué herramientas se suelen utilizar para implementar ciertas funcionalidades o abordar aspectos de UI.
+* Uso de ChatGPT para aprender cómo traducir prototipos visuales a código XAML en WPF.
+* Uso de ChatGPT para la generación de estilos de la interfaz
+** Para diseñar y personalizar los estilos de los botones.
+** Para poder conseguir la apariencia prevista durante los prototipos.
+** Para investigar cómo se suelen organizar los temas visuales de la aplicación.
+** Para explorar buenas prácticas de UI y consistencia en la apariencia.

@@ -1,18 +1,15 @@
-﻿<Window x:Class="Forbbiden.Client.SelectLanguageWindow"
+﻿<Page x:Class="Forbbiden.Client.SelectLanguagePage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
         mc:Ignorable="d"
-        Title="Select Language"
-        WindowState="Maximized"
-        WindowStyle="None"
-        ResizeMode="NoResize">
+        Title="Select Language">
 
-    <Window.Background>
+    <Page.Background>
         <ImageBrush ImageSource="/Images/FEI MainPage.png" Stretch="Fill"/>
-    </Window.Background>
+    </Page.Background>
 
     <Viewbox Stretch="Uniform">
         <Grid Width="1920" Height="1080">
@@ -77,4 +74,4 @@
 
         </Grid>
     </Viewbox>
-</Window>
+</Page>

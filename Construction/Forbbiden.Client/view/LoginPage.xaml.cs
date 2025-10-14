@@ -50,17 +50,18 @@ namespace Forbbiden.Client
                 {
                     password = pwdBPassword.Password;
                 }
-                
+
                 if (BCrypt.Net.BCrypt.Verify(password, searchPlayer.PlayerPassword))
                 {
                     if (client.Login(searchPlayer))
                     {
-
                         Properties.Settings.Default.rememberLogin = chkRememberMe.IsChecked == true;
                         Properties.Settings.Default.Save();
 
-                        var logWindow = Window.GetWindow(this) as LogWindow;
-                        logWindow?.Close();
+                        // Cierra la ventana que contiene esta página
+                        var parentWindow = Window.GetWindow(this);
+                        parentWindow?.Close();
+
                         log.Info($"Usuario '{searchPlayer.PlayerUsername}' logged in.");
                     }
                     else

@@ -3,9 +3,9 @@ using System.Windows.Controls;
 
 namespace Forbbiden.Client
 {
-    public partial class PlayWindow : Window
+    public partial class PlayPage : Page
     {
-        public PlayWindow()
+        public PlayPage()
         {
             InitializeComponent();
             ShowHostGame();
@@ -51,9 +51,10 @@ namespace Forbbiden.Client
             HostButton.Background = System.Windows.Media.Brushes.Gainsboro;
         }
 
-        private void backButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (this.NavigationService != null && this.NavigationService.CanGoBack)
+                this.NavigationService.GoBack();
         }
     }
 }

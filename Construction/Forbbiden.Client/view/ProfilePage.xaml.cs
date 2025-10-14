@@ -5,14 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Forbbiden.Client
 {
     /// <summary>
-    /// Interaction logic for ProfileWindow.xaml
+    /// Interaction logic for ProfilePage.xaml
     /// </summary>
-    public partial class ProfileWindow : Window
+    public partial class ProfilePage : Page
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
 
@@ -20,12 +21,13 @@ namespace Forbbiden.Client
         private string _uploadedAvatarOriginalPath;
         private string _uploadedAvatarProjectPath;
         private bool avatarChanged = false;
-        public ProfileWindow()
+
+        public ProfilePage()
         {
             InitializeComponent();
         }
 
-        public ProfileWindow(Player player)
+        public ProfilePage(Player player)
         {
             InitializeComponent();
             _player = player;
@@ -37,7 +39,7 @@ namespace Forbbiden.Client
             var socialMedia = player.SocialMedia;
             if (socialMedia != null)
             {
-                foreach(var sm in socialMedia)
+                foreach (var sm in socialMedia)
                 {
                     switch (sm.SocialMediaName)
                     {
@@ -69,7 +71,8 @@ namespace Forbbiden.Client
 
         private void BtnDiscard_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            if (this.NavigationService != null && this.NavigationService.CanGoBack)
+                this.NavigationService.GoBack();
         }
 
         private void ResetFieldColors()
@@ -151,7 +154,6 @@ namespace Forbbiden.Client
 
             return isValid;
         }
-        
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -159,16 +161,17 @@ namespace Forbbiden.Client
             var client = new ProfileManagerClient();
 
             Player updatedPlayer = new Player();
-            
+
             if (SetPlayer(ref updatedPlayer))
             {
                 if (avatarChanged) File.Copy(_uploadedAvatarOriginalPath, _uploadedAvatarProjectPath, true);
-                
+
                 updatedPlayer.PlayerId = _player.PlayerId;
-                
+
                 if (client.UpdatePlayer(updatedPlayer))
                 {
-                    Close();
+                    if (this.NavigationService != null && this.NavigationService.CanGoBack)
+                        this.NavigationService.GoBack();
                 }
                 else
                 {
@@ -190,19 +193,12 @@ namespace Forbbiden.Client
             {
                 _uploadedAvatarOriginalPath = openFileDialog.FileName;
 
-                Console.WriteLine("Uploaded avatar path: " + _uploadedAvatarOriginalPath);
-
                 string projectPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
                 string avatarsPath = Path.Combine(projectPath, "avatars");
                 string destinyPath = Path.Combine(avatarsPath, Path.GetFileName(_uploadedAvatarOriginalPath));
 
-                Console.WriteLine("Project path: " + projectPath);
-                Console.WriteLine("Avatars path: " + avatarsPath);
-                Console.WriteLine("FileName: " + Path.GetFileName(_uploadedAvatarOriginalPath));
-                Console.WriteLine("Destiny avatar path: " + destinyPath);
-
                 _uploadedAvatarProjectPath = destinyPath;
-                
+
                 imgAvatar.Fill = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(_uploadedAvatarOriginalPath)));
                 avatarChanged = true;
             }
