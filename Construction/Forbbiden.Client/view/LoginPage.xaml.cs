@@ -58,9 +58,9 @@ namespace Forbbiden.Client
                         Properties.Settings.Default.rememberLogin = chkRememberMe.IsChecked == true;
                         Properties.Settings.Default.Save();
 
-                        // Cierra la ventana que contiene esta página
-                        var parentWindow = Window.GetWindow(this);
-                        parentWindow?.Close();
+                        NavigationService.GoBack();
+                        //var parentWindow = Window.GetWindow(this);
+                        //parentWindow?.Close();
 
                         log.Info($"Usuario '{searchPlayer.PlayerUsername}' logged in.");
                     }
