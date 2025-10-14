@@ -1,0 +1,24 @@
+
+== Objetivos de la próxima iteración
+
+Se planea abarcar los siguientes puntos en la próxima iteración.
+
+=== Diseño
+
+* Descripciones de caso de uso principales (más o menos 5)
+* Diagramas de clases (más o menos 3 casos de uso)
+* Diagramas de secuencia (más o menos 3 casos de uso)
+
+=== Implementación de casos de uso
+
+* Lista de amigos
+* Chat entre amigos
+* Lobby
+* Decorar GUI Login y Registro
+* Terminar GUI Nueva Partida
+
+=== Deuda técnica
+
+* Mejorar el manejo de excepciones
+* Internacionalizar todos los pop ups
+* Estandarizar comentarios (al idioma inglés)

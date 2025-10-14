@@ -2,12 +2,13 @@
 == Avances 26 de septiembre de 2025
 
 === Casos de uso
-- Forbbiden.Server
-- Iniciar sesión como servicio
-- Registrar usuario como servicio
-- Editar perfil de usuario como servicio
-- Menú principal (nuevas funciones)
-- Forbbiden.Test
+* Forbbiden.Server
+* Iniciar sesión como servicio
+* Registrar usuario como servicio
+* Editar perfil de usuario como servicio
+* Menú principal (nuevas funciones)
+* Nuevo Juego (nuevas funciones)
+* Forbbiden.Test
 
 === Porcentajes de contribución
 - Leonardo 50%
@@ -16,18 +17,17 @@
 === Forbbiden.Server
 
 === Iniciar sesión como servicio
-Responsables: Gabriel y Leonardo
+Responsables:
 
-Gabriel: Lógica con el servidor
-
-Lenoardo: Actualización de GUI
+* Gabriel: Lógica con el servidor
+* Lenoardo: Actualización de GUI
 
 *Objetivos para la próxima iteración:* Mejorar la interfaz de usuario para que se vea más bonita
 
 .Inicio de sesión en español
-image::images/screenshots/avance13-10/login-es.png[Inicio de sesión como servicio en español, width=600, align=left]
+image::screenshots/avance13-10/login-es.png[Inicio de sesión como servicio en español, width=600, align=left]
 .Inicio de sesión en inglés
-image::images/screenshots/avance13-10/login-en.png[Inicio de sesión como servicio en inglés, width=600, align=left]
+image::screenshots/avance13-10/login-en.png[Inicio de sesión como servicio en inglés, width=600, align=left]
 
 ==== Código del cliente
 
@@ -160,18 +160,17 @@ public class ProfileManager : IProfileManager
 
 === Registrar usuario como servicio
 
-Responsables: Gabriel y Leonardo
+Responsables:
 
-Gabriel: Lógica con el servidor
-
-Lenoardo: Actualización de GUI
+* Gabriel: Lógica con el servidor
+* Lenoardo: Actualización de GUI
 
 *Objetivos para la próxima iteración:* Mejorar la interfaz de usuario para que se vea más bonita
 
 .Registro de usuario en español
-image::images/screenshots/avance13-10/signup-es.png[Registro de usuario como servicio en español, width=600, align=left]
+image::screenshots/avance13-10/signup-es.png[Registro de usuario como servicio en español, width=600, align=left]
 .Registro de usuario en inglés
-image::images/screenshots/avance13-10/signup-en.png[Registro de usuario como servicio en inglés, width=600, align=left]
+image::screenshots/avance13-10/signup-en.png[Registro de usuario como servicio en inglés, width=600, align=left]
 
 ==== Código del cliente
 
@@ -351,49 +350,56 @@ public class ProfileManager : IProfileManager
 
 ----
 
-
 === Editar perfil de usuario como servicio
-Responsable: Gabriel
+Responsables: 
+
+* Gabriel: Lógica y GUI
 
 .Página de perfil en español
-image::images/screenshots/avance13-10/profile-es.png[Página de perfil como servicio en español, width=600, align=left]
+image::screenshots/avance13-10/profile-es.png[Página de perfil como servicio en español, width=600, align=left]
 .Página de perfil en inglés
-image::images/screenshots/avance13-10/profile-en.png[Página de perfil como servicio en inglés, width=600, align=left]
+image::screenshots/avance13-10/profile-en.png[Página de perfil como servicio en inglés, width=600, align=left]
 .Subir avatar en español
-image::images/screenshots/avance13-10/profile_select_avatar-es.png[Subir avatar en inglés, width=600, align=left]
+image::screenshots/avance13-10/profile_select_avatar-es.png[Subir avatar en inglés, width=600, align=left]
 .Subir avatar en inglés
-image::images/screenshots/avance13-10/profile_select_avatar-en.png[Subir avatar en inglés, width=600, align=left]
+image::screenshots/avance13-10/profile_select_avatar-en.png[Subir avatar en inglés, width=600, align=left]
 
 === Menú principal (Nuevas funciones)
-Responsable: Leonardo
+Responsables:
+
+* Leonardo: Lógica y GUI
 
 .Menú principal en español
-image::images/screenshots/avance13-10/mainpage-es.png[Menú principal en español, width=600, align=left]
+image::screenshots/avance13-10/mainpage-es.png[Menú principal en español, width=600, align=left]
 .Menú principal en inglés
-image::images/screenshots/avance13-10/mainpage-en.png[Menú principal en inglés, width=600, align=left]
+image::screenshots/avance13-10/mainpage-en.png[Menú principal en inglés, width=600, align=left]
 .Menú principal loggeado en español
-image::images/screenshots/avance13-10/mainpage-logged-es.png[Menú principal en español, width=600, align=left]
+image::screenshots/avance13-10/mainpage-logged-es.png[Menú principal en español, width=600, align=left]
 .Menú pirncipal loggeado en inglés
-image::images/screenshots/avance13-10/mainpage-logged-en.png[Menú principal en español, width=600, align=left]
+image::screenshots/avance13-10/mainpage-logged-en.png[Menú principal en español, width=600, align=left]
 
 === Nuevo juego (Nuevas funciones)
-Reponsable: Leonardo
+Reponsables: 
+
+* Leonardo: Lógica y GUI
 
 .Nuevo juego en español
-image::images/screenshots/version2/newgame-es.png[Nuevo juego en español, width=600, align=left]
+image::screenshots/avance13-10/newgame-es.png[Nuevo juego en español, width=600, align=left]
 .Nuevo juego en inglés
-image::images/screenshots/version2/newgame-en.png[Nuevo juego en inglés, width=600, align=left]
+image::screenshots/avance13-10/newgame-en.png[Nuevo juego en inglés, width=600, align=left]
 
 
 === Forbbiden.Test
-Responsable: Gabriel
+Responsables: 
+
+* Gabriel: Diseño e implementación
 
 ==== TestProfileManager
 
 Para más detalle sobre las pruebas ver el reporte de casos de prueba.
 
 .Pruebas
-image::images/screenshots/avance13-10/tests.png[Pruebas, width=600, align=left]
+image::screenshots/avance13-10/tests.png[Pruebas, width=600, align=left]
 
 ===== Código de pruebas
 
