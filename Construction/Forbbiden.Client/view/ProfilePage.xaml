@@ -1,4 +1,4 @@
-﻿<Window x:Class="Forbbiden.Client.ProfileWindow"
+﻿<Page x:Class="Forbbiden.Client.ProfilePage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,10 +7,7 @@
         xmlns:p="clr-namespace:Forbbiden.Client.Properties"
         mc:Ignorable="d" 
         d:DesignHeight="1080" d:DesignWidth="1920"
-        WindowState="Maximized"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        Title="Profile Window">
+        Title="Profile Page">
 
     <Viewbox Stretch="Uniform">
         <Grid Width="1920" Height="1080">
@@ -146,4 +143,4 @@
             </Grid>
         </Grid>
     </Viewbox>
-</Window>
+</Page>
