@@ -1,0 +1,36 @@
+
+[cols="1,1,1,1,1,1,1,1,1"]
+
+|===
+|ID
+|Nombre
+|Objetivo
+|Prioridad
+|Precondiciones
+|Entradas
+|Resultados Esperados
+|Resultados Observados
+|Resultado
+
+|PMT01
+|TestIsEmailAvailable
+|Comprobar si el email ingresado tiene un formato *válido* y *no* está registrado en la base de datos
+|*Alta*
+|PRE01: Haber ingresado un email
+|_randomEmail@email.net_
+|_True_
+|Resultados Observados
+|Resultado
+
+|PMTID
+|Nombre
+|Objetivo
+|Prioridad
+|Precondiciones
+|Entradas
+|Resultados Esperados
+|Resultados Observados
+|Resultado
+
+
+|===
