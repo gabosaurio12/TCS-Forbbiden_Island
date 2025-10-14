@@ -112,7 +112,7 @@ namespace Forbbiden.Client
             }
             else
             {
-                if (!client.IsEmailAvailable(email))
+                if (!client.ValidateEmail(email))
                 {
                     MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
                     txtBkEmail.Foreground = Brushes.Red;

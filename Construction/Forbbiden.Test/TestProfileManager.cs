@@ -1,5 +1,4 @@
 using ProfileManager;
-using NUnit.Framework;
 
 namespace Forbbiden.Test
 {
@@ -31,44 +30,63 @@ namespace Forbbiden.Test
         }
 
         [Test]
-        public async Task TestIsEmailAvailableSuccess()
+        public async Task TestValidateEmailSuccess()
         {
             var client = new ProfileManagerClient();
             string email = "randomEmail@email.net";
 
-            var result = await client.IsEmailAvailableAsync(email);
+            var result = await client.ValidateEmailAsync(email);
             Assert.That(result, Is.True, "result should be true");
         }
 
         [Test]
-        public async Task TestIsEmailAvailableInvalidEmail()
+        public async Task TestValidateEmailInvalidEmail()
         {
             var client = new ProfileManagerClient();
             string email = "randomEmail.com";
 
-            var result = await client.IsEmailAvailableAsync(email);
+            var result = await client.ValidateEmailAsync(email);
             Assert.That(result, Is.False, "result should be false");
         }
 
         [Test]
-        public async Task TestIsEmailAvailableEmptyEmail()
+        public async Task TestValidateEmailEmptyEmail()
         {
             var client = new ProfileManagerClient();
             string email = "";
 
-            var result = await client.IsEmailAvailableAsync(email);
+            var result = await client.ValidateEmailAsync(email);
             Assert.That(result, Is.False, "result should be false");
         }
 
         [Test]
-        public async Task TestIsEmailAvailableTakenEmail()
+        public async Task TestValidateEmailTakenEmail()
         {
             var client = new ProfileManagerClient();
             string email = "testuser@email.net";
 
-            var result = await client.IsEmailAvailableAsync(email);
+            var result = await client.ValidateEmailAsync(email);
             Assert.That(result, Is.False, "result should be false");
         }
 
+        [Test]
+        public async Task TestIsUsernameAvailableSucces()
+        {
+            var client = new ProfileManagerClient();
+            string username = "testUser098";
+
+            var result = await client.IsUsernameAvailableAsync(username);
+            Assert.That(result, Is.True, "result should be true");
+        }
+
+        [Test]
+        public async Task TestIsUsernameAvailableTakenUsername()
+        {
+            var client = new ProfileManagerClient();
+            string username = "testUser";
+
+            var result = await client.IsUsernameAvailableAsync(username);
+            Assert.That(result, Is.False, "result should be false");
+        }
     }
 }

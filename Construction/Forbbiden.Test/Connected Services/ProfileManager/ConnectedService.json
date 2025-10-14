@@ -10,6 +10,31 @@
     "namespaceMappings": [
       "*, ProfileManager"
     ],
+    "references": [
+      "Microsoft.Extensions.ObjectPool, {Microsoft.Extensions.ObjectPool, 8.0.10}",
+      "Microsoft.TestPlatform.CommunicationUtilities, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.TestPlatform.CoreUtilities, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Microsoft.TestPlatform.CrossPlatEngine, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.TestPlatform.PlatformAbstractions, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Microsoft.TestPlatform.Utilities, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.VisualStudio.CodeCoverage.Shim, {Microsoft.CodeCoverage, 17.8.0}",
+      "Microsoft.VisualStudio.TestPlatform.Common, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.VisualStudio.TestPlatform.ObjectModel, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Newtonsoft.Json, {Newtonsoft.Json, 13.0.1}",
+      "NuGet.Frameworks, {NuGet.Frameworks, 6.5.0}",
+      "nunit.framework, {NUnit, 3.14.0}",
+      "System.Reflection.Metadata, {System.Reflection.Metadata, 1.6.0}",
+      "System.Security.Cryptography.Pkcs, {System.Security.Cryptography.Pkcs, 8.0.1}",
+      "System.Security.Cryptography.Xml, {System.Security.Cryptography.Xml, 8.0.2}",
+      "System.ServiceModel, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Duplex, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Http, {System.ServiceModel.Http, 8.1.2}",
+      "System.ServiceModel.NetFramingBase, {System.ServiceModel.NetFramingBase, 8.1.2}",
+      "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 8.1.2}",
+      "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Security, {System.ServiceModel.Primitives, 8.1.2}",
+      "testhost, {Microsoft.TestPlatform.TestHost, 17.8.0}"
+    ],
     "targetFramework": "net8.0",
     "typeReuseMode": "All"
   }

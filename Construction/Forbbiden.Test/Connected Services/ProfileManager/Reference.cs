@@ -196,11 +196,11 @@ namespace ProfileManager
     public interface IProfileManager
     {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ValidateEmail", ReplyAction="http://tempuri.org/IProfileManager/ValidateEmailResponse")]
+        System.Threading.Tasks.Task<bool> ValidateEmailAsync(string email);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsUsernameAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse")]
         System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsEmailAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsEmailAvailableResponse")]
-        System.Threading.Tasks.Task<bool> IsEmailAvailableAsync(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
         System.Threading.Tasks.Task<bool> SendEmailAsync(string email);
@@ -280,14 +280,14 @@ namespace ProfileManager
         {
         }
         
+        public System.Threading.Tasks.Task<bool> ValidateEmailAsync(string email)
+        {
+            return base.Channel.ValidateEmailAsync(email);
+        }
+        
         public System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username)
         {
             return base.Channel.IsUsernameAvailableAsync(username);
-        }
-        
-        public System.Threading.Tasks.Task<bool> IsEmailAvailableAsync(string email)
-        {
-            return base.Channel.IsEmailAvailableAsync(email);
         }
         
         public System.Threading.Tasks.Task<bool> SendEmailAsync(string email)
