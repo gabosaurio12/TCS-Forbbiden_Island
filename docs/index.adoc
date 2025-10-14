@@ -22,6 +22,5 @@
 :warning-caption: Advertencia
 
 include::introduction.adoc[]
+include::testcases.adoc[]
 include::advances26-09.adoc[]
-include::views/classes.adoc[]
-include::views/database.adoc[]

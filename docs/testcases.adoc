@@ -13,7 +13,7 @@
 |Resultado
 
 |PMT01
-|TestIsEmailAvailableSuccess
+|TestValidateEmailSuccess
 |Comprobar si el email ingresado tiene un formato *válido* y *no* está registrado en la base de datos
 |*Alta*
 |PRE01: Haber ingresado un email
@@ -23,35 +23,54 @@
 |*Pasó*
 
 |PMT02
-|TestIsEmailAvailableInvalidEmail
+|TestValidateEmailInvalidEmail
 |Comprobar que no se acepten emails sin un *@*
 |*Alta*
 |PRE01: Haber ingresado un email
 |_randomEmail.com_
 |_False_
-|Resultados Observados
-|Resultado
+|Regresa _false_
+|*Pasó*
 
 |PMT03
-|TestIsEmailAvailableEmailEmptyEmail
+|TestValidateEmailEmailEmptyEmail
 |Comprobar que no se acepte un email *vacío*
 |*Alta*
 |PRE01: Haber ingresado un email
 |_""_
 |_False_
-|Resultados Observados
-|Resultado
+|Regresa _false_
+|*Pasó*
 
 |PMT04
-|TestIsEmailAvailableEmailTakenEmail
+|TestValidateEmailEmailTakenEmail
 |Comprobar que no se acepte un email que ya esté *registrado*
 |*Alta*
 |PRE01: Haber ingresado un email +
 PRE02: Tener el email _testuser@email.net_ registrado
 |_testuser@email.net_
 |_False_
-|Resultados Observados
-|Resultado
+|Regresa _false_
+|*Pasó*
 
+|PMT05
+|TestIsUsernameAvailableSuccess
+|Comprobar que el username no esté *registrado* en la base de datos
+|*Alta*
+|PRE01: Haber ingresado un username
+|_testUser098_
+|_True_
+|Regresa _true_
+|*Pasó*
+
+|PMT06
+|TestIsUsernameAvailableTakenUsername
+|Comprobar que no se acepte un username *registrado* en la base de datos
+|*Alta*
+|PRE01: Haber ingresado un username
+|_testUser_
+|_False_
+|Regresa _true_
+|*Pasó*
 
 |===
