@@ -56,7 +56,7 @@ namespace Forbbiden.Client
                 MessageBox.Show("El nombre de usuario ya está en uso.");
                 isValid = false;
             }
-            if (!client.IsEmailAvailable(player.PlayerEmail))
+            if (!client.ValidateEmail(player.PlayerEmail))
             {
                 MessageBox.Show("El correo electrónico es inválido o ya está en uso.");
                 isValid = false;

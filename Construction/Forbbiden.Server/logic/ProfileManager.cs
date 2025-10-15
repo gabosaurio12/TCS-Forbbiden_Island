@@ -1,13 +1,11 @@
 ﻿using Forbbiden.Contracts;
 using log4net;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net.Mail;
 using System.ServiceModel;
-using System.Web.Management;
 
 namespace Forbbiden.Server.logic
 {
@@ -16,7 +14,7 @@ namespace Forbbiden.Server.logic
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
 
-        public bool IsEmailAvailable(string email)
+        public bool ValidateEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -38,8 +36,16 @@ namespace Forbbiden.Server.logic
         {
             using (var db = new Forbbiden_FEIEntities())
             {
-                var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
-                return playerResult == null;
+                try
+                {
+                    var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
+                    return playerResult == null;
+                }
+                catch (Exception ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                    return false;
+                }
             }
         }
 
@@ -53,7 +59,8 @@ namespace Forbbiden.Server.logic
             message.Body = "Your account has been succesfully created, welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
             SmtpClient client = new SmtpClient("smtp.gmail.com");
             client.Port = 587;
-            client.Credentials = new System.Net.NetworkCredential(emisor, "uqeosliojdotaitq");
+            string emailCode = Properties.Settings.Default.emailCode;
+            client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
             client.EnableSsl = true;
 
             try
@@ -296,6 +303,37 @@ namespace Forbbiden.Server.logic
             }
 
             return success;
+        }
+
+        public bool DeletePlayerByUsername(string username)
+        {
+            using (var db = new Forbbiden_FEIEntities())
+            {
+                try
+                {
+                    var playerToDelete = db.Player.FirstOrDefault(dp => dp.player_username == username);
+                    if (playerToDelete != null)
+                    {
+                        db.Player.Remove(playerToDelete);
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                }
+                catch (DbUpdateException ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                }
+                catch (Exception ex)
+                {
+                    log.Error("ProfileManager.cs", ex);
+                }
+            }
+
+            return false;
         }
     }
 }

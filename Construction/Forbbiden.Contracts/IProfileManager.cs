@@ -9,10 +9,10 @@ namespace Forbbiden.Contracts
     public interface IProfileManager
     {
         [OperationContract]
-        bool IsUsernameAvailable(string username);
+        bool ValidateEmail(string email);
 
         [OperationContract]
-        bool IsEmailAvailable(string email);
+        bool IsUsernameAvailable(string username);
 
         [OperationContract]
         bool SendEmail(string email);
@@ -37,6 +37,9 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         bool UpdatePlayer(Player updatedPlayer);
+
+        [OperationContract]
+        bool DeletePlayerByUsername(string username);
     }
 
     [DataContract]

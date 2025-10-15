@@ -9,13 +9,11 @@ namespace Forbbiden.Client
         {
             InitializeComponent();
 
-            // Inicializar visibilidad al cargar el control
             this.Loaded += HostGameControl_Loaded;
         }
 
         private void HostGameControl_Loaded(object sender, RoutedEventArgs e)
         {
-            // Inicializar dificultad
             if (NormalButton != null && HardButton != null &&
                 NormalMessage != null && HardMessage != null)
             {
@@ -25,7 +23,6 @@ namespace Forbbiden.Client
                 HardButton.Background = System.Windows.Media.Brushes.LightCoral;
             }
 
-            // Inicializar toggle público/privado
             if (PublicToggle != null && PublicMessage != null && PrivateMessage != null)
             {
                 if (PublicToggle.IsChecked == true)
@@ -41,7 +38,6 @@ namespace Forbbiden.Client
             }
         }
 
-        // Botones de dificultad
         private void NormalButton_Click(object sender, RoutedEventArgs e)
         {
             if (NormalMessage != null) NormalMessage.Visibility = Visibility.Visible;
@@ -60,7 +56,6 @@ namespace Forbbiden.Client
             if (NormalButton != null) NormalButton.Background = System.Windows.Media.Brushes.LightGray;
         }
 
-        // Toggle público/privado
         private void PublicToggle_Checked(object sender, RoutedEventArgs e)
         {
             if (PublicMessage != null) PublicMessage.Visibility = Visibility.Visible;

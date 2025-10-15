@@ -36,17 +36,17 @@
       <xsd:import schemaLocation="http://localhost:8080/ProfileManager?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IProfileManager_ValidateEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateEmail" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_ValidateEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateEmailResponse" />
+  </wsdl:message>
   <wsdl:message name="IProfileManager_IsUsernameAvailable_InputMessage">
     <wsdl:part name="parameters" element="tns:IsUsernameAvailable" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_IsUsernameAvailable_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsUsernameAvailableResponse" />
-  </wsdl:message>
-  <wsdl:message name="IProfileManager_IsEmailAvailable_InputMessage">
-    <wsdl:part name="parameters" element="tns:IsEmailAvailable" />
-  </wsdl:message>
-  <wsdl:message name="IProfileManager_IsEmailAvailable_OutputMessage">
-    <wsdl:part name="parameters" element="tns:IsEmailAvailableResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_SendEmail_InputMessage">
     <wsdl:part name="parameters" element="tns:SendEmail" />
@@ -96,14 +96,20 @@
   <wsdl:message name="IProfileManager_UpdatePlayer_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePlayerResponse" />
   </wsdl:message>
+  <wsdl:message name="IProfileManager_DeletePlayerByUsername_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePlayerByUsername" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_DeletePlayerByUsername_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePlayerByUsernameResponse" />
+  </wsdl:message>
   <wsdl:portType name="IProfileManager">
+    <wsdl:operation name="ValidateEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmail" message="tns:IProfileManager_ValidateEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmailResponse" message="tns:IProfileManager_ValidateEmail_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="IsUsernameAvailable">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailable" message="tns:IProfileManager_IsUsernameAvailable_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse" message="tns:IProfileManager_IsUsernameAvailable_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="IsEmailAvailable">
-      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/IsEmailAvailable" message="tns:IProfileManager_IsEmailAvailable_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/IsEmailAvailableResponse" message="tns:IProfileManager_IsEmailAvailable_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/SendEmail" message="tns:IProfileManager_SendEmail_InputMessage" />
@@ -137,12 +143,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/UpdatePlayer" message="tns:IProfileManager_UpdatePlayer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/UpdatePlayerResponse" message="tns:IProfileManager_UpdatePlayer_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="DeletePlayerByUsername">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername" message="tns:IProfileManager_DeletePlayerByUsername_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse" message="tns:IProfileManager_DeletePlayerByUsername_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IProfileManager" type="tns:IProfileManager">
     <wsp:PolicyReference URI="#NetTcpBinding_IProfileManager_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="IsUsernameAvailable">
-      <soap12:operation soapAction="http://tempuri.org/IProfileManager/IsUsernameAvailable" style="document" />
+    <wsdl:operation name="ValidateEmail">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/ValidateEmail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -150,8 +160,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="IsEmailAvailable">
-      <soap12:operation soapAction="http://tempuri.org/IProfileManager/IsEmailAvailable" style="document" />
+    <wsdl:operation name="IsUsernameAvailable">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/IsUsernameAvailable" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -224,6 +234,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdatePlayer">
       <soap12:operation soapAction="http://tempuri.org/IProfileManager/UpdatePlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePlayerByUsername">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/DeletePlayerByUsername" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

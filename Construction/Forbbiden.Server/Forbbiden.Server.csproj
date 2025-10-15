@@ -74,7 +74,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="logic\Login.cs" />
     <Compile Include="logic\ProfileManager.cs" />
     <Compile Include="LoginPlayer.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
@@ -105,6 +104,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Tile.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
@@ -117,6 +121,10 @@
     </EntityDeploy>
     <None Include="ForbbidenModel.edmx.diagram">
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

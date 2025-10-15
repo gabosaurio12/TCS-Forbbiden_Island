@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forbbiden.Contracts", "Forb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forbbiden.Server", "Forbbiden.Server\Forbbiden.Server.csproj", "{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forbbiden.Test", "Forbbiden.Test\Forbbiden.Test.csproj", "{E8021DEC-F35F-4BEC-8BBD-2839BA5C874C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A819AA2A-26C0-466C-9352-FA02FCBAE0FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8021DEC-F35F-4BEC-8BBD-2839BA5C874C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8021DEC-F35F-4BEC-8BBD-2839BA5C874C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8021DEC-F35F-4BEC-8BBD-2839BA5C874C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8021DEC-F35F-4BEC-8BBD-2839BA5C874C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

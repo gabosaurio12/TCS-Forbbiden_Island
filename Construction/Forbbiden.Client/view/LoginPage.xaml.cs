@@ -8,7 +8,7 @@ using Forbbiden.Client.ProfileManager;
 namespace Forbbiden.Client
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// LoginWindow.xaml interaction logic
     /// </summary>
     public partial class LoginPage : Page
     {
@@ -50,17 +50,18 @@ namespace Forbbiden.Client
                 {
                     password = pwdBPassword.Password;
                 }
-                
+
                 if (BCrypt.Net.BCrypt.Verify(password, searchPlayer.PlayerPassword))
                 {
                     if (client.Login(searchPlayer))
                     {
-
                         Properties.Settings.Default.rememberLogin = chkRememberMe.IsChecked == true;
                         Properties.Settings.Default.Save();
 
-                        var logWindow = Window.GetWindow(this) as LogWindow;
-                        logWindow?.Close();
+                        NavigationService.GoBack();
+                        //var parentWindow = Window.GetWindow(this);
+                        //parentWindow?.Close();
+
                         log.Info($"Usuario '{searchPlayer.PlayerUsername}' logged in.");
                     }
                     else
