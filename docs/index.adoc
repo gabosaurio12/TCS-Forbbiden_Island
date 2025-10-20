@@ -24,3 +24,4 @@
 include::advances13-10.adoc[]
 include::testcases.adoc[]
 include::nextiteration.adoc[]
+include::advances-19-10.adoc[]
