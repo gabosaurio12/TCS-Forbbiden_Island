@@ -13,13 +13,11 @@ Se planea abarcar los siguientes puntos en la próxima iteración.
 
 * Lista de amigos
 * Chat entre amigos
-* Decorar GUI Login y Registro
 
-=== CU Listos
-* Terminar GUI Nueva Partida
+=== CU Listos en esta iteración
+* GUI Nueva Partida
 * Lobby
+* GUI Login y Signup
+* Cerrar sesión
 
 === Deuda técnica
-
-* Mejorar el manejo de excepciones
-* Internacionalizar todos los pop ups
