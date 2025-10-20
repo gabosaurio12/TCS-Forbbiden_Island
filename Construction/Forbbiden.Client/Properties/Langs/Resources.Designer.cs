@@ -70,6 +70,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you log in you can choose your avatar and make friends!.
+        /// </summary>
+        public static string bossLogin {
+            get {
+                return ResourceManager.GetString("bossLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Language.
         /// </summary>
         public static string change_language {
@@ -151,6 +160,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while logging out at data base.
+        /// </summary>
+        public static string log_out_error {
+            get {
+                return ResourceManager.GetString("log_out_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log In.
         /// </summary>
         public static string login_button {
@@ -165,6 +183,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string login_title {
             get {
                 return ResourceManager.GetString("login_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login error. Please try again.
+        /// </summary>
+        public static string loginError {
+            get {
+                return ResourceManager.GetString("loginError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log out.
+        /// </summary>
+        public static string logout {
+            get {
+                return ResourceManager.GetString("logout", resourceCulture);
             }
         }
         
@@ -268,6 +304,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while closing application.
+        /// </summary>
+        public static string quit_game_error {
+            get {
+                return ResourceManager.GetString("quit_game_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remember Me.
         /// </summary>
         public static string remember_me {
@@ -354,6 +399,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string username_email {
             get {
                 return ResourceManager.GetString("username_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The username does not exists.
+        /// </summary>
+        public static string usernameNoExists {
+            get {
+                return ResourceManager.GetString("usernameNoExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong Password.
+        /// </summary>
+        public static string wrongPassword {
+            get {
+                return ResourceManager.GetString("wrongPassword", resourceCulture);
             }
         }
     }

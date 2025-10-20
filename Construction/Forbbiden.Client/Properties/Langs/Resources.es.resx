@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="bossLogin" xml:space="preserve">
+    <value>¡Si inicias sesión puedes elegir tu avatar y hacer amigos!</value>
+  </data>
   <data name="change_language" xml:space="preserve">
     <value>Cambiar lenguaje</value>
   </data>
@@ -144,11 +147,20 @@
   <data name="host_game" xml:space="preserve">
     <value>Crear un juego</value>
   </data>
+  <data name="loginError" xml:space="preserve">
+    <value>Error al iniciar sesión. Por favor, inténtelo de nuevo</value>
+  </data>
   <data name="login_button" xml:space="preserve">
     <value>Iniciar sesión</value>
   </data>
   <data name="login_title" xml:space="preserve">
     <value>Inicio de sesión</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="log_out_error" xml:space="preserve">
+    <value>Error al cerrar sesión en la base de datos</value>
   </data>
   <data name="max_players" xml:space="preserve">
     <value>Número máximo de jugadores</value>
@@ -186,6 +198,9 @@
   <data name="quit_game" xml:space="preserve">
     <value>Salir del juego</value>
   </data>
+  <data name="quit_game_error" xml:space="preserve">
+    <value>Error al cerrar la aplicación</value>
+  </data>
   <data name="remember_me" xml:space="preserve">
     <value>Recordarme</value>
   </data>
@@ -213,7 +228,13 @@
   <data name="username" xml:space="preserve">
     <value>Nombre de usuario</value>
   </data>
+  <data name="usernameNoExists" xml:space="preserve">
+    <value>El nombre de usuario no existe</value>
+  </data>
   <data name="username_email" xml:space="preserve">
     <value>Nombre de usuario o correo</value>
+  </data>
+  <data name="wrongPassword" xml:space="preserve">
+    <value>Contraseña incorrecta</value>
   </data>
 </root>

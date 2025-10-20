@@ -9,7 +9,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainWindow">
     <Page.Background>
-        <ImageBrush ImageSource="/Images/FEI MainPage2.png" Stretch="Fill"/>
+        <ImageBrush ImageSource="/Images/FEI MainPage.png" Stretch="Fill"/>
     </Page.Background>
     <Viewbox Stretch="Uniform">
         <Grid Width="1920" Height="1080"

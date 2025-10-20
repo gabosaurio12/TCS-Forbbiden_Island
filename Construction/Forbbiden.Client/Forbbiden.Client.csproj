@@ -101,6 +101,9 @@
     <Compile Include="view\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\QuitPage.xaml.cs">
+      <DependentUpon>QuitPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\SelectLanguagePage.xaml.cs">
       <DependentUpon>SelectLanguagePage.xaml</DependentUpon>
     </Compile>
@@ -244,9 +247,6 @@
     <Resource Include="Images\parkpx1080.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\revo128px.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +303,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="view\QuitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\SelectLanguagePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -311,6 +315,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FEI MainPage3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\boss.png" />
+    <Resource Include="Images\bossdark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

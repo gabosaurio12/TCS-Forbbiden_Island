@@ -8,7 +8,7 @@
         Title="Select Language">
 
     <Page.Background>
-        <ImageBrush ImageSource="/Images/FEI MainPage.png" Stretch="Fill"/>
+        <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
     </Page.Background>
 
     <Viewbox Stretch="Uniform">
@@ -19,14 +19,14 @@
             </Grid.RowDefinitions>
 
             <!-- Upper bar -->
-            <DockPanel Grid.Row="0" Background="White" LastChildFill="True">
+            <DockPanel Grid.Row="0" Background="#0F1945" LastChildFill="True">
                 <Button x:Name="backButton"
                         Content="&lt;"
                         Width="100" Height="100"
                         FontSize="40"
                         FontFamily="Bahnschrift Light"
                         BorderThickness="5" BorderBrush="#FFB7B7B7"
-                        Background="Transparent"
+                        Background="White"
                         Foreground="Black"
                         Margin="20,0,0,0"
                         Cursor="Hand"
@@ -36,7 +36,7 @@
                 <TextBlock Text="{x:Static language:Resources.select_language}"
                            FontSize="60"
                            FontWeight="Bold"
-                           Foreground="Black"
+                           Foreground="White"
                            FontFamily="Bahnschrift Light"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>

@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.view;
 using log4net;
 using System;
 using System.Windows;
@@ -25,9 +26,9 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (this.NavigationService != null)
+                if (NavigationService != null)
                 {
-                    this.NavigationService.Navigate(new PlayPage());
+                    NavigationService.Navigate(new PlayPage());
                 }
             }
             catch (Exception ex)
@@ -41,10 +42,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (this.NavigationService != null)
-                {
-                    this.NavigationService.Navigate(new SelectLanguagePage());
-                }
+                NavigationService?.Navigate(new SelectLanguagePage());
             }
             catch (Exception ex)
             {
@@ -55,26 +53,7 @@ namespace Forbbiden.Client
 
         private void QuitGameButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var client = new ProfileManagerClient();
-
-                if (!Properties.Settings.Default.rememberLogin)
-                {
-                    if (!client.ClearCurrentLogin())
-                    {
-                        MessageBox.Show("Error al cerrar sesión en la base de datos.");
-                    }
-                }
-
-                Application.Current.Shutdown();
-                log.Info("App closed");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cerrar la aplicación.");
-                log.Error("MainPage.xaml.cs - QuitGameButton_Click", ex);
-            }
+            NavigationService?.Navigate(new QuitPage());
         }
 
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
@@ -84,15 +63,15 @@ namespace Forbbiden.Client
                 var client = new ProfileManagerClient();
                 Player player = client.GetCurrentLogin();
 
-                if (this.NavigationService != null)
+                if (NavigationService != null)
                 {
                     if (player == null)
                     {
-                        this.NavigationService.Navigate(new ProfilePage());
+                        NavigationService.Navigate(new ProfilePage());
                     }
                     else
                     {
-                        this.NavigationService.Navigate(new ProfilePage(player));
+                        NavigationService.Navigate(new ProfilePage(player));
                     }
                 }
             }
@@ -107,9 +86,9 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (this.NavigationService != null)
+                if (NavigationService != null)
                 {
-                    this.NavigationService.Navigate(new LoginPage());
+                    NavigationService.Navigate(new LoginPage());
                 }
             }
             catch (Exception ex)

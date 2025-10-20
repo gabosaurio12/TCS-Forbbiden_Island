@@ -4,49 +4,91 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forbbiden.Client"
-        xmlns:p ="clr-namespace:Forbbiden.Client.Properties.Langs"
+        xmlns:language ="clr-namespace:Forbbiden.Client.Properties.Langs"
         mc:Ignorable="d"
-        Title="LoginPage" Height="300" Width="450">
-        
-    <Grid Margin="50,10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        Title="LoginPage" Height="1080" Width="1920" >
 
-        <!-- Title -->
-        <TextBlock Text="{x:Static p:Resources.login_title}"
-           FontSize="20"
-           FontWeight="Bold"
-           HorizontalAlignment="Center"
-           Margin="0,0,0,25"/>
+    <Page.Background>
+        <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
+    </Page.Background>
 
-        <!-- User/email -->
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock x:Name="txtBkUser" Text="{x:Static p:Resources.username_email}" HorizontalAlignment="Left" />
-            <TextBox x:Name="txtBUsername" Height="25" Width="340" Margin="0,5" />
-        </StackPanel>
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1920" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!-- Password -->
-        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock x:Name="txtBkPassword" Text="{x:Static p:Resources.password}" HorizontalAlignment="Left" />
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <PasswordBox x:Name="pwdBPassword" Height="25" Width="280" Margin="5" />
-                <TextBox x:Name="txtBPasswordVisible" Height="25" Width="280" Visibility="Collapsed"  Margin="5"/>
-                <CheckBox x:Name="chkPassword" Content="{x:Static p:Resources.show_password}" VerticalAlignment="Center" Click="TogglePassword_Click" />
-                <!--<Button x:Name="btnTogglePassword" Content="{x:Static p:Resources.show_password}" Width="50" Height="25" Margin="5" Click="btnTogglePassword_Click"/> -->
-            </StackPanel>
-        </StackPanel>
+            <DockPanel Grid.Row="0" Background="#0F1945" LastChildFill="True" >
+                <Button x:Name="backButton"
+                    Content="&lt;"
+                    Width="100" Height="100"
+                    FontSize="40"
+                    FontFamily="Bahnschrift Light"
+                    BorderThickness="5" BorderBrush="#FFB7B7B7"
+                    Background="White"
+                    Foreground="Black"
+                    Margin="20,0,0,0"
+                    Cursor="Hand"
+                    DockPanel.Dock="Left"
+                    Click="BackButton_Click"/>
 
-        <!-- Register Button -->
-        <StackPanel Grid.Row="3" Orientation="Vertical"
-            HorizontalAlignment="Center" Margin="0,20,0,0">
-            <CheckBox x:Name="chkRememberMe" Content="{x:Static p:Resources.remember_me}" HorizontalAlignment="Center" Margin="0,0,0,10" />
-            <Button x:Name="signupButton" Content="{x:Static p:Resources.login_button}" Height="30" Width="150" Background="#39B349" Foreground="White" FontWeight="Bold" Click="BtnLogin_Click"/>
-            <Label Content="{x:Static p:Resources.signup_title}" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Signup_MouseDown" Cursor="Hand" />
-        </StackPanel>
-    </Grid>
+                <TextBlock Text="{x:Static language:Resources.login_title}"
+                   FontSize="60"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   FontFamily="Bahnschrift Light"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+            </DockPanel>
+
+            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- User/email -->
+                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0" HorizontalAlignment="Center">
+                    <TextBlock x:Name="txtBkUser" Text="{x:Static language:Resources.username_email}" HorizontalAlignment="Left"
+                               FontSize="20" Foreground="White" />
+                    <TextBox x:Name="txtBUsername" Height="35" Width="340" Margin="0,5" FontSize="20" />
+                </StackPanel>
+
+                <!-- Password -->
+                <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0" HorizontalAlignment="Center">
+                    <TextBlock x:Name="txtBkPassword" Text="{x:Static language:Resources.password}" HorizontalAlignment="Left"
+                               FontSize="20" Foreground="White" />
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <PasswordBox x:Name="pwdBPassword" Height="35" Width="280" Margin="5" FontSize="20" />
+                        <TextBox x:Name="txtBPasswordVisible" Height="35" Width="280" Visibility="Collapsed"  Margin="5" FontSize="20" />
+                        <CheckBox x:Name="chkPassword" Content="{x:Static language:Resources.show_password}" VerticalAlignment="Center" Click="TogglePassword_Click" Foreground="White">
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                        <!--<Button x:Name="btnTogglePassword" Content="{x:Static p:Resources.show_password}" Width="50" Height="25" Margin="5" Click="btnTogglePassword_Click"/> -->
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Register Button -->
+                <StackPanel Grid.Row="3" Orientation="Vertical"
+                    HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <CheckBox x:Name="chkRememberMe" Content="{x:Static language:Resources.remember_me}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="White" >
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <Button x:Name="signupButton" Content="{x:Static language:Resources.login_button}" Height="35" Width="150" Background="#39B349" Foreground="White" FontSize="16" FontWeight="Bold" Click="BtnLogin_Click" />
+                    <Label Content="{x:Static language:Resources.signup_title}" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Signup_MouseDown" Cursor="Hand" FontSize="14" Foreground="White" />
+                </StackPanel>
+            </Grid>
+            <Image Source="/Images/codebackground.png" Grid.Row="1" Margin="1296,283,171,379" />
+            <Image x:Name="bossImage" Source="/Images/boss.png" HorizontalAlignment="Left" Height="292" Margin="1532,244,0,0" Grid.Row="1" VerticalAlignment="Top" Width="312" RenderTransformOrigin="0.652,0.965"/>
+            <TextBlock Text="{x:Static language:Resources.bossLogin}" HorizontalAlignment="Left" Margin="1320,325,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="187" Width="280" 
+                       FontSize="32" Foreground="Wheat" FontFamily="Consolas" />
+        </Grid>
+    </Viewbox>
 </Page>
