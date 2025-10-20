@@ -86,6 +86,9 @@
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\LobbyPage.xaml.cs">
+      <DependentUpon>LobbyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -283,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="view\LobbyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -322,6 +329,13 @@
   <ItemGroup>
     <Resource Include="Images\boss.png" />
     <Resource Include="Images\bossdark.png" />
+    <Resource Include="Images\Sea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Boat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\defaultAvatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

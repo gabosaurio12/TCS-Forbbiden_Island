@@ -1,0 +1,20 @@
+== Avances 26 de septiembre de 2025
+
+=== Casos de uso
+* Iniciar Sesión (Mejora de interfaz)
+* Lobby
+* Chat
+
+=== Porcentajes de contribución
+- Leonardo 50%
+- Gabriel 50%
+
+=== Lobby y Chat
+Responsable: Leonardo
+
+.Lobby loggeado
+image::screenshots/avance-19-10/LobbyLoggeado.png[Lobby Loggeado, width=600, align=left]
+.Lobby loggeado usando chat
+image::screenshots/avance-19-10/LobbyChat.png[Uso de chat dentro del lobby, width=600, align=left]
+.Lobby sin loggear
+image::screenshots/avance-19-10/LobbySinLoggeado.png[Lobby como invitado, width=600, align=left]

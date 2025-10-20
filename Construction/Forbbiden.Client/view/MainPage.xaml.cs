@@ -26,10 +26,14 @@ namespace Forbbiden.Client
         {
             try
             {
+<<<<<<< HEAD
                 if (NavigationService != null)
                 {
                     NavigationService.Navigate(new PlayPage());
                 }
+=======
+                this.NavigationService?.Navigate(new PlayPage());
+>>>>>>> 54340f3544c2b13474699d873ec4fec09ebeab96
             }
             catch (Exception ex)
             {
@@ -42,7 +46,11 @@ namespace Forbbiden.Client
         {
             try
             {
+<<<<<<< HEAD
                 NavigationService?.Navigate(new SelectLanguagePage());
+=======
+                this.NavigationService?.Navigate(new SelectLanguagePage());
+>>>>>>> 54340f3544c2b13474699d873ec4fec09ebeab96
             }
             catch (Exception ex)
             {
@@ -86,10 +94,14 @@ namespace Forbbiden.Client
         {
             try
             {
+<<<<<<< HEAD
                 if (NavigationService != null)
                 {
                     NavigationService.Navigate(new LoginPage());
                 }
+=======
+                this.NavigationService?.Navigate(new LoginPage());
+>>>>>>> 54340f3544c2b13474699d873ec4fec09ebeab96
             }
             catch (Exception ex)
             {

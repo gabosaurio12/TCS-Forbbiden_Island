@@ -13,9 +13,11 @@ Se planea abarcar los siguientes puntos en la próxima iteración.
 
 * Lista de amigos
 * Chat entre amigos
-* Lobby
 * Decorar GUI Login y Registro
+
+=== CU Listos
 * Terminar GUI Nueva Partida
+* Lobby
 
 === Deuda técnica
 
