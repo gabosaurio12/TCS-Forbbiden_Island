@@ -1,10 +1,14 @@
-﻿using System.Windows;
+﻿using Forbbiden.Client.view;
+using log4net;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Forbbiden.Client
 {
     public partial class PlayPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
         public PlayPage()
         {
             InitializeComponent();
@@ -27,8 +31,18 @@ namespace Forbbiden.Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Funcionalidad de 'New Game' aún no implementada.");
+            try
+            {
+                this.NavigationService?.Navigate(new LobbyPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir la configuración.");
+                log.Error("PlayPage.xaml.cs - LobbyButton_Click", ex);
+            }
         }
+      
+            
 
         private void ShowHostGame()
         {

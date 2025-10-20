@@ -101,5 +101,13 @@ namespace Forbbiden.Client
         {
             NavigationService.Navigate(new LoginPage());
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService != null && NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
+        }
     }
 }

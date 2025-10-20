@@ -21,6 +21,5 @@
 :tip-caption: Consejo
 :warning-caption: Advertencia
 
-include::advances13-10.adoc[]
-include::testcases.adoc[]
+include::advances19-10.adoc[]
 include::nextiteration.adoc[]

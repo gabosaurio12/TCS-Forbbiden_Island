@@ -86,6 +86,9 @@
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\LobbyPage.xaml.cs">
+      <DependentUpon>LobbyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,9 @@
     </Compile>
     <Compile Include="view\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\QuitPage.xaml.cs">
+      <DependentUpon>QuitPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\SelectLanguagePage.xaml.cs">
       <DependentUpon>SelectLanguagePage.xaml</DependentUpon>
@@ -244,9 +250,6 @@
     <Resource Include="Images\parkpx1080.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\revo128px.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="view\LobbyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -303,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="view\QuitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\SelectLanguagePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -311,6 +322,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FEI MainPage3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\boss.png" />
+    <Resource Include="Images\bossdark.png" />
+    <Resource Include="Images\Sea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Boat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\defaultAvatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

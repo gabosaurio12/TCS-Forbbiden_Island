@@ -6,54 +6,84 @@
         xmlns:local="clr-namespace:Forbbiden.Client"
         xmlns:p ="clr-namespace:Forbbiden.Client.Properties"
         mc:Ignorable="d"
-        Title="SignupPage" Height="360" Width="450">
+        Title="SignupPage" Height="1080" Width="1920" >
 
+    <Page.Background>
+        <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
+    </Page.Background>
 
-    <Grid Margin="70,20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1920" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!-- Title -->
-        <TextBlock Text="{x:Static p:Resources.signup_title}"
-                   FontSize="20"
+            <DockPanel Grid.Row="0" Background="#0F1945" LastChildFill="True" >
+                <Button x:Name="backButton"
+                Content="&lt;"
+                Width="100" Height="100"
+                FontSize="40"
+                FontFamily="Bahnschrift Light"
+                BorderThickness="5" BorderBrush="#FFB7B7B7"
+                Background="White"
+                Foreground="Black"
+                Margin="20,0,0,0"
+                Cursor="Hand"
+                DockPanel.Dock="Left"
+                Click="BackButton_Click"/>
+
+                <!-- Title -->
+                <TextBlock Text="{x:Static p:Resources.signup_title}"
+                   FontSize="60"
+                   Foreground="White"
                    FontWeight="Bold"
+                   VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    Margin="0,0,0,15"/>
+            </DockPanel>
 
-        <!-- User -->
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock Text="{x:Static p:Resources.username}" HorizontalAlignment="Left" />
-            <TextBox x:Name="txtBUsername" Height="25" Width="280" Margin="0,5" />
-        </StackPanel>
+            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <!-- Email -->
-        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock Text="{x:Static p:Resources.email}" HorizontalAlignment="Left" />
-            <TextBox x:Name="txtBEmail" Height="25" Width="280" Margin="0,5"/>
-        </StackPanel>
+                <!-- User -->
+                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
+                    <TextBlock Text="{x:Static p:Resources.username}" HorizontalAlignment="Left" Foreground="White" FontSize="20" />
+                    <TextBox x:Name="txtBUsername" Height="35" Width="280" Margin="0,5" FontSize="20" />
+                </StackPanel>
 
-        <!-- Password -->
-        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,5,0,0">
-            <TextBlock Text="{x:Static p:Resources.password}" HorizontalAlignment="Left" />
-            <TextBox x:Name="txtBPassword" Height="25" Width="280" Margin="0,5" />
-        </StackPanel>
+                <!-- Email -->
+                <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0">
+                    <TextBlock Text="{x:Static p:Resources.email}" HorizontalAlignment="Left" Foreground="White" FontSize="20" />
+                    <TextBox x:Name="txtBEmail" Height="35" Width="280" Margin="0,5" FontSize="20" />
+                </StackPanel>
 
-        <!-- Register Button -->
-        <StackPanel Grid.Row="4" Orientation="Vertical"
-                    HorizontalAlignment="Center" Margin="0,15,0,0">
-            <Button x:Name="signupButton" Content="{x:Static p:Resources.signup_button}" 
-                    Height="30" Width="150" Background="#39B349" 
-                    Foreground="White" FontWeight="Bold"
-                    Click="SignupButton_Click" Margin="0,0,0,0"/>
-            <Label Content="{x:Static p:Resources.login_title}" Margin="0,5,0,0" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" 
-                   MouseDown="Login_MouseDown" Cursor="Hand" />
-        </StackPanel>
+                <!-- Password -->
+                <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,5,0,0">
+                    <TextBlock Text="{x:Static p:Resources.password}" HorizontalAlignment="Left" Foreground="White" FontSize="20" />
+                    <TextBox x:Name="txtBPassword" Height="35" Width="280" Margin="0,5" FontSize="20" />
+                </StackPanel>
 
-    </Grid>
+                <!-- Register Button -->
+                <StackPanel Grid.Row="4" Orientation="Vertical"
+                HorizontalAlignment="Center" Margin="0,15,0,0">
+                    <Button x:Name="signupButton" Content="{x:Static p:Resources.signup_button}" 
+                        Height="35" Width="150" Background="#39B349" 
+                        Foreground="White" FontWeight="Bold" FontSize="18"
+                        Click="SignupButton_Click" Margin="0,0,0,0"/>
+                    <Label Content="{x:Static p:Resources.login_title}" Margin="0,5,0,0" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        MouseDown="Login_MouseDown" Cursor="Hand"
+                        Foreground="White" FontSize="14" />
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Viewbox>
 </Page>
