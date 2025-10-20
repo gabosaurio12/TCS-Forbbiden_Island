@@ -25,10 +25,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (this.NavigationService != null)
-                {
-                    this.NavigationService.Navigate(new PlayPage());
-                }
+                this.NavigationService?.Navigate(new PlayPage());
             }
             catch (Exception ex)
             {
@@ -41,10 +38,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (this.NavigationService != null)
-                {
-                    this.NavigationService.Navigate(new SelectLanguagePage());
-                }
+                this.NavigationService?.Navigate(new SelectLanguagePage());
             }
             catch (Exception ex)
             {
@@ -107,10 +101,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (this.NavigationService != null)
-                {
-                    this.NavigationService.Navigate(new LoginPage());
-                }
+                this.NavigationService?.Navigate(new LoginPage());
             }
             catch (Exception ex)
             {
