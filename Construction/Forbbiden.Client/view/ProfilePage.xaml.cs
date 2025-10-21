@@ -2,7 +2,6 @@
 using log4net;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +14,7 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class ProfilePage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
+        private static readonly ILog log = LogManager.GetLogger(typeof(ProfilePage));
 
         private Player _player;
         private string _uploadedAvatarOriginalPath;
@@ -71,8 +70,8 @@ namespace Forbbiden.Client
 
         private void BtnDiscard_Click(object sender, RoutedEventArgs e)
         {
-            if (this.NavigationService != null && this.NavigationService.CanGoBack)
-                this.NavigationService.GoBack();
+            if (NavigationService != null && NavigationService.CanGoBack)
+                NavigationService.GoBack();
         }
 
         private void ResetFieldColors()
@@ -170,8 +169,8 @@ namespace Forbbiden.Client
 
                 if (client.UpdatePlayer(updatedPlayer))
                 {
-                    if (this.NavigationService != null && this.NavigationService.CanGoBack)
-                        this.NavigationService.GoBack();
+                    if (NavigationService != null && NavigationService.CanGoBack)
+                        NavigationService.GoBack();
                 }
                 else
                 {

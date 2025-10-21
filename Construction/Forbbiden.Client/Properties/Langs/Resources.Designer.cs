@@ -241,11 +241,29 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string offline {
+            get {
+                return ResourceManager.GetString("offline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Online.
         /// </summary>
         public static string online {
             get {
                 return ResourceManager.GetString("online", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        public static string online_friends {
+            get {
+                return ResourceManager.GetString("online_friends", resourceCulture);
             }
         }
         
