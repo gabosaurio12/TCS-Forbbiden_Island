@@ -34,7 +34,7 @@ image::screenshots/avance-19-10/login-show.jpg[Login mostrar contraseña, width=
 Responsable: Gabriel
 
 .Cerrar juego o sesión
-image::screenshots/avance-19-10/quitgame.png[Cerrar juego o sesión, width=600, align=left]
+image::screenshots/avance-19-10/quitgame.jpg[Cerrar juego o sesión, width=600, align=left]
 
 === Popups internacionalizados
 Responsable: Gabriel

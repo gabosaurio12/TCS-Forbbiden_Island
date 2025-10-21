@@ -8,13 +8,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainWindow">
+    
     <Page.Background>
         <ImageBrush ImageSource="/Images/FEI MainPage.png" Stretch="Fill"/>
     </Page.Background>
+    
     <Viewbox Stretch="Uniform">
         <Grid Width="1920" Height="1080"
 >
             <Grid.ColumnDefinitions>
+
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
