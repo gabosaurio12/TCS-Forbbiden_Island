@@ -18,10 +18,10 @@
 
             <!-- Upper bar and go back button -->
             <DockPanel Grid.Row="0" Background="#3CB7FF" LastChildFill="True">
-                <Button Content="&lt;" Width="80" Height="80" FontSize="36" Margin="10"
+                <Button Content="&lt;" Width="80" Height="80" FontSize="36" Margin="10" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                         DockPanel.Dock="Left" Click="BtnDiscard_Click"/>
                 <Grid>
-                    <TextBlock Text="{x:Static p:Resources.profile}" FontSize="64" FontWeight="Bold"
+                    <TextBlock Text="{x:Static p:Resources.profile}" FontSize="64" FontWeight="Bold" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                                VerticalAlignment="Center" HorizontalAlignment="Left" Margin="789,0,0,0"/>
                 </Grid>
             </DockPanel>
@@ -45,14 +45,14 @@
                     <StackPanel Grid.Row="0" HorizontalAlignment="Center">
                         <Ellipse x:Name="imgAvatar" Height="300" Width="300" Fill="#969696" HorizontalAlignment="Center" VerticalAlignment="Center"
                                  Margin="100,100,100,50" Grid.Row="0" />
-                        <TextBlock x:Name="txtBkAvatarName" Text="{x:Static p:Resources.guest}" FontSize="57" FontFamily="Irish Gover" 
+                        <TextBlock x:Name="txtBkAvatarName" Text="{x:Static p:Resources.guest}" FontSize="57" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                                    Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </StackPanel>
 
                     <TextBlock Text="{x:Static p:Resources.avatarExplanation}" Grid.Row="1"
                             FontSize="20" FontFamily="Irish Gover" HorizontalAlignment="Center" Margin="0,40,0,40" />
                     <Button x:Name="btnAvatar" Content="{x:Static p:Resources.uploadAvatar}"
-                            Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" 
+                            Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                             Margin="0,8,0,0"
                             Width="238" Height="64" FontSize="24"
                             Click="BtnUploadAvatar_Click" />
@@ -73,11 +73,11 @@
 
                     <!-- User Info Form -->
                     <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,30,0">
-                        <TextBlock x:Name="txtBkUsername" Text="{x:Static p:Resources.username}" FontSize="48" FontFamily="Irish Gover"
+                        <TextBlock x:Name="txtBkUsername" Text="{x:Static p:Resources.username}" FontSize="48" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                                    Margin="20,30,0,0" HorizontalAlignment="Right" />
-                        <TextBlock x:Name="txtBkName" Text="{x:Static p:Resources.name}" FontSize="48" FontFamily="Irish Gover"
+                        <TextBlock x:Name="txtBkName" Text="{x:Static p:Resources.name}" FontSize="48" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                                    Margin="20,30,0,0" HorizontalAlignment="Right" />
-                        <TextBlock x:Name="txtBkEmail" Text="{x:Static p:Resources.email}" FontSize="48" FontFamily="Irish Gover"
+                        <TextBlock x:Name="txtBkEmail" Text="{x:Static p:Resources.email}" FontSize="48" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                                    Margin="20,30,0,0" HorizontalAlignment="Right" />
                     </StackPanel>
 
@@ -132,11 +132,11 @@
                     <!-- Buttons -->
                     <Button x:Name="btnSave" Content="{x:Static p:Resources.saveChanges}" 
                             Grid.Column="0" Grid.Row="2" Margin="0,80,0,0"
-                            Width="345" Height="100" Background="#83EC38"
+                            Width="345" Height="100" Background="#83EC38" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                             FontSize="36" Click="BtnSave_Click" />
                     <Button x:Name="btnDiscard" Content="{x:Static p:Resources.discardChanges}"
                             Grid.Column="1" Grid.Row="2" Margin="0,80,0,0"
-                            Width="345" Height="100" Background="#FFCB2F"
+                            Width="345" Height="100" Background="#FFCB2F" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                             FontSize="36" Click="BtnDiscard_Click" />
 
                 </Grid>

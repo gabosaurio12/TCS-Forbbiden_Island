@@ -33,7 +33,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                this.NavigationService?.Navigate(new LobbyPage());
+                NavigationService?.Navigate(new LobbyPage());
             }
             catch (Exception ex)
             {
@@ -67,8 +67,13 @@ namespace Forbbiden.Client
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.NavigationService != null && this.NavigationService.CanGoBack)
-                this.NavigationService.GoBack();
+            if (NavigationService != null && NavigationService.CanGoBack)
+                NavigationService.GoBack();
+        }
+
+        private void FriendsButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new FriendsPage());
         }
     }
 }
