@@ -24,7 +24,7 @@
                     Content="&lt;"
                     Width="100" Height="100"
                     FontSize="40"
-                    FontFamily="Bahnschrift Light"
+                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                     BorderThickness="5" BorderBrush="#FFB7B7B7"
                     Background="White"
                     Foreground="Black"
@@ -37,7 +37,7 @@
                    FontSize="60"
                    FontWeight="Bold"
                    Foreground="White"
-                   FontFamily="Bahnschrift Light"
+                   FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"/>
             </DockPanel>
@@ -53,18 +53,18 @@
                 <!-- User/email -->
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0" HorizontalAlignment="Center">
                     <TextBlock x:Name="txtBkUser" Text="{x:Static language:Resources.username_email}" HorizontalAlignment="Left"
-                               FontSize="20" Foreground="White" />
+                               FontSize="20" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
                     <TextBox x:Name="txtBUsername" Height="35" Width="340" Margin="0,5" FontSize="20" />
                 </StackPanel>
 
                 <!-- Password -->
                 <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0" HorizontalAlignment="Center">
                     <TextBlock x:Name="txtBkPassword" Text="{x:Static language:Resources.password}" HorizontalAlignment="Left"
-                               FontSize="20" Foreground="White" />
+                               FontSize="20" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                         <PasswordBox x:Name="pwdBPassword" Height="35" Width="280" Margin="5" FontSize="20" />
                         <TextBox x:Name="txtBPasswordVisible" Height="35" Width="280" Visibility="Collapsed"  Margin="5" FontSize="20" />
-                        <CheckBox x:Name="chkPassword" Content="{x:Static language:Resources.show_password}" VerticalAlignment="Center" Click="TogglePassword_Click" Foreground="White">
+                        <CheckBox x:Name="chkPassword" Content="{x:Static language:Resources.show_password}" VerticalAlignment="Center" Click="TogglePassword_Click" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" >
                             <CheckBox.LayoutTransform>
                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                             </CheckBox.LayoutTransform>
@@ -76,13 +76,13 @@
                 <!-- Register Button -->
                 <StackPanel Grid.Row="3" Orientation="Vertical"
                     HorizontalAlignment="Center" Margin="0,20,0,0">
-                    <CheckBox x:Name="chkRememberMe" Content="{x:Static language:Resources.remember_me}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="White" >
+                    <CheckBox x:Name="chkRememberMe" Content="{x:Static language:Resources.remember_me}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" >
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                         </CheckBox.LayoutTransform>
                     </CheckBox>
-                    <Button x:Name="signupButton" Content="{x:Static language:Resources.login_button}" Height="35" Width="150" Background="#39B349" Foreground="White" FontSize="16" FontWeight="Bold" Click="BtnLogin_Click" />
-                    <Label Content="{x:Static language:Resources.signup_title}" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Signup_MouseDown" Cursor="Hand" FontSize="14" Foreground="White" />
+                    <Button x:Name="signupButton" Content="{x:Static language:Resources.login_button}" Height="35" Width="150" Background="#39B349" Foreground="White" FontSize="16" FontFamily="pack://application:,,,/Fonts/#Irish Grover" Click="BtnLogin_Click" />
+                    <Label Content="{x:Static language:Resources.signup_title}" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Signup_MouseDown" Cursor="Hand" FontSize="14" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
                 </StackPanel>
             </Grid>
             <Image Source="/Images/codebackground.png" Grid.Row="1" Margin="1296,283,171,379" />
