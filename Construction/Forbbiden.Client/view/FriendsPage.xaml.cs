@@ -24,5 +24,10 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
         }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

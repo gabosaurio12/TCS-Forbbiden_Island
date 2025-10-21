@@ -174,7 +174,13 @@
   <data name="normal_message" xml:space="preserve">
     <value>The water level starts at 1</value>
   </data>
+  <data name="offline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
   <data name="online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="online_friends" xml:space="preserve">
     <value>Online</value>
   </data>
   <data name="password" xml:space="preserve">
