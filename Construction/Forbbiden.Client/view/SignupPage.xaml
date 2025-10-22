@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Forbbiden.Client"
         xmlns:p ="clr-namespace:Forbbiden.Client.Properties"
         mc:Ignorable="d"
-        Title="SignupPage" Height="1080" Width="1920" >
+        Title="SignupPage" >
 
     <Page.Background>
         <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
