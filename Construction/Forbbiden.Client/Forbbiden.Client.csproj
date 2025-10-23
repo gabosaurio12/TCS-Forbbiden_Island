@@ -344,5 +344,20 @@
   <ItemGroup>
     <Resource Include="Images\defaultAvatar.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\actionsLeft2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\Patronus HD.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\IMG_20191001_171350.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

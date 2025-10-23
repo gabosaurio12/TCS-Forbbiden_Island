@@ -23,25 +23,28 @@
             <!-- Upper bar -->
             <DockPanel Grid.Row="0" Background="#EFC437" LastChildFill="True" Height="152">
                 <Button x:Name="backButton"
-        Content="&lt;"
-        Width="100" Height="100"
-        FontSize="40"
-        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-        BorderThickness="5" BorderBrush="#FFB7B7B7"
-        Background="White"
-        Foreground="Black"
-        Margin="20,0,0,0"
-        Cursor="Hand"
-        DockPanel.Dock="Left"
-        Click="BackButton_Click"/>
+                        Content="&lt;"
+                        Width="100" Height="100"
+                        FontSize="40"
+                        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                        BorderThickness="5" BorderBrush="#FFB7B7B7"
+                        Background="White"
+                        Foreground="Black"
+                        Margin="20,0,0,0"
+                        Cursor="Hand"
+                        DockPanel.Dock="Left"
+                        Click="BackButton_Click"/>
+                
+                <Image Source="/Images/glass.png" Height="100" Width="100" DockPanel.Dock="Right" Margin="20,0"/>
 
                 <TextBlock Text="{x:Static language:Resources.friends}"
-           FontSize="60"
-           FontWeight="Bold"
-           Foreground="White"
-           FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-           VerticalAlignment="Center"
-           HorizontalAlignment="Center"/>
+                        FontSize="60"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"/>
+
             </DockPanel>
 
             <Grid Grid.Row="1" >
@@ -54,11 +57,11 @@
 
                 <StackPanel x:Name="onlineStack" Grid.Column="0" >
                     <TextBlock Text="{x:Static language:Resources.online_friends}"
-                       FontSize="64"
-                       Foreground="White"
-                       FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-                       HorizontalAlignment="Center"
-                       Margin="0,25"/>
+                        FontSize="64"
+                        Foreground="White"
+                        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                        HorizontalAlignment="Center"
+                        Margin="0,25"/>
                 </StackPanel>
 
                 <StackPanel x:Name="offlineStack" Grid.Column="1">

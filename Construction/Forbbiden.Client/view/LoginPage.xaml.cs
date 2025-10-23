@@ -61,9 +61,7 @@ namespace Forbbiden.Client
                         Properties.Settings.Default.Save();
 
                         NavigationService.GoBack();
-                        //var parentWindow = Window.GetWindow(this);
-                        //parentWindow?.Close();
-
+                        
                         log.Info($"User '{searchPlayer.PlayerUsername}' logged in.");
                     }
                     else

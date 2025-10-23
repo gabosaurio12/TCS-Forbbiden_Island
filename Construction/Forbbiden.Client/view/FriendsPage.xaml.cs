@@ -22,9 +22,12 @@ namespace Forbbiden.Client.view
         {
             var profileManager = new ProfileManagerClient();
             var player = profileManager.GetCurrentLogin();
-            foreach (var friend in player.Friends)
+            if (player != null)
             {
-                AddOnlineFriend(friend);
+                foreach (var friend in player.Friends)
+                {
+                    AddOnlineFriend(friend);
+                }
             }
         }
 
