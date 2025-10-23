@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Forbbiden.Client.ProfileManager;
 
 namespace Forbbiden.Client.view
 {
@@ -14,24 +15,29 @@ namespace Forbbiden.Client.view
         public FriendsPage()
         {
             InitializeComponent();
-            AddOnlineFriend();
-            AddOnlineFriend();
-            AddOfflineFriend();
+            SetFriends();
         }
 
-        public void AddOnlineFriend()
+        private void SetFriends()
         {
-            StackPanel friend = new StackPanel
+            var profileManager = new ProfileManagerClient();
+            var player = profileManager.GetCurrentLogin();
+            foreach (var friend in player.Friends)
+            {
+                AddOnlineFriend(friend);
+            }
+        }
+
+        public void AddOnlineFriend(Player friend)
+        {
+            StackPanel friendStack = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 Margin = new Thickness(40,0,40,0),
                 Background = Brushes.LightGray
             };
 
-            string projectPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
-            string avatarsPath = System.IO.Path.Combine(projectPath, "avatars", "meme-pantene.jpg");
-
-            ImageBrush avatarImg = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(avatarsPath)));
+            ImageBrush avatarImg = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(friend.PlayerAvatarPath)));
 
             Ellipse avatar = new Ellipse
             {
@@ -46,16 +52,16 @@ namespace Forbbiden.Client.view
 
             TextBlock friendName = new TextBlock
             {
-                Text = "Friend 1",
+                Text = friend.PlayerUsername,
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(50, 0, 0, 0),
                 FontSize = 48,
                 FontFamily = new FontFamily(irishGoverFont),
             };
 
-            friend.Children.Add(avatar);
-            friend.Children.Add(friendName);
-            onlineStack.Children.Add(friend);
+            friendStack.Children.Add(avatar);
+            friendStack.Children.Add(friendName);
+            onlineStack.Children.Add(friendStack);
         }
 
         public void AddOfflineFriend()

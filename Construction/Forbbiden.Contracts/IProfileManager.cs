@@ -59,6 +59,8 @@ namespace Forbbiden.Contracts
         public string PlayerAvatarPath { get; set; }
         [DataMember]
         public List<SocialMedia> SocialMedia { get; set; }
+        [DataMember]
+        public List<Player> Friends { get; set; }
     }
 
     [DataContract]
