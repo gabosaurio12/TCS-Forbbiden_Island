@@ -18,6 +18,8 @@ namespace ProfileManager
     public partial class Player : object
     {
         
+        private ProfileManager.Player[] FriendsField;
+        
         private string PlayerAvatarPathField;
         
         private string PlayerEmailField;
@@ -31,6 +33,19 @@ namespace ProfileManager
         private string PlayerUsernameField;
         
         private ProfileManager.SocialMedia[] SocialMediaField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ProfileManager.Player[] Friends
+        {
+            get
+            {
+                return this.FriendsField;
+            }
+            set
+            {
+                this.FriendsField = value;
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string PlayerAvatarPath
