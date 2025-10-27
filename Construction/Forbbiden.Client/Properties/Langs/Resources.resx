@@ -120,6 +120,9 @@
   <data name="bossLogin" xml:space="preserve">
     <value>If you log in you can choose your avatar and make friends!</value>
   </data>
+  <data name="capture_button" xml:space="preserve">
+    <value>Capture</value>
+  </data>
   <data name="change_language" xml:space="preserve">
     <value>Change Language</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="max_players" xml:space="preserve">
     <value>Max number of Players</value>
+  </data>
+  <data name="move_button" xml:space="preserve">
+    <value>Move</value>
   </data>
   <data name="new_game" xml:space="preserve">
     <value>New Game</value>
@@ -215,6 +221,9 @@
   </data>
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="shore_up_button" xml:space="preserve">
+    <value>Shore up</value>
   </data>
   <data name="show_password" xml:space="preserve">
     <value>Show</value>
