@@ -393,7 +393,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
