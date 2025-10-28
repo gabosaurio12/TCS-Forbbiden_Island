@@ -60,7 +60,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -90,7 +90,7 @@ namespace Forbbiden.Server.logic
             }
             catch (SmtpException ex)
             {
-                Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                Console.WriteLine(CLASS_NAME + ex.Message);
                 log.Error(CLASS_NAME, ex);
                 throw new Exception(ex.Message);
             }
@@ -120,13 +120,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
@@ -153,13 +153,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
@@ -191,7 +191,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -234,7 +234,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -260,13 +260,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
@@ -278,7 +278,7 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Player GetPlayerById(int playerId)
         {
-            log.Info($"Retrieving player by ID: {playerId}"));
+            log.Info($"Retrieving player by ID: {playerId}");
 
             Contracts.Player player = null;
             using (var db = new Forbbiden_FEIEntities())
@@ -301,7 +301,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -350,13 +350,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
@@ -387,7 +387,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME + ex.Message);
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
