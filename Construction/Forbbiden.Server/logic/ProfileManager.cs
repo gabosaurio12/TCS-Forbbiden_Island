@@ -14,10 +14,11 @@ namespace Forbbiden.Server.logic
     public class ProfileManager : IProfileManager
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
+        private const string CLASS_NAME = "ProfileManager.cs";
 
         public bool ValidateEmail(string email)
         {
-            log.Info("Validating email: " + email);
+            log.Info(String.Format("Validating email: {Email}", email));
 
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -36,7 +37,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
 
@@ -47,7 +48,7 @@ namespace Forbbiden.Server.logic
 
         public bool IsUsernameAvailable(string username)
         {
-            log.Info("Checking username availability: " + username);
+            log.Info(String.Format("Checking username availability: {0}", username));
 
             using (var db = new Forbbiden_FEIEntities())
             {
@@ -59,7 +60,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
             }
@@ -67,7 +68,7 @@ namespace Forbbiden.Server.logic
 
         public bool SendEmail(string email)
         {
-            log.Info("Sending email to: " + email);
+            log.Info(String.Format("Sending email to: {0}", email));
 
             bool success = true;
             string receiver = email;
@@ -84,12 +85,12 @@ namespace Forbbiden.Server.logic
             try
             {
                 client.Send(message);
-                log.Info("Email sent to: " + email);
+                log.Info(String.Format("Email sent to: {0}", email));
             }
-            catch (Exception ex)
+            catch (SmtpException ex)
             {
                 Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                log.Error("ProfileManager.cs", ex);
+                log.Error(CLASS_NAME, ex);
                 throw new Exception(ex.Message);
             }
 
@@ -98,7 +99,7 @@ namespace Forbbiden.Server.logic
 
         public bool SignUp(Contracts.Player player)
         {
-            log.Info("Signing up new player: " + player.PlayerUsername);
+            log.Info(String.Format("Signing up new player: {0}", player.PlayerUsername));
 
             bool success = true;
             using (var db = new Forbbiden_FEIEntities())
@@ -113,19 +114,19 @@ namespace Forbbiden.Server.logic
                 {
                     db.Player.Add(newPlayer);
                     db.SaveChanges();
-                    log.Info("New player signed up: " + player.PlayerUsername);
+                    log.Info(String.Format("New player signed up: {0}", player.PlayerUsername));
                     SendEmail(newPlayer.player_email);
                 }
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
             }
@@ -134,7 +135,7 @@ namespace Forbbiden.Server.logic
 
         public bool Login(Contracts.Player player)
         {
-            log.Info("Logging in player: " + player.PlayerUsername);
+            log.Info(String.Format("Logging in player: {0}", player.PlayerUsername));
 
             bool success = false;
             using (var db = new Forbbiden_FEIEntities())
@@ -147,25 +148,19 @@ namespace Forbbiden.Server.logic
                 {
                     db.SaveChanges();
                     success = true;
-                    log.Info("Player logged in: " + player.PlayerUsername);
+                    log.Info(String.Format("Player logged in: {0}", player.PlayerUsername));
                 }
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
-                    throw new Exception(ex.Message);
                 }
             }
 
@@ -174,7 +169,7 @@ namespace Forbbiden.Server.logic
     
         public Contracts.Player GetPlayerByUsername(string username)
         {
-            log.Info("Retrieving player by username: " + username);
+            log.Info(String.Format("Retrieving player by username: {0}", username));
 
             using (var db = new Forbbiden_FEIEntities())
             {
@@ -183,7 +178,7 @@ namespace Forbbiden.Server.logic
                     var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
                     if (playerResult != null)
                     {
-                        log.Info("Player found: " + username);
+                        log.Info(String.Format("Player found: {0}", username));
                         return new Contracts.Player
                         {
                             PlayerId = playerResult.player_id,
@@ -196,7 +191,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
 
@@ -239,11 +234,11 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
             }
-            log.Info("Current logged-in player retrieved: " + (player != null ? player.PlayerUsername : "None"));
+            log.Info(String.Format("Current logged-in player retrieved: {0}", (player != null ? player.PlayerUsername : "None")));
             return player;
         }
 
@@ -264,13 +259,13 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
             }
@@ -281,7 +276,7 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Player GetPlayerById(int playerId)
         {
-            log.Info("Retrieving player by ID: " + playerId);
+            log.Info(String.Format("Retrieving player by ID: {0}", playerId));
 
             Contracts.Player player = null;
             using (var db = new Forbbiden_FEIEntities())
@@ -305,18 +300,18 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
             }
 
-            log.Info("Player retrieved by ID: " + (player != null ? player.PlayerUsername : "None"));
+            log.Info(String.Format("Player retrieved by ID: {0}", (player != null ? player.PlayerUsername : "None")));
             return player;
         }
 
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
-            log.Info("Updating player: " + updatedPlayer.PlayerUsername);
+            log.Info(String.Format("Updating player: {0}", updatedPlayer.PlayerUsername));
 
             bool success = false;
             using (var db = new Forbbiden_FEIEntities())
@@ -348,25 +343,19 @@ namespace Forbbiden.Server.logic
 
                     db.SaveChanges();
                     success = true;
-                    log.Info("Player updated: " + updatedPlayer.PlayerUsername);
+                    log.Info(String.Format("Player updated: {0}", updatedPlayer.PlayerUsername));
                 }
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
-                    throw new Exception(ex.Message);
                 }
             }
             return success;
@@ -374,7 +363,7 @@ namespace Forbbiden.Server.logic
 
         public bool DeletePlayerByUsername(string username)
         {
-            log.Info("Deleting player by username: " + username);
+            log.Info(String.Format("Deleting player by username: {0}", username));
 
             bool success = false;
 
@@ -396,20 +385,14 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
+                    log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
-                    log.Error("ProfileManager.cs", ex);
-                    throw new Exception(ex.Message);
                 }
             }
 

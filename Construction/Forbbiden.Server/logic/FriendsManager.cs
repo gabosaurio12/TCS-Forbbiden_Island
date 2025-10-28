@@ -28,7 +28,7 @@ namespace Forbbiden.Server.logic
             var receiver = playerManager.GetPlayerByUsername(receiverUsername);
             if (sender == null || receiver == null)
             {
-                log.Warn($"AddSendFriendRequest: One of the users does not exist. Sender: {senderUsername}, Receiver: {receiverUsername}");
+                log.Warn(String.Format("AddSendFriendRequest: One of the users does not exist. Sender: {0}, Receiver: {1}", sender, receiver));
                 return false;
             }
 

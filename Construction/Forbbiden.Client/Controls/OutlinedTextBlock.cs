@@ -87,10 +87,6 @@ namespace Forbbiden.Client.Controls
                 case HorizontalAlignment.Right:
                     x = ActualWidth - ft.WidthIncludingTrailingWhitespace;
                     break;
-                case HorizontalAlignment.Stretch:
-                    break;
-                case HorizontalAlignment.Left:
-                    break;
                 default:
                     x = 0;
                     break;
