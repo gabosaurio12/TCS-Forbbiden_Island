@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="actions_left" xml:space="preserve">
+    <value>Actions Left</value>
+  </data>
+  <data name="avatar_explanation" xml:space="preserve">
+    <value>Import an image from your device to use as an avatar</value>
+  </data>
   <data name="bossLogin" xml:space="preserve">
     <value>If you log in you can choose your avatar and make friends!</value>
   </data>
@@ -128,6 +134,9 @@
   </data>
   <data name="difficulty" xml:space="preserve">
     <value>Difficulty</value>
+  </data>
+  <data name="discard_changes" xml:space="preserve">
+    <value>Discard Changes</value>
   </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
@@ -171,6 +180,9 @@
   <data name="move_button" xml:space="preserve">
     <value>Move</value>
   </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="new_game" xml:space="preserve">
     <value>New Game</value>
   </data>
@@ -195,6 +207,9 @@
   <data name="play" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="players" xml:space="preserve">
+    <value>Players</value>
+  </data>
   <data name="private_message" xml:space="preserve">
     <value>Only the players with invitation can join </value>
   </data>
@@ -215,6 +230,9 @@
   </data>
   <data name="remember_me" xml:space="preserve">
     <value>Remember Me</value>
+  </data>
+  <data name="save_changes" xml:space="preserve">
+    <value>Save Changes</value>
   </data>
   <data name="select_language" xml:space="preserve">
     <value>Select Language</value>
@@ -240,6 +258,9 @@
   <data name="spanish" xml:space="preserve">
     <value>Spanish</value>
   </data>
+  <data name="upload_avatar" xml:space="preserve">
+    <value>Upload Avatar</value>
+  </data>
   <data name="username" xml:space="preserve">
     <value>Username</value>
   </data>
@@ -248,6 +269,9 @@
   </data>
   <data name="username_email" xml:space="preserve">
     <value>Username or email</value>
+  </data>
+  <data name="water_level" xml:space="preserve">
+    <value>Water Level</value>
   </data>
   <data name="wrongPassword" xml:space="preserve">
     <value>Wrong Password</value>

@@ -8,9 +8,9 @@ namespace Forbbiden.Client.view.games
     /// <summary>
     /// Interaction logic for Board.xaml
     /// </summary>
-    public partial class Board : Page
+    public partial class BoardPage : Page
     {
-        public Board()
+        public BoardPage()
         {
             InitializeComponent();
         }
