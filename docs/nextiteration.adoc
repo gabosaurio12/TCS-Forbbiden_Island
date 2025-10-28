@@ -14,6 +14,37 @@ Se planea abarcar los siguientes puntos en la próxima iteración.
 * Lista de amigos
 * Chat entre amigos
 
+=== Lógica
+
+* Agregar token de verificación
+** En la capa del servidor se crean y duran 24 horas activos
+** Si no se verifica el correo se envía un aviso al correo de que se enviará otro correo de verificación y si no se verifica se eliminará la cuenta
+** Se ingresa el token en la aplicación
+** En BD se debe tener una tabla de Not_Verified_Player que es una copia de Player donde se almacenarán los usuarios no verificados
+** Una vez verificados se agregan a Player y se borran de Not_Verified_Player
+** En BD debe haber una tabla:
+
+*Token*
+[cols="1,1,1,1"]
+
+|===
+
+|token_id
+|token
+|is_verified
+|activation_time
+
+|===
+
+* Preguntar si el hasheo de la contraseña es suficiente o hay que agregar seguridad
+
+=== GUI
+
+* En BoardPage:
+** Hacer más pequeñas las tarjetas (que aumenten de tamaño con el mouse enter)
+** Hacer más grandes las casillas
+** Agregar nombre del nivel del mar, jugadores y acciones
+
 === CU Listos en esta iteración
 * GUI Nueva Partida
 * Lobby
