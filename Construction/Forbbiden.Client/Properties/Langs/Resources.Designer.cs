@@ -79,6 +79,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture.
+        /// </summary>
+        public static string capture_button {
+            get {
+                return ResourceManager.GetString("capture_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Language.
         /// </summary>
         public static string change_language {
@@ -210,6 +219,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string max_players {
             get {
                 return ResourceManager.GetString("max_players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string move_button {
+            get {
+                return ResourceManager.GetString("move_button", resourceCulture);
             }
         }
         
@@ -354,6 +372,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string settings {
             get {
                 return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shore up.
+        /// </summary>
+        public static string shore_up_button {
+            get {
+                return ResourceManager.GetString("shore_up_button", resourceCulture);
             }
         }
         

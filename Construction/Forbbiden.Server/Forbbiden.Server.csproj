@@ -13,6 +13,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -74,6 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="logic\FriendsManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />
     <Compile Include="LoginPlayer.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
@@ -104,6 +106,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\email.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>email.settings</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -121,6 +128,10 @@
     </EntityDeploy>
     <None Include="ForbbidenModel.edmx.diagram">
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
+    </None>
+    <None Include="Properties\email.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>email.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -16,9 +16,9 @@ namespace Forbbiden.Client
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfilePage));
 
-        private Player _player;
-        private string _uploadedAvatarOriginalPath;
-        private string _uploadedAvatarProjectPath;
+        private Player player;
+        private string uploadedAvatarOriginalPath;
+        private string uploadedAvatarProjectPath;
         private bool avatarChanged = false;
 
         public ProfilePage()
@@ -29,7 +29,7 @@ namespace Forbbiden.Client
         public ProfilePage(Player player)
         {
             InitializeComponent();
-            _player = player;
+            this.player = player;
             txtBxUsername.Text = player.PlayerUsername;
             txtBxEmail.Text = player.PlayerEmail;
             txtBxName.Text = player.PlayerName;
@@ -131,22 +131,22 @@ namespace Forbbiden.Client
 
             player.SocialMedia = new SocialMedia[]
             {
-                new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = _player.PlayerId },
-                new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = _player.PlayerId },
-                new SocialMedia { SocialMediaName = "instagram", SocialLink = txtBxInstagram.Text, PlayerId = _player.PlayerId },
-                new SocialMedia { SocialMediaName = "facebook", SocialLink = txtBxFacebook.Text, PlayerId = _player.PlayerId }
+                new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = this.player.PlayerId },
+                new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = this.player.PlayerId },
+                new SocialMedia { SocialMediaName = "instagram", SocialLink = txtBxInstagram.Text, PlayerId = this.player.PlayerId },
+                new SocialMedia { SocialMediaName = "facebook", SocialLink = txtBxFacebook.Text, PlayerId = this.player.PlayerId }
             };
 
-            if (avatarChanged) player.PlayerAvatarPath = _uploadedAvatarProjectPath;
+            if (avatarChanged) player.PlayerAvatarPath = uploadedAvatarProjectPath;
 
             bool isValid = true;
 
-            if (player.PlayerUsername != _player.PlayerUsername)
+            if (player.PlayerUsername != this.player.PlayerUsername)
             {
                 ValidateUsername(player.PlayerUsername, ref isValid);
             }
 
-            if (player.PlayerEmail != _player.PlayerEmail)
+            if (player.PlayerEmail != this.player.PlayerEmail)
             {
                 ValidateEmail(player.PlayerEmail, ref isValid);
             }
@@ -163,9 +163,9 @@ namespace Forbbiden.Client
 
             if (SetPlayer(ref updatedPlayer))
             {
-                if (avatarChanged) File.Copy(_uploadedAvatarOriginalPath, _uploadedAvatarProjectPath, true);
+                if (avatarChanged) File.Copy(uploadedAvatarOriginalPath, uploadedAvatarProjectPath, true);
 
-                updatedPlayer.PlayerId = _player.PlayerId;
+                updatedPlayer.PlayerId = player.PlayerId;
 
                 if (client.UpdatePlayer(updatedPlayer))
                 {
@@ -190,15 +190,15 @@ namespace Forbbiden.Client
 
             if (result == true)
             {
-                _uploadedAvatarOriginalPath = openFileDialog.FileName;
+                uploadedAvatarOriginalPath = openFileDialog.FileName;
 
                 string projectPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
                 string avatarsPath = Path.Combine(projectPath, "avatars");
-                string destinyPath = Path.Combine(avatarsPath, Path.GetFileName(_uploadedAvatarOriginalPath));
+                string destinyPath = Path.Combine(avatarsPath, Path.GetFileName(uploadedAvatarOriginalPath));
 
-                _uploadedAvatarProjectPath = destinyPath;
+                uploadedAvatarProjectPath = destinyPath;
 
-                imgAvatar.Fill = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(_uploadedAvatarOriginalPath)));
+                imgAvatar.Fill = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(uploadedAvatarOriginalPath)));
                 avatarChanged = true;
             }
         }

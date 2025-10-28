@@ -23,6 +23,9 @@ namespace Forbbiden.Client.ProfileManager {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.ProfileManager.Player[] FriendsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlayerAvatarPathField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -50,6 +53,19 @@ namespace Forbbiden.Client.ProfileManager {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.ProfileManager.Player[] Friends {
+            get {
+                return this.FriendsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
+                    this.FriendsField = value;
+                    this.RaisePropertyChanged("Friends");
+                }
             }
         }
         

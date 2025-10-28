@@ -86,6 +86,9 @@
     <Compile Include="view\FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\games\Board.xaml.cs">
+      <DependentUpon>Board.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
     </Compile>
@@ -289,6 +292,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\games\Board.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\HostGameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -343,6 +350,33 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\defaultAvatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\actionsLeft2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\Patronus HD.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\IMG_20191001_171350.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\waterLevel-0.png" />
+    <Resource Include="Images\waterLevel-1.png" />
+    <Resource Include="Images\waterLevel-2.png" />
+    <Resource Include="Images\waterLevel-3.png" />
+    <Resource Include="Images\waterLevel-4.png" />
+    <Resource Include="Images\waterLevel-5.png" />
+    <Resource Include="Images\waterLevel-6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\boardButtons.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

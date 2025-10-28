@@ -16,7 +16,7 @@ namespace Forbbiden.Client
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
 
-        private bool _passwordVisible = false;
+        private bool passwordVisible = false;
         public LoginPage()
         {
             InitializeComponent();
@@ -61,9 +61,7 @@ namespace Forbbiden.Client
                         Properties.Settings.Default.Save();
 
                         NavigationService.GoBack();
-                        //var parentWindow = Window.GetWindow(this);
-                        //parentWindow?.Close();
-
+                        
                         log.Info($"User '{searchPlayer.PlayerUsername}' logged in.");
                     }
                     else
@@ -84,7 +82,7 @@ namespace Forbbiden.Client
         {
             string projectPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
 
-            if (!_passwordVisible)
+            if (!passwordVisible)
             {
                 string darkBossPath = Path.Combine(projectPath, "Images", "bossdark.png");
                 bossImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(darkBossPath));
@@ -92,14 +90,14 @@ namespace Forbbiden.Client
                 txtBPasswordVisible.Text = pwdBPassword.Password;
                 txtBPasswordVisible.Visibility = Visibility.Visible;
                 pwdBPassword.Visibility = Visibility.Collapsed;
-                _passwordVisible = true;
+                passwordVisible = true;
             }
             else
             {
                 pwdBPassword.Password = txtBPasswordVisible.Text;
                 txtBPasswordVisible.Visibility = Visibility.Collapsed;
                 pwdBPassword.Visibility = Visibility.Visible;
-                _passwordVisible = false;
+                passwordVisible = false;
 
                 string bossPath = Path.Combine(projectPath, "Images", "boss.png");
                 bossImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(bossPath));

@@ -18,9 +18,9 @@ namespace Forbbiden.Client
             Properties.Settings.Default.languageCode = "en-US";
             Properties.Settings.Default.Save();
 
-            if (this.NavigationService != null && this.NavigationService.CanGoBack)
+            if (NavigationService != null && NavigationService.CanGoBack)
             {
-                this.NavigationService.GoBack();
+                NavigationService.GoBack();
             }
         }
         private void SpanishButton_Click(object sender, RoutedEventArgs e)

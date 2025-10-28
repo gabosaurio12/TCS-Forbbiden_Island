@@ -11,12 +11,16 @@ namespace Forbbiden.Server
     {
         static void Main(string[] args)
         {
-            ServiceHost host = new ServiceHost(typeof(logic.ProfileManager));
-            host.Open();
+            ServiceHost profileHost = new ServiceHost(typeof(logic.ProfileManager));
+            profileHost.Open();
+            ServiceHost friendsHost = new ServiceHost(typeof(logic.FriendsManager));
+            friendsHost.Open();
+
             Console.WriteLine("Service is running...");
             Console.ReadLine();
 
-            host.Close();
+            profileHost.Close();
+            friendsHost.Close();
         }
     }
 }

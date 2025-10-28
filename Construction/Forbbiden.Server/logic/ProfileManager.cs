@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using log4net;
 using System;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -16,17 +17,29 @@ namespace Forbbiden.Server.logic
 
         public bool ValidateEmail(string email)
         {
+            log.Info("Validating email: " + email);
+
             if (string.IsNullOrWhiteSpace(email))
             {
                 return false;
             }
             if (email.Contains("@"))
             {
-                using (var db = new Forbbiden_FEIEntities())
+                try
                 {
-                    var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
-                    return emailResult == null;
+                    using (var db = new Forbbiden_FEIEntities())
+                    {
+                        var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
+                        return emailResult == null;
+                    }
                 }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
+                    log.Error("ProfileManager.cs", ex);
+                    throw new EntityException(ex.Message);
+                }
+
             }
 
             return false;
@@ -34,6 +47,8 @@ namespace Forbbiden.Server.logic
 
         public bool IsUsernameAvailable(string username)
         {
+            log.Info("Checking username availability: " + username);
+
             using (var db = new Forbbiden_FEIEntities())
             {
                 try
@@ -41,36 +56,41 @@ namespace Forbbiden.Server.logic
                     var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
                     return playerResult == null;
                 }
-                catch (Exception ex)
+                catch (EntityException ex)
                 {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
-                    return false;
+                    throw new EntityException(ex.Message);
                 }
             }
         }
 
         public bool SendEmail(string email)
         {
+            log.Info("Sending email to: " + email);
+
             bool success = true;
             string receiver = email;
-            string emisor = "forbbidenislandfei@gmail.com";
+            string emisor = Properties.email.Default.emailAddress;
             MailMessage message = new MailMessage(emisor, receiver);
             message.Subject = "Register confirmation";
             message.Body = "Your account has been succesfully created, welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
-            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            SmtpClient client = new SmtpClient(Properties.email.Default.smtp);
             client.Port = 587;
-            string emailCode = Properties.Settings.Default.emailCode;
+            string emailCode = Properties.email.Default.emailCode;
             client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
             client.EnableSsl = true;
 
             try
             {
                 client.Send(message);
+                log.Info("Email sent to: " + email);
             }
             catch (Exception ex)
             {
+                Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                 log.Error("ProfileManager.cs", ex);
-                success = false;
+                throw new Exception(ex.Message);
             }
 
             return success;
@@ -78,6 +98,8 @@ namespace Forbbiden.Server.logic
 
         public bool SignUp(Contracts.Player player)
         {
+            log.Info("Signing up new player: " + player.PlayerUsername);
+
             bool success = true;
             using (var db = new Forbbiden_FEIEntities())
             {
@@ -91,17 +113,20 @@ namespace Forbbiden.Server.logic
                 {
                     db.Player.Add(newPlayer);
                     db.SaveChanges();
+                    log.Info("New player signed up: " + player.PlayerUsername);
                     SendEmail(newPlayer.player_email);
                 }
                 catch (DbEntityValidationException ex)
                 {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
-                    success = false;
+                    throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
-                    success = false;
+                    throw new DbEntityValidationException(ex.Message);
                 }
             }
             return success;
@@ -109,7 +134,9 @@ namespace Forbbiden.Server.logic
 
         public bool Login(Contracts.Player player)
         {
-            bool success = true;
+            log.Info("Logging in player: " + player.PlayerUsername);
+
+            bool success = false;
             using (var db = new Forbbiden_FEIEntities())
             {
                 db.LoginPlayer.Add(new LoginPlayer
@@ -119,21 +146,26 @@ namespace Forbbiden.Server.logic
                 try
                 {
                     db.SaveChanges();
+                    success = true;
+                    log.Info("Player logged in: " + player.PlayerUsername);
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbUpdateException(ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new Exception(ex.Message);
                 }
             }
 
@@ -142,25 +174,40 @@ namespace Forbbiden.Server.logic
     
         public Contracts.Player GetPlayerByUsername(string username)
         {
+            log.Info("Retrieving player by username: " + username);
+
             using (var db = new Forbbiden_FEIEntities())
             {
-                var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
-                if (playerResult != null)
+                try
                 {
-                    return new Contracts.Player
+                    var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
+                    if (playerResult != null)
                     {
-                        PlayerId = playerResult.player_id,
-                        PlayerUsername = playerResult.player_username,
-                        PlayerPassword = playerResult.player_password,
-                        PlayerEmail = playerResult.player_email
-                    };
+                        log.Info("Player found: " + username);
+                        return new Contracts.Player
+                        {
+                            PlayerId = playerResult.player_id,
+                            PlayerUsername = playerResult.player_username,
+                            PlayerPassword = playerResult.player_password,
+                            PlayerEmail = playerResult.player_email
+                        };
+                    }
                 }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
+                    log.Error("ProfileManager.cs", ex);
+                    throw new EntityException(ex.Message);
+                }
+
                 return null;
             }
         }
 
         public Contracts.Player GetCurrentLogin()
         {
+            log.Info("Retrieving current logged-in player");
+
             Contracts.Player player = null;
             using (var db = new Forbbiden_FEIEntities())
             {
@@ -189,25 +236,22 @@ namespace Forbbiden.Server.logic
                         };
                     }
                 }
-                catch (InvalidOperationException ex)
+                catch (EntityException ex)
                 {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
-                }
-                catch (ArgumentException ex)
-                {
-                    log.Error("ProfileManager.cs", ex);
-                }
-                catch (Exception ex)
-                {
-                    log.Error("ProfileManager.cs", ex);
+                    throw new EntityException(ex.Message);
                 }
             }
+            log.Info("Current logged-in player retrieved: " + (player != null ? player.PlayerUsername : "None"));
             return player;
         }
 
         public bool ClearCurrentLogin()
         {
-            bool success = true;
+            log.Info("Clearing current logged-in player");
+
+            bool success = false;
             using (var db = new Forbbiden_FEIEntities())
             {
                 try
@@ -215,47 +259,66 @@ namespace Forbbiden.Server.logic
                     var loggedInPlayers = db.LoginPlayer.ToList();
                     db.LoginPlayer.RemoveRange(loggedInPlayers);
                     db.SaveChanges();
+                    success = true;
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbUpdateException(ex.Message);
                 }
             }
 
+            log.Info("Current logged-in player cleared");
             return success;
         }
 
         public Contracts.Player GetPlayerById(int playerId)
         {
+            log.Info("Retrieving player by ID: " + playerId);
+
             Contracts.Player player = null;
             using (var db = new Forbbiden_FEIEntities())
             {
-                var playerResult = db.Player.Find(playerId);
-                if (playerResult != null)
+                try
                 {
-                    player = new Contracts.Player
+                    var playerResult = db.Player.Find(playerId);
+                    if (playerResult != null)
                     {
-                        PlayerId = playerResult.player_id,
-                        PlayerName = playerResult.player_name,
-                        PlayerUsername = playerResult.player_username,
-                        PlayerPassword = playerResult.player_password,
-                        PlayerEmail = playerResult.player_email,
-                        PlayerAvatarPath = playerResult.player_avatar
-                    };
+                        player = new Contracts.Player
+                        {
+                            PlayerId = playerResult.player_id,
+                            PlayerName = playerResult.player_name,
+                            PlayerUsername = playerResult.player_username,
+                            PlayerPassword = playerResult.player_password,
+                            PlayerEmail = playerResult.player_email,
+                            PlayerAvatarPath = playerResult.player_avatar
+                        };
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
+                    log.Error("ProfileManager.cs", ex);
+                    throw new EntityException(ex.Message);
                 }
             }
+
+            log.Info("Player retrieved by ID: " + (player != null ? player.PlayerUsername : "None"));
             return player;
         }
 
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
-            bool success = true;
+            log.Info("Updating player: " + updatedPlayer.PlayerUsername);
+
+            bool success = false;
             using (var db = new Forbbiden_FEIEntities())
             {
                 try
@@ -284,29 +347,37 @@ namespace Forbbiden.Server.logic
                     }
 
                     db.SaveChanges();
+                    success = true;
+                    log.Info("Player updated: " + updatedPlayer.PlayerUsername);
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbUpdateException(ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    success = false;
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new Exception(ex.Message);
                 }
             }
-
             return success;
         }
 
         public bool DeletePlayerByUsername(string username)
         {
+            log.Info("Deleting player by username: " + username);
+
+            bool success = false;
+
             using (var db = new Forbbiden_FEIEntities())
             {
                 try
@@ -316,24 +387,33 @@ namespace Forbbiden.Server.logic
                     {
                         db.Player.Remove(playerToDelete);
                         db.SaveChanges();
-                        return true;
+
+                        log.Info("Player deleted: " + username);
+                        success = true;
+                        return success;
                     }
                 }
                 catch (DbEntityValidationException ex)
                 {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new DbUpdateException(ex.Message);
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine("[ERROR] ProfileManager.cs - " + ex.Message);
                     log.Error("ProfileManager.cs", ex);
+                    throw new Exception(ex.Message);
                 }
             }
 
-            return false;
+            return success;
         }
     }
 }

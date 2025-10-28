@@ -16,7 +16,9 @@ namespace Forbbiden.Client
         {
             InitializeComponent();
 
-            if (Properties.Settings.Default.rememberLogin)
+            var client = new ProfileManagerClient();
+
+            if (client.GetCurrentLogin() != null)
             {
                 ReloadMainPage();
             }
