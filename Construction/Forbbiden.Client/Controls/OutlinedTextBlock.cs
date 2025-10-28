@@ -74,7 +74,7 @@ namespace Forbbiden.Client.Controls
             return finalSize;
         }
 
-        protected override void OnRender(DrawingContext dc)
+        protected override void OnRender(DrawingContext drawingContext)
         {
             var ft = CreateFormattedText();
 
@@ -88,7 +88,9 @@ namespace Forbbiden.Client.Controls
                     x = ActualWidth - ft.WidthIncludingTrailingWhitespace;
                     break;
                 case HorizontalAlignment.Stretch:
+                    break;
                 case HorizontalAlignment.Left:
+                    break;
                 default:
                     x = 0;
                     break;
@@ -112,7 +114,7 @@ namespace Forbbiden.Client.Controls
             }
 
             var geometry = ft.BuildGeometry(new Point(x, y));
-            dc.DrawGeometry(Fill, new Pen(Stroke, StrokeThickness), geometry);
+            drawingContext.DrawGeometry(Fill, new Pen(Stroke, StrokeThickness), geometry);
         }
     }
 }

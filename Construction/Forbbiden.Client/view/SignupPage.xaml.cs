@@ -3,6 +3,7 @@ using log4net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Forbbiden.Client
 {
@@ -16,7 +17,7 @@ namespace Forbbiden.Client
         {
             InitializeComponent();
         }
-        private bool ValidatePassword(string password)
+        private static bool ValidatePassword(string password)
         {
             if (!string.IsNullOrWhiteSpace(password) && password.Length > 7)
             {
@@ -32,6 +33,18 @@ namespace Forbbiden.Client
             return true;
         }
 
+        private static void TurnTextBlockRed(TextBlock textBlock)
+        {
+            textBlock.Foreground = Brushes.Red;
+        }
+
+        private static void ResetTextBlocks(TextBlock txtBlockUsername, TextBlock txtBlockEmail, TextBlock txtBlockPassword)
+        {
+            txtBlockUsername.Foreground = Brushes.White;
+            txtBlockEmail.Foreground = Brushes.White;
+            txtBlockPassword.Foreground = Brushes.White;
+        }
+
         private bool ValidatePlayer(ref Player player, ProfileManagerClient client)
         {
             bool isValid = true;
@@ -40,26 +53,31 @@ namespace Forbbiden.Client
             {
                 MessageBox.Show("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
                 isValid = false;
+                TurnTextBlockRed(txtBkPassword);
             }
             if (string.IsNullOrWhiteSpace(player.PlayerUsername))
             {
                 MessageBox.Show("El nombre de usuario no puede estar vacío.");
                 isValid = false;
+                TurnTextBlockRed(txtBkUsername);
             }
             if (player.PlayerUsername.Contains(" "))
             {
                 MessageBox.Show("El nombre de usuario no puede contener espacios.");
                 isValid = false;
+                TurnTextBlockRed(txtBkUsername);
             }
             if (!client.IsUsernameAvailable(player.PlayerUsername))
             {
                 MessageBox.Show("El nombre de usuario ya está en uso.");
                 isValid = false;
+                TurnTextBlockRed(txtBkUsername);
             }
             if (!client.ValidateEmail(player.PlayerEmail))
             {
                 MessageBox.Show("El correo electrónico es inválido o ya está en uso.");
                 isValid = false;
+                TurnTextBlockRed(txtBkEmail);
             }
            
             return isValid;
@@ -67,13 +85,15 @@ namespace Forbbiden.Client
 
         private void SignupButton_Click(object sender, RoutedEventArgs e)
         {
+            ResetTextBlocks(txtBkUsername, txtBkEmail, txtBkPassword);
+
             var client = new ProfileManagerClient();
 
             var player = new Player
             {
-                PlayerUsername = txtBUsername.Text,
-                PlayerEmail = txtBEmail.Text,
-                PlayerPassword = txtBPassword.Text
+                PlayerUsername = txtBxUsername.Text,
+                PlayerEmail = txtBxEmail.Text,
+                PlayerPassword = txtBxPassword.Text
             };
 
             if (ValidatePlayer(ref player, client))
@@ -81,7 +101,7 @@ namespace Forbbiden.Client
                 player.PlayerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
                 if (client.SignUp(player))
                 {
-                    log.Info($"Usuario {player.PlayerUsername} sent.");
+                    log.Info("Usuario {player.PlayerUsername} sent.");
                     MessageBox.Show("Usuario registrado exitosamente.");
                     NavigationService.Navigate(new LoginPage());
                 }
@@ -90,11 +110,6 @@ namespace Forbbiden.Client
                     MessageBox.Show("Error al registrar el usuario. Inténtelo de nuevo más tarde.");
                 }
             }         
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)

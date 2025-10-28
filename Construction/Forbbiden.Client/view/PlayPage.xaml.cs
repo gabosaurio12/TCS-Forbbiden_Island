@@ -12,12 +12,12 @@ namespace Forbbiden.Client
         public PlayPage()
         {
             InitializeComponent();
-            ShowHostGame();
+            ShowHostGame(TabContent, HostButton, OnlineButton);
         }
 
         private void HostButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowHostGame();
+            ShowHostGame(TabContent, HostButton, OnlineButton);
             HostButton.IsDefault = true;
             OnlineButton.IsDefault = false;
         }
@@ -44,7 +44,7 @@ namespace Forbbiden.Client
       
             
 
-        private void ShowHostGame()
+        private static void ShowHostGame(ContentControl TabContent, Button HostButton, Button OnlineButton)
         {
             TabContent.Content = new HostGameControl();
             HostButton.Background = System.Windows.Media.Brushes.LightGray;

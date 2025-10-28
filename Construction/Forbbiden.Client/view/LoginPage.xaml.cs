@@ -22,15 +22,15 @@ namespace Forbbiden.Client
             InitializeComponent();
         }
 
-        private void ResetFieldColors()
+        private static void ResetFieldColors(TextBlock txtBkUser, TextBlock txtBkPassword)
         {
-            txtBkUser.Foreground = Brushes.Black;
-            txtBkPassword.Foreground = Brushes.Black;
+            txtBkUser.Foreground = Brushes.White;
+            txtBkPassword.Foreground = Brushes.White;
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            ResetFieldColors();
+            ResetFieldColors(txtBkUser, txtBkPassword);
 
             var client = new ProfileManagerClient();
 
@@ -62,11 +62,11 @@ namespace Forbbiden.Client
 
                         NavigationService.GoBack();
                         
-                        log.Info($"User '{searchPlayer.PlayerUsername}' logged in.");
+                        log.Info("User '{searchPlayer.PlayerUsername}' logged in.");
                     }
                     else
                     {
-                        log.Warn($"Login failed for user '{searchPlayer.PlayerUsername}'.");
+                        log.Warn("Login failed for user '{searchPlayer.PlayerUsername}'.");
                         MessageBox.Show(Properties.Langs.Resources.loginError);
                     }
                 }
