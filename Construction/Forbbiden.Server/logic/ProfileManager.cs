@@ -15,6 +15,7 @@ namespace Forbbiden.Server.logic
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
         private const string CLASS_NAME = "ProfileManager.cs";
+        private const string ERROR_CODE = "[ERROR] ProfileManager.cs - ";
 
         public bool ValidateEmail(string email)
         {
@@ -36,7 +37,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(ERROR_CODE.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -59,7 +60,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -89,7 +90,7 @@ namespace Forbbiden.Server.logic
             }
             catch (SmtpException ex)
             {
-                Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                 log.Error(CLASS_NAME, ex);
                 throw new Exception(ex.Message);
             }
@@ -119,13 +120,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
@@ -152,13 +153,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
@@ -190,7 +191,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -233,7 +234,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -259,13 +260,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
@@ -300,7 +301,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new EntityException(ex.Message);
                 }
@@ -349,13 +350,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
@@ -386,13 +387,13 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine("[ERROR] ProfileManager.cs - ".Concat(ex.Message));
+                    Console.WriteLine(CLASS_NAME.Concat(ex.Message));
                     log.Error(CLASS_NAME, ex);
                     throw new DbUpdateException(ex.Message);
                 }
