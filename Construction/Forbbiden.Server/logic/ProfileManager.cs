@@ -19,7 +19,7 @@ namespace Forbbiden.Server.logic
 
         public bool ValidateEmail(string email)
         {
-            log.Info($"Validating email: {email}");
+            log.Info("Validating email");
 
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -49,7 +49,7 @@ namespace Forbbiden.Server.logic
 
         public bool IsUsernameAvailable(string username)
         {
-            log.Info($"Checking username availability: {username}"));
+            log.Info("Checking username availability");
 
             using (var db = new Forbbiden_FEIEntities())
             {
@@ -69,7 +69,7 @@ namespace Forbbiden.Server.logic
 
         public bool SendEmail(string email)
         {
-            log.Info($"Sending email to: {email}");
+            log.Info("Sending email");
 
             bool success = true;
             string receiver = email;
@@ -86,13 +86,13 @@ namespace Forbbiden.Server.logic
             try
             {
                 client.Send(message);
-                log.Info($"Email sent to: {email}");
+                log.Info("Email sent");
             }
             catch (SmtpException ex)
             {
                 Console.WriteLine(ERROR_CODE + ex.Message);
                 log.Error(CLASS_NAME, ex);
-                throw new Exception(ex.Message);
+                throw new SmtpException(ex.Message);
             }
 
             return success;
@@ -100,7 +100,7 @@ namespace Forbbiden.Server.logic
 
         public bool SignUp(Contracts.Player player)
         {
-            log.Info($"Signing up new player: {player.PlayerUsername}");
+            log.Info("Signing up new player");
 
             bool success = true;
             using (var db = new Forbbiden_FEIEntities())
@@ -115,7 +115,7 @@ namespace Forbbiden.Server.logic
                 {
                     db.Player.Add(newPlayer);
                     db.SaveChanges();
-                    log.Info($"New player signed up: {player.PlayerUsername}");
+                    log.Info("New player signed up");
                     SendEmail(newPlayer.player_email);
                 }
                 catch (DbEntityValidationException ex)
@@ -136,7 +136,7 @@ namespace Forbbiden.Server.logic
 
         public bool Login(Contracts.Player player)
         {
-            log.Info($"Logging in player: {player.PlayerUsername}");
+            log.Info("Logging in player");
 
             bool success = false;
             using (var db = new Forbbiden_FEIEntities())
@@ -149,7 +149,7 @@ namespace Forbbiden.Server.logic
                 {
                     db.SaveChanges();
                     success = true;
-                    log.Info($"Player logged in: {player.PlayerUsername}");
+                    log.Info("Player logged in");
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -170,7 +170,7 @@ namespace Forbbiden.Server.logic
     
         public Contracts.Player GetPlayerByUsername(string username)
         {
-            log.Info($"Retrieving player by username: {username}");
+            log.Info("Retrieving player by username");
 
             using (var db = new Forbbiden_FEIEntities())
             {
@@ -179,7 +179,7 @@ namespace Forbbiden.Server.logic
                     var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
                     if (playerResult != null)
                     {
-                        log.Info(String.Format("Player found: {0}", username));
+                        log.Info("Player found");
                         return new Contracts.Player
                         {
                             PlayerId = playerResult.player_id,
@@ -239,8 +239,8 @@ namespace Forbbiden.Server.logic
                     throw new EntityException(ex.Message);
                 }
             }
-            string playerUsername = player != null ? player.PlayerUsername : "None";
-            log.Info($"Current logged-in player retrieved: {playerUsername}");
+
+            log.Info("Current logged-in player retrieved");
             return player;
         }
 
@@ -278,7 +278,7 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Player GetPlayerById(int playerId)
         {
-            log.Info($"Retrieving player by ID: {playerId}");
+            log.Info("Retrieving player by ID");
 
             Contracts.Player player = null;
             using (var db = new Forbbiden_FEIEntities())
@@ -307,14 +307,13 @@ namespace Forbbiden.Server.logic
                 }
             }
 
-            string playerUsername = player != null ? player.PlayerUsername : "None";
-            log.Info($"Player retrieved by ID: {playerUsername}");
+            log.Info("Retrieving player by ID");
             return player;
         }
 
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
-            log.Info($"Updating player: {updatedPlayer.PlayerUsername}");
+            log.Info("Updating player");
 
             bool success = false;
             using (var db = new Forbbiden_FEIEntities())
@@ -346,7 +345,7 @@ namespace Forbbiden.Server.logic
 
                     db.SaveChanges();
                     success = true;
-                    log.Info($"Player updated: {updatedPlayer.PlayerUsername}");
+                    log.Info("Player updated");
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -366,7 +365,7 @@ namespace Forbbiden.Server.logic
 
         public bool DeletePlayerByUsername(string username)
         {
-            log.Info($"Deleting player by username: {username}");
+            log.Info("Deleting player by username");
 
             bool success = false;
 
@@ -380,7 +379,7 @@ namespace Forbbiden.Server.logic
                         db.Player.Remove(playerToDelete);
                         db.SaveChanges();
 
-                        log.Info("Player deleted: " + username);
+                        log.Info("Player deleted");
                         success = true;
                         return success;
                     }
