@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using log4net;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -330,18 +331,16 @@ namespace Forbbiden.Server.logic
 
                     formerPlayer.player_socialmedia.Clear();
 
-                    foreach(var social in updatedPlayer.SocialMedia)
-                    {
-                        if (!string.IsNullOrWhiteSpace(social.SocialLink))
+                    db.player_socialmedia.AddRange(
+                        updatedPlayer.SocialMedia
+                        .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
+                        .Select(social => new player_socialmedia
                         {
-                            db.player_socialmedia.Add(new player_socialmedia
-                            {
-                                social_media_name = social.SocialMediaName,
-                                social_link = social.SocialLink,
-                                player_id = formerPlayer.player_id
-                            });
-                        }
-                    }
+                            social_media_name = social.SocialMediaName,
+                            social_link = social.SocialLink,
+                            player_id = formerPlayer.player_id
+                        })
+                    );
 
                     db.SaveChanges();
                     success = true;

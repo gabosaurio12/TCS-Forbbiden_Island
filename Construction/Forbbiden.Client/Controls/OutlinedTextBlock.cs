@@ -102,8 +102,6 @@ namespace Forbbiden.Client.Controls
                 case VerticalAlignment.Bottom:
                     y = ActualHeight - ft.Height;
                     break;
-                case VerticalAlignment.Stretch:
-                case VerticalAlignment.Top:
                 default:
                     y = 0;
                     break;
