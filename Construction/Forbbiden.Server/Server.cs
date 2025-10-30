@@ -17,6 +17,20 @@ namespace Forbbiden.Server
             ServiceHost friendsHost = new ServiceHost(typeof(logic.FriendsManager));
             friendsHost.Open();
 
+            try
+            {
+                using (var db = new Forbbiden_FEIEntities())
+                {
+                    db.Database.Connection.Open();
+                    Console.WriteLine("Conexión exitosa");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al conectar: " + ex.Message);
+                Console.WriteLine(ex.InnerException?.Message);
+            }
+
             Console.WriteLine("Service is running...");
             Console.ReadLine();
 

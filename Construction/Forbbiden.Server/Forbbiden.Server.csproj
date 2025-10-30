@@ -126,6 +126,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ForbbidenModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="connectionStrings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="ForbbidenModel.edmx.diagram">
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
     </None>
