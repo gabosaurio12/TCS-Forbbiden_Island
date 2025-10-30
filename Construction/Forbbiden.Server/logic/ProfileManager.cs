@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.utils;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,12 @@ namespace Forbbiden.Server.logic
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
         private const string CLASS_NAME = "ProfileManager.cs";
         private const string ERROR_CODE = "[ERROR] ProfileManager.cs - ";
+        
+        public ProfileManager()
+        {
+            //EnvReader.LoadEnv(".env");
+            
+        }
 
         public bool ValidateEmail(string email)
         {
@@ -131,6 +138,12 @@ namespace Forbbiden.Server.logic
                     log.Error(CLASS_NAME, ex);
                     throw new DbEntityValidationException(ex.Message);
                 }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ERROR_CODE + ex.Message);
+                    log.Error(CLASS_NAME, ex);
+                    throw;
+                }
             }
             return success;
         }
@@ -194,7 +207,7 @@ namespace Forbbiden.Server.logic
                 {
                     Console.WriteLine(ERROR_CODE + ex.Message);
                     log.Error(CLASS_NAME, ex);
-                    throw new EntityException(ex.Message);
+                    throw;
                 }
 
                 return null;

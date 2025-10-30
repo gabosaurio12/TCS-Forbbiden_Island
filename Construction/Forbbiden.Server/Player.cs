@@ -21,6 +21,8 @@ namespace Forbbiden.Server
             this.player_socialmedia = new HashSet<player_socialmedia>();
             this.Player1 = new HashSet<Player>();
             this.Player2 = new HashSet<Player>();
+            this.Friend_Request = new HashSet<Friend_Request>();
+            this.Friend_Request1 = new HashSet<Friend_Request>();
         }
     
         public int player_id { get; set; }
@@ -29,6 +31,8 @@ namespace Forbbiden.Server
         public string player_password { get; set; }
         public string player_email { get; set; }
         public string player_avatar { get; set; }
+        public Nullable<int> player_status { get; set; }
+        public Nullable<int> is_verified { get; set; }
     
         public virtual LoginPlayer LoginPlayer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -39,5 +43,9 @@ namespace Forbbiden.Server
         public virtual ICollection<Player> Player1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player> Player2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Friend_Request> Friend_Request { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Friend_Request> Friend_Request1 { get; set; }
     }
 }

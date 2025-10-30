@@ -12,9 +12,11 @@ namespace Forbbiden.Contracts
     public interface IFriendsManager
     {
         [OperationContract]
-        bool AddSendFriendRequest(string senderUsername, string receiverUsername);
+        bool SendFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
         bool AcceptFriendRequest(string senderUsername, string receiverUsername);
+        [OperationContract]
+        bool CancelFriendRequest(string senderUsername, string receiverUsername);
     }
 
     [DataContract]

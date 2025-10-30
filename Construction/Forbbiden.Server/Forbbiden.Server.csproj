@@ -75,6 +75,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Friend_Request.cs">
+      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="logic\FriendsManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />
     <Compile Include="LoginPlayer.cs">
@@ -119,8 +122,13 @@
     <Compile Include="Tile.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Token.cs">
+      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="utils\EnvReader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".env" />
     <None Include="App.config" />
     <EntityDeploy Include="ForbbidenModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

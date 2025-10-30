@@ -139,6 +139,7 @@ Thumbs.db
 
 # Project
 Construction/Forbbiden.Client/avatars
+.env
 
 # AsciiDoctor
 build/
