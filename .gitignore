@@ -125,7 +125,6 @@ App_Data/*.ldf
 # =========================
 
 # Windows image file caches
-Thumbs.db
 ehthumbs.db
 
 # Folder config file
@@ -136,6 +135,7 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+Thumbs.db
 
 # Project
 Construction/Forbbiden.Client/avatars
