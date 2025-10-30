@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Forbbiden.Server
 {
-    class Service
+    class Server
     {
-        private Service() { }
+        private Server() { }
         static void Main(string[] args)
         {
             ServiceHost profileHost = new ServiceHost(typeof(logic.ProfileManager));
