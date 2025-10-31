@@ -36,8 +36,6 @@ Se planea abarcar los siguientes puntos en la próxima iteración.
 
 |===
 
-* Preguntar si el hasheo de la contraseña es suficiente o hay que agregar seguridad
-
 === GUI
 
 * En BoardPage:

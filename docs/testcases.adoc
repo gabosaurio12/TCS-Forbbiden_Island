@@ -75,4 +75,24 @@ PRE02: Tener el email _testuser@email.net_ registrado
 |Regresa _true_
 |*Pasó*
 
+|FMT01
+|TestSendFriendRequestSuccess
+|Comprobar que se envíe la solicitud de amistad al usuario correcto
+|*Media*
+|PRE01: Haber ingresado un username
+|_testFriend_
+|_True_
+|
+|
+
+|FMT02
+|TestSendFriendRequestInvalidUsernameFail
+|Comprobar que no se envíe una solicitu de amistad a un usuario que no existe
+|*Media*
+|PRE01: Haber ingresado un username
+|_FriendTest_
+|_False_
+|
+|
+
 |===
