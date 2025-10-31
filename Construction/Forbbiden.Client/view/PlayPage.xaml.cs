@@ -29,21 +29,6 @@ namespace Forbbiden.Client
             HostButton.IsDefault = false;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                NavigationService?.Navigate(new LobbyPage());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al abrir la configuración.");
-                log.Error("PlayPage.xaml.cs - LobbyButton_Click", ex);
-            }
-        }
-      
-            
-
         private static void ShowHostGame(ContentControl TabContent, Button HostButton, Button OnlineButton)
         {
             TabContent.Content = new HostGameControl();

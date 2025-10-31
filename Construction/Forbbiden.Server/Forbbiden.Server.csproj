@@ -79,6 +79,7 @@
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
     <Compile Include="logic\FriendsManager.cs" />
+    <Compile Include="logic\MatchManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />
     <Compile Include="LoginPlayer.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>

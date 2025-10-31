@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IFriendsManager.cs" />
+    <Compile Include="IMatchManager.cs" />
     <Compile Include="IProfileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

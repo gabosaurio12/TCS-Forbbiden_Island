@@ -82,6 +82,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Connected Services\MatchManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
     <Compile Include="Properties\Langs\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -144,6 +149,16 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\MatchManager\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchManager\service.wsdl" />
+    <None Include="Connected Services\MatchManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ProfileManager\Forbbiden.Client.ProfileManager.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -162,6 +177,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Forbbiden.Contracts.Match.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -252,6 +268,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
   </ItemGroup>
   <ItemGroup>
@@ -351,12 +368,6 @@
     <Resource Include="Images\glass.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="avatars\Patronus HD.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="avatars\IMG_20191001_171350.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\waterLevel-0.png" />
     <Resource Include="Images\waterLevel-1.png" />
     <Resource Include="Images\waterLevel-2.png" />
@@ -367,6 +378,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\boardButtons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Forbbiden.Contracts\Forbbiden.Contracts.csproj">
+      <Project>{3d56b418-3592-4374-9801-1d99b563f9db}</Project>
+      <Name>Forbbiden.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
