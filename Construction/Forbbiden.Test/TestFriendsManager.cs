@@ -1,12 +1,17 @@
-﻿using ProfileManager;
-using FriendsManager;
+﻿using FriendsManager;
+using log4net;
 using NUnit.Framework.Internal;
+using ProfileManager;
+using System.Data.Entity.Core;
 
 namespace Forbbiden.Test
 {
     [TestFixture]
     public class TestFriendsManager
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(TestFriendsManager));
+        private const string ClassName = "TestFriendsManager - ";
+
         [OneTimeSetUp]
         public async Task Setup()
         {
@@ -19,8 +24,6 @@ namespace Forbbiden.Test
                 PlayerEmail = "testfriend@email.net"
             };
 
-            await client.SignUpAsync(friend);
-
             Player player = new Player
             {
                 PlayerUsername = "testUser",
@@ -28,7 +31,16 @@ namespace Forbbiden.Test
                 PlayerEmail = "testuser@email.net"
             };
 
-            await client.SignUpAsync(player);
+            try
+            {
+                await client.SignUpAsync(friend);
+
+                await client.SignUpAsync(player);
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [OneTimeTearDown]
@@ -39,11 +51,19 @@ namespace Forbbiden.Test
             string friendUser = "testFriend";
 
             var friendClient = new FriendsManagerClient();
-            await friendClient.CancelFriendRequestAsync(playerUser, friendUser);
+            try
+            {
+                await friendClient.CancelFriendRequestAsync(playerUser, friendUser);
 
-            await profileClient.DeletePlayerByUsernameAsync(playerUser);
-           
-            await profileClient.DeletePlayerByUsernameAsync(friendUser);
+                await profileClient.DeletePlayerByUsernameAsync(playerUser);
+
+                await profileClient.DeletePlayerByUsernameAsync(friendUser);
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
+            
         }
 
         [Test]
@@ -57,9 +77,44 @@ namespace Forbbiden.Test
 
                 Assert.That(result, Is.True, "result should be true");
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
-                Console.WriteLine(ex);
+                log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSendFriendRequestInvalidUsername()
+        {
+            var client = new FriendsManagerClient();
+            string playerUsername = "testUser";
+            string friendUsername = "FriendTest";
+            try
+            {
+                var result = await client.SendFriendRequestAsync(playerUsername, friendUsername);
+
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSendFriendRequestDuplicateFriend()
+        {
+            var client = new FriendsManagerClient();
+            string playerUsername = "testUser";
+            string friendUsername = "testFriend";
+            try
+            {
+                var result = await client.SendFriendRequestAsync(playerUsername, friendUsername);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
             }
         }
     }

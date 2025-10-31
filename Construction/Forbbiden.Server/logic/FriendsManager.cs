@@ -17,50 +17,75 @@ namespace Forbbiden.Server.logic
     public class FriendsManager : IFriendsManager
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(FriendsManager));
-        private const string CLASS_NAME = "FriendsManager.cs";
-        private const string ERROR_CODE = "[ERROR] FriendsManager.cs - ";
+        private const string ErrorCode = "[ERROR] FriendsManager.cs - ";
 
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)
         {
-            throw new NotImplementedException();
+            bool success = false;
+            using (var db = new Forbbiden_FEIEntities())
+            {
+                try
+                {
+                    var sender = db.Player.FirstOrDefault(s => s.player_username == senderUsername);
+                    var receiver = db.Player.FirstOrDefault(r => r.player_username == receiverUsername);
+                    var friendRequest = db.Friend_Request.FirstOrDefault(fr => fr.player_id == sender.player_id && fr.friend_id == receiver.player_id);
+
+                    if (friendRequest != null)
+                    {
+                        sender.Player1.Add(receiver);
+                        db.SaveChanges();
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    throw;
+                }
+            }
+
+            return success;
         }
 
         public bool SendFriendRequest(string senderUsername, string receiverUsername)
         {
             var playerManager = new ProfileManager();
-            var sender = playerManager.GetPlayerByUsername(senderUsername);
-            var receiver = playerManager.GetPlayerByUsername(receiverUsername);
             bool success = false;
-
-            if (sender == null || receiver == null)
+            try
             {
-                log.Warn("AddSendFriendRequest: One of the users does not exist.");
-                return false;
-            }
-            else
-            {
-                using (var db = new Forbbiden_FEIEntities())
+                var sender = playerManager.GetPlayerByUsername(senderUsername);
+                var receiver = playerManager.GetPlayerByUsername(receiverUsername);
+                if (sender == null || receiver == null)
                 {
-                    Friend_Request friendRequest = new Friend_Request
+                    log.Warn("AddSendFriendRequest: One of the users does not exist.");
+                    success = false;
+                }
+                else
+                {
+                    using (var db = new Forbbiden_FEIEntities())
                     {
-                        player_id = sender.PlayerId,
-                        friend_id = receiver.PlayerId,
-                        status = 0
-                    };
-                    try
-                    {
-                        db.Friend_Request.Add(friendRequest);
-                        db.SaveChanges();
-                        success = true;
-                    }
-                    catch (EntityException ex)
-                    {
-                        Console.WriteLine(ERROR_CODE + ex.Message);
-                        log.Error(CLASS_NAME, ex);
-                        throw;
-                        
+                        Friend_Request friendRequest = new Friend_Request
+                        {
+                            player_id = sender.PlayerId,
+                            friend_id = receiver.PlayerId,
+                            status = 0
+                        };
+                        try
+                        {
+                            db.Friend_Request.Add(friendRequest);
+                            db.SaveChanges();
+                            success = true;
+                        }
+                        catch (EntityException ex)
+                        {
+                            Console.WriteLine(ErrorCode + ex.Message);
+                            throw;
+
+                        }
                     }
                 }
+            }
+            catch (EntityException ex)
+            {
+                throw;
             }
 
             return success;
@@ -87,8 +112,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                Console.WriteLine(ERROR_CODE + ex.Message);
-                log.Error(CLASS_NAME, ex);
+                Console.WriteLine(ErrorCode + ex.Message);
                 throw;
             }
 

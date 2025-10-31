@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Matches" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Minigame" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Player" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.player_socialmedia" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.player_socialmedia" Width="1.875" PointX="3" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Tile" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_cards_card" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_LoginPlayer_Player" ManuallyRouted="false" />

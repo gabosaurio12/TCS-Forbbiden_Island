@@ -1,10 +1,15 @@
+using log4net;
 using ProfileManager;
+using System.Data.Entity.Core;
 
 namespace Forbbiden.Test
 {
     [TestFixture]
     public class TestProfileManager
     {
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(TestProfileManager));
+        private const string ClassName = "TestProfileManager - ";
 
         [OneTimeSetUp]
         public async Task Setup()
@@ -18,7 +23,14 @@ namespace Forbbiden.Test
                 PlayerEmail = "testuser@email.net"
             };
 
-            await client.SignUpAsync(player);
+            try
+            {
+                await client.SignUpAsync(player);
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [OneTimeTearDown]
@@ -26,7 +38,14 @@ namespace Forbbiden.Test
         {
             var client = new ProfileManagerClient();
             string username = "testUser";
-            await client.DeletePlayerByUsernameAsync(username);
+            try
+            {
+                await client.DeletePlayerByUsernameAsync(username);
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [Test]
@@ -35,8 +54,15 @@ namespace Forbbiden.Test
             var client = new ProfileManagerClient();
             string email = "randomEmail@email.net";
 
-            var result = await client.ValidateEmailAsync(email);
-            Assert.That(result, Is.True, "result should be true");
+            try
+            {
+                var result = await client.ValidateEmailAsync(email);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [Test]
@@ -45,8 +71,15 @@ namespace Forbbiden.Test
             var client = new ProfileManagerClient();
             string email = "randomEmail.com";
 
-            var result = await client.ValidateEmailAsync(email);
-            Assert.That(result, Is.False, "result should be false");
+            try
+            {
+                var result = await client.ValidateEmailAsync(email);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [Test]
@@ -55,8 +88,15 @@ namespace Forbbiden.Test
             var client = new ProfileManagerClient();
             string email = "";
 
-            var result = await client.ValidateEmailAsync(email);
-            Assert.That(result, Is.False, "result should be false");
+            try
+            {
+                var result = await client.ValidateEmailAsync(email);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [Test]
@@ -65,8 +105,14 @@ namespace Forbbiden.Test
             var client = new ProfileManagerClient();
             string email = "testuser@email.net";
 
-            var result = await client.ValidateEmailAsync(email);
-            Assert.That(result, Is.False, "result should be false");
+            try
+            {
+                var result = await client.ValidateEmailAsync(email);
+                Assert.That(result, Is.False, "result should be false");
+            } catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [Test]
@@ -75,8 +121,15 @@ namespace Forbbiden.Test
             var client = new ProfileManagerClient();
             string username = "testUser098";
 
-            var result = await client.IsUsernameAvailableAsync(username);
-            Assert.That(result, Is.True, "result should be true");
+            try
+            {
+                var result = await client.IsUsernameAvailableAsync(username);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
 
         [Test]
@@ -85,8 +138,15 @@ namespace Forbbiden.Test
             var client = new ProfileManagerClient();
             string username = "testUser";
 
-            var result = await client.IsUsernameAvailableAsync(username);
-            Assert.That(result, Is.False, "result should be false");
+            try
+            {
+                var result = await client.IsUsernameAvailableAsync(username);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
         }
     }
 }

@@ -16,8 +16,7 @@ namespace Forbbiden.Server.logic
     public class ProfileManager : IProfileManager
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
-        private const string CLASS_NAME = "ProfileManager.cs";
-        private const string ERROR_CODE = "[ERROR] ProfileManager.cs - ";
+        private const string ErrorCode = "[ERROR] ProfileManager.cs - ";
         
         public ProfileManager()
         {
@@ -45,9 +44,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new EntityException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
 
             }
@@ -68,9 +66,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new EntityException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
             }
         }
@@ -98,9 +95,8 @@ namespace Forbbiden.Server.logic
             }
             catch (SmtpException ex)
             {
-                Console.WriteLine(ERROR_CODE + ex.Message);
-                log.Error(CLASS_NAME, ex);
-                throw new SmtpException(ex.Message);
+                Console.WriteLine(ErrorCode + ex.Message);
+                throw;
             }
 
             return success;
@@ -128,20 +124,12 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbEntityValidationException(ex.Message);
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbEntityValidationException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
+                    Console.WriteLine(ErrorCode + ex.Message);
                     throw;
                 }
             }
@@ -167,15 +155,18 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbEntityValidationException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbUpdateException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
             }
 
@@ -205,8 +196,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
+                    Console.WriteLine(ErrorCode + ex.Message);
                     throw;
                 }
 
@@ -248,9 +238,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new EntityException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
             }
 
@@ -274,15 +263,18 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbEntityValidationException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbUpdateException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
             }
 
@@ -315,9 +307,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new EntityException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
             }
 
@@ -361,15 +352,18 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbEntityValidationException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbUpdateException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
             }
             return success;
@@ -398,15 +392,18 @@ namespace Forbbiden.Server.logic
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbEntityValidationException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
                 catch (DbUpdateException ex)
                 {
-                    Console.WriteLine(ERROR_CODE + ex.Message);
-                    log.Error(CLASS_NAME, ex);
-                    throw new DbUpdateException(ex.Message);
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
                 }
             }
 
