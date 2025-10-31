@@ -138,7 +138,6 @@
                             Grid.Column="1" Grid.Row="2" Margin="0,80,0,0"
                             Width="345" Height="100" Background="#FFCB2F" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                             FontSize="36" Click="BtnDiscard_Click" />
-
                 </Grid>
             </Grid>
         </Grid>

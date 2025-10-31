@@ -25,8 +25,8 @@ namespace Forbbiden.Client.view
             InitializePlayerMap();
 
             //Chat Events
-            txtChat.GotFocus += TxtChat_GotFocus;
-            txtChat.KeyDown += TxtChat_KeyDown;
+            txtBxChat.GotFocus += TxtChat_GotFocus;
+            txtBxChat.KeyDown += TxtChat_KeyDown;
         }
 
         private void StartClock()
@@ -87,9 +87,9 @@ namespace Forbbiden.Client.view
 
         private void TxtChat_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtChat.Text) || !txtChat.Text.StartsWith(currentPlayer + ":"))
-                txtChat.Text = $"{currentPlayer}: ";
-            txtChat.CaretIndex = txtChat.Text.Length;
+            if (string.IsNullOrWhiteSpace(txtBxChat.Text) || !txtBxChat.Text.StartsWith(currentPlayer + ":"))
+                txtBxChat.Text = $"{currentPlayer}: ";
+            txtBxChat.CaretIndex = txtBxChat.Text.Length;
         }
 
         private void TxtChat_KeyDown(object sender, KeyEventArgs e)
@@ -98,7 +98,7 @@ namespace Forbbiden.Client.view
             {
                 e.Handled = true; //Send Sound
 
-                string text = txtChat.Text.Trim();
+                string text = txtBxChat.Text.Trim();
                 if (string.IsNullOrEmpty(text))
                     return;
 
@@ -109,8 +109,8 @@ namespace Forbbiden.Client.view
                 string message = text.Substring(currentPlayer.Length + 2); 
                 DisplayMessage(currentPlayer, message);
 
-                txtChat.Text = $"{currentPlayer}: ";
-                txtChat.CaretIndex = txtChat.Text.Length;
+                txtBxChat.Text = $"{currentPlayer}: ";
+                txtBxChat.CaretIndex = txtBxChat.Text.Length;
             }
         }
 

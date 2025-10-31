@@ -24,7 +24,7 @@
                        Margin="0,20,40,0" Height="80" Width="284"/>
 
             <!-- Chat -->
-            <TextBox x:Name="txtChat"
+            <TextBox x:Name="txtBxChat"
                      Width="700" Height="110"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Bottom"
