@@ -38,6 +38,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
+                    Console.WriteLine(ErrorCode + ex);
                     throw;
                 }
             }
@@ -68,23 +69,16 @@ namespace Forbbiden.Server.logic
                             friend_id = receiver.PlayerId,
                             status = 0
                         };
-                        try
-                        {
-                            db.Friend_Request.Add(friendRequest);
-                            db.SaveChanges();
-                            success = true;
-                        }
-                        catch (EntityException ex)
-                        {
-                            Console.WriteLine(ErrorCode + ex.Message);
-                            throw;
-
-                        }
+                        
+                        db.Friend_Request.Add(friendRequest);
+                        db.SaveChanges();
+                        success = true;   
                     }
                 }
             }
             catch (EntityException ex)
             {
+                Console.WriteLine(ErrorCode, ex);
                 throw;
             }
 
@@ -94,9 +88,10 @@ namespace Forbbiden.Server.logic
         public bool CancelFriendRequest(string senderUsername, string receiverUsername)
         {
             bool success = false;
-            try
+            
+            using (var db = new Forbbiden_FEIEntities())
             {
-                using (var db = new Forbbiden_FEIEntities())
+                try
                 {
                     var sender = db.Player.FirstOrDefault(s => s.player_username == senderUsername);
                     var receiver = db.Player.FirstOrDefault(r => r.player_username == receiverUsername);
@@ -107,13 +102,12 @@ namespace Forbbiden.Server.logic
                         db.SaveChanges();
                         success = true;
                     }
-                    
                 }
-            }
-            catch (EntityException ex)
-            {
-                Console.WriteLine(ErrorCode + ex.Message);
-                throw;
+                catch(EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    throw;
+                }
             }
 
             return success;
