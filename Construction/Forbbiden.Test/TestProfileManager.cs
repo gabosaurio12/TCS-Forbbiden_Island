@@ -7,7 +7,7 @@ namespace Forbbiden.Test
     {
 
         [OneTimeSetUp]
-        public void Setup()
+        public async Task Setup()
         {
             var client = new ProfileManagerClient();
 
@@ -18,15 +18,15 @@ namespace Forbbiden.Test
                 PlayerEmail = "testuser@email.net"
             };
 
-            client.SignUpAsync(player);
+            await client.SignUpAsync(player);
         }
 
         [OneTimeTearDown]
-        public void TearDown()
+        public async Task TearDown()
         {
             var client = new ProfileManagerClient();
             string username = "testUser";
-            client.DeletePlayerByUsernameAsync(username);
+            await client.DeletePlayerByUsernameAsync(username);
         }
 
         [Test]

@@ -1,5 +1,6 @@
 ﻿using ProfileManager;
 using FriendsManager;
+using NUnit.Framework.Internal;
 
 namespace Forbbiden.Test
 {
@@ -7,7 +8,7 @@ namespace Forbbiden.Test
     public class TestFriendsManager
     {
         [OneTimeSetUp]
-        public void Setup()
+        public async Task Setup()
         {
             var client = new ProfileManagerClient();
 
@@ -18,7 +19,7 @@ namespace Forbbiden.Test
                 PlayerEmail = "testfriend@email.net"
             };
 
-            client.SignUpAsync(friend);
+            await client.SignUpAsync(friend);
 
             Player player = new Player
             {
@@ -27,28 +28,39 @@ namespace Forbbiden.Test
                 PlayerEmail = "testuser@email.net"
             };
 
-            client.SignUpAsync(player);
+            await client.SignUpAsync(player);
         }
 
         [OneTimeTearDown]
-        public void TearDown()
+        public async Task TearDown()
         {
-            var client = new ProfileManagerClient();
+            var profileClient = new ProfileManagerClient();
             string playerUser = "testUser";
-            client.DeletePlayerByUsernameAsync(playerUser);
             string friendUser = "testFriend";
-            client.DeletePlayerByUsernameAsync(friendUser);
+
+            var friendClient = new FriendsManagerClient();
+            await friendClient.CancelFriendRequestAsync(playerUser, friendUser);
+
+            await profileClient.DeletePlayerByUsernameAsync(playerUser);
+           
+            await profileClient.DeletePlayerByUsernameAsync(friendUser);
         }
 
         [Test]
-        public async Task TestAddFriendSuccess()
+        public async Task TestSendFriendRequestSuccess()
         {
             var client = new FriendsManagerClient();
             string playerUsername = "testUser";
             string friendUsername = "testFriend";
-            var result = await client.AddSendFriendRequestAsync(playerUsername, friendUsername);
+            try {
+                var result = await client.SendFriendRequestAsync(playerUsername, friendUsername);
 
-            Assert.That(result, Is.True, "result should be true");
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }

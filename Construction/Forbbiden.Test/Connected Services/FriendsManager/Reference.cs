@@ -16,11 +16,14 @@ namespace FriendsManager
     public interface IFriendsManager
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/AddSendFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/AddSendFriendRequestResponse")]
-        System.Threading.Tasks.Task<bool> AddSendFriendRequestAsync(string senderUsername, string receiverUsername);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/SendFriendRequestResponse")]
+        System.Threading.Tasks.Task<bool> SendFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/AcceptFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> AcceptFriendRequestAsync(string senderUsername, string receiverUsername);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
+        System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -73,14 +76,19 @@ namespace FriendsManager
         {
         }
         
-        public System.Threading.Tasks.Task<bool> AddSendFriendRequestAsync(string senderUsername, string receiverUsername)
+        public System.Threading.Tasks.Task<bool> SendFriendRequestAsync(string senderUsername, string receiverUsername)
         {
-            return base.Channel.AddSendFriendRequestAsync(senderUsername, receiverUsername);
+            return base.Channel.SendFriendRequestAsync(senderUsername, receiverUsername);
         }
         
         public System.Threading.Tasks.Task<bool> AcceptFriendRequestAsync(string senderUsername, string receiverUsername)
         {
             return base.Channel.AcceptFriendRequestAsync(senderUsername, receiverUsername);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername)
+        {
+            return base.Channel.CancelFriendRequestAsync(senderUsername, receiverUsername);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

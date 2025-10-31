@@ -17,7 +17,7 @@ namespace Forbbiden.Client.view
         private string currentPlayer; 
         private Dictionary<string, TextBlock> playerMsgMap;
 
-        public LobbyPage()
+        public LobbyPage(int matchId)
         {
             InitializeComponent();
             LoadPlayers();

@@ -82,12 +82,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Connected Services\MatchManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
+    <Compile Include="Properties\Langs\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="view\FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\Board.xaml.cs">
-      <DependentUpon>Board.xaml</DependentUpon>
+    <Compile Include="view\games\BoardPage.xaml.cs">
+      <DependentUpon>BoardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
@@ -129,16 +139,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Langs\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -149,11 +149,16 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.es.resx" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Include="Connected Services\MatchManager\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchManager\service.wsdl" />
+    <None Include="Connected Services\MatchManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ProfileManager\Forbbiden.Client.ProfileManager.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -172,6 +177,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Forbbiden.Contracts.Match.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -262,6 +268,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
   </ItemGroup>
   <ItemGroup>
@@ -292,7 +299,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\Board.xaml">
+    <Page Include="view\games\BoardPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -361,12 +368,6 @@
     <Resource Include="Images\glass.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="avatars\Patronus HD.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="avatars\IMG_20191001_171350.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\waterLevel-0.png" />
     <Resource Include="Images\waterLevel-1.png" />
     <Resource Include="Images\waterLevel-2.png" />
@@ -377,6 +378,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\boardButtons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Forbbiden.Contracts\Forbbiden.Contracts.csproj">
+      <Project>{3d56b418-3592-4374-9801-1d99b563f9db}</Project>
+      <Name>Forbbiden.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,12 +12,12 @@ namespace Forbbiden.Client
         public PlayPage()
         {
             InitializeComponent();
-            ShowHostGame();
+            ShowHostGame(TabContent, HostButton, OnlineButton);
         }
 
         private void HostButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowHostGame();
+            ShowHostGame(TabContent, HostButton, OnlineButton);
             HostButton.IsDefault = true;
             OnlineButton.IsDefault = false;
         }
@@ -29,22 +29,7 @@ namespace Forbbiden.Client
             HostButton.IsDefault = false;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                NavigationService?.Navigate(new LobbyPage());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al abrir la configuración.");
-                log.Error("PlayPage.xaml.cs - LobbyButton_Click", ex);
-            }
-        }
-      
-            
-
-        private void ShowHostGame()
+        private static void ShowHostGame(ContentControl TabContent, Button HostButton, Button OnlineButton)
         {
             TabContent.Content = new HostGameControl();
             HostButton.Background = System.Windows.Media.Brushes.LightGray;

@@ -16,7 +16,7 @@ namespace Forbbiden.Client
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfilePage));
 
-        private Player player;
+        private readonly Player player;
         private string uploadedAvatarOriginalPath;
         private string uploadedAvatarProjectPath;
         private bool avatarChanged = false;
@@ -74,7 +74,7 @@ namespace Forbbiden.Client
                 NavigationService.GoBack();
         }
 
-        private void ResetFieldColors()
+        private static void ResetFieldColors(TextBlock txtBkUsername, TextBlock txtBkName, TextBlock txtBkEmail)
         {
             txtBkUsername.Foreground = Brushes.Black;
             txtBkName.Foreground = Brushes.Black;
@@ -156,7 +156,7 @@ namespace Forbbiden.Client
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            ResetFieldColors();
+            ResetFieldColors(txtBkUsername, txtBkName, txtBkEmail);
             var client = new ProfileManagerClient();
 
             Player updatedPlayer = new Player();

@@ -24,6 +24,8 @@ namespace Forbbiden.Server
         }
     
         public int match_id { get; set; }
+        public string match_difficulty { get; set; }
+        public string match_visibility { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_cards> match_cards { get; set; }

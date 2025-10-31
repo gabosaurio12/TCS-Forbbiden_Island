@@ -37,5 +37,7 @@ namespace Forbbiden.Server
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<player_socialmedia> player_socialmedia { get; set; }
         public virtual DbSet<Tile> Tile { get; set; }
+        public virtual DbSet<Friend_Request> Friend_Request { get; set; }
+        public virtual DbSet<Token> Token { get; set; }
     }
 }

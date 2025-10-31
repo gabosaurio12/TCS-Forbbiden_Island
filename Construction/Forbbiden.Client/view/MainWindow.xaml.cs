@@ -12,8 +12,7 @@ namespace Forbbiden.Client.view
         public MainWindow()
         {
             InitializeComponent();
-            // Source = new System.Uri("MainPage.xaml", System.UriKind.Relative);
-            Source = new System.Uri("games/Board.xaml", System.UriKind.Relative);
+            Source = new System.Uri("MainPage.xaml", System.UriKind.Relative);
         }
     }
 }

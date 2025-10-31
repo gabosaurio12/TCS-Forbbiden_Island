@@ -5,6 +5,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Forbbiden.Client
 {
@@ -20,7 +21,7 @@ namespace Forbbiden.Client
 
             if (client.GetCurrentLogin() != null)
             {
-                ReloadMainPage();
+                ReloadMainPage(txtBkUser, imgAvatar);
             }
         }
 
@@ -28,7 +29,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                this.NavigationService?.Navigate(new PlayPage());
+                NavigationService?.Navigate(new PlayPage());
             }
             catch (Exception ex)
             {
@@ -94,7 +95,7 @@ namespace Forbbiden.Client
             }
         }
 
-        public void ReloadMainPage()
+        public static void ReloadMainPage(TextBlock txtBkUser, Ellipse imgAvatar)
         {
             try
             {

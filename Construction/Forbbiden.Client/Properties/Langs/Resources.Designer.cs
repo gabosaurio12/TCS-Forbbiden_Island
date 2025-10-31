@@ -70,6 +70,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions Left.
+        /// </summary>
+        public static string actions_left {
+            get {
+                return ResourceManager.GetString("actions_left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import an image from your device to use as an avatar.
+        /// </summary>
+        public static string avatar_explanation {
+            get {
+                return ResourceManager.GetString("avatar_explanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to If you log in you can choose your avatar and make friends!.
         /// </summary>
         public static string bossLogin {
@@ -102,6 +120,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string difficulty {
             get {
                 return ResourceManager.GetString("difficulty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard Changes.
+        /// </summary>
+        public static string discard_changes {
+            get {
+                return ResourceManager.GetString("discard_changes", resourceCulture);
             }
         }
         
@@ -232,6 +259,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string name {
+            get {
+                return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Game.
         /// </summary>
         public static string new_game {
@@ -304,6 +340,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Players.
+        /// </summary>
+        public static string players {
+            get {
+                return ResourceManager.GetString("players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only the players with invitation can join .
         /// </summary>
         public static string private_message {
@@ -354,6 +399,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string remember_me {
             get {
                 return ResourceManager.GetString("remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Changes.
+        /// </summary>
+        public static string save_changes {
+            get {
+                return ResourceManager.GetString("save_changes", resourceCulture);
             }
         }
         
@@ -430,6 +484,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Avatar.
+        /// </summary>
+        public static string upload_avatar {
+            get {
+                return ResourceManager.GetString("upload_avatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string username {
@@ -453,6 +516,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string usernameNoExists {
             get {
                 return ResourceManager.GetString("usernameNoExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Water Level.
+        /// </summary>
+        public static string water_level {
+            get {
+                return ResourceManager.GetString("water_level", resourceCulture);
             }
         }
         
