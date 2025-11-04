@@ -5,7 +5,7 @@ namespace Forbbiden.Server.utils
 {
     internal class ConnectionStringGenerator
     {
-        public ConnectionStringGenerator() 
+        private ConnectionStringGenerator() 
         {
         }
 
