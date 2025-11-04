@@ -34,9 +34,11 @@ namespace Forbbiden.Client
 
             var client = new ProfileManagerClient();
 
-            Player searchPlayer = client.GetPlayerByUsername(txtBUsername.Text);
+            string username = txtBxUsername.Text.Trim();
 
-            if (searchPlayer.PlayerId != -1)
+            var searchPlayer = client.GetPlayerByUsername(username);
+
+            if (searchPlayer.PlayerId == -1)
             {
                 MessageBox.Show(Properties.Langs.Resources.usernameNoExists);
                 txtBkUser.Foreground = Brushes.Red;
@@ -46,19 +48,17 @@ namespace Forbbiden.Client
                 string password = "";
                 if (chkPassword.IsChecked == true)
                 {
-                    password = txtBPasswordVisible.Text;
+                    password = txtBxPasswordVisible.Text;
                 }
                 else
                 {
-                    password = pwdBPassword.Password;
+                    password = pwdBxPassword.Password;
                 }
 
                 if (BCrypt.Net.BCrypt.Verify(password, searchPlayer.PlayerPassword))
                 {
                     if (client.Login(searchPlayer))
                     {
-                        Properties.Settings.Default.rememberLogin = chkRememberMe.IsChecked == true;
-                        Properties.Settings.Default.Save();
 
                         NavigationService.GoBack();
                         
@@ -87,16 +87,16 @@ namespace Forbbiden.Client
                 string darkBossPath = Path.Combine(projectPath, "Images", "bossdark.png");
                 bossImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(darkBossPath));
 
-                txtBPasswordVisible.Text = pwdBPassword.Password;
-                txtBPasswordVisible.Visibility = Visibility.Visible;
-                pwdBPassword.Visibility = Visibility.Collapsed;
+                txtBxPasswordVisible.Text = pwdBxPassword.Password;
+                txtBxPasswordVisible.Visibility = Visibility.Visible;
+                pwdBxPassword.Visibility = Visibility.Collapsed;
                 passwordVisible = true;
             }
             else
             {
-                pwdBPassword.Password = txtBPasswordVisible.Text;
-                txtBPasswordVisible.Visibility = Visibility.Collapsed;
-                pwdBPassword.Visibility = Visibility.Visible;
+                pwdBxPassword.Password = txtBxPasswordVisible.Text;
+                txtBxPasswordVisible.Visibility = Visibility.Collapsed;
+                pwdBxPassword.Visibility = Visibility.Visible;
                 passwordVisible = false;
 
                 string bossPath = Path.Combine(projectPath, "Images", "boss.png");

@@ -82,6 +82,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Connected Services\FriendsManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\MatchManager\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,6 +154,16 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\FriendsManager\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsManager\service.wsdl" />
+    <None Include="Connected Services\FriendsManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\MatchManager\Forbbiden.Contracts.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -177,6 +192,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Forbbiden.Contracts.FriendRequest.datasource" />
     <None Include="Properties\DataSources\Forbbiden.Contracts.Match.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
@@ -268,6 +284,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
   </ItemGroup>
@@ -393,6 +410,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\MatchManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\FriendsManager\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\FriendsManager\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\FriendsManager\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

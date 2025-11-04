@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.ProfileManager;
 
 namespace Forbbiden.Client.view
@@ -13,6 +15,7 @@ namespace Forbbiden.Client.view
     /// </summary>
     public partial class FriendsPage : Page
     {
+        private string currentLoginUsername;
         public FriendsPage()
         {
             InitializeComponent();
@@ -23,11 +26,20 @@ namespace Forbbiden.Client.view
         {
             var profileManager = new ProfileManagerClient();
             var player = profileManager.GetCurrentLogin();
-            if (player != null)
+            if (player.PlayerId != -1)
             {
+                currentLoginUsername = player.PlayerUsername;
                 foreach (var friend in player.Friends)
                 {
                     AddOnlineFriend(friend);
+                }
+
+                var friendsClient = new FriendsManagerClient();
+                var requests = friendsClient.getFriendRequests(currentLoginUsername);
+                if (requests.Length > 0)
+                {
+                    Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
+                    storyboard.Begin();
                 }
             }
         }
@@ -109,21 +121,82 @@ namespace Forbbiden.Client.view
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new HostGameControl());
+            NavigationService?.GoBack();
         }
 
         private void SearchFriend_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (searchtxtBx.Width == 0)
             {
-                Storyboard storyBoard = (Storyboard)FindResource("ShowSearchBar");
-                storyBoard.Begin();
+                Storyboard barStoryBoard = (Storyboard)FindResource("ShowSearchBar");
+                barStoryBoard.Begin();
+                Storyboard buttonStoryBoard = (Storyboard)FindResource("ShowAddButton");
+                buttonStoryBoard.Begin();
             }
             else
             {
                 Storyboard storyBoard = (Storyboard)FindResource("HideSearchBar");
                 storyBoard.Begin();
+                Storyboard buttonStoryBoard = (Storyboard)FindResource("HideAddButton");
+                buttonStoryBoard.Begin();
             }
+        }
+
+        private async Task SendFriendRequest(string friendUsername)
+        {
+            var profileClient = new ProfileManagerClient();
+            var searchPlayer = await profileClient.GetPlayerByUsernameAsync(friendUsername);
+            if (searchPlayer.PlayerId != -1)
+            {
+                var friendsClient = new FriendsManagerClient();
+                var requestStatus = friendsClient.SendFriendRequest(currentLoginUsername, searchPlayer.PlayerUsername);
+
+                if (requestStatus)
+                {
+                    MessageBox.Show("Solicitud de amistad enviada!");
+                }
+            }
+        }
+
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            string friendUsername = searchtxtBx.Text.Trim();
+            await SendFriendRequest(friendUsername);
+            
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var blink = new DoubleAnimation
+            {
+                From = 10,
+                To = 8,
+                Duration = TimeSpan.FromSeconds(1),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
+
+            var verticalShine = new DoubleAnimation
+            {
+                From = 50,
+                To = 55,
+                Duration = TimeSpan.FromSeconds(1),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
+
+            var horizontalShine = new DoubleAnimation
+            {
+                From = 50,
+                To = 55,
+                Duration = TimeSpan.FromSeconds(1),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
+
+            led.BeginAnimation(Shape.StrokeThicknessProperty, blink);
+            led.BeginAnimation(Shape.HeightProperty, verticalShine);
+            led.BeginAnimation(Shape.WidthProperty, horizontalShine);
         }
     }
 }

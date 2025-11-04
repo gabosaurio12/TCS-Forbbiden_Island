@@ -29,7 +29,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                NavigationService?.Navigate(new PlayPage());
+                NavigationService?.Navigate(new FriendsPage());
             }
             catch (Exception ex)
             {
