@@ -4,4 +4,4 @@ select * from Player;
 
 select * from LoginPlayer;
 
-select * from Friend_Request;
+select * from Friends;
