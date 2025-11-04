@@ -185,11 +185,14 @@ namespace Forbbiden.Server.logic
                     {
                         log.Info("Player found");
 
-                        var friends = db.Friends.Where(f => f.player_id == playerResult.player_id).ToList();
+                        var friends = db.Friends.Where(f => f.player_id == playerResult.player_id && f.status == 1).ToList();
                         List<Contracts.Player> friendsList = new List<Contracts.Player>();
-                        foreach (var friend in friends)
+                        if (friends.Count > 0)
                         {
-                            friendsList.Add(GetPlayerById(friend.friend_id));
+                            foreach (var friend in friends)
+                            {
+                                friendsList.Add(GetPlayerById(friend.friend_id));
+                            }
                         }
 
                         return new Contracts.Player
@@ -240,11 +243,14 @@ namespace Forbbiden.Server.logic
 
                     if (searchPlayer != null)
                     {
-                        var friends = db.Friends.Where(f => f.player_id == searchPlayer.player_id).ToList();
+                        var friends = db.Friends.Where(f => f.player_id == searchPlayer.player_id && f.status == 1).ToList();
                         List<Contracts.Player> friendsList = new List<Contracts.Player>();
-                        foreach (var friend in friends)
+                        if (friends.Count > 0)
                         {
-                            friendsList.Add(GetPlayerById(friend.friend_id));
+                            foreach (var friend in friends)
+                            {
+                                friendsList.Add(GetPlayerById(friend.friend_id));
+                            }
                         }
 
                         player = new Contracts.Player

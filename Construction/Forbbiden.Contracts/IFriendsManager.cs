@@ -17,16 +17,20 @@ namespace Forbbiden.Contracts
         bool AcceptFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
         bool CancelFriendRequest(string senderUsername, string receiverUsername);
+        [OperationContract]
+        List<FriendRequest> getFriendRequests(string receiverUsername);
+        [OperationContract]
+        List<FriendRequest> getFriendsID(string receiverUsername);
     }
 
     [DataContract]
-    public class  FriendRequest
+    public class FriendRequest
     {
         [DataMember]
-        string senderUsername;
+        public int SenderID;
         [DataMember]
-        string receiverUsername;
+        public int ReceiverID;
         [DataMember]
-        bool isAccepted;
+        public bool status;
     }
 }

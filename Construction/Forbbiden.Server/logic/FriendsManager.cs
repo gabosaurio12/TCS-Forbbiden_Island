@@ -2,6 +2,7 @@
 using Forbbiden.Server.utils;
 using log4net;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
 using System.ServiceModel;
@@ -132,6 +133,47 @@ namespace Forbbiden.Server.logic
             }
 
             return success;
+        }
+
+        public List<FriendRequest> getFriendRequests(string receiverUsername)
+        {
+            using (var db = new Forbbiden_FEIEntities(connectionString))
+            {
+                try
+                {
+                    var receiver = db.Player.FirstOrDefault(p => p.player_username == receiverUsername);
+                    if (receiver.player_id != -1)
+                    {
+                        var requests = db.Friends.Where(fr => fr.friend_id == receiver.player_id && fr.status == 0).ToList();
+
+                        var friendRequests = new List<FriendRequest>();
+
+                        foreach (Friends friend in requests)
+                        {
+                            var request = new FriendRequest
+                            {
+                                SenderID = friend.player_id,
+                                ReceiverID = friend.friend_id,
+                                status = friend.status == 1
+                            };
+                            friendRequests.Add(request);
+                        }
+
+                        return friendRequests;
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    log.Error(ex.Message);
+                }
+            }
+            return new List<FriendRequest>();
+        }
+
+        public List<FriendRequest> getFriendsID(string receiverUsername)
+        {
+            throw new NotImplementedException();
         }
     }
 }
