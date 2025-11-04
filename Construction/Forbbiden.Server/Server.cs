@@ -1,15 +1,28 @@
 ﻿using System;
 using System.ServiceModel;
 using Forbbiden.Server.logic;
+using dotenv.net;
+using Forbbiden.Server.utils;
 
 namespace Forbbiden.Server
 {
     class Server
     {
-        private Server() { }
+        private Server() {
+            DotEnv.Load();
+        }
 
         static void Main(string[] args)
         {
+            DotEnv.Load();
+
+            string dbUser = Environment.GetEnvironmentVariable("FORBBIDEN_USER");
+            string dbPass = Environment.GetEnvironmentVariable("FORBBIDEN_PASS");
+            string dbHost = Environment.GetEnvironmentVariable("FORBBIDEN_HOST");
+            string dbName = Environment.GetEnvironmentVariable("FORBBIDEN_DB");
+
+            Console.WriteLine(dbUser + "\n" + dbPass + "\n" + dbHost + "\n" + dbName);
+
             ServiceHost profileHost = null;
             ServiceHost friendsHost = null;
             ServiceHost matchHost = null;
@@ -32,7 +45,7 @@ namespace Forbbiden.Server
 
                 try
                 {
-                    using (var db = new Forbbiden_FEIEntities())
+                    using (var db = new Forbbiden_FEIEntities(ConnectionStringGenerator.GenerateConnectionString()))
                     {
                         db.Database.Connection.Open();
                         Console.WriteLine(" Conexión a la base de datos exitosa");

@@ -16,18 +16,16 @@ namespace Forbbiden.Server.logic
     public class ProfileManager : IProfileManager
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
-        private const string ErrorCode = "[ERROR] ProfileManager.cs - ";
-        
+        private const string ErrorCode = "[Error] ProfileManager.cs - ";
+        private readonly string connectionString;
+
         public ProfileManager()
         {
-            //EnvReader.LoadEnv(".env");
-            
+            connectionString = ConnectionStringGenerator.GenerateConnectionString();
         }
 
         public bool ValidateEmail(string email)
         {
-            log.Info("Validating email");
-
             if (string.IsNullOrWhiteSpace(email))
             {
                 return false;
@@ -36,7 +34,7 @@ namespace Forbbiden.Server.logic
             {
                 try
                 {
-                    using (var db = new Forbbiden_FEIEntities())
+                    using (var db = new Forbbiden_FEIEntities(connectionString))
                     {
                         var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
                         return emailResult == null;
@@ -45,7 +43,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
 
             }
@@ -55,21 +53,22 @@ namespace Forbbiden.Server.logic
 
         public bool IsUsernameAvailable(string username)
         {
-            log.Info("Checking username availability");
+            bool usernameFound = false;
 
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
                 {
                     var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
-                    return playerResult == null;
+                    usernameFound = playerResult == null;
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
             }
+            return usernameFound;
         }
 
         public bool SendEmail(string email)
@@ -96,7 +95,7 @@ namespace Forbbiden.Server.logic
             catch (SmtpException ex)
             {
                 Console.WriteLine(ErrorCode + ex.Message);
-                throw;
+                log.Error(ex.Message);;
             }
 
             return success;
@@ -107,7 +106,7 @@ namespace Forbbiden.Server.logic
             log.Info("Signing up new player");
 
             bool success = true;
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 Player newPlayer = new Player
                 {
@@ -125,12 +124,12 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);
                 }
             }
             return success;
@@ -141,7 +140,7 @@ namespace Forbbiden.Server.logic
             log.Info("Logging in player");
 
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 db.LoginPlayer.Add(new LoginPlayer
                 {
@@ -156,17 +155,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
             }
 
@@ -177,7 +176,7 @@ namespace Forbbiden.Server.logic
         {
             log.Info("Retrieving player by username");
 
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
                 {
@@ -185,22 +184,43 @@ namespace Forbbiden.Server.logic
                     if (playerResult != null)
                     {
                         log.Info("Player found");
+
+                        var friends = db.Friends.Where(f => f.player_id == playerResult.player_id).ToList();
+                        List<Contracts.Player> friendsList = new List<Contracts.Player>();
+                        foreach (var friend in friends)
+                        {
+                            friendsList.Add(GetPlayerById(friend.friend_id));
+                        }
+
                         return new Contracts.Player
                         {
                             PlayerId = playerResult.player_id,
                             PlayerUsername = playerResult.player_username,
+                            PlayerName = playerResult.player_name,
                             PlayerPassword = playerResult.player_password,
-                            PlayerEmail = playerResult.player_email
+                            PlayerEmail = playerResult.player_email,
+                            PlayerAvatarPath = playerResult.player_avatar,
+                            SocialMedia = playerResult.player_socialmedia.Select(sm => new SocialMedia
+                            {
+                                PlayerId = sm.player_id ?? 0,
+                                SocialMediaId = sm.social_media,
+                                SocialMediaName = sm.social_media_name.Trim(),
+                                SocialLink = sm.social_link
+                            }).ToList(),
+                            Friends = friendsList                                
                         };
                     }
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
 
-                return null;
+                return new Contracts.Player()
+                {
+                    PlayerId = -1
+                };
             }
         }
 
@@ -209,15 +229,24 @@ namespace Forbbiden.Server.logic
             log.Info("Retrieving current logged-in player");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
                 {
                     int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).FirstOrDefault();
                     Player searchPlayer = db.Player.Include("player_socialmedia").FirstOrDefault(p => p.player_id == current_id);
 
+
+
                     if (searchPlayer != null)
                     {
+                        var friends = db.Friends.Where(f => f.player_id == searchPlayer.player_id).ToList();
+                        List<Contracts.Player> friendsList = new List<Contracts.Player>();
+                        foreach (var friend in friends)
+                        {
+                            friendsList.Add(GetPlayerById(friend.friend_id));
+                        }
+
                         player = new Contracts.Player
                         {
                             PlayerId = searchPlayer.player_id,
@@ -232,14 +261,15 @@ namespace Forbbiden.Server.logic
                                 SocialMediaId = sm.social_media,
                                 SocialMediaName = sm.social_media_name.Trim(),
                                 SocialLink = sm.social_link
-                            }).ToList()
+                            }).ToList(),
+                            Friends = friendsList
                         };
                     }
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
             }
 
@@ -252,7 +282,7 @@ namespace Forbbiden.Server.logic
             log.Info("Clearing current logged-in player");
 
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
                 {
@@ -264,17 +294,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
             }
 
@@ -287,7 +317,7 @@ namespace Forbbiden.Server.logic
             log.Info("Retrieving player by ID");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
                 {
@@ -308,7 +338,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
             }
 
@@ -321,7 +351,7 @@ namespace Forbbiden.Server.logic
             log.Info("Updating player");
 
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
                 {
@@ -353,17 +383,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
             }
             return success;
@@ -375,13 +405,16 @@ namespace Forbbiden.Server.logic
 
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
                 {
                     var playerToDelete = db.Player.FirstOrDefault(dp => dp.player_username == username);
                     if (playerToDelete != null)
                     {
+                        var friends = db.Friends.Where(f => f.player_id == playerToDelete.player_id).ToList();
+
+                        db.Friends.RemoveRange(friends);
                         db.Player.Remove(playerToDelete);
                         db.SaveChanges();
 
@@ -393,17 +426,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);;
                 }
             }
 

@@ -17,12 +17,10 @@ namespace Forbbiden.Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Player()
         {
+            this.Friends = new HashSet<Friends>();
+            this.Friends1 = new HashSet<Friends>();
             this.match_players = new HashSet<match_players>();
             this.player_socialmedia = new HashSet<player_socialmedia>();
-            this.Player1 = new HashSet<Player>();
-            this.Player2 = new HashSet<Player>();
-            this.Friend_Request = new HashSet<Friend_Request>();
-            this.Friend_Request1 = new HashSet<Friend_Request>();
         }
     
         public int player_id { get; set; }
@@ -34,18 +32,14 @@ namespace Forbbiden.Server
         public Nullable<int> player_status { get; set; }
         public Nullable<int> is_verified { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Friends> Friends { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Friends> Friends1 { get; set; }
         public virtual LoginPlayer LoginPlayer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_players> match_players { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_socialmedia> player_socialmedia { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Player1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Player2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Friend_Request> Friend_Request { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Friend_Request> Friend_Request1 { get; set; }
     }
 }

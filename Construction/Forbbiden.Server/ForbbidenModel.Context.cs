@@ -19,7 +19,12 @@ namespace Forbbiden.Server
             : base("name=Forbbiden_FEIEntities")
         {
         }
-    
+
+        public Forbbiden_FEIEntities(string connectionString)
+            : base(connectionString)
+        {
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -27,6 +32,7 @@ namespace Forbbiden.Server
     
         public virtual DbSet<Card> Card { get; set; }
         public virtual DbSet<card_catalog> card_catalog { get; set; }
+        public virtual DbSet<Friends> Friends { get; set; }
         public virtual DbSet<LoginPlayer> LoginPlayer { get; set; }
         public virtual DbSet<match_cards> match_cards { get; set; }
         public virtual DbSet<match_minigames> match_minigames { get; set; }
@@ -37,7 +43,6 @@ namespace Forbbiden.Server
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<player_socialmedia> player_socialmedia { get; set; }
         public virtual DbSet<Tile> Tile { get; set; }
-        public virtual DbSet<Friend_Request> Friend_Request { get; set; }
         public virtual DbSet<Token> Token { get; set; }
     }
 }

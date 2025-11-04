@@ -1,13 +1,10 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.utils;
 using log4net;
-using log4net.Core;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 
 namespace Forbbiden.Server.logic
 {
@@ -18,28 +15,41 @@ namespace Forbbiden.Server.logic
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(FriendsManager));
         private const string ErrorCode = "[ERROR] FriendsManager.cs - ";
+        private readonly string connectionString;
+
+        public FriendsManager()
+        {
+            connectionString = ConnectionStringGenerator.GenerateConnectionString();
+        }
 
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
+                var profileClient = new ProfileManager();
                 try
                 {
-                    var sender = db.Player.FirstOrDefault(s => s.player_username == senderUsername);
-                    var receiver = db.Player.FirstOrDefault(r => r.player_username == receiverUsername);
-                    var friendRequest = db.Friend_Request.FirstOrDefault(fr => fr.player_id == sender.player_id && fr.friend_id == receiver.player_id);
+                    var sender = profileClient.GetPlayerByUsername(senderUsername);
+                    var receiver = profileClient.GetPlayerByUsername(receiverUsername);
 
-                    if (friendRequest != null)
+                    if (sender.PlayerId != -1 && receiver.PlayerId != -1)
                     {
-                        sender.Player1.Add(receiver);
-                        db.SaveChanges();
+
+                        var friendRequest = db.Friends.FirstOrDefault(fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
+
+                        if (friendRequest != null)
+                        {
+                            friendRequest.status = 1;
+                            db.SaveChanges();
+                            success = true;
+                        }
                     }
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex);
-                    throw;
+                    log.Error(ex.Message);
                 }
             }
 
@@ -54,32 +64,39 @@ namespace Forbbiden.Server.logic
             {
                 var sender = playerManager.GetPlayerByUsername(senderUsername);
                 var receiver = playerManager.GetPlayerByUsername(receiverUsername);
-                if (sender == null || receiver == null)
+                if (sender.PlayerId == -1 || receiver.PlayerId == -1)
                 {
                     log.Warn("AddSendFriendRequest: One of the users does not exist.");
                     success = false;
                 }
                 else
                 {
-                    using (var db = new Forbbiden_FEIEntities())
+                    
+                    using (var db = new Forbbiden_FEIEntities(connectionString))
                     {
-                        Friend_Request friendRequest = new Friend_Request
+                        var searchFriendRequest = db.Friends.FirstOrDefault(
+                            sfr => sfr.player_id == sender.PlayerId && sfr.friend_id == receiver.PlayerId);
+
+                        if (searchFriendRequest == null)
                         {
-                            player_id = sender.PlayerId,
-                            friend_id = receiver.PlayerId,
-                            status = 0
-                        };
-                        
-                        db.Friend_Request.Add(friendRequest);
-                        db.SaveChanges();
-                        success = true;   
+                            Friends friendRequest = new Friends
+                            {
+                                player_id = sender.PlayerId,
+                                friend_id = receiver.PlayerId,
+                                status = 0
+                            };
+
+                            db.Friends.Add(friendRequest);
+                            db.SaveChanges();
+                            success = true;
+                        }
                     }
                 }
             }
             catch (EntityException ex)
             {
-                Console.WriteLine(ErrorCode, ex);
-                throw;
+                Console.WriteLine(ErrorCode + ex);
+                log.Error(ex.Message);
             }
 
             return success;
@@ -89,24 +106,28 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
             
-            using (var db = new Forbbiden_FEIEntities())
+            using (var db = new Forbbiden_FEIEntities(connectionString))
             {
+                var profileClient = new ProfileManager();
                 try
                 {
-                    var sender = db.Player.FirstOrDefault(s => s.player_username == senderUsername);
-                    var receiver = db.Player.FirstOrDefault(r => r.player_username == receiverUsername);
-                    var friendRequest = db.Friend_Request.FirstOrDefault(fr => fr.player_id == sender.player_id && fr.friend_id == receiver.player_id);
-                    if (friendRequest != null)
+                    var sender = profileClient.GetPlayerByUsername(senderUsername);
+                    var receiver = profileClient.GetPlayerByUsername(receiverUsername);
+                    if (sender.PlayerId != -1 && receiver.PlayerId != -1)
                     {
-                        db.Friend_Request.Remove(friendRequest);
-                        db.SaveChanges();
-                        success = true;
+                        var friendRequest = db.Friends.FirstOrDefault(fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
+                        if (friendRequest != null)
+                        {
+                            db.Friends.Remove(friendRequest);
+                            db.SaveChanges();
+                            success = true;
+                        }
                     }
                 }
                 catch(EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    throw;
+                    log.Error(ex.Message);
                 }
             }
 

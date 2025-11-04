@@ -75,7 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Friend_Request.cs">
+    <Compile Include="Friends.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
     <Compile Include="logic\FriendsManager.cs" />
@@ -126,18 +126,17 @@
     <Compile Include="Token.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="utils\EnvReader.cs" />
+    <Compile Include="utils\ConnectionStringGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".env" />
+    <None Include=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App.config" />
     <EntityDeploy Include="ForbbidenModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ForbbidenModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="connectionStrings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="ForbbidenModel.edmx.diagram">
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
     </None>
@@ -149,18 +148,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ForbbidenModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
-      <LastGenOutput>ForbbidenModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="ForbbidenModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
-      <LastGenOutput>ForbbidenModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -175,12 +162,27 @@
     <PackageReference Include="BCrypt.Net-Next">
       <Version>4.0.3</Version>
     </PackageReference>
+    <PackageReference Include="dotenv.net">
+      <Version>4.0.0</Version>
+    </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.5.1</Version>
     </PackageReference>
     <PackageReference Include="log4net">
       <Version>3.2.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ForbbidenModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
+      <LastGenOutput>ForbbidenModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ForbbidenModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
+      <LastGenOutput>ForbbidenModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,7 +12,7 @@ namespace Forbbiden.Server
     using System;
     using System.Collections.Generic;
     
-    public partial class Friend_Request
+    public partial class Friends
     {
         public int player_id { get; set; }
         public int friend_id { get; set; }
