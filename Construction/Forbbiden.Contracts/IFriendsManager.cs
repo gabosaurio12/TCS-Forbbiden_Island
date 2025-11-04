@@ -27,10 +27,10 @@ namespace Forbbiden.Contracts
     public class FriendRequest
     {
         [DataMember]
-        public int SenderID;
+        private int SenderID { get; set; }
         [DataMember]
-        public int ReceiverID;
+        private int ReceiverID { get; set; }
         [DataMember]
-        public bool status;
+        private bool Status { get; set; }
     }
 }
