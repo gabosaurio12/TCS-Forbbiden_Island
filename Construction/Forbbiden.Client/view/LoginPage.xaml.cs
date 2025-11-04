@@ -36,7 +36,7 @@ namespace Forbbiden.Client
 
             Player searchPlayer = client.GetPlayerByUsername(txtBUsername.Text);
 
-            if (searchPlayer == null)
+            if (searchPlayer.PlayerId != -1)
             {
                 MessageBox.Show(Properties.Langs.Resources.usernameNoExists);
                 txtBkUser.Foreground = Brushes.Red;

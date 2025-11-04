@@ -13,13 +13,14 @@ namespace Forbbiden.Client
     public partial class SignupPage : Page
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(SignupPage));
+        private const int PasswordMinLength = 7;
         public SignupPage()
         {
             InitializeComponent();
         }
         private static bool ValidatePassword(string password)
         {
-            if (!string.IsNullOrWhiteSpace(password) && password.Length > 7)
+            if (!string.IsNullOrWhiteSpace(password) && password.Length > PasswordMinLength)
             {
                 if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[A-Z]")) return false;
                 if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[a-z]")) return false;

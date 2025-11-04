@@ -82,7 +82,6 @@ namespace Forbbiden.Client
         {
             try
             {
-                // 🔹 Obtener el usuario actual con ProfileManager
                 var profileClient = new ProfileManagerClient();
                 var currentPlayer = profileClient.GetCurrentLogin();
 

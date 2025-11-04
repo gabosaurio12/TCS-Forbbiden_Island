@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Forbbiden.Client.ProfileManager;
 
@@ -108,7 +109,21 @@ namespace Forbbiden.Client.view
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.GoBack();
+            NavigationService?.Navigate(new HostGameControl());
+        }
+
+        private void SearchFriend_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (searchtxtBx.Width == 0)
+            {
+                Storyboard storyBoard = (Storyboard)FindResource("ShowSearchBar");
+                storyBoard.Begin();
+            }
+            else
+            {
+                Storyboard storyBoard = (Storyboard)FindResource("HideSearchBar");
+                storyBoard.Begin();
+            }
         }
     }
 }

@@ -13,6 +13,23 @@
         <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
     </Page.Background>
 
+    <Page.Resources>
+        <Storyboard x:Key="ShowSearchBar">
+            <DoubleAnimation Storyboard.TargetName="searchtxtBx"
+                             Storyboard.TargetProperty="Width"
+                             From="0" To="450"
+                             Duration="0:0:0.5"
+                             AccelerationRatio="0.3" DecelerationRatio="0.3" />
+        </Storyboard>
+        <Storyboard x:Key="HideSearchBar">
+            <DoubleAnimation Storyboard.TargetName="searchtxtBx"
+                             Storyboard.TargetProperty="Width"
+                             From="450" To="0"
+                             Duration="0:0:0.5"
+                             AccelerationRatio="0.3" DecelerationRatio="0.3" />
+        </Storyboard>
+    </Page.Resources>
+
     <Viewbox Stretch="Uniform">
         <Grid Width="1920" Height="1080">
             <Grid.RowDefinitions>
@@ -21,31 +38,56 @@
             </Grid.RowDefinitions>
 
             <!-- Upper bar -->
-            <DockPanel Grid.Row="0" Background="#EFC437" LastChildFill="True" Height="152">
-                <Button x:Name="backButton"
-                        Content="&lt;"
-                        Width="100" Height="100"
-                        FontSize="40"
-                        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-                        BorderThickness="5" BorderBrush="#FFB7B7B7"
-                        Background="White"
-                        Foreground="Black"
-                        Margin="20,0,0,0"
-                        Cursor="Hand"
-                        DockPanel.Dock="Left"
-                        Click="BackButton_Click"/>
-                
-                <Image Source="/Images/glass.png" Height="100" Width="100" DockPanel.Dock="Right" Margin="20,0"/>
 
-                <TextBlock Text="{x:Static language:Resources.friends}"
-                        FontSize="60"
-                        FontWeight="Bold"
-                        Foreground="White"
-                        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"/>
+            <Grid x:Name="upperGrid" Background="#EFC437" Height="152">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            </DockPanel>
+                <Button x:Name="backButton" Grid.Column="0"
+                    Content="&lt;"
+                    Width="100" Height="100"
+                    HorizontalAlignment="Left"
+                    FontSize="40"
+                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                    BorderThickness="5" BorderBrush="#FFB7B7B7"
+                    Background="White"
+                    Foreground="Black"
+                    Margin="20,0,0,0"
+                    Cursor="Hand"
+                    Click="BackButton_Click"/>
+
+                <TextBlock Text="{x:Static language:Resources.friends}" Grid.Column="1"
+                    FontSize="60"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"/>
+
+                <DockPanel Grid.Column="2">
+                    <Image Source="/Images/glass.png"
+                            DockPanel.Dock="Right"
+                            Height="100" Width="100" Margin="20,0"
+                            Cursor="Hand"
+                            MouseLeftButtonDown="SearchFriend_MouseLeftButtonDown"/>
+
+                    <TextBox x:Name="searchtxtBx" Height="60" Width="0"
+                             MaxLength="30"
+                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                             FontSize="40"
+                             DockPanel.Dock="Left"
+                             VerticalAlignment="Center"
+                             Margin="10,0,0,0"
+                             Visibility="Visible"/>
+                    
+                    
+                </DockPanel>
+
+
+            </Grid>
 
             <Grid Grid.Row="1" >
                 <Grid.ColumnDefinitions>
