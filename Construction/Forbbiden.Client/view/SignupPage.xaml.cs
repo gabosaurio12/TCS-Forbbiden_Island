@@ -1,5 +1,7 @@
 using Forbbiden.Client.ProfileManager;
 using log4net;
+using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,10 +24,18 @@ namespace Forbbiden.Client
         {
             if (!string.IsNullOrWhiteSpace(password) && password.Length > PasswordMinLength)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[A-Z]")) return false;
-                if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[a-z]")) return false;
-                if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[0-9]")) return false;
-                if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"[\W_]")) return false;
+                var passwordUpperCase = Regex.IsMatch(password, @"[A-Z]", 
+                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                if (!passwordUpperCase) return false;
+                var passwordLowerCase = Regex.IsMatch(password, @"[a-z]", 
+                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                if (!passwordLowerCase) return false;
+                var passwordNumbers = Regex.IsMatch(password, @"[0-9]", 
+                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                if (!passwordNumbers) return false;
+                var passwordSpecialChar = Regex.IsMatch(password, @"[\W_]", 
+                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                if (!passwordSpecialChar) return false;
             }
             else
             {
