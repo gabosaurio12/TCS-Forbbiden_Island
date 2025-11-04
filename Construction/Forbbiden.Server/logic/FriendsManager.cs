@@ -50,7 +50,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex);
-                    log.Error(ex.Message);
+                    log.Error(ex);
                 }
             }
 
@@ -97,7 +97,7 @@ namespace Forbbiden.Server.logic
             catch (EntityException ex)
             {
                 Console.WriteLine(ErrorCode + ex);
-                log.Error(ex.Message);
+                log.Error(ex);
             }
 
             return success;
@@ -128,7 +128,7 @@ namespace Forbbiden.Server.logic
                 catch(EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);
+                    log.Error(ex);
                 }
             }
 
@@ -141,10 +141,12 @@ namespace Forbbiden.Server.logic
             {
                 try
                 {
-                    var receiver = db.Player.FirstOrDefault(p => p.player_username == receiverUsername);
-                    if (receiver.player_id != -1)
+                    var profileClient = new ProfileManager();
+                    var receiver = profileClient.GetPlayerByUsername(receiverUsername);
+
+                    if (receiver.PlayerId != -1)
                     {
-                        var requests = db.Friends.Where(fr => fr.friend_id == receiver.player_id && fr.status == 0).ToList();
+                        var requests = db.Friends.Where(fr => fr.friend_id == receiver.PlayerId && fr.status == 0).ToList();
 
                         var friendRequests = new List<FriendRequest>();
 
@@ -165,7 +167,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);
+                    log.Error(ex);
                 }
             }
             return new List<FriendRequest>();
