@@ -43,7 +43,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
 
             }
@@ -65,7 +65,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
             }
             return usernameFound;
@@ -95,7 +95,7 @@ namespace Forbbiden.Server.logic
             catch (SmtpException ex)
             {
                 Console.WriteLine(ErrorCode + ex.Message);
-                log.Error(ex.Message);;
+                log.Error(ex.Message);
             }
 
             return success;
@@ -155,17 +155,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
             }
 
@@ -217,7 +217,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
 
                 return new Contracts.Player()
@@ -238,8 +238,6 @@ namespace Forbbiden.Server.logic
                 {
                     int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).FirstOrDefault();
                     Player searchPlayer = db.Player.Include("player_socialmedia").FirstOrDefault(p => p.player_id == current_id);
-
-
 
                     if (searchPlayer != null)
                     {
@@ -275,7 +273,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
             }
 
@@ -300,17 +298,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
             }
 
@@ -344,7 +342,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
             }
 
@@ -389,17 +387,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
             }
             return success;
@@ -432,17 +430,17 @@ namespace Forbbiden.Server.logic
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (DbUpdateException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
                 catch (EntityException ex)
                 {
                     Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex.Message);;
+                    log.Error(ex.Message);
                 }
             }
 
