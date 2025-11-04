@@ -21,7 +21,7 @@ namespace Forbbiden.Server.logic
 
         public ProfileManager()
         {
-            connectionString = ConnectionStringGenerator.GenerateConnectionString();
+            connectionString = ConnectionStringGenerator.Generate();
         }
 
         public bool ValidateEmail(string email)

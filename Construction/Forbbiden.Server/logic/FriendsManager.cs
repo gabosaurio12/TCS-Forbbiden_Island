@@ -20,7 +20,7 @@ namespace Forbbiden.Server.logic
 
         public FriendsManager()
         {
-            connectionString = ConnectionStringGenerator.GenerateConnectionString();
+            connectionString = ConnectionStringGenerator.Generate();
         }
 
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)

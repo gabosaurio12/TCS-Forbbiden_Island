@@ -5,7 +5,11 @@ namespace Forbbiden.Server.utils
 {
     internal class ConnectionStringGenerator
     {
-        public static string GenerateConnectionString()
+        public ConnectionStringGenerator() 
+        {
+        }
+
+        public static string Generate()
         {
             DotEnv.Load();
 

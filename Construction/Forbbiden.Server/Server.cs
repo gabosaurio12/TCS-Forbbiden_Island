@@ -45,7 +45,7 @@ namespace Forbbiden.Server
 
                 try
                 {
-                    using (var db = new Forbbiden_FEIEntities(ConnectionStringGenerator.GenerateConnectionString()))
+                    using (var db = new Forbbiden_FEIEntities(ConnectionStringGenerator.Generate()))
                     {
                         db.Database.Connection.Open();
                         Console.WriteLine(" Conexión a la base de datos exitosa");
