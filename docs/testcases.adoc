@@ -1,6 +1,8 @@
 
 == Casos de Prueba
 
+=== ProfileManagerTests
+
 [cols="1,1,1,1,1,1,1,1,1"]
 
 |===
@@ -75,12 +77,29 @@ PRE02: Tener el email _testuser@email.net_ registrado
 |Regresa _true_
 |*Pasó*
 
+|===
+
+=== FriendsManagerTests
+
+[cols="1,1,1,1,1,1,1,1,1"]
+
+|===
+|ID
+|Nombre
+|Objetivo
+|Prioridad
+|Precondiciones
+|Entradas
+|Resultados Esperados
+|Resultados Observados
+|Resultado
+
 |FMT01
 |TestSendFriendRequestSuccess
 |Comprobar que se envíe la solicitud de amistad al usuario correcto
 |*Media*
 |PRE01: Haber ingresado un username
-|_testFriend_
+|sender = _testSender_ receiver = _testReceiver_
 |_True_
 |Regresa _true_
 |*Pasó*
@@ -90,7 +109,7 @@ PRE02: Tener el email _testuser@email.net_ registrado
 |Comprobar que no se envíe una solicitud de amistad a un usuario que no existe
 |*Media*
 |PRE01: Haber ingresado un username
-|_FriendTest_
+|sender = _testSender_ fakeReceiver = _FriendTest_
 |_False_
 |Regresa _false_
 |*Pasó*
@@ -100,7 +119,7 @@ PRE02: Tener el email _testuser@email.net_ registrado
 |Comprobar que no se envíe una solicitud de amistad a con quien ya se tiene una amistad
 |*Media*
 |PRE01: Haber ingresado un username
-|_testFriend_
+|sender = _firstFriend_ receiver = _secondFriend_
 |_False_
 |Regresa _false_
 |*Pasó*
@@ -110,20 +129,39 @@ PRE02: Tener el email _testuser@email.net_ registrado
 |El jugador acepta la solicitud de amistad
 |*Media*
 |PRE01: El jugador debe tener una solicitud de amistad
-|
+|sender = _testSender_ receiver = _firstFriend_
 |_True_
+|Regresa _true_
+|*Pasó*
+
+|FMT05
+|TestAcceptFriendRequestInvalidUsername
+|No se puede aceptar una solicitud de amistad que no existe
+|*Media*
+|PRE01: El jugador no debe haber recibido una solicitud de amistad
+|sender = _testSender_ receiver = _FriendTest_
+|_False_
 |Regresa __
 |**
 
-|FMT05
+|FMT06
 |TestCancelFriendRequestSuccess
 |El jugador cancela la solicitud de amistad enviada
 |*Media*
 |PRE01: El jugador debe tener una solicitud de amistad enviada
-|
+|sender = _testSender_ receiver = _secondFriend_
 |_True_
-|Regresa __
-|**
+|Regresa _true_
+|*Pasó*
 
+|FMT067
+|TestCancelFriendRequestInvalidUsername
+|No se puede cancelar una solicitud de amistad que no existe
+|*Media*
+|PRE01: El jugador no debe haber enviado una solicitud de amistad
+|sender = _testSender_ receiver = _FriendTest_
+|_True_
+|Regresa _true_
+|*Pasó*
 
 |===

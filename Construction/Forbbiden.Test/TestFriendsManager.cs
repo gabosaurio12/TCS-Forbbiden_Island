@@ -15,27 +15,53 @@ namespace Forbbiden.Test
         [OneTimeSetUp]
         public async Task Setup()
         {
-            var client = new ProfileManagerClient();
 
-            Player friend = new Player
+            Player sender = new Player
             {
-                PlayerUsername = "testFriend",
+                PlayerUsername = "testSender",
                 PlayerPassword = "T3st_pass",
-                PlayerEmail = "testfriend@email.net"
+                PlayerEmail = "testSender@email.net"
             };
 
-            Player player = new Player
+            Player receiver = new Player
             {
-                PlayerUsername = "testUser",
+                PlayerUsername = "testReceiver",
                 PlayerPassword = "T3st_pass",
-                PlayerEmail = "testuser@email.net"
+                PlayerEmail = "testReceiver@email.net"
+            };
+
+            Player firstFriend = new Player
+            {
+                PlayerUsername = "firstFriend",
+                PlayerPassword = "T3st_pass",
+                PlayerEmail = "firstFriend@email.net"
+            };
+
+            Player secondFriend = new Player
+            {
+                PlayerUsername = "secondFriend",
+                PlayerPassword = "T3st_pass",
+                PlayerEmail = "secondFriend@email.net"
             };
 
             try
             {
-                await client.SignUpAsync(friend);
+                var profileClient = new ProfileManagerClient();
 
-                await client.SignUpAsync(player);
+                await profileClient.SignUpAsync(sender);
+                await profileClient.SignUpAsync(receiver);
+
+                var frienshipClient = new FriendsManagerClient();
+
+                await profileClient.SignUpAsync(firstFriend);
+                await profileClient.SignUpAsync(secondFriend);
+
+                await frienshipClient.SendFriendRequestAsync(firstFriend.PlayerUsername, secondFriend.PlayerUsername);
+                await frienshipClient.AcceptFriendRequestAsync(firstFriend.PlayerUsername, secondFriend.PlayerUsername);
+
+                await frienshipClient.SendFriendRequestAsync(sender.PlayerUsername, firstFriend.PlayerUsername);
+                await frienshipClient.SendFriendRequestAsync(sender.PlayerUsername, secondFriend.PlayerUsername);
+
             }
             catch (EntityException ex)
             {
@@ -46,18 +72,23 @@ namespace Forbbiden.Test
         [OneTimeTearDown]
         public async Task TearDown()
         {
-            var profileClient = new ProfileManagerClient();
-            string playerUser = "testUser";
-            string friendUser = "testFriend";
+            try {
+                var profileClient = new ProfileManagerClient();
+                string sender = "testSender";
+                string receiver = "testReceiver";
 
-            var friendClient = new FriendsManagerClient();
-            try
-            {
-                await friendClient.CancelFriendRequestAsync(playerUser, friendUser);
+                string firstFriend = "firstFriend";
+                string secondFriend = "secondFriend";
 
-                await profileClient.DeletePlayerByUsernameAsync(playerUser);
+                var friendClient = new FriendsManagerClient();
 
-                await profileClient.DeletePlayerByUsernameAsync(friendUser);
+                await friendClient.CancelFriendRequestAsync(sender, firstFriend);
+                await friendClient.CancelFriendRequestAsync(sender, receiver);
+                await profileClient.DeletePlayerByUsernameAsync(sender);
+                await profileClient.DeletePlayerByUsernameAsync(receiver);
+
+                await profileClient.DeletePlayerByUsernameAsync(firstFriend);
+                await profileClient.DeletePlayerByUsernameAsync(secondFriend);
             }
             catch (EntityException ex)
             {
@@ -70,10 +101,10 @@ namespace Forbbiden.Test
         public async Task TestSendFriendRequestSuccess()
         {
             var client = new FriendsManagerClient();
-            string playerUsername = "testUser";
-            string friendUsername = "testFriend";
+            string sender = "testSender";
+            string receiver = "testReceiver";
             try {
-                var result = await client.SendFriendRequestAsync(playerUsername, friendUsername);
+                var result = await client.SendFriendRequestAsync(sender, receiver);
 
                 Assert.That(result, Is.True, "result should be true");
             }
@@ -87,11 +118,11 @@ namespace Forbbiden.Test
         public async Task TestSendFriendRequestInvalidUsername()
         {
             var client = new FriendsManagerClient();
-            string playerUsername = "testUser";
-            string friendUsername = "FriendTest";
+            string sender = "testSender";
+            string fakeReceiver = "FriendTest";
             try
             {
-                var result = await client.SendFriendRequestAsync(playerUsername, friendUsername);
+                var result = await client.SendFriendRequestAsync(sender, fakeReceiver);
 
                 Assert.That(result, Is.False, "result should be false");
             }
@@ -105,11 +136,83 @@ namespace Forbbiden.Test
         public async Task TestSendFriendRequestDuplicateFriend()
         {
             var client = new FriendsManagerClient();
-            string playerUsername = "testUser";
-            string friendUsername = "testFriend";
+            string senderSim = "firstFriend";
+            string receiverSim = "secondFriend";
             try
             {
-                var result = await client.SendFriendRequestAsync(playerUsername, friendUsername);
+                var result = await client.SendFriendRequestAsync(senderSim, receiverSim);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestAcceptFriendRequestSuccess()
+        {
+            var client = new FriendsManagerClient();
+            string sender = "testSender";
+            string recieverSim = "firstFriend";
+
+            try
+            {
+                var result = await client.AcceptFriendRequestAsync(sender, recieverSim);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestAcceptFriendRequestInvalidUsername()
+        {
+            var client = new FriendsManagerClient();
+            string sender = "testSender";
+            string recieverSim = "FriendTest";
+
+            try
+            {
+                var result = await client.AcceptFriendRequestAsync(sender, recieverSim);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestCancelFriendRequestSuccess()
+        {
+            var client = new FriendsManagerClient();
+            string sender = "testSender";
+            string recieverSim = "secondFriend";
+
+            try
+            {
+                var result = await client.CancelFriendRequestAsync(sender, recieverSim);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (EntityException ex)
+            {
+                log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestCancelFriendRequestInvalidUsername()
+        {
+            var client = new FriendsManagerClient();
+            string sender = "testSender";
+            string recieverSim = "FriendTest";
+
+            try
+            {
+                var result = await client.CancelFriendRequestAsync(sender, recieverSim);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (EntityException ex)
