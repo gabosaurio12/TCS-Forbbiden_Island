@@ -83,7 +83,7 @@ namespace Forbbiden.Client
             try
             {
                 var profileClient = new ProfileManagerClient();
-                var currentPlayer = profileClient.GetCurrentLogin();
+                var currentPlayer = await profileClient.GetCurrentLoginAsync();
 
                 if (currentPlayer == null)
                 {

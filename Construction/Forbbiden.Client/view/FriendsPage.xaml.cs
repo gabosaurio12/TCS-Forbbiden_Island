@@ -149,7 +149,7 @@ namespace Forbbiden.Client.view
             if (searchPlayer.PlayerId != -1)
             {
                 var friendsClient = new FriendsManagerClient();
-                var requestStatus = friendsClient.SendFriendRequest(currentLoginUsername, searchPlayer.PlayerUsername);
+                var requestStatus = await friendsClient.SendFriendRequestAsync(currentLoginUsername, searchPlayer.PlayerUsername);
 
                 if (requestStatus)
                 {
