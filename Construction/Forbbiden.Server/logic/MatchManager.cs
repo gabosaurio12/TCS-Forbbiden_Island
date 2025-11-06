@@ -14,7 +14,6 @@ namespace Forbbiden.Server.logic
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(MatchManager));
         private const string CLASS_NAME = "MatchManager.cs";
-        private const string ERROR_CODE = "[ERROR] MatchManager.cs - ";
 
         public int CreateMatch(CreateMatchRequest request)
         {
@@ -24,30 +23,61 @@ namespace Forbbiden.Server.logic
             {
                 using (var db = new Forbbiden_FEIEntities())
                 {
+                    int hostId = db.Player
+                        .Where(p => p.player_username == request.HostUsername)
+                        .Select(p => p.player_id)
+                        .FirstOrDefault();
+
+                    if (hostId == 0)
+                    {
+                        throw new FaultException("Host player not found.");
+                    }
+
                     var newMatch = new Matches
                     {
                         match_difficulty = request.Difficulty,
-                        match_visibility = request.Visibility
+                        match_visibility = request.Visibility,
+                        host_id = hostId,
+                        created_at = DateTime.Now
                     };
 
+                    db.Configuration.AutoDetectChangesEnabled = false;
                     db.Matches.Add(newMatch);
                     db.SaveChanges();
+                    db.Configuration.AutoDetectChangesEnabled = true;
 
-                    log.Info($"Match created successfully (ID: {newMatch.match_id})");
+                    bool hostExists = db.match_players
+                        .Any(mp => mp.match_id == newMatch.match_id && mp.player_id == hostId);
+
+                    if (!hostExists)
+                    {
+                        db.match_players.Add(new match_players
+                        {
+                            match_id = newMatch.match_id,
+                            player_id = hostId
+                        });
+                        db.SaveChanges();
+                    }
+
                     return newMatch.match_id;
                 }
+
             }
             catch (DbEntityValidationException ex)
             {
-                Console.WriteLine(ERROR_CODE + ex.Message);
                 log.Error(CLASS_NAME, ex);
                 throw new FaultException("Error validating match entity.");
             }
             catch (EntityException ex)
             {
-                Console.WriteLine(ERROR_CODE + ex.Message);
                 log.Error(CLASS_NAME, ex);
                 throw new FaultException("Database connection error while creating match.");
+            }
+            catch (Exception ex)
+            {
+                log.Error(CLASS_NAME, ex);
+                Console.WriteLine("Detalles del error: " + ex);
+                throw new FaultException("Unexpected error while creating match: " + ex.Message);
             }
         }
 
@@ -66,28 +96,38 @@ namespace Forbbiden.Server.logic
                         return false;
                     }
 
-                    var player = db.Player.FirstOrDefault(p => p.player_username == request.Username);
-                    if (player == null)
+                    Player player = db.Player.FirstOrDefault(p => p.player_username == request.Username);
+                    int playerId;
+
+                    if (player != null)
                     {
-                        log.Warn($"Player {request.Username} not found");
-                        return false;
+                        playerId = player.player_id;
+                    }
+                    else
+                    {
+                        int minGuestId = db.match_players
+                            .Where(mp => mp.match_id == match.match_id && mp.player_id < 0)
+                            .Select(mp => mp.player_id)
+                            .DefaultIfEmpty(0)
+                            .Min();
+                        playerId = minGuestId - 1;
                     }
 
                     bool alreadyJoined = db.match_players
-                        .Any(mp => mp.match_id == match.match_id && mp.player_id == player.player_id);
+                        .Any(mp => mp.match_id == match.match_id && mp.player_id == playerId);
 
                     if (alreadyJoined)
                     {
                         log.Warn($"Player {request.Username} already in match {match.match_id}");
                         return false;
                     }
-                    var newJoin = new match_players
+
+                    db.match_players.Add(new match_players
                     {
                         match_id = match.match_id,
-                        player_id = player.player_id
-                    };
+                        player_id = playerId
+                    });
 
-                    db.match_players.Add(newJoin);
                     db.SaveChanges();
 
                     log.Info($"Player {request.Username} successfully joined match {match.match_id}");
@@ -96,12 +136,10 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                Console.WriteLine(ERROR_CODE + ex.Message);
                 log.Error(CLASS_NAME, ex);
                 throw new FaultException("Database connection error while joining match.");
             }
         }
-
 
         public List<Contracts.Match> ListMatches()
         {
@@ -111,21 +149,37 @@ namespace Forbbiden.Server.logic
             {
                 using (var db = new Forbbiden_FEIEntities())
                 {
-                    var dbMatches = db.Matches.ToList();
+                    var matches = (from m in db.Matches
+                                   join host in db.Player on m.host_id equals host.player_id
+                                   select new Contracts.Match
+                                   {
+                                       MatchId = m.match_id,
+                                       Difficulty = m.match_difficulty,
+                                       Visibility = m.match_visibility,
+                                       CreatedAt = m.created_at ?? DateTime.Now,
+                                       HostUsername = host.player_username,
+                                       Players = (from mp in db.match_players
+                                                  where mp.match_id == m.match_id
+                                                  join p in db.Player on mp.player_id equals p.player_id into joined
+                                                  from p in joined.DefaultIfEmpty()
+                                                  select new PlayerInfo
+                                                  {
+                                                      PlayerId = mp.player_id,
+                                                      PlayerUsername = mp.player_id > 0
+                                                          ? p.player_username
+                                                          : "Guest" + Math.Abs(mp.player_id),
+                                                      PlayerName = mp.player_id > 0
+                                                          ? p.player_name
+                                                          : "Guest",
+                                                      IsHost = mp.player_id == m.host_id
+                                                  }).ToList()
+                                   }).ToList();
 
-                    // Convertimos las entidades del servidor a los contratos
-                    return dbMatches.Select(m => new Contracts.Match
-                    {
-                        MatchId = m.match_id,
-                        Difficulty = m.match_difficulty,
-                        Visibility = m.match_visibility,
-                        Players = new List<PlayerInfo>() // pendiente de llenar
-                    }).ToList();
+                    return matches;
                 }
             }
             catch (EntityException ex)
             {
-                Console.WriteLine(ERROR_CODE + ex.Message);
                 log.Error(CLASS_NAME, ex);
                 throw new FaultException("Error retrieving matches from database.");
             }
@@ -139,25 +193,44 @@ namespace Forbbiden.Server.logic
             {
                 using (var db = new Forbbiden_FEIEntities())
                 {
-                    var match = db.Matches.FirstOrDefault(m => m.match_id == matchId);
+                    var match = (from m in db.Matches
+                                 join host in db.Player on m.host_id equals host.player_id
+                                 where m.match_id == matchId
+                                 select new Contracts.Match
+                                 {
+                                     MatchId = m.match_id,
+                                     Difficulty = m.match_difficulty,
+                                     Visibility = m.match_visibility,
+                                     CreatedAt = m.created_at ?? DateTime.Now,
+                                     HostUsername = host.player_username,
+                                     Players = (from mp in db.match_players
+                                                where mp.match_id == m.match_id
+                                                join p in db.Player on mp.player_id equals p.player_id into joined
+                                                from p in joined.DefaultIfEmpty()
+                                                select new PlayerInfo
+                                                {
+                                                    PlayerId = mp.player_id,
+                                                    PlayerUsername = mp.player_id > 0
+                                                        ? p.player_username
+                                                        : "Guest" + Math.Abs(mp.player_id),
+                                                    PlayerName = mp.player_id > 0
+                                                        ? p.player_name
+                                                        : "Guest",
+                                                    IsHost = mp.player_id == m.host_id
+                                                }).ToList()
+                                 }).FirstOrDefault();
+
                     if (match == null)
                     {
                         log.Warn("Match not found");
                         return null;
                     }
 
-                    return new Contracts.Match
-                    {
-                        MatchId = match.match_id,
-                        Difficulty = match.match_difficulty,
-                        Visibility = match.match_visibility,
-                        Players = new List<PlayerInfo>()
-                    };
+                    return match;
                 }
             }
             catch (EntityException ex)
             {
-                Console.WriteLine(ERROR_CODE + ex.Message);
                 log.Error(CLASS_NAME, ex);
                 throw new FaultException("Database connection error while retrieving match.");
             }

@@ -8,9 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Threading.Tasks;
-
 namespace Forbbiden.Client.MatchManager {
     
     
@@ -100,11 +97,6 @@ namespace Forbbiden.Client.MatchManager {
         
         public System.Threading.Tasks.Task<Forbbiden.Contracts.Match> GetMatchByIdAsync(int matchId) {
             return base.Channel.GetMatchByIdAsync(matchId);
-        }
-
-        internal async Task CloseAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

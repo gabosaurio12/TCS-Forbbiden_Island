@@ -1,8 +1,10 @@
 ﻿using Forbbiden.Client.MatchManager;
-using Forbbiden.Client.ProfileManager;       
-using Forbbiden.Client.view;                  
+using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.view;
 using Forbbiden.Contracts;
 using System;
+using System.Net.Http;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -23,33 +25,36 @@ namespace Forbbiden.Client
 
         private void HostGameControl_Loaded(object sender, RoutedEventArgs e)
         {
-            // Estado inicial de dificultad
+            if (NormalButton == null || HardButton == null ||
+                NormalMessage == null || HardMessage == null ||
+                PublicToggle == null || PublicMessage == null || PrivateMessage == null)
+            {
+                return;
+            }
+
+            selectedDifficulty = "Normal";
             NormalMessage.Visibility = Visibility.Visible;
             HardMessage.Visibility = Visibility.Collapsed;
             NormalButton.Background = Brushes.LightGreen;
             HardButton.Background = Brushes.LightCoral;
 
-            // Estado inicial de visibilidad
-            if (PublicToggle.IsChecked == true)
-            {
-                PublicMessage.Visibility = Visibility.Visible;
-                PrivateMessage.Visibility = Visibility.Collapsed;
-                selectedVisibility = "Public";
-            }
-            else
-            {
-                PublicMessage.Visibility = Visibility.Collapsed;
-                PrivateMessage.Visibility = Visibility.Visible;
-                selectedVisibility = "Private";
-            }
+            // Visibilidad por defecto: Pública
+            selectedVisibility = "Public";
+            PublicToggle.IsChecked = true;
+            PublicMessage.Visibility = Visibility.Visible;
+            PrivateMessage.Visibility = Visibility.Collapsed;
         }
 
         private void NormalButton_Click(object sender, RoutedEventArgs e)
         {
             selectedDifficulty = "Normal";
+            if (NormalMessage == null || HardMessage == null || NormalButton == null || HardButton == null)
+            {
+                return;
+            }
+
             NormalMessage.Visibility = Visibility.Visible;
             HardMessage.Visibility = Visibility.Collapsed;
-
             NormalButton.Background = Brushes.LightGreen;
             HardButton.Background = Brushes.LightCoral;
         }
@@ -57,15 +62,24 @@ namespace Forbbiden.Client
         private void HardButton_Click(object sender, RoutedEventArgs e)
         {
             selectedDifficulty = "Hard";
+            if (NormalMessage == null || HardMessage == null || NormalButton == null || HardButton == null)
+            {
+                return;
+            }
+
             NormalMessage.Visibility = Visibility.Collapsed;
             HardMessage.Visibility = Visibility.Visible;
-
             HardButton.Background = Brushes.LightGreen;
             NormalButton.Background = Brushes.LightGray;
         }
 
         private void PublicToggle_Checked(object sender, RoutedEventArgs e)
         {
+            if (PublicMessage == null || PrivateMessage == null)
+            {
+                return;
+            }
+
             selectedVisibility = "Public";
             PublicMessage.Visibility = Visibility.Visible;
             PrivateMessage.Visibility = Visibility.Collapsed;
@@ -73,6 +87,11 @@ namespace Forbbiden.Client
 
         private void PublicToggle_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (PublicMessage == null || PrivateMessage == null)
+            {
+                return;
+            }
+
             selectedVisibility = "Private";
             PublicMessage.Visibility = Visibility.Collapsed;
             PrivateMessage.Visibility = Visibility.Visible;
@@ -80,10 +99,12 @@ namespace Forbbiden.Client
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            var profileClient = new ProfileManagerClient();
+            var matchClient = new MatchManagerClient();
+
             try
             {
-                var profileClient = new ProfileManagerClient();
-                var currentPlayer = await profileClient.GetCurrentLoginAsync();
+                var currentPlayer = profileClient.GetCurrentLogin();
 
                 if (currentPlayer == null)
                 {
@@ -93,8 +114,6 @@ namespace Forbbiden.Client
                 }
 
                 string username = currentPlayer.PlayerUsername;
-
-                var matchClient = new MatchManagerClient();
 
                 var request = new CreateMatchRequest
                 {
@@ -118,19 +137,49 @@ namespace Forbbiden.Client
                     MessageBox.Show("No se pudo crear la partida. Intenta nuevamente.",
                         "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                await matchClient.CloseAsync();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("La conexión con el servidor ha excedido el tiempo de espera. Intenta más tarde.",
+                    "Tiempo de espera agotado", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show("No se pudo conectar con el servidor. Verifica tu conexión a internet.",
+                    "Conexión fallida", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (CommunicationException)
+            {
+                MessageBox.Show("Ocurrió un problema de comunicación con el servidor.",
+                    "Error de comunicación", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("No se pudo contactar el servicio remoto. Verifica tu red.",
+                    "Error de red", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear la partida: {ex.Message}",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Último recurso: error no esperado
+                MessageBox.Show($"Ocurrió un error inesperado al crear la partida.\nDetalles: {ex.Message}",
+                    "Error inesperado", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                try
+                {
+                    matchClient.Close();
+                }
+                catch
+                {
+                    matchClient.Abort();
+                }
             }
         }
 
         private void PlayerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //TO DO
+            // TODO: Guardar cantidad máxima de jugadores 
         }
     }
 }

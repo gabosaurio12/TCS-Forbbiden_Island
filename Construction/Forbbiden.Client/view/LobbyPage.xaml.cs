@@ -1,11 +1,15 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Forbbiden.Client.view
@@ -16,10 +20,12 @@ namespace Forbbiden.Client.view
         private DispatcherTimer timer;
         private string currentPlayer; 
         private Dictionary<string, TextBlock> playerMsgMap;
+        private int currentMatchId;
 
         public LobbyPage(int matchId)
         {
             InitializeComponent();
+            currentMatchId=matchId;
             LoadPlayers();
             StartClock();
             InitializePlayerMap();
@@ -45,34 +51,67 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                var client = new ProfileManagerClient();
-                Player player = client.GetCurrentLogin();
+                var matchClient = new MatchManagerClient();
+                var match = matchClient.GetMatchById(currentMatchId);
+                if (match == null || match.Players == null)
+                    return;
 
-                // Player 1 (host)
-                if (player != null)
+                var playerSlots = new List<(TextBlock nameBlock, Ellipse avatarEllipse, TextBlock msgBlock)>
+        {
+            (txtBkUser1, imgAvatar1, msgUser1),
+            (txtBkUser2, imgAvatar2, msgUser2),
+            (txtBkUser3, imgAvatar3, msgUser3),
+            (txtBkUser4, imgAvatar4, msgUser4)
+        };
+
+                // Inicializar slots con datos por defecto
+                for (int i = 0; i < playerSlots.Count; i++)
                 {
-                    txtBkUser1.Text = player.PlayerUsername;
-                    imgAvatar1.Fill = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(player.PlayerAvatarPath, UriKind.RelativeOrAbsolute)));
-                    currentPlayer = player.PlayerUsername; 
+                    playerSlots[i].nameBlock.Text = "Vacant";
+                    playerSlots[i].avatarEllipse.Fill = new ImageBrush(
+                        new BitmapImage(new Uri("/Images/defaultAvatar.png", UriKind.RelativeOrAbsolute)));
+                    playerSlots[i].msgBlock.Visibility = Visibility.Collapsed;
                 }
 
-                // Players 2,3,4 (guests placeholders)
-                txtBkUser2.Text = "Guest1";
-                txtBkUser3.Text = "Guest2";
-                txtBkUser4.Text = "Guest3";
+                int guestCounter = 1;
+                var tempMsgMap = new Dictionary<string, TextBlock>();
 
+                for (int i = 0; i < match.Players.Count && i < 4; i++)
+                {
+                    var player = match.Players[i];
+                    var slot = playerSlots[i];
 
-                // Message Colappsed
-                msgUser1.Visibility = Visibility.Collapsed;
-                msgUser2.Visibility = Visibility.Collapsed;
-                msgUser3.Visibility = Visibility.Collapsed;
-                msgUser4.Visibility = Visibility.Collapsed;
+                    // Nombre único: PlayerUsername si existe, sino Guest_i
+                    string playerName = string.IsNullOrEmpty(player.PlayerUsername)
+                                        ? $"Guest_{guestCounter++}"
+                                        : player.PlayerUsername;
+
+                    slot.nameBlock.Text = playerName;
+
+                    string avatarPath = "/Images/defaultAvatar.png";
+                    // Si quieres soporte avatar real desde ProfileManager:
+                    // avatarPath = string.IsNullOrEmpty(player.PlayerAvatarPath) ? "/Images/defaultAvatar.png" : player.PlayerAvatarPath;
+
+                    slot.avatarEllipse.Fill = new ImageBrush(
+                        new BitmapImage(new Uri(avatarPath, UriKind.RelativeOrAbsolute)));
+
+                    if (player.IsHost)
+                        currentPlayer = playerName;
+
+                    // Llenar diccionario
+                    tempMsgMap[playerName] = slot.msgBlock;
+                }
+
+                playerMsgMap = tempMsgMap;
             }
             catch (Exception ex)
             {
                 log.Error("LobbyPage.xaml.cs - LoadPlayers", ex);
             }
         }
+
+
+
 
         private void InitializePlayerMap()
         {

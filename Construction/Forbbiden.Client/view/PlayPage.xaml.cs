@@ -9,6 +9,7 @@ namespace Forbbiden.Client
     public partial class PlayPage : Page
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
+
         public PlayPage()
         {
             InitializeComponent();
@@ -24,7 +25,7 @@ namespace Forbbiden.Client
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowOnline();
+            ShowOnline(TabContent, HostButton, OnlineButton);
             OnlineButton.IsDefault = true;
             HostButton.IsDefault = false;
         }
@@ -36,16 +37,9 @@ namespace Forbbiden.Client
             OnlineButton.Background = System.Windows.Media.Brushes.Gainsboro;
         }
 
-        private void ShowOnline()
+        private static void ShowOnline(ContentControl TabContent, Button HostButton, Button OnlineButton)
         {
-            TabContent.Content = new TextBlock
-            {
-                Text = "Online mode (en construcción)",
-                FontSize = 32,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-
+            TabContent.Content = new JoinGameControl();
             OnlineButton.Background = System.Windows.Media.Brushes.LightGray;
             HostButton.Background = System.Windows.Media.Brushes.Gainsboro;
         }
