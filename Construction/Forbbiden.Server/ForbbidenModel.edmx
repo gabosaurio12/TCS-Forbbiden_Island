@@ -74,6 +74,8 @@
           <Property Name="match_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="match_difficulty" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="match_visibility" Type="nvarchar" MaxLength="7" Nullable="false" />
+          <Property Name="host_id" Type="int" />
+          <Property Name="created_at" Type="datetime" />
         </EntityType>
         <EntityType Name="Minigame">
           <Key>
@@ -122,7 +124,7 @@
           <Property Name="is_verified" Type="int" Nullable="false" />
           <Property Name="activation_time" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Friend_Re__frien__1332DBDC">
+        <Association Name="FK__Friend_Re__frien__5629CD9C">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
           <ReferentialConstraint>
@@ -134,7 +136,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Friend_Re__playe__123EB7A3">
+        <Association Name="FK__Friend_Re__frien__571DF1D5">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friend_Request" Type="Self.Friend_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friend_Request">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend_Re__playe__5812160E">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friend_Request" Type="Self.Friend_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friend_Request">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend_Re__playe__59063A47">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
           <ReferentialConstraint>
@@ -230,6 +256,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Matches_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="host_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_player_socialmedia">
           <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
           <End Role="player_socialmedia" Type="Self.player_socialmedia" Multiplicity="*" />
@@ -281,11 +319,19 @@
           <EntitySet Name="player_socialmedia" EntityType="Self.player_socialmedia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tile" EntityType="Self.Tile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Friend_Re__frien__1332DBDC" Association="Self.FK__Friend_Re__frien__1332DBDC">
+          <AssociationSet Name="FK__Friend_Re__frien__5629CD9C" Association="Self.FK__Friend_Re__frien__5629CD9C">
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Friend_Re__playe__123EB7A3" Association="Self.FK__Friend_Re__playe__123EB7A3">
+          <AssociationSet Name="FK__Friend_Re__frien__571DF1D5" Association="Self.FK__Friend_Re__frien__571DF1D5">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friend_Request" EntitySet="Friend_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend_Re__playe__5812160E" Association="Self.FK__Friend_Re__playe__5812160E">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friend_Request" EntitySet="Friend_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend_Re__playe__59063A47" Association="Self.FK__Friend_Re__playe__59063A47">
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
@@ -316,6 +362,10 @@
           <AssociationSet Name="FK_match_tiles_match" Association="Self.FK_match_tiles_match">
             <End Role="Matches" EntitySet="Matches" />
             <End Role="match_tiles" EntitySet="match_tiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matches_Player" Association="Self.FK_Matches_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Matches" EntitySet="Matches" />
           </AssociationSet>
           <AssociationSet Name="FK_player_socialmedia" Association="Self.FK_player_socialmedia">
             <End Role="Player" EntitySet="Player" />
@@ -420,6 +470,14 @@
           <NavigationProperty Name="match_minigames" Relationship="Self.FK_match_minigames_match" FromRole="Matches" ToRole="match_minigames" />
           <NavigationProperty Name="match_players" Relationship="Self.FK_match_players_match" FromRole="Matches" ToRole="match_players" />
           <NavigationProperty Name="match_tiles" Relationship="Self.FK_match_tiles_match" FromRole="Matches" ToRole="match_tiles" />
+<<<<<<< Updated upstream
+=======
+          <Property Name="match_difficulty" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="match_visibility" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="host_id" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Player" Relationship="Forbbiden_FEIModel.FK_Matches_Player" FromRole="Matches" ToRole="Player" />
+>>>>>>> Stashed changes
         </EntityType>
         <EntityType Name="Minigame">
           <Key>
@@ -447,6 +505,16 @@
           <NavigationProperty Name="LoginPlayer" Relationship="Self.FK_LoginPlayer_Player" FromRole="Player" ToRole="LoginPlayer" />
           <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
           <NavigationProperty Name="player_socialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="player_socialmedia" />
+<<<<<<< Updated upstream
+=======
+          <NavigationProperty Name="Player1" Relationship="Forbbiden_FEIModel.Player_Friends" FromRole="Player" ToRole="Player1" />
+          <NavigationProperty Name="Player2" Relationship="Forbbiden_FEIModel.Player_Friends" FromRole="Player1" ToRole="Player" />
+          <Property Name="player_status" Type="Int32" />
+          <Property Name="is_verified" Type="Int32" />
+          <NavigationProperty Name="Friend_Request" Relationship="Forbbiden_FEIModel.FK__Friend_Re__frien__1332DBDC" FromRole="Player" ToRole="Friend_Request" />
+          <NavigationProperty Name="Friend_Request1" Relationship="Forbbiden_FEIModel.FK__Friend_Re__playe__123EB7A3" FromRole="Player" ToRole="Friend_Request" />
+          <NavigationProperty Name="Matches" Relationship="Forbbiden_FEIModel.FK_Matches_Player" FromRole="Player" ToRole="Matches" />
+>>>>>>> Stashed changes
         </EntityType>
         <EntityType Name="player_socialmedia">
           <Key>
@@ -683,7 +751,89 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="player_socialmedia" EntitySet="player_socialmedia" />
           </AssociationSet>
+<<<<<<< Updated upstream
         </EntityContainer>
+=======
+          <AssociationSet Name="Player_Friends" Association="Forbbiden_FEIModel.Player_Friends">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Player1" EntitySet="Player" />
+          </AssociationSet>
+          <EntitySet Name="Friend_Request" EntityType="Forbbiden_FEIModel.Friend_Request" />
+          <EntitySet Name="Token" EntityType="Forbbiden_FEIModel.Token" />
+          <AssociationSet Name="FK__Friend_Re__frien__1332DBDC" Association="Forbbiden_FEIModel.FK__Friend_Re__frien__1332DBDC">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friend_Request" EntitySet="Friend_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend_Re__playe__123EB7A3" Association="Forbbiden_FEIModel.FK__Friend_Re__playe__123EB7A3">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friend_Request" EntitySet="Friend_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matches_Player" Association="Forbbiden_FEIModel.FK_Matches_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="Player_Friends">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="*" />
+          <End Type="Forbbiden_FEIModel.Player" Role="Player1" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Friend_Request">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="friend_id" />
+          </Key>
+          <Property Name="player_id" Type="Int32" Nullable="false" />
+          <Property Name="friend_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="Forbbiden_FEIModel.FK__Friend_Re__frien__1332DBDC" FromRole="Friend_Request" ToRole="Player" />
+          <NavigationProperty Name="Player1" Relationship="Forbbiden_FEIModel.FK__Friend_Re__playe__123EB7A3" FromRole="Friend_Request" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="token_id" />
+          </Key>
+          <Property Name="token_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="token1" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="is_verified" Type="Int32" Nullable="false" />
+          <Property Name="activation_time" Type="Time" Nullable="false" Precision="7" />
+        </EntityType>
+        <Association Name="FK__Friend_Re__frien__1332DBDC">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="Forbbiden_FEIModel.Friend_Request" Role="Friend_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friend_Request">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend_Re__playe__123EB7A3">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="Forbbiden_FEIModel.Friend_Request" Role="Friend_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friend_Request">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matches_Player">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="Forbbiden_FEIModel.Matches" Role="Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="host_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+>>>>>>> Stashed changes
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -762,6 +912,13 @@
           <EntitySetMapping Name="Matches">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.Matches">
               <MappingFragment StoreEntitySet="Matches">
+<<<<<<< Updated upstream
+=======
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="host_id" ColumnName="host_id" />
+                <ScalarProperty Name="match_visibility" ColumnName="match_visibility" />
+                <ScalarProperty Name="match_difficulty" ColumnName="match_difficulty" />
+>>>>>>> Stashed changes
                 <ScalarProperty Name="match_id" ColumnName="match_id" />
                 <ScalarProperty Name="match_difficulty" ColumnName="match_difficulty" />
                 <ScalarProperty Name="match_visibility" ColumnName="match_visibility" />
