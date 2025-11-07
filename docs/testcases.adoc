@@ -160,8 +160,8 @@ PRE02: Tener el email _testuser@email.net_ registrado
 |*Media*
 |PRE01: El jugador no debe haber enviado una solicitud de amistad
 |sender = _testSender_ receiver = _FriendTest_
-|_True_
-|Regresa _true_
-|*Pasó*
+|_False_
+|Regresa __
+|**
 
 |===

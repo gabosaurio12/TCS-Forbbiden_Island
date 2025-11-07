@@ -31,6 +31,7 @@
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_tiles_match" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_tile_match_tile" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_player_socialmedia" ManuallyRouted="false" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_Matches_Player" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

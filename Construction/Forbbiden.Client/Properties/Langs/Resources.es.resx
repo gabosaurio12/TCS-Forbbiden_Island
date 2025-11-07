@@ -144,8 +144,29 @@
   <data name="english" xml:space="preserve">
     <value>Inglés</value>
   </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="friends" xml:space="preserve">
     <value>Amigos</value>
+  </data>
+  <data name="friend_requests" xml:space="preserve">
+    <value>Solicitudes de Amistad</value>
+  </data>
+  <data name="friend_request_accepted" xml:space="preserve">
+    <value>Solicitud de Amistad Aceptada</value>
+  </data>
+  <data name="friend_request_accepted_message" xml:space="preserve">
+    <value>La solicitud de amistad fue aceptada con éxito</value>
+  </data>
+  <data name="friend_request_not_sent" xml:space="preserve">
+    <value>Hubo un error al enviar tu solicitud de amistad, intenta más tarde</value>
+  </data>
+  <data name="friend_request_sent_message" xml:space="preserve">
+    <value>Tu solicitud de amistad fue enviada exitosamente a </value>
+  </data>
+  <data name="friend_request_sent_title" xml:space="preserve">
+    <value>Solicitud de Amistad Enviada</value>
   </data>
   <data name="guest" xml:space="preserve">
     <value>Invitado</value>
@@ -222,6 +243,12 @@
   <data name="public_message" xml:space="preserve">
     <value>Cualquier jugador puede entrar a tu juego</value>
   </data>
+  <data name="pull_database_error" xml:space="preserve">
+    <value>Hubo un error al recuperar datos de la base de datos</value>
+  </data>
+  <data name="push_database_error" xml:space="preserve">
+    <value>Hubo un error al escribir datos en la base de datos</value>
+  </data>
   <data name="quit_game" xml:space="preserve">
     <value>Salir del juego</value>
   </data>
@@ -257,6 +284,9 @@
   </data>
   <data name="spanish" xml:space="preserve">
     <value>Español</value>
+  </data>
+  <data name="unexpected_error" xml:space="preserve">
+    <value>Hubo un error inesperado, por favor contacte a servicio al cliente</value>
   </data>
   <data name="upload_avatar" xml:space="preserve">
     <value>Subir Ávatar</value>

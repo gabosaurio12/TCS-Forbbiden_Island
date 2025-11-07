@@ -1,7 +1,9 @@
 ﻿using Forbbiden.Client.ProfileManager;
+using Forbbiden.Contracts;
 using log4net;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -129,7 +131,7 @@ namespace Forbbiden.Client
             player.PlayerEmail = txtBxEmail.Text;
             player.PlayerName = txtBxName.Text;
 
-            player.SocialMedia = new SocialMedia[]
+            player.SocialMedia = new List<SocialMedia>
             {
                 new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = this.player.PlayerId },
                 new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = this.player.PlayerId },

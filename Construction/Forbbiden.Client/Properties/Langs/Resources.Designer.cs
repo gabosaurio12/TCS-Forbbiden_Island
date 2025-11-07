@@ -151,6 +151,69 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string error {
+            get {
+                return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Request Accepted.
+        /// </summary>
+        public static string friend_request_accepted {
+            get {
+                return ResourceManager.GetString("friend_request_accepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The friend request was accepted succesfully.
+        /// </summary>
+        public static string friend_request_accepted_message {
+            get {
+                return ResourceManager.GetString("friend_request_accepted_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while sending your friend request, try again later.
+        /// </summary>
+        public static string friend_request_not_sent {
+            get {
+                return ResourceManager.GetString("friend_request_not_sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your friend request was successfully sent to .
+        /// </summary>
+        public static string friend_request_sent_message {
+            get {
+                return ResourceManager.GetString("friend_request_sent_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Request Sent.
+        /// </summary>
+        public static string friend_request_sent_title {
+            get {
+                return ResourceManager.GetString("friend_request_sent_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Requests.
+        /// </summary>
+        public static string friend_requests {
+            get {
+                return ResourceManager.GetString("friend_requests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friends.
         /// </summary>
         public static string friends {
@@ -376,6 +439,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while retrieving info from the database.
+        /// </summary>
+        public static string pull_database_error {
+            get {
+                return ResourceManager.GetString("pull_database_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while writing info to the database.
+        /// </summary>
+        public static string push_database_error {
+            get {
+                return ResourceManager.GetString("push_database_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit game.
         /// </summary>
         public static string quit_game {
@@ -480,6 +561,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string spanish {
             get {
                 return ResourceManager.GetString("spanish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an unexpected error, please contact client support.
+        /// </summary>
+        public static string unexpected_error {
+            get {
+                return ResourceManager.GetString("unexpected_error", resourceCulture);
             }
         }
         

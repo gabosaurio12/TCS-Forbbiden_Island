@@ -51,7 +51,8 @@
                     Background="#D9D9D9"
                     FontSize="30"
                     FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-                    FontWeight="Bold"/>
+                    FontWeight="Bold"
+                    Cursor="Hand"/>
 
             <Image Source="/Images/Boat.png"
                    Width="1100" Height="400"

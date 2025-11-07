@@ -91,17 +91,25 @@
                 <TextBlock Text="{x:Static language:Resources.friends}" Grid.Column="1"
                     FontSize="60"
                     FontWeight="Bold"
-                    Foreground="White"
+                    Foreground="Black"
                     FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"/>
 
                 <DockPanel Grid.Column="2">
-                    <Image Source="/Images/glass.png"
-                            DockPanel.Dock="Right"
-                            Height="100" Width="100" Margin="20,0"
-                            Cursor="Hand"
-                            MouseLeftButtonDown="SearchFriend_MouseLeftButtonDown"/>
+                    <Image x:Name="glass"
+                           Source="/Images/glass.png"
+                           DockPanel.Dock="Right"
+                           Height="100" Width="100" Margin="20,0"
+                           MaxHeight="120" MaxWidth="120"
+                           MinHeight="100" MinWidth="100"
+                           Cursor="Hand"
+                           MouseLeftButtonDown="SearchFriend_MouseLeftButtonDown"
+                           MouseEnter="Glass_MouseEnter"
+                           MouseLeave="Glass_MouseLeave"
+                           MouseDown="Glass_MouseDown"
+                           MouseUp="Glass_MouseUp"
+                           />
 
                     <Button x:Name="addButton" Height="0" Width="50"
                             Content="+"
@@ -131,10 +139,14 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
+                
+                <!-- Notification -->
                 <Grid x:Name="notificationGrid" Height="85" Width="0"
                       HorizontalAlignment="Left" VerticalAlignment="Top"
-                      Margin="0,10,0,0">
+                      Margin="0,10,0,0"
+                      Cursor="Hand"
+                      Panel.ZIndex="99"
+                      MouseLeftButtonDown="NotificationGrid_MouseLeftButtonDown">
                     <Image Source="/Images/codebackground.png"
                             Height="85" Width="85"
                             Stretch="Fill"/>
@@ -149,25 +161,34 @@
 
                 <!-- Online Friends -->
 
-                <StackPanel x:Name="onlineStack" Grid.Column="0" >
-                    <TextBlock Text="{x:Static language:Resources.online_friends}"
-                        FontSize="64"
-                        Foreground="White"
-                        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-                        HorizontalAlignment="Center"
-                        Margin="0,25"/>
-                </StackPanel>
+                <ScrollViewer Grid.Column="0"
+                              VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel x:Name="onlineStack"  >
+                        <TextBlock Text="{x:Static language:Resources.online_friends}"
+                                   FontSize="64"
+                                   Foreground="White"
+                                   FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,25"/>
+                    </StackPanel>
+                </ScrollViewer>
+                
                 
                 <!-- Offline Friends -->
+                <ScrollViewer Grid.Column="1"
+                              VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel x:Name="offlineStack" >
+                        <TextBlock Text="{x:Static language:Resources.offline}"
+                                   FontSize="64"
+                                   Foreground="White"
+                                   FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,25"/>
+                    </StackPanel>
+                </ScrollViewer>
 
-                <StackPanel x:Name="offlineStack" Grid.Column="1">
-                    <TextBlock Text="{x:Static language:Resources.offline}"
-                       FontSize="64"
-                       Foreground="White"
-                       FontFamily="pack://application:,,,/Fonts/#Irish Grover"
-                       HorizontalAlignment="Center"
-                       Margin="0,25"/>
-                </StackPanel>
             </Grid>
         </Grid>
     </Viewbox>

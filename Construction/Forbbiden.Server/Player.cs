@@ -21,6 +21,7 @@ namespace Forbbiden.Server
             this.Friends1 = new HashSet<Friends>();
             this.match_players = new HashSet<match_players>();
             this.player_socialmedia = new HashSet<player_socialmedia>();
+            this.Matches = new HashSet<Matches>();
         }
     
         public int player_id { get; set; }
@@ -41,5 +42,7 @@ namespace Forbbiden.Server
         public virtual ICollection<match_players> match_players { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_socialmedia> player_socialmedia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Matches> Matches { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Contracts;
 using log4net;
 using System;
 using System.Text.RegularExpressions;
@@ -130,10 +131,7 @@ namespace Forbbiden.Client
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService != null && NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
+            NavigationService?.Navigate(new MainPage());
         }
     }
 }

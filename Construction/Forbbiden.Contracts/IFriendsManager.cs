@@ -20,17 +20,26 @@ namespace Forbbiden.Contracts
         [OperationContract]
         List<FriendRequest> getFriendRequests(string receiverUsername);
         [OperationContract]
-        List<FriendRequest> getFriendsID(string receiverUsername);
+        List<Friendship> getFriendsByID(int playerID);
     }
 
     [DataContract]
     public class FriendRequest
     {
         [DataMember]
-        private int SenderID { get; set; }
+        public int SenderID { get; set; }
         [DataMember]
-        private int ReceiverID { get; set; }
+        public int ReceiverID { get; set; }
         [DataMember]
-        private bool Status { get; set; }
+        public int Status { get; set; }
+    }
+
+    [DataContract]
+    public class Friendship
+    {
+        [DataMember]
+        public int PlayerID { get; set; }
+        [DataMember]
+        public Player Friend { get; set; }
     }
 }

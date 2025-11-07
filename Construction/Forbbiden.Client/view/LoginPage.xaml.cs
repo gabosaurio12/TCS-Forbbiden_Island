@@ -1,11 +1,12 @@
+using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.view.info;
 using log4net;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Forbbiden.Client.ProfileManager;
-using System.IO;
 
 namespace Forbbiden.Client
 {
@@ -22,15 +23,16 @@ namespace Forbbiden.Client
             InitializeComponent();
         }
 
-        private static void ResetFieldColors(TextBlock txtBkUser, TextBlock txtBkPassword)
+        private static void ResetFields(TextBlock txtBkUser, TextBlock txtBkPassword, TextBlock txtBkBoss)
         {
+            txtBkBoss.Text = Properties.Langs.Resources.bossLogin;
             txtBkUser.Foreground = Brushes.White;
             txtBkPassword.Foreground = Brushes.White;
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            ResetFieldColors(txtBkUser, txtBkPassword);
+            ResetFields(txtBkUser, txtBkPassword, txtBkBoss);
 
             var client = new ProfileManagerClient();
 
@@ -40,7 +42,7 @@ namespace Forbbiden.Client
 
             if (searchPlayer.PlayerId == -1)
             {
-                MessageBox.Show(Properties.Langs.Resources.usernameNoExists);
+                txtBkBoss.Text = Properties.Langs.Resources.usernameNoExists;
                 txtBkUser.Foreground = Brushes.Red;
             }
             else
@@ -60,20 +62,26 @@ namespace Forbbiden.Client
                     if (client.Login(searchPlayer))
                     {
 
-                        NavigationService.GoBack();
+                        NavigationService?.Navigate(new MainPage());
                         
                         log.Info("User '{searchPlayer.PlayerUsername}' logged in.");
                     }
                     else
                     {
                         log.Warn("Login failed for user '{searchPlayer.PlayerUsername}'.");
-                        MessageBox.Show(Properties.Langs.Resources.loginError);
+                        string title = Properties.Langs.Resources.error;
+                        string message = Properties.Langs.Resources.loginError;
+                        var notificationWindow = new NotificationWindow(title, message)
+                        {
+                            Owner = Window.GetWindow(this)
+                        };
+                        notificationWindow.ShowDialog();
                     }
                 }
                 else
                 {
                     txtBkPassword.Foreground = Brushes.Red;
-                    MessageBox.Show(Properties.Langs.Resources.wrongPassword);
+                    txtBkBoss.Text = Properties.Langs.Resources.wrongPassword;
                 }
             }
         }
@@ -111,10 +119,7 @@ namespace Forbbiden.Client
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService != null && NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
+            NavigationService?.Navigate(new MainPage());
         }
     }
 }

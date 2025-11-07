@@ -26,6 +26,8 @@ namespace Forbbiden.Server
         public int match_id { get; set; }
         public string match_difficulty { get; set; }
         public string match_visibility { get; set; }
+        public Nullable<int> host_id { get; set; }
+        public Nullable<System.DateTime> created_at { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_cards> match_cards { get; set; }
@@ -35,5 +37,6 @@ namespace Forbbiden.Server
         public virtual ICollection<match_players> match_players { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_tiles> match_tiles { get; set; }
+        public virtual Player Player { get; set; }
     }
 }

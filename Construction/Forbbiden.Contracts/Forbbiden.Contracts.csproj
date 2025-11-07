@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICallbacks.cs" />
     <Compile Include="IFriendsManager.cs" />
     <Compile Include="IMatchManager.cs" />
     <Compile Include="IProfileManager.cs" />

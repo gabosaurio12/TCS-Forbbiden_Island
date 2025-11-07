@@ -126,7 +126,7 @@
     <Compile Include="Token.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="utils\ConnectionStringGenerator.cs" />
+    <Compile Include="utils\ConnectionStringSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".env">

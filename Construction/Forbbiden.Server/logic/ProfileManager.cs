@@ -21,7 +21,7 @@ namespace Forbbiden.Server.logic
 
         public ProfileManager()
         {
-            connectionString = ConnectionStringGenerator.Generate();
+            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
         public bool ValidateEmail(string email)
@@ -108,11 +108,15 @@ namespace Forbbiden.Server.logic
             bool success = true;
             using (var db = new Forbbiden_FEIEntities(connectionString))
             {
+                string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
                 Player newPlayer = new Player
                 {
                     player_username = player.PlayerUsername,
                     player_password = player.PlayerPassword,
-                    player_email = player.PlayerEmail
+                    player_email = player.PlayerEmail,
+                    player_name = "",
+                    player_avatar = avatar,
+                    player_status = 0
                 };
                 try
                 {
@@ -142,12 +146,13 @@ namespace Forbbiden.Server.logic
             bool success = false;
             using (var db = new Forbbiden_FEIEntities(connectionString))
             {
-                db.LoginPlayer.Add(new LoginPlayer
-                {
-                    login_player_id = player.PlayerId,
-                });
                 try
                 {
+                    db.LoginPlayer.Add(new LoginPlayer
+                    {
+                        login_player_id = player.PlayerId,
+                    });
+                
                     db.SaveChanges();
                     success = true;
                     log.Info("Player logged in");
@@ -185,27 +190,26 @@ namespace Forbbiden.Server.logic
                     {
                         log.Info("Player found");
 
-                        var friends = db.Friends.Where(f => f.player_id == playerResult.player_id && f.status == 1).ToList();
-                        List<Contracts.Player> friendsList = new List<Contracts.Player>();
-                        if (friends.Count > 0)
-                        {
-                            foreach (var friend in friends)
-                            {
-                                friendsList.Add(GetPlayerById(friend.friend_id));
-                            }
-                        }
+                        var friendsClient = new FriendsManager();
+
+                        List<Friendship> friendsList =
+                            friendsClient.getFriendsByID(playerResult.player_id);
+                        
+                        string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
 
                         return new Contracts.Player
                         {
                             PlayerId = playerResult.player_id,
                             PlayerUsername = playerResult.player_username,
-                            PlayerName = playerResult.player_name,
+                            PlayerName = playerResult.player_name ?? "",
                             PlayerPassword = playerResult.player_password,
                             PlayerEmail = playerResult.player_email,
-                            PlayerAvatarPath = playerResult.player_avatar,
+                            PlayerAvatarPath = playerResult.player_avatar ?? avatar,
+                            Status = playerResult.player_status ?? 0,
+                            Verified = playerResult.is_verified ?? 0,
                             SocialMedia = playerResult.player_socialmedia.Select(sm => new SocialMedia
                             {
-                                PlayerId = sm.player_id ?? 0,
+                                PlayerId = playerResult.player_id,
                                 SocialMediaId = sm.social_media,
                                 SocialMediaName = sm.social_media_name.Trim(),
                                 SocialLink = sm.social_link
@@ -237,31 +241,31 @@ namespace Forbbiden.Server.logic
                 try
                 {
                     int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).FirstOrDefault();
-                    Player searchPlayer = db.Player.Include("player_socialmedia").FirstOrDefault(p => p.player_id == current_id);
+                    Player playerResult = db.Player.Include("player_socialmedia")
+                        .FirstOrDefault(p => p.player_id == current_id);
 
-                    if (searchPlayer != null)
+                    if (playerResult != null)
                     {
-                        var friends = db.Friends.Where(f => f.player_id == searchPlayer.player_id && f.status == 1).ToList();
-                        List<Contracts.Player> friendsList = new List<Contracts.Player>();
-                        if (friends.Count > 0)
-                        {
-                            foreach (var friend in friends)
-                            {
-                                friendsList.Add(GetPlayerById(friend.friend_id));
-                            }
-                        }
+                        var friendsClient = new FriendsManager();
+
+                        List<Friendship> friendsList = 
+                            friendsClient.getFriendsByID(playerResult.player_id);
+
+                        string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
 
                         player = new Contracts.Player
                         {
-                            PlayerId = searchPlayer.player_id,
-                            PlayerUsername = searchPlayer.player_username,
-                            PlayerName = searchPlayer.player_name,
-                            PlayerPassword = searchPlayer.player_password,
-                            PlayerEmail = searchPlayer.player_email,
-                            PlayerAvatarPath = searchPlayer.player_avatar,
-                            SocialMedia = searchPlayer.player_socialmedia.Select(sm => new SocialMedia
+                            PlayerId = playerResult.player_id,
+                            PlayerUsername = playerResult.player_username,
+                            PlayerName = playerResult.player_name ?? "",
+                            PlayerPassword = playerResult.player_password,
+                            PlayerEmail = playerResult.player_email,
+                            PlayerAvatarPath = playerResult.player_avatar ?? avatar,
+                            Status = playerResult.player_status ?? 0,
+                            Verified = playerResult.is_verified ?? 0,
+                            SocialMedia = playerResult.player_socialmedia.Select(sm => new SocialMedia
                             {
-                                PlayerId = sm.player_id ?? 0,
+                                PlayerId = playerResult.player_id,
                                 SocialMediaId = sm.social_media,
                                 SocialMediaName = sm.social_media_name.Trim(),
                                 SocialLink = sm.social_link
@@ -328,14 +332,25 @@ namespace Forbbiden.Server.logic
                     var playerResult = db.Player.Find(playerId);
                     if (playerResult != null)
                     {
+                        string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
+
                         player = new Contracts.Player
                         {
                             PlayerId = playerResult.player_id,
-                            PlayerName = playerResult.player_name,
                             PlayerUsername = playerResult.player_username,
+                            PlayerName = playerResult.player_name ?? "",
                             PlayerPassword = playerResult.player_password,
                             PlayerEmail = playerResult.player_email,
-                            PlayerAvatarPath = playerResult.player_avatar
+                            PlayerAvatarPath = playerResult.player_avatar ?? avatar,
+                            Status = playerResult.player_status ?? 0,
+                            Verified = playerResult.is_verified ?? 0,
+                            SocialMedia = playerResult.player_socialmedia.Select(sm => new SocialMedia
+                            {
+                                PlayerId = playerResult.player_id,
+                                SocialMediaId = sm.social_media,
+                                SocialMediaName = sm.social_media_name.Trim(),
+                                SocialLink = sm.social_link
+                            }).ToList(),
                         };
                     }
                 }

@@ -39,11 +39,11 @@ namespace Forbbiden.Client.FriendsManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/getFriendRequestsResponse")]
         System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> getFriendRequestsAsync(string receiverUsername);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendsID", ReplyAction="http://tempuri.org/IFriendsManager/getFriendsIDResponse")]
-        Forbbiden.Contracts.FriendRequest[] getFriendsID(string receiverUsername);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/getFriendsByIDResponse")]
+        Forbbiden.Contracts.Friendship[] getFriendsByID(int playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendsID", ReplyAction="http://tempuri.org/IFriendsManager/getFriendsIDResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> getFriendsIDAsync(string receiverUsername);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/getFriendsByIDResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> getFriendsByIDAsync(int playerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -105,12 +105,12 @@ namespace Forbbiden.Client.FriendsManager {
             return base.Channel.getFriendRequestsAsync(receiverUsername);
         }
         
-        public Forbbiden.Contracts.FriendRequest[] getFriendsID(string receiverUsername) {
-            return base.Channel.getFriendsID(receiverUsername);
+        public Forbbiden.Contracts.Friendship[] getFriendsByID(int playerID) {
+            return base.Channel.getFriendsByID(playerID);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> getFriendsIDAsync(string receiverUsername) {
-            return base.Channel.getFriendsIDAsync(receiverUsername);
+        public System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> getFriendsByIDAsync(int playerID) {
+            return base.Channel.getFriendsByIDAsync(playerID);
         }
     }
 }

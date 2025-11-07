@@ -20,7 +20,7 @@ namespace Forbbiden.Server.logic
 
         public FriendsManager()
         {
-            connectionString = ConnectionStringGenerator.Generate();
+            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)
@@ -156,7 +156,7 @@ namespace Forbbiden.Server.logic
                             {
                                 SenderID = friend.player_id,
                                 ReceiverID = friend.friend_id,
-                                status = friend.status == 1
+                                Status = friend.status
                             };
                             friendRequests.Add(request);
                         }
@@ -173,9 +173,40 @@ namespace Forbbiden.Server.logic
             return new List<FriendRequest>();
         }
 
-        public List<FriendRequest> getFriendsID(string receiverUsername)
+        public List<Friendship> getFriendsByID(int playerID)
         {
-            throw new NotImplementedException();
+            using (var db = new Forbbiden_FEIEntities(connectionString))
+            {
+                var friends = new List<Friends>();
+                try
+                {
+                    friends = db.Friends.Where(f =>
+                        (f.player_id == playerID ||
+                        f.friend_id == playerID) &&
+                        f.status == 1).ToList();
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    log.Error(ex);
+                }
+
+                var profileManager = new ProfileManager();
+                var friendships = new List<Friendship>();
+                foreach (var friend in friends)
+                {
+                    int friendID = friend.player_id == playerID ?
+                        friend.friend_id : friend.player_id;
+                    var friendship = new Friendship
+                    {
+                        PlayerID = playerID,
+                        Friend = profileManager.GetPlayerById(friendID)
+                    };
+                    friendships.Add(friendship);
+                }
+
+                return friendships;
+            }
         }
     }
 }

@@ -144,8 +144,29 @@
   <data name="english" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="friends" xml:space="preserve">
     <value>Friends</value>
+  </data>
+  <data name="friend_requests" xml:space="preserve">
+    <value>Friend Requests</value>
+  </data>
+  <data name="friend_request_accepted" xml:space="preserve">
+    <value>Friend Request Accepted</value>
+  </data>
+  <data name="friend_request_accepted_message" xml:space="preserve">
+    <value>The friend request was accepted succesfully</value>
+  </data>
+  <data name="friend_request_not_sent" xml:space="preserve">
+    <value>There was an error while sending your friend request, try again later</value>
+  </data>
+  <data name="friend_request_sent_message" xml:space="preserve">
+    <value>Your friend request was successfully sent to </value>
+  </data>
+  <data name="friend_request_sent_title" xml:space="preserve">
+    <value>Friend Request Sent</value>
   </data>
   <data name="guest" xml:space="preserve">
     <value>Guest</value>
@@ -222,6 +243,12 @@
   <data name="public_message" xml:space="preserve">
     <value>Any player can join in your game</value>
   </data>
+  <data name="pull_database_error" xml:space="preserve">
+    <value>There was an error while retrieving info from the database</value>
+  </data>
+  <data name="push_database_error" xml:space="preserve">
+    <value>There was an error while writing info to the database</value>
+  </data>
   <data name="quit_game" xml:space="preserve">
     <value>Quit game</value>
   </data>
@@ -257,6 +284,9 @@
   </data>
   <data name="spanish" xml:space="preserve">
     <value>Spanish</value>
+  </data>
+  <data name="unexpected_error" xml:space="preserve">
+    <value>There was an unexpected error, please contact client support</value>
   </data>
   <data name="upload_avatar" xml:space="preserve">
     <value>Upload Avatar</value>

@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
+using Forbbiden.Contracts;
 using log4net;
 using System;
 using System.Windows;

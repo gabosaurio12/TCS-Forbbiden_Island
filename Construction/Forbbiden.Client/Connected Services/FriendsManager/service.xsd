@@ -60,17 +60,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getFriendsID">
+  <xs:element name="getFriendsByID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="receiverUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="playerID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getFriendsIDResponse">
+  <xs:element name="getFriendsByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="getFriendsIDResult" nillable="true" type="q2:ArrayOfFriendRequest" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="getFriendsByIDResult" nillable="true" type="q2:ArrayOfFriendship" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

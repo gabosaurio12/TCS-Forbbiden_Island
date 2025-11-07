@@ -92,11 +92,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\ProfileManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
+    <Compile Include="logic\CallbacksManager.cs" />
     <Compile Include="Properties\Langs\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="view\FriendRequestsPage.xaml.cs">
+      <DependentUpon>FriendRequestsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
@@ -106,6 +115,9 @@
     </Compile>
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\info\NotificationWindow.xaml.cs">
+      <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\LobbyPage.xaml.cs">
       <DependentUpon>LobbyPage.xaml</DependentUpon>
@@ -136,11 +148,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\ProfileManager\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -174,26 +181,25 @@
     <None Include="Connected Services\MatchManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ProfileManager\Forbbiden.Client.ProfileManager.Player.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ProfileManager\ProfileManager.wsdl" />
-    <None Include="Connected Services\ProfileManager\ProfileManager.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ProfileManager\ProfileManager1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ProfileManager\ProfileManager2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Resource Include="Fonts\IrishGrover.ttf" />
+    <None Include="Connected Services\ProfileManager\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ProfileManager\service.wsdl" />
+    <None Include="Connected Services\ProfileManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ProfileManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Forbbiden.Contracts.FriendRequest.datasource" />
+    <None Include="Properties\DataSources\Forbbiden.Contracts.Friendship.datasource" />
     <None Include="Properties\DataSources\Forbbiden.Contracts.Match.datasource" />
+    <None Include="Properties\DataSources\Forbbiden.Contracts.Player.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -289,21 +295,6 @@
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ProfileManager\ProfileManager.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ProfileManager\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ProfileManager\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ProfileManager\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Styles\ButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -311,6 +302,10 @@
     <Page Include="Styles\ToggleButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\FriendRequestsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\FriendsPage.xaml">
       <SubType>Designer</SubType>
@@ -323,6 +318,10 @@
     <Page Include="view\HostGameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\info\NotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\LobbyPage.xaml">
       <SubType>Designer</SubType>
@@ -422,6 +421,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\FriendsManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\IMG_20191001_171350.jpg" />
+    <Resource Include="avatars\Link con fondo.png" />
+    <Resource Include="avatars\MASTER LALO %282%29.jpg" />
+    <Resource Include="avatars\Padrino.PNG" />
+    <Resource Include="avatars\Pape y yo jugando.png" />
+    <Resource Include="avatars\Patronus HD.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ProfileManager\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ProfileManager\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ProfileManager\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

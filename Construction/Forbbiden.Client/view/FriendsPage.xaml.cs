@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Forbbiden.Client.FriendsManager;
+using Forbbiden.Client.ProfileManager;
+using Forbbiden.Contracts;
+using Forbbiden.Client.view.info;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.ProfileManager;
 
 namespace Forbbiden.Client.view
 {
@@ -29,17 +31,24 @@ namespace Forbbiden.Client.view
             if (player.PlayerId != -1)
             {
                 currentLoginUsername = player.PlayerUsername;
-                foreach (var friend in player.Friends)
+                foreach (var friendship in player.Friends)
                 {
-                    AddOnlineFriend(friend);
-                }
+                    if (friendship.Friend.Status == 1)
+                    {
+                        AddOnlineFriend(friendship.Friend);
+                    }
+                    else
+                    {
+                        AddOfflineFriend(friendship.Friend);
+                    }
 
-                var friendsClient = new FriendsManagerClient();
-                var requests = friendsClient.getFriendRequests(currentLoginUsername);
-                if (requests.Length > 0)
-                {
-                    Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
-                    storyboard.Begin();
+                    var friendsClient = new FriendsManagerClient();
+                    var requests = friendsClient.getFriendRequests(currentLoginUsername);
+                    if (requests.Length > 0)
+                    {
+                        Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
+                        storyboard.Begin();
+                    }
                 }
             }
         }
@@ -80,19 +89,16 @@ namespace Forbbiden.Client.view
             onlineStack.Children.Add(friendStack);
         }
 
-        public void AddOfflineFriend()
+        public void AddOfflineFriend(Player friend)
         {
-            StackPanel friend = new StackPanel
+            StackPanel friendStack = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 Margin = new Thickness(40, 0, 40, 0),
                 Background = Brushes.LightGray
             };
 
-            string projectPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
-            string avatarsPath = System.IO.Path.Combine(projectPath, "avatars", "meme-pantene.jpg");
-
-            ImageBrush avatarImg = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(avatarsPath)));
+            ImageBrush avatarImg = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(friend.PlayerAvatarPath)));
 
             Ellipse avatar = new Ellipse
             {
@@ -107,16 +113,16 @@ namespace Forbbiden.Client.view
 
             TextBlock friendName = new TextBlock
             {
-                Text = "Friend 1",
+                Text = friend.PlayerUsername,
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(50, 0, 0, 0),
                 FontSize = 48,
                 FontFamily = new FontFamily(irishGoverFont),
             };
 
-            friend.Children.Add(avatar);
-            friend.Children.Add(friendName);
-            offlineStack.Children.Add(friend);
+            friendStack.Children.Add(avatar);
+            friendStack.Children.Add(friendName);
+            offlineStack.Children.Add(friendStack);
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -142,27 +148,42 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private async Task SendFriendRequest(string friendUsername)
+        private async Task SendFriendRequest(string receiverUsername)
         {
             var profileClient = new ProfileManagerClient();
-            var searchPlayer = await profileClient.GetPlayerByUsernameAsync(friendUsername);
-            if (searchPlayer.PlayerId != -1)
+            var receiver = await profileClient.GetPlayerByUsernameAsync(receiverUsername);
+            if (receiver.PlayerId != -1)
             {
                 var friendsClient = new FriendsManagerClient();
-                var requestStatus = await friendsClient.SendFriendRequestAsync(currentLoginUsername, searchPlayer.PlayerUsername);
+                var requestStatus = await friendsClient.SendFriendRequestAsync(currentLoginUsername, receiver.PlayerUsername);
 
                 if (requestStatus)
                 {
-                    MessageBox.Show("Solicitud de amistad enviada!");
+                    string title = Properties.Langs.Resources.friend_request_sent_title;
+                    string message = Properties.Langs.Resources.friend_request_sent_message + receiverUsername;
+                    var notificationWindow = new NotificationWindow(title, message)
+                    {
+                        Owner = Window.GetWindow(this)
+                    };
+                    notificationWindow.ShowDialog();
+                }
+                else
+                {
+                    string title = Properties.Langs.Resources.error;
+                    string message = Properties.Langs.Resources.friend_request_not_sent;
+                    var notificationWindow = new NotificationWindow(title, message)
+                    {
+                        Owner = Window.GetWindow(this)
+                    };
+                    notificationWindow.ShowDialog();
                 }
             }
         }
 
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string friendUsername = searchtxtBx.Text.Trim();
-            await SendFriendRequest(friendUsername);
-            
+            string receiverUsername = searchtxtBx.Text.Trim();
+            await SendFriendRequest(receiverUsername);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -170,8 +191,8 @@ namespace Forbbiden.Client.view
             var blink = new DoubleAnimation
             {
                 From = 10,
-                To = 8,
-                Duration = TimeSpan.FromSeconds(1),
+                To = 6,
+                Duration = TimeSpan.FromSeconds(0.8),
                 RepeatBehavior = RepeatBehavior.Forever,
                 AutoReverse = true
             };
@@ -180,7 +201,7 @@ namespace Forbbiden.Client.view
             {
                 From = 50,
                 To = 55,
-                Duration = TimeSpan.FromSeconds(1),
+                Duration = TimeSpan.FromSeconds(0.8),
                 RepeatBehavior = RepeatBehavior.Forever,
                 AutoReverse = true
             };
@@ -189,14 +210,99 @@ namespace Forbbiden.Client.view
             {
                 From = 50,
                 To = 55,
-                Duration = TimeSpan.FromSeconds(1),
+                Duration = TimeSpan.FromSeconds(0.8),
                 RepeatBehavior = RepeatBehavior.Forever,
                 AutoReverse = true
             };
 
             led.BeginAnimation(Shape.StrokeThicknessProperty, blink);
-            led.BeginAnimation(Shape.HeightProperty, verticalShine);
-            led.BeginAnimation(Shape.WidthProperty, horizontalShine);
+            led.BeginAnimation(HeightProperty, verticalShine);
+            led.BeginAnimation(WidthProperty, horizontalShine);
+        }
+
+        private void Glass_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var verticalZoom = new DoubleAnimation
+            {
+                From = 100,
+                To = 105,
+                Duration = TimeSpan.FromSeconds(0.15)
+            };
+
+            var horizontalZoom = new DoubleAnimation
+            {
+                From = 100,
+                To = 105,
+                Duration = TimeSpan.FromSeconds(0.15),
+            };
+
+            glass.BeginAnimation(HeightProperty, verticalZoom);
+            glass.BeginAnimation(WidthProperty, horizontalZoom);
+        }
+
+        private void Glass_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var verticalZoom = new DoubleAnimation
+            {
+                From = 105,
+                To = 100,
+                Duration = TimeSpan.FromSeconds(0.15)
+            };
+
+            var horizontalZoom = new DoubleAnimation
+            {
+                From = 105,
+                To = 100,
+                Duration = TimeSpan.FromSeconds(0.15),
+            };
+
+            glass.BeginAnimation(HeightProperty, verticalZoom);
+            glass.BeginAnimation(WidthProperty, horizontalZoom);
+        }
+
+        private void Glass_MouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var verticalZoom = new DoubleAnimation
+            {
+                From = glass.Height,
+                To = glass.Height + 7.5,
+                Duration = TimeSpan.FromSeconds(0.15)
+            };
+
+            var horizontalZoom = new DoubleAnimation
+            {
+                From = glass.Width,
+                To = glass.Width + 7.5,
+                Duration = TimeSpan.FromSeconds(0.15),
+            };
+
+            glass.BeginAnimation(HeightProperty, verticalZoom);
+            glass.BeginAnimation(WidthProperty, horizontalZoom);
+        }
+
+        private void Glass_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var verticalZoom = new DoubleAnimation
+            {
+                From = glass.Height,
+                To = glass.Height - 7.5,
+                Duration = TimeSpan.FromSeconds(0.15)
+            };
+
+            var horizontalZoom = new DoubleAnimation
+            {
+                From = glass.Width,
+                To = glass.Width - 7.5,
+                Duration = TimeSpan.FromSeconds(0.15),
+            };
+
+            glass.BeginAnimation(HeightProperty, verticalZoom);
+            glass.BeginAnimation(WidthProperty, horizontalZoom);
+        }
+
+        private void NotificationGrid_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            NavigationService?.Navigate(new FriendRequestsPage());
         }
     }
 }
