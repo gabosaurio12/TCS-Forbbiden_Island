@@ -179,10 +179,41 @@ namespace Forbbiden.Server.logic
             return success;
         }
     
+        private Contracts.Player SetPlayer(Player player)
+        {
+            List<Friendship> friendsList = GetFriendsByID(player.player_id);
+
+            string avatar = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Images",
+                defaultAvatarPath);
+
+            return new Contracts.Player
+            {
+                PlayerId = player.player_id,
+                PlayerUsername = player.player_username,
+                PlayerName = player.player_name ?? "",
+                PlayerPassword = player.player_password,
+                PlayerEmail = player.player_email,
+                PlayerAvatarPath = player.player_avatar ?? avatar,
+                Status = player.player_status ?? 0,
+                Verified = player.is_verified ?? 0,
+                SocialMedia = player.player_socialmedia.Select(sm => new SocialMedia
+                {
+                    PlayerId = player.player_id,
+                    SocialMediaId = sm.social_media,
+                    SocialMediaName = sm.social_media_name.Trim(),
+                    SocialLink = sm.social_link
+                }).ToList(),
+                Friends = friendsList
+            };
+        }
+
         public Contracts.Player GetPlayerByUsername(string username)
         {
             log.Info("Retrieving player by username");
 
+            Contracts.Player player = null;
             using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 try
@@ -192,32 +223,7 @@ namespace Forbbiden.Server.logic
                     {
                         log.Info("Player found");
 
-                        List<Friendship> friendsList = GetFriendsByID(playerResult.player_id);
-                        
-                        string avatar = Path.Combine(
-                            AppDomain.CurrentDomain.BaseDirectory,
-                            "Images",
-                            defaultAvatarPath);
-
-                        return new Contracts.Player
-                        {
-                            PlayerId = playerResult.player_id,
-                            PlayerUsername = playerResult.player_username,
-                            PlayerName = playerResult.player_name ?? "",
-                            PlayerPassword = playerResult.player_password,
-                            PlayerEmail = playerResult.player_email,
-                            PlayerAvatarPath = playerResult.player_avatar ?? avatar,
-                            Status = playerResult.player_status ?? 0,
-                            Verified = playerResult.is_verified ?? 0,
-                            SocialMedia = playerResult.player_socialmedia.Select(sm => new SocialMedia
-                            {
-                                PlayerId = playerResult.player_id,
-                                SocialMediaId = sm.social_media,
-                                SocialMediaName = sm.social_media_name.Trim(),
-                                SocialLink = sm.social_link
-                            }).ToList(),
-                            Friends = friendsList                                
-                        };
+                        player = SetPlayer(playerResult);
                     }
                 }
                 catch (EntityException ex)
@@ -226,11 +232,49 @@ namespace Forbbiden.Server.logic
                     log.Error(ex);
                 }
 
-                return new Contracts.Player()
+                if (player == null)
+                {
+                    player = new Contracts.Player
+                    {
+                        PlayerId = -1
+                    };
+                }
+
+                return player;
+            }
+        }
+
+        public Contracts.Player GetPlayerById(int playerId)
+        {
+            log.Info("Retrieving player by ID");
+
+            Contracts.Player player = null;
+            using (var db = new Forbbiden_FEIEntities(connectionString))
+            {
+                try
+                {
+                    var playerResult = db.Player.Find(playerId);
+                    if (playerResult != null)
+                    {
+                        player = SetPlayer(playerResult);
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    log.Error(ex);
+                }
+            }
+
+            if (player == null)
+            {
+                player = new Contracts.Player
                 {
                     PlayerId = -1
                 };
             }
+
+            return player;
         }
 
         public List<Friendship> GetFriendsByID(int playerID)
@@ -282,32 +326,7 @@ namespace Forbbiden.Server.logic
 
                     if (playerResult != null)
                     {
-                        List<Friendship> friendsList = GetFriendsByID(playerResult.player_id);
-
-                        string avatar = Path.Combine(
-                            AppDomain.CurrentDomain.BaseDirectory,
-                            "Images",
-                            defaultAvatarPath);
-
-                        player = new Contracts.Player
-                        {
-                            PlayerId = playerResult.player_id,
-                            PlayerUsername = playerResult.player_username,
-                            PlayerName = playerResult.player_name ?? "",
-                            PlayerPassword = playerResult.player_password,
-                            PlayerEmail = playerResult.player_email,
-                            PlayerAvatarPath = playerResult.player_avatar ?? avatar,
-                            Status = playerResult.player_status ?? 0,
-                            Verified = playerResult.is_verified ?? 0,
-                            SocialMedia = playerResult.player_socialmedia.Select(sm => new SocialMedia
-                            {
-                                PlayerId = playerResult.player_id,
-                                SocialMediaId = sm.social_media,
-                                SocialMediaName = sm.social_media_name.Trim(),
-                                SocialLink = sm.social_link
-                            }).ToList(),
-                            Friends = friendsList
-                        };
+                        player = SetPlayer(playerResult);
                     }
                 }
                 catch (EntityException ex)
@@ -361,54 +380,6 @@ namespace Forbbiden.Server.logic
 
             log.Info("Current logged-in player cleared");
             return success;
-        }
-
-        public Contracts.Player GetPlayerById(int playerId)
-        {
-            log.Info("Retrieving player by ID");
-
-            Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
-            {
-                try
-                {
-                    var playerResult = db.Player.Find(playerId);
-                    if (playerResult != null)
-                    {
-                        string avatar = Path.Combine(
-                            AppDomain.CurrentDomain.BaseDirectory,
-                            "Images",
-                            defaultAvatarPath);
-
-                        player = new Contracts.Player
-                        {
-                            PlayerId = playerResult.player_id,
-                            PlayerUsername = playerResult.player_username,
-                            PlayerName = playerResult.player_name ?? "",
-                            PlayerPassword = playerResult.player_password,
-                            PlayerEmail = playerResult.player_email,
-                            PlayerAvatarPath = playerResult.player_avatar ?? avatar,
-                            Status = playerResult.player_status ?? 0,
-                            Verified = playerResult.is_verified ?? 0,
-                            SocialMedia = playerResult.player_socialmedia.Select(sm => new SocialMedia
-                            {
-                                PlayerId = playerResult.player_id,
-                                SocialMediaId = sm.social_media,
-                                SocialMediaName = sm.social_media_name.Trim(),
-                                SocialLink = sm.social_link
-                            }).ToList(),
-                        };
-                    }
-                }
-                catch (EntityException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
-            }
-
-            log.Info("Retrieving player by ID");
-            return player;
         }
 
         public bool ClearSocials(Player player)
