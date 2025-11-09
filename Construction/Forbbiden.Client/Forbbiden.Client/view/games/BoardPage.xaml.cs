@@ -25,7 +25,8 @@ namespace Forbbiden.Client.view.games
         private void AddPlayerAvatar(Player player)
         {
             string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                    AppDomain.CurrentDomain.BaseDirectory).
+                    Parent.Parent.FullName;
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
 
             var bmp = new BitmapImage();

@@ -179,9 +179,11 @@ namespace Forbbiden.Server.logic
             return success;
         }
     
-        private Contracts.Player SetPlayer(Player player)
+        private Contracts.Player SetPlayer(Player player, bool includeFriends = true)
         {
-            List<Friendship> friendsList = GetFriendsByID(player.player_id);
+            List<Friendship> friendsList = new List<Friendship>();
+            if (includeFriends)
+                friendsList = GetFriendsByID(player.player_id);
 
             string avatar = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
@@ -209,7 +211,7 @@ namespace Forbbiden.Server.logic
             };
         }
 
-        public Contracts.Player GetPlayerByUsername(string username)
+        public Contracts.Player GetPlayerByUsername(string username, bool includeFriends = true)
         {
             log.Info("Retrieving player by username");
 
@@ -223,7 +225,7 @@ namespace Forbbiden.Server.logic
                     {
                         log.Info("Player found");
 
-                        player = SetPlayer(playerResult);
+                        player = SetPlayer(playerResult, includeFriends);
                     }
                 }
                 catch (EntityException ex)
@@ -244,7 +246,7 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        public Contracts.Player GetPlayerById(int playerId)
+        public Contracts.Player GetPlayerById(int playerId, bool includeFriends = true)
         {
             log.Info("Retrieving player by ID");
 
@@ -256,7 +258,7 @@ namespace Forbbiden.Server.logic
                     var playerResult = db.Player.Find(playerId);
                     if (playerResult != null)
                     {
-                        player = SetPlayer(playerResult);
+                        player = SetPlayer(playerResult, includeFriends);
                     }
                 }
                 catch (EntityException ex)
@@ -302,7 +304,7 @@ namespace Forbbiden.Server.logic
                     var friendship = new Friendship
                     {
                         PlayerID = playerID,
-                        Friend = GetPlayerById(friendID)
+                        Friend = GetPlayerById(friendID, includeFriends: false)
                     };
                     friendships.Add(friendship);
                 }

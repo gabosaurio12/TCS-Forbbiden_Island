@@ -23,16 +23,16 @@ namespace Forbbiden.Contracts
         bool Login(Player player);
 
         [OperationContract]
-        Player GetPlayerByUsername(string username);
+        Player GetPlayerByUsername(string username, bool includeFriends = true);
+
+        [OperationContract]
+        Player GetPlayerById(int playerId, bool includeFriends = true);
 
         [OperationContract]
         Player GetCurrentLogin();
 
         [OperationContract]
         bool ClearCurrentLogin();
-
-        [OperationContract]
-        Player GetPlayerById(int playerId);
 
         [OperationContract]
         bool UpdatePlayer(Player updatedPlayer);
