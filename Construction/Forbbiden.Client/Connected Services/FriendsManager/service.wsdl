@@ -64,11 +64,11 @@
   <wsdl:message name="IFriendsManager_getFriendRequests_OutputMessage">
     <wsdl:part name="parameters" element="tns:getFriendRequestsResponse" />
   </wsdl:message>
-  <wsdl:message name="IFriendsManager_getFriendsByID_InputMessage">
-    <wsdl:part name="parameters" element="tns:getFriendsByID" />
+  <wsdl:message name="IFriendsManager_GetFriendsByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendsByID" />
   </wsdl:message>
-  <wsdl:message name="IFriendsManager_getFriendsByID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getFriendsByIDResponse" />
+  <wsdl:message name="IFriendsManager_GetFriendsByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendsByIDResponse" />
   </wsdl:message>
   <wsdl:portType name="IFriendsManager">
     <wsdl:operation name="SendFriendRequest">
@@ -87,9 +87,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/getFriendRequests" message="tns:IFriendsManager_getFriendRequests_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/getFriendRequestsResponse" message="tns:IFriendsManager_getFriendRequests_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getFriendsByID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/getFriendsByID" message="tns:IFriendsManager_getFriendsByID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/getFriendsByIDResponse" message="tns:IFriendsManager_getFriendsByID_OutputMessage" />
+    <wsdl:operation name="GetFriendsByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/GetFriendsByID" message="tns:IFriendsManager_GetFriendsByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse" message="tns:IFriendsManager_GetFriendsByID_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IFriendsManager" type="tns:IFriendsManager">
@@ -132,8 +132,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getFriendsByID">
-      <soap12:operation soapAction="http://tempuri.org/IFriendsManager/getFriendsByID" style="document" />
+    <wsdl:operation name="GetFriendsByID">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsManager/GetFriendsByID" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

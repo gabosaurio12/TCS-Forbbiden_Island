@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.ServiceModel;
@@ -108,7 +109,7 @@ namespace Forbbiden.Server.logic
             bool success = true;
             using (var db = new Forbbiden_FEIEntities(connectionString))
             {
-                string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
+                string avatar = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "defaultAvatar.png");
                 Player newPlayer = new Player
                 {
                     player_username = player.PlayerUsername,
@@ -190,12 +191,9 @@ namespace Forbbiden.Server.logic
                     {
                         log.Info("Player found");
 
-                        var friendsClient = new FriendsManager();
-
-                        List<Friendship> friendsList =
-                            friendsClient.getFriendsByID(playerResult.player_id);
+                        List<Friendship> friendsList = GetFriendsByID(playerResult.player_id);
                         
-                        string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
+                        string avatar = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "defaultAvatar.png");
 
                         return new Contracts.Player
                         {
@@ -231,6 +229,42 @@ namespace Forbbiden.Server.logic
             }
         }
 
+        public List<Friendship> GetFriendsByID(int playerID)
+        {
+            using (var db = new Forbbiden_FEIEntities(connectionString))
+            {
+                var friends = new List<Friends>();
+                try
+                {
+                    friends = db.Friends.Where(f =>
+                        (f.player_id == playerID ||
+                        f.friend_id == playerID) &&
+                        f.status == 1).ToList();
+                }
+                catch (EntityException ex)
+                {
+                    Console.WriteLine(ErrorCode + ex.Message);
+                    log.Error(ex);
+                }
+
+                var profileManager = new ProfileManager();
+                var friendships = new List<Friendship>();
+                foreach (var friend in friends)
+                {
+                    int friendID = friend.player_id == playerID ?
+                        friend.friend_id : friend.player_id;
+                    var friendship = new Friendship
+                    {
+                        PlayerID = playerID,
+                        Friend = profileManager.GetPlayerById(friendID)
+                    };
+                    friendships.Add(friendship);
+                }
+
+                return friendships;
+            }
+        }
+
         public Contracts.Player GetCurrentLogin()
         {
             log.Info("Retrieving current logged-in player");
@@ -246,12 +280,9 @@ namespace Forbbiden.Server.logic
 
                     if (playerResult != null)
                     {
-                        var friendsClient = new FriendsManager();
+                        List<Friendship> friendsList = GetFriendsByID(playerResult.player_id);
 
-                        List<Friendship> friendsList = 
-                            friendsClient.getFriendsByID(playerResult.player_id);
-
-                        string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
+                        string avatar = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "defaultAvatar.png");
 
                         player = new Contracts.Player
                         {
@@ -281,7 +312,14 @@ namespace Forbbiden.Server.logic
                 }
             }
 
-            log.Info("Current logged-in player retrieved");
+            if (player == null)
+            {
+                player = new Contracts.Player
+                {
+                    PlayerId = -1
+                };
+            }
+            
             return player;
         }
 
@@ -332,7 +370,7 @@ namespace Forbbiden.Server.logic
                     var playerResult = db.Player.Find(playerId);
                     if (playerResult != null)
                     {
-                        string avatar = "D:\\mazin\\Documents\\Codigos\\Proyectos\\TCS-Forbbiden_Island\\Construction\\Forbbiden.Client\\Images\\defaultAvatar.png";
+                        string avatar = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "defaultAvatar.png");
 
                         player = new Contracts.Player
                         {

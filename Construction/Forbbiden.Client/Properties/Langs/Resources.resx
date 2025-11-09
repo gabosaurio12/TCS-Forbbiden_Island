@@ -279,11 +279,17 @@
   <data name="signup_button" xml:space="preserve">
     <value>Sign Up</value>
   </data>
-  <data name="signup_title" xml:space="preserve">
-    <value>Sign Up</value>
+  <data name="signup_error" xml:space="preserve">
+    <value>There was an error while signing up, try again later</value>
   </data>
   <data name="spanish" xml:space="preserve">
     <value>Spanish</value>
+  </data>
+  <data name="successful_signup" xml:space="preserve">
+    <value>Successful Sign-Up</value>
+  </data>
+  <data name="successful_signup_message" xml:space="preserve">
+    <value>The sign-up was successful, now you can log in</value>
   </data>
   <data name="unexpected_error" xml:space="preserve">
     <value>There was an unexpected error, please contact client support</value>
@@ -305,5 +311,29 @@
   </data>
   <data name="wrongPassword" xml:space="preserve">
     <value>Wrong Password</value>
+  </data>
+  <data name="signup_title" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="signup_invalid_password" xml:space="preserve">
+    <value>Password must have at least 8 characters, one upper case, one lower case, one number and one special character (@, &amp;, _)</value>
+  </data>
+  <data name="signup_empty_username" xml:space="preserve">
+    <value>The user name can't be empty</value>
+  </data>
+  <data name="signup_space_username" xml:space="preserve">
+    <value>The user name can't contain white spaces ( )</value>
+  </data>
+  <data name="signup_username_already_used" xml:space="preserve">
+    <value>That user name is already being used</value>
+  </data>
+  <data name="signup_invalid_email" xml:space="preserve">
+    <value>The email is not valid or is already registered</value>
+  </data>
+  <data name="invalid_input" xml:space="preserve">
+    <value>Invalid Input</value>
+  </data>
+  <data name="boss_invalid_inputs" xml:space="preserve">
+    <value>There were some invalid inputs in your form, check it out</value>
   </data>
 </root>

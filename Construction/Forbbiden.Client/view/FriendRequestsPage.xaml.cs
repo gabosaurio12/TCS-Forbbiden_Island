@@ -2,7 +2,6 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
-using Forbbiden.Contracts;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -131,6 +130,42 @@ namespace Forbbiden.Client.view
             }
         }
 
+        private void RejectButton_Click(Object sender, RoutedEventArgs e)
+        {
+            var grid = (Grid)((Button)sender).Parent;
+            string senderUsername = GettxtBkText(grid);
+
+            if (!senderUsername.Equals(""))
+            {
+                var profileClient = new ProfileManagerClient();
+                var receiver = profileClient.GetCurrentLogin();
+                if (receiver.PlayerId != -1)
+                {
+                    var friendClient = new FriendsManagerClient();
+                    var requestStatus = friendClient.CancelFriendRequest(senderUsername, receiver.PlayerUsername);
+                    if (!requestStatus)
+                    {
+                        OpenNotification(Properties.Langs.Resources.error,
+                            Properties.Langs.Resources.push_database_error);
+                    }
+                    else
+                    {
+                        RemoveRequestStack(grid);
+                    }
+                }
+                else
+                {
+                    OpenNotification(Properties.Langs.Resources.error,
+                        Properties.Langs.Resources.pull_database_error);
+                }
+            }
+            else
+            {
+                OpenNotification(Properties.Langs.Resources.error,
+                    Properties.Langs.Resources.unexpected_error);
+            }
+        }
+
         private Button CreateGridButton(string action)
         {
             Button button = new Button();
@@ -180,6 +215,7 @@ namespace Forbbiden.Client.view
                     Foreground = Brushes.White,
                     Cursor = Cursors.Hand
                 };
+                rejectRequest.Click += RejectButton_Click;
                 button = rejectRequest;
             }
 
@@ -255,7 +291,7 @@ namespace Forbbiden.Client.view
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.GoBack();
+            NavigationService?.Navigate(new FriendsPage());
         }
 
         private void SearchFriend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

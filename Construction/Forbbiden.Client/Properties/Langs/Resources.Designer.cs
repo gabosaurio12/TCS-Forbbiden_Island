@@ -88,6 +88,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There were some invalid inputs in your form, check it out.
+        /// </summary>
+        public static string boss_invalid_inputs {
+            get {
+                return ResourceManager.GetString("boss_invalid_inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to If you log in you can choose your avatar and make friends!.
         /// </summary>
         public static string bossLogin {
@@ -255,6 +264,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string host_game {
             get {
                 return ResourceManager.GetString("host_game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Input.
+        /// </summary>
+        public static string invalid_input {
+            get {
+                return ResourceManager.GetString("invalid_input", resourceCulture);
             }
         }
         
@@ -547,6 +565,51 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user name can&apos;t be empty.
+        /// </summary>
+        public static string signup_empty_username {
+            get {
+                return ResourceManager.GetString("signup_empty_username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while signing up, try again later.
+        /// </summary>
+        public static string signup_error {
+            get {
+                return ResourceManager.GetString("signup_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email is not valid or is already registered.
+        /// </summary>
+        public static string signup_invalid_email {
+            get {
+                return ResourceManager.GetString("signup_invalid_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must have at least 8 characters, one upper case, one lower case, one number and one special character (@, &amp;, _).
+        /// </summary>
+        public static string signup_invalid_password {
+            get {
+                return ResourceManager.GetString("signup_invalid_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user name can&apos;t contain white spaces ( ).
+        /// </summary>
+        public static string signup_space_username {
+            get {
+                return ResourceManager.GetString("signup_space_username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign Up.
         /// </summary>
         public static string signup_title {
@@ -556,11 +619,38 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to That user name is already being used.
+        /// </summary>
+        public static string signup_username_already_used {
+            get {
+                return ResourceManager.GetString("signup_username_already_used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spanish.
         /// </summary>
         public static string spanish {
             get {
                 return ResourceManager.GetString("spanish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successful Sign-Up.
+        /// </summary>
+        public static string successful_signup {
+            get {
+                return ResourceManager.GetString("successful_signup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The sign-up was successful, now you can log in.
+        /// </summary>
+        public static string successful_signup_message {
+            get {
+                return ResourceManager.GetString("successful_signup_message", resourceCulture);
             }
         }
         

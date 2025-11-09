@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
     <Compile Include="logic\CallbacksManager.cs" />
+    <Compile Include="logic\ICallbacks.cs" />
     <Compile Include="Properties\Langs\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +162,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.FriendRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.Friendship.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Contracts.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -170,6 +177,10 @@
     </None>
     <None Include="Connected Services\FriendsManager\service1.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <Resource Include="Fonts\IrishGrover.ttf" />
+    <None Include="Connected Services\MatchManager\Forbbiden.Client.MatchManager.Match.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\MatchManager\Forbbiden.Contracts.xsd">
       <SubType>Designer</SubType>
@@ -181,7 +192,9 @@
     <None Include="Connected Services\MatchManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Resource Include="Fonts\IrishGrover.ttf" />
+    <None Include="Connected Services\ProfileManager\Forbbiden.Client.ProfileManager.Player.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ProfileManager\Forbbiden.Contracts.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -396,24 +409,6 @@
     <Resource Include="Images\boardButtons.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Forbbiden.Contracts\Forbbiden.Contracts.csproj">
-      <Project>{3d56b418-3592-4374-9801-1d99b563f9db}</Project>
-      <Name>Forbbiden.Contracts</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MatchManager\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MatchManager\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MatchManager\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\FriendsManager\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -444,6 +439,30 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\Aiolos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\Screenshot_2020-06-01-00-03-15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\defaultAvatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\Master chief.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

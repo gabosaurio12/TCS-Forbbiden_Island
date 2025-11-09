@@ -1,13 +1,15 @@
 ﻿using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Contracts;
 using Forbbiden.Client.view.info;
 using System;
+using System.IO;
+using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Forbbiden.Client.view
@@ -27,6 +29,7 @@ namespace Forbbiden.Client.view
         private void SetFriends()
         {
             var profileManager = new ProfileManagerClient();
+
             var player = profileManager.GetCurrentLogin();
             if (player.PlayerId != -1)
             {
@@ -41,19 +44,33 @@ namespace Forbbiden.Client.view
                     {
                         AddOfflineFriend(friendship.Friend);
                     }
+                }
 
-                    var friendsClient = new FriendsManagerClient();
-                    var requests = friendsClient.getFriendRequests(currentLoginUsername);
-                    if (requests.Length > 0)
-                    {
-                        Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
-                        storyboard.Begin();
-                    }
+                var friendsClient = new FriendsManagerClient();
+                var requests = friendsClient.getFriendRequests(currentLoginUsername);
+                if (requests.Length > 0)
+                {
+                    Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
+                    storyboard.Begin();
+                }
+                else
+                {
+                    Storyboard storyboard = (Storyboard)FindResource("HideNotification");
+                    storyboard.Begin();
                 }
             }
         }
 
-        public void AddOnlineFriend(Player friend)
+        private void OpenNotification(string title, string message)
+        {
+            var notificationWindow = new NotificationWindow(title, message)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            notificationWindow.ShowDialog();
+        }
+
+        public void AddOnlineFriend(ProfileManager.Player friend)
         {
             StackPanel friendStack = new StackPanel
             {
@@ -89,7 +106,7 @@ namespace Forbbiden.Client.view
             onlineStack.Children.Add(friendStack);
         }
 
-        public void AddOfflineFriend(Player friend)
+        public void AddOfflineFriend(ProfileManager.Player friend)
         {
             StackPanel friendStack = new StackPanel
             {
@@ -98,14 +115,22 @@ namespace Forbbiden.Client.view
                 Background = Brushes.LightGray
             };
 
-            ImageBrush avatarImg = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(friend.PlayerAvatarPath)));
+            string projectDir = Directory.GetParent(
+                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
+
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
+            bmp.EndInit();
 
             Ellipse avatar = new Ellipse
             {
                 Width = 100,
                 Height = 100,
                 VerticalAlignment = VerticalAlignment.Center,
-                Fill = avatarImg,
+                Fill = new ImageBrush(bmp),
                 Margin = new Thickness(20, 20, 0, 20)
             };
 
@@ -127,7 +152,7 @@ namespace Forbbiden.Client.view
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.GoBack();
+            NavigationService?.Navigate(new MainPage());
         }
 
         private void SearchFriend_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -161,21 +186,13 @@ namespace Forbbiden.Client.view
                 {
                     string title = Properties.Langs.Resources.friend_request_sent_title;
                     string message = Properties.Langs.Resources.friend_request_sent_message + receiverUsername;
-                    var notificationWindow = new NotificationWindow(title, message)
-                    {
-                        Owner = Window.GetWindow(this)
-                    };
-                    notificationWindow.ShowDialog();
+                    OpenNotification(title, message);
                 }
                 else
                 {
                     string title = Properties.Langs.Resources.error;
                     string message = Properties.Langs.Resources.friend_request_not_sent;
-                    var notificationWindow = new NotificationWindow(title, message)
-                    {
-                        Owner = Window.GetWindow(this)
-                    };
-                    notificationWindow.ShowDialog();
+                    OpenNotification(title, message);
                 }
             }
         }

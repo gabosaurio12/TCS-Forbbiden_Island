@@ -9,7 +9,429 @@
 //------------------------------------------------------------------------------
 
 namespace Forbbiden.Client.FriendsManager {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FriendRequest", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class FriendRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ReceiverIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SenderIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int StatusField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ReceiverID {
+            get {
+                return this.ReceiverIDField;
+            }
+            set {
+                if ((this.ReceiverIDField.Equals(value) != true)) {
+                    this.ReceiverIDField = value;
+                    this.RaisePropertyChanged("ReceiverID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SenderID {
+            get {
+                return this.SenderIDField;
+            }
+            set {
+                if ((this.SenderIDField.Equals(value) != true)) {
+                    this.SenderIDField = value;
+                    this.RaisePropertyChanged("SenderID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Friendship", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Friendship : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.FriendsManager.Player FriendField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.FriendsManager.Player Friend {
+            get {
+                return this.FriendField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FriendField, value) != true)) {
+                    this.FriendField = value;
+                    this.RaisePropertyChanged("Friend");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerID {
+            get {
+                return this.PlayerIDField;
+            }
+            set {
+                if ((this.PlayerIDField.Equals(value) != true)) {
+                    this.PlayerIDField = value;
+                    this.RaisePropertyChanged("PlayerID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.FriendsManager.Friendship[] FriendsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerAvatarPathField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerEmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerPasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.FriendsManager.SocialMedia[] SocialMediaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int VerifiedField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.FriendsManager.Friendship[] Friends {
+            get {
+                return this.FriendsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
+                    this.FriendsField = value;
+                    this.RaisePropertyChanged("Friends");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerAvatarPath {
+            get {
+                return this.PlayerAvatarPathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerAvatarPathField, value) != true)) {
+                    this.PlayerAvatarPathField = value;
+                    this.RaisePropertyChanged("PlayerAvatarPath");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerEmail {
+            get {
+                return this.PlayerEmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerEmailField, value) != true)) {
+                    this.PlayerEmailField = value;
+                    this.RaisePropertyChanged("PlayerEmail");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId {
+            get {
+                return this.PlayerIdField;
+            }
+            set {
+                if ((this.PlayerIdField.Equals(value) != true)) {
+                    this.PlayerIdField = value;
+                    this.RaisePropertyChanged("PlayerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerName {
+            get {
+                return this.PlayerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerNameField, value) != true)) {
+                    this.PlayerNameField = value;
+                    this.RaisePropertyChanged("PlayerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerPassword {
+            get {
+                return this.PlayerPasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerPasswordField, value) != true)) {
+                    this.PlayerPasswordField = value;
+                    this.RaisePropertyChanged("PlayerPassword");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerUsername {
+            get {
+                return this.PlayerUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerUsernameField, value) != true)) {
+                    this.PlayerUsernameField = value;
+                    this.RaisePropertyChanged("PlayerUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.FriendsManager.SocialMedia[] SocialMedia {
+            get {
+                return this.SocialMediaField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SocialMediaField, value) != true)) {
+                    this.SocialMediaField = value;
+                    this.RaisePropertyChanged("SocialMedia");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Verified {
+            get {
+                return this.VerifiedField;
+            }
+            set {
+                if ((this.VerifiedField.Equals(value) != true)) {
+                    this.VerifiedField = value;
+                    this.RaisePropertyChanged("Verified");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SocialMedia", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class SocialMedia : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SocialLinkField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SocialMediaIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SocialMediaNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId {
+            get {
+                return this.PlayerIdField;
+            }
+            set {
+                if ((this.PlayerIdField.Equals(value) != true)) {
+                    this.PlayerIdField = value;
+                    this.RaisePropertyChanged("PlayerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialLink {
+            get {
+                return this.SocialLinkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SocialLinkField, value) != true)) {
+                    this.SocialLinkField = value;
+                    this.RaisePropertyChanged("SocialLink");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SocialMediaId {
+            get {
+                return this.SocialMediaIdField;
+            }
+            set {
+                if ((this.SocialMediaIdField.Equals(value) != true)) {
+                    this.SocialMediaIdField = value;
+                    this.RaisePropertyChanged("SocialMediaId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialMediaName {
+            get {
+                return this.SocialMediaNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SocialMediaNameField, value) != true)) {
+                    this.SocialMediaNameField = value;
+                    this.RaisePropertyChanged("SocialMediaName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FriendsManager.IFriendsManager")]
@@ -34,16 +456,16 @@ namespace Forbbiden.Client.FriendsManager {
         System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/getFriendRequestsResponse")]
-        Forbbiden.Contracts.FriendRequest[] getFriendRequests(string receiverUsername);
+        Forbbiden.Client.FriendsManager.FriendRequest[] getFriendRequests(string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/getFriendRequestsResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> getFriendRequestsAsync(string receiverUsername);
+        System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.FriendRequest[]> getFriendRequestsAsync(string receiverUsername);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/getFriendsByIDResponse")]
-        Forbbiden.Contracts.Friendship[] getFriendsByID(int playerID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]
+        Forbbiden.Client.FriendsManager.Friendship[] GetFriendsByID(int playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/getFriendsByIDResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> getFriendsByIDAsync(int playerID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.Friendship[]> GetFriendsByIDAsync(int playerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -97,20 +519,20 @@ namespace Forbbiden.Client.FriendsManager {
             return base.Channel.CancelFriendRequestAsync(senderUsername, receiverUsername);
         }
         
-        public Forbbiden.Contracts.FriendRequest[] getFriendRequests(string receiverUsername) {
+        public Forbbiden.Client.FriendsManager.FriendRequest[] getFriendRequests(string receiverUsername) {
             return base.Channel.getFriendRequests(receiverUsername);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> getFriendRequestsAsync(string receiverUsername) {
+        public System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.FriendRequest[]> getFriendRequestsAsync(string receiverUsername) {
             return base.Channel.getFriendRequestsAsync(receiverUsername);
         }
         
-        public Forbbiden.Contracts.Friendship[] getFriendsByID(int playerID) {
-            return base.Channel.getFriendsByID(playerID);
+        public Forbbiden.Client.FriendsManager.Friendship[] GetFriendsByID(int playerID) {
+            return base.Channel.GetFriendsByID(playerID);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> getFriendsByIDAsync(int playerID) {
-            return base.Channel.getFriendsByIDAsync(playerID);
+        public System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.Friendship[]> GetFriendsByIDAsync(int playerID) {
+            return base.Channel.GetFriendsByIDAsync(playerID);
         }
     }
 }

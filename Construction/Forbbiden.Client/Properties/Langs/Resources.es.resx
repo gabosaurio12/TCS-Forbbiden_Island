@@ -279,11 +279,17 @@
   <data name="signup_button" xml:space="preserve">
     <value>Registrar</value>
   </data>
-  <data name="signup_title" xml:space="preserve">
-    <value>Registro</value>
+  <data name="signup_error" xml:space="preserve">
+    <value>Hubo un error al realizar el registro, inténtalo de nuevo más tarde</value>
   </data>
   <data name="spanish" xml:space="preserve">
     <value>Español</value>
+  </data>
+  <data name="successful_signup" xml:space="preserve">
+    <value>Registro Exitoso</value>
+  </data>
+  <data name="successful_signup_message" xml:space="preserve">
+    <value>El registro fue exitoso, ahora puedes iniciar sesión</value>
   </data>
   <data name="unexpected_error" xml:space="preserve">
     <value>Hubo un error inesperado, por favor contacte a servicio al cliente</value>
@@ -305,5 +311,30 @@
   </data>
   <data name="wrongPassword" xml:space="preserve">
     <value>Contraseña incorrecta</value>
+  </data>
+  <data name="signup_title" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+  <data name="signup_invalid_password" xml:space="preserve">
+    <value>La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial (@, &amp;, _)</value>
+  </data>
+  <data name="signup_empty_username" xml:space="preserve">
+    <value>El nombre de usuario no puede estar vacío</value>
+  </data>
+  <data name="signup_space_username" xml:space="preserve">
+    <value>El nombre de usuario no puede contener espacios</value>
+  </data>
+  <data name="signup_username_already_used" xml:space="preserve">
+    <value>El nombre de usuario ya está en uso</value>
+  </data>
+  <data name="signup_invalid_email" xml:space="preserve">
+    <value>El correo electrónico es inválido o ya está en uso</value>
+  </data>
+  <data name="invalid_input" xml:space="preserve">
+    <value>Campo Inválido</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="boss_invalid_inputs" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
 </root>

@@ -59,9 +59,10 @@
 
 === IFriendsManager
 
-==== AddFriend()
+==== SendFriendRequest()
 
-* Username del amigo
+* Username del que envía la solicitud
+* Username del que recibe la solicitud
 
 ==== DeleteFriend()
 
@@ -73,11 +74,21 @@
 
 ==== AcceptFriendship()
 
-==== DeclineFrindship()
+* Username del que envía la solicitud
+* Username del que recibe la solicitud
+
+==== CancelFriendRequest()
+
+* Username del que envía la solicitud
+* Username del que recibe la solicitud
 
 ==== SearchGame()
 
 * ID de la partida
+
+==== GetFriendRequests()
+
+* Username del que jugador
 
 === IChatManager
 
@@ -91,3 +102,29 @@
 
 * Mensaje
 * Regresa: Si se entregó con éxito
+
+=== IBoardManager
+
+==== GetMatchPlayers()
+
+==== MovePlayer()
+
+* Player to move
+* Position to move
+* Regresa si se movió con éxito
+** Desde el cliente se hace el callback
+
+==== ChallengePlayer()
+
+* Challenger Player
+* Challenged Player
+* Return the minigame to play
+
+==== ShoreTile()
+
+* Tile to shore
+
+==== Capture()
+
+* Player capturing
+* Treasure captured

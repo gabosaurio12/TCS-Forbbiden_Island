@@ -1,5 +1,5 @@
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Contracts;
+using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.Text.RegularExpressions;
@@ -21,6 +21,16 @@ namespace Forbbiden.Client
         {
             InitializeComponent();
         }
+
+        private void OpenNotification(string title, string message)
+        {
+            var notificationWindow = new NotificationWindow(title, message)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            notificationWindow.ShowDialog();
+        }
+
         private static bool ValidatePassword(string password)
         {
             if (!string.IsNullOrWhiteSpace(password) && password.Length > PasswordMinLength)
@@ -60,34 +70,40 @@ namespace Forbbiden.Client
         private bool ValidatePlayer(ref Player player, ProfileManagerClient client)
         {
             bool isValid = true;
+            string title = Properties.Langs.Resources.invalid_input;
 
             if (!ValidatePassword(player.PlayerPassword))
             {
-                MessageBox.Show("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+                string message = Properties.Langs.Resources.signup_invalid_password;
+                OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkPassword);
             }
             if (string.IsNullOrWhiteSpace(player.PlayerUsername))
             {
-                MessageBox.Show("El nombre de usuario no puede estar vacío.");
+                string message = Properties.Langs.Resources.signup_empty_username;
+                OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
             }
             if (player.PlayerUsername.Contains(" "))
             {
-                MessageBox.Show("El nombre de usuario no puede contener espacios.");
+                string message = Properties.Langs.Resources.signup_space_username;
+                OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
             }
             if (!client.IsUsernameAvailable(player.PlayerUsername))
             {
-                MessageBox.Show("El nombre de usuario ya está en uso.");
+                string message = Properties.Langs.Resources.signup_username_already_used;
+                OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
             }
             if (!client.ValidateEmail(player.PlayerEmail))
             {
-                MessageBox.Show("El correo electrónico es inválido o ya está en uso.");
+                string message = Properties.Langs.Resources.signup_invalid_email;
+                OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkEmail);
             }
@@ -111,17 +127,25 @@ namespace Forbbiden.Client
             if (ValidatePlayer(ref player, client))
             {
                 player.PlayerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
-                if (client.SignUp(player))
+                var result = client.SignUp(player);
+                if (result)
                 {
-                    log.Info("Usuario {player.PlayerUsername} sent.");
-                    MessageBox.Show("Usuario registrado exitosamente.");
+                    string title = Properties.Langs.Resources.successful_signup;
+                    string message = Properties.Langs.Resources.successful_signup_message;
+                    OpenNotification(title, message);
                     NavigationService.Navigate(new LoginPage());
                 }
                 else
                 {
-                    MessageBox.Show("Error al registrar el usuario. Inténtelo de nuevo más tarde.");
+                    string title = Properties.Langs.Resources.error;
+                    string message = Properties.Langs.Resources.signup_error;
+                    OpenNotification(title, message);
                 }
-            }         
+            }
+            else
+            {
+                txtBkBoss.Text = Properties.Langs.Resources.boss_invalid_inputs;
+            }
         }
 
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forbbiden.Client"
-        xmlns:p ="clr-namespace:Forbbiden.Client.Properties.Langs"
+      xmlns:language ="clr-namespace:Forbbiden.Client.Properties.Langs"
         mc:Ignorable="d"
         Title="SignupPage" >
 
@@ -34,7 +34,7 @@
                 Click="BackButton_Click"/>
 
                 <!-- Title -->
-                <TextBlock Text="{x:Static p:Resources.signup_title}"
+                <TextBlock Text="{x:Static language:Resources.signup_title}"
                    FontSize="60"
                    Foreground="White"
                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
@@ -55,45 +55,60 @@
 
                 <!-- User -->
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
-                    <TextBlock x:Name="txtBkUsername" Text="{x:Static p:Resources.username}"
+                    <TextBlock x:Name="txtBkUsername" Text="{x:Static language:Resources.username}"
                                HorizontalAlignment="Left" Foreground="White"
                                FontSize="40" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
                     <TextBox x:Name="txtBxUsername" Height="35" Width="400"
-                             Margin="0,5" FontSize="20" />
+                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                             Margin="0,5" FontSize="24" />
                 </StackPanel>
 
                 <!-- Email -->
                 <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0">
-                    <TextBlock x:Name="txtBkEmail" Text="{x:Static p:Resources.email}"
+                    <TextBlock x:Name="txtBkEmail" Text="{x:Static language:Resources.email}"
                                HorizontalAlignment="Left" Foreground="White"
                                FontSize="40" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
-                    <TextBox x:Name="txtBxEmail" Height="35" Width="400" Margin="0,5" FontSize="20" />
+                    <TextBox x:Name="txtBxEmail" Height="35" Width="400" Margin="0,5" FontSize="24"
+                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
                 </StackPanel>
 
                 <!-- Password -->
                 <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,5,0,0">
-                    <TextBlock x:Name="txtBkPassword" Text="{x:Static p:Resources.password}"
+                    <TextBlock x:Name="txtBkPassword" Text="{x:Static language:Resources.password}"
                                HorizontalAlignment="Left" Foreground="White"
                                FontSize="40" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
                     <TextBox x:Name="txtBxPassword" Height="35" Width="400" Margin="0,5"
-                             FontSize="20" />
+                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                             FontSize="24" />
                 </StackPanel>
 
                 <!-- Register Button -->
                 <StackPanel Grid.Row="4" Orientation="Vertical"
                 HorizontalAlignment="Center" Margin="0,15,0,0">
-                    <Button x:Name="signupButton" Content="{x:Static p:Resources.signup_button}" 
+                    <Button x:Name="signupButton" Content="{x:Static language:Resources.signup_button}" 
                         Height="50" Width="175" Background="#39B349" 
                         Foreground="White" FontSize="25"
                         FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                         Click="SignupButton_Click" Margin="0,0,0,0"/>
-                    <Label Content="{x:Static p:Resources.login_title}" Margin="0,5,0,0" 
+                    <Label Content="{x:Static language:Resources.login_title}" Margin="0,5,0,0" 
                         HorizontalAlignment="Center" VerticalAlignment="Center" 
                         MouseDown="Login_MouseDown" Cursor="Hand" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                         Foreground="White" FontSize="25" />
                 </StackPanel>
 
             </Grid>
+
+            <Image Source="/Images/codebackground.png" Grid.Row="1" Margin="1296,283,171,379" />
+            <Image x:Name="bossImage" Source="/Images/boss.png" HorizontalAlignment="Left" Height="292" 
+                   Margin="1532,244,0,0" Grid.Row="1" VerticalAlignment="Top" Width="312" RenderTransformOrigin="0.652,0.965"/>
+            <TextBlock x:Name="txtBkBoss"
+               Text="{x:Static language:Resources.bossLogin}"
+               HorizontalAlignment="Left" Margin="1320,325,0,0"
+               Grid.Row="1" TextWrapping="Wrap"
+               VerticalAlignment="Top" Height="187" Width="280" 
+               FontSize="32" Foreground="Wheat"
+               FontFamily="Consolas" />
+
         </Grid>
     </Viewbox>
 </Page>

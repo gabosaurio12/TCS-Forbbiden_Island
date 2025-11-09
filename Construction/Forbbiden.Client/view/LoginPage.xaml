@@ -54,7 +54,9 @@
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0" HorizontalAlignment="Center">
                     <TextBlock x:Name="txtBkUser" Text="{x:Static language:Resources.username}" HorizontalAlignment="Left"
                                FontSize="40" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
-                    <TextBox x:Name="txtBxUsername" Height="35" Width="400" Margin="0,5" FontSize="20" />
+                    <TextBox x:Name="txtBxUsername" Height="35" Width="400" Margin="0,5"
+                             FontSize="24"
+                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
                 </StackPanel>
 
                 <!-- Password -->
@@ -62,8 +64,12 @@
                     <TextBlock x:Name="txtBkPassword" Text="{x:Static language:Resources.password}" HorizontalAlignment="Left"
                                FontSize="40" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                        <PasswordBox x:Name="pwdBxPassword" Height="35" Width="330" Margin="5" FontSize="20" />
-                        <TextBox x:Name="txtBxPasswordVisible" Height="35" Width="330" Visibility="Collapsed"  Margin="5" FontSize="20" />
+                        <PasswordBox x:Name="pwdBxPassword" Height="35" Width="320" Margin="5" 
+                                     FontSize="24"
+                                     FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
+                        <TextBox x:Name="txtBxPasswordVisible" Height="35" Width="320" Visibility="Collapsed"  Margin="5" 
+                                 FontSize="24"
+                                 FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
                         <CheckBox x:Name="chkPassword" Content="{x:Static language:Resources.show_password}" 
                                   VerticalAlignment="Center" 
                                   Click="TogglePassword_Click" 

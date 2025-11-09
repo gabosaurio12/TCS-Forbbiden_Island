@@ -9,7 +9,352 @@
 //------------------------------------------------------------------------------
 
 namespace Forbbiden.Client.ProfileManager {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.ProfileManager.Friendship[] FriendsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerAvatarPathField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerEmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerPasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.ProfileManager.SocialMedia[] SocialMediaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int VerifiedField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.ProfileManager.Friendship[] Friends {
+            get {
+                return this.FriendsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
+                    this.FriendsField = value;
+                    this.RaisePropertyChanged("Friends");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerAvatarPath {
+            get {
+                return this.PlayerAvatarPathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerAvatarPathField, value) != true)) {
+                    this.PlayerAvatarPathField = value;
+                    this.RaisePropertyChanged("PlayerAvatarPath");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerEmail {
+            get {
+                return this.PlayerEmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerEmailField, value) != true)) {
+                    this.PlayerEmailField = value;
+                    this.RaisePropertyChanged("PlayerEmail");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId {
+            get {
+                return this.PlayerIdField;
+            }
+            set {
+                if ((this.PlayerIdField.Equals(value) != true)) {
+                    this.PlayerIdField = value;
+                    this.RaisePropertyChanged("PlayerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerName {
+            get {
+                return this.PlayerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerNameField, value) != true)) {
+                    this.PlayerNameField = value;
+                    this.RaisePropertyChanged("PlayerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerPassword {
+            get {
+                return this.PlayerPasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerPasswordField, value) != true)) {
+                    this.PlayerPasswordField = value;
+                    this.RaisePropertyChanged("PlayerPassword");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerUsername {
+            get {
+                return this.PlayerUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerUsernameField, value) != true)) {
+                    this.PlayerUsernameField = value;
+                    this.RaisePropertyChanged("PlayerUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.ProfileManager.SocialMedia[] SocialMedia {
+            get {
+                return this.SocialMediaField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SocialMediaField, value) != true)) {
+                    this.SocialMediaField = value;
+                    this.RaisePropertyChanged("SocialMedia");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Verified {
+            get {
+                return this.VerifiedField;
+            }
+            set {
+                if ((this.VerifiedField.Equals(value) != true)) {
+                    this.VerifiedField = value;
+                    this.RaisePropertyChanged("Verified");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Friendship", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Friendship : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.ProfileManager.Player FriendField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.ProfileManager.Player Friend {
+            get {
+                return this.FriendField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FriendField, value) != true)) {
+                    this.FriendField = value;
+                    this.RaisePropertyChanged("Friend");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerID {
+            get {
+                return this.PlayerIDField;
+            }
+            set {
+                if ((this.PlayerIDField.Equals(value) != true)) {
+                    this.PlayerIDField = value;
+                    this.RaisePropertyChanged("PlayerID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SocialMedia", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class SocialMedia : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SocialLinkField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SocialMediaIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SocialMediaNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId {
+            get {
+                return this.PlayerIdField;
+            }
+            set {
+                if ((this.PlayerIdField.Equals(value) != true)) {
+                    this.PlayerIdField = value;
+                    this.RaisePropertyChanged("PlayerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialLink {
+            get {
+                return this.SocialLinkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SocialLinkField, value) != true)) {
+                    this.SocialLinkField = value;
+                    this.RaisePropertyChanged("SocialLink");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SocialMediaId {
+            get {
+                return this.SocialMediaIdField;
+            }
+            set {
+                if ((this.SocialMediaIdField.Equals(value) != true)) {
+                    this.SocialMediaIdField = value;
+                    this.RaisePropertyChanged("SocialMediaId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialMediaName {
+            get {
+                return this.SocialMediaNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SocialMediaNameField, value) != true)) {
+                    this.SocialMediaNameField = value;
+                    this.RaisePropertyChanged("SocialMediaName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ProfileManager.IProfileManager")]
@@ -34,28 +379,28 @@ namespace Forbbiden.Client.ProfileManager {
         System.Threading.Tasks.Task<bool> SendEmailAsync(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
-        bool SignUp(Forbbiden.Contracts.Player player);
+        bool SignUp(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
-        System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Contracts.Player player);
+        System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
-        bool Login(Forbbiden.Contracts.Player player);
+        bool Login(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
-        System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Contracts.Player player);
+        System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse")]
-        Forbbiden.Contracts.Player GetPlayerByUsername(string username);
+        Forbbiden.Client.ProfileManager.Player GetPlayerByUsername(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByUsernameAsync(string username);
+        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByUsernameAsync(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
-        Forbbiden.Contracts.Player GetCurrentLogin();
+        Forbbiden.Client.ProfileManager.Player GetCurrentLogin();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetCurrentLoginAsync();
+        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetCurrentLoginAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ClearCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/ClearCurrentLoginResponse")]
         bool ClearCurrentLogin();
@@ -64,16 +409,16 @@ namespace Forbbiden.Client.ProfileManager {
         System.Threading.Tasks.Task<bool> ClearCurrentLoginAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
-        Forbbiden.Contracts.Player GetPlayerById(int playerId);
+        Forbbiden.Client.ProfileManager.Player GetPlayerById(int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByIdAsync(int playerId);
+        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
-        bool UpdatePlayer(Forbbiden.Contracts.Player updatedPlayer);
+        bool UpdatePlayer(Forbbiden.Client.ProfileManager.Player updatedPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
-        System.Threading.Tasks.Task<bool> UpdatePlayerAsync(Forbbiden.Contracts.Player updatedPlayer);
+        System.Threading.Tasks.Task<bool> UpdatePlayerAsync(Forbbiden.Client.ProfileManager.Player updatedPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse")]
         bool DeletePlayerByUsername(string username);
@@ -133,35 +478,35 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.SendEmailAsync(email);
         }
         
-        public bool SignUp(Forbbiden.Contracts.Player player) {
+        public bool SignUp(Forbbiden.Client.ProfileManager.Player player) {
             return base.Channel.SignUp(player);
         }
         
-        public System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Contracts.Player player) {
+        public System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Client.ProfileManager.Player player) {
             return base.Channel.SignUpAsync(player);
         }
         
-        public bool Login(Forbbiden.Contracts.Player player) {
+        public bool Login(Forbbiden.Client.ProfileManager.Player player) {
             return base.Channel.Login(player);
         }
         
-        public System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Contracts.Player player) {
+        public System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Client.ProfileManager.Player player) {
             return base.Channel.LoginAsync(player);
         }
         
-        public Forbbiden.Contracts.Player GetPlayerByUsername(string username) {
+        public Forbbiden.Client.ProfileManager.Player GetPlayerByUsername(string username) {
             return base.Channel.GetPlayerByUsername(username);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByUsernameAsync(string username) {
+        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByUsernameAsync(string username) {
             return base.Channel.GetPlayerByUsernameAsync(username);
         }
         
-        public Forbbiden.Contracts.Player GetCurrentLogin() {
+        public Forbbiden.Client.ProfileManager.Player GetCurrentLogin() {
             return base.Channel.GetCurrentLogin();
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetCurrentLoginAsync() {
+        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetCurrentLoginAsync() {
             return base.Channel.GetCurrentLoginAsync();
         }
         
@@ -173,19 +518,19 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.ClearCurrentLoginAsync();
         }
         
-        public Forbbiden.Contracts.Player GetPlayerById(int playerId) {
+        public Forbbiden.Client.ProfileManager.Player GetPlayerById(int playerId) {
             return base.Channel.GetPlayerById(playerId);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByIdAsync(int playerId) {
+        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId) {
             return base.Channel.GetPlayerByIdAsync(playerId);
         }
         
-        public bool UpdatePlayer(Forbbiden.Contracts.Player updatedPlayer) {
+        public bool UpdatePlayer(Forbbiden.Client.ProfileManager.Player updatedPlayer) {
             return base.Channel.UpdatePlayer(updatedPlayer);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdatePlayerAsync(Forbbiden.Contracts.Player updatedPlayer) {
+        public System.Threading.Tasks.Task<bool> UpdatePlayerAsync(Forbbiden.Client.ProfileManager.Player updatedPlayer) {
             return base.Channel.UpdatePlayerAsync(updatedPlayer);
         }
         

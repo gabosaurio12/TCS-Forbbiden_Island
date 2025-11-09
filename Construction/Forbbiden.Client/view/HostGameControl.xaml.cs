@@ -1,7 +1,6 @@
 ﻿using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.ProfileManager;       
 using Forbbiden.Client.view;                  
-using Forbbiden.Contracts;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -119,7 +118,7 @@ namespace Forbbiden.Client
                         "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                await matchClient.CloseAsync();
+                //await matchClient.CloseAsync();
             }
             catch (Exception ex)
             {

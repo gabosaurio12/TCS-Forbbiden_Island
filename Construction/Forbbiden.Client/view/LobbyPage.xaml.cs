@@ -1,5 +1,4 @@
 ﻿using Forbbiden.Client.ProfileManager;
-using Forbbiden.Contracts;
 using log4net;
 using System;
 using System.Collections.Generic;

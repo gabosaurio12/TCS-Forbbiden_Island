@@ -153,12 +153,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Forbbiden.Contracts\Forbbiden.Contracts.csproj">
-      <Project>{3d56b418-3592-4374-9801-1d99b563f9db}</Project>
-      <Name>Forbbiden.Contracts</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next">
       <Version>4.0.3</Version>
     </PackageReference>

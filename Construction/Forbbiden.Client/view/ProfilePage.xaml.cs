@@ -1,5 +1,4 @@
 ﻿using Forbbiden.Client.ProfileManager;
-using Forbbiden.Contracts;
 using log4net;
 using Microsoft.Win32;
 using System;
@@ -8,6 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Forbbiden.Client
 {
@@ -21,6 +21,7 @@ namespace Forbbiden.Client
         private readonly Player player;
         private string uploadedAvatarOriginalPath;
         private string uploadedAvatarProjectPath;
+        private string avatarFileName;
         private bool avatarChanged = false;
 
         public ProfilePage()
@@ -65,15 +66,23 @@ namespace Forbbiden.Client
 
             if (player.PlayerAvatarPath != null)
             {
-                ImageBrush avatar = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(player.PlayerAvatarPath)));
-                imgAvatar.Fill = avatar;
+                string projectDir = Directory.GetParent(
+                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+
+                var bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.CacheOption = BitmapCacheOption.OnLoad;
+                bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
+                bmp.EndInit();
+                imgAvatar.Fill = new ImageBrush(bmp);
             }
         }
 
         private void BtnDiscard_Click(object sender, RoutedEventArgs e)
         {
             if (NavigationService != null && NavigationService.CanGoBack)
-                NavigationService.GoBack();
+                NavigationService?.Navigate(new MainPage());
         }
 
         private static void ResetFieldColors(TextBlock txtBkUsername, TextBlock txtBkName, TextBlock txtBkEmail)
@@ -131,7 +140,7 @@ namespace Forbbiden.Client
             player.PlayerEmail = txtBxEmail.Text;
             player.PlayerName = txtBxName.Text;
 
-            player.SocialMedia = new List<SocialMedia>
+            player.SocialMedia = new []
             {
                 new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = this.player.PlayerId },
                 new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = this.player.PlayerId },
@@ -139,7 +148,19 @@ namespace Forbbiden.Client
                 new SocialMedia { SocialMediaName = "facebook", SocialLink = txtBxFacebook.Text, PlayerId = this.player.PlayerId }
             };
 
-            if (avatarChanged) player.PlayerAvatarPath = uploadedAvatarProjectPath;
+            if (avatarChanged)
+            {
+                player.PlayerAvatarPath = avatarFileName;
+                string exeDir = AppContext.BaseDirectory;
+                string projectDir = Directory.GetParent(exeDir).Parent.Parent.FullName;
+
+                uploadedAvatarProjectPath = Path.Combine(projectDir, "avatars", avatarFileName);
+                File.Copy(uploadedAvatarOriginalPath, uploadedAvatarProjectPath, true);
+            }
+            else
+            {
+                player.PlayerAvatarPath = this.player.PlayerAvatarPath;
+            }
 
             bool isValid = true;
 
@@ -161,18 +182,16 @@ namespace Forbbiden.Client
             ResetFieldColors(txtBkUsername, txtBkName, txtBkEmail);
             var client = new ProfileManagerClient();
 
-            Player updatedPlayer = new Player();
+            Player updatedPlayer = new Player
+            {
+                PlayerId = player.PlayerId
+            };
 
             if (SetPlayer(ref updatedPlayer))
             {
-                if (avatarChanged) File.Copy(uploadedAvatarOriginalPath, uploadedAvatarProjectPath, true);
-
-                updatedPlayer.PlayerId = player.PlayerId;
-
                 if (client.UpdatePlayer(updatedPlayer))
                 {
-                    if (NavigationService != null && NavigationService.CanGoBack)
-                        NavigationService.GoBack();
+                    NavigationService?.Navigate(new MainPage());
                 }
                 else
                 {
@@ -192,15 +211,14 @@ namespace Forbbiden.Client
 
             if (result == true)
             {
-                uploadedAvatarOriginalPath = openFileDialog.FileName;
+                avatarFileName = Path.GetFileName(openFileDialog.FileName);
 
-                string projectPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
-                string avatarsPath = Path.Combine(projectPath, "avatars");
-                string destinyPath = Path.Combine(avatarsPath, Path.GetFileName(uploadedAvatarOriginalPath));
+                uploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
 
-                uploadedAvatarProjectPath = destinyPath;
+                imgAvatar.Fill = new ImageBrush(
+                    new System.Windows.Media.Imaging.BitmapImage(
+                        new Uri(uploadedAvatarOriginalPath)));
 
-                imgAvatar.Fill = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(uploadedAvatarOriginalPath)));
                 avatarChanged = true;
             }
         }

@@ -54,6 +54,14 @@
              AccelerationRatio="0.3" DecelerationRatio="0.3" />
         </Storyboard>
 
+        <Storyboard x:Key="HideNotification">
+            <DoubleAnimation Storyboard.TargetName="notificationGrid"
+             Storyboard.TargetProperty="Width"
+             From="85" To="0"
+             Duration="0:0:0"
+             AccelerationRatio="0" DecelerationRatio="0" />
+        </Storyboard>
+
     </Page.Resources>
 
     <Viewbox Stretch="Uniform">

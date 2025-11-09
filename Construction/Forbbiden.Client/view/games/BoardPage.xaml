@@ -40,42 +40,15 @@
                 <!-- Players -->
                 <Grid Grid.Column="0" Grid.Row="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="500" />
+                        <RowDefinition Height="400" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="0" Margin="20,20,0,0">
+                    <StackPanel x:Name="cornerPlayers" Orientation="Vertical"
+                                HorizontalAlignment="Left" Grid.Row="0" Margin="20,20,0,0">
                         <TextBlock Text="{x:Static language:Resources.players}"
                                    FontSize="32" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
                                    Foreground="White" />
-
-                        <Ellipse x:Name="playerOneList" Margin="0,10,0,0" Grid.ColumnSpan="2"
-                                 Height="100" Width="100" Stroke="LightGray" StrokeThickness="5">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="/avatars/Patronus HD.jpg" />
-                            </Ellipse.Fill>
-                        </Ellipse>
-
-                        <Ellipse x:Name="playerTwoList" Margin="0,10,0,0" Grid.ColumnSpan="2"
-                                 Height="100" Width="100" Stroke="LightGray" StrokeThickness="5">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="/avatars/meme-pantene.jpg" />
-                            </Ellipse.Fill>
-                        </Ellipse>
-
-                        <Ellipse x:Name="playerThreeList" Margin="0,10,0,0" Grid.ColumnSpan="2"
-                                 Height="100" Width="100" Stroke="LightGray" StrokeThickness="5">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="/avatars/EL ORIGEN DEL PADRINO BIÓNICO.png"  />
-                            </Ellipse.Fill>
-                        </Ellipse>
-
-                        <Ellipse x:Name="playerFourList" Margin="0,10,0,0" Grid.ColumnSpan="2"
-                                 Height="100" Width="100" Stroke="LightGray" StrokeThickness="5">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="/avatars/IMG_20191001_171350.jpg" />
-                            </Ellipse.Fill>
-                        </Ellipse>
                     </StackPanel>
 
                     <!-- Water level -->
@@ -117,11 +90,14 @@
                     <Image Source="/Images/actionsLeft2.png"
                            Height="200" Width="200" />
                     <Image Source="/Images/actionsLeft2.png"
-                           Height="200" Width="200" />
+                           Height="200" Width="200"/>
                 </StackPanel>
 
+                <!-- Actions -->
                 <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,0,0" >
-                    <Grid Height="132" Width="404" Margin="0,0,0,0">
+                    <Grid Height="130" Width="400" Margin="0,0,0,0"
+                                   MouseEnter="Moves_MouseEnter"
+                                   MouseLeave="Moves_MouseLeave">
                         <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                         <TextBlock Text="{x:Static language:Resources.move_button}" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -129,7 +105,9 @@
                                    Cursor="Hand"/>
                     </Grid>
 
-                    <Grid Height="132" Width="404" Margin="0,0,0,0">
+                    <Grid Height="130" Width="400" Margin="0,0,0,0"
+                                   MouseEnter="Moves_MouseEnter"
+                                   MouseLeave="Moves_MouseLeave">
                         <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                         <TextBlock Text="{x:Static language:Resources.shore_up_button}" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -137,7 +115,9 @@
                                    Cursor="Hand"/>
                     </Grid>
 
-                    <Grid Height="132" Width="404" Margin="0,0,0,0">
+                    <Grid Height="130" Width="400" Margin="0,0,0,0"
+                                   MouseEnter="Moves_MouseEnter"
+                                   MouseLeave="Moves_MouseLeave">
                         <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                         <TextBlock Text="{x:Static language:Resources.capture_button}" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -146,9 +126,6 @@
                     </Grid>
                 </StackPanel>
             </StackPanel>
-
-            <!-- Actions -->
-            
 
             <!-- Board -->
             <Grid HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="0"  Grid.Column="1">
@@ -171,19 +148,19 @@
                 <!-- First row -->
                 <Rectangle Grid.Column="1" Grid.Row="0"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="2" Grid.Row="0"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="3" Grid.Row="0"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
@@ -191,32 +168,32 @@
                 <!-- Second row -->
                 <Rectangle Grid.Column="0" Grid.Row="1"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 
                 <Rectangle Grid.Column="1" Grid.Row="1"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="2" Grid.Row="1"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="3" Grid.Row="1"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="4" Grid.Row="1"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
@@ -224,31 +201,31 @@
                 <!-- Third row -->
                 <Rectangle Grid.Column="0" Grid.Row="2"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="1" Grid.Row="2"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="2" Grid.Row="2"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="3" Grid.Row="2"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="4" Grid.Row="2"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
@@ -256,31 +233,31 @@
                 <!-- Fourth row -->
                 <Rectangle Grid.Column="0" Grid.Row="3"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="1" Grid.Row="3"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="2" Grid.Row="3"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="3" Grid.Row="3"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="4" Grid.Row="3"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
@@ -288,19 +265,19 @@
                 <!-- Fifth row -->
                 <Rectangle Grid.Column="1" Grid.Row="4"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="2" Grid.Row="4"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
                 <Rectangle Grid.Column="3" Grid.Row="4"
                            Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="3" 
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
