@@ -88,7 +88,7 @@
                     Width="100" Height="100"
                     HorizontalAlignment="Left"
                     FontSize="40"
-                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                    FontFamily="{StaticResource IrishGrover}"
                     BorderThickness="5" BorderBrush="#FFB7B7B7"
                     Background="White"
                     Foreground="Black"
@@ -100,7 +100,7 @@
                     FontSize="60"
                     FontWeight="Bold"
                     Foreground="Black"
-                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                    FontFamily="{StaticResource IrishGrover}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"/>
 
@@ -122,7 +122,7 @@
                     <Button x:Name="addButton" Height="0" Width="50"
                             Content="+"
                             Foreground="White" FontSize="40"
-                            FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                            FontFamily="{StaticResource IrishGrover}"
                             Background="Green"
                             DockPanel.Dock="Right"
                             Cursor="Hand"
@@ -130,7 +130,7 @@
 
                     <TextBox x:Name="searchtxtBx" Height="60" Width="0"
                              MaxLength="30"
-                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                             FontFamily="{StaticResource IrishGrover}"
                              FontSize="44"
                              DockPanel.Dock="Left"
                              VerticalAlignment="Center"
@@ -176,7 +176,7 @@
                         <TextBlock Text="{x:Static language:Resources.online_friends}"
                                    FontSize="64"
                                    Foreground="White"
-                                   FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                                   FontFamily="{StaticResource IrishGrover}"
                                    HorizontalAlignment="Center"
                                    Margin="0,25"/>
                     </StackPanel>
@@ -191,7 +191,7 @@
                         <TextBlock Text="{x:Static language:Resources.offline}"
                                    FontSize="64"
                                    Foreground="White"
-                                   FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                                   FontFamily="{StaticResource IrishGrover}"
                                    HorizontalAlignment="Center"
                                    Margin="0,25"/>
                     </StackPanel>

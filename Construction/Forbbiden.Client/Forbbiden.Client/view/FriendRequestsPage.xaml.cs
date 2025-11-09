@@ -20,16 +20,18 @@ namespace Forbbiden.Client.view
     public partial class FriendRequestsPage : Page
     {
 
-        private CallbacksManager callback;
+        private readonly CallbacksManager callback;
         private string currentLoginUsername;
+        private readonly FontFamily IrishGrover;
 
         public FriendRequestsPage()
         {
             InitializeComponent();
 
+            IrishGrover = (FontFamily)Application.Current.Resources["IrishGrover"];
+
             callback = new CallbacksManager();
             callback.FriendRequestReceived += OnFriendRequestReceived;
-            var client = new FriendsManagerClient();
 
             SetRequests();
         }
@@ -74,7 +76,7 @@ namespace Forbbiden.Client.view
             notificationWindow.ShowDialog();
         }
 
-        private string GettxtBkText(Grid stack)
+        private static string GettxtBkText(Grid stack)
         {
             string text = "";
             foreach (var child in stack.Children)
@@ -89,9 +91,9 @@ namespace Forbbiden.Client.view
             return text;
         }
 
-        private void RemoveRequestStack(Grid stack)
+        private static void RemoveRequestStack(StackPanel stackRemoving, Grid gridToRemove)
         {
-            requestsStack.Children.Remove(stack);
+            stackRemoving.Children.Remove(gridToRemove);
         }
 
         private void AcceptButton_Click(Object sender, RoutedEventArgs e)
@@ -99,7 +101,7 @@ namespace Forbbiden.Client.view
             var grid = (Grid)((Button)sender).Parent;
             string senderUsername = GettxtBkText(grid);
 
-            if (!senderUsername.Equals(""))
+            if (!string.IsNullOrEmpty(senderUsername))
             {
                 var profileClient = new ProfileManagerClient();
                 var receiver = profileClient.GetCurrentLogin();
@@ -114,7 +116,7 @@ namespace Forbbiden.Client.view
                     }
                     else
                     {
-                        RemoveRequestStack(grid);
+                        RemoveRequestStack(requestsStack, grid);
                     }
                 }
                 else
@@ -135,7 +137,7 @@ namespace Forbbiden.Client.view
             var grid = (Grid)((Button)sender).Parent;
             string senderUsername = GettxtBkText(grid);
 
-            if (!senderUsername.Equals(""))
+            if (!string.IsNullOrEmpty(senderUsername))
             {
                 var profileClient = new ProfileManagerClient();
                 var receiver = profileClient.GetCurrentLogin();
@@ -150,7 +152,7 @@ namespace Forbbiden.Client.view
                     }
                     else
                     {
-                        RemoveRequestStack(grid);
+                        RemoveRequestStack(requestsStack, grid);
                     }
                 }
                 else
@@ -168,9 +170,6 @@ namespace Forbbiden.Client.view
 
         private Button CreateGridButton(string action)
         {
-            Button button = new Button();
-            var irishGoverFont = new FontFamily(new Uri("pack://application:,,,/"),
-                "/Forbbiden.Client;component/Fonts/#Garet Heavy");
             var green = (Brush)new BrushConverter().ConvertFromString("#43C414");
             var red = (Brush)new BrushConverter().ConvertFromString("#C41414");
 
@@ -188,13 +187,13 @@ namespace Forbbiden.Client.view
                     Width = 60,
                     Height = 60,
                     FontSize = 54,
-                    FontFamily = irishGoverFont,
+                    FontFamily = IrishGrover,
                     Background = green,
                     Foreground = Brushes.White,
                     Cursor = Cursors.Hand
                 };
                 acceptRequest.Click += AcceptButton_Click;
-                button = acceptRequest;
+                return acceptRequest;
             }
             else
             {
@@ -210,16 +209,14 @@ namespace Forbbiden.Client.view
                     Width = 60,
                     Height = 60,
                     FontSize = 54,
-                    FontFamily = irishGoverFont,
+                    FontFamily = IrishGrover,
                     Background = red,
                     Foreground = Brushes.White,
                     Cursor = Cursors.Hand
                 };
                 rejectRequest.Click += RejectButton_Click;
-                button = rejectRequest;
+                return rejectRequest;
             }
-
-            return button;
         }
 
         private Ellipse CreateGridEllipse(ImageBrush avatarImg)
@@ -238,16 +235,13 @@ namespace Forbbiden.Client.view
 
         private TextBlock CreateGridTextBlock(string username)
         {
-            var irishGoverFont = new FontFamily(new Uri("pack://application:,,,/"),
-                "/Forbbiden.Client;component/Fonts/#Garet Heavy");
-
             TextBlock friendName = new TextBlock
             {
                 Text = username,
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(50, 0, 0, 0),
                 FontSize = 48,
-                FontFamily = irishGoverFont,
+                FontFamily = IrishGrover,
             };
             Grid.SetColumn(friendName, 1);
 

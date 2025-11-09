@@ -22,7 +22,7 @@
         <!-- Upper bar -->
         <Grid Grid.Row="0" Background="#EFC437">
             <TextBlock x:Name="titletxtBk" Foreground="Black"
-                       FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                       FontFamily="{StaticResource IrishGrover}"
                        FontSize="48"
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
@@ -33,7 +33,7 @@
                           HorizontalScrollBarVisibility="Disabled"
                           MaxHeight="130">
                 <TextBlock x:Name="messagetxtBk" Foreground="White"
-                           FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                           FontFamily="{StaticResource IrishGrover}"
                            FontSize="38"
                            MaxWidth="620"
                            TextWrapping="Wrap"
@@ -52,7 +52,7 @@
                     HorizontalAlignment="Right" VerticalAlignment="Center"
                     Margin="0,0,50,30"
                     Foreground="White" Background="#43C414"
-                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                    FontFamily="{StaticResource IrishGrover}"
                     FontSize="32"
                     Cursor="Hand"
                     Click="OkButton_Click" >

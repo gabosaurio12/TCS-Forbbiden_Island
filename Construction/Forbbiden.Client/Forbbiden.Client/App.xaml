@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Forbbiden.Client"
              StartupUri="view/MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="IrishGrover">pack://application:,,,/Fonts/#Irish Grover</FontFamily>
     </Application.Resources>
 </Application>

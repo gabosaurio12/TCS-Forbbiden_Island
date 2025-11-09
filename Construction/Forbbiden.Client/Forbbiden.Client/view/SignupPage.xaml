@@ -24,7 +24,7 @@
                 Content="&lt;"
                 Width="100" Height="100"
                 FontSize="40"
-                FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                FontFamily="{StaticResource IrishGrover}"
                 BorderThickness="5" BorderBrush="#FFB7B7B7"
                 Background="White"
                 Foreground="Black"
@@ -37,7 +37,7 @@
                 <TextBlock Text="{x:Static language:Resources.signup_title}"
                    FontSize="60"
                    Foreground="White"
-                   FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                   FontFamily="{StaticResource IrishGrover}"
                    FontWeight="Bold"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
@@ -57,9 +57,9 @@
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
                     <TextBlock x:Name="txtBkUsername" Text="{x:Static language:Resources.username}"
                                HorizontalAlignment="Left" Foreground="White"
-                               FontSize="40" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
+                               FontSize="40" FontFamily="{StaticResource IrishGrover}" />
                     <TextBox x:Name="txtBxUsername" Height="35" Width="400"
-                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                             FontFamily="{StaticResource IrishGrover}"
                              Margin="0,5" FontSize="24" />
                 </StackPanel>
 
@@ -67,18 +67,18 @@
                 <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0">
                     <TextBlock x:Name="txtBkEmail" Text="{x:Static language:Resources.email}"
                                HorizontalAlignment="Left" Foreground="White"
-                               FontSize="40" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
+                               FontSize="40" FontFamily="{StaticResource IrishGrover}" />
                     <TextBox x:Name="txtBxEmail" Height="35" Width="400" Margin="0,5" FontSize="24"
-                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
+                             FontFamily="{StaticResource IrishGrover}"/>
                 </StackPanel>
 
                 <!-- Password -->
                 <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,5,0,0">
                     <TextBlock x:Name="txtBkPassword" Text="{x:Static language:Resources.password}"
                                HorizontalAlignment="Left" Foreground="White"
-                               FontSize="40" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
+                               FontSize="40" FontFamily="{StaticResource IrishGrover}" />
                     <TextBox x:Name="txtBxPassword" Height="35" Width="400" Margin="0,5"
-                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                             FontFamily="{StaticResource IrishGrover}"
                              FontSize="24" />
                 </StackPanel>
 
@@ -88,11 +88,11 @@
                     <Button x:Name="signupButton" Content="{x:Static language:Resources.signup_button}" 
                         Height="50" Width="175" Background="#39B349" 
                         Foreground="White" FontSize="25"
-                        FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                        FontFamily="{StaticResource IrishGrover}"
                         Click="SignupButton_Click" Margin="0,0,0,0"/>
                     <Label Content="{x:Static language:Resources.login_title}" Margin="0,5,0,0" 
                         HorizontalAlignment="Center" VerticalAlignment="Center" 
-                        MouseDown="Login_MouseDown" Cursor="Hand" FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                        MouseDown="Login_MouseDown" Cursor="Hand" FontFamily="{StaticResource IrishGrover}"
                         Foreground="White" FontSize="25" />
                 </StackPanel>
 

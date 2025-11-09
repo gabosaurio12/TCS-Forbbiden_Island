@@ -24,7 +24,7 @@
                     Content="&lt;"
                     Width="100" Height="100"
                     FontSize="40"
-                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                    FontFamily="{StaticResource IrishGrover}"
                     BorderThickness="5" BorderBrush="#FFB7B7B7"
                     Background="White"
                     Foreground="Black"
@@ -37,7 +37,7 @@
                    FontSize="60"
                    FontWeight="Bold"
                    Foreground="White"
-                   FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                   FontFamily="{StaticResource IrishGrover}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"/>
             </DockPanel>
@@ -53,28 +53,28 @@
                 <!-- User/email -->
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0" HorizontalAlignment="Center">
                     <TextBlock x:Name="txtBkUser" Text="{x:Static language:Resources.username}" HorizontalAlignment="Left"
-                               FontSize="40" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
+                               FontSize="40" Foreground="White" FontFamily="{StaticResource IrishGrover}" />
                     <TextBox x:Name="txtBxUsername" Height="35" Width="400" Margin="0,5"
                              FontSize="24"
-                             FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
+                             FontFamily="{StaticResource IrishGrover}"/>
                 </StackPanel>
 
                 <!-- Password -->
                 <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5,0,0" HorizontalAlignment="Center">
                     <TextBlock x:Name="txtBkPassword" Text="{x:Static language:Resources.password}" HorizontalAlignment="Left"
-                               FontSize="40" Foreground="White" FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
+                               FontSize="40" Foreground="White" FontFamily="{StaticResource IrishGrover}" />
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                         <PasswordBox x:Name="pwdBxPassword" Height="35" Width="320" Margin="5" 
                                      FontSize="24"
-                                     FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
+                                     FontFamily="{StaticResource IrishGrover}"/>
                         <TextBox x:Name="txtBxPasswordVisible" Height="35" Width="320" Visibility="Collapsed"  Margin="5" 
                                  FontSize="24"
-                                 FontFamily="pack://application:,,,/Fonts/#Irish Grover"/>
+                                 FontFamily="{StaticResource IrishGrover}"/>
                         <CheckBox x:Name="chkPassword" Content="{x:Static language:Resources.show_password}" 
                                   VerticalAlignment="Center" 
                                   Click="TogglePassword_Click" 
                                   Foreground="White" FontSize="15"
-                                  FontFamily="pack://application:,,,/Fonts/#Irish Grover" >
+                                  FontFamily="{StaticResource IrishGrover}" >
                             <CheckBox.LayoutTransform>
                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                             </CheckBox.LayoutTransform>
@@ -90,7 +90,7 @@
                             Height="50" Width="175"
                             Background="#39B349" Foreground="White"
                             FontSize="25" 
-                            FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                            FontFamily="{StaticResource IrishGrover}"
                             Cursor="Hand"
                             Click="BtnLogin_Click" />
                     <Label Content="{x:Static language:Resources.signup_title}"
@@ -98,7 +98,7 @@
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            MouseDown="Signup_MouseDown" Cursor="Hand"
                            FontSize="25" Foreground="White"
-                           FontFamily="pack://application:,,,/Fonts/#Irish Grover" />
+                           FontFamily="{StaticResource IrishGrover}" />
                 </StackPanel>
             </Grid>
             <Image Source="/Images/codebackground.png" Grid.Row="1" Margin="1296,283,171,379" />

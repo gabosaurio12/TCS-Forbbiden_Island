@@ -20,6 +20,7 @@ namespace Forbbiden.Server.logic
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
         private const string ErrorCode = "[Error] ProfileManager.cs - ";
         private readonly string connectionString;
+        private readonly string defaultAvatarPath = "defaultAvatar.png";
 
         public ProfileManager()
         {
@@ -109,7 +110,7 @@ namespace Forbbiden.Server.logic
             bool success = true;
             using (var db = new Forbbiden_FEIEntities(connectionString))
             {
-                string avatar = Path.Combine("defaultAvatar.png");
+                string avatar = Path.Combine(defaultAvatarPath);
                 Player newPlayer = new Player
                 {
                     player_username = player.PlayerUsername,
@@ -193,7 +194,10 @@ namespace Forbbiden.Server.logic
 
                         List<Friendship> friendsList = GetFriendsByID(playerResult.player_id);
                         
-                        string avatar = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "defaultAvatar.png");
+                        string avatar = Path.Combine(
+                            AppDomain.CurrentDomain.BaseDirectory,
+                            "Images",
+                            defaultAvatarPath);
 
                         return new Contracts.Player
                         {
@@ -246,8 +250,6 @@ namespace Forbbiden.Server.logic
                     Console.WriteLine(ErrorCode + ex.Message);
                     log.Error(ex);
                 }
-
-                var profileManager = new ProfileManager();
                 var friendships = new List<Friendship>();
                 foreach (var friend in friends)
                 {
@@ -282,7 +284,10 @@ namespace Forbbiden.Server.logic
                     {
                         List<Friendship> friendsList = GetFriendsByID(playerResult.player_id);
 
-                        string avatar = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "defaultAvatar.png");
+                        string avatar = Path.Combine(
+                            AppDomain.CurrentDomain.BaseDirectory,
+                            "Images",
+                            defaultAvatarPath);
 
                         player = new Contracts.Player
                         {
@@ -370,7 +375,10 @@ namespace Forbbiden.Server.logic
                     var playerResult = db.Player.Find(playerId);
                     if (playerResult != null)
                     {
-                        string avatar = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "defaultAvatar.png");
+                        string avatar = Path.Combine(
+                            AppDomain.CurrentDomain.BaseDirectory,
+                            "Images",
+                            defaultAvatarPath);
 
                         player = new Contracts.Player
                         {

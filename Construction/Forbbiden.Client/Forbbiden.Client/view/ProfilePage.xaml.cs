@@ -92,7 +92,7 @@ namespace Forbbiden.Client
             txtBkEmail.Foreground = Brushes.Black;
         }
 
-        private void ValidateUsername(string username, ref bool isValid)
+        private void ValidateUsername(string username, ref bool isValid) // preguntar si debe ser estático, porque si se hace estático habría que pasar 4 parámetros
         {
             var client = new ProfileManagerClient();
 
@@ -113,7 +113,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private void ValidateEmail(string email, ref bool isValid)
+        private void ValidateEmail(string email, ref bool isValid) // preguntar si debe ser estático, porque si se hace estático habría que pasar 4 parámetros
         {
             var client = new ProfileManagerClient();
 

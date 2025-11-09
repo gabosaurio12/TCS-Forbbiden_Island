@@ -3,6 +3,7 @@ using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
 using System;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,16 +35,22 @@ namespace Forbbiden.Client.view
             if (player.PlayerId != -1)
             {
                 currentLoginUsername = player.PlayerUsername;
-                foreach (var friendship in player.Friends)
+
+                var onlineFriends = player.Friends
+                    .Where(fs => fs.Friend.Status == 1)
+                    .Select(fs => fs.Friend).ToList();
+                var offlineFriends = player.Friends
+                    .Where(fs => fs.Friend.Status == 0)
+                    .Select(fs => fs.Friend).ToList();
+
+                foreach (var friendShip in onlineFriends)
                 {
-                    if (friendship.Friend.Status == 1)
-                    {
-                        AddOnlineFriend(friendship.Friend);
-                    }
-                    else
-                    {
-                        AddOfflineFriend(friendship.Friend);
-                    }
+                    AddOnlineFriend(friendShip);
+                }
+
+                foreach (var friendShip in offlineFriends)
+                {
+                    AddOfflineFriend(friendShip);
                 }
 
                 var friendsClient = new FriendsManagerClient();
@@ -90,7 +97,7 @@ namespace Forbbiden.Client.view
                 Margin = new Thickness(20,20,0,20)
             };
 
-            string irishGoverFont = "pack://application:,,,/Fonts/#Irish Grover";
+            string irishGoverFont = "{StaticResource IrishGrover}";
 
             TextBlock friendName = new TextBlock
             {
@@ -134,7 +141,7 @@ namespace Forbbiden.Client.view
                 Margin = new Thickness(20, 20, 0, 20)
             };
 
-            string irishGoverFont = "pack://application:,,,/Fonts/#Irish Grover";
+            string irishGoverFont = "{StaticResource IrishGrover}";
 
             TextBlock friendName = new TextBlock
             {

@@ -17,7 +17,7 @@
                        Text="12:35 AM"
                        FontSize="32"
                        Foreground="White"
-                       FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                       FontFamily="{StaticResource IrishGrover}"
                        FontWeight="Bold"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
@@ -31,7 +31,7 @@
                      Margin="40,0,0,70"
                      Text="Chat..."
                      FontSize="30"
-                     FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                     FontFamily="{StaticResource IrishGrover}"
                      Foreground="Black"
                      Background="#FFD9D9D9"
                      TextWrapping="Wrap"
@@ -50,7 +50,7 @@
                     BorderBrush="Black"
                     Background="#D9D9D9"
                     FontSize="30"
-                    FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                    FontFamily="{StaticResource IrishGrover}"
                     FontWeight="Bold"
                     Cursor="Hand"/>
 
@@ -72,7 +72,7 @@
                                Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser1" Text="Player1"
                                FontSize="24" Foreground="White"
-                               FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                               FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="Gray"/>
@@ -91,7 +91,7 @@
                                Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser2" Text="Player2"
                                FontSize="24" Foreground="White"
-                               FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                               FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="LightGray"/>
@@ -110,7 +110,7 @@
                                Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser3" Text="Player3"
                                FontSize="24" Foreground="White"
-                               FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                               FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="LightGray"/>
@@ -129,7 +129,7 @@
                                Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser4" Text="Player4"
                                FontSize="24" Foreground="White"
-                               FontFamily="pack://application:,,,/Fonts/#Irish Grover"
+                               FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="LightGray"/>
