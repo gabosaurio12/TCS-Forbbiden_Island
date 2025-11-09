@@ -2,12 +2,24 @@
 {
     "jugadores": [
         {
-            "username": "mazinger",
-            "password": "M@z1ng3r"
+            "username": "Sheldor",
+            "password": "Sh3ldon"
         },
         {
-            "username": "gabosaurio12",
-            "password": "M@G4bo_sama"
+            "username": "gabosaurio",
+            "password": "M@G4bo_saurio"
+        },
+        {
+            "username": "Tt",
+            "password": "T3poringa_"
+        },
+        {
+            "username": "li0",
+            "password": "Li0nardo_"
+        },
+        {
+            "username": "Gonort",
+            "password": "G0nortg_"
         }
     ]
 }
