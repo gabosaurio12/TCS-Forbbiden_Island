@@ -1,93 +1,40 @@
 
 == Agrupación de interfaces y funcionalidades
 
+=== IProfileManager
+
+* bool ValidateEmail(string email)
+* bool IsUsernameAvailable(string username)
+* bool SendEmail(string email)
+* bool SignUp(Player player)
+* bool Login(Player player)
+* Player GetPlayerByUsername(string username, bool includeFriends)
+* Player GetPlayerById(int playerId, bool includeFriends)
+* Player GetCurrentLogin()
+* bool ClearCurrentLogin()
+* bool UpdatePlayer(Player updatedPlayer)
+* bool DeletePlayerByUsername(string username)
+
 === IHostGameManager
 
-==== NewGame()
-
-* Dificultad
-* Cantidad de jugadores máxima
-* Pública o privada
-
-==== InviteFriend()
-|
-* Username del amigo
+* bool NewGame(string difficulty, int maxPlayers, string privacy)
+* bool InviteFriend(string friendUsername)
 
 === IGameManager
 
-==== JoinGame()
-* Regresa: Estado de la conexión
-
-==== SearchMatches()
-* Regresa: Partidas disponibles en la red
-
-==== ExitGame()
-
-=== IProfileManager
-
-==== Login()
-
-* Username
-* Contraseña
-
-==== Signup()
-
-* Username
-* Contraseña
-* Correo electrónico
-
-==== UpdateUsername()
-
-* Nueva TAG
-* Regresa: Si se actualizó con éxito
-
-==== UpdatePersonalInfo()
-
-* Nombre
-* Apellidos
-* Regresa: Si se actualizó con éxito
-
-==== UpdateSocialLinks()
-
-* Nueva red social
-* Regresa: Si se actualizó con éxito
-
-==== UpdateAvatar()
-
-* Nuevo ávatar
-* Regresa: Si se actualizó con éxito
+* bool JoinGame()
+* List<Matches> SearchMatches()
+* bool ExitGame()
 
 === IFriendsManager
 
-==== AddFriend()
-
-* Username del amigo
-
-==== DeleteFriend()
-
-* Username del amigo
-
-==== GetFriends()
-
-* Retorno: Lista de amigos
-
-==== AcceptFriendship()
-
-==== DeclineFrindship()
-
-==== SearchGame()
-
-* ID de la partida
+* bool SendFriendRequest(string senderUsername, string receverUsername)
+* bool AcceptFriendRequest(string senderUsername, string receverUsername)
+* bool CancelFriendRequest(string senderUsername, string receverUsername)
+* List<FriendRequest> GetFriendRequests(string receiverUsername)
+* List<Friendship> GetFriendsByID(int playerID)
 
 === IChatManager
 
-==== SendMessage()
-
-* Username del destinatario
-* Mensaje
-* Regresa: Si se entregó con éxito
-
-==== SendGroupMessage()
-
-* Mensaje
-* Regresa: Si se entregó con éxito
+* bool SendMessage(string destiny, string message)
+* bool SendGroupMessage(string message)

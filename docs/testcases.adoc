@@ -1,6 +1,8 @@
 
 == Casos de Prueba
 
+=== ProfileManager
+
 [cols="1,1,1,1,1,1,1,1,1"]
 
 |===
@@ -18,68 +20,230 @@
 |TestValidateEmailSuccess
 |Comprobar si el email ingresado tiene un formato *válido* y *no* está registrado en la base de datos
 |*Alta*
-|PRE01: Haber ingresado un email
+|*PRE01*: Haber ingresado un email
 |_randomEmail@email.net_
 |_True_
-|Regresa _true_
+|_true_
 |*Pasó*
 
 |PMT02
 |TestValidateEmailInvalidEmail
 |Comprobar que no se acepten emails sin un *@*
 |*Alta*
-|PRE01: Haber ingresado un email
+|*PRE01*: Haber ingresado un email
 |_randomEmail.com_
 |_False_
-|Regresa _false_
+|_false_
 |*Pasó*
 
 |PMT03
 |TestValidateEmailEmailEmptyEmail
 |Comprobar que no se acepte un email *vacío*
 |*Alta*
-|PRE01: Haber ingresado un email
+|*PRE01*: Haber ingresado un email
 |_""_
 |_False_
-|Regresa _false_
+|_false_
 |*Pasó*
 
 |PMT04
 |TestValidateEmailEmailTakenEmail
 |Comprobar que no se acepte un email que ya esté *registrado*
 |*Alta*
-|PRE01: Haber ingresado un email +
-PRE02: Tener el email _testuser@email.net_ registrado
+|*PRE01*: Haber ingresado un email +
+*PRE02*: Tener el email _testuser@email.net_ registrado
 |_testuser@email.net_
 |_False_
-|Regresa _false_
+|_false_
 |*Pasó*
 
 |PMT05
 |TestIsUsernameAvailableSuccess
 |Comprobar que el username no esté *registrado* en la base de datos
 |*Alta*
-|PRE01: Haber ingresado un username
+|*PRE01*: Haber ingresado un username
 |_testUser098_
 |_True_
-|Regresa _true_
+|_true_
 |*Pasó*
 
 |PMT06
 |TestIsUsernameAvailableTakenUsername
 |Comprobar que no se acepte un username *registrado* en la base de datos
 |*Alta*
-|PRE01: Haber ingresado un username
+|*PRE01*: Haber ingresado un username
 |_testUser_
 |_False_
-|Regresa _true_
+|_true_
 |*Pasó*
+
+|PMT07
+|TestSendEmailSuccess
+|Comprobar que se envíe un correo de confirmación a un email
+|*Media*
+|*PRE01*: Haber ingresado un email
+|_mazinger.gl@gmail.com_
+|_True_
+|__
+|**
+
+|PMT08
+|TestSendEmailNotExist
+|Comprobar que ocurre si se envía un correo de confirmación a un email que no existe
+|*Media*
+|*PRE01*: Haber ingresado un email
+|_testForbbiden@email.com_
+|_False_
+|__
+|**
+
+|PMT09
+|TestSignUpSuccess
+|Comprobar que se registre correctamente un jugador
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario, contraseña e email
+|_testPlayer_+ _T3st_player_ + _testplayer@email.com_
+|_True_
+|__
+|**
+
+|PMT10
+|TestLoginSuccess
+|Comprobar que se inicie correctamente sesión de un jugador registrado
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario y contraseña +
+*PRE02*: Guardar el CurrentLogin y limpiarlo (luego volver a actualizarlo)
+|_testUser_ + _T3st_pass_
+|_True_
+|__
+|**
+
+|PMT11
+|TestLoginNotRegisteredPlayer
+|Comprobar que no se inicie correctamente sesión a un jugador no registrado
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario y contraseña +
+*PRE02*: Guardar el CurrentLogin y limpiarlo (luego volver a actualizarlo)
+|_fakePlayer_ + _F4ke_pass_
+|_True_
+|__
+|**
+
+|PMT12
+|TestGetPlayerByUsernameShouldReturnPlayer
+|Comprobar que si se encuentra un jugador este regrese con todos sus datos
+|*Alta*
+|*PRE01*: Haber ingresado un nombre de usuario
+|_testUser_
+|_Contracts.Player_
+|__
+|**
+
+|PMT13
+|TestGetPlayerByUsernameShouldReturnEmptyPlayer
+|Comprobar que si se encuentra un jugador este regrese con todos sus datos
+|*Alta*
+|*PRE01*: Haber ingresado un nombre de usuario
+|_fakePlayer_
+|_Contracts.Player() { PlayerId = -1 }_
+|__
+|**
+
+|PMT14
+|TestGetPlayerByIdShouldReturnPlayer
+|Comprobar que si se encuentra un jugador este regrese con todos sus datos
+|*Alta*
+|*PRE01*: Haber ingresado un ID de jugador
+|_ID de testUser_
+|_Contracts.Player_
+|__
+|**
+
+|PMT15
+|TestGetPlayerByIdShouldReturnEmptyPlayer
+|Comprobar que si se encuentra un jugador este regrese con todos sus datos
+|*Alta*
+|*PRE01*: Haber ingresado un ID de jugador
+|_ID de testUser_
+|_Contracts.Player() { PlayerId = -1 }_
+|__
+|**
+
+|PMT16
+|TestGetCurrentLoginShouldReturnPlayer
+|Comprobar que sí se regrese un jugador si ha iniciado sesión
+|*Alta*
+|
+|_testUser_
+|_Contracts.Player_
+|__
+|**
+
+|PMT17
+|TestGetCurrentLoginShouldReturnEmptyPlayer
+|Comprobar que no se regrese un jugador si no ha iniciado sesión
+|*Alta*
+|
+|_ID de testUser_
+|_Contracts.Player() { PlayerId = -1 }_
+|__
+|**
+
+|PMT18
+|TestClearCurrentLoginShouldReturnTrue
+|Comprobar que se limpie el CurrentLogin
+|*Alta*
+|*PRE-01*: Iniciar sesión con el jugador de prueba
+|Iniciar sesión con _testUser_
+|_True_
+|__
+|**
+
+|PMT19
+|TestUpdatePlayerShouldReturnTrue
+|Comprobar que se actualice un jugador
+|*Alta*
+|*PRE-01*: Cambiar los datos de un jugador
+|PlayerName = _"This is a Name"_
+|_True_
+|__
+|**
+
+|PMT20
+|TestDeletePlayerByUsernameShouldReturnTrue
+|Comprobar que se elimina un jugador
+|*Alta*
+|*PRE-01*: Cambiar los datos de un jugador
+|Contracts.Player { +
+_PlayerUsername = "DropPlayer",_ +
+_PlayerEmail = "dropplayer@email.com",_ +
+_PlayerPassword = "Dr0p_player"_ } +
+username = _DropPlayer_
+|_True_
+|__
+|**
+
+|PMT20
+|TestDeletePlayerByUsernameShouldReturnFalse
+|Comprobar que no se intenta eliminar un jugador con un nombre de usuario que no está registrado
+|*Alta*
+|*PRE-01*: Cambiar los datos de un jugador
+|_DropPlayer_
+|_False_
+|__
+|**
+
+|===
+
+[cols="1,1,1,1,1,1,1,1,1"]
+
+|===
 
 |FMT01
 |TestSendFriendRequestSuccess
 |Comprobar que se envíe la solicitud de amistad al usuario correcto
 |*Media*
-|PRE01: Haber ingresado un username
+|*PRE01*: Haber ingresado un username
 |_testFriend_
 |_True_
 |
@@ -89,7 +253,7 @@ PRE02: Tener el email _testuser@email.net_ registrado
 |TestSendFriendRequestInvalidUsernameFail
 |Comprobar que no se envíe una solicitu de amistad a un usuario que no existe
 |*Media*
-|PRE01: Haber ingresado un username
+|*PRE01*: Haber ingresado un username
 |_FriendTest_
 |_False_
 |

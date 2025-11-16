@@ -36,6 +36,14 @@ Se planea abarcar los siguientes puntos en la próxima iteración.
 
 |===
 
+=== URGENTE
+
+* 30-40 % de jugabilidad
+** GUI
+** Internacionalización
+
+*NOTA:* Para la jugabilidad tenemos 2 semanas, después de esas 2 semanas se enfocan a conectarse
+
 === GUI
 
 * En BoardPage:
