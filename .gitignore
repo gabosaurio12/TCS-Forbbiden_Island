@@ -146,3 +146,5 @@ build/
 
 # My files
 Database/Queries
+edmxbackup/
+jugadores.json

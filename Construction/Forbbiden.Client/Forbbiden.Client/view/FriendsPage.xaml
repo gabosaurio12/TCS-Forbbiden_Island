@@ -1,0 +1,203 @@
+﻿<Page x:Class="Forbbiden.Client.view.FriendsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Forbbiden.Client.view"
+      xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="FriendsPage"
+      Loaded="Page_Loaded">
+
+    <Page.Background>
+        <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
+    </Page.Background>
+
+    <Page.Resources>
+        <Storyboard x:Key="ShowSearchBar">
+            <DoubleAnimation Storyboard.TargetName="searchtxtBx"
+                             Storyboard.TargetProperty="Width"
+                             From="0" To="450"
+                             Duration="0:0:0.5"
+                             AccelerationRatio="0.3" DecelerationRatio="0.3" />
+        </Storyboard>
+        <Storyboard x:Key="HideSearchBar">
+            <DoubleAnimation Storyboard.TargetName="searchtxtBx"
+                             Storyboard.TargetProperty="Width"
+                             From="450" To="0"
+                             Duration="0:0:0.5"
+                             AccelerationRatio="0.3" DecelerationRatio="0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="ShowAddButton">
+            <DoubleAnimation Storyboard.TargetName="addButton"
+                     Storyboard.TargetProperty="Height"
+                     From="0" To="50"
+                     Duration="0:0:0.5"
+                     AccelerationRatio="0.3" DecelerationRatio="0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="HideAddButton">
+            <DoubleAnimation Storyboard.TargetName="addButton"
+                     Storyboard.TargetProperty="Height"
+                     From="50" To="0"
+                     Duration="0:0:0.5"
+                     AccelerationRatio="0.3" DecelerationRatio="0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="ShowNotification">
+            <DoubleAnimation Storyboard.TargetName="notificationGrid"
+             Storyboard.TargetProperty="Width"
+             From="0" To="85"
+             Duration="0:0:0.5"
+             AccelerationRatio="0.3" DecelerationRatio="0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="HideNotification">
+            <DoubleAnimation Storyboard.TargetName="notificationGrid"
+             Storyboard.TargetProperty="Width"
+             From="85" To="0"
+             Duration="0:0:0"
+             AccelerationRatio="0" DecelerationRatio="0" />
+        </Storyboard>
+
+    </Page.Resources>
+
+    <Viewbox Stretch="Uniform">
+
+        <Grid Width="1920" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            
+            
+            <!-- Upper bar -->
+
+            <Grid x:Name="upperGrid" Background="#EFC437" Height="152">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="backButton" Grid.Column="0"
+                    Content="&lt;"
+                    Width="100" Height="100"
+                    HorizontalAlignment="Left"
+                    FontSize="40"
+                    FontFamily="{StaticResource IrishGrover}"
+                    BorderThickness="5" BorderBrush="#FFB7B7B7"
+                    Background="White"
+                    Foreground="Black"
+                    Margin="20,0,0,0"
+                    Cursor="Hand"
+                    Click="BackButton_Click"/>
+
+                <TextBlock Text="{x:Static language:Resources.friends}" Grid.Column="1"
+                    FontSize="60"
+                    FontWeight="Bold"
+                    Foreground="Black"
+                    FontFamily="{StaticResource IrishGrover}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"/>
+
+                <DockPanel Grid.Column="2">
+                    <Image x:Name="glass"
+                           Source="/Images/glass.png"
+                           DockPanel.Dock="Right"
+                           Height="100" Width="100" Margin="20,0"
+                           MaxHeight="120" MaxWidth="120"
+                           MinHeight="100" MinWidth="100"
+                           Cursor="Hand"
+                           MouseLeftButtonDown="SearchFriend_MouseLeftButtonDown"
+                           MouseEnter="Glass_MouseEnter"
+                           MouseLeave="Glass_MouseLeave"
+                           MouseDown="Glass_MouseDown"
+                           MouseUp="Glass_MouseUp"
+                           />
+
+                    <Button x:Name="addButton" Height="0" Width="50"
+                            Content="+"
+                            Foreground="White" FontSize="40"
+                            FontFamily="{StaticResource IrishGrover}"
+                            Background="Green"
+                            DockPanel.Dock="Right"
+                            Cursor="Hand"
+                            Click="AddButton_Click"/>
+
+                    <TextBox x:Name="searchtxtBx" Height="60" Width="0"
+                             MaxLength="30"
+                             FontFamily="{StaticResource IrishGrover}"
+                             FontSize="44"
+                             DockPanel.Dock="Left"
+                             VerticalAlignment="Center"
+                             Visibility="Visible"/>
+                    
+                    
+                </DockPanel>
+
+
+            </Grid>
+
+            <Grid Grid.Row="1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Notification -->
+                <Grid x:Name="notificationGrid" Height="85" Width="0"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"
+                      Margin="0,10,0,0"
+                      Cursor="Hand"
+                      Panel.ZIndex="99"
+                      MouseLeftButtonDown="NotificationGrid_MouseLeftButtonDown">
+                    <Image Source="/Images/codebackground.png"
+                            Height="85" Width="85"
+                            Stretch="Fill"/>
+                    <Ellipse x:Name="led" Width="50" Height="50"
+                            Fill="#E8FFE3" 
+                            Stroke="#11FF00" StrokeThickness="10">
+                        <Ellipse.Effect>
+                            <BlurEffect Radius="15" />
+                        </Ellipse.Effect>
+                    </Ellipse>
+                </Grid>
+
+                <!-- Online Friends -->
+
+                <ScrollViewer Grid.Column="0"
+                              VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel x:Name="onlineStack"  >
+                        <TextBlock Text="{x:Static language:Resources.online_friends}"
+                                   FontSize="64"
+                                   Foreground="White"
+                                   FontFamily="{StaticResource IrishGrover}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,25"/>
+                    </StackPanel>
+                </ScrollViewer>
+                
+                
+                <!-- Offline Friends -->
+                <ScrollViewer Grid.Column="1"
+                              VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel x:Name="offlineStack" >
+                        <TextBlock Text="{x:Static language:Resources.offline}"
+                                   FontSize="64"
+                                   Foreground="White"
+                                   FontFamily="{StaticResource IrishGrover}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,25"/>
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Page>
