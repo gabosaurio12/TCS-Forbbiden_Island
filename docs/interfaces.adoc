@@ -34,47 +34,18 @@
 * List<FriendRequest> GetFriendRequests(string receiverUsername)
 * List<Friendship> GetFriendsByID(int playerID)
 
-==== GetFriendRequests()
-
-* Username del que jugador
-
 === IChatManager
 
 * bool SendMessage(string destiny, string message)
 * bool SendGroupMessage(string message)
-==== SendMessage()
-
-* Username del destinatario
-* Mensaje
-* Regresa: Si se entregó con éxito
-
-==== SendGroupMessage()
-
-* Mensaje
-* Regresa: Si se entregó con éxito
 
 === IBoardManager
 
-==== GetMatchPlayers()
-
-==== MovePlayer()
-
-* Player to move
-* Position to move
-* Regresa si se movió con éxito
-** Desde el cliente se hace el callback
-
-==== ChallengePlayer()
-
-* Challenger Player
-* Challenged Player
-* Return the minigame to play
-
-==== ShoreTile()
-
-* Tile to shore
-
-==== Capture()
-
-* Player capturing
-* Treasure captured
+* List<Player> GetMatchPlayers()
+* bool MovePlayer(Player playerToMove, string positionToMove)
+* bool ChallengePlayer(Player challenger, Player challenged)
+* bool ShoreTile(string tile)
+* List<string> SinkTiles()
+** Moja aleatoriamente 4 casillas en cada orilla
+** Si están secas las moja si están mojadas las hunde
+* bool CaptureTreasure(Player capturer, Treasure captured)
