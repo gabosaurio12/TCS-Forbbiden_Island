@@ -19,16 +19,16 @@ namespace Forbbiden.Client.view.games
         public BoardPage()
         {
             InitializeComponent();
-            SetPlayersAvatars();
+            KeyDown += BoardPage_KeyDown;
+            Focusable = true;
+            Focus();
+            var currentPlayer = new ProfileManagerClient().GetCurrentLogin();
+            SetPlayersAvatars(currentPlayer);
         }
 
-        private void AddPlayerAvatar(Player player)
-        {
-            string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).
-                    Parent.Parent.FullName;
-            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
 
+        private Ellipse GetPlayerAvatarEllipse(string avatarPath)
+        {
             var bmp = new BitmapImage();
             bmp.BeginInit();
             bmp.CacheOption = BitmapCacheOption.OnLoad;
@@ -48,13 +48,33 @@ namespace Forbbiden.Client.view.games
                     Stretch = Stretch.UniformToFill
                 }
             };
-            cornerPlayers.Children.Add(ellipse);
+
+            return ellipse;
         }
 
-        private void SetPlayersAvatars()
+        private void AddPlayerAvatar(Player player)
         {
-            var currentPlayer = new ProfileManagerClient().GetCurrentLogin();
-            AddPlayerAvatar(currentPlayer);
+            string projectDir = Directory.GetParent(
+                    AppDomain.CurrentDomain.BaseDirectory).
+                    Parent.Parent.FullName;
+            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+            Ellipse avatar = GetPlayerAvatarEllipse(avatarPath);
+
+            Ellipse boardAvatar = GetPlayerAvatarEllipse(avatarPath);
+            c2r0.Children.Add(boardAvatar);
+        }
+
+        private void SetPlayersAvatars(Player player)
+        {
+            AddPlayerAvatar(player);
+        }
+
+        private void BoardPage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                NavigationService?.Navigate(new MainPage());
+            }
         }
 
         private void ColorStroke_MouseEnter(object sender, MouseEventArgs e)

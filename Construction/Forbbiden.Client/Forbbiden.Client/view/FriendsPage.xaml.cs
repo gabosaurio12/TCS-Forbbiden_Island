@@ -183,7 +183,8 @@ namespace Forbbiden.Client.view
         private async Task SendFriendRequest(string receiverUsername)
         {
             var profileClient = new ProfileManagerClient();
-            var receiver = await profileClient.GetPlayerByUsernameAsync(receiverUsername);
+
+            var receiver = await profileClient.GetPlayerByUsernameAsync(receiverUsername, true);
             if (receiver.PlayerId != -1)
             {
                 var friendsClient = new FriendsManagerClient();

@@ -169,6 +169,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flood Stack.
+        /// </summary>
+        public static string flood_stack {
+            get {
+                return ResourceManager.GetString("flood_stack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friend Request Accepted.
         /// </summary>
         public static string friend_request_accepted {
@@ -412,6 +421,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick a card.
+        /// </summary>
+        public static string pick_card {
+            get {
+                return ResourceManager.GetString("pick_card", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
         public static string play {
@@ -651,6 +669,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string successful_signup_message {
             get {
                 return ResourceManager.GetString("successful_signup_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Treasure Stack.
+        /// </summary>
+        public static string treasure_stack {
+            get {
+                return ResourceManager.GetString("treasure_stack", resourceCulture);
             }
         }
         

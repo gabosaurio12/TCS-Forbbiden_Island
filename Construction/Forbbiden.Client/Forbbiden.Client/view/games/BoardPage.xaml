@@ -44,9 +44,12 @@
                         <RowDefinition Height="400" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel x:Name="cornerPlayers" Orientation="Vertical"
+                    <StackPanel x:Name="stacks" Orientation="Vertical"
                                 HorizontalAlignment="Left" Grid.Row="0" Margin="20,20,0,0">
-                        <TextBlock Text="{x:Static language:Resources.players}"
+                        <TextBlock Text="{x:Static language:Resources.treasure_stack}"
+                                   FontSize="32" FontFamily="{StaticResource IrishGrover}"
+                                   Foreground="White" />
+                        <TextBlock Text="{x:Static language:Resources.flood_stack}"
                                    FontSize="32" FontFamily="{StaticResource IrishGrover}"
                                    Foreground="White" />
                     </StackPanel>
@@ -101,7 +104,8 @@
                         <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                         <TextBlock Text="{x:Static language:Resources.move_button}" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   FontSize="48" Foreground="White"
+                                   FontFamily="{StaticResource IrishGrover}"
+                                   FontSize="44" Foreground="White"
                                    Cursor="Hand"/>
                     </Grid>
 
@@ -111,7 +115,8 @@
                         <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                         <TextBlock Text="{x:Static language:Resources.shore_up_button}" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   FontSize="48" Foreground="White"
+                                   FontFamily="{StaticResource IrishGrover}"
+                                   FontSize="44" Foreground="White"
                                    Cursor="Hand"/>
                     </Grid>
 
@@ -121,7 +126,8 @@
                         <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                         <TextBlock Text="{x:Static language:Resources.capture_button}" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   FontSize="48" Foreground="White"
+                                   FontFamily="{StaticResource IrishGrover}"
+                                   FontSize="44" Foreground="White"
                                    Cursor="Hand"/>
                     </Grid>
                 </StackPanel>
@@ -146,144 +152,199 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- First row -->
-                <Rectangle Grid.Column="1" Grid.Row="0"
+                <Grid x:Name="c1r0" Grid.Column="1" Grid.Row="0">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="2" Grid.Row="0"
-                           Height="150" Width="150" Margin="10"
+                </Grid>
+
+                <Grid x:Name="c2r0" Grid.Column="2" Grid.Row="0">
+                    <Rectangle Height="150" Width="150" Margin="10"
+                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
+                           MouseEnter="ColorStroke_MouseEnter"
+                           Cursor="Hand"
+                           MouseLeave="ColorStroke_MouseLeave" />
+                </Grid>
+
+                <Grid x:Name="c3r0" Grid.Column="3" Grid.Row="0">
+                    <Rectangle Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="3" Grid.Row="0"
-                           Height="150" Width="150" Margin="10"
-                           Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
-                           MouseEnter="ColorStroke_MouseEnter"
-                           Cursor="Hand"
-                           MouseLeave="ColorStroke_MouseLeave"/>
+                </Grid>
 
                 <!-- Second row -->
-                <Rectangle Grid.Column="0" Grid.Row="1"
+                <Grid x:Name="c0r1" Grid.Column="0" Grid.Row="1">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                
-                <Rectangle Grid.Column="1" Grid.Row="1"
+                </Grid>
+
+                <Grid x:Name="c1r1" Grid.Column="1" Grid.Row="1">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="2" Grid.Row="1"
+                </Grid>
+
+                <Grid x:Name="c2r1" Grid.Column="2" Grid.Row="1">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="3" Grid.Row="1"
+                </Grid>
+
+                <Grid x:Name="c3r1" Grid.Column="3" Grid.Row="1">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="4" Grid.Row="1"
+                </Grid>
+
+                <Grid x:Name="c4r1" Grid.Column="4" Grid.Row="1">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
+                </Grid>
 
                 <!-- Third row -->
-                <Rectangle Grid.Column="0" Grid.Row="2"
+                <Grid x:Name="c0r2" Grid.Column="0" Grid.Row="2" >
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="1" Grid.Row="2"
+                </Grid>
+
+                <Grid x:Name="c1r2" Grid.Column="1" Grid.Row="2" >
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="2" Grid.Row="2"
+                </Grid>
+
+                <Grid x:Name="c2r2" Grid.Column="2" Grid.Row="2">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="3" Grid.Row="2"
+                </Grid>
+
+                <Grid x:Name="c3r2" Grid.Column="3" Grid.Row="2">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="4" Grid.Row="2"
+                </Grid>
+
+                <Grid x:Name="c4r2" Grid.Column="4" Grid.Row="2">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
+                </Grid>
 
                 <!-- Fourth row -->
-                <Rectangle Grid.Column="0" Grid.Row="3"
+                <Grid x:Name="c0r3" Grid.Column="0" Grid.Row="3">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="1" Grid.Row="3"
+                </Grid>
+
+                <Grid x:Name="c1r3" Grid.Column="1" Grid.Row="3">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="2" Grid.Row="3"
+                </Grid>
+
+                <Grid x:Name="c2r3" Grid.Column="2" Grid.Row="3">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="3" Grid.Row="3"
+                </Grid>
+
+                <Grid x:Name="c3r3" Grid.Column="3" Grid.Row="3">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="4" Grid.Row="3"
+                </Grid>
+
+                <Grid x:Name="c4r3" Grid.Column="4" Grid.Row="3">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
+                </Grid>
 
                 <!-- Fifth row -->
-                <Rectangle Grid.Column="1" Grid.Row="4"
+                <Grid x:Name="c1r4" Grid.Column="1" Grid.Row="4">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="2" Grid.Row="4"
+                </Grid>
+
+                <Grid x:Name="c2r4" Grid.Column="2" Grid.Row="4">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
-                <Rectangle Grid.Column="3" Grid.Row="4"
+                </Grid>
+
+                <Grid x:Name="c3r4" Grid.Column="3" Grid.Row="4">
+                    <Rectangle
                            Height="150" Width="150" Margin="10"
                            Fill="White" Stroke="DarkBlue" StrokeThickness="7" 
                            MouseEnter="ColorStroke_MouseEnter"
                            Cursor="Hand"
                            MouseLeave="ColorStroke_MouseLeave"/>
+                </Grid>
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+            <StackPanel x:Name="cardStack" Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
                         HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0">
                 <Rectangle
                     Height="170" Width="140" Margin="0,0,0,0"
@@ -320,6 +381,24 @@
                     MouseLeave="Card_MouseLeave"
                     Cursor="Hand"/>
             </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2"
+                        HorizontalAlignment="Center">
+
+                <Rectangle
+                    Height="150" Width="120" Margin="0,0,0,0"
+                    Fill="#D9C790" Stroke="#734714" StrokeThickness="15"
+                    MouseEnter="Card_MouseEnter"
+                    MouseLeave="Card_MouseLeave"
+                    Cursor="Hand"/>
+
+                <TextBlock Text="{x:Static language:Resources.pick_card}"
+                           VerticalAlignment="Center" Margin="0,0,10,0"
+                           FontSize="24" Foreground="White"
+                           FontFamily="{StaticResource IrishGrover}"/>
+            </StackPanel>
+
+
         </Grid>
     </Viewbox>        
 </Page>

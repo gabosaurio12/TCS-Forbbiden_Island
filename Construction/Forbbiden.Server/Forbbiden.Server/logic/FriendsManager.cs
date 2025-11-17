@@ -49,8 +49,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
@@ -96,8 +95,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                Console.WriteLine(ErrorCode + ex);
-                log.Error(ex);
+                HandleEntityException(ex);
             }
 
             return success;
@@ -125,17 +123,16 @@ namespace Forbbiden.Server.logic
                         }
                     }
                 }
-                catch(EntityException ex)
+                catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
             return success;
         }
 
-        public List<FriendRequest> getFriendRequests(string receiverUsername)
+        public List<FriendRequest> GetFriendRequests(string receiverUsername)
         {
             using (var db = new Forbbiden_FEIEntities(connectionString))
             {
@@ -166,8 +163,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
             return new List<FriendRequest>();
@@ -187,8 +183,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
 
                 var profileManager = new ProfileManager();
@@ -207,6 +202,20 @@ namespace Forbbiden.Server.logic
 
                 return friendships;
             }
+        }
+
+        private void HandleEntityException(EntityException ex)
+        {
+            log.Error(ex);
+
+            var fault = new DBFault
+            {
+                Error = "Database Error",
+                Details = ex.Message
+            };
+
+            throw new FaultException<DBFault>(fault,
+                new FaultReason("EntityException"));
         }
     }
 }
