@@ -3,22 +3,25 @@
 
 === Casos de uso
 * Entrar a partida (GUI)
-* Tomar una carta
-* Moverse
-* Pruebas
+* Pruebas (Ver casos de prueba)
 * NotificationWindow
 
 === Porcentajes de contribución
 - Leonardo 50%
 - Gabriel 50%
 
-=== Entrar a partida (GUI)
+=== Partida (GUI)
 
 Responsable: Gabriel
 
-Se construyó la parte visual de cuando un jugador entra a una partida, que aparezca su avatar, acciones y movimientos disponibles.
+Se construyó la parte visual de cuando un jugador entra a una partida, que aparezca su avatar y acciones disponibles.
+
+image:images/screenshots/avance-16-11/board.png[]
+
 
 === NotificationWindow
 
 Una ventana emergente que informa al usuario algún evento.
+
+image:images/screenshots/avance-16-11/notification.png[]
 
