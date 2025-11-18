@@ -23,7 +23,9 @@
   <xs:element name="ArrayOfMatch" nillable="true" type="tns:ArrayOfMatch" />
   <xs:complexType name="Match">
     <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedAt" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Difficulty" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HostUsername" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MatchId" type="xs:int" />
       <xs:element minOccurs="0" name="Players" nillable="true" type="tns:ArrayOfPlayerInfo" />
       <xs:element minOccurs="0" name="Visibility" nillable="true" type="xs:string" />
@@ -39,7 +41,9 @@
   <xs:complexType name="PlayerInfo">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsHost" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlayerId" type="xs:int" />
+      <xs:element minOccurs="0" name="PlayerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlayerUsername" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PlayerInfo" nillable="true" type="tns:PlayerInfo" />

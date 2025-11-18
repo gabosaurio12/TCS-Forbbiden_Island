@@ -68,7 +68,7 @@
   <ItemGroup>
     <Compile Include="ICallbacks.cs" />
     <Compile Include="IFriendsManager.cs" />
-    <Compile Include="IBoardManager.cs" />
+    <Compile Include="IGameService.cs" />
     <Compile Include="IMatchManager.cs" />
     <Compile Include="IProfileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

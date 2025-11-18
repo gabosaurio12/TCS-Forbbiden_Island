@@ -78,6 +78,7 @@
     <Compile Include="Friends.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="logic\GameService.cs" />
     <Compile Include="logic\FriendsManager.cs" />
     <Compile Include="logic\MatchManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />

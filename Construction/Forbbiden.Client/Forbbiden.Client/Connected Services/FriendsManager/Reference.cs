@@ -455,11 +455,11 @@ namespace Forbbiden.Client.FriendsManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/getFriendRequestsResponse")]
-        Forbbiden.Client.FriendsManager.FriendRequest[] getFriendRequests(string receiverUsername);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
+        Forbbiden.Client.FriendsManager.FriendRequest[] GetFriendRequests(string receiverUsername);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/getFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/getFriendRequestsResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.FriendRequest[]> getFriendRequestsAsync(string receiverUsername);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]
         Forbbiden.Client.FriendsManager.Friendship[] GetFriendsByID(int playerID);
@@ -519,12 +519,12 @@ namespace Forbbiden.Client.FriendsManager {
             return base.Channel.CancelFriendRequestAsync(senderUsername, receiverUsername);
         }
         
-        public Forbbiden.Client.FriendsManager.FriendRequest[] getFriendRequests(string receiverUsername) {
-            return base.Channel.getFriendRequests(receiverUsername);
+        public Forbbiden.Client.FriendsManager.FriendRequest[] GetFriendRequests(string receiverUsername) {
+            return base.Channel.GetFriendRequests(receiverUsername);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.FriendRequest[]> getFriendRequestsAsync(string receiverUsername) {
-            return base.Channel.getFriendRequestsAsync(receiverUsername);
+        public System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername) {
+            return base.Channel.GetFriendRequestsAsync(receiverUsername);
         }
         
         public Forbbiden.Client.FriendsManager.Friendship[] GetFriendsByID(int playerID) {

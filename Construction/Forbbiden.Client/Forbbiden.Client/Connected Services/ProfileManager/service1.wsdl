@@ -118,11 +118,8 @@
   <wsdl:message name="IProfileManager_ClearCurrentLogin_OutputMessage">
     <wsdl:part name="parameters" element="tns:ClearCurrentLoginResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_GetPlayerById_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetPlayerById" />
-  </wsdl:message>
-  <wsdl:message name="IProfileManager_GetPlayerById_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetPlayerByIdResponse" />
+  <wsdl:message name="IProfileManager_ClearCurrentLogin_DBFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:DBFault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_UpdatePlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePlayer" />
@@ -172,6 +169,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByUsername" message="tns:IProfileManager_GetPlayerByUsername_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse" message="tns:IProfileManager_GetPlayerByUsername_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_GetPlayerByUsername_DBFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerById" message="tns:IProfileManager_GetPlayerById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByIdResponse" message="tns:IProfileManager_GetPlayerById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByIdDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_GetPlayerById_DBFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCurrentLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/GetCurrentLogin" message="tns:IProfileManager_GetCurrentLogin_InputMessage" />

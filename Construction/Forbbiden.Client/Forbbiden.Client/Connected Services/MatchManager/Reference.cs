@@ -156,7 +156,13 @@ namespace Forbbiden.Client.MatchManager {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreatedAtField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DifficultyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HostUsernameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int MatchIdField;
@@ -178,6 +184,19 @@ namespace Forbbiden.Client.MatchManager {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedAt {
+            get {
+                return this.CreatedAtField;
+            }
+            set {
+                if ((this.CreatedAtField.Equals(value) != true)) {
+                    this.CreatedAtField = value;
+                    this.RaisePropertyChanged("CreatedAt");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Difficulty {
             get {
                 return this.DifficultyField;
@@ -186,6 +205,19 @@ namespace Forbbiden.Client.MatchManager {
                 if ((object.ReferenceEquals(this.DifficultyField, value) != true)) {
                     this.DifficultyField = value;
                     this.RaisePropertyChanged("Difficulty");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HostUsername {
+            get {
+                return this.HostUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HostUsernameField, value) != true)) {
+                    this.HostUsernameField = value;
+                    this.RaisePropertyChanged("HostUsername");
                 }
             }
         }
@@ -252,7 +284,13 @@ namespace Forbbiden.Client.MatchManager {
         private bool IsHostField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UsernameField;
+        private int PlayerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerUsernameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -278,14 +316,40 @@ namespace Forbbiden.Client.MatchManager {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Username {
+        public int PlayerId {
             get {
-                return this.UsernameField;
+                return this.PlayerIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
-                    this.UsernameField = value;
-                    this.RaisePropertyChanged("Username");
+                if ((this.PlayerIdField.Equals(value) != true)) {
+                    this.PlayerIdField = value;
+                    this.RaisePropertyChanged("PlayerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerName {
+            get {
+                return this.PlayerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerNameField, value) != true)) {
+                    this.PlayerNameField = value;
+                    this.RaisePropertyChanged("PlayerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerUsername {
+            get {
+                return this.PlayerUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerUsernameField, value) != true)) {
+                    this.PlayerUsernameField = value;
+                    this.RaisePropertyChanged("PlayerUsername");
                 }
             }
         }
