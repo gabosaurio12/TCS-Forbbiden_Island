@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBoardManager.cs" />
     <Compile Include="ICallbacks.cs" />
     <Compile Include="IFriendsManager.cs" />
     <Compile Include="IGameService.cs" />
