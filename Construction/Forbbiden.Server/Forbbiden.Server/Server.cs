@@ -27,21 +27,25 @@ namespace Forbbiden.Server
             ServiceHost profileHost = null;
             ServiceHost friendsHost = null;
             ServiceHost matchHost = null;
+            ServiceHost boardHost = null;
 
             try
             {
                 profileHost = new ServiceHost(typeof(ProfileManager));
                 friendsHost = new ServiceHost(typeof(FriendsManager));
                 matchHost = new ServiceHost(typeof(MatchManager));
+                boardHost = new ServiceHost(typeof(BoardManager));
 
                 profileHost.Open();
                 friendsHost.Open();
                 matchHost.Open();
+                boardHost.Open();
 
                 Console.WriteLine("=== Forbbiden Server ===");
                 Console.WriteLine("ProfileManager - net.tcp://localhost:8081/ProfileManager");
                 Console.WriteLine("FriendsManager - net.tcp://localhost:8082/FriendsManager");
                 Console.WriteLine("MatchManager  - net.tcp://localhost:8083/MatchManager");
+                Console.WriteLine("BoardManager - net.tcp://localhost:8084/BoardManager");
                 Console.WriteLine();
 
                 try
@@ -76,6 +80,8 @@ namespace Forbbiden.Server
                 if (friendsHost?.State == CommunicationState.Opened)
                     friendsHost.Close();
                 if (matchHost?.State == CommunicationState.Opened)
+                    matchHost.Close();
+                if (boardHost?.State == CommunicationState.Opened)
                     matchHost.Close();
 
                 Console.WriteLine("Servidor detenido.");

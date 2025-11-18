@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="f508ceb9-e569-4365-83b3-c72c1bc30da0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://localhost:8084/BoardManager/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="7132a898-bb32-4b2a-a8c3-70dc5271f1c0" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ae625328-89db-4d41-80d1-12f823b1fb45" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="1efbe695-6f0e-4f3a-a00c-69cb694934f6" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="639a8fff-c79b-4718-b7f7-78e39030f7a1" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="baab6c67-5c48-4cec-b7cd-05c98a76d1e4" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

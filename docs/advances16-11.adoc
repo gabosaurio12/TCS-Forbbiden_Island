@@ -43,18 +43,18 @@ image:images/screenshots/avance-16-11/notification.png[Notificación, width=600,
 * Responsable: Leonardo
 
 .Estado inicial del juego
-image:images/screenshots/avance16-11/hostGameUpdate.png[Estado inicial del juego, width=600, align=left]
+image:images/screenshots/avance-16-11/hostGameUpdate.png[Estado inicial del juego, width=600, align=left]
 
 === Minijuego Detener el Servidor
 * Responsable: Leonardo
 
 .Estado inicial del juego
-image:images/screenshots/avance16-11/apagarServidorInicial.png[Estado inicial del juego, width=600, align=left]
+image:images/screenshots/avance-16-11/apagarServidorInicial.png[Estado inicial del juego, width=600, align=left]
 .Error del Servidor
-image:images/screenshots/avance16-11/apagarServidorError.png[Error del reloj del servidor, width=600, align=left]
+image:images/screenshots/avance-16-11/apagarServidorError.png[Error del reloj del servidor, width=600, align=left]
 
 === Minijuego Iniciar Sesión en la RIUV
 * Reponsable: Leonardo
 
 .Riuv Login Error
-image:images/screenshots/avance16-11/riuvLoginError.png[Animación en caso de colocar tecla incorrecta en el login, width=600, align=left]
+image:images/screenshots/avance-16-11/riuvLoginError.png[Animación en caso de colocar tecla incorrecta en el login, width=600, align=left]

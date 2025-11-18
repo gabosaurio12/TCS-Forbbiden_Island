@@ -331,6 +331,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Too much cards!.
+        /// </summary>
+        public static string max_cards_exceed {
+            get {
+                return ResourceManager.GetString("max_cards_exceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have.
+        /// </summary>
+        public static string max_cards_exceed_message {
+            get {
+                return ResourceManager.GetString("max_cards_exceed_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max number of Players.
         /// </summary>
         public static string max_players {

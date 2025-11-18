@@ -24,6 +24,7 @@ namespace Forbbiden.Server
         public string card_name { get; set; }
         public string description { get; set; }
         public string type { get; set; }
+        public string card_image_path { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_cards> match_cards { get; set; }

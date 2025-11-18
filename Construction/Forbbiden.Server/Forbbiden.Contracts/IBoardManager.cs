@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Forbbiden.Contracts
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IIBoardManager" in both code and config file together.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IBoardManager" in both code and config file together.
     [ServiceContract]
     public interface IBoardManager
     {
@@ -15,11 +15,10 @@ namespace Forbbiden.Contracts
         List<String> GetTileImages();
 
         [OperationContract]
-        List<Card> GetCards();
+        List<Card> GetTreasureCards();
 
         [OperationContract]
-        List<Treasure> GetTreasures();
-
+        List<Card> GetFloodCards();
     }
 
     [DataContract]
@@ -49,5 +48,8 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public string Type { get; set; }
+
+        [DataMember]
+        public string ImagePath { get; set; }
     }
 }

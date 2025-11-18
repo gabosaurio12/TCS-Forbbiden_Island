@@ -15,7 +15,6 @@ namespace Forbbiden.Server.logic
     public class FriendsManager : IFriendsManager
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(FriendsManager));
-        private const string ErrorCode = "[ERROR] FriendsManager.cs - ";
         private readonly string connectionString;
 
         public FriendsManager()

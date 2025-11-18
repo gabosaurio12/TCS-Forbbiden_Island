@@ -69,4 +69,16 @@ namespace Forbbiden.Contracts
         [DataMember(IsRequired = true)]
         public string Username { get; set; }
     }
+
+    [DataContract]
+    public class MatchCard
+    {
+        [DataMember]
+        public int MatchCardID { get; set; }
+        [DataMember]
+        public int MatchID { get; set; }
+
+        [DataMember]
+        public int CardID { get; set; }
+    }
 }

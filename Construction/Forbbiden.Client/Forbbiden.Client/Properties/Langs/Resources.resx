@@ -345,4 +345,10 @@
   <data name="flood_stack" xml:space="preserve">
     <value>Flood Stack</value>
   </data>
+  <data name="max_cards_exceed" xml:space="preserve">
+    <value>Too much cards!</value>
+  </data>
+  <data name="max_cards_exceed_message" xml:space="preserve">
+    <value>With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have</value>
+  </data>
 </root>
