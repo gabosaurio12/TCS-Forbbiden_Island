@@ -37,7 +37,8 @@ namespace Forbbiden.Client
         {
             try
             {
-                NavigationService?.Navigate(new PlayPage());
+                //NavigationService?.Navigate(new PlayPage());
+                NavigationService?.Navigate(new BoardPage());
             }
             catch (Exception ex)
             {
