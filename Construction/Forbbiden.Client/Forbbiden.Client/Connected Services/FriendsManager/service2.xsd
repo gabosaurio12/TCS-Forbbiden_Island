@@ -46,17 +46,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getFriendRequests">
+  <xs:element name="GetFriendRequests">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="receiverUsername" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getFriendRequestsResponse">
+  <xs:element name="GetFriendRequestsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="getFriendRequestsResult" nillable="true" type="q1:ArrayOfFriendRequest" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetFriendRequestsResult" nillable="true" type="q1:ArrayOfFriendRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

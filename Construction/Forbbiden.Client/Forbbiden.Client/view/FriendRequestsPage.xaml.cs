@@ -100,7 +100,7 @@ namespace Forbbiden.Client.view
                 var requests = new FriendRequest[] { };
                 try
                 {
-                    requests = await friendsClient.getFriendRequestsAsync(currentLoginUsername);
+                    requests = await friendsClient.GetFriendRequestsAsync(currentLoginUsername);
                 }
                 catch (FaultException<DBFault> dbFault)
                 {
@@ -110,14 +110,14 @@ namespace Forbbiden.Client.view
 
                 if (requests.Length > 0)
                 {
-                    foreach(var request in requests)
+                    foreach (var request in requests)
                     {
                         if (request.Status == 0)
                         {
                             _ = AddRequest(request);
                         }
                     }
-                }                
+                }
             }
         }
 
@@ -188,7 +188,7 @@ namespace Forbbiden.Client.view
                     OpenNotification(Properties.Langs.Resources.error,
                         Properties.Langs.Resources.pull_database_error);
                 }
-            } 
+            }
             else
             {
                 OpenNotification(Properties.Langs.Resources.error,

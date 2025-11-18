@@ -54,7 +54,7 @@ namespace Forbbiden.Client.view
                 }
 
                 var friendsClient = new FriendsManagerClient();
-                var requests = friendsClient.getFriendRequests(currentLoginUsername);
+                var requests = friendsClient.GetFriendRequests(currentLoginUsername);
                 if (requests.Length > 0)
                 {
                     Storyboard storyboard = (Storyboard)FindResource("ShowNotification");

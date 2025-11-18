@@ -58,11 +58,11 @@
   <wsdl:message name="IFriendsManager_CancelFriendRequest_OutputMessage">
     <wsdl:part name="parameters" element="tns:CancelFriendRequestResponse" />
   </wsdl:message>
-  <wsdl:message name="IFriendsManager_getFriendRequests_InputMessage">
-    <wsdl:part name="parameters" element="tns:getFriendRequests" />
+  <wsdl:message name="IFriendsManager_GetFriendRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequests" />
   </wsdl:message>
-  <wsdl:message name="IFriendsManager_getFriendRequests_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getFriendRequestsResponse" />
+  <wsdl:message name="IFriendsManager_GetFriendRequests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequestsResponse" />
   </wsdl:message>
   <wsdl:message name="IFriendsManager_GetFriendsByID_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFriendsByID" />
@@ -83,9 +83,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/CancelFriendRequest" message="tns:IFriendsManager_CancelFriendRequest_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse" message="tns:IFriendsManager_CancelFriendRequest_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getFriendRequests">
-      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/getFriendRequests" message="tns:IFriendsManager_getFriendRequests_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/getFriendRequestsResponse" message="tns:IFriendsManager_getFriendRequests_OutputMessage" />
+    <wsdl:operation name="GetFriendRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/GetFriendRequests" message="tns:IFriendsManager_GetFriendRequests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse" message="tns:IFriendsManager_GetFriendRequests_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFriendsByID">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/GetFriendsByID" message="tns:IFriendsManager_GetFriendsByID_InputMessage" />
@@ -123,8 +123,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getFriendRequests">
-      <soap12:operation soapAction="http://tempuri.org/IFriendsManager/getFriendRequests" style="document" />
+    <wsdl:operation name="GetFriendRequests">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsManager/GetFriendRequests" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -144,11 +144,11 @@
   </wsdl:binding>
   <wsdl:service name="FriendsManager">
     <wsdl:port name="NetTcpBinding_IFriendsManager" binding="tns:NetTcpBinding_IFriendsManager">
-      <soap12:address location="net.tcp://localhost:8081/FriendsManager" />
+      <soap12:address location="net.tcp://localhost:8082/FriendsManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/FriendsManager</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8082/FriendsManager</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-GAGL\mazin</Upn>
+          <Upn>LUMINA\leona</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
