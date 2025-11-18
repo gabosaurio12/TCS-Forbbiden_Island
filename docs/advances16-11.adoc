@@ -3,6 +3,9 @@
 
 === Casos de uso
 * Entrar a partida (GUI)
+* Minijuego Detener el Servidor
+* Minijuego Conectarse a la RIUV
+* Unirse a partida 
 * Tomar una carta
 * Moverse
 * Pruebas
@@ -11,6 +14,16 @@
 === Porcentajes de contribución
 - Leonardo 50%
 - Gabriel 50%
+
+=== Forbbiden.Server
+
+=== Servicio de creación de juegos 
+Responsables:
+* Leonardo: Lógica con el servicio
+
+=== Servicio de Juegos 
+Responsables:
+* Leonardo: Lógica con el servicio
 
 === Entrar a partida (GUI)
 
@@ -22,3 +35,22 @@ Se construyó la parte visual de cuando un jugador entra a una partida, que apar
 
 Una ventana emergente que informa al usuario algún evento.
 
+=== Unirse a juego actualización de GUI y funcionalidad 
+* Responsable: Leonardo
+
+.Estado inicial del juego
+image::screenshots/avance16-11/hostGameUpdate.png[Estado inicial del juego, width=600, align=left]
+
+=== Minijuego Detener el Servidor
+* Responsable: Leonardo
+
+.Estado inicial del juego
+image::screenshots/avance16-11/apagarServidorInicial.png[Estado inicial del juego, width=600, align=left]
+.Error del Servidor
+image::screenshots/avance16-11/apagarServidorError.png[Error del reloj del servidor, width=600, align=left]
+
+=== Minijuego Iniciar Sesión en la RIUV
+* Reponsable: Leonardo
+
+.Riuv Login Error
+image::screenshots/avance16-11/riuvLoginError.png[Animación en caso de colocar tecla incorrecta en el login, width=600, align=left]
