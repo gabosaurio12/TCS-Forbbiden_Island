@@ -58,8 +58,8 @@
                             <Rectangle
                                Height="200" Width="170" Margin="0,20,0,20"
                                Fill="#F2B9B3" Stroke="#A81D0F" StrokeThickness="15"
-                               MouseEnter="Card_MouseEnter"
-                               MouseLeave="Card_MouseLeave"
+                               MouseEnter="CardStack_MouseEnter"
+                               MouseLeave="CardStack_MouseLeave"
                                Cursor="Hand"
                                MouseLeftButtonDown="PickTreasureCard_MouseLeftButtonDown"/>
                         </StackPanel>

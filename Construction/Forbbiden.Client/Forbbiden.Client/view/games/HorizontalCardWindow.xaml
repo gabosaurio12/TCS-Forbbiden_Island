@@ -1,4 +1,4 @@
-﻿<Window x:Class="Forbbiden.Client.view.games.VerticalCardWindow"
+﻿<Window x:Class="Forbbiden.Client.view.games.HorizontalCardWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,9 +10,9 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
-        Title="VerticalCardWindow" Height="300" Width="270">
+        Title="HorizontalCardWindow" Height="270" Width="300">
     
-    <Grid x:Name="cardGrid" Height="300" Width="270">
-        <Rectangle x:Name="cardRectangle" Height="300" Width="270" />
+    <Grid x:Name="cardGrid" Height="270" Width="300">
+        <Rectangle x:Name="cardRectangle" Height="270" Width="300" />
     </Grid>
 </Window>

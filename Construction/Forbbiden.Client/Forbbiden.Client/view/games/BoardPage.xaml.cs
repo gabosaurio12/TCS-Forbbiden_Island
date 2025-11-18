@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.FriendsManager;
+using Forbbiden.Client.logic;
 using Forbbiden.Client.model;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
@@ -14,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace Forbbiden.Client.view.games
@@ -29,6 +31,10 @@ namespace Forbbiden.Client.view.games
         private List<Card> floodCards;
         private List<Card> playerCards = new List<Card>();
         private int waterLevelCount = 0;
+        private readonly string imagesPath;
+        private readonly string tilesImagesPath;
+        private readonly string cardsImagesPath;
+        private readonly string avatarImagesPath;
 
         public BoardPage()
         {
@@ -36,6 +42,21 @@ namespace Forbbiden.Client.view.games
             var currentPlayer = new ProfileManagerClient().GetCurrentLogin();
             treasureCards = boardManager.GetTreasureCards().ToList();
             floodCards = boardManager.GetFloodCards().ToList();
+            discardStackTreasureCards = new List<Card>();
+            
+            string projectDir = Directory.GetParent(
+                AppDomain.CurrentDomain.BaseDirectory).
+                Parent.Parent.FullName;
+
+            imagesPath = System.IO.Path.Combine(
+                projectDir, "Images");
+            tilesImagesPath = System.IO.Path.Combine(
+                projectDir, imagesPath, "tiles");
+            cardsImagesPath = System.IO.Path.Combine(
+                projectDir, imagesPath, "cards");
+            avatarImagesPath = System.IO.Path.Combine(
+                projectDir, "avatars");
+
 
             KeyDown += BoardPage_KeyDown;
             Focusable = true;
@@ -45,7 +66,25 @@ namespace Forbbiden.Client.view.games
             SetPlayersAvatars(currentPlayer);
         }
 
-        private List<Grid> GetTilesFromGrid()
+        // Event Handlers
+
+        private void BoardPage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                NavigationService?.Navigate(new MainPage());
+            }
+        }
+
+        private void PickTreasureCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            PickTreasureCard();
+            PickTreasureCard();
+        }
+
+        // logic
+
+        private List<Grid> GetTilesFromGrid() // Can be user control
         {
             List<Grid> tiles = new List<Grid>();
             foreach (var child in boardTiles.Children)
@@ -58,40 +97,12 @@ namespace Forbbiden.Client.view.games
             return tiles;
         }
 
-        private BitmapImage GetTilesImage(string tileImage)
-        {
-            var bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.CacheOption = BitmapCacheOption.OnLoad;
-            string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).
-                    Parent.Parent.FullName;
-            string avatarPath = System.IO.Path.Combine(projectDir, "Images", "tiles", tileImage);
-            bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-            bmp.EndInit();
-
-            return bmp;
-        }
-
-        private BitmapImage GetImage(string image)
-        {
-            var bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.CacheOption = BitmapCacheOption.OnLoad;
-            string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).
-                    Parent.Parent.FullName;
-            string avatarPath = System.IO.Path.Combine(projectDir, "Images", image);
-            bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-            bmp.EndInit();
-
-            return bmp;
-        }
-
-        private void FillFreeTiles()
+        private void FillFreeTiles() // Can be user control
         {
             string freeTileImage = "free.jpg";
-            var bmp = GetTilesImage(freeTileImage);
+            string imagePath = System.IO.Path.Combine(
+                tilesImagesPath, freeTileImage);
+            var bmp = ViewUtils.GetImage(imagePath);
 
             List<Grid> tiles = GetTilesFromGrid();
             foreach (var tile in tiles)
@@ -108,7 +119,7 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private void SetTreasureTiles()
+        private void SetTreasureTiles() // Can be user control
         {
             List<Grid> tiles = GetTilesFromGrid();
             Random rand = new Random();
@@ -117,8 +128,12 @@ namespace Forbbiden.Client.view.games
                 int index = rand.Next(tiles.Count);
                 Grid tile = tiles[index];
                 tiles.RemoveAt(index);
+
                 string treasureImage = $"treasure{i + 1}.png";
-                var bmp = GetTilesImage(treasureImage);
+                string treasureImagePath = System.IO.Path.Combine(
+                    tilesImagesPath, treasureImage);
+                var bmp = ViewUtils.GetImage(treasureImagePath);
+
                 Rectangle rectangle = tile.Children.OfType<Rectangle>().FirstOrDefault();
                 if (rectangle != null)
                 {
@@ -131,20 +146,12 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private BitmapImage GetAvatarImage(string avatarPath)
+        private Ellipse GetPlayerAvatarEllipse(string avatarPath) // Can be user control
         {
-            var bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.CacheOption = BitmapCacheOption.OnLoad;
-            bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-            bmp.EndInit();
+            string avatarImagePath = System.IO.Path.Combine(
+                avatarImagesPath, avatarPath);
 
-            return bmp;
-        }
-
-        private Ellipse GetPlayerAvatarEllipse(string avatarPath)
-        {
-            var bmp = GetAvatarImage(avatarPath);
+            var bmp = ViewUtils.GetImage(avatarImagePath);
 
             Ellipse ellipse = new Ellipse
             {
@@ -163,7 +170,7 @@ namespace Forbbiden.Client.view.games
             return ellipse;
         }
 
-        private bool IsTreasureTile(Grid tile)
+        private bool IsTreasureTile(Grid tile) // Can be user control
         {
             bool band = false;
             Rectangle rectangle = tile.Children.OfType<Rectangle>().FirstOrDefault();
@@ -207,13 +214,122 @@ namespace Forbbiden.Client.view.games
             AddPlayerAvatar(player);
         }
 
-        private void BoardPage_KeyDown(object sender, KeyEventArgs e)
+        private void ShowCardOnBoard(Card card)
         {
-            if (e.Key == Key.Escape)
+            string cardImagePath = System.IO.Path.Combine(
+                cardsImagesPath, card.ImagePath);
+
+            var cardSettings = new CardWindowSettings
             {
-                NavigationService?.Navigate(new MainPage());
+                StrokeThickness = 15,
+                StrokeColor = "#A81D0F",
+                CardImage = ViewUtils.GetImage(cardImagePath)
+            };
+            if (card.Name == "water_rise_name")
+            {
+                var cardWindow = new HorizontalCardWindow(cardSettings)
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                cardWindow.ShowDialog();
+            }
+            else
+            {
+                var cardWindow = new VerticalCardWindow(cardSettings)
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                cardWindow.ShowDialog();
+            } 
+        }
+
+        private void AddPlayerACard(Card card)
+        {
+            if (playerCards.Count < 6)
+            {
+                playerCards.Add(card);
+                cardStack.Children.Add(new Rectangle
+                {
+                    Width = 140,
+                    Height = 170,
+                    Margin = new Thickness(15),
+                    Fill = new ImageBrush
+                    {
+                        ImageSource = ViewUtils.GetImage(card.ImagePath),
+                        Stretch = Stretch.UniformToFill
+                    }
+                });
+            }
+            else
+            {
+                string title = Properties.Langs.Resources.max_cards_exceed;
+                string message = Properties.Langs.Resources.max_cards_exceed_message;
+                var notificationWindow = new NotificationWindow(title, message) // TODO Cambiarla por notificación aceptar carta
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                notificationWindow.ShowDialog();
             }
         }
+
+        private void IncreaseWaterLevel(Card card)
+        {
+            waterLevelCount++;
+            string waterLevelImagePath = System.IO.Path.Combine(
+                imagesPath, $"waterLevel-{waterLevelCount}.png");
+            waterLevel.Source = ViewUtils.GetImage(waterLevelImagePath);
+            floodCards.Clear();
+            floodCards = boardManager.GetFloodCards().ToList();
+            discardStackTreasureCards.Add(card);
+        }
+
+        private void FloodTile(Card card)
+        {
+            // TODO
+            // Dificultad: Saber cual es la casilla de esa carta
+        }
+
+        private void ExecuteCardEffect(Card card)
+        {
+            string waterRiseCard = "water_rise_name";
+            string floodCard = "flood_name";
+
+            if (card.Name == waterRiseCard)
+                IncreaseWaterLevel(card);
+            else if (card.Name == floodCard)
+            {
+                FloodTile(card);
+            }
+            else
+            {
+                AddPlayerACard(card);
+            }
+        }
+
+        private Card PickTreasureCard()
+        {
+            int count = treasureCards.Count;
+            int emptyNumber = 0;
+
+            if (count == emptyNumber)
+            {
+                treasureCards = boardManager.GetTreasureCards().ToList();
+            }
+
+            Random rand = new Random();
+            count = treasureCards.Count;
+            int random = rand.Next(count);
+            Card card = treasureCards[random];
+            treasureCards.Remove(card);
+
+            ShowCardOnBoard(card);
+
+            ExecuteCardEffect(card);
+
+            return card;
+        }
+
+        // Animaciones
 
         private void ColorStroke_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -325,107 +441,46 @@ namespace Forbbiden.Client.view.games
             card.BeginAnimation(WidthProperty, horizontalZoom);
         }
 
-        private void ShowCardOnBoard(Card card)
+        private void CardStack_MouseEnter(object sender, MouseEventArgs e)
         {
-            var cardSettings = new CardWindowSettings
+            var verticalZoom = new DoubleAnimation
             {
-                StrokeThickness = 15,
-                StrokeColor = "#A81D0F",
-                CardImage = GetTilesImage(card.ImagePath)
+                From = 200,
+                To = 220,
+                Duration = TimeSpan.FromSeconds(0.15)
             };
-            var cardWindow = new VerticalCardWindow(cardSettings)
+
+            var horizontalZoom = new DoubleAnimation
             {
-                Owner = Window.GetWindow(this)
+                From = 170,
+                To = 190,
+                Duration = TimeSpan.FromSeconds(0.15),
             };
-            cardWindow.ShowDialog();
+
+            Rectangle card = (Rectangle)sender;
+            card.BeginAnimation(HeightProperty, verticalZoom);
+            card.BeginAnimation(WidthProperty, horizontalZoom);
         }
 
-        private void AddPlayerACard(Card card)
+        private void CardStack_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (playerCards.Count < 6)
+            var verticalZoom = new DoubleAnimation
             {
-                playerCards.Add(card);
-                cardStack.Children.Add(new Rectangle
-                {
-                    Width = 140,
-                    Height = 170,
-                    Margin = new Thickness(15),
-                    Fill = new ImageBrush
-                    {
-                        ImageSource = GetTilesImage(card.ImagePath),
-                        Stretch = Stretch.UniformToFill
-                    }
-                });
-            }
-            else
+                From = 220,
+                To = 200,
+                Duration = TimeSpan.FromSeconds(0.15)
+            };
+
+            var horizontalZoom = new DoubleAnimation
             {
-                string title = Properties.Langs.Resources.max_cards_exceed;
-                string message = Properties.Langs.Resources.max_cards_exceed_message;
-                var notificationWindow = new NotificationWindow(title, message) // Cambiarla por notificación aceptar carta
-                {
-                    Owner = Window.GetWindow(this)
-                };
-                notificationWindow.ShowDialog();
-            }
-        }
+                From = 190,
+                To = 170,
+                Duration = TimeSpan.FromSeconds(0.15),
+            };
 
-        private void IncreaseWaterLevel(Card card)
-        {
-            waterLevelCount++;
-            waterLevel.Source = GetImage($"waterLevel{waterLevelCount}.png");
-            floodCards.Clear();
-            floodCards = boardManager.GetFloodCards().ToList();
-            discardStackTreasureCards.Add(card);
-        }
-
-        private List<Card> PickTwoTreasureCards()
-        {
-            List<Card> cards = new List<Card>();
-            Random rand = new Random();
-
-            Card firstCard = cards[rand.Next(treasureCards.Count)];
-            treasureCards.Remove(firstCard);
-            Card secondCard = cards[rand.Next(treasureCards.Count)];
-            treasureCards.Remove(secondCard);
-
-            ShowCardOnBoard(firstCard);
-            ShowCardOnBoard(secondCard);
-
-            if (firstCard.Name != "Water Rises!") AddPlayerACard(firstCard);
-            else IncreaseWaterLevel(firstCard);
-            if (secondCard.Name != "Water Rises!") AddPlayerACard(secondCard);
-            else IncreaseWaterLevel(secondCard);
-
-            return cards;
-        }
-
-        private void PickTreasureCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            PickTwoTreasureCards();
-
-            /*
-             * TODO
-             * 
-             * Card card = GetFloodCard();
-             * ShowCardOnBoard(card);
-             * var flooded = BoardManager.FloodCard(card);
-             * 
-             * if (flooded == null) 
-             * {
-             *     card.brush = Brushes.Black;
-             *     Grid tile = board.GetTileByCoord(string coord);
-             *     foreach (var child in tile.Children)
-             *     {
-             *         if (child is Ellipse ellipse)
-             *         {
-             *             MoveAvatarToClosesTile(ellipse);
-             *         }
-             *     }
-             * }
-             *             
-             * else card.brush = Brushes.Gray;
-             *     
-             */
+            Rectangle card = (Rectangle)sender;
+            card.BeginAnimation(HeightProperty, verticalZoom);
+            card.BeginAnimation(WidthProperty, horizontalZoom);
         }
     }
 }
