@@ -8,36 +8,47 @@ namespace Forbbiden.Contracts
     public interface IProfileManager
     {
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         bool ValidateEmail(string email);
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         bool IsUsernameAvailable(string username);
 
         [OperationContract]
+        [FaultContract(typeof(EmailFault))]
         bool SendEmail(string email);
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         bool SignUp(Player player);
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         bool Login(Player player);
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         Player GetPlayerByUsername(string username, bool includeFriends = true);
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         Player GetPlayerById(int playerId, bool includeFriends = true);
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         Player GetCurrentLogin();
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         bool ClearCurrentLogin();
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         bool UpdatePlayer(Player updatedPlayer);
 
         [OperationContract]
+        [FaultContract(typeof(DBFault))]
         bool DeletePlayerByUsername(string username);
     }
 
@@ -77,5 +88,24 @@ namespace Forbbiden.Contracts
         public string SocialLink { get; set; }
         [DataMember]
         public string SocialMediaName { get; set; }
+    }
+
+    [DataContract]
+    public class DBFault
+    {
+        [DataMember]
+        public string Error { get; set; }
+        [DataMember]
+        public string Details { get; set; }
+    }
+
+    [DataContract]
+    public class EmailFault
+    {
+        [DataMember]
+        public string Error { get; set; }
+
+        [DataMember]
+        public string Details { get; set; }
     }
 }

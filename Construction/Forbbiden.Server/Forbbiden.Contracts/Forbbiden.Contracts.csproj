@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,6 +68,7 @@
   <ItemGroup>
     <Compile Include="ICallbacks.cs" />
     <Compile Include="IFriendsManager.cs" />
+    <Compile Include="IGameService.cs" />
     <Compile Include="IMatchManager.cs" />
     <Compile Include="IProfileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

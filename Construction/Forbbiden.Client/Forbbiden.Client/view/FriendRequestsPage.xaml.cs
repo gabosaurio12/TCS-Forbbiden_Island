@@ -2,7 +2,10 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
+using log4net;
 using System;
+using System.Numerics;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,10 +22,12 @@ namespace Forbbiden.Client.view
     /// </summary>
     public partial class FriendRequestsPage : Page
     {
-
+        private static readonly ILog log = LogManager.GetLogger(typeof(FriendRequestsPage));
         private readonly CallbacksManager callback;
         private string currentLoginUsername;
         private readonly FontFamily IrishGrover;
+        private readonly ProfileManagerClient profileManager = new ProfileManagerClient();
+        private readonly FriendsManagerClient friendsClient = new FriendsManagerClient();
 
         public FriendRequestsPage()
         {
@@ -33,7 +38,47 @@ namespace Forbbiden.Client.view
             callback = new CallbacksManager();
             callback.FriendRequestReceived += OnFriendRequestReceived;
 
-            SetRequests();
+            _ = SetRequests();
+        }
+
+        private void HandlePullDBFault(FaultException<DBFault> dbFault)
+        {
+            log.Error(dbFault.Detail);
+            string title = Properties.Langs.Resources.error;
+            string message = Properties.Langs.Resources.pull_database_error;
+            var notificationWindow = new NotificationWindow(title, message)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            notificationWindow.ShowDialog();
+        }
+
+        private void HandlePushDBFault(FaultException<DBFault> dbFault)
+        {
+            log.Error(dbFault.Detail);
+            string title = Properties.Langs.Resources.error;
+            string message = Properties.Langs.Resources.push_database_error;
+            var notificationWindow = new NotificationWindow(title, message)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            notificationWindow.ShowDialog();
+        }
+
+        private async Task<ProfileManager.Player> GetCurrentLogin()
+        {
+            var player = new ProfileManager.Player();
+            try
+            {
+                player = await profileManager.GetCurrentLoginAsync();
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                HandlePullDBFault(dbFault);
+                NavigationService?.Navigate(new FriendsPage());
+            }
+
+            return player;
         }
 
         private void OnFriendRequestReceived(FriendRequest request)
@@ -44,26 +89,35 @@ namespace Forbbiden.Client.view
             });
         }
 
-        private void SetRequests()
+        private async Task SetRequests()
         {
-            var profileManager = new ProfileManagerClient();
-            var player = profileManager.GetCurrentLogin();
+            var player = await GetCurrentLogin();
+
             if (player.PlayerId != -1)
             {
                 currentLoginUsername = player.PlayerUsername;
 
-                var friendsClient = new FriendsManagerClient();
-                var requests = friendsClient.getFriendRequests(currentLoginUsername);
+                var requests = new FriendRequest[] { };
+                try
+                {
+                    requests = await friendsClient.GetFriendRequestsAsync(currentLoginUsername);
+                }
+                catch (FaultException<DBFault> dbFault)
+                {
+                    HandlePullDBFault(dbFault);
+                    NavigationService?.Navigate(new FriendsPage());
+                }
+
                 if (requests.Length > 0)
                 {
-                    foreach(var request in requests)
+                    foreach (var request in requests)
                     {
                         if (request.Status == 0)
                         {
                             _ = AddRequest(request);
                         }
                     }
-                }                
+                }
             }
         }
 
@@ -96,19 +150,29 @@ namespace Forbbiden.Client.view
             stackRemoving.Children.Remove(gridToRemove);
         }
 
-        private void AcceptButton_Click(Object sender, RoutedEventArgs e)
+        private async void AcceptButton_Click(Object sender, RoutedEventArgs e)
         {
             var grid = (Grid)((Button)sender).Parent;
             string senderUsername = GettxtBkText(grid);
 
             if (!string.IsNullOrEmpty(senderUsername))
             {
-                var profileClient = new ProfileManagerClient();
-                var receiver = profileClient.GetCurrentLogin();
+                var receiver = await GetCurrentLogin();
+
                 if (receiver.PlayerId != -1)
                 {
-                    var friendClient = new FriendsManagerClient();
-                    var requestStatus = friendClient.AcceptFriendRequest(senderUsername, receiver.PlayerUsername);
+                    var requestStatus = false;
+                    try
+                    {
+                        requestStatus = await friendsClient
+                            .AcceptFriendRequestAsync(senderUsername, receiver.PlayerUsername);
+                    }
+                    catch (FaultException<DBFault> dbFault)
+                    {
+                        HandlePushDBFault(dbFault);
+                        NavigationService?.Navigate(new FriendsPage());
+                    }
+
                     if (!requestStatus)
                     {
                         OpenNotification(Properties.Langs.Resources.error,
@@ -124,7 +188,7 @@ namespace Forbbiden.Client.view
                     OpenNotification(Properties.Langs.Resources.error,
                         Properties.Langs.Resources.pull_database_error);
                 }
-            } 
+            }
             else
             {
                 OpenNotification(Properties.Langs.Resources.error,
@@ -132,19 +196,29 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private void RejectButton_Click(Object sender, RoutedEventArgs e)
+        private async void RejectButton_Click(Object sender, RoutedEventArgs e)
         {
             var grid = (Grid)((Button)sender).Parent;
             string senderUsername = GettxtBkText(grid);
 
             if (!string.IsNullOrEmpty(senderUsername))
             {
-                var profileClient = new ProfileManagerClient();
-                var receiver = profileClient.GetCurrentLogin();
+                var receiver = await GetCurrentLogin();
+
                 if (receiver.PlayerId != -1)
                 {
-                    var friendClient = new FriendsManagerClient();
-                    var requestStatus = friendClient.CancelFriendRequest(senderUsername, receiver.PlayerUsername);
+                    var requestStatus = false;
+                    try
+                    {
+                        requestStatus = await friendsClient
+                            .CancelFriendRequestAsync(senderUsername, receiver.PlayerUsername);
+                    }
+                    catch (FaultException<DBFault> dbFault)
+                    {
+                        HandlePushDBFault(dbFault);
+                        NavigationService?.Navigate(new FriendsPage());
+                    }
+
                     if (!requestStatus)
                     {
                         OpenNotification(Properties.Langs.Resources.error,
@@ -262,8 +336,17 @@ namespace Forbbiden.Client.view
             requestGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             requestGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-            var profileClient = new ProfileManagerClient();
-            var friend = await profileClient.GetPlayerByIdAsync(request.SenderID);
+            var friend = new ProfileManager.Player();
+            try
+            {
+                friend = await profileManager.GetPlayerByIdAsync(request.SenderID, false);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                HandlePullDBFault(dbFault);
+                NavigationService?.Navigate(new FriendsPage());
+            }
+
             ImageBrush avatarImg = new ImageBrush(new BitmapImage(new Uri(friend.PlayerAvatarPath)));
             var avatar = CreateGridEllipse(avatarImg);
             Grid.SetColumn(avatar, 0);
@@ -308,12 +391,29 @@ namespace Forbbiden.Client.view
 
         private async Task SendFriendRequest(string friendUsername)
         {
-            var profileClient = new ProfileManagerClient();
-            var searchPlayer = await profileClient.GetPlayerByUsernameAsync(friendUsername);
+            var searchPlayer = new ProfileManager.Player();
+            try
+            {
+                searchPlayer = await profileManager.GetPlayerByUsernameAsync(friendUsername, false);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                HandlePullDBFault(dbFault);
+                NavigationService?.Navigate(new FriendsPage());
+            }
+
             if (searchPlayer.PlayerId != -1)
             {
-                var friendsClient = new FriendsManagerClient();
-                var requestStatus = await friendsClient.SendFriendRequestAsync(currentLoginUsername, searchPlayer.PlayerUsername);
+                var requestStatus = false;
+                try
+                {
+                    requestStatus = await friendsClient.SendFriendRequestAsync(currentLoginUsername, searchPlayer.PlayerUsername);
+                }
+                catch (FaultException<DBFault> dbFault)
+                {
+                    HandlePushDBFault(dbFault);
+                    NavigationService?.Navigate(new FriendsPage());
+                }
 
                 if (requestStatus)
                 {

@@ -78,6 +78,8 @@
     <Compile Include="Friends.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="logic\BoardManager.cs" />
+    <Compile Include="logic\GameService.cs" />
     <Compile Include="logic\FriendsManager.cs" />
     <Compile Include="logic\MatchManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />
@@ -124,6 +126,9 @@
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Token.cs">
+      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Treasure.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
     <Compile Include="utils\ConnectionStringSingleton.cs" />

@@ -15,6 +15,128 @@ namespace Forbbiden.Client.ProfileManager {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class DBFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EmailFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class EmailFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
     [System.SerializableAttribute()]
     public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -361,66 +483,77 @@ namespace Forbbiden.Client.ProfileManager {
     public interface IProfileManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ValidateEmail", ReplyAction="http://tempuri.org/IProfileManager/ValidateEmailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/ValidateEmailDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool ValidateEmail(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ValidateEmail", ReplyAction="http://tempuri.org/IProfileManager/ValidateEmailResponse")]
         System.Threading.Tasks.Task<bool> ValidateEmailAsync(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsUsernameAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/IsUsernameAvailableDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool IsUsernameAvailable(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsUsernameAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse")]
         System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.EmailFault), Action="http://tempuri.org/IProfileManager/SendEmailEmailFaultFault", Name="EmailFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool SendEmail(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
         System.Threading.Tasks.Task<bool> SendEmailAsync(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/SignUpDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool SignUp(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
         System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/LoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool Login(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
         System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse")]
-        Forbbiden.Client.ProfileManager.Player GetPlayerByUsername(string username);
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.ProfileManager.Player GetPlayerByUsername(string username, bool includeFriends);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByUsernameAsync(string username);
+        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByUsernameAsync(string username, bool includeFriends);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetPlayerByIdDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.ProfileManager.Player GetPlayerById(int playerId, bool includeFriends);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId, bool includeFriends);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.ProfileManager.Player GetCurrentLogin();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetCurrentLoginAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ClearCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/ClearCurrentLoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/ClearCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool ClearCurrentLogin();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ClearCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/ClearCurrentLoginResponse")]
         System.Threading.Tasks.Task<bool> ClearCurrentLoginAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
-        Forbbiden.Client.ProfileManager.Player GetPlayerById(int playerId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/UpdatePlayerDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool UpdatePlayer(Forbbiden.Client.ProfileManager.Player updatedPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
         System.Threading.Tasks.Task<bool> UpdatePlayerAsync(Forbbiden.Client.ProfileManager.Player updatedPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool DeletePlayerByUsername(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse")]
@@ -494,12 +627,20 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.LoginAsync(player);
         }
         
-        public Forbbiden.Client.ProfileManager.Player GetPlayerByUsername(string username) {
-            return base.Channel.GetPlayerByUsername(username);
+        public Forbbiden.Client.ProfileManager.Player GetPlayerByUsername(string username, bool includeFriends) {
+            return base.Channel.GetPlayerByUsername(username, includeFriends);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByUsernameAsync(string username) {
-            return base.Channel.GetPlayerByUsernameAsync(username);
+        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByUsernameAsync(string username, bool includeFriends) {
+            return base.Channel.GetPlayerByUsernameAsync(username, includeFriends);
+        }
+        
+        public Forbbiden.Client.ProfileManager.Player GetPlayerById(int playerId, bool includeFriends) {
+            return base.Channel.GetPlayerById(playerId, includeFriends);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId, bool includeFriends) {
+            return base.Channel.GetPlayerByIdAsync(playerId, includeFriends);
         }
         
         public Forbbiden.Client.ProfileManager.Player GetCurrentLogin() {
@@ -516,14 +657,6 @@ namespace Forbbiden.Client.ProfileManager {
         
         public System.Threading.Tasks.Task<bool> ClearCurrentLoginAsync() {
             return base.Channel.ClearCurrentLoginAsync();
-        }
-        
-        public Forbbiden.Client.ProfileManager.Player GetPlayerById(int playerId) {
-            return base.Channel.GetPlayerById(playerId);
-        }
-        
-        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId) {
-            return base.Channel.GetPlayerByIdAsync(playerId);
         }
         
         public bool UpdatePlayer(Forbbiden.Client.ProfileManager.Player updatedPlayer) {

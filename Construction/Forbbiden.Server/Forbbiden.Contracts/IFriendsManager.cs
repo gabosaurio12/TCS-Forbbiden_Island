@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Forbbiden.Contracts
 {
@@ -18,7 +14,7 @@ namespace Forbbiden.Contracts
         [OperationContract]
         bool CancelFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
-        List<FriendRequest> getFriendRequests(string receiverUsername);
+        List<FriendRequest> GetFriendRequests(string receiverUsername);
         [OperationContract]
         List<Friendship> GetFriendsByID(int playerID);
     }

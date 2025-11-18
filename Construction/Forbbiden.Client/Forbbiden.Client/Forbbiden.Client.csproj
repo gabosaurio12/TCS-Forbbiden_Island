@@ -82,7 +82,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Connected Services\BoardManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\FriendsManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\GameManager\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -99,7 +109,9 @@
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
     <Compile Include="logic\CallbacksManager.cs" />
+    <Compile Include="logic\GameServiceCallback.cs" />
     <Compile Include="logic\ICallbacks.cs" />
+    <Compile Include="model\CardWindowSettings.cs" />
     <Compile Include="Properties\Langs\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -114,11 +126,23 @@
     <Compile Include="view\games\BoardPage.xaml.cs">
       <DependentUpon>BoardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\games\VerticalCardWindow.xaml.cs">
+      <DependentUpon>VerticalCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\games\RiuvPage.xaml.cs">
+      <DependentUpon>RiuvPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\games\ServerPage.xaml.cs">
+      <DependentUpon>ServerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\info\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\JoinGameControl.xaml.cs">
+      <DependentUpon>JoinGameControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\LobbyPage.xaml.cs">
       <DependentUpon>LobbyPage.xaml</DependentUpon>
@@ -162,23 +186,49 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\BoardManager\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Card.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BoardManager\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BoardManager\service.wsdl" />
+    <None Include="Connected Services\BoardManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BoardManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.FriendRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.Friendship.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\FriendsManager\Forbbiden.Contracts.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\FriendsManager\service.wsdl" />
-    <None Include="Connected Services\FriendsManager\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\FriendsManager\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Resource Include="Fonts\IrishGrover.ttf" />
+    <None Include="Connected Services\FriendsManager\Forbbiden.Contracts1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsManager\service1.wsdl" />
+    <None Include="Connected Services\FriendsManager\service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsManager\service21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\service.wsdl" />
+    <None Include="Connected Services\GameManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\MatchManager\Forbbiden.Client.MatchManager.Match.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -198,10 +248,10 @@
     <None Include="Connected Services\ProfileManager\Forbbiden.Contracts.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ProfileManager\service.wsdl" />
     <None Include="Connected Services\ProfileManager\service.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ProfileManager\service1.wsdl" />
     <None Include="Connected Services\ProfileManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -303,7 +353,9 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\BoardManager\" />
     <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
+    <WCFMetadataStorage Include="Connected Services\GameManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
   </ItemGroup>
@@ -328,11 +380,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\games\VerticalCardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\games\RiuvPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\games\ServerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\HostGameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="view\info\NotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\JoinGameControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -463,6 +531,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="avatars\Master chief.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\Jin.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameManager\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameManager\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Mundo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

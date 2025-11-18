@@ -123,9 +123,6 @@
   <data name="avatar_explanation" xml:space="preserve">
     <value>Import an image from your device to use as an avatar</value>
   </data>
-  <data name="bossLogin" xml:space="preserve">
-    <value>If you log in you can choose your avatar and make friends!</value>
-  </data>
   <data name="capture_button" xml:space="preserve">
     <value>Capture</value>
   </data>
@@ -333,7 +330,25 @@
   <data name="invalid_input" xml:space="preserve">
     <value>Invalid Input</value>
   </data>
+  <data name="pick_card" xml:space="preserve">
+    <value>Pick a card</value>
+  </data>
   <data name="boss_invalid_inputs" xml:space="preserve">
     <value>There were some invalid inputs in your form, check it out</value>
+  </data>
+  <data name="bossLogin" xml:space="preserve">
+    <value>If you log in you can choose your avatar and make friends!</value>
+  </data>
+  <data name="treasure_stack" xml:space="preserve">
+    <value>Treasure Stack</value>
+  </data>
+  <data name="flood_stack" xml:space="preserve">
+    <value>Flood Stack</value>
+  </data>
+  <data name="max_cards_exceed" xml:space="preserve">
+    <value>Too much cards!</value>
+  </data>
+  <data name="max_cards_exceed_message" xml:space="preserve">
+    <value>With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have</value>
   </data>
 </root>

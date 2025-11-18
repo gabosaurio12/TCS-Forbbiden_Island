@@ -24,7 +24,7 @@ namespace Forbbiden.Server
             : base(connectionString)
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -44,5 +44,6 @@ namespace Forbbiden.Server
         public virtual DbSet<player_socialmedia> player_socialmedia { get; set; }
         public virtual DbSet<Tile> Tile { get; set; }
         public virtual DbSet<Token> Token { get; set; }
+        public virtual DbSet<Treasure> Treasure { get; set; }
     }
 }

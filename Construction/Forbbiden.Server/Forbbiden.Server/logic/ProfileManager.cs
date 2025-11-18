@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -18,7 +17,6 @@ namespace Forbbiden.Server.logic
     {
 
         private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
-        private const string ErrorCode = "[Error] ProfileManager.cs - ";
         private readonly string connectionString;
         private readonly string defaultAvatarPath = "defaultAvatar.png";
 
@@ -45,8 +43,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
@@ -66,8 +63,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
             return usernameFound;
@@ -77,27 +73,37 @@ namespace Forbbiden.Server.logic
         {
             log.Info("Sending email");
 
-            bool success = true;
+            bool success = false;
             string receiver = email;
             string emisor = Properties.email.Default.emailAddress;
-            MailMessage message = new MailMessage(emisor, receiver);
-            message.Subject = "Register confirmation";
-            message.Body = "Your account has been succesfully created, welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
-            SmtpClient client = new SmtpClient(Properties.email.Default.smtp);
-            client.Port = 587;
-            string emailCode = Properties.email.Default.emailCode;
-            client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
-            client.EnableSsl = true;
+            using (var message = new MailMessage(emisor, receiver))
+            using (var client = new SmtpClient(Properties.email.Default.smtp))
+            {
+                message.Subject = "Register confirmation";
+                message.Body = "Your account has been succesfully created, welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
+                client.Port = 587;
+                string emailCode = Properties.email.Default.emailCode;
+                client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
+                client.EnableSsl = true;
 
-            try
-            {
-                client.Send(message);
-                log.Info("Email sent");
-            }
-            catch (SmtpException ex)
-            {
-                Console.WriteLine(ErrorCode + ex.Message);
-                log.Error(ex);
+                try
+                {
+                    client.Send(message);
+                    log.Info("Email sent");
+                    success = true;
+                }
+                catch (SmtpException ex)
+                {
+                    var fault = new EmailFault
+                    {
+                        Error = "SMTP Error",
+                        Details = ex.Message
+                    };
+                    log.Error(ex);
+
+                    throw new FaultException<EmailFault>(fault,
+                        new FaultReason("SmtpException"));
+                }
             }
 
             return success;
@@ -127,15 +133,9 @@ namespace Forbbiden.Server.logic
                     log.Info("New player signed up");
                     SendEmail(newPlayer.player_email);
                 }
-                catch (DbEntityValidationException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
             return success;
@@ -154,31 +154,20 @@ namespace Forbbiden.Server.logic
                     {
                         login_player_id = player.PlayerId,
                     });
-                
+
                     db.SaveChanges();
                     success = true;
                     log.Info("Player logged in");
                 }
-                catch (DbEntityValidationException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
             return success;
         }
-    
+
         private Contracts.Player SetPlayer(Player player, bool includeFriends = true)
         {
             List<Friendship> friendsList = new List<Friendship>();
@@ -230,8 +219,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
 
                 if (player == null)
@@ -263,8 +251,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
@@ -293,9 +280,9 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
+
                 var friendships = new List<Friendship>();
                 foreach (var friend in friends)
                 {
@@ -333,8 +320,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
@@ -345,7 +331,7 @@ namespace Forbbiden.Server.logic
                     PlayerId = -1
                 };
             }
-            
+
             return player;
         }
 
@@ -363,20 +349,9 @@ namespace Forbbiden.Server.logic
                     db.SaveChanges();
                     success = true;
                 }
-                catch (DbEntityValidationException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
@@ -401,8 +376,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
@@ -420,44 +394,52 @@ namespace Forbbiden.Server.logic
                 {
                     Player formerPlayer = db.Player.Find(updatedPlayer.PlayerId);
                     if (formerPlayer == null) return false;
-                    
+
                     formerPlayer.player_name = updatedPlayer.PlayerName;
                     formerPlayer.player_username = updatedPlayer.PlayerUsername;
                     formerPlayer.player_email = updatedPlayer.PlayerEmail;
                     formerPlayer.player_avatar = updatedPlayer.PlayerAvatarPath;
-                    Console.WriteLine("Avatar path: " + updatedPlayer.PlayerAvatarPath);
-                    Console.WriteLine("Former Avatar path: " + formerPlayer.player_avatar);
 
-                    if (ClearSocials(formerPlayer)) {
-                        db.player_socialmedia.AddRange(
-                        updatedPlayer.SocialMedia
-                        .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
-                        .Select(social => new player_socialmedia
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
                         {
-                            social_media_name = social.SocialMediaName,
-                            social_link = social.SocialLink,
-                            player_id = formerPlayer.player_id
-                        }));
-                    }
+                            if (ClearSocials(formerPlayer))
+                            {
+                                db.player_socialmedia.AddRange(
+                                updatedPlayer.SocialMedia
+                                .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
+                                .Select(social => new player_socialmedia
+                                {
+                                    social_media_name = social.SocialMediaName,
+                                    social_link = social.SocialLink,
+                                    player_id = formerPlayer.player_id
+                                }));
+                            }
 
-                    db.SaveChanges();
-                    success = true;
-                    log.Info("Player updated");
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                            db.SaveChanges();
+                            success = true;
+                            log.Info("Player updated");
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            transaction.Rollback();
+                            log.Error(ex);
+
+                            var fault = new DBFault
+                            {
+                                Error = "Database Error",
+                                Details = ex.Message
+                            };
+
+                            throw new FaultException<DBFault>(fault,
+                                new FaultReason("EntityException"));
+                        }                        
+                    }                    
                 }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
             return success;
@@ -487,24 +469,27 @@ namespace Forbbiden.Server.logic
                         return success;
                     }
                 }
-                catch (DbEntityValidationException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
-                }
                 catch (EntityException ex)
                 {
-                    Console.WriteLine(ErrorCode + ex.Message);
-                    log.Error(ex);
+                    HandleEntityException(ex);
                 }
             }
 
             return success;
+        }
+
+        private void HandleEntityException(EntityException ex)
+        {
+            log.Error(ex);
+
+            var fault = new DBFault
+            {
+                Error = "Database Error",
+                Details = ex.Message
+            };
+
+            throw new FaultException<DBFault>(fault,
+                new FaultReason("EntityException"));
         }
     }
 }

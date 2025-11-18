@@ -34,6 +34,12 @@ namespace Forbbiden.Contracts
         public string Visibility { get; set; }
 
         [DataMember]
+        public string HostUsername { get; set; }
+
+        [DataMember]
+        public DateTime CreatedAt { get; set; }
+
+        [DataMember]
         public List<PlayerInfo> Players { get; set; } = new List<PlayerInfo>();
     }
 
@@ -41,11 +47,18 @@ namespace Forbbiden.Contracts
     public class PlayerInfo
     {
         [DataMember]
-        public string Username { get; set; }
+        public int PlayerId { get; set; }
+
+        [DataMember]
+        public string PlayerUsername { get; set; }
+
+        [DataMember]
+        public string PlayerName { get; set; }
 
         [DataMember]
         public bool IsHost { get; set; }
     }
+
 
     [DataContract]
     public class CreateMatchRequest
@@ -68,5 +81,17 @@ namespace Forbbiden.Contracts
 
         [DataMember(IsRequired = true)]
         public string Username { get; set; }
+    }
+
+    [DataContract]
+    public class MatchCard
+    {
+        [DataMember]
+        public int MatchCardID { get; set; }
+        [DataMember]
+        public int MatchID { get; set; }
+
+        [DataMember]
+        public int CardID { get; set; }
     }
 }

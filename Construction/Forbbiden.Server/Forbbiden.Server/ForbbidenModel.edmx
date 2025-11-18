@@ -13,6 +13,7 @@
           <Property Name="card_name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="card_image_path" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="card_catalog">
           <Key>
@@ -123,6 +124,14 @@
           <Property Name="token" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="is_verified" Type="int" Nullable="false" />
           <Property Name="activation_time" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Treasure">
+          <Key>
+            <PropertyRef Name="treasure_id" />
+          </Key>
+          <Property Name="treasure_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK__Friend_Re__frien__1332DBDC">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
@@ -295,6 +304,7 @@
           <EntitySet Name="player_socialmedia" EntityType="Self.player_socialmedia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tile" EntityType="Self.Tile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treasure" EntityType="Self.Treasure" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Friend_Re__frien__1332DBDC" Association="Self.FK__Friend_Re__frien__1332DBDC">
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
@@ -361,6 +371,7 @@
           <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="match_cards" Relationship="Self.FK_match_cards_card" FromRole="Card" ToRole="match_cards" />
+          <Property Name="card_image_path" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="card_catalog">
           <Key>
@@ -708,6 +719,7 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="Matches" EntitySet="Matches" />
           </AssociationSet>
+          <EntitySet Name="Treasure" EntityType="Forbbiden_FEIModel.Treasure" />
         </EntityContainer>
         <Association Name="FK_Matches_Player">
           <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="0..1" />
@@ -721,6 +733,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Treasure">
+          <Key>
+            <PropertyRef Name="treasure_id" />
+          </Key>
+          <Property Name="treasure_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -730,6 +750,7 @@
           <EntitySetMapping Name="Card">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.Card">
               <MappingFragment StoreEntitySet="Card">
+                <ScalarProperty Name="card_image_path" ColumnName="card_image_path" />
                 <ScalarProperty Name="card_id" ColumnName="card_id" />
                 <ScalarProperty Name="card_name" ColumnName="card_name" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -856,6 +877,15 @@
                 <ScalarProperty Name="token1" ColumnName="token" />
                 <ScalarProperty Name="is_verified" ColumnName="is_verified" />
                 <ScalarProperty Name="activation_time" ColumnName="activation_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treasure">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Treasure">
+              <MappingFragment StoreEntitySet="Treasure">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="treasure_id" ColumnName="treasure_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

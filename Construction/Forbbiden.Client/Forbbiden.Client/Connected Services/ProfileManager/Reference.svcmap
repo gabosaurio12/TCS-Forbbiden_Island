@@ -22,7 +22,7 @@
     <MetadataSource Address="net.tcp://localhost:8081/ProfileManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="50e8f5a6-c77e-4fe9-b01e-85bf0f9b7f0e" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="a9d76635-fae5-4a8e-a8d7-c8b80e9350e4" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="801a65c4-3080-421d-992a-24633dfe91a5" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="bc1e9109-2f32-4c15-9b13-d6811ff10621" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
     <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="2fc31f42-204a-4f7c-b35a-df1fc3070525" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />

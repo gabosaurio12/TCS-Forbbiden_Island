@@ -169,6 +169,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flood Stack.
+        /// </summary>
+        public static string flood_stack {
+            get {
+                return ResourceManager.GetString("flood_stack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friend Request Accepted.
         /// </summary>
         public static string friend_request_accepted {
@@ -322,6 +331,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Too much cards!.
+        /// </summary>
+        public static string max_cards_exceed {
+            get {
+                return ResourceManager.GetString("max_cards_exceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have.
+        /// </summary>
+        public static string max_cards_exceed_message {
+            get {
+                return ResourceManager.GetString("max_cards_exceed_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max number of Players.
         /// </summary>
         public static string max_players {
@@ -408,6 +435,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string password {
             get {
                 return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a card.
+        /// </summary>
+        public static string pick_card {
+            get {
+                return ResourceManager.GetString("pick_card", resourceCulture);
             }
         }
         
@@ -651,6 +687,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string successful_signup_message {
             get {
                 return ResourceManager.GetString("successful_signup_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Treasure Stack.
+        /// </summary>
+        public static string treasure_stack {
+            get {
+                return ResourceManager.GetString("treasure_stack", resourceCulture);
             }
         }
         

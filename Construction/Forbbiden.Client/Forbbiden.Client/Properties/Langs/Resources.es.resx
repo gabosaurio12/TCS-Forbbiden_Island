@@ -123,9 +123,6 @@
   <data name="avatar_explanation" xml:space="preserve">
     <value>Importa una imagen de tu dispositivo para usarlo como ávatar</value>
   </data>
-  <data name="bossLogin" xml:space="preserve">
-    <value>¡Si inicias sesión puedes elegir tu avatar y hacer amigos!</value>
-  </data>
   <data name="capture_button" xml:space="preserve">
     <value>Capturar</value>
   </data>
@@ -333,8 +330,25 @@
   <data name="invalid_input" xml:space="preserve">
     <value>Campo Inválido</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="boss_invalid_inputs" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="pick_card" xml:space="preserve">
+    <value>Tomar una carta</value>
+  </data>
+  <data name="boss_invalid_inputs" xml:space="preserve">
+    <value>Hubo algunas entradas inválidas en tu formulario, revísalas</value>
+  </data>
+  <data name="bossLogin" xml:space="preserve">
+    <value>¡Si inicias sesión puedes elegir tu avatar y hacer amigos!</value>
+  </data>
+  <data name="treasure_stack" xml:space="preserve">
+    <value>Pila de Tesoros</value>
+  </data>
+  <data name="flood_stack" xml:space="preserve">
+    <value>Pila de Inundación</value>
+  </data>
+  <data name="max_cards_exceed" xml:space="preserve">
+    <value>¡Demasiadas cartas!</value>
+  </data>
+  <data name="max_cards_exceed_message" xml:space="preserve">
+    <value>Con estas cartas tienes más de seis cartas, descarta una para que puedas tomar la nueva o skippea si quieres quedarte con las que tienes</value>
   </data>
 </root>

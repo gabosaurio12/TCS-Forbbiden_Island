@@ -52,7 +52,7 @@
                     FontSize="30"
                     FontFamily="{StaticResource IrishGrover}"
                     FontWeight="Bold"
-                    Cursor="Hand"/>
+                    Cursor="Hand" Click="BtnReady_Click"/>
 
             <Image Source="/Images/Boat.png"
                    Width="1100" Height="400"
@@ -141,6 +141,19 @@
                     </Grid>
                 </StackPanel>
             </StackPanel>
+            <Button x:Name="btnReady_Copy"
+                Content="Ready"
+                Width="200" Height="60"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="0,0,281,40"
+                BorderThickness="5"
+                BorderBrush="Black"
+                Background="#D9D9D9"
+                FontSize="30"
+                FontFamily="{StaticResource IrishGrover}"
+                FontWeight="Bold"
+                Cursor="Hand" Click="btnReady_Server"/>
         </Grid>
     </Viewbox>
 </Page>
