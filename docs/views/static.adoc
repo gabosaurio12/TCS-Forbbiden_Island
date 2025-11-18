@@ -1,0 +1,21 @@
+
+== Modelo de Dominio
+
+El *MD* nos muestra las relaciones entre las entidades del juego.
+
+.Modelo de dominio
+image:../images/domain.png[Modelo de dominio, width=600, align=left]
+
+== Diagrama de clases
+
+Muestra el modelo de las clases del juego, definiendo relaciones, atributos y métodos.
+
+.Diagrama de clases
+image:../images/class.png[Diagrama de clases, width=900, align=left]
+
+== Diagrama de interacción
+
+Muestra las relaciones entre las páginas de WPF (xaml) del juego, así como sus atributos y métodos mediante un diagrama de clases.
+
+.Diagrama de interacción
+image:../images/interaction.png[Diagrama de interacción, width=900, align=center]

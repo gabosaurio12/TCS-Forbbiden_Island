@@ -1,0 +1,24 @@
+
+== Avances 11 de noviembre de 2025
+
+=== Casos de uso
+* Entrar a partida (GUI)
+* Tomar una carta
+* Moverse
+* Pruebas
+* NotificationWindow
+
+=== Porcentajes de contribución
+- Leonardo 50%
+- Gabriel 50%
+
+=== Entrar a partida (GUI)
+
+Responsable: Gabriel
+
+Se construyó la parte visual de cuando un jugador entra a una partida, que aparezca su avatar, acciones y movimientos disponibles.
+
+=== NotificationWindow
+
+Una ventana emergente que informa al usuario algún evento.
+
