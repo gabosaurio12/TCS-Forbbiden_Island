@@ -8,99 +8,101 @@
     </Page.Resources>
 
     <Page.Background>
-        <ImageBrush ImageSource="/Images/Sea.png" Stretch="Fill"/>
+        <ImageBrush ImageSource="/Images/salaServidores.png" Stretch="Fill"/>
     </Page.Background>
+    <Viewbox Stretch="Uniform">
+        <Grid x:Name="LayoutRoot" Width="1920" Height="1080">
 
-    <Grid x:Name="LayoutRoot" Width="1920" Height="1080">
+            <!-- Título -->
+            <TextBlock Text="Apaga el Servidor"
+               FontSize="100"
+               FontWeight="Bold"
+               FontFamily="{StaticResource IrishGrover}"
+               Foreground="White"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="40,20,0,0"/>
 
-        <!-- Título -->
-        <TextBlock Text="Apaga el Servidor"
-                   FontSize="100"
-                   FontWeight="Bold"
-                   FontFamily="{StaticResource IrishGrover}"
-                   Foreground="White"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="40,20,0,0"/>
+            <!-- Tiempo objetivo inicial -->
+            <TextBlock x:Name="TargetTimeText"
+               FontSize="48"
+               FontWeight="Bold"
+               FontFamily="{StaticResource IrishGrover}"
+               Foreground="Orange"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="0,100,0,0"
+               TextAlignment="Center"/>
 
-        <!-- Tiempo objetivo inicial -->
-        <TextBlock x:Name="TargetTimeText"
-                   FontSize="48"
-                   FontWeight="Bold"
-                   FontFamily="{StaticResource IrishGrover}"
-                   Foreground="Orange"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,100,0,0"
-                   TextAlignment="Center"/>
-
-        <!-- Reloj digital -->
-        <Grid Width="800" Height="350"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center">
-            <Border CornerRadius="40" Background="#555">
-                <Border CornerRadius="30" Background="#222" Margin="20">
-                    <Grid>
-                        <TextBlock x:Name="ClockText"
-                                   Text="00:00"
-                                   Foreground="White"
-                                   FontSize="160"
-                                   FontWeight="Bold"
-                                   FontFamily="{StaticResource IrishGrover}"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   TextAlignment="Center"/>
-                    </Grid>
+            <!-- Reloj digital -->
+            <Grid Width="800" Height="350"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center">
+                <Border CornerRadius="40" Background="#555">
+                    <Border CornerRadius="30" Background="#222" Margin="20">
+                        <Grid>
+                            <TextBlock x:Name="ClockText"
+                               Text="00:00"
+                               Foreground="White"
+                               FontSize="160"
+                               FontWeight="Bold"
+                               FontFamily="{StaticResource IrishGrover}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               TextAlignment="Center"/>
+                        </Grid>
+                    </Border>
                 </Border>
-            </Border>
-        </Grid>
-
-        <!-- Avatares de jugadores -->
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    Margin="0,752,0,0"
-                    x:Name="PlayerStack"
-                    Height="278">
-
-            <!-- Jugador1 -->
-            <Grid Width="180" Margin="20,0">
-                <Ellipse x:Name="Avatar1" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
-                <TextBlock x:Name="Name1" Text="Jugador 1" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
             </Grid>
 
-            <!-- Jugador2 -->
-            <Grid Width="180" Margin="20,0">
-                <Ellipse x:Name="Avatar2" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
-                <TextBlock x:Name="Name2" Text="Jugador 2" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
-            </Grid>
-
-            <!-- Jugador3 -->
-            <Grid Width="180" Margin="20,0">
-                <Ellipse x:Name="Avatar3" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
-                <TextBlock x:Name="Name3" Text="Jugador 3" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
-            </Grid>
-
-            <!-- Jugador4 -->
-            <Grid Width="180" Margin="20,0">
-                <Ellipse x:Name="Avatar4" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
-                <TextBlock x:Name="Name4" Text="Jugador 4" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
-            </Grid>
-
-        </StackPanel>
-
-        <!-- Panel de resultados dentro de la pantalla -->
-        <Border x:Name="ResultPanel"
-                BorderBrush="White"
-                BorderThickness="3"
-                CornerRadius="20"
-                Width="600"
-                Height="300"
+            <!-- Avatares de jugadores -->
+            <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Visibility="Collapsed" Background="Black">
-            <StackPanel x:Name="ResultStack" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
+                VerticalAlignment="Top"
+                Margin="0,752,0,0"
+                x:Name="PlayerStack"
+                Height="278">
 
-    </Grid>
+                <!-- Jugador1 -->
+                <Grid Width="180" Margin="20,0">
+                    <Ellipse x:Name="Avatar1" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
+                    <TextBlock x:Name="Name1" Text="Jugador 1" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                </Grid>
+
+                <!-- Jugador2 -->
+                <Grid Width="180" Margin="20,0">
+                    <Ellipse x:Name="Avatar2" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
+                    <TextBlock x:Name="Name2" Text="Jugador 2" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                </Grid>
+
+                <!-- Jugador3 -->
+                <Grid Width="180" Margin="20,0">
+                    <Ellipse x:Name="Avatar3" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
+                    <TextBlock x:Name="Name3" Text="Jugador 3" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                </Grid>
+
+                <!-- Jugador4 -->
+                <Grid Width="180" Margin="20,0">
+                    <Ellipse x:Name="Avatar4" Width="150" Height="150" Stroke="White" StrokeThickness="5" Fill="LightGray"/>
+                    <TextBlock x:Name="Name4" Text="Jugador 4" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                </Grid>
+
+            </StackPanel>
+
+            <!-- Panel de resultados dentro de la pantalla -->
+            <Border x:Name="ResultPanel"
+            BorderBrush="White"
+            BorderThickness="3"
+            CornerRadius="20"
+            Width="600"
+            Height="300"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="Collapsed" Background="Black">
+                <StackPanel x:Name="ResultStack" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+
+        </Grid>
+    </Viewbox>
+    
 </Page>
