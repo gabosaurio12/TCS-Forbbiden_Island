@@ -1,5 +1,6 @@
 using log4net;
 using ProfileManager;
+using Forbbiden.Contracts;
 using System.Data.Entity.Core;
 
 namespace Forbbiden.Test

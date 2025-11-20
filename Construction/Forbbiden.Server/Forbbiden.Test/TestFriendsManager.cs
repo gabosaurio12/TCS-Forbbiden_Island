@@ -1,4 +1,5 @@
-﻿using FriendsManager;
+﻿using Forbbiden.Contracts;
+using FriendsManager;
 using log4net;
 using NUnit.Framework.Internal;
 using ProfileManager;
