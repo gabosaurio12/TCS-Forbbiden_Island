@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Client.model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,14 +31,18 @@ namespace Forbbiden.Client.view.games
         public VerticalCardWindow(CardWindowSettings settings)
         {
             InitializeComponent();
-            cardGrid.Background = new ImageBrush(settings.CardImage);
+            cardGrid.Background = new ImageBrush
+            {
+                ImageSource = settings.CardImage,
+                Stretch = Stretch.UniformToFill
+            };
             cardRectangle.StrokeThickness = settings.StrokeThickness;
             cardRectangle.Stroke = (SolidColorBrush)(new BrushConverter().ConvertFromString(settings.StrokeColor));
             KeyDown += BoardPage_KeyDown;
         }
 
         private void BoardPage_KeyDown(object sender, KeyEventArgs e)
-        {
+         {
             Key[] keys = { Key.Escape, Key.Enter, Key.Space, Key.Return };
             if (keys.Contains(e.Key))
             {

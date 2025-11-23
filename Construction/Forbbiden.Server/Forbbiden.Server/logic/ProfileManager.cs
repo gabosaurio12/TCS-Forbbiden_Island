@@ -418,6 +418,7 @@ namespace Forbbiden.Server.logic
                             }
 
                             db.SaveChanges();
+                            transaction.Commit();
                             success = true;
                             log.Info("Player updated");
                         }

@@ -12,7 +12,7 @@
         ShowInTaskbar="False"
         Title="VerticalCardWindow" Height="300" Width="270">
     
-    <Grid x:Name="cardGrid">
-        <Rectangle x:Name="cardRectangle" Height="170" Width="140" />
+    <Grid x:Name="cardGrid" Height="300" Width="270">
+        <Rectangle x:Name="cardRectangle" Height="300" Width="270" />
     </Grid>
 </Window>

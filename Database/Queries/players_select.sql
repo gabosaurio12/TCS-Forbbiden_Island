@@ -8,4 +8,4 @@ select * from LoginPlayer;
 
 select * from Friends;
 
--- update Player set player_avatar = 'defaultAvatar.png';
+select * from Card;

@@ -3,6 +3,7 @@ using Forbbiden.Server.utils;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 
 namespace Forbbiden.Server.logic
@@ -31,7 +32,25 @@ namespace Forbbiden.Server.logic
 
         public List<Contracts.Card> GetTreasureCards()
         {
-            return new List<Contracts.Card>();
+            using (var db = new Forbbiden_FEIEntities(connectionString))
+            {
+                List<Card> cards = db.Card.Where(c => c.type == "treasure").ToList();
+                
+                List<Contracts.Card> treasureCards = new List<Contracts.Card>();
+                foreach (var card in cards)
+                {
+                    treasureCards.Add(new Contracts.Card
+                    {
+                        CardId = card.card_id,
+                        Name = card.card_name,
+                        Description = card.description,
+                        Type = card.type,
+                        ImagePath = card.card_image_path
+                    });
+                }
+
+                return treasureCards;
+            }
         }
     }
 }

@@ -24,6 +24,12 @@ namespace FriendsManager
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> GetFriendsByIDAsync(int playerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -91,6 +97,16 @@ namespace FriendsManager
             return base.Channel.CancelFriendRequestAsync(senderUsername, receiverUsername);
         }
         
+        public System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername)
+        {
+            return base.Channel.GetFriendRequestsAsync(receiverUsername);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> GetFriendsByIDAsync(int playerID)
+        {
+            return base.Channel.GetFriendsByIDAsync(playerID);
+        }
+        
         public virtual System.Threading.Tasks.Task OpenAsync()
         {
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
@@ -120,7 +136,7 @@ namespace FriendsManager
         {
             if ((endpointConfiguration == EndpointConfiguration.NetTcpBinding_IFriendsManager))
             {
-                return new System.ServiceModel.EndpointAddress("net.tcp://localhost:8081/FriendsManager");
+                return new System.ServiceModel.EndpointAddress("net.tcp://localhost:8082/FriendsManager");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
