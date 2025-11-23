@@ -19,6 +19,11 @@ namespace Forbbiden.Server
             : base("name=Forbbiden_FEIEntities")
         {
         }
+
+        public Forbbiden_FEIEntities(string connectionString)
+            : base(connectionString)
+        {
+        }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -38,7 +43,7 @@ namespace Forbbiden.Server
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<player_socialmedia> player_socialmedia { get; set; }
         public virtual DbSet<Tile> Tile { get; set; }
-        public virtual DbSet<Token> Token { get; set; }
         public virtual DbSet<Treasure> Treasure { get; set; }
+        public virtual DbSet<Token> Token { get; set; }
     }
 }

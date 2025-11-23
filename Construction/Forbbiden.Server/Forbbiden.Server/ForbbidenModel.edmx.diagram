@@ -18,7 +18,6 @@
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Player" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.player_socialmedia" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Tile" Width="1.5" PointX="3.75" PointY="23.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Forbbiden_FEIModel.Token" Width="1.5" PointX="8.75" PointY="5.375" IsExpanded="true" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_match_cards_card" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK__Friend_Re__frien__1332DBDC" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK__Friend_Re__playe__123EB7A3" ManuallyRouted="false" />
@@ -33,7 +32,8 @@
         <AssociationConnector Association="Forbbiden_FEIModel.FK_player_socialmedia" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_Matches_Player" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Treasure" Width="1.5" PointX="0.75" PointY="0.75" />
-        <AssociationConnector Association="Forbbiden_FEIModel.FK_Token_player_id" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Token" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK__Token__player_id__3D2915A8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
