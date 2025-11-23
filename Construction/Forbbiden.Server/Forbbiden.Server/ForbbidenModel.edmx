@@ -124,6 +124,7 @@
           <Property Name="token" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="is_verified" Type="int" Nullable="false" />
           <Property Name="activation_time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="player_id" Type="int" />
         </EntityType>
         <EntityType Name="Treasure">
           <Key>
@@ -289,6 +290,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Token_player_id">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Forbbiden_FEIModelStoreContainer">
           <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="card_catalog" EntityType="Self.card_catalog" Schema="dbo" store:Type="Tables" />
@@ -356,6 +369,10 @@
           <AssociationSet Name="FK_tile_match_tile" Association="Self.FK_tile_match_tile">
             <End Role="Tile" EntitySet="Tile" />
             <End Role="match_tiles" EntitySet="match_tiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_player_id" Association="Self.FK_Token_player_id">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -479,6 +496,7 @@
           <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
           <NavigationProperty Name="player_socialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="player_socialmedia" />
           <NavigationProperty Name="Matches" Relationship="Forbbiden_FEIModel.FK_Matches_Player" FromRole="Player" ToRole="Matches" />
+          <NavigationProperty Name="Token" Relationship="Forbbiden_FEIModel.FK_Token_player_id" FromRole="Player" ToRole="Token" />
         </EntityType>
         <EntityType Name="player_socialmedia">
           <Key>
@@ -507,6 +525,8 @@
           <Property Name="token1" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="is_verified" Type="Int32" Nullable="false" />
           <Property Name="activation_time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="player_id" Type="Int32" />
+          <NavigationProperty Name="Player" Relationship="Forbbiden_FEIModel.FK_Token_player_id" FromRole="Token" ToRole="Player" />
         </EntityType>
         <Association Name="FK_match_cards_card">
           <End Role="Card" Type="Self.Card" Multiplicity="1" />
@@ -720,6 +740,10 @@
             <End Role="Matches" EntitySet="Matches" />
           </AssociationSet>
           <EntitySet Name="Treasure" EntityType="Forbbiden_FEIModel.Treasure" />
+          <AssociationSet Name="FK_Token_player_id" Association="Forbbiden_FEIModel.FK_Token_player_id">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Matches_Player">
           <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="0..1" />
@@ -741,6 +765,18 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK_Token_player_id">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="Forbbiden_FEIModel.Token" Role="Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -873,6 +909,7 @@
           <EntitySetMapping Name="Token">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.Token">
               <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
                 <ScalarProperty Name="token_id" ColumnName="token_id" />
                 <ScalarProperty Name="token1" ColumnName="token" />
                 <ScalarProperty Name="is_verified" ColumnName="is_verified" />

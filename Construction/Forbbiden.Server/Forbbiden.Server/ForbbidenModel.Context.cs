@@ -19,12 +19,7 @@ namespace Forbbiden.Server
             : base("name=Forbbiden_FEIEntities")
         {
         }
-
-        public Forbbiden_FEIEntities(string connectionString)
-            : base(connectionString)
-        {
-        }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

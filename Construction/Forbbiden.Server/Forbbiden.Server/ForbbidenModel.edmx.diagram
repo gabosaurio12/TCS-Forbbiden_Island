@@ -33,6 +33,7 @@
         <AssociationConnector Association="Forbbiden_FEIModel.FK_player_socialmedia" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_Matches_Player" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Treasure" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_Token_player_id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

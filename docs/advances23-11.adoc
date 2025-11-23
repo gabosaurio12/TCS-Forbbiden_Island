@@ -1,0 +1,21 @@
+
+== Avances 11 de noviembre de 2025
+
+=== Casos de uso
+* Actualización de fondo por hora (Cliente-GUI)
+* UserControls (Refactorización)
+* _Flujo normal de turno (Cliente-Jugabilidad)_
+* _Elegir una carta a descartar (Cliente-Jugabilidad)_
+* _Token de verificación (Server-Signup)_
+* _Memento en login y signup (Cliente-Login)_
+
+=== Porcentajes de contribución
+- Leonardo 50%
+- Gabriel 50%
+
+=== Uso de IA
+
+* Generar imágenes y GIFs
+
+*Gabriel:*
+* Se usó ChatGPT para depurar el código y entender el funcionamiento de algunos patrones de diseño
