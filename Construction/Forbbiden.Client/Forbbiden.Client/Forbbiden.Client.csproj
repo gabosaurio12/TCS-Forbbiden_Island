@@ -72,6 +72,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9e7cd3b544a090dc, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.2.0.2\lib\net40\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -129,6 +132,18 @@
     </Compile>
     <Compile Include="view\games\HorizontalCardWindow.xaml.cs">
       <DependentUpon>HorizontalCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\games\UserControlActionButton.xaml.cs">
+      <DependentUpon>UserControlActionButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\games\UserControlBoard.xaml.cs">
+      <DependentUpon>UserControlBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\games\UserControlTile.xaml.cs">
+      <DependentUpon>UserControlTile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\games\UserControlCard.xaml.cs">
+      <DependentUpon>UserControlCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\games\VerticalCardWindow.xaml.cs">
       <DependentUpon>VerticalCardWindow.xaml</DependentUpon>
@@ -388,6 +403,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\games\UserControlActionButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\games\UserControlBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\games\UserControlTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\games\UserControlCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\games\VerticalCardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -574,6 +605,14 @@
     <Resource Include="Images\tiles\treasure2.png" />
     <Resource Include="Images\tiles\treasure3.png" />
     <Resource Include="Images\tiles\treasure4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\board_background.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\salaServidores.png" />

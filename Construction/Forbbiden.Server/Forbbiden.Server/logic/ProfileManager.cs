@@ -16,13 +16,13 @@ namespace Forbbiden.Server.logic
     public class ProfileManager : IProfileManager
     {
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(ProfileManager));
-        private readonly string connectionString;
-        private readonly string defaultAvatarPath = "defaultAvatar.png";
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
+        private readonly string ConnectionString;
+        private readonly string DefaultAvatarPath = "defaultAvatar.png";
 
         public ProfileManager()
         {
-            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
         public bool ValidateEmail(string email)
@@ -35,7 +35,7 @@ namespace Forbbiden.Server.logic
             {
                 try
                 {
-                    using (var db = new Forbbiden_FEIEntities(connectionString))
+                    using (var db = new Forbbiden_FEIEntities(ConnectionString))
                     {
                         var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
                         return emailResult == null;
@@ -54,7 +54,7 @@ namespace Forbbiden.Server.logic
         {
             bool usernameFound = false;
 
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -69,18 +69,23 @@ namespace Forbbiden.Server.logic
             return usernameFound;
         }
 
-        public bool SendEmail(string email)
+        public bool SendEmail(string email, int playerId)
         {
-            log.Info("Sending email");
+            Log.Info("Sending email");
 
             bool success = false;
             string receiver = email;
             string emisor = Properties.email.Default.emailAddress;
+
+            var token = new TokenManager().GenerateToken(playerId);
+
             using (var message = new MailMessage(emisor, receiver))
             using (var client = new SmtpClient(Properties.email.Default.smtp))
             {
                 message.Subject = "Register confirmation";
-                message.Body = "Your account has been succesfully created, welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
+                message.Body = "Your account has been succesfully created. \n" +
+                    "This is your token: " + token.TokenString + "\n" +
+                    "Welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
                 client.Port = 587;
                 string emailCode = Properties.email.Default.emailCode;
                 client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
@@ -89,7 +94,7 @@ namespace Forbbiden.Server.logic
                 try
                 {
                     client.Send(message);
-                    log.Info("Email sent");
+                    Log.Info("Email sent");
                     success = true;
                 }
                 catch (SmtpException ex)
@@ -99,7 +104,7 @@ namespace Forbbiden.Server.logic
                         Error = "SMTP Error",
                         Details = ex.Message
                     };
-                    log.Error(ex);
+                    Log.Error(ex);
 
                     throw new FaultException<EmailFault>(fault,
                         new FaultReason("SmtpException"));
@@ -111,12 +116,12 @@ namespace Forbbiden.Server.logic
 
         public bool SignUp(Contracts.Player player)
         {
-            log.Info("Signing up new player");
+            Log.Info("Signing up new player");
 
             bool success = true;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
-                string avatar = Path.Combine(defaultAvatarPath);
+                string avatar = Path.Combine(DefaultAvatarPath);
                 Player newPlayer = new Player
                 {
                     player_username = player.PlayerUsername,
@@ -124,14 +129,15 @@ namespace Forbbiden.Server.logic
                     player_email = player.PlayerEmail,
                     player_name = "",
                     player_avatar = avatar,
-                    player_status = 0
+                    player_status = 0,
+                    is_verified = 0
                 };
                 try
                 {
                     db.Player.Add(newPlayer);
                     db.SaveChanges();
-                    log.Info("New player signed up");
-                    SendEmail(newPlayer.player_email);
+                    Log.Info("New player signed up");
+                    SendEmail(newPlayer.player_email, newPlayer.player_id);
                 }
                 catch (EntityException ex)
                 {
@@ -143,10 +149,10 @@ namespace Forbbiden.Server.logic
 
         public bool Login(Contracts.Player player)
         {
-            log.Info("Logging in player");
+            Log.Info("Logging in player");
 
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -157,7 +163,7 @@ namespace Forbbiden.Server.logic
 
                     db.SaveChanges();
                     success = true;
-                    log.Info("Player logged in");
+                    Log.Info("Player logged in");
                 }
                 catch (EntityException ex)
                 {
@@ -177,7 +183,7 @@ namespace Forbbiden.Server.logic
             string avatar = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 "Images",
-                defaultAvatarPath);
+                DefaultAvatarPath);
 
             return new Contracts.Player
             {
@@ -202,17 +208,17 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Player GetPlayerByUsername(string username, bool includeFriends = true)
         {
-            log.Info("Retrieving player by username");
+            Log.Info("Retrieving player by username");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
                     var playerResult = db.Player.FirstOrDefault(u => u.player_username == username);
                     if (playerResult != null)
                     {
-                        log.Info("Player found");
+                        Log.Info("Player found");
 
                         player = SetPlayer(playerResult, includeFriends);
                     }
@@ -236,10 +242,10 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Player GetPlayerById(int playerId, bool includeFriends = true)
         {
-            log.Info("Retrieving player by ID");
+            Log.Info("Retrieving player by ID");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -268,7 +274,7 @@ namespace Forbbiden.Server.logic
 
         public List<Friendship> GetFriendsByID(int playerID)
         {
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 var friends = new List<Friends>();
                 try
@@ -302,10 +308,10 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Player GetCurrentLogin()
         {
-            log.Info("Retrieving current logged-in player");
+            Log.Info("Retrieving current logged-in player");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -337,10 +343,10 @@ namespace Forbbiden.Server.logic
 
         public bool ClearCurrentLogin()
         {
-            log.Info("Clearing current logged-in player");
+            Log.Info("Clearing current logged-in player");
 
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -355,14 +361,14 @@ namespace Forbbiden.Server.logic
                 }
             }
 
-            log.Info("Current logged-in player cleared");
+            Log.Info("Current logged-in player cleared");
             return success;
         }
 
         public bool ClearSocials(Player player)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -385,10 +391,10 @@ namespace Forbbiden.Server.logic
 
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
-            log.Info("Updating player");
+            Log.Info("Updating player");
 
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -420,12 +426,12 @@ namespace Forbbiden.Server.logic
                             db.SaveChanges();
                             transaction.Commit();
                             success = true;
-                            log.Info("Player updated");
+                            Log.Info("Player updated");
                         }
                         catch (DbUpdateException ex)
                         {
                             transaction.Rollback();
-                            log.Error(ex);
+                            Log.Error(ex);
 
                             var fault = new DBFault
                             {
@@ -448,11 +454,11 @@ namespace Forbbiden.Server.logic
 
         public bool DeletePlayerByUsername(string username)
         {
-            log.Info("Deleting player by username");
+            Log.Info("Deleting player by username");
 
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -465,7 +471,7 @@ namespace Forbbiden.Server.logic
                         db.Player.Remove(playerToDelete);
                         db.SaveChanges();
 
-                        log.Info("Player deleted");
+                        Log.Info("Player deleted");
                         success = true;
                         return success;
                     }
@@ -481,7 +487,7 @@ namespace Forbbiden.Server.logic
 
         private void HandleEntityException(EntityException ex)
         {
-            log.Error(ex);
+            Log.Error(ex);
 
             var fault = new DBFault
             {

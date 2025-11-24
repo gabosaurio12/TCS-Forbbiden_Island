@@ -72,6 +72,7 @@
     <Compile Include="IGameService.cs" />
     <Compile Include="IMatchManager.cs" />
     <Compile Include="IProfileManager.cs" />
+    <Compile Include="ITokenManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

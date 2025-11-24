@@ -1,8 +1,10 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
 using Forbbiden.Client.view.games;
 using log4net;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +32,26 @@ namespace Forbbiden.Client
             else
             {
                 profileButton.Visibility = Visibility.Hidden;
+            }
+
+            SetBackground();
+        }
+
+        private void SetBackground()
+        {
+            DateTime currentTime = DateTime.Now;
+            string ampm = currentTime.ToString("tt", CultureInfo.InvariantCulture).ToLower();
+            if (ampm == "pm")
+            {
+                string darkBackground = "FEI MainPage3.png";
+                string projectDir = Directory.GetParent(
+                AppDomain.CurrentDomain.BaseDirectory).
+                Parent.Parent.FullName;
+                string imagesPath = System.IO.Path.Combine(
+                    projectDir, "Images");
+                string backgroundPath = System.IO.Path.Combine(
+                    imagesPath, darkBackground);
+                background.ImageSource = ViewUtils.GetImage(backgroundPath);
             }
         }
 

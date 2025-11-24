@@ -19,6 +19,7 @@ namespace Forbbiden.Server
             var matchHost = new ServiceHost(typeof(MatchManager));
             var gameHost = new ServiceHost(typeof(GameService));
             var boardHost = new ServiceHost(typeof(BoardManager));
+            var tokenHost = new ServiceHost(typeof(TokenManager));
 
             try
             {
@@ -28,6 +29,7 @@ namespace Forbbiden.Server
                 matchHost.Open();
                 gameHost.Open();
                 boardHost.Open();
+                tokenHost.Open();
 
                 Console.WriteLine("=== Forbbiden Server ===");
                 Console.WriteLine("Servicios cargados desde App.config.");
@@ -53,11 +55,30 @@ namespace Forbbiden.Server
             }
             finally
             {
-                if (profileHost.State == CommunicationState.Opened) profileHost.Close();
-                if (friendsHost.State == CommunicationState.Opened) friendsHost.Close();
-                if (matchHost.State == CommunicationState.Opened) matchHost.Close();
-                if (gameHost.State == CommunicationState.Opened) gameHost.Close();
-                if (boardHost.State == CommunicationState.Opened) boardHost.Close();
+                if (profileHost.State == CommunicationState.Opened)
+                {
+                    profileHost.Close();
+                }
+                if (friendsHost.State == CommunicationState.Opened)
+                {
+                    friendsHost.Close();
+                }
+                if (matchHost.State == CommunicationState.Opened)
+                {
+                    matchHost.Close();
+                }
+                if (gameHost.State == CommunicationState.Opened)
+                {
+                    gameHost.Close();
+                }
+                if (boardHost.State == CommunicationState.Opened)
+                {
+                    boardHost.Close();
+                }
+                if (tokenHost.State == CommunicationState.Opened)
+                {
+                    tokenHost.Close();
+                }
 
                 Console.WriteLine("Servidor detenido.");
             }

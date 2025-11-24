@@ -17,7 +17,7 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(EmailFault))]
-        bool SendEmail(string email);
+        bool SendEmail(string email, int playerId);
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]

@@ -122,8 +122,7 @@
           </Key>
           <Property Name="token_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="token" Type="nvarchar" MaxLength="6" Nullable="false" />
-          <Property Name="is_verified" Type="int" Nullable="false" />
-          <Property Name="activation_time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="player_id" Type="int" />
         </EntityType>
         <EntityType Name="Treasure">
           <Key>
@@ -153,6 +152,18 @@
               <PropertyRef Name="player_id" />
             </Principal>
             <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__3D2915A8">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
               <PropertyRef Name="player_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -312,6 +323,10 @@
           <AssociationSet Name="FK__Friend_Re__playe__123EB7A3" Association="Self.FK__Friend_Re__playe__123EB7A3">
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__3D2915A8" Association="Self.FK__Token__player_id__3D2915A8">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
           </AssociationSet>
           <AssociationSet Name="FK_LoginPlayer_Player" Association="Self.FK_LoginPlayer_Player">
             <End Role="Player" EntitySet="Player" />
@@ -479,6 +494,7 @@
           <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
           <NavigationProperty Name="player_socialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="player_socialmedia" />
           <NavigationProperty Name="Matches" Relationship="Forbbiden_FEIModel.FK_Matches_Player" FromRole="Player" ToRole="Matches" />
+          <NavigationProperty Name="Token" Relationship="Forbbiden_FEIModel.FK__Token__player_id__3D2915A8" FromRole="Player" ToRole="Token" />
         </EntityType>
         <EntityType Name="player_socialmedia">
           <Key>
@@ -498,15 +514,6 @@
           <Property Name="flooded_level" Type="Int32" Nullable="false" />
           <Property Name="type" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="match_tiles" Relationship="Self.FK_tile_match_tile" FromRole="Tile" ToRole="match_tiles" />
-        </EntityType>
-        <EntityType Name="Token">
-          <Key>
-            <PropertyRef Name="token_id" />
-          </Key>
-          <Property Name="token_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="token1" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="is_verified" Type="Int32" Nullable="false" />
-          <Property Name="activation_time" Type="Time" Nullable="false" Precision="7" />
         </EntityType>
         <Association Name="FK_match_cards_card">
           <End Role="Card" Type="Self.Card" Multiplicity="1" />
@@ -666,7 +673,6 @@
           <EntitySet Name="Player" EntityType="Self.Player" />
           <EntitySet Name="player_socialmedia" EntityType="Self.player_socialmedia" />
           <EntitySet Name="Tile" EntityType="Self.Tile" />
-          <EntitySet Name="Token" EntityType="Self.Token" />
           <AssociationSet Name="FK_match_cards_card" Association="Self.FK_match_cards_card">
             <End Role="Card" EntitySet="Card" />
             <End Role="match_cards" EntitySet="match_cards" />
@@ -720,6 +726,11 @@
             <End Role="Matches" EntitySet="Matches" />
           </AssociationSet>
           <EntitySet Name="Treasure" EntityType="Forbbiden_FEIModel.Treasure" />
+          <EntitySet Name="Token" EntityType="Forbbiden_FEIModel.Token" />
+          <AssociationSet Name="FK__Token__player_id__3D2915A8" Association="Forbbiden_FEIModel.FK__Token__player_id__3D2915A8">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Matches_Player">
           <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="0..1" />
@@ -741,6 +752,27 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="token_id" />
+          </Key>
+          <Property Name="token_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="token1" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="player_id" Type="Int32" />
+          <NavigationProperty Name="Player" Relationship="Forbbiden_FEIModel.FK__Token__player_id__3D2915A8" FromRole="Token" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK__Token__player_id__3D2915A8">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="Forbbiden_FEIModel.Token" Role="Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -870,22 +902,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Token">
-            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Token">
-              <MappingFragment StoreEntitySet="Token">
-                <ScalarProperty Name="token_id" ColumnName="token_id" />
-                <ScalarProperty Name="token1" ColumnName="token" />
-                <ScalarProperty Name="is_verified" ColumnName="is_verified" />
-                <ScalarProperty Name="activation_time" ColumnName="activation_time" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Treasure">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.Treasure">
               <MappingFragment StoreEntitySet="Treasure">
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="treasure_id" ColumnName="treasure_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Token">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+                <ScalarProperty Name="token1" ColumnName="token" />
+                <ScalarProperty Name="token_id" ColumnName="token_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -111,6 +111,12 @@ namespace Forbbiden.Client
             return isValid;
         }
 
+        private void VerifyPlayer()
+        {
+
+
+        }
+
         private void SignupButton_Click(object sender, RoutedEventArgs e)
         {
             ResetTextBlocks(txtBkUsername, txtBkEmail, txtBkPassword);

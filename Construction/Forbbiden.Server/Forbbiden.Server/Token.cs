@@ -16,7 +16,8 @@ namespace Forbbiden.Server
     {
         public int token_id { get; set; }
         public string token1 { get; set; }
-        public int is_verified { get; set; }
-        public System.TimeSpan activation_time { get; set; }
+        public Nullable<int> player_id { get; set; }
+    
+        public virtual Player Player { get; set; }
     }
 }
