@@ -15,7 +15,7 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class SignupPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(SignupPage));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(SignupPage));
         private const int PasswordMinLength = 7;
         public SignupPage()
         {
@@ -113,8 +113,11 @@ namespace Forbbiden.Client
 
         private void VerifyPlayer()
         {
-
-
+            var verificationWindow = new VerificationWIndow()
+            {
+                Owner = Window.GetWindow(this)
+            };
+            verificationWindow.ShowDialog();
         }
 
         private void SignupButton_Click(object sender, RoutedEventArgs e)
@@ -139,7 +142,8 @@ namespace Forbbiden.Client
                     string title = Properties.Langs.Resources.successful_signup;
                     string message = Properties.Langs.Resources.successful_signup_message;
                     OpenNotification(title, message);
-                    NavigationService.Navigate(new LoginPage());
+                    VerifyPlayer();
+                    NavigationService?.Navigate(new LoginPage());
                 }
                 else
                 {

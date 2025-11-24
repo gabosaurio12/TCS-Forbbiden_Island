@@ -9,7 +9,7 @@ namespace Forbbiden.Test
     public class TestProfileManager
     {
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(TestProfileManager));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(TestProfileManager));
         private const string ClassName = "TestProfileManager - ";
 
         [OneTimeSetUp]
@@ -30,7 +30,7 @@ namespace Forbbiden.Test
             }
             catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Forbbiden.Test
             }
             catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Forbbiden.Test
             }
             catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Forbbiden.Test
             }
             catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Forbbiden.Test
             }
             catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Forbbiden.Test
                 Assert.That(result, Is.False, "result should be false");
             } catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
 
@@ -129,7 +129,7 @@ namespace Forbbiden.Test
             }
             catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Forbbiden.Test
             }
             catch (EntityException ex)
             {
-                log.Error(ClassName, ex);
+                Log.Error(ClassName, ex);
             }
         }
     }

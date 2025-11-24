@@ -106,6 +106,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Capture.
         /// </summary>
         public static string capture_button {
@@ -457,6 +466,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player Verified.
+        /// </summary>
+        public static string player_verified {
+            get {
+                return ResourceManager.GetString("player verified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your account has been successfully verified.
+        /// </summary>
+        public static string player_verified_message {
+            get {
+                return ResourceManager.GetString("player_verified_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Players.
         /// </summary>
         public static string players {
@@ -745,11 +772,47 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string verify {
+            get {
+                return ResourceManager.GetString("verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify Account.
+        /// </summary>
+        public static string verify_account {
+            get {
+                return ResourceManager.GetString("verify_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Water Level.
         /// </summary>
         public static string water_level {
             get {
                 return ResourceManager.GetString("water_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong Token.
+        /// </summary>
+        public static string wrong_token {
+            get {
+                return ResourceManager.GetString("wrong_token", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The token you try to verify is not correct, please try again.
+        /// </summary>
+        public static string wrong_token_message {
+            get {
+                return ResourceManager.GetString("wrong_token_message", resourceCulture);
             }
         }
         

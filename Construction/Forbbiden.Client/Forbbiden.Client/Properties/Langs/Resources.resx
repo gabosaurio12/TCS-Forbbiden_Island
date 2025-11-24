@@ -351,4 +351,25 @@
   <data name="max_cards_exceed_message" xml:space="preserve">
     <value>With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have</value>
   </data>
+  <data name="verify_account" xml:space="preserve">
+    <value>Verify Account</value>
+  </data>
+  <data name="verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="player verified" xml:space="preserve">
+    <value>Player Verified</value>
+  </data>
+  <data name="player_verified_message" xml:space="preserve">
+    <value>Your account has been successfully verified</value>
+  </data>
+  <data name="wrong_token" xml:space="preserve">
+    <value>Wrong Token</value>
+  </data>
+  <data name="wrong_token_message" xml:space="preserve">
+    <value>The token you try to verify is not correct, please try again</value>
+  </data>
 </root>

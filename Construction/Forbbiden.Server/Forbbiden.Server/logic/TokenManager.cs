@@ -35,16 +35,27 @@ namespace Forbbiden.Server.logic
                 new FaultReason("EntityException"));
         }
 
+        public string CreateRandomToken()
+        {
+            int tokenLength = 6;
+            int minRandom = 0;
+            int maxRandom = 0;
+            string randomTokenString = "";
+            for (int i = 0; i < tokenLength; i++)
+            {
+                int randomToken = new Random().Next(minRandom, maxRandom);
+                randomTokenString += randomToken;
+            }
+
+            return randomTokenString;
+        }
+
         public Contracts.Token GenerateToken(int playerId)
         {
-            int minToken = 100000;
-            int maxToken = 999999;
-            string randomTokenString = "";
+            string randomTokenString = CreateRandomToken();
             bool success = false;
             do
             {
-                int randomToken = new Random().Next(minToken, maxToken);
-                randomTokenString = randomToken.ToString();
                 try
                 {
                     using (var db = new Forbbiden_FEIEntities(ConnectionString))

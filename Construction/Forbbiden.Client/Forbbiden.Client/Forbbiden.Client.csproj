@@ -110,7 +110,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\TokenManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
+    <Compile Include="Controls\UserControlButton.xaml.cs">
+      <DependentUpon>UserControlButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="logic\CallbacksManager.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
     <Compile Include="logic\ICallbacks.cs" />
@@ -159,6 +167,9 @@
     </Compile>
     <Compile Include="view\info\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\info\VerificationWIndow.xaml.cs">
+      <DependentUpon>VerificationWIndow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\JoinGameControl.xaml.cs">
       <DependentUpon>JoinGameControl.xaml</DependentUpon>
@@ -274,6 +285,19 @@
     <None Include="Connected Services\ProfileManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\TokenManager\Forbbiden.Client.TokenManager.Token.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\TokenManager\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TokenManager\service.wsdl" />
+    <None Include="Connected Services\TokenManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TokenManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -377,8 +401,13 @@
     <WCFMetadataStorage Include="Connected Services\GameManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
+    <WCFMetadataStorage Include="Connected Services\TokenManager\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\UserControlButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\ButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -436,6 +465,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="view\info\NotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\info\VerificationWIndow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -610,6 +643,12 @@
     <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\TokenManager\configuration91.svcinfo" />
+    <None Include="Connected Services\TokenManager\configuration.svcinfo" />
+    <None Include="Connected Services\TokenManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Images\board_background.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

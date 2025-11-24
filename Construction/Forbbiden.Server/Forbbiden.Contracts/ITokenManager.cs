@@ -8,6 +8,9 @@ namespace Forbbiden.Contracts
     public interface ITokenManager
     {
         [OperationContract]
+        string CreateRandomToken();
+
+        [OperationContract]
         Token GenerateToken(int playerId);
 
         [OperationContract]
