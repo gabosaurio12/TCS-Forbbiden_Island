@@ -17,9 +17,8 @@ Se planea abarcar los siguientes puntos en la próxima iteración.
 === Lógica
 
 * Agregar token de verificación
-** En la capa del servidor se crean y duran 24 horas activos
-** Si no se verifica el correo se envía un aviso al correo de que se enviará otro correo de verificación y si no se verifica se eliminará la cuenta
-** Se ingresa el token en la aplicación
+** En la capa del servidor se crean y deben ingresarse en el momento, de lo contrario no se podrá jugar
+** Si no se verifica en 5 minutos se elimina la cuenta
 ** En BD se debe tener una tabla de Not_Verified_Player que es una copia de Player donde se almacenarán los usuarios no verificados
 ** Una vez verificados se agregan a Player y se borran de Not_Verified_Player
 ** En BD debe haber una tabla:
