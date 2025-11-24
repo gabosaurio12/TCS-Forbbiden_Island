@@ -2,6 +2,7 @@
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
 using Forbbiden.Client.view.games;
+using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.Globalization;
@@ -24,9 +25,11 @@ namespace Forbbiden.Client
 
             var client = new ProfileManagerClient();
 
-            if (client.GetCurrentLogin().PlayerId != -1)
+            var currentLogin = client.GetCurrentLogin();
+
+            if (currentLogin.PlayerId != -1)
             {
-                ReloadMainPage(txtBkUser, imgAvatar);
+                ReloadMainPage(currentLogin);
                 logInButton.Visibility = Visibility.Hidden;
             }
             else
@@ -126,15 +129,17 @@ namespace Forbbiden.Client
             }
         }
 
-        public static void ReloadMainPage(TextBlock txtBkUser, Ellipse imgAvatar)
+        public void ReloadMainPage(Player player)
         {
             try
             {
-                var client = new ProfileManagerClient();
-                Player player = client.GetCurrentLogin();
-
                 if (player != null)
                 {
+                    if (player.Verified == 0)
+                    {
+                        verifyButton.Visibility = Visibility.Visible;
+                    }
+
                     txtBkUser.Text = player.PlayerUsername;
 
                     string projectDir = Directory.GetParent(
@@ -159,6 +164,16 @@ namespace Forbbiden.Client
         private void FriendsButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new FriendsPage());
+        }
+
+        private void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var player = new ProfileManagerClient().GetCurrentLoginAsync();
+            var verificationWindow = new VerificationWIndow(player.Id)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            verificationWindow.ShowDialog();
         }
     }
 }

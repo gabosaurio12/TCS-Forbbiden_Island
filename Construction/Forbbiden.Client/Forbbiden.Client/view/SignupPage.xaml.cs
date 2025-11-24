@@ -3,6 +3,7 @@ using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace Forbbiden.Client
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(SignupPage));
         private const int PasswordMinLength = 7;
+        private readonly ProfileManagerClient Client = new ProfileManagerClient();
         public SignupPage()
         {
             InitializeComponent();
@@ -67,7 +69,7 @@ namespace Forbbiden.Client
             txtBlockPassword.Foreground = Brushes.White;
         }
 
-        private bool ValidatePlayer(ref Player player, ProfileManagerClient client)
+        private async Task<bool> ValidatePlayer(Player player)
         {
             bool isValid = true;
             string title = Properties.Langs.Resources.invalid_input;
@@ -93,14 +95,14 @@ namespace Forbbiden.Client
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
             }
-            if (!client.IsUsernameAvailable(player.PlayerUsername))
+            if (!await Client.IsUsernameAvailableAsync(player.PlayerUsername))
             {
                 string message = Properties.Langs.Resources.signup_username_already_used;
                 OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
             }
-            if (!client.ValidateEmail(player.PlayerEmail))
+            if (!await Client.ValidateEmailAsync(player.PlayerEmail))
             {
                 string message = Properties.Langs.Resources.signup_invalid_email;
                 OpenNotification(title, message);
@@ -111,20 +113,19 @@ namespace Forbbiden.Client
             return isValid;
         }
 
-        private void VerifyPlayer()
+        private async Task VerifyPlayer(string username)
         {
-            var verificationWindow = new VerificationWIndow()
+            var player = await Client.GetPlayerByUsernameAsync(username, false);
+            var verificationWindow = new VerificationWIndow(player.PlayerId)
             {
                 Owner = Window.GetWindow(this)
             };
             verificationWindow.ShowDialog();
         }
 
-        private void SignupButton_Click(object sender, RoutedEventArgs e)
+        private async void SignupButton_Click(object sender, RoutedEventArgs e)
         {
             ResetTextBlocks(txtBkUsername, txtBkEmail, txtBkPassword);
-
-            var client = new ProfileManagerClient();
 
             var player = new Player
             {
@@ -133,17 +134,27 @@ namespace Forbbiden.Client
                 PlayerPassword = txtBxPassword.Text
             };
 
-            if (ValidatePlayer(ref player, client))
+            if (await ValidatePlayer(player))
             {
                 player.PlayerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
-                var result = client.SignUp(player);
-                if (result)
+                var playerId = await Client.SignUpAsync(player);
+                if (playerId != -1)
                 {
-                    string title = Properties.Langs.Resources.successful_signup;
-                    string message = Properties.Langs.Resources.successful_signup_message;
-                    OpenNotification(title, message);
-                    VerifyPlayer();
-                    NavigationService?.Navigate(new LoginPage());
+                    if (await Client.SendEmailAsync(player.PlayerEmail, playerId))
+                    {
+                        string title = Properties.Langs.Resources.successful_signup;
+                        string message = Properties.Langs.Resources.successful_signup_message;
+                        OpenNotification(title, message);
+                        await VerifyPlayer(player.PlayerUsername);
+                        NavigationService?.Navigate(new LoginPage());
+                    }
+                    else
+                    {
+                        string title = Properties.Langs.Resources.error;
+                        string message = Properties.Langs.Resources.send_email_error;
+                        OpenNotification(title, message);
+                    }
+                    
                 }
                 else
                 {

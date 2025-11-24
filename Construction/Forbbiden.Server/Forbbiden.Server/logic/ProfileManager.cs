@@ -114,11 +114,11 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-        public bool SignUp(Contracts.Player player)
+        public int SignUp(Contracts.Player player)
         {
             Log.Info("Signing up new player");
 
-            bool success = true;
+            int playerId = -1;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 string avatar = Path.Combine(DefaultAvatarPath);
@@ -136,15 +136,16 @@ namespace Forbbiden.Server.logic
                 {
                     db.Player.Add(newPlayer);
                     db.SaveChanges();
+                    playerId = newPlayer.player_id;
                     Log.Info("New player signed up");
-                    SendEmail(newPlayer.player_email, newPlayer.player_id);
                 }
                 catch (EntityException ex)
                 {
                     HandleEntityException(ex);
                 }
             }
-            return success;
+
+            return playerId;
         }
 
         public bool Login(Contracts.Player player)
@@ -405,6 +406,7 @@ namespace Forbbiden.Server.logic
                     formerPlayer.player_username = updatedPlayer.PlayerUsername;
                     formerPlayer.player_email = updatedPlayer.PlayerEmail;
                     formerPlayer.player_avatar = updatedPlayer.PlayerAvatarPath;
+                    formerPlayer.is_verified = updatedPlayer.Verified;
 
                     using (var transaction = db.Database.BeginTransaction())
                     {

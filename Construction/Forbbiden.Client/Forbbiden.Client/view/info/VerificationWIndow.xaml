@@ -69,7 +69,8 @@
                 Foreground="White"
                 Margin="20"
                 FontSize="26"
-                Cursor="Hand" >
+                Cursor="Hand"
+                Click="CancelButton_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"

@@ -498,17 +498,17 @@ namespace Forbbiden.Client.ProfileManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.EmailFault), Action="http://tempuri.org/IProfileManager/SendEmailEmailFaultFault", Name="EmailFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        bool SendEmail(string email);
+        bool SendEmail(string email, int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
-        System.Threading.Tasks.Task<bool> SendEmailAsync(string email);
+        System.Threading.Tasks.Task<bool> SendEmailAsync(string email, int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/SignUpDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        bool SignUp(Forbbiden.Client.ProfileManager.Player player);
+        int SignUp(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
-        System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Client.ProfileManager.Player player);
+        System.Threading.Tasks.Task<int> SignUpAsync(Forbbiden.Client.ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/LoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -603,19 +603,19 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.IsUsernameAvailableAsync(username);
         }
         
-        public bool SendEmail(string email) {
-            return base.Channel.SendEmail(email);
+        public bool SendEmail(string email, int playerId) {
+            return base.Channel.SendEmail(email, playerId);
         }
         
-        public System.Threading.Tasks.Task<bool> SendEmailAsync(string email) {
-            return base.Channel.SendEmailAsync(email);
+        public System.Threading.Tasks.Task<bool> SendEmailAsync(string email, int playerId) {
+            return base.Channel.SendEmailAsync(email, playerId);
         }
         
-        public bool SignUp(Forbbiden.Client.ProfileManager.Player player) {
+        public int SignUp(Forbbiden.Client.ProfileManager.Player player) {
             return base.Channel.SignUp(player);
         }
         
-        public System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Client.ProfileManager.Player player) {
+        public System.Threading.Tasks.Task<int> SignUpAsync(Forbbiden.Client.ProfileManager.Player player) {
             return base.Channel.SignUpAsync(player);
         }
         

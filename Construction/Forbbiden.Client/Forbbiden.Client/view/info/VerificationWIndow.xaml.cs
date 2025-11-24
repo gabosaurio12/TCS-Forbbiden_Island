@@ -38,7 +38,7 @@ namespace Forbbiden.Client.view.info
         {
             var notificationWindow = new NotificationWindow(title, message)
             {
-                Owner = Window.GetWindow(this)
+                Owner = GetWindow(this)
             };
             notificationWindow.ShowDialog();
         }
@@ -47,11 +47,11 @@ namespace Forbbiden.Client.view.info
         private string GetToken()
         {
             string token = txtBx1.Text.Trim();
-            token.Concat(txtBx2.Text.Trim());
-            token.Concat(txtBx3.Text.Trim());
-            token.Concat(txtBx4.Text.Trim());
-            token.Concat(txtBx5.Text.Trim());
-            token.Concat(txtBx6.Text.Trim());
+            token += txtBx2.Text.Trim();
+            token += txtBx3.Text.Trim();
+            token += txtBx4.Text.Trim();          
+            token += txtBx5.Text.Trim();
+            token += txtBx6.Text.Trim();
             return token;
         }
 
@@ -115,6 +115,11 @@ namespace Forbbiden.Client.view.info
         private void VerifyButton_Click(object sender, RoutedEventArgs e)
         {
             VerifyToken();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

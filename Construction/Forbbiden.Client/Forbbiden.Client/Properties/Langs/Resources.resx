@@ -372,4 +372,7 @@
   <data name="wrong_token_message" xml:space="preserve">
     <value>The token you try to verify is not correct, please try again</value>
   </data>
+  <data name="send_email_error" xml:space="preserve">
+    <value>There was an error while sending your verification email, contact us at: forbbidenislandfei@gmail.com</value>
+  </data>
 </root>

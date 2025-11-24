@@ -583,6 +583,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while sending your verification email, contact us at: forbbidenislandfei@gmail.com.
+        /// </summary>
+        public static string send_email_error {
+            get {
+                return ResourceManager.GetString("send_email_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string settings {

@@ -21,7 +21,7 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
-        bool SignUp(Player player);
+        int SignUp(Player player);
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
