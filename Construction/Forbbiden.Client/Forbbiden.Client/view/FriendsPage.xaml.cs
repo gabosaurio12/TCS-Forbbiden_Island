@@ -2,19 +2,15 @@
 using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.info;
 using log4net;
 using System;
-using System.IO;
 using System.Linq;
-using System.Numerics;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Forbbiden.Client.view
