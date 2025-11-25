@@ -61,7 +61,7 @@ namespace Forbbiden.Client.view.info
             var player = await profileManager.GetPlayerByIdAsync(PlayerID, false);
             if (player != null)
             {
-                player.Verified = 1;
+                player.IsVerified = 1;
                 var updated = await profileManager.UpdatePlayerAsync(player);
                 if (updated)
                 {

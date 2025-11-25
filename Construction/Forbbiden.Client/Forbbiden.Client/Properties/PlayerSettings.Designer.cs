@@ -13,11 +13,11 @@ namespace Forbbiden.Client.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class PlayerSettings : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static PlayerSettings defaultInstance = ((PlayerSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new PlayerSettings())));
         
-        public static Settings Default {
+        public static PlayerSettings Default {
             get {
                 return defaultInstance;
             }
@@ -25,13 +25,13 @@ namespace Forbbiden.Client.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
-        public string languageCode {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CurrentPlayerId {
             get {
-                return ((string)(this["languageCode"]));
+                return ((int)(this["CurrentPlayerId"]));
             }
             set {
-                this["languageCode"] = value;
+                this["CurrentPlayerId"] = value;
             }
         }
     }

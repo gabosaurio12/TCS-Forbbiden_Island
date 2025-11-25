@@ -46,23 +46,11 @@ namespace Forbbiden.Client.view
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var client = new ProfileManagerClient();
-
-                if (!client.ClearCurrentLogin())
-                {
-                    MessageBox.Show(Properties.Langs.Resources.log_out_error);
-                }
-
-                Application.Current.Shutdown();
-                log.Info("App closed");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Properties.Langs.Resources.quit_game_error);
-                log.Error("MainPage.xaml.cs - QuitGameButton_Click", ex);
-            }
+            Properties.PlayerSettings.Default.CurrentPlayerId = 0;
+            Properties.PlayerSettings.Default.Save();
+            Application.Current.Shutdown();
+            log.Info("App closed");
+            
         }
     }
 }

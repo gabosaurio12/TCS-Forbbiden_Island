@@ -1,18 +1,15 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.model;
-using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfAnimatedGif;
 
@@ -37,14 +34,11 @@ namespace Forbbiden.Client.view.games
         {
             InitializeComponent();
 
-            var currentPlayer = new ProfileManagerClient().GetCurrentLogin();
             TreasureCards = BoardManager.GetTreasureCards().ToList();
             FloodCards = BoardManager.GetFloodCards().ToList();
             DiscardStackTreasureCards = new List<Card>();
-            
-            string projectDir = Directory.GetParent(
-                AppDomain.CurrentDomain.BaseDirectory).
-                Parent.Parent.FullName;
+
+            string projectDir = ViewUtils.GetProjectDir();
 
             ImagesPath = System.IO.Path.Combine(
                 projectDir, "Images");
@@ -57,7 +51,7 @@ namespace Forbbiden.Client.view.games
             Focus();
 
             SetBoard();
-            SetPlayersAvatars(currentPlayer);
+            SetPlayersAvatars();
         }
 
         private void InitGif()
@@ -65,7 +59,7 @@ namespace Forbbiden.Client.view.games
             string gifName = "board_background.gif";
             string gifPath = System.IO.Path.Combine(
                 ImagesPath, gifName);
-            var gif = ViewUtils.GetImage(gifPath);
+            var gif = ViewUtils.GetBitmapImage(gifPath);
 
             ImageBehavior.SetAnimatedSource(gifBackground, gif);
         }
@@ -93,9 +87,9 @@ namespace Forbbiden.Client.view.games
             mainGrid.Children.Add(Board);
         }
 
-        private void SetPlayersAvatars(Player player)
+        private void SetPlayersAvatars()
         {
-            Board.AddPlayerAvatar(player);
+            Board.AddPlayerAvatar(ClientSession.GetPlayer());
         }
 
         private void ShowCardOnBoard(Card card)
@@ -107,7 +101,7 @@ namespace Forbbiden.Client.view.games
             {
                 StrokeThickness = 15,
                 StrokeColor = "#A81D0F",
-                CardImage = ViewUtils.GetImage(cardImagePath)
+                CardImage = ViewUtils.GetBitmapImage(cardImagePath)
             };
             if (card.Name == "water_rise_name")
             {
@@ -139,7 +133,7 @@ namespace Forbbiden.Client.view.games
                     Margin = new Thickness(15),
                     Fill = new ImageBrush
                     {
-                        ImageSource = ViewUtils.GetImage(card.ImagePath),
+                        ImageSource = ViewUtils.GetBitmapImage(card.ImagePath),
                         Stretch = Stretch.UniformToFill
                     }
                 });
@@ -161,7 +155,7 @@ namespace Forbbiden.Client.view.games
             WaterLevelCount++;
             string waterLevelImagePath = System.IO.Path.Combine(
                 ImagesPath, $"waterLevel-{WaterLevelCount}.png");
-            waterLevel.Source = ViewUtils.GetImage(waterLevelImagePath);
+            waterLevel.Source = ViewUtils.GetBitmapImage(waterLevelImagePath);
             FloodCards.Clear();
             FloodCards = BoardManager.GetFloodCards().ToList();
             DiscardStackTreasureCards.Add(card);

@@ -148,23 +148,32 @@ namespace Forbbiden.Server.logic
             return playerId;
         }
 
-        public bool Login(Contracts.Player player)
+        public Contracts.Player Login(string username, string password)
         {
             Log.Info("Logging in player");
 
-            bool success = false;
+            Contracts.Player player = new Contracts.Player
+            {
+                PlayerId = -1
+            };
+
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
-                    db.LoginPlayer.Add(new LoginPlayer
-                    {
-                        login_player_id = player.PlayerId,
-                    });
+                    var searchPlayer = db.Player.First(p => p.player_username == username);
 
-                    db.SaveChanges();
-                    success = true;
-                    Log.Info("Player logged in");
+                    if (searchPlayer != null)
+                    {
+                        if (BCrypt.Net.BCrypt.Verify(password, searchPlayer.player_password))
+                        {
+                            player = SetPlayer(searchPlayer, false);
+                        }
+                        else
+                        {
+                            player.PlayerId = -2;
+                        }
+                    }
                 }
                 catch (EntityException ex)
                 {
@@ -172,7 +181,7 @@ namespace Forbbiden.Server.logic
                 }
             }
 
-            return success;
+            return player;
         }
 
         private Contracts.Player SetPlayer(Player player, bool includeFriends = true)
@@ -194,8 +203,8 @@ namespace Forbbiden.Server.logic
                 PlayerPassword = player.player_password,
                 PlayerEmail = player.player_email,
                 PlayerAvatarPath = player.player_avatar ?? avatar,
-                Status = player.player_status ?? 0,
-                Verified = player.is_verified ?? 0,
+                Status = (int)player.player_status,
+                IsVerified = (int)player.is_verified,
                 SocialMedia = player.player_socialmedia.Select(sm => new SocialMedia
                 {
                     PlayerId = player.player_id,
@@ -406,7 +415,7 @@ namespace Forbbiden.Server.logic
                     formerPlayer.player_username = updatedPlayer.PlayerUsername;
                     formerPlayer.player_email = updatedPlayer.PlayerEmail;
                     formerPlayer.player_avatar = updatedPlayer.PlayerAvatarPath;
-                    formerPlayer.is_verified = updatedPlayer.Verified;
+                    formerPlayer.is_verified = updatedPlayer.IsVerified;
 
                     using (var transaction = db.Database.BeginTransaction())
                     {

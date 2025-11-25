@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Forbbiden.Client.Controls.UserControlFriendRequest"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Forbbiden.Client.Controls"
+             xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
+             mc:Ignorable="d" 
+             d:DesignWidth="800">
+    <Grid Width="800"
+          Background="LightGray"
+          Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Ellipse x:Name="avatarEllipse" Grid.Column="0"
+                 Width="100" Height="100"
+                 VerticalAlignment="Center"
+                 Margin="20,20,0,20" >
+            <Ellipse.Fill >
+                <ImageBrush ImageSource="/avatars/defaultAvatar.png" />
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <TextBlock x:Name="friendUsernametxtBk" Grid.Column="1"
+                   Text="{x:Static language:Resources.username}"
+                   VerticalAlignment="Center"
+                   Margin="50,0,0,0"
+                   FontSize="48"
+                   FontFamily="{StaticResource IrishGrover}" />
+
+        <Button x:Name="acceptBtn" Grid.Column="2"
+                Content="+"
+                VerticalAlignment="Center" HorizontalAlignment="center"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                Margin="20,0,10,0"
+                Width="60" Height="60"
+                FontSize="54"
+                FontFamily="{StaticResource IrishGrover}"
+                Background="#43C414"
+                Foreground="White"
+                Cursor="Hand"
+                />
+
+        <Button x:Name="rejectBtn" Grid.Column="3"
+                Content="-"
+                VerticalAlignment="Center" HorizontalAlignment="center"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                Margin="20,0,10,0"
+                Width="60" Height="60"
+                FontSize="54"
+                FontFamily="{StaticResource IrishGrover}"
+                Background="#C41414"
+                Foreground="White"
+                Cursor="Hand"
+                />
+
+    </Grid>
+</UserControl>

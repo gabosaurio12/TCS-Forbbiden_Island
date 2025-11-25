@@ -10,4 +10,6 @@ select * from LoginPlayer;
 
 select * from Friends;
 
+select * from match_players;
+
 select * from Card;

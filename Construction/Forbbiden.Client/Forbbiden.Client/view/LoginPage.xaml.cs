@@ -1,10 +1,9 @@
+using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.IO;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,9 +16,8 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class LoginPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
-        private readonly ProfileManagerClient client = new ProfileManagerClient();
-        private bool passwordVisible = false;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LoginPage));
+        private bool PasswordVisible = false;
         public LoginPage()
         {
             InitializeComponent();
@@ -37,73 +35,53 @@ namespace Forbbiden.Client
             txtBk.Foreground = Brushes.Red;
         }
 
-        private static bool ValidatePassword(string passwordTry, string hashedPassword)
-        {
-            return BCrypt.Net.BCrypt.Verify(passwordTry, hashedPassword);
-        }
-
-        private async Task LoginPlayer(Player player)
-        {
-            bool loggedIn = false;
-            try
-            {
-                loggedIn = await client.LoginAsync(player);
-            }
-            catch (FaultException<DBFault> dbFault)
-            {
-                log.Error(dbFault.Detail);
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.loginError;
-                var notificationWindow = new NotificationWindow(title, message)
-                {
-                    Owner = Window.GetWindow(this)
-                };
-                notificationWindow.ShowDialog();
-            }
-
-            if (loggedIn)
-            {
-
-                NavigationService?.Navigate(new MainPage());
-
-                log.Info("User '{searchPlayer.PlayerUsername}' logged in.");
-            }
-        }
-
         private async void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             ResetFields(txtBkUser, txtBkPassword, txtBkBoss);
 
             string username = txtBxUsername.Text.Trim();
 
-            var searchPlayer = await client.GetPlayerByUsernameAsync(username, false);
+            string password = "";
+            if (chkPassword.IsChecked == true)
+            {
+                password = txtBxPasswordVisible.Text;
+            }
+            else
+            {
+                password = pwdBxPassword.Password;
+            }
 
-            if (searchPlayer.PlayerId == -1)
+            Player player = new Player();
+
+            try
+            {
+                var client = new ProfileManagerClient();
+                player = await client.LoginAsync(username, password);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                Log.Error("ERROR: LoginPage.BtnLogin_Click", dbFault);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
+            }
+
+
+            if (player.PlayerId > 0)
+            {
+                ClientSession.SetPlayer(player);
+                Properties.PlayerSettings.Default.CurrentPlayerId = ClientSession.CurrentPlayerId;
+                Properties.PlayerSettings.Default.Save();
+                NavigationService?.Navigate(new MainPage());
+                Log.Info("Player logged in.");
+            }
+            else if (player.PlayerId == -1)
             {
                 txtBkBoss.Text = Properties.Langs.Resources.usernameNoExists;
                 BrushTextBlock(txtBkUser);
             }
             else
             {
-                string password = "";
-                if (chkPassword.IsChecked == true)
-                {
-                    password = txtBxPasswordVisible.Text;
-                }
-                else
-                {
-                    password = pwdBxPassword.Password;
-                }
-
-                if (ValidatePassword(password, searchPlayer.PlayerPassword))
-                {
-                    await LoginPlayer(searchPlayer);
-                }
-                else
-                {
-                    BrushTextBlock(txtBkPassword);
-                    txtBkBoss.Text = Properties.Langs.Resources.wrongPassword;
-                }
+                BrushTextBlock(txtBkPassword);
+                txtBkBoss.Text = Properties.Langs.Resources.wrongPassword;
             }
         }
 
@@ -111,7 +89,7 @@ namespace Forbbiden.Client
         {
             string projectPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
 
-            if (!passwordVisible)
+            if (!PasswordVisible)
             {
                 string darkBossPath = Path.Combine(projectPath, "Images", "bossdark.png");
                 bossImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(darkBossPath));
@@ -119,14 +97,14 @@ namespace Forbbiden.Client
                 txtBxPasswordVisible.Text = pwdBxPassword.Password;
                 txtBxPasswordVisible.Visibility = Visibility.Visible;
                 pwdBxPassword.Visibility = Visibility.Collapsed;
-                passwordVisible = true;
+                PasswordVisible = true;
             }
             else
             {
                 pwdBxPassword.Password = txtBxPasswordVisible.Text;
                 txtBxPasswordVisible.Visibility = Visibility.Collapsed;
                 pwdBxPassword.Visibility = Visibility.Visible;
-                passwordVisible = false;
+                PasswordVisible = false;
 
                 string bossPath = Path.Combine(projectPath, "Images", "boss.png");
                 bossImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(bossPath));

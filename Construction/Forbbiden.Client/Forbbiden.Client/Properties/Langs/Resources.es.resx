@@ -375,4 +375,7 @@
   <data name="send_email_error" xml:space="preserve">
     <value>Hubo un error al enviar tu correo de verificación, contáctenos en: forbbidenislandfei@gmail.com</value>
   </data>
+  <data name="load_page_error" xml:space="preserve">
+    <value>Hubo un error al cargar la página, inténtalo de nuevo o contáctanos a: forbbidenislandfei@gmail.com</value>
+  </data>
 </root>

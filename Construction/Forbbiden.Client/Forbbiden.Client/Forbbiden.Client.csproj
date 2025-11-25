@@ -119,7 +119,14 @@
     <Compile Include="Controls\UserControlButton.xaml.cs">
       <DependentUpon>UserControlButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UserControlFriend.xaml.cs">
+      <DependentUpon>UserControlFriend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
+      <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="logic\CallbacksManager.cs" />
+    <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
     <Compile Include="logic\ICallbacks.cs" />
     <Compile Include="logic\ViewUtils.cs" />
@@ -129,6 +136,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\PlayerSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>PlayerSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="view\FriendRequestsPage.xaml.cs">
       <DependentUpon>FriendRequestsPage.xaml</DependentUpon>
     </Compile>
@@ -206,11 +224,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <EmbeddedResource Include="Properties\Langs\Resources.es.resx" />
     <EmbeddedResource Include="Properties\Langs\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -237,6 +250,14 @@
     </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.Friendship.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Properties\PlayerSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>PlayerSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Resource Include="Fonts\IrishGrover.ttf" />
     <None Include="Connected Services\FriendsManager\Forbbiden.Contracts1.xsd">
@@ -306,10 +327,6 @@
     <None Include="Properties\DataSources\Forbbiden.Contracts.Friendship.datasource" />
     <None Include="Properties\DataSources\Forbbiden.Contracts.Match.datasource" />
     <None Include="Properties\DataSources\Forbbiden.Contracts.Player.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -405,6 +422,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\UserControlButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UserControlFriend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UserControlFriendRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -649,6 +674,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Resource Include="avatars\Reyna 1.jpg" />
     <Content Include="Images\board_background.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

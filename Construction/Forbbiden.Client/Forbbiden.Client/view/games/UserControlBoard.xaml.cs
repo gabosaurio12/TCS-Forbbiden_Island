@@ -3,13 +3,10 @@ using Forbbiden.Client.ProfileManager;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Forbbiden.Client.view.games
@@ -20,7 +17,6 @@ namespace Forbbiden.Client.view.games
     public partial class UserControlBoard : UserControl
     {
         private readonly int NumberOfTreasures = 4;
-        private readonly string AvatarImagesPath;
         private readonly string TilesImagesPath;
         private readonly string ImagesPath;
 
@@ -28,9 +24,7 @@ namespace Forbbiden.Client.view.games
         {
             InitializeComponent();
 
-            string projectDir = Directory.GetParent(
-                AppDomain.CurrentDomain.BaseDirectory).
-                Parent.Parent.FullName;
+            string projectDir = ViewUtils.GetProjectDir();
 
             ImagesPath = System.IO.Path.Combine(
                 projectDir, "Images");
@@ -113,7 +107,7 @@ namespace Forbbiden.Client.view.games
             {
                 string treasureImage = $"treasure{i + 1}.png";
                 string treasureImagePath = System.IO.Path.Combine(TilesImagesPath, treasureImage);
-                var treasureBitmap = ViewUtils.GetImage(treasureImagePath);
+                var treasureBitmap = ViewUtils.GetBitmapImage(treasureImagePath);
 
                 UserControlTile tile = shuffledTiles[i];
                 string redColorCode = "#A81D0F";
@@ -129,7 +123,7 @@ namespace Forbbiden.Client.view.games
             string freeTileImage = "free.jpg";
             string imagePath = System.IO.Path.Combine(
                 TilesImagesPath, freeTileImage);
-            var freeTileBitmap = ViewUtils.GetImage(imagePath);
+            var freeTileBitmap = ViewUtils.GetBitmapImage(imagePath);
 
             List<UserControlTile> tiles = GetAllTilesFromGrid();
             foreach (var tile in tiles)
@@ -141,8 +135,7 @@ namespace Forbbiden.Client.view.games
 
         private Ellipse GetAvatarEllipse(string avatarPath)
         {
-
-            var avatarBitmap = ViewUtils.GetImage(avatarPath);
+            var avatarBitmap = ViewUtils.GetBitmapImage(avatarPath);
 
             Ellipse ellipse = new Ellipse
             {
@@ -163,9 +156,7 @@ namespace Forbbiden.Client.view.games
 
         public void AddPlayerAvatar(Player player)
         {
-            string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).
-                    Parent.Parent.FullName;
+            string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
             Ellipse boardAvatar = GetAvatarEllipse(avatarPath);
 

@@ -295,6 +295,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while loading the page, try again or contact us at: forbbidenislandfei@gmail.com.
+        /// </summary>
+        public static string load_page_error {
+            get {
+                return ResourceManager.GetString("load_page_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error while logging out at data base.
         /// </summary>
         public static string log_out_error {

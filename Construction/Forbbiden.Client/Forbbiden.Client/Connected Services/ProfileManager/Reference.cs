@@ -148,6 +148,9 @@ namespace Forbbiden.Client.ProfileManager {
         private Forbbiden.Client.ProfileManager.Friendship[] FriendsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IsVerifiedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlayerAvatarPathField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -171,9 +174,6 @@ namespace Forbbiden.Client.ProfileManager {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int StatusField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int VerifiedField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -193,6 +193,19 @@ namespace Forbbiden.Client.ProfileManager {
                 if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
                     this.FriendsField = value;
                     this.RaisePropertyChanged("Friends");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IsVerified {
+            get {
+                return this.IsVerifiedField;
+            }
+            set {
+                if ((this.IsVerifiedField.Equals(value) != true)) {
+                    this.IsVerifiedField = value;
+                    this.RaisePropertyChanged("IsVerified");
                 }
             }
         }
@@ -297,19 +310,6 @@ namespace Forbbiden.Client.ProfileManager {
                 if ((this.StatusField.Equals(value) != true)) {
                     this.StatusField = value;
                     this.RaisePropertyChanged("Status");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Verified {
-            get {
-                return this.VerifiedField;
-            }
-            set {
-                if ((this.VerifiedField.Equals(value) != true)) {
-                    this.VerifiedField = value;
-                    this.RaisePropertyChanged("Verified");
                 }
             }
         }
@@ -512,10 +512,10 @@ namespace Forbbiden.Client.ProfileManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/LoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        bool Login(Forbbiden.Client.ProfileManager.Player player);
+        Forbbiden.Client.ProfileManager.Player Login(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
-        System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Client.ProfileManager.Player player);
+        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> LoginAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -619,12 +619,12 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.SignUpAsync(player);
         }
         
-        public bool Login(Forbbiden.Client.ProfileManager.Player player) {
-            return base.Channel.Login(player);
+        public Forbbiden.Client.ProfileManager.Player Login(string username, string password) {
+            return base.Channel.Login(username, password);
         }
         
-        public System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Client.ProfileManager.Player player) {
-            return base.Channel.LoginAsync(player);
+        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> LoginAsync(string username, string password) {
+            return base.Channel.LoginAsync(username, password);
         }
         
         public Forbbiden.Client.ProfileManager.Player GetPlayerByUsername(string username, bool includeFriends) {

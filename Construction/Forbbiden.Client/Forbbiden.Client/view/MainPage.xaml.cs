@@ -7,37 +7,52 @@ using log4net;
 using System;
 using System.Globalization;
 using System.IO;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Forbbiden.Client
 {
     public partial class MainPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
-
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MainPage));
+        private readonly ProfileManagerClient Client = new ProfileManagerClient();
         public MainPage()
         {
             InitializeComponent();
-
-            var client = new ProfileManagerClient();
-
-            var currentLogin = client.GetCurrentLogin();
-
-            if (currentLogin.PlayerId != -1)
-            {
-                ReloadMainPage(currentLogin);
-                logInButton.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                profileButton.Visibility = Visibility.Hidden;
-            }
-
+            SetLogin();
             SetBackground();
+        }
+
+        private async void SetLogin()
+        {
+            int playerId = Properties.PlayerSettings.Default.CurrentPlayerId;
+
+            if (playerId > 0)
+            {
+                Player currentLogin = new Player();
+
+                try
+                {
+                    currentLogin = await Client.GetPlayerByIdAsync(playerId, false);
+                }
+                catch (FaultException<DBFault> ex)
+                {
+                    Log.Error("ERROR: MainPage.SetLogin", ex);
+                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                }
+
+                if (currentLogin.PlayerId > 0)
+                {
+                    ClientSession.SetPlayer(currentLogin);
+                    ReloadMainPage(currentLogin);
+                    logInButton.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    profileButton.Visibility = Visibility.Hidden;
+                }
+            }
         }
 
         private void SetBackground()
@@ -50,11 +65,11 @@ namespace Forbbiden.Client
                 string projectDir = Directory.GetParent(
                 AppDomain.CurrentDomain.BaseDirectory).
                 Parent.Parent.FullName;
-                string imagesPath = System.IO.Path.Combine(
+                string imagesPath = Path.Combine(
                     projectDir, "Images");
-                string backgroundPath = System.IO.Path.Combine(
+                string backgroundPath = Path.Combine(
                     imagesPath, darkBackground);
-                background.ImageSource = ViewUtils.GetImage(backgroundPath);
+                background.ImageSource = ViewUtils.GetBitmapImage(backgroundPath);
             }
         }
 
@@ -67,8 +82,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la página de juego.");
-                log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.PlayButton_Click", ex);
             }
         }
 
@@ -80,8 +95,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la configuración.");
-                log.Error("MainPage.xaml.cs - SettingsButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.SettingsButton_Click", ex);
             }
         }
 
@@ -94,25 +109,14 @@ namespace Forbbiden.Client
         {
             try
             {
-                var client = new ProfileManagerClient();
-                Player player = client.GetCurrentLogin();
+                Player player = ClientSession.GetPlayer();
 
-                if (NavigationService != null)
-                {
-                    if (player == null)
-                    {
-                        NavigationService.Navigate(new ProfilePage());
-                    }
-                    else
-                    {
-                        NavigationService.Navigate(new ProfilePage(player));
-                    }
-                }
+                NavigationService?.Navigate(new ProfilePage(player));
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir el perfil.");
-                log.Error("MainPage.xaml.cs - ProfileButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.ProfileButton_Click", ex);
             }
         }
 
@@ -124,8 +128,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la página de login.");
-                log.Error("MainPage.xaml.cs - LogInButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.LogInButton_Click", ex);
             }
         }
 
@@ -133,31 +137,22 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (player != null)
+                if (player.IsVerified == 0)
                 {
-                    if (player.Verified == 0)
-                    {
-                        verifyButton.Visibility = Visibility.Visible;
-                    }
-
-                    txtBkUser.Text = player.PlayerUsername;
-
-                    string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                    string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
-
-                    var bmp = new BitmapImage();
-                    bmp.BeginInit();
-                    bmp.CacheOption = BitmapCacheOption.OnLoad;
-                    bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-                    bmp.EndInit();
-                    imgAvatar.Fill = new ImageBrush(bmp);
-
+                    verifyButton.Visibility = Visibility.Visible;
                 }
+
+                txtBkUser.Text = player.PlayerUsername;
+
+                string projectDir = ViewUtils.GetProjectDir();
+                string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+                imgAvatar.Fill = ViewUtils.GetImageBrush(avatarPath);
+
             }
             catch (Exception ex)
             {
-                log.Error("MainPage.xaml.cs - ReloadMainPage", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.ReloadMainPage", ex);
             }
         }
 
@@ -168,8 +163,8 @@ namespace Forbbiden.Client
 
         private void VerifyButton_Click(object sender, RoutedEventArgs e)
         {
-            var player = new ProfileManagerClient().GetCurrentLoginAsync();
-            var verificationWindow = new VerificationWIndow(player.Id)
+            var player = ClientSession.GetPlayer();
+            var verificationWindow = new VerificationWIndow(player.PlayerId)
             {
                 Owner = Window.GetWindow(this)
             };

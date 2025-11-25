@@ -2,24 +2,14 @@
 {
     "jugadores": [
         {
-            "username": "Sheldor",
-            "password": "Sh3ldon"
+            "username": "gabosaurio",
+            "password": "G4bo_saurio",
+            "email": "mazinger.gl@gmail.com"
         },
         {
-            "username": "gabosaurio05",
-            "password": "G4bo_saurio"
-        },
-        {
-            "username": "Tt",
-            "password": "T3poringa_"
-        },
-        {
-            "username": "li0",
-            "password": "Li0nardo_"
-        },
-        {
-            "username": "Gonort",
-            "password": "G0nortg_"
+            "username": "gabohacker",
+            "password": "G4bo_hacker",
+            "email": "mazinger.gl@hotmail.com"
         }
     ]
 }

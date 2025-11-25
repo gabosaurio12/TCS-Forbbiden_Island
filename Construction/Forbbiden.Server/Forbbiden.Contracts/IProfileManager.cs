@@ -25,7 +25,7 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
-        bool Login(Player player);
+        Player Login(string username, string password);
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
@@ -70,7 +70,7 @@ namespace Forbbiden.Contracts
         [DataMember]
         public int Status { get; set; }
         [DataMember]
-        public int Verified { get; set; }
+        public int IsVerified { get; set; }
         [DataMember]
         public List<SocialMedia> SocialMedia { get; set; }
         [DataMember]

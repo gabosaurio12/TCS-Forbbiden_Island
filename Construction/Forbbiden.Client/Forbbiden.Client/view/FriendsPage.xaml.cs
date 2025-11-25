@@ -1,10 +1,14 @@
-﻿using Forbbiden.Client.FriendsManager;
+﻿using Forbbiden.Client.Controls;
+using Forbbiden.Client.FriendsManager;
+using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
+using log4net;
 using System;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,22 +24,33 @@ namespace Forbbiden.Client.view
     /// </summary>
     public partial class FriendsPage : Page
     {
-        private string currentLoginUsername;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsPage));
+        private readonly ProfileManagerClient ProfileClient = new ProfileManagerClient();
+        private readonly FriendsManagerClient FriendsClient = new FriendsManagerClient();
+
+
         public FriendsPage()
         {
             InitializeComponent();
-            SetFriends();
+            _ = SetFriends();
+            _ = SetFriendRequests();
         }
 
-        private void SetFriends()
+        private async Task SetFriends()
         {
-            var profileManager = new ProfileManagerClient();
+            var player = new ProfileManager.Player();
 
-            var player = profileManager.GetCurrentLogin();
+            try
+            {
+                player = await ProfileClient.GetPlayerByUsernameAsync(ClientSession.Username, true);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                Log.Error("ERROR: FriendsPage.SetFriends", dbFault);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
+            }
             if (player.PlayerId != -1)
             {
-                currentLoginUsername = player.PlayerUsername;
-
                 var onlineFriends = player.Friends
                     .Where(fs => fs.Friend.Status == 1)
                     .Select(fs => fs.Friend).ToList();
@@ -52,109 +67,48 @@ namespace Forbbiden.Client.view
                 {
                     AddOfflineFriend(friendShip);
                 }
-
-                var friendsClient = new FriendsManagerClient();
-                var requests = friendsClient.GetFriendRequests(currentLoginUsername);
-                if (requests.Length > 0)
-                {
-                    Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
-                    storyboard.Begin();
-                }
-                else
-                {
-                    Storyboard storyboard = (Storyboard)FindResource("HideNotification");
-                    storyboard.Begin();
-                }
             }
         }
 
-        private void OpenNotification(string title, string message)
+        private async Task SetFriendRequests()
         {
-            var notificationWindow = new NotificationWindow(title, message)
+            var requests = await FriendsClient.GetFriendRequestsAsync(ClientSession.Username);
+            if (requests.Length > 0)
             {
-                Owner = Window.GetWindow(this)
-            };
-            notificationWindow.ShowDialog();
+                Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
+                storyboard.Begin();
+            }
+            else
+            {
+                Storyboard storyboard = (Storyboard)FindResource("HideNotification");
+                storyboard.Begin();
+            }
         }
 
         public void AddOnlineFriend(ProfileManager.Player friend)
         {
-            StackPanel friendStack = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                Margin = new Thickness(40,0,40,0),
-                Background = Brushes.LightGray
-            };
+            var friendControl = new UserControlFriend();
 
-            ImageBrush avatarImg = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(new Uri(friend.PlayerAvatarPath)));
+            string projectDir = ViewUtils.GetProjectDir();
+            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
+            ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            friendControl.SetAvatarImage(avatarImage);
 
-            Ellipse avatar = new Ellipse
-            {
-                Width = 100,
-                Height = 100,
-                VerticalAlignment = VerticalAlignment.Center,
-                Fill = avatarImg,
-                Margin = new Thickness(20,20,0,20)
-            };
-
-            string irishGoverFont = "{StaticResource IrishGrover}";
-
-            TextBlock friendName = new TextBlock
-            {
-                Text = friend.PlayerUsername,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(50, 0, 0, 0),
-                FontSize = 48,
-                FontFamily = new FontFamily(irishGoverFont),
-            };
-
-            friendStack.Children.Add(avatar);
-            friendStack.Children.Add(friendName);
-            onlineStack.Children.Add(friendStack);
+            friendControl.SetFriendUsername(friend.PlayerUsername);
+            onlineStack.Children.Add(friendControl);
         }
 
         public void AddOfflineFriend(ProfileManager.Player friend)
         {
-            StackPanel friendStack = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                Margin = new Thickness(40, 0, 40, 0),
-                Background = Brushes.LightGray
-            };
+            var friendControl = new UserControlFriend();
 
-            string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+            string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
+            ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            friendControl.SetAvatarImage(avatarImage);
 
-            var bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.CacheOption = BitmapCacheOption.OnLoad;
-            bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-            bmp.EndInit();
-
-            Ellipse avatar = new Ellipse
-            {
-                Width = 100,
-                Height = 100,
-                VerticalAlignment = VerticalAlignment.Center,
-                Fill = new ImageBrush(bmp),
-                Margin = new Thickness(20, 20, 0, 20)
-            };
-
-            string irishGoverFont = "{StaticResource IrishGrover}";
-
-            TextBlock friendName = new TextBlock
-            {
-                Text = friend.PlayerUsername,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(50, 0, 0, 0),
-                FontSize = 48,
-                FontFamily = new FontFamily(irishGoverFont),
-            };
-
-            friendStack.Children.Add(avatar);
-            friendStack.Children.Add(friendName);
-            offlineStack.Children.Add(friendStack);
+            friendControl.SetFriendUsername(friend.PlayerUsername);
+            offlineStack.Children.Add(friendControl);
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -182,25 +136,43 @@ namespace Forbbiden.Client.view
 
         private async Task SendFriendRequest(string receiverUsername)
         {
-            var profileClient = new ProfileManagerClient();
-
-            var receiver = await profileClient.GetPlayerByUsernameAsync(receiverUsername, true);
+            var receiver = new ProfileManager.Player();
+            try
+            {
+                receiver = await ProfileClient.GetPlayerByUsernameAsync(receiverUsername, true);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                Log.Error("ERROR: FriendsPage.SendFriendRequest", dbFault);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
+            }
             if (receiver.PlayerId != -1)
             {
                 var friendsClient = new FriendsManagerClient();
-                var requestStatus = await friendsClient.SendFriendRequestAsync(currentLoginUsername, receiver.PlayerUsername);
+
+                bool requestStatus = false; ;
+
+                try
+                {
+                    requestStatus = await friendsClient.SendFriendRequestAsync(ClientSession.Username, receiver.PlayerUsername);
+                }
+                catch (FaultException<DBFault> dbFault)
+                {
+                    Log.Error("ERROR: FriendsPage.SendFriendRequest", dbFault);
+                    ViewUtils.ShowPushError(Window.GetWindow(this));
+                }
 
                 if (requestStatus)
                 {
                     string title = Properties.Langs.Resources.friend_request_sent_title;
                     string message = Properties.Langs.Resources.friend_request_sent_message + receiverUsername;
-                    OpenNotification(title, message);
+                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 }
                 else
                 {
                     string title = Properties.Langs.Resources.error;
                     string message = Properties.Langs.Resources.friend_request_not_sent;
-                    OpenNotification(title, message);
+                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 }
             }
         }
