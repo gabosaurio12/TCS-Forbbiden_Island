@@ -90,6 +90,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\FriendRequestCallback\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\FriendsManager\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,10 +130,8 @@
     <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="logic\CallbacksManager.cs" />
     <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
-    <Compile Include="logic\ICallbacks.cs" />
     <Compile Include="logic\ViewUtils.cs" />
     <Compile Include="model\CardWindowSettings.cs" />
     <Compile Include="Properties\Langs\Resources.Designer.cs">
@@ -243,6 +246,16 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\BoardManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendRequestCallback\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendRequestCallback\service.wsdl" />
+    <None Include="Connected Services\FriendRequestCallback\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendRequestCallback\service1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.FriendRequest.datasource">
@@ -414,6 +427,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BoardManager\" />
+    <WCFMetadataStorage Include="Connected Services\FriendRequestCallback\" />
     <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
     <WCFMetadataStorage Include="Connected Services\GameManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchManager\" />
@@ -675,6 +689,12 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Resource Include="avatars\Reyna 1.jpg" />
+    <None Include="Connected Services\FriendRequestCallback\configuration91.svcinfo" />
+    <None Include="Connected Services\FriendRequestCallback\configuration.svcinfo" />
+    <None Include="Connected Services\FriendRequestCallback\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Images\board_background.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

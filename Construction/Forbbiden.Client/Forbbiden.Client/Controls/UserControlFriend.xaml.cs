@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Forbbiden.Client.Controls
 {
@@ -13,14 +14,14 @@ namespace Forbbiden.Client.Controls
             InitializeComponent();
         }
 
-        public void SetAvatarImage(ImageBrush avatarImage)
+        public void SetAvatarImage(Ellipse ellipse, ImageBrush avatarImage)
         {
-            avatarEllipse.Fill = avatarImage;
+            ellipse.Fill = avatarImage;
         }
 
-        public void SetFriendUsername(string username)
+        public void SetFriendUsername(TextBlock textBlock, string username)
         {
-            usernameTxtBk.Text = username;
+            textBlock.Text = username;
         }
     }
 }

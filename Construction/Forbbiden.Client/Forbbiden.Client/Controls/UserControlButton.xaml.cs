@@ -25,19 +25,19 @@ namespace Forbbiden.Client.Controls
             InitializeComponent();
         }
 
-        public void SetBackgroundColor(Color color)
+        public void SetBackgroundColor(Button button, Color color)
         {
-            Background = new SolidColorBrush(color);
+            button.Background = new SolidColorBrush(color);
         }
 
-        public void SetForeground(Color color)
+        public void SetForeground(Button button, Color color)
         {
-            Foreground = new SolidColorBrush(color);
+            button.Foreground = new SolidColorBrush(color);
         }
 
-        public void SetText(string text)
+        public void SetText(Button button, string text)
         {
-            Content = text;
+            button.Content = text;
         }
     }
 }

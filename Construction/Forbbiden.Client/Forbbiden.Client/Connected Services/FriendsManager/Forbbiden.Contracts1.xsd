@@ -30,6 +30,7 @@
   <xs:complexType name="Player">
     <xs:sequence>
       <xs:element minOccurs="0" name="Friends" nillable="true" type="tns:ArrayOfFriendship" />
+      <xs:element minOccurs="0" name="IsVerified" type="xs:int" />
       <xs:element minOccurs="0" name="PlayerAvatarPath" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlayerEmail" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlayerId" type="xs:int" />
@@ -38,7 +39,6 @@
       <xs:element minOccurs="0" name="PlayerUsername" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SocialMedia" nillable="true" type="tns:ArrayOfSocialMedia" />
       <xs:element minOccurs="0" name="Status" type="xs:int" />
-      <xs:element minOccurs="0" name="Verified" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Player" nillable="true" type="tns:Player" />

@@ -15,6 +15,7 @@ namespace Forbbiden.Server.logic
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(MatchManager));
         private const string CLASS_NAME = "MatchManager.cs";
+        private readonly string Guest = "Guest";
         private const string ERROR_CODE = "[ERROR] MatchManager.cs - ";
         private readonly string connectionString;
         public MatchManager()
@@ -85,8 +86,6 @@ namespace Forbbiden.Server.logic
 
         public bool JoinMatch(JoinMatchRequest request)
         {
-            log.Info($"Player {request.Username} joining match {request.MatchId}");
-
             try
             {
                 using (var db = new Forbbiden_FEIEntities(connectionString))
@@ -161,10 +160,10 @@ namespace Forbbiden.Server.logic
                                                       PlayerId = mp.player_id,
                                                       PlayerUsername = mp.player_id > 0
                                                           ? p.player_username
-                                                          : "Guest" + Math.Abs(mp.player_id),
+                                                          : Guest + Math.Abs(mp.player_id),
                                                       PlayerName = mp.player_id > 0
                                                           ? p.player_name
-                                                          : "Guest",
+                                                          : Guest,
                                                       IsHost = mp.player_id == m.host_id
                                                   }).ToList()
                                    }).ToList();
@@ -181,8 +180,6 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Match GetMatchById(int matchId)
         {
-            log.Info($"Retrieving match by ID: {matchId}");
-
             try
             {
                 using (var db = new Forbbiden_FEIEntities(connectionString))
@@ -206,10 +203,10 @@ namespace Forbbiden.Server.logic
                                                     PlayerId = mp.player_id,
                                                     PlayerUsername = mp.player_id > 0
                                                         ? p.player_username
-                                                        : "Guest" + Math.Abs(mp.player_id),
+                                                        : Guest + Math.Abs(mp.player_id),
                                                     PlayerName = mp.player_id > 0
                                                         ? p.player_name
-                                                        : "Guest",
+                                                        : Guest,
                                                     IsHost = mp.player_id == m.host_id
                                                 }).ToList()
                                  }).FirstOrDefault();

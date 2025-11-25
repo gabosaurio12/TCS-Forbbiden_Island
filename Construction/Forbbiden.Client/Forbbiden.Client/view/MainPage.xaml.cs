@@ -8,8 +8,10 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Forbbiden.Client
 {
@@ -20,11 +22,11 @@ namespace Forbbiden.Client
         public MainPage()
         {
             InitializeComponent();
-            SetLogin();
-            SetBackground();
+            _ = SetLogin();
+            SetBackground(background);
         }
 
-        private async void SetLogin()
+        private async Task SetLogin()
         {
             int playerId = Properties.PlayerSettings.Default.CurrentPlayerId;
 
@@ -55,7 +57,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private void SetBackground()
+        private static void SetBackground(ImageBrush background)
         {
             DateTime currentTime = DateTime.Now;
             string ampm = currentTime.ToString("tt", CultureInfo.InvariantCulture).ToLower();

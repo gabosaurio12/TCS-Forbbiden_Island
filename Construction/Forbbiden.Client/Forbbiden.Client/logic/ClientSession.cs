@@ -2,7 +2,7 @@
 
 namespace Forbbiden.Client.logic
 {
-    public class ClientSession
+    public static class ClientSession
     {
         public static int CurrentPlayerId { get; private set; }
         public static string Name { get; set; }

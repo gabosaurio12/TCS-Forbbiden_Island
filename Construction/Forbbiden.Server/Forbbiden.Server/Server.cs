@@ -20,6 +20,7 @@ namespace Forbbiden.Server
             var gameHost = new ServiceHost(typeof(GameService));
             var boardHost = new ServiceHost(typeof(BoardManager));
             var tokenHost = new ServiceHost(typeof(TokenManager));
+            var friendRequestCallbackHost = new ServiceHost(typeof(FriendRequestCallback));
 
             try
             {
@@ -30,6 +31,7 @@ namespace Forbbiden.Server
                 gameHost.Open();
                 boardHost.Open();
                 tokenHost.Open();
+                friendRequestCallbackHost.Open();
 
                 Console.WriteLine("=== Forbbiden Server ===");
                 Console.WriteLine("Servicios cargados desde App.config.");
@@ -78,6 +80,10 @@ namespace Forbbiden.Server
                 if (tokenHost.State == CommunicationState.Opened)
                 {
                     tokenHost.Close();
+                }
+                if (friendRequestCallbackHost.State == CommunicationState.Opened)
+                {
+                    friendRequestCallbackHost.Close();
                 }
 
                 Console.WriteLine("Servidor detenido.");

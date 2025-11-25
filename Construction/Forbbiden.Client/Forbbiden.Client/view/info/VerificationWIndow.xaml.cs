@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.TokenManager;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace Forbbiden.Client.view.info
             return token;
         }
 
-        private async void VerifyPlayer()
+        private async Task VerifyPlayer()
         {
             var profileManager = new ProfileManagerClient();
             var player = await profileManager.GetPlayerByIdAsync(PlayerID, false);
@@ -68,7 +69,7 @@ namespace Forbbiden.Client.view.info
                     string title = Properties.Langs.Resources.player_verified;
                     string message = Properties.Langs.Resources.player_verified_message;
 
-                    OpenNotification(title, message);
+                    ViewUtils.OpenNotificationWindow(title, message, GetWindow(this));
                     Close();
                 }
                 else
@@ -100,7 +101,7 @@ namespace Forbbiden.Client.view.info
                 var isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
                 if (isToken)
                 {
-                    VerifyPlayer();
+                    _ = VerifyPlayer();
                 }
                 else
                 {

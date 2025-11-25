@@ -6,7 +6,9 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
+using System.Text;
 
 namespace Forbbiden.Server.logic
 {
@@ -43,12 +45,14 @@ namespace Forbbiden.Server.logic
             Random random = new Random();
             int minRandom = 0;
             int maxRandom = 9;
-            string randomTokenString = "";
+            StringBuilder builder = new StringBuilder();
             for (int i = 0; i < tokenLength; i++)
             {
                 int randomToken = random.Next(minRandom, maxRandom);
-                randomTokenString += randomToken.ToString();
+                builder.Append(randomToken);
             }
+
+            string randomTokenString = builder.ToString();
 
             return randomTokenString;
         }
@@ -73,6 +77,7 @@ namespace Forbbiden.Server.logic
                             };
                             db.Token.Add(searchToken);
                             db.SaveChanges();
+                            success = true;
 
                             return new Contracts.Token
                             {

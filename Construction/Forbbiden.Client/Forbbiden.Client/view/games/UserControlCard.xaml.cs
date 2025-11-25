@@ -19,7 +19,7 @@ namespace Forbbiden.Client.view.games
             InitializeComponent();
         }
 
-        public void SetImage(BitmapImage image)
+        public static void SetImage(BitmapImage image, Image cardImage)
         {
             cardImage.Source = image;
             cardImage.Stretch = Stretch.UniformToFill;

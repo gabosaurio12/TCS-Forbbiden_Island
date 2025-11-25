@@ -20,11 +20,11 @@ namespace Forbbiden.Client.view.games
     /// </summary>
     public partial class BoardPage : Page
     {
-        private BoardManagerClient BoardManager = new BoardManagerClient();
+        private readonly BoardManagerClient BoardManager = new BoardManagerClient();
         private List<Card> TreasureCards;
-        private List<Card> DiscardStackTreasureCards;
+        private readonly List<Card> DiscardStackTreasureCards;
         private List<Card> FloodCards;
-        private List<Card> PlayerCards = new List<Card>();
+        private readonly List<Card> PlayerCards = new List<Card>();
         private int WaterLevelCount = 0;
         private readonly string ImagesPath;
         private readonly string CardsImagesPath;

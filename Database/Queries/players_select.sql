@@ -1,6 +1,7 @@
 use Forbbiden_FEI
 
---delete from Player where player_username = 'sheldor'
+--delete from Token where player_id =1346
+--delete from Player where player_username = 'li0'
 --update Friends set status = 0
 
 select * from Token;

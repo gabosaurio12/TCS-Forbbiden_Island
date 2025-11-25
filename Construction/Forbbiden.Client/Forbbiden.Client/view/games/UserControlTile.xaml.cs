@@ -20,7 +20,7 @@ namespace Forbbiden.Client.view.games
             InitializeComponent();
         }
 
-        public void SetImage(BitmapImage image)
+        public static void SetImage(BitmapImage image, Image tileImage)
         {
             tileImage.Source = image;
             tileImage.Stretch = Stretch.UniformToFill;
@@ -31,12 +31,12 @@ namespace Forbbiden.Client.view.games
             return (BitmapImage)tileImage.Source;
         }
 
-        public void SetBorderBrush(Color color)
+        public static void SetBorderBrush(Color color, UserControlTile tile)
         {
             tile.BorderBrush = new SolidColorBrush(color);
         }
 
-        public void AddAvatar(Ellipse avatar)
+        public static void AddAvatar(Ellipse avatar, Grid tileGrid)
         {
             avatar.VerticalAlignment = VerticalAlignment.Center;
             avatar.HorizontalAlignment = HorizontalAlignment.Center;

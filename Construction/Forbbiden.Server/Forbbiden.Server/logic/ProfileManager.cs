@@ -3,6 +3,7 @@ using Forbbiden.Server.utils;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
@@ -20,6 +21,8 @@ namespace Forbbiden.Server.logic
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
         private readonly string ConnectionString;
         private readonly string DefaultAvatarPath = "defaultAvatar.png";
+        private readonly string DatabaseError = "Database Error";
+        private readonly string EntityError = "EntityException";
 
         public ProfileManager()
         {
@@ -361,12 +364,12 @@ namespace Forbbiden.Server.logic
 
                             var fault = new DBFault
                             {
-                                Error = "Database Error",
+                                Error = DatabaseError,
                                 Details = ex.Message
                             };
 
                             throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
+                                new FaultReason(EntityError));
                         }
                     }  
                 }
@@ -411,12 +414,12 @@ namespace Forbbiden.Server.logic
 
                             var fault = new DBFault
                             {
-                                Error = "Database Error",
+                                Error = DatabaseError,
                                 Details = ex.Message
                             };
 
                             throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
+                                new FaultReason(EntityError));
                         }
                     }
                 }
@@ -494,12 +497,12 @@ namespace Forbbiden.Server.logic
 
                             var fault = new DBFault
                             {
-                                Error = "Database Error",
+                                Error = DatabaseError,
                                 Details = ex.Message
                             };
 
                             throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
+                                new FaultReason(EntityError));
                         }                        
                     }                    
                 }
@@ -552,12 +555,12 @@ namespace Forbbiden.Server.logic
 
             var fault = new DBFault
             {
-                Error = "Database Error",
+                Error = DatabaseError,
                 Details = ex.Message
             };
 
             throw new FaultException<DBFault>(fault,
-                new FaultReason("EntityException"));
+                new FaultReason(EntityError));
         }
     }
 }

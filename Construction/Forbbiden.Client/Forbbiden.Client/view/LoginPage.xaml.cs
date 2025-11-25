@@ -39,14 +39,14 @@ namespace Forbbiden.Client
         {
             string username = txtBxUsername.Text.Trim();
 
-            string password = "";
+            string password;
             if (chkPassword.IsChecked == true)
             {
-                password = txtBxPasswordVisible.Text;
+                password = txtBxPasswordVisible.Text.Trim();
             }
             else
             {
-                password = pwdBxPassword.Password;
+                password = pwdBxPassword.Password.Trim();
             }
 
             return new Player

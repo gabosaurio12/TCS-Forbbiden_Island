@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace Forbbiden.Client.logic
 {
-    public class ViewUtils
+    public static class ViewUtils
     {
 
         public static BitmapImage GetBitmapImage(string imagePath)

@@ -18,18 +18,28 @@ namespace Forbbiden.Client.view
     /// <summary>
     /// Interaction logic for FriendsPage.xaml
     /// </summary>
-    public partial class FriendsPage : Page
+    public partial class FriendsPage : Page, IFriendsManagerCallback
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsPage));
         private readonly ProfileManagerClient ProfileClient = new ProfileManagerClient();
-        private readonly FriendsManagerClient FriendsClient = new FriendsManagerClient();
+        private readonly FriendsManagerClient FriendsClient;
 
 
         public FriendsPage()
         {
             InitializeComponent();
+
+            var callbackManager = new InstanceContext(this);
+            FriendsClient = new FriendsManagerClient(callbackManager);
+
             _ = SetFriends();
             _ = SetFriendRequests();
+        }
+
+        public void OnFriendRequestReceived(FriendRequest friendRequest)
+        {
+            Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
+            storyboard.Begin();
         }
 
         private async Task SetFriends()
@@ -56,12 +66,12 @@ namespace Forbbiden.Client.view
 
                 foreach (var friendShip in onlineFriends)
                 {
-                    AddOnlineFriend(friendShip);
+                    AddOnlineFriend(friendShip, onlineStack);
                 }
 
                 foreach (var friendShip in offlineFriends)
                 {
-                    AddOfflineFriend(friendShip);
+                    AddOfflineFriend(friendShip, offlineStack);
                 }
             }
         }
@@ -81,29 +91,29 @@ namespace Forbbiden.Client.view
             }
         }
 
-        public void AddOnlineFriend(ProfileManager.Player friend)
+        public static void AddOnlineFriend(ProfileManager.Player friend, StackPanel onlineStack)
         {
             var friendControl = new UserControlFriend();
 
             string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
             ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
-            friendControl.SetAvatarImage(avatarImage);
+            friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
 
-            friendControl.SetFriendUsername(friend.PlayerUsername);
+            friendControl.SetFriendUsername(friendControl.usernameTxtBk, friend.PlayerUsername);
             onlineStack.Children.Add(friendControl);
         }
 
-        public void AddOfflineFriend(ProfileManager.Player friend)
+        public static void AddOfflineFriend(ProfileManager.Player friend, StackPanel offlineStack)
         {
             var friendControl = new UserControlFriend();
 
             string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
             ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
-            friendControl.SetAvatarImage(avatarImage);
+            friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
 
-            friendControl.SetFriendUsername(friend.PlayerUsername);
+            friendControl.SetFriendUsername(friendControl.usernameTxtBk, friend.PlayerUsername);
             offlineStack.Children.Add(friendControl);
         }
 
@@ -144,13 +154,11 @@ namespace Forbbiden.Client.view
             }
             if (receiver.PlayerId != -1)
             {
-                var friendsClient = new FriendsManagerClient();
-
-                bool requestStatus = false; ;
+                bool requestStatus = false;
 
                 try
                 {
-                    requestStatus = await friendsClient.SendFriendRequestAsync(ClientSession.Username, receiver.PlayerUsername);
+                    requestStatus = await FriendsClient.SendFriendRequestAsync(ClientSession.Username, receiver.PlayerUsername);
                 }
                 catch (FaultException<DBFault> dbFault)
                 {

@@ -36,7 +36,8 @@ namespace Forbbiden.Server.logic
                     if (sender.PlayerId != -1 && receiver.PlayerId != -1)
                     {
 
-                        var friendRequest = db.Friends.FirstOrDefault(fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
+                        var friendRequest = db.Friends.FirstOrDefault(
+                            fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
 
                         if (friendRequest != null)
                         {
@@ -53,6 +54,12 @@ namespace Forbbiden.Server.logic
             }
 
             return success;
+        }
+
+        private void SendFriendequestCallback(FriendRequest friendRequest)
+        {
+            var callback = OperationContext.Current.GetCallbackChannel<IFriendRequestCallback>();
+            callback.OnFriendRequestReceived(friendRequest);
         }
 
         public bool SendFriendRequest(string senderUsername, string receiverUsername)
@@ -85,8 +92,16 @@ namespace Forbbiden.Server.logic
                                 status = 0
                             };
 
+                            var friendRequestCallback = new FriendRequest
+                            {
+                                SenderID = sender.PlayerId,
+                                ReceiverID = receiver.PlayerId,
+                                Status = 0
+                            };
+
                             db.Friends.Add(friendRequest);
                             db.SaveChanges();
+                            SendFriendequestCallback(friendRequestCallback);
                             success = true;
                         }
                     }
