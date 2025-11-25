@@ -133,6 +133,27 @@ namespace Forbbiden.Client
             }
         }
 
+        private async void ConnectPlayer(string username)
+        {
+            var client = new ProfileManagerClient();
+            bool isConnected = false;
+
+            try
+            {
+                isConnected = await client.ConnectPlayerByUsernameAsync(username);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                Log.Error("ERROR: LoginPage.ConnectPlayer", dbFault);
+                ViewUtils.ShowPushError(Window.GetWindow(this));
+            }
+
+            if (isConnected)
+            {
+                ClientSession.Status = 1;
+            }
+        }
+
         public void ReloadMainPage(Player player)
         {
             try
@@ -145,8 +166,9 @@ namespace Forbbiden.Client
                 txtBkUser.Text = player.PlayerUsername;
 
                 string projectDir = ViewUtils.GetProjectDir();
-                string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+                string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
                 imgAvatar.Fill = ViewUtils.GetImageBrush(avatarPath);
+                ConnectPlayer(ClientSession.Username);
 
             }
             catch (Exception ex)

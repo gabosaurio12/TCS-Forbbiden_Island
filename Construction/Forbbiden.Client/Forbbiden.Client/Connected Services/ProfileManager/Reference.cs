@@ -531,19 +531,17 @@ namespace Forbbiden.Client.ProfileManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId, bool includeFriends);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        Forbbiden.Client.ProfileManager.Player GetCurrentLogin();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse")]
+        bool ConnectPlayerByUsername(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetCurrentLoginAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse")]
+        System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ClearCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/ClearCurrentLoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/ClearCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        bool ClearCurrentLogin();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
+        bool DisconnectPlayerByUsername(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ClearCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/ClearCurrentLoginResponse")]
-        System.Threading.Tasks.Task<bool> ClearCurrentLoginAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
+        System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/UpdatePlayerDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -643,20 +641,20 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.GetPlayerByIdAsync(playerId, includeFriends);
         }
         
-        public Forbbiden.Client.ProfileManager.Player GetCurrentLogin() {
-            return base.Channel.GetCurrentLogin();
+        public bool ConnectPlayerByUsername(string username) {
+            return base.Channel.ConnectPlayerByUsername(username);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetCurrentLoginAsync() {
-            return base.Channel.GetCurrentLoginAsync();
+        public System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username) {
+            return base.Channel.ConnectPlayerByUsernameAsync(username);
         }
         
-        public bool ClearCurrentLogin() {
-            return base.Channel.ClearCurrentLogin();
+        public bool DisconnectPlayerByUsername(string username) {
+            return base.Channel.DisconnectPlayerByUsername(username);
         }
         
-        public System.Threading.Tasks.Task<bool> ClearCurrentLoginAsync() {
-            return base.Channel.ClearCurrentLoginAsync();
+        public System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username) {
+            return base.Channel.DisconnectPlayerByUsernameAsync(username);
         }
         
         public bool UpdatePlayer(Forbbiden.Client.ProfileManager.Player updatedPlayer) {

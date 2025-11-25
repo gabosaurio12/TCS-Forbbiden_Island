@@ -109,7 +109,7 @@ namespace Forbbiden.Client.view
             try
             {
                 var profileClient = new ProfileManagerClient();
-                var player = profileClient.GetCurrentLogin();
+                var player = ClientSession.GetPlayer();
 
                 if (player != null && player.PlayerId != -1)
                 {

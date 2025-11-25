@@ -35,10 +35,8 @@ namespace Forbbiden.Client
             txtBk.Foreground = Brushes.Red;
         }
 
-        private async void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private Player GetPlayerInput()
         {
-            ResetFields(txtBkUser, txtBkPassword, txtBkBoss);
-
             string username = txtBxUsername.Text.Trim();
 
             string password = "";
@@ -51,12 +49,23 @@ namespace Forbbiden.Client
                 password = pwdBxPassword.Password;
             }
 
-            Player player = new Player();
+            return new Player
+            {
+                PlayerUsername = username,
+                PlayerPassword = password,
+            };
+        }
+
+        private async void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            ResetFields(txtBkUser, txtBkPassword, txtBkBoss);
+
+            Player player = GetPlayerInput();
 
             try
             {
                 var client = new ProfileManagerClient();
-                player = await client.LoginAsync(username, password);
+                player = await client.LoginAsync(player.PlayerUsername, player.PlayerPassword);
             }
             catch (FaultException<DBFault> dbFault)
             {
@@ -64,19 +73,19 @@ namespace Forbbiden.Client
                 ViewUtils.ShowPullError(Window.GetWindow(this));
             }
 
-
             if (player.PlayerId > 0)
             {
                 ClientSession.SetPlayer(player);
                 Properties.PlayerSettings.Default.CurrentPlayerId = ClientSession.CurrentPlayerId;
                 Properties.PlayerSettings.Default.Save();
+
                 NavigationService?.Navigate(new MainPage());
                 Log.Info("Player logged in.");
             }
             else if (player.PlayerId == -1)
             {
-                txtBkBoss.Text = Properties.Langs.Resources.usernameNoExists;
                 BrushTextBlock(txtBkUser);
+                txtBkBoss.Text = Properties.Langs.Resources.usernameNoExists;
             }
             else
             {

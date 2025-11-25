@@ -36,12 +36,10 @@ namespace Forbbiden.Contracts
         Player GetPlayerById(int playerId, bool includeFriends = true);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
-        Player GetCurrentLogin();
+        bool ConnectPlayerByUsername(string username);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
-        bool ClearCurrentLogin();
+        bool DisconnectPlayerByUsername(string username);
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]

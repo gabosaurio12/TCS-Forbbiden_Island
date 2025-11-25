@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -43,7 +44,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.ValidateEmail ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -63,7 +65,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.IsUsernameAvailable ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
             return usernameFound;
@@ -104,7 +107,7 @@ namespace Forbbiden.Server.logic
                         Error = "SMTP Error",
                         Details = ex.Message
                     };
-                    Log.Error(ex);
+                    Log.Error("ERROR: ProfileManager.SendEmail", ex);
 
                     throw new FaultException<EmailFault>(fault,
                         new FaultReason("SmtpException"));
@@ -141,7 +144,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.SignUp ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -177,7 +181,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.Login ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -235,7 +240,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.GetPlayerByUsername ";
+                    HandleEntityException(ex, classMethod);
                 }
 
                 if (player == null)
@@ -267,7 +273,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.GetPlayerById ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -296,7 +303,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.GetFriendsByID ";
+                    HandleEntityException(ex, classMethod);
                 }
 
                 var friendships = new List<Friendship>();
@@ -316,62 +324,103 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        public Contracts.Player GetCurrentLogin()
+        public bool ConnectPlayerByUsername(string username)
         {
-            Log.Info("Retrieving current logged-in player");
+            bool success = false;
 
-            Contracts.Player player = null;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
+                var player = new Player();
+
                 try
                 {
-                    int current_id = db.LoginPlayer.Select(lp => lp.login_player_id).FirstOrDefault();
-                    Player playerResult = db.Player.Include("player_socialmedia")
-                        .FirstOrDefault(p => p.player_id == current_id);
-
-                    if (playerResult != null)
-                    {
-                        player = SetPlayer(playerResult);
-                    }
+                    player = db.Player.FirstOrDefault(p => p.player_username == username);
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.ConnectPlayerByUsername ";
+                    HandleEntityException(ex, classMethod);
+                }
+
+                if (player != null)
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            player.player_status = 1;
+                            db.SaveChanges();
+                            transaction.Commit();
+                            success = true;
+                            Log.Info("Player connected");
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            transaction.Rollback();
+                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
+
+                            var fault = new DBFault
+                            {
+                                Error = "Database Error",
+                                Details = ex.Message
+                            };
+
+                            throw new FaultException<DBFault>(fault,
+                                new FaultReason("EntityException"));
+                        }
+                    }  
                 }
             }
-
-            if (player == null)
-            {
-                player = new Contracts.Player
-                {
-                    PlayerId = -1
-                };
-            }
-
-            return player;
+            return success;
         }
 
-        public bool ClearCurrentLogin()
+        public bool DisconnectPlayerByUsername(string username)
         {
-            Log.Info("Clearing current logged-in player");
-
             bool success = false;
+
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
+                var player = new Player();
+
                 try
                 {
-                    var loggedInPlayers = db.LoginPlayer.ToList();
-                    db.LoginPlayer.RemoveRange(loggedInPlayers);
-                    db.SaveChanges();
-                    success = true;
+                    player = db.Player.FirstOrDefault(p => p.player_username == username);
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.DisconnectPlayerByUsername ";
+                    HandleEntityException(ex, classMethod);
+                }
+
+                if (player != null)
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            player.player_status = 0;
+                            db.SaveChanges();
+                            transaction.Commit();
+                            success = true;
+                            Log.Info("Player disconnected");
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            transaction.Rollback();
+                            Log.Error("ERROR: ProfileManager.DisconnectPlayerByUsername", ex);
+
+                            var fault = new DBFault
+                            {
+                                Error = "Database Error",
+                                Details = ex.Message
+                            };
+
+                            throw new FaultException<DBFault>(fault,
+                                new FaultReason("EntityException"));
+                        }
+                    }
                 }
             }
-
-            Log.Info("Current logged-in player cleared");
             return success;
         }
 
@@ -392,7 +441,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.ClearSocials ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -401,8 +451,6 @@ namespace Forbbiden.Server.logic
 
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
-            Log.Info("Updating player");
-
             bool success = false;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
@@ -417,23 +465,23 @@ namespace Forbbiden.Server.logic
                     formerPlayer.player_avatar = updatedPlayer.PlayerAvatarPath;
                     formerPlayer.is_verified = updatedPlayer.IsVerified;
 
+                    if (ClearSocials(formerPlayer))
+                    {
+                        db.player_socialmedia.AddRange(
+                        updatedPlayer.SocialMedia
+                        .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
+                        .Select(social => new player_socialmedia
+                        {
+                            social_media_name = social.SocialMediaName,
+                            social_link = social.SocialLink,
+                            player_id = formerPlayer.player_id
+                        }));
+                    }
+
                     using (var transaction = db.Database.BeginTransaction())
                     {
                         try
                         {
-                            if (ClearSocials(formerPlayer))
-                            {
-                                db.player_socialmedia.AddRange(
-                                updatedPlayer.SocialMedia
-                                .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
-                                .Select(social => new player_socialmedia
-                                {
-                                    social_media_name = social.SocialMediaName,
-                                    social_link = social.SocialLink,
-                                    player_id = formerPlayer.player_id
-                                }));
-                            }
-
                             db.SaveChanges();
                             transaction.Commit();
                             success = true;
@@ -442,7 +490,7 @@ namespace Forbbiden.Server.logic
                         catch (DbUpdateException ex)
                         {
                             transaction.Rollback();
-                            Log.Error(ex);
+                            Log.Error("ERROR: ProfileManager.ConnectPlayer", ex);
 
                             var fault = new DBFault
                             {
@@ -457,7 +505,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.UpdatePlayer ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
             return success;
@@ -489,16 +538,17 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "ProfileManager.DeletePlayerByUsername ";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
             return success;
         }
 
-        private void HandleEntityException(EntityException ex)
+        private void HandleEntityException(EntityException ex, string classMethod)
         {
-            Log.Error(ex);
+            Log.Error("ERROR" + classMethod, ex);
 
             var fault = new DBFault
             {
