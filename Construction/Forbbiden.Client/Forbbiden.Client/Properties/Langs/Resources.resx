@@ -378,4 +378,19 @@
   <data name="load_page_error" xml:space="preserve">
     <value>There was an error while loading the page, try again or contact us at: forbbidenislandfei@gmail.com</value>
   </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="no_more_actions" xml:space="preserve">
+    <value>You ran out of actions, you have to steal treasure cards from the Treasure Stack (click on it)</value>
+  </data>
+  <data name="finish_turn" xml:space="preserve">
+    <value>Finish Turn</value>
+  </data>
+  <data name="game_over" xml:space="preserve">
+    <value>GAME OVER!</value>
+  </data>
+  <data name="game_over_message" xml:space="preserve">
+    <value>The water reach the highest level! FEI IS NOW UNDER THE SEAS! Good Luck in your next adventure...</value>
+  </data>
 </root>

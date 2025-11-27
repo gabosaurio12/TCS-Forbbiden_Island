@@ -164,9 +164,9 @@ namespace Forbbiden.Client.view
             string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
             ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
-            requestControl.SetAvatarImage(avatarImage);
+            requestControl.SetAvatarImage(requestControl.avatarEllipse, avatarImage);
 
-            requestControl.SetFriendUsername(friend.PlayerUsername);
+            requestControl.SetFriendUsername(requestControl.friendUsernametxtBk, friend.PlayerUsername);
 
             requestControl.acceptBtn.Click += AcceptButton_Click;
             requestControl.rejectBtn.Click += RejectButton_Click;

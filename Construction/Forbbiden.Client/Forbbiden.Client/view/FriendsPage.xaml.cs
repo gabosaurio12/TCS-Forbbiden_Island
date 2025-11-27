@@ -4,6 +4,7 @@ using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
+using System.Dynamic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -91,14 +92,38 @@ namespace Forbbiden.Client.view
             }
         }
 
+        private void DeleteFriend()
+        {
+
+        }
+
+
+        private void SeeFriendProfile()
+        {
+
+        }
+        private void GetContextMenu()
+        {
+            var contextMenu = new ContextMenu();
+            var profileItem = new MenuItem();
+            profileItem.Header = Properties.Langs.Resources.profile;
+            var deleteItem = new MenuItem();
+            deleteItem.Header = Properties.Langs.Resources.delete;
+
+            contextMenu.Items.Add(profileItem);
+            contextMenu.Items.Add(deleteItem);
+        }
+
         public static void AddOnlineFriend(ProfileManager.Player friend, StackPanel onlineStack)
         {
             var friendControl = new UserControlFriend();
+            friendControl.ContextMenu = new ContextMenu();
 
             string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
             ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
             friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
+            
 
             friendControl.SetFriendUsername(friendControl.usernameTxtBk, friend.PlayerUsername);
             onlineStack.Children.Add(friendControl);

@@ -11,9 +11,11 @@
             Height="115" Width="115"
             Margin="5"
             Background="LightGray"
-            BorderBrush="DarkBlue"
+            BorderBrush="#143285"
             BorderThickness="8"
-            Cursor="Hand" >
+            MouseLeftButtonDown="MoveAvatar_MouseLeftButtonDown"
+            MouseEnter="ColorStroke_MouseEnter"
+            MouseLeave="ColorStroke_MouseLeave">
         <Grid x:Name="tileGrid" >
             <Image x:Name="tileImage" Stretch="Uniform" />
         </Grid>

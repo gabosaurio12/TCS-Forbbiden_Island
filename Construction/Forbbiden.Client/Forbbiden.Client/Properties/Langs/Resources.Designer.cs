@@ -133,6 +133,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string delete {
+            get {
+                return ResourceManager.GetString("delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difficulty.
         /// </summary>
         public static string difficulty {
@@ -174,6 +183,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish Turn.
+        /// </summary>
+        public static string finish_turn {
+            get {
+                return ResourceManager.GetString("finish_turn", resourceCulture);
             }
         }
         
@@ -246,6 +264,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string friends {
             get {
                 return ResourceManager.GetString("friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GAME OVER!.
+        /// </summary>
+        public static string game_over {
+            get {
+                return ResourceManager.GetString("game_over", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The water reach the highest level! FEI IS NOW UNDER THE SEAS! Good Luck in your next adventure....
+        /// </summary>
+        public static string game_over_message {
+            get {
+                return ResourceManager.GetString("game_over_message", resourceCulture);
             }
         }
         
@@ -399,6 +435,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string new_game {
             get {
                 return ResourceManager.GetString("new_game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You ran out of actions, you have to steal treasure cards from the Treasure Stack (click on it).
+        /// </summary>
+        public static string no_more_actions {
+            get {
+                return ResourceManager.GetString("no_more_actions", resourceCulture);
             }
         }
         

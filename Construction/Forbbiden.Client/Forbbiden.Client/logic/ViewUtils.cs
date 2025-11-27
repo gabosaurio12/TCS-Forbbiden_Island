@@ -12,17 +12,40 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace Forbbiden.Client.logic
 {
     public static class ViewUtils
     {
+        public static Ellipse GetAvatarEllipse(string avatarPath)
+        {
+            string projectDir = ViewUtils.GetProjectDir();
+            string fullAvatarPath = System.IO.Path.Combine(projectDir, "avatars", avatarPath);
+            var avatarBitmap = GetBitmapImage(fullAvatarPath);
 
+            Ellipse ellipse = new Ellipse
+            {
+                Width = 100,
+                Height = 100,
+                Stroke = Brushes.LightGray,
+                StrokeThickness = 5,
+                Margin = new Thickness(0, 0, 0, 0),
+                Fill = new ImageBrush
+                {
+                    ImageSource = avatarBitmap,
+                    Stretch = Stretch.UniformToFill
+                }
+            };
+
+            return ellipse;
+        }
         public static BitmapImage GetBitmapImage(string imagePath)
         {
             var bmp = new BitmapImage();
             bmp.BeginInit();
             bmp.CacheOption = BitmapCacheOption.OnLoad;
+            Console.WriteLine(imagePath);
             bmp.UriSource = new Uri(imagePath, UriKind.Absolute);
             bmp.EndInit();
 

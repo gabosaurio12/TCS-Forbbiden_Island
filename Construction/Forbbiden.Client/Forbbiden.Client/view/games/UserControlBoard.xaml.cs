@@ -38,7 +38,7 @@ namespace Forbbiden.Client.view.games
         {
             BuildBoard();
             SetTreasureTiles();
-            FillFreeTiles();
+            FillTiles();
         }
 
         private void BuildBoard()
@@ -59,9 +59,10 @@ namespace Forbbiden.Client.view.games
                     Col = x,
                     Row = y
                 };
-                boardGrid.Children.Add(tile);
                 Grid.SetColumn(tile, tile.Col);
                 Grid.SetRow(tile, tile.Row);
+                tile.TileClicked += OnTileClicked;
+                boardGrid.Children.Add(tile);
             }
 
             for (int row = 1; row < boardRows; row++)
@@ -75,12 +76,31 @@ namespace Forbbiden.Client.view.games
                     };
                     Grid.SetColumn(tile ,tile.Col);
                     Grid.SetRow(tile,tile.Row);
+                    tile.TileClicked += OnTileClicked;
                     boardGrid.Children.Add(tile);
                 }
             }
         }
 
-        private List<UserControlTile> GetAllTilesFromGrid()
+        public UserControlTile GetTile(int row, int col)
+        {
+            UserControlTile tile = new UserControlTile
+            {
+                Row = -1,
+                Col = -1
+            };
+            foreach (UserControlTile childTile in boardGrid.Children)
+            {
+                if (childTile.Row == row && childTile.Col == col)
+                {
+                    tile = childTile;
+                    break;
+                }
+            }
+            return tile;
+        }
+
+        public List<UserControlTile> GetAllTilesFromGrid()
         {
             return boardGrid.Children
                 .OfType<UserControlTile>()
@@ -95,10 +115,16 @@ namespace Forbbiden.Client.view.games
                 .ToList();
         }
 
+        public List<UserControlTile> GetFloodedTiles()
+        {
+            return boardGrid.Children
+                .OfType<UserControlTile>()
+                .Where(t => t.IsFlood).ToList();
+        }
+
         private void SetTreasureTiles()
         {
             List<UserControlTile> tiles = GetInnerTilesFromGrid();
-            Console.WriteLine(tiles.Count);
             Random rand = new Random();
 
             var shuffledTiles = tiles.OrderBy(x => rand.Next()).Take(NumberOfTreasures).ToList();
@@ -110,11 +136,8 @@ namespace Forbbiden.Client.view.games
                 var treasureBitmap = ViewUtils.GetBitmapImage(treasureImagePath);
 
                 UserControlTile tile = shuffledTiles[i];
-                string redColorCode = "#A81D0F";
-                Color redColor = (Color)ColorConverter.ConvertFromString(redColorCode);
-                tile.SetBorderBrush(redColor);
-                tile.SetImage(treasureBitmap);
-                tile.IsTreasure = true;
+                tile.ImageFileName = treasureImage;
+                tile.SetTileAsTreasure(treasureBitmap);
             }
         }
 
@@ -133,45 +156,54 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private Ellipse GetAvatarEllipse(string avatarPath)
+        private void FillTiles()
         {
-            var avatarBitmap = ViewUtils.GetBitmapImage(avatarPath);
+            List<UserControlTile> tiles = GetAllTilesFromGrid();
 
-            Ellipse ellipse = new Ellipse
+            int tileNumber = 1;
+
+            for (int i = 0; i < tiles.Count; i++)
             {
-                Width = 100,
-                Height = 100,
-                Stroke = Brushes.LightGray,
-                StrokeThickness = 5,
-                Margin = new Thickness(0, 0, 0, 0),
-                Fill = new ImageBrush
-                {
-                    ImageSource = avatarBitmap,
-                    Stretch = Stretch.UniformToFill
-                }
-            };
 
-            return ellipse;
+                if (!tiles[i].IsTreasure)
+                {
+                    string tileImage = $"tile{tileNumber}.png";
+                    tileNumber++;
+                    string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
+                    var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
+
+                    tiles[i].ImageFileName = tileImage;
+                    tiles[i].SetImage(tileBitmap);
+                }                
+            }
         }
 
-        public void AddPlayerAvatar(Player player)
+        public UserControlTile AddPlayerAvatar(Player player)
         {
-            string projectDir = ViewUtils.GetProjectDir();
-            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
-            Ellipse boardAvatar = GetAvatarEllipse(avatarPath);
+            Ellipse boardAvatar = ViewUtils.GetAvatarEllipse(player.PlayerAvatarPath);
 
             var tiles = GetAllTilesFromGrid();
             bool avatarPlaced = false;
+            UserControlTile spawnTile;
             do
             {
                 int spawnTileIndex = new Random().Next(tiles.Count);
-                var spawnTile = tiles[spawnTileIndex];
+                spawnTile = tiles[spawnTileIndex];
                 if (!spawnTile.IsTreasure)
                 {
                     spawnTile.tileGrid.Children.Add(boardAvatar);
                     avatarPlaced = true;
                 }
             } while (!avatarPlaced);
+
+            return spawnTile;
+        }
+
+        public event EventHandler<TileClickedEventArgs> TileClickedOnBoard;
+
+        private void OnTileClicked(object sender, TileClickedEventArgs e)
+        {
+            TileClickedOnBoard?.Invoke(this, e);
         }
     }
 }

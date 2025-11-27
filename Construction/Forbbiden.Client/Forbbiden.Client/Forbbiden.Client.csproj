@@ -132,6 +132,8 @@
     </Compile>
     <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
+    <Compile Include="logic\MatchLogic.cs" />
+    <Compile Include="logic\TileClickedEventArgs.cs" />
     <Compile Include="logic\ViewUtils.cs" />
     <Compile Include="model\CardWindowSettings.cs" />
     <Compile Include="Properties\Langs\Resources.Designer.cs">

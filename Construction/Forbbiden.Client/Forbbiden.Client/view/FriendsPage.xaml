@@ -15,6 +15,12 @@
     </Page.Background>
 
     <Page.Resources>
+        <ContextMenu x:Key="rightClickMenu">
+            <MenuItem Header="{x:Static language:Resources.profile}" />
+            <MenuItem Header="{x:Static language:Resources.delete}"
+                      Command="DeleteFriend"/>
+        </ContextMenu>
+
         <Storyboard x:Key="ShowSearchBar">
             <DoubleAnimation Storyboard.TargetName="searchtxtBx"
                              Storyboard.TargetProperty="Width"
