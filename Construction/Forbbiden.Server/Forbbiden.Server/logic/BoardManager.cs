@@ -22,7 +22,25 @@ namespace Forbbiden.Server.logic
 
         public List<Contracts.Card> GetFloodCards()
         {
-            return new List<Contracts.Card>();
+            using (var db = new Forbbiden_FEIEntities(connectionString))
+            {
+                List<Card> cards = db.Card.Where(c => c.type == "flood").ToList();
+
+                List<Contracts.Card> floodCards = new List<Contracts.Card>();
+                foreach (var card in cards)
+                {
+                    floodCards.Add(new Contracts.Card
+                    {
+                        CardId = card.card_id,
+                        Name = card.card_name,
+                        Description = card.description,
+                        Type = card.type,
+                        ImagePath = card.card_image_path
+                    });
+                }
+
+                return floodCards;
+            }
         }
 
         public List<string> GetTileImages()

@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.ProfileManager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,7 +64,7 @@ namespace Forbbiden.Client.view.games
             try
             {
                 var profileClient = new ProfileManagerClient();
-                var player = profileClient.GetCurrentLogin();
+                var player = ClientSession.GetPlayer();
                 if (player != null && player.PlayerId != -1)
                 {
                     SetAvatarImage(Avatar1, player.PlayerAvatarPath);

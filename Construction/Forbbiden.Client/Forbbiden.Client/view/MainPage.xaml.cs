@@ -2,42 +2,62 @@
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
 using Forbbiden.Client.view.games;
+using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.Globalization;
 using System.IO;
+using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Forbbiden.Client
 {
     public partial class MainPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
-
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MainPage));
+        private readonly ProfileManagerClient Client = new ProfileManagerClient();
         public MainPage()
         {
             InitializeComponent();
-
-            var client = new ProfileManagerClient();
-
-            if (client.GetCurrentLogin().PlayerId != -1)
-            {
-                ReloadMainPage(txtBkUser, imgAvatar);
-                logInButton.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                profileButton.Visibility = Visibility.Hidden;
-            }
-
-            SetBackground();
+            _ = SetLogin();
+            SetBackground(background);
         }
 
-        private void SetBackground()
+        private async Task SetLogin()
+        {
+            int playerId = Properties.PlayerSettings.Default.CurrentPlayerId;
+
+            if (playerId > 0)
+            {
+                Player currentLogin = new Player();
+
+                try
+                {
+                    currentLogin = await Client.GetPlayerByIdAsync(playerId, false);
+                }
+                catch (FaultException<DBFault> ex)
+                {
+                    Log.Error("ERROR: MainPage.SetLogin", ex);
+                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                }
+
+                if (currentLogin.PlayerId > 0)
+                {
+                    ClientSession.SetPlayer(currentLogin);
+                    ReloadMainPage(currentLogin);
+                    logInButton.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    profileButton.Visibility = Visibility.Hidden;
+                }
+            }
+        }
+
+        private static void SetBackground(ImageBrush background)
         {
             DateTime currentTime = DateTime.Now;
             string ampm = currentTime.ToString("tt", CultureInfo.InvariantCulture).ToLower();
@@ -47,11 +67,11 @@ namespace Forbbiden.Client
                 string projectDir = Directory.GetParent(
                 AppDomain.CurrentDomain.BaseDirectory).
                 Parent.Parent.FullName;
-                string imagesPath = System.IO.Path.Combine(
+                string imagesPath = Path.Combine(
                     projectDir, "Images");
-                string backgroundPath = System.IO.Path.Combine(
+                string backgroundPath = Path.Combine(
                     imagesPath, darkBackground);
-                background.ImageSource = ViewUtils.GetImage(backgroundPath);
+                background.ImageSource = ViewUtils.GetBitmapImage(backgroundPath);
             }
         }
 
@@ -64,8 +84,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la página de juego.");
-                log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.PlayButton_Click", ex);
             }
         }
 
@@ -77,8 +97,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la configuración.");
-                log.Error("MainPage.xaml.cs - SettingsButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.SettingsButton_Click", ex);
             }
         }
 
@@ -91,25 +111,14 @@ namespace Forbbiden.Client
         {
             try
             {
-                var client = new ProfileManagerClient();
-                Player player = client.GetCurrentLogin();
+                Player player = ClientSession.GetPlayer();
 
-                if (NavigationService != null)
-                {
-                    if (player == null)
-                    {
-                        NavigationService.Navigate(new ProfilePage());
-                    }
-                    else
-                    {
-                        NavigationService.Navigate(new ProfilePage(player));
-                    }
-                }
+                NavigationService?.Navigate(new ProfilePage(player));
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir el perfil.");
-                log.Error("MainPage.xaml.cs - ProfileButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.ProfileButton_Click", ex);
             }
         }
 
@@ -121,44 +130,69 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la página de login.");
-                log.Error("MainPage.xaml.cs - LogInButton_Click", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.LogInButton_Click", ex);
             }
         }
 
-        public static void ReloadMainPage(TextBlock txtBkUser, Ellipse imgAvatar)
+        private async void ConnectPlayer(string username)
+        {
+            var client = new ProfileManagerClient();
+            bool isConnected = false;
+
+            try
+            {
+                isConnected = await client.ConnectPlayerByUsernameAsync(username);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                Log.Error("ERROR: LoginPage.ConnectPlayer", dbFault);
+                ViewUtils.ShowPushError(Window.GetWindow(this));
+            }
+
+            if (isConnected)
+            {
+                ClientSession.Status = 1;
+            }
+        }
+
+        public void ReloadMainPage(Player player)
         {
             try
             {
-                var client = new ProfileManagerClient();
-                Player player = client.GetCurrentLogin();
-
-                if (player != null)
+                if (player.IsVerified == 0)
                 {
-                    txtBkUser.Text = player.PlayerUsername;
-
-                    string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                    string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
-
-                    var bmp = new BitmapImage();
-                    bmp.BeginInit();
-                    bmp.CacheOption = BitmapCacheOption.OnLoad;
-                    bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-                    bmp.EndInit();
-                    imgAvatar.Fill = new ImageBrush(bmp);
-
+                    verifyButton.Visibility = Visibility.Visible;
                 }
+
+                txtBkUser.Text = player.PlayerUsername;
+
+                string projectDir = ViewUtils.GetProjectDir();
+                string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+                imgAvatar.Fill = ViewUtils.GetImageBrush(avatarPath);
+                ConnectPlayer(ClientSession.Username);
+
             }
             catch (Exception ex)
             {
-                log.Error("MainPage.xaml.cs - ReloadMainPage", ex);
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("ERROR: MainPage.ReloadMainPage", ex);
             }
         }
 
         private void FriendsButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new FriendsPage());
+        }
+
+        private void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var player = ClientSession.GetPlayer();
+            var verificationWindow = new VerificationWIndow(player.PlayerId)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            verificationWindow.ShowDialog();
         }
     }
 }

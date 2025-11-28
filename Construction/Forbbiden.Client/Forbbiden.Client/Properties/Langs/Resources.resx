@@ -351,4 +351,46 @@
   <data name="max_cards_exceed_message" xml:space="preserve">
     <value>With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have</value>
   </data>
+  <data name="verify_account" xml:space="preserve">
+    <value>Verify Account</value>
+  </data>
+  <data name="verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="player verified" xml:space="preserve">
+    <value>Player Verified</value>
+  </data>
+  <data name="player_verified_message" xml:space="preserve">
+    <value>Your account has been successfully verified</value>
+  </data>
+  <data name="wrong_token" xml:space="preserve">
+    <value>Wrong Token</value>
+  </data>
+  <data name="wrong_token_message" xml:space="preserve">
+    <value>The token you try to verify is not correct, please try again</value>
+  </data>
+  <data name="send_email_error" xml:space="preserve">
+    <value>There was an error while sending your verification email, contact us at: forbbidenislandfei@gmail.com</value>
+  </data>
+  <data name="load_page_error" xml:space="preserve">
+    <value>There was an error while loading the page, try again or contact us at: forbbidenislandfei@gmail.com</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="no_more_actions" xml:space="preserve">
+    <value>You ran out of actions, you have to steal treasure cards from the Treasure Stack (click on it)</value>
+  </data>
+  <data name="finish_turn" xml:space="preserve">
+    <value>Finish Turn</value>
+  </data>
+  <data name="game_over" xml:space="preserve">
+    <value>GAME OVER!</value>
+  </data>
+  <data name="game_over_message" xml:space="preserve">
+    <value>The water reach the highest level! FEI IS NOW UNDER THE SEAS! Good Luck in your next adventure...</value>
+  </data>
 </root>

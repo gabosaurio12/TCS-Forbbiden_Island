@@ -14,18 +14,18 @@ namespace Forbbiden.Server.logic
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class FriendsManager : IFriendsManager
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(FriendsManager));
-        private readonly string connectionString;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsManager));
+        private readonly string ConnectionString;
 
         public FriendsManager()
         {
-            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -36,7 +36,8 @@ namespace Forbbiden.Server.logic
                     if (sender.PlayerId != -1 && receiver.PlayerId != -1)
                     {
 
-                        var friendRequest = db.Friends.FirstOrDefault(fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
+                        var friendRequest = db.Friends.FirstOrDefault(
+                            fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
 
                         if (friendRequest != null)
                         {
@@ -55,6 +56,12 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
+        private void SendFriendequestCallback(FriendRequest friendRequest)
+        {
+            var callback = OperationContext.Current.GetCallbackChannel<IFriendRequestCallback>();
+            callback.OnFriendRequestReceived(friendRequest);
+        }
+
         public bool SendFriendRequest(string senderUsername, string receiverUsername)
         {
             var playerManager = new ProfileManager();
@@ -65,13 +72,13 @@ namespace Forbbiden.Server.logic
                 var receiver = playerManager.GetPlayerByUsername(receiverUsername);
                 if (sender.PlayerId == -1 || receiver.PlayerId == -1)
                 {
-                    log.Warn("AddSendFriendRequest: One of the users does not exist.");
+                    Log.Warn("AddSendFriendRequest: One of the users does not exist.");
                     success = false;
                 }
                 else
                 {
                     
-                    using (var db = new Forbbiden_FEIEntities(connectionString))
+                    using (var db = new Forbbiden_FEIEntities(ConnectionString))
                     {
                         var searchFriendRequest = db.Friends.FirstOrDefault(
                             sfr => sfr.player_id == sender.PlayerId && sfr.friend_id == receiver.PlayerId);
@@ -85,8 +92,16 @@ namespace Forbbiden.Server.logic
                                 status = 0
                             };
 
+                            var friendRequestCallback = new FriendRequest
+                            {
+                                SenderID = sender.PlayerId,
+                                ReceiverID = receiver.PlayerId,
+                                Status = 0
+                            };
+
                             db.Friends.Add(friendRequest);
                             db.SaveChanges();
+                            SendFriendequestCallback(friendRequestCallback);
                             success = true;
                         }
                     }
@@ -104,7 +119,7 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
             
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -133,7 +148,7 @@ namespace Forbbiden.Server.logic
 
         public List<FriendRequest> GetFriendRequests(string receiverUsername)
         {
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -170,7 +185,7 @@ namespace Forbbiden.Server.logic
 
         public List<Friendship> GetFriendsByID(int playerID)
         {
-            using (var db = new Forbbiden_FEIEntities(connectionString))
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 var friends = new List<Friends>();
                 try
@@ -205,7 +220,7 @@ namespace Forbbiden.Server.logic
 
         private void HandleEntityException(EntityException ex)
         {
-            log.Error(ex);
+            Log.Error(ex);
 
             var fault = new DBFault
             {

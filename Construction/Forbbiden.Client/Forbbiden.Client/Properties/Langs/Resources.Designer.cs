@@ -106,6 +106,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Capture.
         /// </summary>
         public static string capture_button {
@@ -120,6 +129,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string change_language {
             get {
                 return ResourceManager.GetString("change_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string delete {
+            get {
+                return ResourceManager.GetString("delete", resourceCulture);
             }
         }
         
@@ -165,6 +183,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish Turn.
+        /// </summary>
+        public static string finish_turn {
+            get {
+                return ResourceManager.GetString("finish_turn", resourceCulture);
             }
         }
         
@@ -241,6 +268,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GAME OVER!.
+        /// </summary>
+        public static string game_over {
+            get {
+                return ResourceManager.GetString("game_over", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The water reach the highest level! FEI IS NOW UNDER THE SEAS! Good Luck in your next adventure....
+        /// </summary>
+        public static string game_over_message {
+            get {
+                return ResourceManager.GetString("game_over_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guest.
         /// </summary>
         public static string guest {
@@ -282,6 +327,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string invalid_input {
             get {
                 return ResourceManager.GetString("invalid_input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while loading the page, try again or contact us at: forbbidenislandfei@gmail.com.
+        /// </summary>
+        public static string load_page_error {
+            get {
+                return ResourceManager.GetString("load_page_error", resourceCulture);
             }
         }
         
@@ -385,6 +439,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You ran out of actions, you have to steal treasure cards from the Treasure Stack (click on it).
+        /// </summary>
+        public static string no_more_actions {
+            get {
+                return ResourceManager.GetString("no_more_actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normal.
         /// </summary>
         public static string normal {
@@ -453,6 +516,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string play {
             get {
                 return ResourceManager.GetString("play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player Verified.
+        /// </summary>
+        public static string player_verified {
+            get {
+                return ResourceManager.GetString("player verified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your account has been successfully verified.
+        /// </summary>
+        public static string player_verified_message {
+            get {
+                return ResourceManager.GetString("player_verified_message", resourceCulture);
             }
         }
         
@@ -552,6 +633,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string select_language {
             get {
                 return ResourceManager.GetString("select_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while sending your verification email, contact us at: forbbidenislandfei@gmail.com.
+        /// </summary>
+        public static string send_email_error {
+            get {
+                return ResourceManager.GetString("send_email_error", resourceCulture);
             }
         }
         
@@ -745,11 +835,47 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string verify {
+            get {
+                return ResourceManager.GetString("verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify Account.
+        /// </summary>
+        public static string verify_account {
+            get {
+                return ResourceManager.GetString("verify_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Water Level.
         /// </summary>
         public static string water_level {
             get {
                 return ResourceManager.GetString("water_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong Token.
+        /// </summary>
+        public static string wrong_token {
+            get {
+                return ResourceManager.GetString("wrong_token", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The token you try to verify is not correct, please try again.
+        /// </summary>
+        public static string wrong_token_message {
+            get {
+                return ResourceManager.GetString("wrong_token_message", resourceCulture);
             }
         }
         

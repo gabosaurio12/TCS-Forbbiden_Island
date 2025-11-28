@@ -21,11 +21,11 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
-        bool SignUp(Player player);
+        int SignUp(Player player);
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
-        bool Login(Player player);
+        Player Login(string username, string password);
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
@@ -36,12 +36,10 @@ namespace Forbbiden.Contracts
         Player GetPlayerById(int playerId, bool includeFriends = true);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
-        Player GetCurrentLogin();
+        bool ConnectPlayerByUsername(string username);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
-        bool ClearCurrentLogin();
+        bool DisconnectPlayerByUsername(string username);
 
         [OperationContract]
         [FaultContract(typeof(DBFault))]
@@ -70,7 +68,7 @@ namespace Forbbiden.Contracts
         [DataMember]
         public int Status { get; set; }
         [DataMember]
-        public int Verified { get; set; }
+        public int IsVerified { get; set; }
         [DataMember]
         public List<SocialMedia> SocialMedia { get; set; }
         [DataMember]

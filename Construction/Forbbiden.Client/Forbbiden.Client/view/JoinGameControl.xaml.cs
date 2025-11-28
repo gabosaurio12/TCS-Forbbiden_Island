@@ -85,7 +85,7 @@ namespace Forbbiden.Client.view
             if (sender is Button btn && btn.DataContext is MatchItem match)
             {
                 var profileClient = new ProfileManagerClient();
-                var currentPlayer = await profileClient.GetCurrentLoginAsync();
+                var currentPlayer = ClientSession.GetPlayer();
 
                 if (currentPlayer.PlayerId == -1)
                 {

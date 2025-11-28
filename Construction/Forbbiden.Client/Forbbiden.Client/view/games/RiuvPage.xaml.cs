@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -108,7 +109,7 @@ namespace Forbbiden.Client.view.games
             try
             {
                 var profileClient = new ProfileManagerClient();
-                var player = profileClient.GetCurrentLogin();
+                var player = ClientSession.GetPlayer();
 
                 if (player != null && player.PlayerId != -1)
                 {

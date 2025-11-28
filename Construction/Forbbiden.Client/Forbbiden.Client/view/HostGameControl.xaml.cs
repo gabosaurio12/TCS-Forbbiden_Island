@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.MatchManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
 using System;
@@ -103,7 +104,7 @@ namespace Forbbiden.Client
 
             try
             {
-                var currentPlayer = profileClient.GetCurrentLogin();
+                var currentPlayer = ClientSession.GetPlayer();
 
                 if (currentPlayer == null)
                 {

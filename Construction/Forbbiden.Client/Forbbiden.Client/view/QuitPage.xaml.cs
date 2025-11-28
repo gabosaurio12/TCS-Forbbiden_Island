@@ -1,8 +1,10 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,11 +25,26 @@ namespace Forbbiden.Client.view
     public partial class QuitPage : Page
     {
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(QuitPage));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(QuitPage));
 
         public QuitPage()
         {
             InitializeComponent();
+        }
+
+        private async void DisconnectPlayer(string username)
+        {
+            var client = new ProfileManagerClient();
+
+            try
+            {
+                await client.DisconnectPlayerByUsernameAsync(username);
+            }
+            catch (FaultException<DBFault> dbFault)
+            {
+                Log.Error("ERROR: LoginPage.ConnectPlayer", dbFault);
+                ViewUtils.ShowPushError(Window.GetWindow(this));
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -40,29 +57,19 @@ namespace Forbbiden.Client.view
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
+            DisconnectPlayer(ClientSession.Username);
             Application.Current.Shutdown();
-            log.Info("App closed");
+            Log.Info("App closed");
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var client = new ProfileManagerClient();
-
-                if (!client.ClearCurrentLogin())
-                {
-                    MessageBox.Show(Properties.Langs.Resources.log_out_error);
-                }
-
-                Application.Current.Shutdown();
-                log.Info("App closed");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Properties.Langs.Resources.quit_game_error);
-                log.Error("MainPage.xaml.cs - QuitGameButton_Click", ex);
-            }
+            DisconnectPlayer(ClientSession.Username);
+            Properties.PlayerSettings.Default.CurrentPlayerId = 0;
+            Properties.PlayerSettings.Default.Save();
+            Application.Current.Shutdown();
+            Log.Info("App closed");
+            
         }
     }
 }

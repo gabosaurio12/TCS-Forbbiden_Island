@@ -351,4 +351,46 @@
   <data name="max_cards_exceed_message" xml:space="preserve">
     <value>Con estas cartas tienes más de seis cartas, descarta una para que puedas tomar la nueva o skippea si quieres quedarte con las que tienes</value>
   </data>
+  <data name="verify_account" xml:space="preserve">
+    <value>Verificar Cuenta</value>
+  </data>
+  <data name="verify" xml:space="preserve">
+    <value>Verificar</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="player verified" xml:space="preserve">
+    <value>Jugador Verificado</value>
+  </data>
+  <data name="player_verified_message" xml:space="preserve">
+    <value>Tu cuenta ha sido exitosamente verificada</value>
+  </data>
+  <data name="wrong_token" xml:space="preserve">
+    <value>Token Erróneo</value>
+  </data>
+  <data name="wrong_token_message" xml:space="preserve">
+    <value>El token que intentaste ingresar no es correcto, por favor vuelve a intentar</value>
+  </data>
+  <data name="send_email_error" xml:space="preserve">
+    <value>Hubo un error al enviar tu correo de verificación, contáctenos en: forbbidenislandfei@gmail.com</value>
+  </data>
+  <data name="load_page_error" xml:space="preserve">
+    <value>Hubo un error al cargar la página, inténtalo de nuevo o contáctanos a: forbbidenislandfei@gmail.com</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="no_more_actions" xml:space="preserve">
+    <value>Ya no tienes más acciones, debes robar cartas del tesoro de la pila de Tesoros (dale clic)</value>
+  </data>
+  <data name="finish_turn" xml:space="preserve">
+    <value>Terminar turno</value>
+  </data>
+  <data name="game_over" xml:space="preserve">
+    <value>¡PERDISTE!</value>
+  </data>
+  <data name="game_over_message" xml:space="preserve">
+    <value>¡El agua alcanzó el nivel más alto! ¡LA FEI ESTÁ AHORA BAJO EL AGUA!  Buena suerte en tu próxima aventura...</value>
+  </data>
 </root>

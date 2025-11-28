@@ -164,6 +164,9 @@ namespace Forbbiden.Client.FriendsManager {
         private Forbbiden.Client.FriendsManager.Friendship[] FriendsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IsVerifiedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlayerAvatarPathField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -187,9 +190,6 @@ namespace Forbbiden.Client.FriendsManager {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int StatusField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int VerifiedField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -209,6 +209,19 @@ namespace Forbbiden.Client.FriendsManager {
                 if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
                     this.FriendsField = value;
                     this.RaisePropertyChanged("Friends");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IsVerified {
+            get {
+                return this.IsVerifiedField;
+            }
+            set {
+                if ((this.IsVerifiedField.Equals(value) != true)) {
+                    this.IsVerifiedField = value;
+                    this.RaisePropertyChanged("IsVerified");
                 }
             }
         }
@@ -317,19 +330,6 @@ namespace Forbbiden.Client.FriendsManager {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Verified {
-            get {
-                return this.VerifiedField;
-            }
-            set {
-                if ((this.VerifiedField.Equals(value) != true)) {
-                    this.VerifiedField = value;
-                    this.RaisePropertyChanged("Verified");
-                }
-            }
-        }
-        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -434,7 +434,7 @@ namespace Forbbiden.Client.FriendsManager {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FriendsManager.IFriendsManager")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FriendsManager.IFriendsManager", CallbackContract=typeof(Forbbiden.Client.FriendsManager.IFriendsManagerCallback))]
     public interface IFriendsManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/SendFriendRequestResponse")]
@@ -469,30 +469,38 @@ namespace Forbbiden.Client.FriendsManager {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IFriendsManagerCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendsManager/OnFriendRequestReceived")]
+        void OnFriendRequestReceived(Forbbiden.Client.FriendsManager.FriendRequest friendRequest);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IFriendsManagerChannel : Forbbiden.Client.FriendsManager.IFriendsManager, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FriendsManagerClient : System.ServiceModel.ClientBase<Forbbiden.Client.FriendsManager.IFriendsManager>, Forbbiden.Client.FriendsManager.IFriendsManager {
+    public partial class FriendsManagerClient : System.ServiceModel.DuplexClientBase<Forbbiden.Client.FriendsManager.IFriendsManager>, Forbbiden.Client.FriendsManager.IFriendsManager {
         
-        public FriendsManagerClient() {
+        public FriendsManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public FriendsManagerClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public FriendsManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public FriendsManagerClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public FriendsManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public FriendsManagerClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public FriendsManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public FriendsManagerClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public FriendsManagerClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public bool SendFriendRequest(string senderUsername, string receiverUsername) {

@@ -86,6 +86,267 @@ namespace ProfileManager
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class Player : object
+    {
+        
+        private ProfileManager.Friendship[] FriendsField;
+        
+        private string PlayerAvatarPathField;
+        
+        private string PlayerEmailField;
+        
+        private int PlayerIdField;
+        
+        private string PlayerNameField;
+        
+        private string PlayerPasswordField;
+        
+        private string PlayerUsernameField;
+        
+        private ProfileManager.SocialMedia[] SocialMediaField;
+        
+        private int StatusField;
+        
+        private int VerifiedField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ProfileManager.Friendship[] Friends
+        {
+            get
+            {
+                return this.FriendsField;
+            }
+            set
+            {
+                this.FriendsField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerAvatarPath
+        {
+            get
+            {
+                return this.PlayerAvatarPathField;
+            }
+            set
+            {
+                this.PlayerAvatarPathField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerEmail
+        {
+            get
+            {
+                return this.PlayerEmailField;
+            }
+            set
+            {
+                this.PlayerEmailField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId
+        {
+            get
+            {
+                return this.PlayerIdField;
+            }
+            set
+            {
+                this.PlayerIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerName
+        {
+            get
+            {
+                return this.PlayerNameField;
+            }
+            set
+            {
+                this.PlayerNameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerPassword
+        {
+            get
+            {
+                return this.PlayerPasswordField;
+            }
+            set
+            {
+                this.PlayerPasswordField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerUsername
+        {
+            get
+            {
+                return this.PlayerUsernameField;
+            }
+            set
+            {
+                this.PlayerUsernameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ProfileManager.SocialMedia[] SocialMedia
+        {
+            get
+            {
+                return this.SocialMediaField;
+            }
+            set
+            {
+                this.SocialMediaField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Status
+        {
+            get
+            {
+                return this.StatusField;
+            }
+            set
+            {
+                this.StatusField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Verified
+        {
+            get
+            {
+                return this.VerifiedField;
+            }
+            set
+            {
+                this.VerifiedField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Friendship", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class Friendship : object
+    {
+        
+        private ProfileManager.Player FriendField;
+        
+        private int PlayerIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ProfileManager.Player Friend
+        {
+            get
+            {
+                return this.FriendField;
+            }
+            set
+            {
+                this.FriendField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerID
+        {
+            get
+            {
+                return this.PlayerIDField;
+            }
+            set
+            {
+                this.PlayerIDField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SocialMedia", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class SocialMedia : object
+    {
+        
+        private int PlayerIdField;
+        
+        private string SocialLinkField;
+        
+        private int SocialMediaIdField;
+        
+        private string SocialMediaNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId
+        {
+            get
+            {
+                return this.PlayerIdField;
+            }
+            set
+            {
+                this.PlayerIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialLink
+        {
+            get
+            {
+                return this.SocialLinkField;
+            }
+            set
+            {
+                this.SocialLinkField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SocialMediaId
+        {
+            get
+            {
+                return this.SocialMediaIdField;
+            }
+            set
+            {
+                this.SocialMediaIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialMediaName
+        {
+            get
+            {
+                return this.SocialMediaNameField;
+            }
+            set
+            {
+                this.SocialMediaNameField = value;
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ProfileManager.IProfileManager")]
     public interface IProfileManager
@@ -101,27 +362,27 @@ namespace ProfileManager
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.EmailFault), Action="http://tempuri.org/IProfileManager/SendEmailEmailFaultFault", Name="EmailFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<bool> SendEmailAsync(string email);
+        System.Threading.Tasks.Task<bool> SendEmailAsync(string email, int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/SignUpDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Contracts.Player player);
+        System.Threading.Tasks.Task<int> SignUpAsync(ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/LoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Contracts.Player player);
+        System.Threading.Tasks.Task<bool> LoginAsync(ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByUsernameAsync(string username, bool includeFriends);
+        System.Threading.Tasks.Task<ProfileManager.Player> GetPlayerByUsernameAsync(string username, bool includeFriends);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetPlayerByIdDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByIdAsync(int playerId, bool includeFriends);
+        System.Threading.Tasks.Task<ProfileManager.Player> GetPlayerByIdAsync(int playerId, bool includeFriends);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetCurrentLoginAsync();
+        System.Threading.Tasks.Task<ProfileManager.Player> GetCurrentLoginAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ClearCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/ClearCurrentLoginResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/ClearCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -129,7 +390,7 @@ namespace ProfileManager
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/UpdatePlayerDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<bool> UpdatePlayerAsync(Forbbiden.Contracts.Player updatedPlayer);
+        System.Threading.Tasks.Task<bool> UpdatePlayerAsync(ProfileManager.Player updatedPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -196,32 +457,32 @@ namespace ProfileManager
             return base.Channel.IsUsernameAvailableAsync(username);
         }
         
-        public System.Threading.Tasks.Task<bool> SendEmailAsync(string email)
+        public System.Threading.Tasks.Task<bool> SendEmailAsync(string email, int playerId)
         {
-            return base.Channel.SendEmailAsync(email);
+            return base.Channel.SendEmailAsync(email, playerId);
         }
         
-        public System.Threading.Tasks.Task<bool> SignUpAsync(Forbbiden.Contracts.Player player)
+        public System.Threading.Tasks.Task<int> SignUpAsync(ProfileManager.Player player)
         {
             return base.Channel.SignUpAsync(player);
         }
         
-        public System.Threading.Tasks.Task<bool> LoginAsync(Forbbiden.Contracts.Player player)
+        public System.Threading.Tasks.Task<bool> LoginAsync(ProfileManager.Player player)
         {
             return base.Channel.LoginAsync(player);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByUsernameAsync(string username, bool includeFriends)
+        public System.Threading.Tasks.Task<ProfileManager.Player> GetPlayerByUsernameAsync(string username, bool includeFriends)
         {
             return base.Channel.GetPlayerByUsernameAsync(username, includeFriends);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetPlayerByIdAsync(int playerId, bool includeFriends)
+        public System.Threading.Tasks.Task<ProfileManager.Player> GetPlayerByIdAsync(int playerId, bool includeFriends)
         {
             return base.Channel.GetPlayerByIdAsync(playerId, includeFriends);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Player> GetCurrentLoginAsync()
+        public System.Threading.Tasks.Task<ProfileManager.Player> GetCurrentLoginAsync()
         {
             return base.Channel.GetCurrentLoginAsync();
         }
@@ -231,7 +492,7 @@ namespace ProfileManager
             return base.Channel.ClearCurrentLoginAsync();
         }
         
-        public System.Threading.Tasks.Task<bool> UpdatePlayerAsync(Forbbiden.Contracts.Player updatedPlayer)
+        public System.Threading.Tasks.Task<bool> UpdatePlayerAsync(ProfileManager.Player updatedPlayer)
         {
             return base.Channel.UpdatePlayerAsync(updatedPlayer);
         }

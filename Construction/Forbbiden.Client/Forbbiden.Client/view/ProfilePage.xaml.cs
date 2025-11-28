@@ -16,13 +16,13 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class ProfilePage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(ProfilePage));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
 
-        private readonly Player player;
-        private string uploadedAvatarOriginalPath;
-        private string uploadedAvatarProjectPath;
-        private string avatarFileName;
-        private bool avatarChanged = false;
+        private readonly Player ProfilePlayer;
+        private string UploadedAvatarOriginalPath;
+        private string UploadedAvatarProjectPath;
+        private string AvatarFileName;
+        private bool AvatarChanged = false;
 
         public ProfilePage()
         {
@@ -32,7 +32,7 @@ namespace Forbbiden.Client
         public ProfilePage(Player player)
         {
             InitializeComponent();
-            this.player = player;
+            this.ProfilePlayer = player;
             txtBxUsername.Text = player.PlayerUsername;
             txtBxEmail.Text = player.PlayerEmail;
             txtBxName.Text = player.PlayerName;
@@ -139,37 +139,39 @@ namespace Forbbiden.Client
             player.PlayerUsername = txtBxUsername.Text;
             player.PlayerEmail = txtBxEmail.Text;
             player.PlayerName = txtBxName.Text;
+            player.Status = ProfilePlayer.Status;
+            player.IsVerified = ProfilePlayer.IsVerified;
 
             player.SocialMedia = new []
             {
-                new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = this.player.PlayerId },
-                new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = this.player.PlayerId },
-                new SocialMedia { SocialMediaName = "instagram", SocialLink = txtBxInstagram.Text, PlayerId = this.player.PlayerId },
-                new SocialMedia { SocialMediaName = "facebook", SocialLink = txtBxFacebook.Text, PlayerId = this.player.PlayerId }
+                new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = this.ProfilePlayer.PlayerId },
+                new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = this.ProfilePlayer.PlayerId },
+                new SocialMedia { SocialMediaName = "instagram", SocialLink = txtBxInstagram.Text, PlayerId = this.ProfilePlayer.PlayerId },
+                new SocialMedia { SocialMediaName = "facebook", SocialLink = txtBxFacebook.Text, PlayerId = this.ProfilePlayer.PlayerId }
             };
 
-            if (avatarChanged)
+            if (AvatarChanged)
             {
-                player.PlayerAvatarPath = avatarFileName;
+                player.PlayerAvatarPath = AvatarFileName;
                 string exeDir = AppContext.BaseDirectory;
                 string projectDir = Directory.GetParent(exeDir).Parent.Parent.FullName;
 
-                uploadedAvatarProjectPath = Path.Combine(projectDir, "avatars", avatarFileName);
-                File.Copy(uploadedAvatarOriginalPath, uploadedAvatarProjectPath, true);
+                UploadedAvatarProjectPath = Path.Combine(projectDir, "avatars", AvatarFileName);
+                File.Copy(UploadedAvatarOriginalPath, UploadedAvatarProjectPath, true);
             }
             else
             {
-                player.PlayerAvatarPath = this.player.PlayerAvatarPath;
+                player.PlayerAvatarPath = this.ProfilePlayer.PlayerAvatarPath;
             }
 
             bool isValid = true;
 
-            if (player.PlayerUsername != this.player.PlayerUsername)
+            if (player.PlayerUsername != this.ProfilePlayer.PlayerUsername)
             {
                 ValidateUsername(player.PlayerUsername, ref isValid);
             }
 
-            if (player.PlayerEmail != this.player.PlayerEmail)
+            if (player.PlayerEmail != this.ProfilePlayer.PlayerEmail)
             {
                 ValidateEmail(player.PlayerEmail, ref isValid);
             }
@@ -184,7 +186,7 @@ namespace Forbbiden.Client
 
             Player updatedPlayer = new Player
             {
-                PlayerId = player.PlayerId
+                PlayerId = ProfilePlayer.PlayerId
             };
 
             if (SetPlayer(ref updatedPlayer))
@@ -211,15 +213,15 @@ namespace Forbbiden.Client
 
             if (result == true)
             {
-                avatarFileName = Path.GetFileName(openFileDialog.FileName);
+                AvatarFileName = Path.GetFileName(openFileDialog.FileName);
 
-                uploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
+                UploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
 
                 imgAvatar.Fill = new ImageBrush(
                     new System.Windows.Media.Imaging.BitmapImage(
-                        new Uri(uploadedAvatarOriginalPath)));
+                        new Uri(UploadedAvatarOriginalPath)));
 
-                avatarChanged = true;
+                AvatarChanged = true;
             }
         }
     }

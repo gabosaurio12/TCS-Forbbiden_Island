@@ -94,6 +94,12 @@ namespace Forbbiden.Client.TokenManager {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TokenManager.ITokenManager")]
     public interface ITokenManager {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/CreateRandomToken", ReplyAction="http://tempuri.org/ITokenManager/CreateRandomTokenResponse")]
+        string CreateRandomToken();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/CreateRandomToken", ReplyAction="http://tempuri.org/ITokenManager/CreateRandomTokenResponse")]
+        System.Threading.Tasks.Task<string> CreateRandomTokenAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/GenerateToken", ReplyAction="http://tempuri.org/ITokenManager/GenerateTokenResponse")]
         Forbbiden.Client.TokenManager.Token GenerateToken(int playerId);
         
@@ -138,6 +144,14 @@ namespace Forbbiden.Client.TokenManager {
         
         public TokenManagerClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public string CreateRandomToken() {
+            return base.Channel.CreateRandomToken();
+        }
+        
+        public System.Threading.Tasks.Task<string> CreateRandomTokenAsync() {
+            return base.Channel.CreateRandomTokenAsync();
         }
         
         public Forbbiden.Client.TokenManager.Token GenerateToken(int playerId) {

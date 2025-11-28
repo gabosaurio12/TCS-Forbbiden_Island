@@ -128,6 +128,17 @@
                         Cursor="Hand"
                         Click="LogInButton_Click" Background="#A1A1A1" />
             </Grid>
+
+            <Button x:Name="verifyButton" Grid.Column="1" Grid.Row="2"
+                    Visibility="Hidden"
+                    Height="80" Width="250"
+                    FontFamily="{StaticResource IrishGrover}"
+                    Content="{x:Static language:Resources.verify}"
+                    FontSize="30" Foreground="White"
+                    BorderThickness="5" BorderBrush="Black"
+                    Background="#A1A1A1"
+                    Cursor="Hand"
+                    Click="VerifyButton_Click"/>
         </Grid>
     </Viewbox>
 </Page>

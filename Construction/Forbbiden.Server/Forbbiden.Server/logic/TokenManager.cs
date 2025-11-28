@@ -3,8 +3,12 @@ using Forbbiden.Server.utils;
 using log4net;
 using System;
 using System.Data.Entity.Core;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
+using System.Text;
 
 namespace Forbbiden.Server.logic
 {
@@ -21,7 +25,7 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
-        private void HandleEntityException(EntityException ex)
+        private void HandleEntityException(Exception ex)
         {
             Log.Error(ex);
 
@@ -32,19 +36,33 @@ namespace Forbbiden.Server.logic
             };
 
             throw new FaultException<DBFault>(fault,
-                new FaultReason("EntityException"));
+                new FaultReason(fault.Error));
+        }
+
+        public string CreateRandomToken()
+        {
+            int tokenLength = 6;
+            Random random = new Random();
+            int minRandom = 0;
+            int maxRandom = 9;
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < tokenLength; i++)
+            {
+                int randomToken = random.Next(minRandom, maxRandom);
+                builder.Append(randomToken);
+            }
+
+            string randomTokenString = builder.ToString();
+
+            return randomTokenString;
         }
 
         public Contracts.Token GenerateToken(int playerId)
         {
-            int minToken = 100000;
-            int maxToken = 999999;
-            string randomTokenString = "";
+            string randomTokenString = CreateRandomToken();
             bool success = false;
             do
             {
-                int randomToken = new Random().Next(minToken, maxToken);
-                randomTokenString = randomToken.ToString();
                 try
                 {
                     using (var db = new Forbbiden_FEIEntities(ConnectionString))
@@ -59,16 +77,18 @@ namespace Forbbiden.Server.logic
                             };
                             db.Token.Add(searchToken);
                             db.SaveChanges();
+                            success = true;
 
                             return new Contracts.Token
                             {
+                                Id = searchToken.token_id,
                                 TokenString = searchToken.token1,
                                 PlayerId = (int)searchToken.player_id
                             };
                         }
                     }
                 }
-                catch (EntityException ex)
+                catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
                 {
                     HandleEntityException(ex);
                 }
@@ -107,10 +127,19 @@ namespace Forbbiden.Server.logic
             bool isTokenCorrect = false;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
-                var searchToken = db.Token.FirstOrDefault(t => t.token1 == token && t.player_id == playerId);
-                if (searchToken != null)
+                try
                 {
-                    isTokenCorrect = true;
+                    var searchToken = db.Token.FirstOrDefault(t => t.token1 == token && t.player_id == playerId);
+                    if (searchToken != null)
+                    {
+                        isTokenCorrect = true;
+                        db.Token.Remove(searchToken);
+                        db.SaveChanges();
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    HandleEntityException(ex);
                 }
             }
 

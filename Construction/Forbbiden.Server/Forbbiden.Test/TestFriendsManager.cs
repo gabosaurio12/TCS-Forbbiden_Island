@@ -17,28 +17,28 @@ namespace Forbbiden.Test
         public async Task Setup()
         {
 
-            Player sender = new Player
+            ProfileManager.Player sender = new ProfileManager.Player
             {
                 PlayerUsername = "testSender",
                 PlayerPassword = "T3st_pass",
                 PlayerEmail = "testSender@email.net"
             };
 
-            Player receiver = new Player
+            ProfileManager.Player receiver = new ProfileManager.Player
             {
                 PlayerUsername = "testReceiver",
                 PlayerPassword = "T3st_pass",
                 PlayerEmail = "testReceiver@email.net"
             };
 
-            Player firstFriend = new Player
+            ProfileManager.Player firstFriend = new ProfileManager.Player
             {
                 PlayerUsername = "firstFriend",
                 PlayerPassword = "T3st_pass",
                 PlayerEmail = "firstFriend@email.net"
             };
 
-            Player secondFriend = new Player
+            ProfileManager.Player secondFriend = new ProfileManager.Player
             {
                 PlayerUsername = "secondFriend",
                 PlayerPassword = "T3st_pass",
