@@ -14,6 +14,8 @@ namespace Forbbiden.Contracts
         [OperationContract]
         bool CancelFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
+        bool DeleteFriend(string friendUsername, string playerUsername);
+        [OperationContract]
         List<FriendRequest> GetFriendRequests(string receiverUsername);
         [OperationContract]
         List<Friendship> GetFriendsByID(int playerID);

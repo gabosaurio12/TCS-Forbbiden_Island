@@ -54,7 +54,7 @@ namespace Forbbiden.Server.logic
                                 Status = 1
                             };
 
-                            if (FriendsNotificationManager.SendAcceptedRequestCallback(friendRequestCallback, senderUsername))
+                            if (FriendsNotificationManager.SendRefreshPageCallback(friendRequestCallback, senderUsername))
                             {
                                 success = true;
                             }
@@ -169,7 +169,8 @@ namespace Forbbiden.Server.logic
                     var receiver = profileClient.GetPlayerByUsername(receiverUsername);
                     if (sender.PlayerId != -1 && receiver.PlayerId != -1)
                     {
-                        var friendRequest = db.Friends.FirstOrDefault(fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
+                        var friendRequest = db.Friends.FirstOrDefault(
+                            fr => fr.player_id == sender.PlayerId && fr.friend_id == receiver.PlayerId);
                         if (friendRequest != null)
                         {
                             db.Friends.Remove(friendRequest);
@@ -180,7 +181,52 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    string classMethod = "FriendsManager.AcceptFriendRequest";
+                    string classMethod = "FriendsManager.CancelFriendRequest";
+                    HandleEntityException(ex, classMethod);
+                }
+            }
+
+            return success;
+        }
+
+        public bool DeleteFriend(string friendUsername, string playerUsername)
+        {
+            bool success = false;
+
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                var profileClient = new ProfileManager();
+                try
+                {
+                    var friend = profileClient.GetPlayerByUsername(friendUsername);
+                    var player = profileClient.GetPlayerByUsername(playerUsername);
+                    if (friend.PlayerId != -1 && player.PlayerId != -1)
+                    {
+                        var friendRequest = db.Friends.FirstOrDefault(fr =>
+                            (
+                                (fr.player_id == player.PlayerId && fr.friend_id == friend.PlayerId) ||
+                                (fr.player_id == friend.PlayerId && fr.friend_id == player.PlayerId)
+                            )
+                            && fr.status == 1
+                        );
+
+                        if (friendRequest != null)
+                        {
+                            db.Friends.Remove(friendRequest);
+                            db.SaveChanges();
+
+                            if (FriendsNotificationManager.SendRefreshPageCallback(new FriendRequest(), friendUsername))
+                            {
+                                success = true;
+                            }
+
+                            success = true;
+                        }
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "FriendsManager.DeleteFriend";
                     HandleEntityException(ex, classMethod);
                 }
             }
@@ -219,7 +265,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    string classMethod = "FriendsManager.AcceptFriendRequest";
+                    string classMethod = "FriendsManager.GetFriendRequests";
                     HandleEntityException(ex, classMethod);
                 }
             }
@@ -240,7 +286,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    string classMethod = "FriendsManager.AcceptFriendRequest";
+                    string classMethod = "FriendsManager.GetFriedsByID";
                     HandleEntityException(ex, classMethod);
                 }
 

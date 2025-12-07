@@ -20,6 +20,6 @@ namespace Forbbiden.Contracts
         void NewFriendRequest(FriendRequest friendRequest);
 
         [OperationContract(IsOneWay = true)]
-        void NewFriendship(FriendRequest friendRequest);
+        void RefreshPageCallback(FriendRequest friendRequest);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -67,11 +68,11 @@ namespace Forbbiden.Server.callbacks
             return success;
         }
 
-        public static bool SendAcceptedRequestCallback(FriendRequest friendRequest, string senderUsername)
+        public static bool SendRefreshPageCallback(FriendRequest friendRequest, string username)
         {
             bool success = false;
 
-            if (!Subscribers.TryGetValue(senderUsername, out var subscriber))
+            if (!Subscribers.TryGetValue(username, out var subscriber))
             {
                 Log.Warn("[WARNING] - FriendsManager.SendFriendRequest - User unsuscribed");
             }
@@ -79,18 +80,18 @@ namespace Forbbiden.Server.callbacks
             {
                 try
                 {
-                    subscriber.NewFriendship(friendRequest);
+                    subscriber.RefreshPageCallback(friendRequest);
                     success = true;
                 }
                 catch (CommunicationObjectAbortedException ex)
                 {
-                    Subscribers.Remove(senderUsername);
+                    Subscribers.Remove(username);
 
                     Log.Warn("WARNING - FriendsNotificationManager.SendFriendRequest", ex);
                 }
                 catch (CommunicationException ex)
                 {
-                    Subscribers.Remove(senderUsername);
+                    Subscribers.Remove(username);
 
                     Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
                 }
