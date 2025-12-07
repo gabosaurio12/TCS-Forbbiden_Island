@@ -145,7 +145,7 @@ Construction/Forbbiden.Client/avatars
 build/
 
 # My files
-Database/Queries
+Database/Queries/
 edmxbackup/
 jugadores.json
 avatars/
