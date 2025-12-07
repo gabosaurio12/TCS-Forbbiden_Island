@@ -2,6 +2,7 @@ using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
 using log4net;
 using System;
+using System.ServiceModel;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,10 +19,12 @@ namespace Forbbiden.Client
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(SignupPage));
         private const int PasswordMinLength = 7;
-        private readonly ProfileManagerClient Client = new ProfileManagerClient();
+        private readonly ProfileManagerClient Client;
         public SignupPage()
         {
             InitializeComponent();
+
+            Client = new ProfileManagerClient();
         }
 
         private void OpenNotification(string title, string message)

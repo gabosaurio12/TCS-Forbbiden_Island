@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,6 +18,7 @@ namespace Forbbiden.Client
     public partial class ProfilePage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
+        private ProfileManagerClient ProfileClient;
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
@@ -27,11 +29,16 @@ namespace Forbbiden.Client
         public ProfilePage()
         {
             InitializeComponent();
+
+            ProfileClient = new ProfileManagerClient();
         }
 
         public ProfilePage(Player player)
         {
             InitializeComponent();
+
+            ProfileClient = new ProfileManagerClient();
+
             this.ProfilePlayer = player;
             txtBxUsername.Text = player.PlayerUsername;
             txtBxEmail.Text = player.PlayerEmail;
@@ -94,8 +101,6 @@ namespace Forbbiden.Client
 
         private void ValidateUsername(string username, ref bool isValid) // preguntar si debe ser estático, porque si se hace estático habría que pasar 4 parámetros
         {
-            var client = new ProfileManagerClient();
-
             if (string.IsNullOrEmpty(username))
             {
                 MessageBox.Show("El nombre de usuario no puede estar vacío.");
@@ -104,7 +109,7 @@ namespace Forbbiden.Client
             }
             else
             {
-                if (!client.IsUsernameAvailable(username))
+                if (!ProfileClient.IsUsernameAvailable(username))
                 {
                     MessageBox.Show("El nombre de usuario ya existe.");
                     txtBkUsername.Foreground = Brushes.Red;
@@ -115,8 +120,6 @@ namespace Forbbiden.Client
 
         private void ValidateEmail(string email, ref bool isValid) // preguntar si debe ser estático, porque si se hace estático habría que pasar 4 parámetros
         {
-            var client = new ProfileManagerClient();
-
             if (string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("El correo no puede estar vació.");
@@ -125,7 +128,7 @@ namespace Forbbiden.Client
             }
             else
             {
-                if (!client.ValidateEmail(email))
+                if (!ProfileClient.ValidateEmail(email))
                 {
                     MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
                     txtBkEmail.Foreground = Brushes.Red;
@@ -182,7 +185,6 @@ namespace Forbbiden.Client
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             ResetFieldColors(txtBkUsername, txtBkName, txtBkEmail);
-            var client = new ProfileManagerClient();
 
             Player updatedPlayer = new Player
             {
@@ -191,7 +193,7 @@ namespace Forbbiden.Client
 
             if (SetPlayer(ref updatedPlayer))
             {
-                if (client.UpdatePlayer(updatedPlayer))
+                if (ProfileClient.UpdatePlayer(updatedPlayer))
                 {
                     NavigationService?.Navigate(new MainPage());
                 }

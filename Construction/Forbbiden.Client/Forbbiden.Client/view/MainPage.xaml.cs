@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.FriendsManager;
+using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
 using Forbbiden.Client.view.games;
@@ -7,6 +8,7 @@ using log4net;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,10 +20,16 @@ namespace Forbbiden.Client
     public partial class MainPage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainPage));
-        private readonly ProfileManagerClient Client = new ProfileManagerClient();
+        private readonly ProfileManagerClient Client;
+        public static logic.FriendsNotificationSingleton CallbackManager { get; private set; }
+        public static IFriendsManager FriendsProxy { get; private set; }
+
         public MainPage()
         {
             InitializeComponent();
+
+            Client = new ProfileManagerClient();
+
             _ = SetLogin();
             SetBackground(background);
         }
@@ -32,7 +40,7 @@ namespace Forbbiden.Client
 
             if (playerId > 0)
             {
-                Player currentLogin = new Player();
+                ProfileManager.Player currentLogin = new ProfileManager.Player();
 
                 try
                 {
@@ -48,12 +56,15 @@ namespace Forbbiden.Client
                 {
                     ClientSession.SetPlayer(currentLogin);
                     ReloadMainPage(currentLogin);
-                    logInButton.Visibility = Visibility.Hidden;
+                    profileButton.Visibility = Visibility.Visible;
+                    friendsButton.Visibility = Visibility.Visible;
+
+                    FriendsNotificationSingleton.Instance.Subscribe(ClientSession.Username);
                 }
-                else
-                {
-                    profileButton.Visibility = Visibility.Hidden;
-                }
+            }
+            else
+            {
+                logInButton.Visibility = Visibility.Visible;
             }
         }
 
@@ -79,7 +90,6 @@ namespace Forbbiden.Client
         {
             try
             {
-                //NavigationService?.Navigate(new PlayPage());
                 NavigationService?.Navigate(new BoardPage());
             }
             catch (Exception ex)
@@ -111,7 +121,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                Player player = ClientSession.GetPlayer();
+                ProfileManager.Player player = ClientSession.GetPlayer();
 
                 NavigationService?.Navigate(new ProfilePage(player));
             }
@@ -137,12 +147,11 @@ namespace Forbbiden.Client
 
         private async void ConnectPlayer(string username)
         {
-            var client = new ProfileManagerClient();
             bool isConnected = false;
 
             try
             {
-                isConnected = await client.ConnectPlayerByUsernameAsync(username);
+                isConnected = await Client.ConnectPlayerByUsernameAsync(username);
             }
             catch (FaultException<DBFault> dbFault)
             {
@@ -156,7 +165,7 @@ namespace Forbbiden.Client
             }
         }
 
-        public void ReloadMainPage(Player player)
+        public void ReloadMainPage(ProfileManager.Player player)
         {
             try
             {

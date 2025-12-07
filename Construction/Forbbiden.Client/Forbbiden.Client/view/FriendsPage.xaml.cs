@@ -2,6 +2,7 @@
 using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.FriendsNotificationManager;
 using log4net;
 using System;
 using System.Dynamic;
@@ -19,10 +20,10 @@ namespace Forbbiden.Client.view
     /// <summary>
     /// Interaction logic for FriendsPage.xaml
     /// </summary>
-    public partial class FriendsPage : Page, IFriendsManagerCallback
+    public partial class FriendsPage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsPage));
-        private readonly ProfileManagerClient ProfileClient = new ProfileManagerClient();
+        private readonly ProfileManagerClient ProfileClient;
         private readonly FriendsManagerClient FriendsClient;
 
 
@@ -30,17 +31,40 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
 
-            var callbackManager = new InstanceContext(this);
-            FriendsClient = new FriendsManagerClient(callbackManager);
+            ProfileClient = new ProfileManagerClient();
+            FriendsClient = new FriendsManagerClient();
+
+            FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
+            FriendsNotificationSingleton.Instance.OnNewFriendship += OnFriendshipAccepted;
 
             _ = SetFriends();
             _ = SetFriendRequests();
         }
 
-        public void OnFriendRequestReceived(FriendRequest friendRequest)
+        private void OnFriendRequestReceived(FriendsNotificationManager.FriendRequest friendRequest)
         {
             Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
             storyboard.Begin();
+        }
+
+        private void OnFriendshipAccepted(FriendsNotificationManager.FriendRequest friendRequest)
+        {
+            ReloadFriends();
+        }
+
+        private void ReloadFriends()
+        {
+            for (int i = 1; i < onlineStack.Children.Count; i++)
+            {
+                onlineStack.Children.RemoveAt(i);
+            }
+
+            for (int i = 1; i < offlineStack.Children.Count; i++)
+            {
+                offlineStack.Children.RemoveAt(i);
+            }
+
+            _ = SetFriends();
         }
 
         private async Task SetFriends()
@@ -177,6 +201,7 @@ namespace Forbbiden.Client.view
                 Log.Error("ERROR: FriendsPage.SendFriendRequest", dbFault);
                 ViewUtils.ShowPullError(Window.GetWindow(this));
             }
+
             if (receiver.PlayerId != -1)
             {
                 bool requestStatus = false;

@@ -62,6 +62,7 @@
                         BorderThickness="5" BorderBrush="Black"
                         FontFamily="{StaticResource IrishGrover}"
                         FontSize="30" Foreground="White"
+                        Visibility="Collapsed"
                         Cursor="Hand"
                         Click="FriendsButton_Click" Background="#A1A1A1" />
                 <Button x:Name="settingsButton" Content="{x:Static language:Resources.settings}"
@@ -110,6 +111,7 @@
                         BorderThickness="5" BorderBrush="Black"
                         HorizontalAlignment="Center"
                         Cursor="Hand"
+                        Visibility="Hidden"
                         Click="ProfileButton_Click" Background="#A1A1A1" />
             </StackPanel>
 
@@ -126,6 +128,7 @@
                         FontFamily="{StaticResource IrishGrover}"
                         FontSize="30" Foreground="White"
                         Cursor="Hand"
+                        Visibility="Hidden"
                         Click="LogInButton_Click" Background="#A1A1A1" />
             </Grid>
 

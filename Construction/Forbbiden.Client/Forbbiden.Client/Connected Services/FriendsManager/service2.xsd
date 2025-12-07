@@ -74,11 +74,4 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="OnFriendRequestReceived">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="friendRequest" nillable="true" type="q3:FriendRequest" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

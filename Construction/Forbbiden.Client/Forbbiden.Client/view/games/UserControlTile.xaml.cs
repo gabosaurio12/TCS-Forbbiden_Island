@@ -20,7 +20,7 @@ namespace Forbbiden.Client.view.games
         public bool IsFlood { get; set; }
         public bool IsLost { get; set; }
 
-        public Color DarkBlue { get; }
+        public Color DefaultBlue { get; }
         public Color Border { get; set; }
         public Color EnterBorder { get; set; }
         public Color RedColor { get; set; }
@@ -31,12 +31,12 @@ namespace Forbbiden.Client.view.games
         {
             InitializeComponent();
 
-            string darkBlueColorHex = "#143285";
-            DarkBlue = (Color)ColorConverter.ConvertFromString(darkBlueColorHex);
+            string defaultGreenHex = "#03A300";
+            DefaultBlue = (Color)ColorConverter.ConvertFromString(defaultGreenHex);
             string redColorHex = "#A81D0F";
             RedColor = (Color)ColorConverter.ConvertFromString(redColorHex);
-            Border = DarkBlue;
-            EnterBorder = DarkBlue;
+            Border = DefaultBlue;
+            EnterBorder = DefaultBlue;
 
             IsHitTestVisible = false;
             Cursor = Cursors.Arrow;
@@ -67,7 +67,7 @@ namespace Forbbiden.Client.view.games
 
         public void ResetBorder()
         {
-            Color color = DarkBlue;
+            Color color = DefaultBlue;
             if (IsTreasure)
             {
                 color = RedColor;

@@ -17,10 +17,10 @@ namespace Forbbiden.Client.view
     /// <summary>
     /// Interaction logic for FriendRequestsPage.xaml
     /// </summary>
-    public partial class FriendRequestsPage : Page, IFriendsManagerCallback
+    public partial class FriendRequestsPage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendRequestsPage));
-        private readonly ProfileManagerClient ProfileManager = new ProfileManagerClient();
+        private readonly ProfileManagerClient ProfileManager;
         private readonly FriendsManagerClient FriendsClient;
         private readonly string ErrorTitle = Properties.Langs.Resources.error;
 
@@ -28,14 +28,23 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
 
-            var callbackManager = new InstanceContext(this);
-            FriendsClient = new FriendsManagerClient(callbackManager);
+            ProfileManager = new ProfileManagerClient();
+            FriendsClient = new FriendsManagerClient();
+
+            FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
 
             _ = SetRequests();
         }
 
-        public async void OnFriendRequestReceived(FriendRequest request)
+        public async void OnFriendRequestReceived(FriendsNotificationManager.FriendRequest friendRequest)
         {
+            var request = new FriendRequest
+            {
+                ReceiverID = friendRequest.ReceiverID,
+                SenderID = friendRequest.SenderID,
+                Status = friendRequest.Status,
+            };
+
             await AddRequest(request);
         }
 
