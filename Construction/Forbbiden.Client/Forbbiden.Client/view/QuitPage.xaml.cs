@@ -19,6 +19,11 @@ namespace Forbbiden.Client.view
         public QuitPage()
         {
             InitializeComponent();
+
+            if (ClientSession.CurrentPlayerId > 0)
+            {
+                logOutButton.Visibility = Visibility.Visible;
+            }
         }
 
         private async void DisconnectPlayer(string username)
