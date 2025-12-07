@@ -1,13 +1,6 @@
-﻿using Forbbiden.Contracts;
-using log4net;
+﻿using log4net;
 using ProfileManager;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.Core;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using TokenManager;
 
 namespace Forbbiden.Test

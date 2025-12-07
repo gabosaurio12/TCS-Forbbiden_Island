@@ -1,7 +1,7 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.callbacks;
 using Forbbiden.Server.utils;
 using log4net;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
@@ -16,6 +16,9 @@ namespace Forbbiden.Server.logic
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsManager));
         private readonly string ConnectionString;
+        private readonly string DatabaseError = "Database Error";
+        private readonly string EntityError = "EntityException";
+
 
         public FriendsManager()
         {
@@ -43,73 +46,111 @@ namespace Forbbiden.Server.logic
                         {
                             friendRequest.status = 1;
                             db.SaveChanges();
+
+                            FriendRequest friendRequestCallback = new FriendRequest
+                            {
+                                SenderID = sender.PlayerId,
+                                ReceiverID = receiver.PlayerId,
+                                Status = 1
+                            };
+
+                            if (FriendsNotificationManager.SendAcceptedRequestCallback(friendRequestCallback, senderUsername))
+                            {
+                                success = true;
+                            }
+
                             success = true;
                         }
                     }
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "FriendsManager.AcceptFriendRequest";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
             return success;
         }
 
-        private void SendFriendequestCallback(FriendRequest friendRequest)
+        private (Contracts.Player sender, Contracts.Player receiver) GetSenderReceiver(
+            string senderUsername, string receiverUsername)
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IFriendRequestCallback>();
-            callback.OnFriendRequestReceived(friendRequest);
+            var profileManager = new ProfileManager();
+
+            Contracts.Player sender = new Contracts.Player();
+            Contracts.Player receiver = new Contracts.Player();
+
+            try
+            {
+                sender = profileManager.GetPlayerByUsername(senderUsername);
+                receiver = profileManager.GetPlayerByUsername(receiverUsername);
+
+            }
+            catch (EntityException ex)
+            {
+                string classMethod = "FriendsManager.SendFriendRequest";
+                HandleEntityException(ex, classMethod);
+            }
+
+            return (sender, receiver);
         }
 
         public bool SendFriendRequest(string senderUsername, string receiverUsername)
         {
-            var playerManager = new ProfileManager();
             bool success = false;
-            try
-            {
-                var sender = playerManager.GetPlayerByUsername(senderUsername);
-                var receiver = playerManager.GetPlayerByUsername(receiverUsername);
-                if (sender.PlayerId == -1 || receiver.PlayerId == -1)
+
+            var (sender, receiver) = GetSenderReceiver(senderUsername, receiverUsername);
+
+            if (sender.PlayerId != -1 && receiver.PlayerId != -1)
+            { 
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    Log.Warn("AddSendFriendRequest: One of the users does not exist.");
-                    success = false;
-                }
-                else
-                {
-                    
-                    using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                    Friends searchFriendRequest = new Friends();
+                    try
                     {
-                        var searchFriendRequest = db.Friends.FirstOrDefault(
-                            sfr => sfr.player_id == sender.PlayerId && sfr.friend_id == receiver.PlayerId);
+                        searchFriendRequest = db.Friends.FirstOrDefault(
+                        sfr => sfr.player_id == sender.PlayerId && sfr.friend_id == receiver.PlayerId);
+                    }
+                    catch (EntityException ex)
+                    {
+                        string classMethod = "FriendsManager.SendFriendRequest";
+                        HandleEntityException(ex, classMethod);
+                    }
 
-                        if (searchFriendRequest == null)
+                    if (searchFriendRequest == null)
+                    {
+                        Friends friendRequest = new Friends
                         {
-                            Friends friendRequest = new Friends
-                            {
-                                player_id = sender.PlayerId,
-                                friend_id = receiver.PlayerId,
-                                status = 0
-                            };
+                            player_id = sender.PlayerId,
+                            friend_id = receiver.PlayerId,
+                            status = 0
+                        };
 
-                            var friendRequestCallback = new FriendRequest
-                            {
-                                SenderID = sender.PlayerId,
-                                ReceiverID = receiver.PlayerId,
-                                Status = 0
-                            };
-
+                        try
+                        {
                             db.Friends.Add(friendRequest);
                             db.SaveChanges();
-                            SendFriendequestCallback(friendRequestCallback);
+                        }
+                        catch (EntityException ex)
+                        {
+                            string classMethod = "FriendsManager.SendFriendRequest";
+                            HandleEntityException(ex, classMethod);
+                        }
+
+                        FriendRequest friendRequestCallback = new FriendRequest
+                        {
+                            SenderID = sender.PlayerId,
+                            ReceiverID = receiver.PlayerId,
+                            Status = 0
+                        };
+
+                        if (FriendsNotificationManager.SendRequestCallback(friendRequestCallback, receiverUsername))
+                        {
                             success = true;
                         }
                     }
                 }
-            }
-            catch (EntityException ex)
-            {
-                HandleEntityException(ex);
             }
 
             return success;
@@ -139,7 +180,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "FriendsManager.AcceptFriendRequest";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -177,7 +219,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "FriendsManager.AcceptFriendRequest";
+                    HandleEntityException(ex, classMethod);
                 }
             }
             return new List<FriendRequest>();
@@ -197,7 +240,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "FriendsManager.AcceptFriendRequest";
+                    HandleEntityException(ex, classMethod);
                 }
 
                 var profileManager = new ProfileManager();
@@ -218,18 +262,18 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        private void HandleEntityException(EntityException ex)
+        private void HandleEntityException(EntityException ex, string classMethod)
         {
-            Log.Error(ex);
+            Log.Error("ERROR" + classMethod, ex);
 
             var fault = new DBFault
             {
-                Error = "Database Error",
+                Error = DatabaseError,
                 Details = ex.Message
             };
 
             throw new FaultException<DBFault>(fault,
-                new FaultReason("EntityException"));
+                new FaultReason(EntityError));
         }
     }
 }

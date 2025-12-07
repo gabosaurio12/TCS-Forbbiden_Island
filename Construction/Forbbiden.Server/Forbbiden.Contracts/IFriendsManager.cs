@@ -4,7 +4,7 @@ using System.ServiceModel;
 
 namespace Forbbiden.Contracts
 {
-    [ServiceContract(CallbackContract = typeof(IFriendRequestCallback))]
+    [ServiceContract]
     public interface IFriendsManager
     {
         [OperationContract]
