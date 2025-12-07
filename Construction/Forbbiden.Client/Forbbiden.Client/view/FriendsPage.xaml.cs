@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace Forbbiden.Client.view
 {
@@ -35,7 +36,7 @@ namespace Forbbiden.Client.view
             FriendsClient = new FriendsManagerClient();
 
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
-            FriendsNotificationSingleton.Instance.OnNewFriendship += OnFriendshipAccepted;
+            FriendsNotificationSingleton.Instance.OnRefreshPage += RefreshFriends;
 
             _ = SetFriends();
             _ = SetFriendRequests();
@@ -47,7 +48,7 @@ namespace Forbbiden.Client.view
             storyboard.Begin();
         }
 
-        private void OnFriendshipAccepted(FriendsNotificationManager.FriendRequest friendRequest)
+        private void RefreshFriends(FriendsNotificationManager.FriendRequest friendRequest)
         {
             ReloadFriends();
         }
@@ -91,12 +92,12 @@ namespace Forbbiden.Client.view
 
                 foreach (var friendShip in onlineFriends)
                 {
-                    AddOnlineFriend(friendShip, onlineStack);
+                    AddOnlineFriend(friendShip);
                 }
 
                 foreach (var friendShip in offlineFriends)
                 {
-                    AddOfflineFriend(friendShip, offlineStack);
+                    AddOfflineFriend(friendShip);
                 }
             }
         }
@@ -116,29 +117,39 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private void DeleteFriend()
+        private async void DeleteFriend_MouseLeftButtonDownAsync(Object sender, MouseButtonEventArgs e)
         {
+            var imageClicked = sender as Image;
+            var requestControl = ViewUtils.FindParent<UserControlFriend>(imageClicked);
+            string friendUsername = requestControl.usernameTxtBk.Text;
 
+            var isDeleted = await FriendsClient.DeleteFriendAsync(friendUsername, ClientSession.Username);
+
+            if (isDeleted)
+            {
+                ReloadFriends();
+                string title = Properties.Langs.Resources.friend_deleted_title;
+                string message = Properties.Langs.Resources.friend_deleted_message + friendUsername;    
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+            }
         }
 
 
-        private void SeeFriendProfile()
+        private async void SeeFriendProfile(Object sender, MouseButtonEventArgs e)
         {
+            var imageClicked = sender as Image;
+            var requestControl = ViewUtils.FindParent<UserControlFriend>(imageClicked);
+            string friendUsername = requestControl.usernameTxtBk.Text;
 
-        }
-        private void GetContextMenu()
-        {
-            var contextMenu = new ContextMenu();
-            var profileItem = new MenuItem();
-            profileItem.Header = Properties.Langs.Resources.profile;
-            var deleteItem = new MenuItem();
-            deleteItem.Header = Properties.Langs.Resources.delete;
+            var friend = await ProfileClient.GetPlayerByUsernameAsync(friendUsername, false);
 
-            contextMenu.Items.Add(profileItem);
-            contextMenu.Items.Add(deleteItem);
+            if (friend.PlayerId != -1)
+            {
+                NavigationService?.Navigate(new FriendProfilePage(friend));
+            }
         }
 
-        public static void AddOnlineFriend(ProfileManager.Player friend, StackPanel onlineStack)
+        public void AddOnlineFriend(ProfileManager.Player friend)
         {
             var friendControl = new UserControlFriend();
             friendControl.ContextMenu = new ContextMenu();
@@ -147,13 +158,15 @@ namespace Forbbiden.Client.view
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
             ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
             friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
-            
+
+            friendControl.profileImage.MouseLeftButtonDown += SeeFriendProfile;
+            friendControl.recycleBin.MouseLeftButtonDown += DeleteFriend_MouseLeftButtonDownAsync;
 
             friendControl.SetFriendUsername(friendControl.usernameTxtBk, friend.PlayerUsername);
             onlineStack.Children.Add(friendControl);
         }
 
-        public static void AddOfflineFriend(ProfileManager.Player friend, StackPanel offlineStack)
+        public void AddOfflineFriend(ProfileManager.Player friend)
         {
             var friendControl = new UserControlFriend();
 
@@ -161,6 +174,9 @@ namespace Forbbiden.Client.view
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
             ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
             friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
+
+            friendControl.profileImage.MouseLeftButtonDown += SeeFriendProfile;
+            friendControl.recycleBin.MouseLeftButtonDown += DeleteFriend_MouseLeftButtonDownAsync;
 
             friendControl.SetFriendUsername(friendControl.usernameTxtBk, friend.PlayerUsername);
             offlineStack.Children.Add(friendControl);
@@ -275,15 +291,15 @@ namespace Forbbiden.Client.view
         {
             var verticalZoom = new DoubleAnimation
             {
-                From = 100,
-                To = 105,
+                From = glass.Height,
+                To = glass.Height + 5,
                 Duration = TimeSpan.FromSeconds(0.15)
             };
 
             var horizontalZoom = new DoubleAnimation
             {
-                From = 100,
-                To = 105,
+                From = glass.Height,
+                To = glass.Height + 5,
                 Duration = TimeSpan.FromSeconds(0.15),
             };
 
@@ -295,15 +311,15 @@ namespace Forbbiden.Client.view
         {
             var verticalZoom = new DoubleAnimation
             {
-                From = 105,
-                To = 100,
+                From = glass.Height,
+                To = glass.Height - 5,
                 Duration = TimeSpan.FromSeconds(0.15)
             };
 
             var horizontalZoom = new DoubleAnimation
             {
-                From = 105,
-                To = 100,
+                From = glass.Height,
+                To = glass.Height - 5,
                 Duration = TimeSpan.FromSeconds(0.15),
             };
 

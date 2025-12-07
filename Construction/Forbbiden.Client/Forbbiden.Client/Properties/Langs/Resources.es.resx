@@ -393,4 +393,13 @@
   <data name="game_over_message" xml:space="preserve">
     <value>¡El agua alcanzó el nivel más alto! ¡LA FEI ESTÁ AHORA BAJO EL AGUA!  Buena suerte en tu próxima aventura...</value>
   </data>
+  <data name="friend_deleted_title" xml:space="preserve">
+    <value>Amigo Eliminado</value>
+  </data>
+  <data name="friend_deleted_message" xml:space="preserve">
+    <value>Has eliminado tu amistad exitosamente con: </value>
+  </data>
+  <data name="accept" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
 </root>

@@ -58,6 +58,12 @@
   <wsdl:message name="IFriendsManager_CancelFriendRequest_OutputMessage">
     <wsdl:part name="parameters" element="tns:CancelFriendRequestResponse" />
   </wsdl:message>
+  <wsdl:message name="IFriendsManager_DeleteFriend_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFriend" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsManager_DeleteFriend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFriendResponse" />
+  </wsdl:message>
   <wsdl:message name="IFriendsManager_GetFriendRequests_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFriendRequests" />
   </wsdl:message>
@@ -82,6 +88,10 @@
     <wsdl:operation name="CancelFriendRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/CancelFriendRequest" message="tns:IFriendsManager_CancelFriendRequest_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse" message="tns:IFriendsManager_CancelFriendRequest_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFriend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/DeleteFriend" message="tns:IFriendsManager_DeleteFriend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsManager/DeleteFriendResponse" message="tns:IFriendsManager_DeleteFriend_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFriendRequests">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendsManager/GetFriendRequests" message="tns:IFriendsManager_GetFriendRequests_InputMessage" />
@@ -116,6 +126,15 @@
     </wsdl:operation>
     <wsdl:operation name="CancelFriendRequest">
       <soap12:operation soapAction="http://tempuri.org/IFriendsManager/CancelFriendRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFriend">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsManager/DeleteFriend" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

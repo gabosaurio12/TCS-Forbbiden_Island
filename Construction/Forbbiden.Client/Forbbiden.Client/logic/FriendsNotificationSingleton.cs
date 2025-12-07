@@ -25,7 +25,7 @@ namespace Forbbiden.Client.logic
 
         public event Action<FriendRequest> OnNewFriendRequest;
 
-        public event Action<FriendRequest> OnNewFriendship;
+        public event Action<FriendRequest> OnRefreshPage;
 
         private readonly FriendsNotificationManagerClient Client;
 
@@ -60,13 +60,13 @@ namespace Forbbiden.Client.logic
             }
         }
 
-        public void NewFriendship(FriendRequest friendRequest)
+        public void RefreshPageCallback(FriendRequest friendRequest)
         {
             try
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    OnNewFriendship?.Invoke(friendRequest);
+                    OnRefreshPage?.Invoke(friendRequest);
                 });
             }
             catch (Exception ex)

@@ -153,6 +153,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="view\FriendProfilePage.xaml.cs">
+      <DependentUpon>FriendProfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\FriendRequestsPage.xaml.cs">
       <DependentUpon>FriendRequestsPage.xaml</DependentUpon>
     </Compile>
@@ -423,6 +426,7 @@
     <Resource Include="Images\parkpx1080.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\profile_px.png" />
     <Resource Include="Images\x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -457,6 +461,10 @@
     <Page Include="Styles\ToggleButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\FriendProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\FriendRequestsPage.xaml">
       <SubType>Designer</SubType>
@@ -685,6 +693,7 @@
     <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\recycle_bin.png" />
     <None Include="Connected Services\TokenManager\configuration91.svcinfo" />
     <None Include="Connected Services\TokenManager\configuration.svcinfo" />
     <None Include="Connected Services\TokenManager\Reference.svcmap">

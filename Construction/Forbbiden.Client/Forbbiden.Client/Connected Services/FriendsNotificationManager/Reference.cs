@@ -113,8 +113,8 @@ namespace Forbbiden.Client.FriendsNotificationManager {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendsNotificationManager/NewFriendRequest")]
         void NewFriendRequest(Forbbiden.Client.FriendsNotificationManager.FriendRequest friendRequest);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendsNotificationManager/NewFriendship")]
-        void NewFriendship(Forbbiden.Client.FriendsNotificationManager.FriendRequest friendRequest);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendsNotificationManager/RefreshPageCallback")]
+        void RefreshPageCallback(Forbbiden.Client.FriendsNotificationManager.FriendRequest friendRequest);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

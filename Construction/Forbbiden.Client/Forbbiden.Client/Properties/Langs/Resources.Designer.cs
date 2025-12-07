@@ -70,6 +70,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string accept {
+            get {
+                return ResourceManager.GetString("accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actions Left.
         /// </summary>
         public static string actions_left {
@@ -201,6 +210,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string flood_stack {
             get {
                 return ResourceManager.GetString("flood_stack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have successfully deleted your friendship with: .
+        /// </summary>
+        public static string friend_deleted_message {
+            get {
+                return ResourceManager.GetString("friend_deleted_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Deleted.
+        /// </summary>
+        public static string friend_deleted_title {
+            get {
+                return ResourceManager.GetString("friend_deleted_title", resourceCulture);
             }
         }
         

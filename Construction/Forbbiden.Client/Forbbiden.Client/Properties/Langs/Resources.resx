@@ -393,4 +393,13 @@
   <data name="game_over_message" xml:space="preserve">
     <value>The water reach the highest level! FEI IS NOW UNDER THE SEAS! Good Luck in your next adventure...</value>
   </data>
+  <data name="friend_deleted_title" xml:space="preserve">
+    <value>Friend Deleted</value>
+  </data>
+  <data name="friend_deleted_message" xml:space="preserve">
+    <value>You have successfully deleted your friendship with: </value>
+  </data>
+  <data name="accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
 </root>

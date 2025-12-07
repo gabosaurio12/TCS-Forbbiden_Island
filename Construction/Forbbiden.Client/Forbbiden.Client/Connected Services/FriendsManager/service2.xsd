@@ -46,6 +46,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="DeleteFriend">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="friendUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="playerUsername" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteFriendResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteFriendResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetFriendRequests">
     <xs:complexType>
       <xs:sequence>

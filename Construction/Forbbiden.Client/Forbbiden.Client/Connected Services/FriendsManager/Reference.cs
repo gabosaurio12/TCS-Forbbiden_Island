@@ -455,6 +455,12 @@ namespace Forbbiden.Client.FriendsManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteFriendResponse")]
+        bool DeleteFriend(string friendUsername, string playerUsername);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteFriendResponse")]
+        System.Threading.Tasks.Task<bool> DeleteFriendAsync(string friendUsername, string playerUsername);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
         Forbbiden.Client.FriendsManager.FriendRequest[] GetFriendRequests(string receiverUsername);
         
@@ -517,6 +523,14 @@ namespace Forbbiden.Client.FriendsManager {
         
         public System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername) {
             return base.Channel.CancelFriendRequestAsync(senderUsername, receiverUsername);
+        }
+        
+        public bool DeleteFriend(string friendUsername, string playerUsername) {
+            return base.Channel.DeleteFriend(friendUsername, playerUsername);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteFriendAsync(string friendUsername, string playerUsername) {
+            return base.Channel.DeleteFriendAsync(friendUsername, playerUsername);
         }
         
         public Forbbiden.Client.FriendsManager.FriendRequest[] GetFriendRequests(string receiverUsername) {

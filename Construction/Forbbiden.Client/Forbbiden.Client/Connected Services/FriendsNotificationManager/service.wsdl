@@ -55,8 +55,8 @@
   <wsdl:message name="IFriendsNotificationManager_NewFriendRequest_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NewFriendRequest" />
   </wsdl:message>
-  <wsdl:message name="IFriendsNotificationManager_NewFriendship_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NewFriendship" />
+  <wsdl:message name="IFriendsNotificationManager_RefreshPageCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RefreshPageCallback" />
   </wsdl:message>
   <wsdl:portType name="IFriendsNotificationManager">
     <wsdl:operation name="Subscribe">
@@ -70,8 +70,8 @@
     <wsdl:operation name="NewFriendRequest">
       <wsdl:output wsaw:Action="http://tempuri.org/IFriendsNotificationManager/NewFriendRequest" message="tns:IFriendsNotificationManager_NewFriendRequest_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="NewFriendship">
-      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsNotificationManager/NewFriendship" message="tns:IFriendsNotificationManager_NewFriendship_OutputCallbackMessage" />
+    <wsdl:operation name="RefreshPageCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsNotificationManager/RefreshPageCallback" message="tns:IFriendsNotificationManager_RefreshPageCallback_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IFriendsNotificationManager" type="tns:IFriendsNotificationManager">
@@ -102,8 +102,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="NewFriendship">
-      <soap12:operation soapAction="http://tempuri.org/IFriendsNotificationManager/NewFriendship" style="document" />
+    <wsdl:operation name="RefreshPageCallback">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsNotificationManager/RefreshPageCallback" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
