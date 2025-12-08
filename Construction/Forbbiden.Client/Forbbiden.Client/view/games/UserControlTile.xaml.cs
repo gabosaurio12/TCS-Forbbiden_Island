@@ -50,7 +50,7 @@ namespace Forbbiden.Client.view.games
             IsTreasure = true;
         }
 
-        public void SetMovementBorders()
+        public void SetInteractionBorders()
         {
             string yellow = "#FFEB00";
             string orange = "#DE7A14";

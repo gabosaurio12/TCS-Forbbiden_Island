@@ -5,6 +5,7 @@ using Forbbiden.Client.view.info;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,6 +32,9 @@ namespace Forbbiden.Client.view.games
         private UserControlBoard Board;
         private UserControlTile CurrentTile;
         private int ActionsRemain = 3;
+
+        private bool MoveMode = false;
+        private bool ShoreMode = false;
 
         public BoardPage()
         {
@@ -219,19 +223,37 @@ namespace Forbbiden.Client.view.games
             return card;
         }
 
+        private void Shore_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ActionsRemain > 0)
+            {
+                ShoreMode = true;
+                var possibleTilesToShore = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
+                possibleTilesToShore.Add(CurrentTile);
 
-
-
+                foreach (var possibleTile in possibleTilesToShore)
+                {
+                    possibleTile.SetInteractionBorders();
+                }
+            }
+            else
+            {
+                string title = Properties.Langs.Resources.actions_left;
+                string message = Properties.Langs.Resources.no_more_actions;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+            }
+        }
 
         private void Move_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (ActionsRemain > 0)
             {
+                MoveMode = true;
                 var possibleTilesToMove = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
 
                 foreach (var possibleTile in possibleTilesToMove)
                 {
-                    possibleTile.SetMovementBorders();
+                    possibleTile.SetInteractionBorders();
                 }
             }
             else
@@ -244,20 +266,42 @@ namespace Forbbiden.Client.view.games
 
         private void OnTileClickedFromBoard(object sender, TileClickedEventArgs e)
         {
-            var moveToTile = Board.GetTile(e.Row, e.Column);
-            Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+            if (MoveMode)
+            {
+                var moveToTile = Board.GetTile(e.Row, e.Column);
+                Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+
+                CurrentTile.ClearAvatar();
+                moveToTile.AddAvatar(avatar);
+
+                var tiles = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
+
+                CurrentTile = moveToTile;
+
+                ActionsRemain--;
+                var actionImage = actionsRemainingStack.Children[ActionsRemain];
+                actionImage.Visibility = Visibility.Hidden;
+                MatchLogic.ResetTiles(tiles);
+
+                MoveMode = false;
+            }
+            else if (ShoreMode)
+            {
+                var shoreTile = Board.GetTile(e.Row, e.Column);
+                var tiles = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
+                tiles.Add(CurrentTile);
+                MatchLogic.ResetTiles(tiles);
+
+                shoreTile.IsFlood = false;
+                shoreTile.ResetBorder();
+
+                ActionsRemain--;
+                var actionImage = actionsRemainingStack.Children[ActionsRemain];
+                actionImage.Visibility = Visibility.Hidden;
+
+                ShoreMode = false;
+            }
             
-            CurrentTile.ClearAvatar();
-            moveToTile.AddAvatar(avatar);
-
-            var tiles = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
-
-            CurrentTile = moveToTile;
-
-            ActionsRemain--;
-            var actionImage = actionsRemainingStack.Children[ActionsRemain];
-            actionImage.Visibility = Visibility.Hidden;
-            MatchLogic.ResetTiles(tiles);
         }
 
         private void BoardPage_KeyDown(object sender, KeyEventArgs e)

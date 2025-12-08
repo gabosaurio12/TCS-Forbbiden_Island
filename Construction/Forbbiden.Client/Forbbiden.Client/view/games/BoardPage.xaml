@@ -137,7 +137,8 @@
                         <Grid Height="130" Width="350" Margin="0"
                               MouseEnter="Moves_MouseEnter"
                               MouseLeave="Moves_MouseLeave"
-                              HorizontalAlignment="Right">
+                              HorizontalAlignment="Right"
+                              MouseLeftButtonDown="Shore_MouseLeftButtonDown">
                             <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.shore_up_button}" 
                                 VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -149,7 +150,8 @@
                         <Grid Height="130" Width="350" Margin="0"
                               MouseEnter="Moves_MouseEnter"
                               MouseLeave="Moves_MouseLeave"
-                              HorizontalAlignment="Right">
+                              HorizontalAlignment="Right"
+                              IsEnabled="False">
                             <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.capture_button}" 
                                 VerticalAlignment="Center" HorizontalAlignment="Center"
