@@ -90,17 +90,12 @@ namespace Forbbiden.Client.view.games
             if (PlayerCards.Count < 6)
             {
                 PlayerCards.Add(card);
-                cardStack.Children.Add(new Rectangle
-                {
-                    Width = 140,
-                    Height = 170,
-                    Margin = new Thickness(15),
-                    Fill = new ImageBrush
-                    {
-                        ImageSource = ViewUtils.GetBitmapImage(card.ImagePath),
-                        Stretch = Stretch.UniformToFill
-                    }
-                });
+                string imagePath = System.IO.Path.Combine(CardsImagesPath, card.ImagePath);
+                var image = ViewUtils.GetBitmapImage(imagePath);
+                var cardControl = new UserControlCard();
+                cardControl.SetImage(image);
+
+                cardStack.Children.Add(cardControl);
             }
             else
             {
@@ -161,7 +156,7 @@ namespace Forbbiden.Client.view.games
 
         private void ExecuteCardEffect(Card card)
         {
-            string waterRiseCard = "water_rise_name";
+            string waterRiseCard = "water-rise-name";
 
             if (card.Name == waterRiseCard)
                 IncreaseWaterLevel(card);
