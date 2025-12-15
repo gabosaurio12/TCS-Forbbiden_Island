@@ -90,12 +90,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\FriendRequestCallback\Reference.cs">
+    <Compile Include="Connected Services\FriendsManager\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\FriendsManager\Reference.cs">
+    <Compile Include="Connected Services\FriendsNotificationManager\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -131,6 +131,7 @@
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
     <Compile Include="logic\ClientSession.cs" />
+    <Compile Include="logic\FriendsNotificationSingleton.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
     <Compile Include="logic\MatchLogic.cs" />
     <Compile Include="logic\TileClickedEventArgs.cs" />
@@ -152,6 +153,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="view\FriendProfilePage.xaml.cs">
+      <DependentUpon>FriendProfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\FriendRequestsPage.xaml.cs">
       <DependentUpon>FriendRequestsPage.xaml</DependentUpon>
     </Compile>
@@ -187,6 +191,9 @@
     </Compile>
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\info\NotificationCardExceedWindow.xaml.cs">
+      <DependentUpon>NotificationCardExceedWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\info\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
@@ -250,21 +257,21 @@
     <None Include="Connected Services\BoardManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FriendRequestCallback\Forbbiden.Contracts.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\FriendRequestCallback\service.wsdl" />
-    <None Include="Connected Services\FriendRequestCallback\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\FriendRequestCallback\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.FriendRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.Friendship.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\FriendsNotificationManager\Forbbiden.Contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsNotificationManager\service.wsdl" />
+    <None Include="Connected Services\FriendsNotificationManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsNotificationManager\service1.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PlayerSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -422,6 +429,7 @@
     <Resource Include="Images\parkpx1080.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\profile_px.png" />
     <Resource Include="Images\x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -429,8 +437,8 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BoardManager\" />
-    <WCFMetadataStorage Include="Connected Services\FriendRequestCallback\" />
     <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
+    <WCFMetadataStorage Include="Connected Services\FriendsNotificationManager\" />
     <WCFMetadataStorage Include="Connected Services\GameManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
@@ -456,6 +464,10 @@
     <Page Include="Styles\ToggleButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\FriendProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\FriendRequestsPage.xaml">
       <SubType>Designer</SubType>
@@ -504,6 +516,10 @@
     <Page Include="view\HostGameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\info\NotificationCardExceedWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\info\NotificationWindow.xaml">
       <SubType>Designer</SubType>
@@ -684,6 +700,7 @@
     <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\recycle_bin.png" />
     <None Include="Connected Services\TokenManager\configuration91.svcinfo" />
     <None Include="Connected Services\TokenManager\configuration.svcinfo" />
     <None Include="Connected Services\TokenManager\Reference.svcmap">
@@ -691,9 +708,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Resource Include="avatars\Reyna 1.jpg" />
-    <None Include="Connected Services\FriendRequestCallback\configuration91.svcinfo" />
-    <None Include="Connected Services\FriendRequestCallback\configuration.svcinfo" />
-    <None Include="Connected Services\FriendRequestCallback\Reference.svcmap">
+    <None Include="Connected Services\FriendsNotificationManager\configuration91.svcinfo" />
+    <None Include="Connected Services\FriendsNotificationManager\configuration.svcinfo" />
+    <None Include="Connected Services\FriendsNotificationManager\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

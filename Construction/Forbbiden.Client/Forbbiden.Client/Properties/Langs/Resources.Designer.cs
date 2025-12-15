@@ -70,6 +70,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string accept {
+            get {
+                return ResourceManager.GetString("accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actions Left.
         /// </summary>
         public static string actions_left {
@@ -115,7 +124,7 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Capture.
+        ///   Looks up a localized string similar to Capture Treasure.
         /// </summary>
         public static string capture_button {
             get {
@@ -147,6 +156,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string difficulty {
             get {
                 return ResourceManager.GetString("difficulty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard a Card.
+        /// </summary>
+        public static string discard_card {
+            get {
+                return ResourceManager.GetString("discard_card", resourceCulture);
             }
         }
         
@@ -201,6 +219,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string flood_stack {
             get {
                 return ResourceManager.GetString("flood_stack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have successfully deleted your friendship with: .
+        /// </summary>
+        public static string friend_deleted_message {
+            get {
+                return ResourceManager.GetString("friend_deleted_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Deleted.
+        /// </summary>
+        public static string friend_deleted_title {
+            get {
+                return ResourceManager.GetString("friend_deleted_title", resourceCulture);
             }
         }
         
@@ -331,6 +367,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keep cards.
+        /// </summary>
+        public static string keep_cards {
+            get {
+                return ResourceManager.GetString("keep_cards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error while loading the page, try again or contact us at: forbbidenislandfei@gmail.com.
         /// </summary>
         public static string load_page_error {
@@ -394,7 +439,7 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have.
+        ///   Looks up a localized string similar to With this card you will have more than six cards, what do you want to do?.
         /// </summary>
         public static string max_cards_exceed_message {
             get {
@@ -804,6 +849,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string upload_avatar {
             get {
                 return ResourceManager.GetString("upload_avatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Card.
+        /// </summary>
+        public static string use_card {
+            get {
+                return ResourceManager.GetString("use_card", resourceCulture);
             }
         }
         

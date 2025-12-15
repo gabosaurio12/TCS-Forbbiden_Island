@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forbbiden.Client.BoardManager;
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,57 +15,65 @@ namespace Forbbiden.Client.view.games
     public partial class UserControlCard : UserControl
     {
 
+        private readonly int BasicHeight = 120;
+        private readonly int BasicWidth = 150;
+        public readonly Card CardInfo;
+
         public UserControlCard()
         {
             InitializeComponent();
         }
 
-        public static void SetImage(BitmapImage image, Image cardImage)
+        public UserControlCard(Card card)
+        {
+            InitializeComponent();
+            CardInfo = card;
+        }
+
+        public void SetImage(BitmapImage image)
         {
             cardImage.Source = image;
-            cardImage.Stretch = Stretch.UniformToFill;
+            cardImage.Stretch = Stretch.Fill;
         }
 
         private void Card_MouseEnter(object sender, MouseEventArgs e)
         {
             var verticalZoom = new DoubleAnimation
             {
-                From = 170,
-                To = 190,
+                From = (int)Height,
+                To = (int)Height + 20,
                 Duration = TimeSpan.FromSeconds(0.15)
             };
 
             var horizontalZoom = new DoubleAnimation
             {
-                From = 140,
-                To = 160,
+                From = (int)Width,
+                To = (int)Width + 20,
                 Duration = TimeSpan.FromSeconds(0.15),
             };
 
-            Rectangle card = (Rectangle)sender;
-            card.BeginAnimation(HeightProperty, verticalZoom);
-            card.BeginAnimation(WidthProperty, horizontalZoom);
+            BeginAnimation(HeightProperty, verticalZoom);
+            BeginAnimation(WidthProperty, horizontalZoom);
         }
 
         private void Card_MouseLeave(object sender, MouseEventArgs e)
         {
             var verticalZoom = new DoubleAnimation
             {
-                From = 190,
-                To = 170,
+                From = (int)Height,
+                To = BasicHeight,
                 Duration = TimeSpan.FromSeconds(0.15)
             };
 
             var horizontalZoom = new DoubleAnimation
             {
-                From = 160,
-                To = 140,
+                From = (int)Width,
+                To = BasicWidth,
                 Duration = TimeSpan.FromSeconds(0.15),
             };
 
-            Rectangle card = (Rectangle)sender;
-            card.BeginAnimation(HeightProperty, verticalZoom);
-            card.BeginAnimation(WidthProperty, horizontalZoom);
+            BeginAnimation(HeightProperty, verticalZoom);
+            BeginAnimation(WidthProperty, horizontalZoom);
         }
     }
 }

@@ -25,12 +25,24 @@ namespace Forbbiden.Client.view.games
         private readonly List<Card> DiscardStackTreasureCards;
         private List<Card> FloodCards;
         private readonly List<Card> PlayerCards = new List<Card>();
-        private int WaterLevelCount = 0;
-        private readonly string ImagesPath;
-        private readonly string CardsImagesPath;
+
         private UserControlBoard Board;
         private UserControlTile CurrentTile;
+        private int WaterLevelCount = 0;
         private int ActionsRemain = 3;
+        private Card PendantCard;
+
+        private readonly string ImagesPath;
+        private readonly string CardsImagesPath;
+
+        private bool MoveMode = false;
+        private bool ShoreMode = false;
+        private bool DiscardMode = false;
+
+        private int CleanCodeCounter = 0;
+        private int CubicleKeysCounter = 0;
+        private int LucioCounter = 0;
+        private int ParkingCardCounter = 0;
 
         public BoardPage()
         {
@@ -81,28 +93,77 @@ namespace Forbbiden.Client.view.games
             CurrentTile = Board.AddPlayerAvatar(ClientSession.GetPlayer());
         }
 
+        private void UpdatePlayerTreasureCards(string cardName)
+        {
+            switch (cardName)
+            {
+                case "clean-code-name":
+                    CleanCodeCounter++;
+                    break;
+                case "cubicle-keys-name":
+                    CubicleKeysCounter++;
+                    break;
+                case "lucio-name":
+                    LucioCounter++;
+                    break;
+                case "parking-card-name":
+                    ParkingCardCounter++;
+                    break;
+            }
+        }
+
+        private void FloodTile(Card card)
+        {
+            var cardImageFileName = card.ImagePath;
+            
+            foreach (var tile in Board.GetAllTilesFromGrid())
+            {
+                if (tile.ImageFileName == cardImageFileName)
+                {
+                    tile.FloodTile();
+                    break;
+                }
+            }
+        }
+
+        private void DiscardCard(Card card)
+        {
+            PendantCard = card;
+            var notificationWindow = new NotificationCardExceedWindow(ref DiscardMode) // Fix: DiscardMode should update after selecting one option at the modal
+            {
+                Owner = Window.GetWindow(this)
+            };
+            notificationWindow.ShowDialog();
+        }
+
         private void AddPlayerACard(Card card)
         {
             if (PlayerCards.Count < 6)
             {
                 PlayerCards.Add(card);
-                cardStack.Children.Add(new Rectangle
-                {
-                    Width = 140,
-                    Height = 170,
-                    Margin = new Thickness(15),
-                    Fill = new ImageBrush
-                    {
-                        ImageSource = ViewUtils.GetBitmapImage(card.ImagePath),
-                        Stretch = Stretch.UniformToFill
-                    }
-                });
+                string imagePath = System.IO.Path.Combine(CardsImagesPath, card.ImagePath);
+                var image = ViewUtils.GetBitmapImage(imagePath);
+                var cardControl = new UserControlCard(card);
+                cardControl.SetImage(image);
+
+                cardStack.Children.Add(cardControl);
+                UpdatePlayerTreasureCards(card.Name);
             }
             else
             {
-                string title = Properties.Langs.Resources.max_cards_exceed;
-                string message = Properties.Langs.Resources.max_cards_exceed_message;
-                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                DiscardCard(card);
+            }
+        }
+
+        private void ExecuteCardEffect(Card card)
+        {
+            string waterRiseCard = "water-rise-name";
+
+            if (card.Name == waterRiseCard)
+                IncreaseWaterLevel(card);
+            else
+            {
+                AddPlayerACard(card);
             }
         }
 
@@ -141,32 +202,6 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private void FloodTile(Card card)
-        {
-            var cardImageFileName = card.ImagePath;
-            
-            foreach (var tile in Board.GetAllTilesFromGrid())
-            {
-                if (tile.ImageFileName == cardImageFileName)
-                {
-                    tile.FloodTile();
-                    break;
-                }
-            }
-        }
-
-        private void ExecuteCardEffect(Card card)
-        {
-            string waterRiseCard = "water_rise_name";
-
-            if (card.Name == waterRiseCard)
-                IncreaseWaterLevel(card);
-            else
-            {
-                AddPlayerACard(card);
-            }
-        }
-
         private void ShowCardOnBoard(Card card)
         {
             string cardImagePath = System.IO.Path.Combine(
@@ -196,7 +231,7 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private Card PickTreasureCard()
+        private void PickTreasureCard()
         {
             int count = TreasureCards.Count;
             int emptyNumber = 0;
@@ -215,23 +250,18 @@ namespace Forbbiden.Client.view.games
             ShowCardOnBoard(card);
 
             ExecuteCardEffect(card);
-
-            return card;
         }
-
-
-
-
 
         private void Move_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (ActionsRemain > 0)
             {
+                MoveMode = true;
                 var possibleTilesToMove = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
 
                 foreach (var possibleTile in possibleTilesToMove)
                 {
-                    possibleTile.SetMovementBorders();
+                    possibleTile.SetInteractionBorders();
                 }
             }
             else
@@ -242,11 +272,67 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private void OnTileClickedFromBoard(object sender, TileClickedEventArgs e)
+        private void Shore_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var moveToTile = Board.GetTile(e.Row, e.Column);
-            Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+            if (ActionsRemain > 0)
+            {
+                ShoreMode = true;
+                var possibleTilesToShore = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
+                possibleTilesToShore.Add(CurrentTile);
+
+                foreach (var possibleTile in possibleTilesToShore)
+                {
+                    possibleTile.SetInteractionBorders();
+                }
+            }
+            else
+            {
+                string title = Properties.Langs.Resources.actions_left;
+                string message = Properties.Langs.Resources.no_more_actions;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+            }
+        }
+
+        private void CaptureTreasure_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
             
+        }
+
+        private void UseTreasureCard(Card card)
+        {
+            switch (card.Name)
+            {
+                case "clean-code-name":
+                    ActionsRemain--;
+                    break;
+                case "escape-q-name":
+                    NavigationService?.Navigate(new MainPage());
+                    break;
+                case "antivirus-name":
+                    ActionsRemain--;
+                    break;
+            }
+        }
+
+        private void OnCardClick(object sender, MouseButtonEventArgs e)
+        {
+            var card = sender as UserControlCard;
+            if (DiscardMode)
+            {
+                TreasureCards.Add(card.CardInfo);
+                cardStack.Children.Remove(card);
+            }
+            else
+            {
+                ExecuteCardEffect(card.CardInfo);
+            }
+        }
+
+        private void MoveAvatar(TileClickedEventArgs tile)
+        {
+            var moveToTile = Board.GetTile(tile.Row, tile.Column);
+            Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+
             CurrentTile.ClearAvatar();
             moveToTile.AddAvatar(avatar);
 
@@ -258,6 +344,37 @@ namespace Forbbiden.Client.view.games
             var actionImage = actionsRemainingStack.Children[ActionsRemain];
             actionImage.Visibility = Visibility.Hidden;
             MatchLogic.ResetTiles(tiles);
+
+            MoveMode = false;
+        }
+
+        private void ShoreTile(TileClickedEventArgs tile)
+        {
+            var shoreTile = Board.GetTile(tile.Row, tile.Column);
+            var tiles = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
+            tiles.Add(CurrentTile);
+            MatchLogic.ResetTiles(tiles);
+
+            shoreTile.IsFlood = false;
+            shoreTile.ResetBorder();
+
+            ActionsRemain--;
+            var actionImage = actionsRemainingStack.Children[ActionsRemain];
+            actionImage.Visibility = Visibility.Hidden;
+
+            ShoreMode = false;
+        }
+
+        private void OnTileClickedFromBoard(object sender, TileClickedEventArgs e)
+        {
+            if (MoveMode)
+            {
+                MoveAvatar(e);
+            }
+            else if (ShoreMode)
+            {
+                ShoreTile(e);
+            } 
         }
 
         private void BoardPage_KeyDown(object sender, KeyEventArgs e)
@@ -266,12 +383,6 @@ namespace Forbbiden.Client.view.games
             {
                 NavigationService?.Navigate(new MainPage());
             }
-        }
-
-        private void PickTreasureCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            PickTreasureCard();
-            PickTreasureCard();
         }
 
         private void EndTurnButton_Click(object sender, RoutedEventArgs e)
@@ -293,12 +404,10 @@ namespace Forbbiden.Client.view.games
                 FloodTile(floodCard);
                 FloodCards.Remove(floodCard);
             }
+
+            PickTreasureCard();
+            PickTreasureCard();
         }
-
-
-
-
-
 
         private void Moves_MouseEnter(object sender, MouseEventArgs e)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using dotenv.net;
+using Forbbiden.Server.callbacks;
 using Forbbiden.Server.logic;
 using Forbbiden.Server.utils;
 
@@ -20,7 +21,7 @@ namespace Forbbiden.Server
             var gameHost = new ServiceHost(typeof(GameService));
             var boardHost = new ServiceHost(typeof(BoardManager));
             var tokenHost = new ServiceHost(typeof(TokenManager));
-            var friendRequestCallbackHost = new ServiceHost(typeof(FriendRequestCallback));
+            var friendsNotificationHost = new ServiceHost(typeof(FriendsNotificationManager));
 
             try
             {
@@ -31,7 +32,7 @@ namespace Forbbiden.Server
                 gameHost.Open();
                 boardHost.Open();
                 tokenHost.Open();
-                friendRequestCallbackHost.Open();
+                friendsNotificationHost.Open();
 
                 Console.WriteLine("=== Forbbiden Server ===");
                 Console.WriteLine("Servicios cargados desde App.config.");
@@ -81,9 +82,9 @@ namespace Forbbiden.Server
                 {
                     tokenHost.Close();
                 }
-                if (friendRequestCallbackHost.State == CommunicationState.Opened)
+                if (friendsNotificationHost.State == CommunicationState.Opened)
                 {
-                    friendRequestCallbackHost.Close();
+                    friendsNotificationHost.Close();
                 }
 
                 Console.WriteLine("Servidor detenido.");

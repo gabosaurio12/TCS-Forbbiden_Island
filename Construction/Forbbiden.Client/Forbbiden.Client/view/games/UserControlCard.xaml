@@ -5,17 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Forbbiden.Client.view.games"
              mc:Ignorable="d" 
-             d:DesignHeight="170" d:DesignWidth="140">
+             d:DesignHeight="120" d:DesignWidth="150">
     <Grid
         MouseEnter="Card_MouseEnter"
-        MouseLeave="Card_MouseLeave" >
-        <Rectangle
-            Height="170" Width="140" Margin="0,0,0,0"
-            Fill="#734714" StrokeThickness="10"
-            Cursor="Hand"/>
-
+        MouseLeave="Card_MouseLeave"
+        Background="#734714"
+        Cursor="Hand" >
         <Image x:Name="cardImage"
-               Height="150" Width="120"
+               Height="110" Width="140"
                Stretch="UniformToFill" />
     </Grid>
 </UserControl>

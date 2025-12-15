@@ -11,7 +11,7 @@
             Height="115" Width="115"
             Margin="5"
             Background="LightGray"
-            BorderBrush="#143285"
+            BorderBrush="#03A300"
             BorderThickness="8"
             MouseLeftButtonDown="MoveAvatar_MouseLeftButtonDown"
             MouseEnter="ColorStroke_MouseEnter"

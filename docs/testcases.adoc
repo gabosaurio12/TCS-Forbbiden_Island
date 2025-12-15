@@ -1,5 +1,6 @@
 
 == Casos de Prueba
+:page-orientation: landscape
 
 === ProfileManager
 

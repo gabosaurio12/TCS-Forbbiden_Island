@@ -46,6 +46,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="DeleteFriend">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="friendUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="playerUsername" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteFriendResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteFriendResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetFriendRequests">
     <xs:complexType>
       <xs:sequence>
@@ -71,13 +86,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetFriendsByIDResult" nillable="true" type="q2:ArrayOfFriendship" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="OnFriendRequestReceived">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="friendRequest" nillable="true" type="q3:FriendRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

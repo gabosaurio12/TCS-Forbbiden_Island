@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.BoardManager;
+using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using System;
 using System.Collections.Generic;
@@ -141,24 +142,10 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private void FillFreeTiles()
-        {
-            string freeTileImage = "free.jpg";
-            string imagePath = System.IO.Path.Combine(
-                TilesImagesPath, freeTileImage);
-            var freeTileBitmap = ViewUtils.GetBitmapImage(imagePath);
-
-            List<UserControlTile> tiles = GetAllTilesFromGrid();
-            foreach (var tile in tiles)
-            {
-                if (!tile.IsTreasure)
-                    tile.SetImage(freeTileBitmap);
-            }
-        }
-
         private void FillTiles()
         {
             List<UserControlTile> tiles = GetAllTilesFromGrid();
+            var tilesImages = new BoardManagerClient().GetFloodCards();
 
             int tileNumber = 1;
 
@@ -167,7 +154,7 @@ namespace Forbbiden.Client.view.games
 
                 if (!tiles[i].IsTreasure)
                 {
-                    string tileImage = $"tile{tileNumber}.png";
+                    string tileImage = tilesImages[i].ImagePath;
                     tileNumber++;
                     string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
                     var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);

@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.view.games;
 using Forbbiden.Client.view.info;
 using log4net;
 using System;
@@ -20,7 +21,7 @@ namespace Forbbiden.Client.logic
     {
         public static Ellipse GetAvatarEllipse(string avatarPath)
         {
-            string projectDir = ViewUtils.GetProjectDir();
+            string projectDir = GetProjectDir();
             string fullAvatarPath = System.IO.Path.Combine(projectDir, "avatars", avatarPath);
             var avatarBitmap = GetBitmapImage(fullAvatarPath);
 
@@ -88,6 +89,7 @@ namespace Forbbiden.Client.logic
             };
             notificationWindow.ShowDialog();
         }
+
         public static void ShowPullError(Window window)
         {
             string title = Properties.Langs.Resources.error;

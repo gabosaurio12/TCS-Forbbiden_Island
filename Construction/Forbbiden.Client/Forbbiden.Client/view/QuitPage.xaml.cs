@@ -1,21 +1,10 @@
 ﻿using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Forbbiden.Client.view
 {
@@ -30,6 +19,11 @@ namespace Forbbiden.Client.view
         public QuitPage()
         {
             InitializeComponent();
+
+            if (ClientSession.CurrentPlayerId > 0)
+            {
+                logOutButton.Visibility = Visibility.Visible;
+            }
         }
 
         private async void DisconnectPlayer(string username)

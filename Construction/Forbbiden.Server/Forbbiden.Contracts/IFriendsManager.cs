@@ -4,7 +4,7 @@ using System.ServiceModel;
 
 namespace Forbbiden.Contracts
 {
-    [ServiceContract(CallbackContract = typeof(IFriendRequestCallback))]
+    [ServiceContract]
     public interface IFriendsManager
     {
         [OperationContract]
@@ -13,6 +13,8 @@ namespace Forbbiden.Contracts
         bool AcceptFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
         bool CancelFriendRequest(string senderUsername, string receiverUsername);
+        [OperationContract]
+        bool DeleteFriend(string friendUsername, string playerUsername);
         [OperationContract]
         List<FriendRequest> GetFriendRequests(string receiverUsername);
         [OperationContract]

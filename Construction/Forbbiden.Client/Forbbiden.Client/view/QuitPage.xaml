@@ -61,15 +61,16 @@
                     Click="QuitButton_Click"/>
 
                 <Button x:Name="logOutButton"
-                    Content="{x:Static language:Resources.logout}"
-                    Width="500" Height="80"
-                    BorderThickness="5" BorderBrush="#FFB7B7B7"
-                    FontFamily="{StaticResource IrishGrover}"
-                    FontSize="30"
-                    Background="LightGray"
-                    Foreground="Black"
-                    Cursor="Hand"
-                    Click="LogOutButton_Click"/>
+                        Content="{x:Static language:Resources.logout}"
+                        Width="500" Height="80"
+                        BorderThickness="5" BorderBrush="#FFB7B7B7"
+                        FontFamily="{StaticResource IrishGrover}"
+                        FontSize="30"
+                        Background="LightGray"
+                        Foreground="Black"
+                        Cursor="Hand"
+                        Visibility="Hidden"
+                        Click="LogOutButton_Click"/>
 
             </StackPanel>
 

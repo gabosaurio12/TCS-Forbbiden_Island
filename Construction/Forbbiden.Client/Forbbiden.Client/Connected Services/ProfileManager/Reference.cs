@@ -531,18 +531,6 @@ namespace Forbbiden.Client.ProfileManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.Player> GetPlayerByIdAsync(int playerId, bool includeFriends);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse")]
-        bool ConnectPlayerByUsername(string username);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse")]
-        System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
-        bool DisconnectPlayerByUsername(string username);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
-        System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/UpdatePlayerDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool UpdatePlayer(Forbbiden.Client.ProfileManager.Player updatedPlayer);
@@ -556,6 +544,20 @@ namespace Forbbiden.Client.ProfileManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse")]
         System.Threading.Tasks.Task<bool> DeletePlayerByUsernameAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool ConnectPlayerByUsername(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse")]
+        System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool DisconnectPlayerByUsername(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
+        System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -641,22 +643,6 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.GetPlayerByIdAsync(playerId, includeFriends);
         }
         
-        public bool ConnectPlayerByUsername(string username) {
-            return base.Channel.ConnectPlayerByUsername(username);
-        }
-        
-        public System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username) {
-            return base.Channel.ConnectPlayerByUsernameAsync(username);
-        }
-        
-        public bool DisconnectPlayerByUsername(string username) {
-            return base.Channel.DisconnectPlayerByUsername(username);
-        }
-        
-        public System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username) {
-            return base.Channel.DisconnectPlayerByUsernameAsync(username);
-        }
-        
         public bool UpdatePlayer(Forbbiden.Client.ProfileManager.Player updatedPlayer) {
             return base.Channel.UpdatePlayer(updatedPlayer);
         }
@@ -671,6 +657,22 @@ namespace Forbbiden.Client.ProfileManager {
         
         public System.Threading.Tasks.Task<bool> DeletePlayerByUsernameAsync(string username) {
             return base.Channel.DeletePlayerByUsernameAsync(username);
+        }
+        
+        public bool ConnectPlayerByUsername(string username) {
+            return base.Channel.ConnectPlayerByUsername(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username) {
+            return base.Channel.ConnectPlayerByUsernameAsync(username);
+        }
+        
+        public bool DisconnectPlayerByUsername(string username) {
+            return base.Channel.DisconnectPlayerByUsername(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username) {
+            return base.Channel.DisconnectPlayerByUsernameAsync(username);
         }
     }
 }

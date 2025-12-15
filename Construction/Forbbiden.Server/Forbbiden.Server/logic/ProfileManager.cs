@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -327,106 +326,6 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        public bool ConnectPlayerByUsername(string username)
-        {
-            bool success = false;
-
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
-            {
-                var player = new Player();
-
-                try
-                {
-                    player = db.Player.FirstOrDefault(p => p.player_username == username);
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.ConnectPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
-                }
-
-                if (player != null)
-                {
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            player.player_status = 1;
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player connected");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
-
-                            var fault = new DBFault
-                            {
-                                Error = DatabaseError,
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason(EntityError));
-                        }
-                    }  
-                }
-            }
-            return success;
-        }
-
-        public bool DisconnectPlayerByUsername(string username)
-        {
-            bool success = false;
-
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
-            {
-                var player = new Player();
-
-                try
-                {
-                    player = db.Player.FirstOrDefault(p => p.player_username == username);
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.DisconnectPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
-                }
-
-                if (player != null)
-                {
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            player.player_status = 0;
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player disconnected");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.DisconnectPlayerByUsername", ex);
-
-                            var fault = new DBFault
-                            {
-                                Error = DatabaseError,
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason(EntityError));
-                        }
-                    }
-                }
-            }
-            return success;
-        }
-
         public bool ClearSocials(Player player)
         {
             bool success = false;
@@ -562,5 +461,104 @@ namespace Forbbiden.Server.logic
             throw new FaultException<DBFault>(fault,
                 new FaultReason(EntityError));
         }
+
+        public bool ConnectPlayerByUsername(string username)
+        {
+            bool success = false;
+
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                var player = new Player();
+                try
+                {
+                    player = db.Player.FirstOrDefault(p => p.player_username == username);
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "ProfileManager.ConnectPlayerByUsername ";
+                    HandleEntityException(ex, classMethod);
+                }
+
+                if (player != null)
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            player.player_status = 1;
+                            db.SaveChanges();
+                            transaction.Commit();
+                            success = true;
+                            Log.Info("Player connected");
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            transaction.Rollback();
+                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
+                            var fault = new DBFault
+                            {
+                                Error = "Database Error",
+                                Details = ex.Message
+                            };
+
+                            throw new FaultException<DBFault>(fault,
+                                new FaultReason("EntityException"));
+                        }
+                    }
+                }
+            }
+
+            return success;
+        }
+
+        public bool DisconnectPlayerByUsername(string username)
+        {
+            bool success = false;
+
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                var player = new Player();
+                try
+                {
+                    player = db.Player.FirstOrDefault(p => p.player_username == username);
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "ProfileManager.ConnectPlayerByUsername ";
+                    HandleEntityException(ex, classMethod);
+                }
+
+                if (player != null)
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            player.player_status = 0;
+                            db.SaveChanges();
+                            transaction.Commit();
+                            success = true;
+                            Log.Info("Player connected");
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            transaction.Rollback();
+                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
+                            var fault = new DBFault
+                            {
+                                Error = "Database Error",
+                                Details = ex.Message
+                            };
+
+                            throw new FaultException<DBFault>(fault,
+                                new FaultReason("EntityException"));
+                        }
+                    }
+                }
+            }
+
+            return success;
+        }
+
     }
 }
