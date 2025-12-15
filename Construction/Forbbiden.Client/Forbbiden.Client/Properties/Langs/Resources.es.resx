@@ -124,7 +124,7 @@
     <value>Importa una imagen de tu dispositivo para usarlo como ávatar</value>
   </data>
   <data name="capture_button" xml:space="preserve">
-    <value>Capturar</value>
+    <value>Capturar Tesoro</value>
   </data>
   <data name="change_language" xml:space="preserve">
     <value>Cambiar lenguaje</value>
@@ -349,7 +349,7 @@
     <value>¡Demasiadas cartas!</value>
   </data>
   <data name="max_cards_exceed_message" xml:space="preserve">
-    <value>Con estas cartas tienes más de seis cartas, descarta una para que puedas tomar la nueva o skippea si quieres quedarte con las que tienes</value>
+    <value>Con estas cartas tienes más de seis cartas ¿Qué quieres hacer?</value>
   </data>
   <data name="verify_account" xml:space="preserve">
     <value>Verificar Cuenta</value>
@@ -401,5 +401,14 @@
   </data>
   <data name="accept" xml:space="preserve">
     <value>Aceptar</value>
+  </data>
+  <data name="use_card" xml:space="preserve">
+    <value>Use Card</value>
+  </data>
+  <data name="discard_card" xml:space="preserve">
+    <value>Descartar una carta</value>
+  </data>
+  <data name="keep_cards" xml:space="preserve">
+    <value>Mantener las cartas</value>
   </data>
 </root>

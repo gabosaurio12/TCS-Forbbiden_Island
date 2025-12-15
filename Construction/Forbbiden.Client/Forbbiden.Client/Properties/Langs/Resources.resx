@@ -124,7 +124,7 @@
     <value>Import an image from your device to use as an avatar</value>
   </data>
   <data name="capture_button" xml:space="preserve">
-    <value>Capture</value>
+    <value>Capture Treasure</value>
   </data>
   <data name="change_language" xml:space="preserve">
     <value>Change Language</value>
@@ -349,7 +349,7 @@
     <value>Too much cards!</value>
   </data>
   <data name="max_cards_exceed_message" xml:space="preserve">
-    <value>With this cards you will have more than six cards, drop one so you can pick the new one or skip this to keep the ones you have</value>
+    <value>With this card you will have more than six cards, what do you want to do?</value>
   </data>
   <data name="verify_account" xml:space="preserve">
     <value>Verify Account</value>
@@ -401,5 +401,14 @@
   </data>
   <data name="accept" xml:space="preserve">
     <value>Accept</value>
+  </data>
+  <data name="use_card" xml:space="preserve">
+    <value>Use Card</value>
+  </data>
+  <data name="discard_card" xml:space="preserve">
+    <value>Discard a Card</value>
+  </data>
+  <data name="keep_cards" xml:space="preserve">
+    <value>Keep cards</value>
   </data>
 </root>

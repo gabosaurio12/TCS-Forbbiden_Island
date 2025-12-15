@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forbbiden.Client.BoardManager;
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,10 +17,17 @@ namespace Forbbiden.Client.view.games
 
         private readonly int BasicHeight = 120;
         private readonly int BasicWidth = 150;
+        public readonly Card CardInfo;
 
         public UserControlCard()
         {
             InitializeComponent();
+        }
+
+        public UserControlCard(Card card)
+        {
+            InitializeComponent();
+            CardInfo = card;
         }
 
         public void SetImage(BitmapImage image)
