@@ -6,7 +6,7 @@
 :icons: font
 :source-highlighter: highlight.js
 :imagesdir: images
-:lang: es
+:lang: es:
 
 :chapter-label: Capítulo
 :appendix-caption: Apéndice
@@ -21,9 +21,5 @@
 :tip-caption: Consejo
 :warning-caption: Advertencia
 
-include::introduction.adoc[]
-include::views/static.adoc[]
-include::interfaces.adoc[]
-include::testcases.adoc[]
 
-include::advances23-11.adoc[]
+include::testcases.adoc[]

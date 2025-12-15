@@ -103,7 +103,7 @@
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario, contraseña e email
 |_testPlayer_+ _T3st_player_ + _testplayer@email.com_
-|_True_
+|_player_id != -1_
 |__
 |**
 
@@ -309,6 +309,44 @@ username = _DropPlayer_
 |sender = _testSender_ receiver = _FriendTest_
 |_False_
 |Regresa __
+|**
+
+|===
+
+=== TokenManager
+
+[cols="1,1,1,1,1,1,1,1,1"]
+
+|===
+
+|TMT01
+|TestCreateRandomTokenSuccess
+|Comprobar que se genere un token aleatorio de la longitud válida
+|*Alta*
+|N/A
+|N/A
+|_token.length == 6_
+|_token.length == 6_
+|*Pasó*
+
+|TMT02
+|TestGenerateTokenSucces
+|Comprobar que no se envíe una solicitud de amistad a un usuario que no existe
+|*Alta*
+|PRE01: Haber registrado un jugador (testUser)
+|playerId = testUser.playerId
+|_Token_ donde _Token.playerId == testUser.playerId_
+|Regresa _Token_ donde _Token.playerId == testUser.playerId_
+|*Pasó*
+
+|TMT03
+|TestGenerateTokenThrowFaultException
+|Comprobar que no se genere un token para un jugador que no se registró
+|*Alta*
+|N/A
+|-1
+|_Token_ donde _Token.tokenId == -1_
+|Regresa _Token_ donde _Token.tokenId == -1_
 |**
 
 |===
