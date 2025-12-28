@@ -60,8 +60,7 @@
                             <StackPanel Orientation="Horizontal" >
                                 <Rectangle
                                     Height="200" Width="170" Margin="0,20,0,20"
-                                    Fill="#F2B9B3" Stroke="#A81D0F" StrokeThickness="15"
-                                    Cursor="Hand" />
+                                    Fill="#F2B9B3" Stroke="#A81D0F" StrokeThickness="15" />
                             </StackPanel>
 
                         </StackPanel>

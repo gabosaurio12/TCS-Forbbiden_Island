@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Forbbiden.Client.view.games
+namespace Forbbiden.Client.Controls
 {
     /// <summary>
     /// Interaction logic for UserControlActionButton.xaml

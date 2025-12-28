@@ -168,16 +168,16 @@
     <Compile Include="view\games\HorizontalCardWindow.xaml.cs">
       <DependentUpon>HorizontalCardWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\UserControlActionButton.xaml.cs">
+    <Compile Include="Controls\UserControlActionButton.xaml.cs">
       <DependentUpon>UserControlActionButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\UserControlBoard.xaml.cs">
+    <Compile Include="Controls\UserControlBoard.xaml.cs">
       <DependentUpon>UserControlBoard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\UserControlTile.xaml.cs">
+    <Compile Include="Controls\UserControlTile.xaml.cs">
       <DependentUpon>UserControlTile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\UserControlCard.xaml.cs">
+    <Compile Include="Controls\UserControlCard.xaml.cs">
       <DependentUpon>UserControlCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\games\VerticalCardWindow.xaml.cs">
@@ -485,19 +485,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\UserControlActionButton.xaml">
+    <Page Include="Controls\UserControlActionButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\UserControlBoard.xaml">
+    <Page Include="Controls\UserControlBoard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\UserControlTile.xaml">
+    <Page Include="Controls\UserControlTile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\UserControlCard.xaml">
+    <Page Include="Controls\UserControlCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

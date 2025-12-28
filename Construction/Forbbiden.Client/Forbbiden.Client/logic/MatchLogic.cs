@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.view.games;
+﻿using Forbbiden.Client.Controls;
+using Forbbiden.Client.view.games;
 using log4net.Appender;
 using System;
 using System.Collections.Generic;

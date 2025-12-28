@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Client.BoardManager;
+using Forbbiden.Client.Controls;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.model;
 using Forbbiden.Client.view.info;
@@ -138,7 +139,8 @@ namespace Forbbiden.Client.view.games
 
         private void AddPlayerACard(Card card)
         {
-            if (PlayerCards.Count < 6)
+            int maxCardsInHand = 5;
+            if (PlayerCards.Count < maxCardsInHand)
             {
                 PlayerCards.Add(card);
                 string imagePath = System.IO.Path.Combine(CardsImagesPath, card.ImagePath);
@@ -365,6 +367,18 @@ namespace Forbbiden.Client.view.games
             ShoreMode = false;
         }
 
+        private void PickFloodCard()
+        {
+            Random rand = new Random();
+            int minRand = 0;
+            int maxRand = FloodCards.Count - 1;
+            int randomNumber = rand.Next(minRand, maxRand);
+
+            var floodCard = FloodCards[randomNumber];
+            FloodTile(floodCard);
+            FloodCards.Remove(floodCard);
+        }
+
         private void OnTileClickedFromBoard(object sender, TileClickedEventArgs e)
         {
             if (MoveMode)
@@ -393,20 +407,11 @@ namespace Forbbiden.Client.view.games
                 action.Visibility = Visibility.Visible;
             }
 
-            Random rand = new Random();
-            int minRand = 0;
-            int maxRand = FloodCards.Count - 1;
-            for (int i = 0; i < 2; i++)
-            {
-                int randomNumber = rand.Next(minRand, maxRand);
-
-                var floodCard = FloodCards[randomNumber];
-                FloodTile(floodCard);
-                FloodCards.Remove(floodCard);
-            }
-
             PickTreasureCard();
             PickTreasureCard();
+
+            PickFloodCard();
+            PickFloodCard();
         }
 
         private void Moves_MouseEnter(object sender, MouseEventArgs e)
