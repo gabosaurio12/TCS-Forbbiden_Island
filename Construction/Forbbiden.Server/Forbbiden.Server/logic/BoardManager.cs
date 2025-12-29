@@ -25,7 +25,6 @@ namespace Forbbiden.Server.logic
             using (var db = new Forbbiden_FEIEntities(connectionString))
             {
                 List<Card> cards = db.Card.Where(c => c.type == "flood").ToList();
-
                 List<Contracts.Card> floodCards = new List<Contracts.Card>();
                 foreach (var card in cards)
                 {

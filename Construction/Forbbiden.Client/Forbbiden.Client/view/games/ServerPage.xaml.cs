@@ -90,8 +90,7 @@ namespace Forbbiden.Client.view.games
 
         private void StartInitialCountdown()
         {
-            Random rnd = new Random();
-            targetTime = rnd.Next(10, 31); 
+            targetTime = MatchLogic.Rand.Next(10, 31); 
             TargetTimeText.Text = $"Apaga el servidor a los 00:{targetTime:00}";
             TargetTimeText.Visibility = Visibility.Visible;
 

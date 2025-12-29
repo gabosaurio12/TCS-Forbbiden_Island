@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Forbbiden.Client.Controls
@@ -30,7 +28,7 @@ namespace Forbbiden.Client.Controls
             ImagesPath = System.IO.Path.Combine(
                 projectDir, "Images");
             TilesImagesPath = System.IO.Path.Combine(
-                projectDir, ImagesPath, "tiles");
+                ImagesPath, "tiles");
 
             GenerateBoard();
         }
@@ -125,43 +123,37 @@ namespace Forbbiden.Client.Controls
 
         private void SetTreasureTiles()
         {
-            List<UserControlTile> tiles = GetInnerTilesFromGrid();
-            Random rand = new Random();
+            List<UserControlTile> innerTiles = GetInnerTilesFromGrid();
+            var shuffledTiles = innerTiles.OrderBy(x => MatchLogic.Rand.Next()).Take(NumberOfTreasures).ToList();
 
-            var shuffledTiles = tiles.OrderBy(x => rand.Next()).Take(NumberOfTreasures).ToList();
-
-            for (int i = 0; i < shuffledTiles.Count; i++)
+            for (int i = 0; i < NumberOfTreasures; i++)
             {
                 string treasureImage = $"treasure{i + 1}.png";
                 string treasureImagePath = System.IO.Path.Combine(TilesImagesPath, treasureImage);
                 var treasureBitmap = ViewUtils.GetBitmapImage(treasureImagePath);
-
-                UserControlTile tile = shuffledTiles[i];
-                tile.ImageFileName = treasureImage;
-                tile.SetTileAsTreasure(treasureBitmap);
+                shuffledTiles[i].SetTileAsTreasure(treasureBitmap);
             }
         }
 
         private void FillTiles()
         {
             List<UserControlTile> tiles = GetAllTilesFromGrid();
+            Console.WriteLine($"Total tiles to fill: {tiles.Count}");
             var tilesImages = new BoardManagerClient().GetFloodCards();
 
-            int tileNumber = 1;
-
-            for (int i = 0; i < tiles.Count; i++)
+            int tileIndex = 0;
+            foreach (var tile in tiles)
             {
-
-                if (!tiles[i].IsTreasure)
+                if (!tile.IsTreasure)
                 {
-                    string tileImage = tilesImages[i].ImagePath;
-                    tileNumber++;
+                    string tileImage = tilesImages[tileIndex].ImagePath;
                     string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
                     var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
 
-                    tiles[i].ImageFileName = tileImage;
-                    tiles[i].SetImage(tileBitmap);
-                }                
+                    tile.ImageFileName = tileImage;
+                    tile.SetImage(tileBitmap);
+                    tileIndex++;
+                }
             }
         }
 
@@ -174,7 +166,7 @@ namespace Forbbiden.Client.Controls
             UserControlTile spawnTile;
             do
             {
-                int spawnTileIndex = new Random().Next(tiles.Count);
+                int spawnTileIndex = MatchLogic.Rand.Next(tiles.Count);
                 spawnTile = tiles[spawnTileIndex];
                 if (!spawnTile.IsTreasure)
                 {

@@ -339,9 +339,6 @@
   <data name="bossLogin" xml:space="preserve">
     <value>¡Si inicias sesión puedes elegir tu avatar y hacer amigos!</value>
   </data>
-  <data name="treasure_stack" xml:space="preserve">
-    <value>Pila de Tesoros</value>
-  </data>
   <data name="flood_stack" xml:space="preserve">
     <value>Pila de Inundación</value>
   </data>
@@ -410,5 +407,41 @@
   </data>
   <data name="keep_cards" xml:space="preserve">
     <value>Mantener las cartas</value>
+  </data>
+  <data name="verification_token_sent_title" xml:space="preserve">
+    <value>Token de Verificación Enviado</value>
+  </data>
+  <data name="verification_token_sent" xml:space="preserve">
+    <value>Te hemos enviado un nuevo token de verificación, por favor revisa tu correo electrónico</value>
+  </data>
+  <data name="treasures_saved" xml:space="preserve">
+    <value>Tesoros Salvados</value>
+  </data>
+  <data name="clean_code" xml:space="preserve">
+    <value>Clean Code</value>
+  </data>
+  <data name="win_title" xml:space="preserve">
+    <value>Ganaste!</value>
+  </data>
+  <data name="win_message" xml:space="preserve">
+    <value>¡Has rescatado todos los tesoros en la escuela! ¡Gracias por jugar!</value>
+  </data>
+  <data name="not_escape_tile_title" xml:space="preserve">
+    <value>No es una Casilla de Escape</value>
+  </data>
+  <data name="not_escape_tile" xml:space="preserve">
+    <value>Para escapar de la FEI debes estar en la Entrada de la FEI (casilla de borde azul)</value>
+  </data>
+  <data name="missing_treasures_title" xml:space="preserve">
+    <value>Faltan Tesoros</value>
+  </data>
+  <data name="missing_treasures" xml:space="preserve">
+    <value>No has capturado los cuatro tesoros que están en la FEI</value>
+  </data>
+  <data name="not_treasure_tile" xml:space="preserve">
+    <value>Para capturar un tesoro debes estar en una casilla de tesoro</value>
+  </data>
+  <data name="not_treasure_tile_title" xml:space="preserve">
+    <value>No es una Casilla de Tesoro</value>
   </data>
 </root>

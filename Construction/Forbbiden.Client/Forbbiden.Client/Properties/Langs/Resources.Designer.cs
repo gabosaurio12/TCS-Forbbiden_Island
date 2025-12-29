@@ -142,6 +142,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clean Code.
+        /// </summary>
+        public static string clean_code {
+            get {
+                return ResourceManager.GetString("clean_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string delete {
@@ -457,6 +466,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You haven&apos;t captured the four treasures at the FEI.
+        /// </summary>
+        public static string missing_treasures {
+            get {
+                return ResourceManager.GetString("missing_treasures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Treasures.
+        /// </summary>
+        public static string missing_treasures_title {
+            get {
+                return ResourceManager.GetString("missing_treasures_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move.
         /// </summary>
         public static string move_button {
@@ -507,6 +534,42 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string normal_message {
             get {
                 return ResourceManager.GetString("normal_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To escape from the FEI you have to be at the FEI Entrance (blue border tile).
+        /// </summary>
+        public static string not_escape_tile {
+            get {
+                return ResourceManager.GetString("not_escape_tile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a Escape Tile.
+        /// </summary>
+        public static string not_escape_tile_title {
+            get {
+                return ResourceManager.GetString("not_escape_tile_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To capture a treasure you have to be at a treasure tile.
+        /// </summary>
+        public static string not_treasure_tile {
+            get {
+                return ResourceManager.GetString("not_treasure_tile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a Treasure Tile.
+        /// </summary>
+        public static string not_treasure_tile_title {
+            get {
+                return ResourceManager.GetString("not_treasure_tile_title", resourceCulture);
             }
         }
         
@@ -826,11 +889,11 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Treasure Stack.
+        ///   Looks up a localized string similar to Treasures Saved.
         /// </summary>
-        public static string treasure_stack {
+        public static string treasures_saved {
             get {
-                return ResourceManager.GetString("treasure_stack", resourceCulture);
+                return ResourceManager.GetString("treasures_saved", resourceCulture);
             }
         }
         
@@ -889,6 +952,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We have sent you a new verification token, please check your email.
+        /// </summary>
+        public static string verification_token_sent {
+            get {
+                return ResourceManager.GetString("verification_token_sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification Token Sent.
+        /// </summary>
+        public static string verification_token_sent_title {
+            get {
+                return ResourceManager.GetString("verification_token_sent_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verify.
         /// </summary>
         public static string verify {
@@ -912,6 +993,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string water_level {
             get {
                 return ResourceManager.GetString("water_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have saved all the treasures at the school! Thanks for playing!.
+        /// </summary>
+        public static string win_message {
+            get {
+                return ResourceManager.GetString("win_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Win!.
+        /// </summary>
+        public static string win_title {
+            get {
+                return ResourceManager.GetString("win_title", resourceCulture);
             }
         }
         

@@ -119,7 +119,7 @@ namespace Forbbiden.Client
         private async Task VerifyPlayer(string username)
         {
             var player = await Client.GetPlayerByUsernameAsync(username, false);
-            var verificationWindow = new VerificationWIndow(player.PlayerId)
+            var verificationWindow = new VerificationWindow(player.PlayerId)
             {
                 Owner = Window.GetWindow(this)
             };

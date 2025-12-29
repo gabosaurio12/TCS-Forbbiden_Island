@@ -52,17 +52,25 @@
                         <StackPanel x:Name="stacks" Orientation="Vertical"
                             HorizontalAlignment="Left" Grid.Row="0" Margin="20,20,0,0">
                             <!-- Treasure stack -->
-                            <TextBlock Text="{x:Static language:Resources.treasure_stack}"
+                            <TextBlock Text="{x:Static language:Resources.treasures_saved}"
                                 Margin="0,0,0,0"
                                 FontSize="32" FontFamily="{StaticResource IrishGrover}"
                                 Foreground="White" />
 
-                            <StackPanel Orientation="Horizontal" >
-                                <Rectangle
-                                    Height="200" Width="170" Margin="0,20,0,20"
-                                    Fill="#F2B9B3" Stroke="#A81D0F" StrokeThickness="15" />
+                            <StackPanel x:Name="treasuresSavedStack" Orientation="Vertical"
+                                        Height="200">
+                                <StackPanel Orientation="Horizontal"
+                                            Background="LightSlateGray">
+                                    <Image  HorizontalAlignment="Left"
+                                            x:Name="cleanCodeImage"
+                                            Height="40" Margin="5"
+                                            Source="/Images/cards/treasure1bw.png"/>
+                                    <TextBlock Text="{x:Static language:Resources.clean_code}"
+                                               VerticalAlignment="Center" Margin="10,0,0,0"
+                                               FontSize="28" Foreground="White"
+                                               FontFamily="{StaticResource IrishGrover}"/>
+                                </StackPanel>
                             </StackPanel>
-
                         </StackPanel>
 
                         <!-- Water level -->
@@ -191,6 +199,7 @@
                         Content="{x:Static language:Resources.finish_turn}"
                         FontFamily="{StaticResource IrishGrover}"
                         FontSize="28"
+                        Cursor="Hand"
                         Click="EndTurnButton_Click"
                         />
             </Grid>

@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.BoardManager;
+using Forbbiden.Client.logic;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,8 +20,11 @@ namespace Forbbiden.Client.Controls
         public bool IsTreasure { get; set; }
         public bool IsFlood { get; set; }
         public bool IsLost { get; set; }
+        public bool IsEscapeTile { get; set; }
+        public Card TreasureCard;
 
-        public Color DefaultBlue { get; }
+        public Color DefaultGreen { get; }
+        public Color EscapeBlue { get; }
         public Color Border { get; set; }
         public Color EnterBorder { get; set; }
         public Color RedColor { get; set; }
@@ -32,22 +36,33 @@ namespace Forbbiden.Client.Controls
             InitializeComponent();
 
             string defaultGreenHex = "#03A300";
-            DefaultBlue = (Color)ColorConverter.ConvertFromString(defaultGreenHex);
+            DefaultGreen = (Color)ColorConverter.ConvertFromString(defaultGreenHex);
+            string defaultBlueHex = "#102E78";
+            EscapeBlue = (Color)ColorConverter.ConvertFromString(defaultBlueHex);
             string redColorHex = "#A81D0F";
             RedColor = (Color)ColorConverter.ConvertFromString(redColorHex);
-            Border = DefaultBlue;
-            EnterBorder = DefaultBlue;
+            Border = DefaultGreen;
+            EnterBorder = DefaultGreen;
 
             IsHitTestVisible = false;
             Cursor = Cursors.Arrow;
         }
 
-        public void SetTileAsTreasure(BitmapImage treasureBitmap)
+        public void SetTileAsTreasure(BitmapImage treasureBitmap, Card treasureCard)
         {
+            TreasureCard = treasureCard;
             Border = EnterBorder = RedColor;
             SetImage(treasureBitmap);
             UpdateBorderBrush();
             IsTreasure = true;
+        }
+
+        public void SetTileAsEscape(BitmapImage escapeBitmap)
+        {
+            Border = EnterBorder = EscapeBlue;
+            SetImage(escapeBitmap);
+            UpdateBorderBrush();
+            IsEscapeTile = true;
         }
 
         public void SetInteractionBorders()
@@ -65,16 +80,36 @@ namespace Forbbiden.Client.Controls
             tile.BorderBrush = new SolidColorBrush(Border);
         }
 
-        public void ResetBorder()
+        public void ResetBorderToDefault()
         {
-            Color color = DefaultBlue;
-            if (IsTreasure)
+            Color color;
+            if (IsEscapeTile)
+            {
+                color = EscapeBlue;
+            } 
+            else if (IsTreasure)
             {
                 color = RedColor;
+            }
+            else
+            {
+                color = DefaultGreen;
             }
 
             Border = EnterBorder = color;
             tile.BorderBrush = new SolidColorBrush(color);
+        }
+
+        public void ResetBorder()
+        {
+            if (IsFlood)
+            {
+                FloodTile();
+            }
+            else
+            {
+                ResetBorderToDefault();
+            }
         }
 
         public void FloodTile()

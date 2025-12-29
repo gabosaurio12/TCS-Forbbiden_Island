@@ -130,6 +130,14 @@
     <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="logic\board\BoardStateContext.cs" />
+    <Compile Include="logic\board\IBoardState.cs" />
+    <Compile Include="logic\board\states\DiscardCardState.cs" />
+    <Compile Include="logic\board\states\MitigationState.cs" />
+    <Compile Include="logic\board\states\MoveState.cs" />
+    <Compile Include="logic\board\states\NormalState.cs" />
+    <Compile Include="logic\board\states\ShoreState.cs" />
+    <Compile Include="logic\board\states\UseCardState.cs" />
     <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\FriendsNotificationSingleton.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
@@ -690,16 +698,43 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\cards\water-rise.png" />
-    <Resource Include="Images\tiles\free.jpg" />
-    <Resource Include="Images\tiles\treasure1.png" />
-    <Resource Include="Images\tiles\treasure2.png" />
-    <Resource Include="Images\tiles\treasure3.png" />
-    <Resource Include="Images\tiles\treasure4.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\cards\treasure1c.png" />
+    <Resource Include="Images\cards\mitigation.png" />
+    <Resource Include="Images\cards\escape-q.png" />
+    <Resource Include="Images\cards\treasure1.png" />
+    <Resource Include="Images\cards\treasure2.png" />
+    <Resource Include="Images\cards\treasure3.png" />
+    <Resource Include="Images\cards\treasure4.png" />
+    <Resource Include="Images\cards\treasure1bw.png" />
+    <Resource Include="Images\tiles\treasure1.png" />
+    <Resource Include="Images\tiles\treasure2.png" />
+    <Resource Include="Images\tiles\treasure3.png" />
+    <Resource Include="Images\tiles\treasure4.png" />
+    <Resource Include="Images\tiles\mini-cafe.png" />
+    <Resource Include="Images\tiles\accessibility-unity.png" />
+    <Resource Include="Images\tiles\auditory.png" />
+    <Resource Include="Images\tiles\balcony.png" />
+    <Resource Include="Images\tiles\cc1.png" />
+    <Resource Include="Images\tiles\cc2.png" />
+    <Resource Include="Images\tiles\cc4.png" />
+    <Resource Include="Images\tiles\classroom-112.png" />
+    <Resource Include="Images\tiles\classroom-3.png" />
+    <Resource Include="Images\tiles\classroom-f103.png" />
+    <Resource Include="Images\tiles\court.png" />
+    <Resource Include="Images\tiles\elrevo-cubicle.png" />
+    <Resource Include="Images\tiles\entrance.png" />
+    <Resource Include="Images\tiles\esplanade.png" />
+    <Resource Include="Images\tiles\headquarters-cubicles.png" />
+    <Resource Include="Images\tiles\komalli.png" />
+    <Resource Include="Images\tiles\library.png" />
+    <Resource Include="Images\tiles\spiral-staircase.png" />
+    <Resource Include="Images\tiles\usability-lab.png" />
+    <Resource Include="Images\tiles\yard.png" />
     <Resource Include="Images\recycle_bin.png" />
     <None Include="Connected Services\TokenManager\configuration91.svcinfo" />
     <None Include="Connected Services\TokenManager\configuration.svcinfo" />

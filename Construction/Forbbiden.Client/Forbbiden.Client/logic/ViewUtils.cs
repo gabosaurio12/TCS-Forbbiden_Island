@@ -27,8 +27,8 @@ namespace Forbbiden.Client.logic
 
             Ellipse ellipse = new Ellipse
             {
-                Width = 100,
-                Height = 100,
+                Width = 70,
+                Height = 70,
                 Stroke = Brushes.LightGray,
                 StrokeThickness = 5,
                 Margin = new Thickness(0, 0, 0, 0),

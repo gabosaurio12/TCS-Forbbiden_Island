@@ -57,15 +57,40 @@ namespace Forbbiden.Server.logic
             return randomTokenString;
         }
 
+        private bool RemoveExistingToken(int playerId)
+        {
+            bool removed = false;
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                try
+                {
+                    var existingToken = db.Token.FirstOrDefault(t => t.player_id == playerId);
+                    if (existingToken != null)
+                    {
+                        db.Token.Remove(existingToken);
+                        db.SaveChanges();
+                        removed = true;
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    HandleEntityException(ex);
+                }
+            }
+
+            return removed;
+        }
+
         public Contracts.Token GenerateToken(int playerId)
         {
             string randomTokenString = CreateRandomToken();
             bool success = false;
-            do
+            RemoveExistingToken(playerId);
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
-                try
+                do
                 {
-                    using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                    try
                     {
                         var searchToken = db.Token.FirstOrDefault(t => t.token1 == randomTokenString);
                         if (searchToken == null)
@@ -87,12 +112,12 @@ namespace Forbbiden.Server.logic
                             };
                         }
                     }
-                }
-                catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
-                {
-                    HandleEntityException(ex);
-                }
-            } while (!success);
+                    catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
+                    {
+                        HandleEntityException(ex);
+                    }
+                } while (!success);
+            }
 
             return new Contracts.Token
             {

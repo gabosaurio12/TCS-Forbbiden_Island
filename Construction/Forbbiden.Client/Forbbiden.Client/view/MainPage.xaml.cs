@@ -8,7 +8,6 @@ using log4net;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,7 +20,7 @@ namespace Forbbiden.Client
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainPage));
         private readonly ProfileManagerClient Client;
-        public static logic.FriendsNotificationSingleton CallbackManager { get; private set; }
+        public static FriendsNotificationSingleton CallbackManager { get; private set; }
         public static IFriendsManager FriendsProxy { get; private set; }
 
         public MainPage()
@@ -173,6 +172,10 @@ namespace Forbbiden.Client
                 {
                     verifyButton.Visibility = Visibility.Visible;
                 }
+                else
+                {
+                    verifyButton.Visibility = Visibility.Hidden;
+                }
 
                 txtBkUser.Text = player.PlayerUsername;
 
@@ -180,7 +183,6 @@ namespace Forbbiden.Client
                 string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
                 imgAvatar.Fill = ViewUtils.GetImageBrush(avatarPath);
                 ConnectPlayer(ClientSession.Username);
-
             }
             catch (Exception ex)
             {
@@ -194,14 +196,41 @@ namespace Forbbiden.Client
             NavigationService?.Navigate(new FriendsPage());
         }
 
-        private void VerifyButton_Click(object sender, RoutedEventArgs e)
+        private void ShowVerificationWindow(ProfileManager.Player player)
         {
-            var player = ClientSession.GetPlayer();
-            var verificationWindow = new VerificationWIndow(player.PlayerId)
+            var verificationWindow = new VerificationWindow(player.PlayerId)
             {
                 Owner = Window.GetWindow(this)
             };
+
+            verificationWindow.OnVerified += async () =>
+            {
+                var profileManager = new ProfileManagerClient();
+                var updatedPlayer = await profileManager.GetPlayerByIdAsync(player.PlayerId, false);
+
+                Dispatcher.Invoke(() =>
+                {
+                    ClientSession.SetPlayer(updatedPlayer);
+                    ReloadMainPage(updatedPlayer);
+                });
+            };
+
             verificationWindow.ShowDialog();
+        }
+        
+        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var player = ClientSession.GetPlayer();
+            var result = await Client.SendEmailAsync(player.PlayerEmail, player.PlayerId);
+
+            if (result)
+            {
+                string title = Properties.Langs.Resources.verification_token_sent_title;
+                string message = Properties.Langs.Resources.verification_token_sent;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+
+                ShowVerificationWindow(player);
+            }
         }
     }
 }

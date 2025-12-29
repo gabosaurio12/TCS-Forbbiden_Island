@@ -339,9 +339,6 @@
   <data name="bossLogin" xml:space="preserve">
     <value>If you log in you can choose your avatar and make friends!</value>
   </data>
-  <data name="treasure_stack" xml:space="preserve">
-    <value>Treasure Stack</value>
-  </data>
   <data name="flood_stack" xml:space="preserve">
     <value>Flood Stack</value>
   </data>
@@ -410,5 +407,41 @@
   </data>
   <data name="keep_cards" xml:space="preserve">
     <value>Keep cards</value>
+  </data>
+  <data name="verification_token_sent_title" xml:space="preserve">
+    <value>Verification Token Sent</value>
+  </data>
+  <data name="verification_token_sent" xml:space="preserve">
+    <value>We have sent you a new verification token, please check your email</value>
+  </data>
+  <data name="treasures_saved" xml:space="preserve">
+    <value>Treasures Saved</value>
+  </data>
+  <data name="clean_code" xml:space="preserve">
+    <value>Clean Code</value>
+  </data>
+  <data name="win_title" xml:space="preserve">
+    <value>You Win!</value>
+  </data>
+  <data name="win_message" xml:space="preserve">
+    <value>You have saved all the treasures at the school! Thanks for playing!</value>
+  </data>
+  <data name="not_escape_tile_title" xml:space="preserve">
+    <value>Not a Escape Tile</value>
+  </data>
+  <data name="not_escape_tile" xml:space="preserve">
+    <value>To escape from the FEI you have to be at the FEI Entrance (blue border tile)</value>
+  </data>
+  <data name="missing_treasures_title" xml:space="preserve">
+    <value>Missing Treasures</value>
+  </data>
+  <data name="missing_treasures" xml:space="preserve">
+    <value>You haven't captured the four treasures at the FEI</value>
+  </data>
+  <data name="not_treasure_tile" xml:space="preserve">
+    <value>To capture a treasure you have to be at a treasure tile</value>
+  </data>
+  <data name="not_treasure_tile_title" xml:space="preserve">
+    <value>Not a Treasure Tile</value>
   </data>
 </root>
