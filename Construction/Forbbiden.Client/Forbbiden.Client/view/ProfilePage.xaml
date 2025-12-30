@@ -18,7 +18,9 @@
 
             <!-- Upper bar and go back button -->
             <DockPanel Grid.Row="0" Background="#3CB7FF" LastChildFill="True">
-                <Button Content="&lt;" Width="80" Height="80" FontSize="36" Margin="10" FontFamily="{StaticResource IrishGrover}"
+                <Button Content="&lt;" Width="80" Height="80" FontSize="36" Margin="10" 
+                        FontFamily="{StaticResource IrishGrover}"
+                        Cursor="Hand"
                         DockPanel.Dock="Left" Click="BtnDiscard_Click"/>
                 <Grid>
                     <TextBlock Text="{x:Static language:Resources.profile}" FontSize="64" FontWeight="Bold" FontFamily="{StaticResource IrishGrover}"
@@ -54,6 +56,7 @@
                     <Button x:Name="btnAvatar" Content="{x:Static language:Resources.upload_avatar}"
                             Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" FontFamily="{StaticResource IrishGrover}"
                             Margin="0,8,0,0"
+                            Cursor="Hand"
                             Width="238" Height="64" FontSize="24"
                             Click="BtnUploadAvatar_Click" />
                 </Grid>
@@ -132,11 +135,15 @@
                     <!-- Buttons -->
                     <Button x:Name="btnSave" Content="{x:Static language:Resources.save_changes}" 
                             Grid.Column="0" Grid.Row="2" Margin="0,80,0,0"
-                            Width="345" Height="100" Background="#83EC38" FontFamily="{StaticResource IrishGrover}"
+                            Width="345" Height="100" Background="#83EC38" 
+                            FontFamily="{StaticResource IrishGrover}"
+                            Cursor="Hand"
                             FontSize="36" Click="BtnSave_Click" />
                     <Button x:Name="btnDiscard" Content="{x:Static language:Resources.discard_changes}"
                             Grid.Column="1" Grid.Row="2" Margin="0,80,0,0"
-                            Width="345" Height="100" Background="#FFCB2F" FontFamily="{StaticResource IrishGrover}"
+                            Width="345" Height="100" Background="#FFCB2F" 
+                            FontFamily="{StaticResource IrishGrover}"
+                            Cursor="Hand"
                             FontSize="36" Click="BtnDiscard_Click" />
                 </Grid>
             </Grid>

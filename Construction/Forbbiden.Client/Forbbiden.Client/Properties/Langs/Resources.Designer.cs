@@ -144,9 +144,18 @@ namespace Forbbiden.Client.Properties.Langs {
         /// <summary>
         ///   Looks up a localized string similar to Clean Code.
         /// </summary>
-        public static string clean_code {
+        public static string clean_code_name {
             get {
-                return ResourceManager.GetString("clean_code", resourceCulture);
+                return ResourceManager.GetString("clean-code-name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cubicle Keys.
+        /// </summary>
+        public static string cubicle_keys_name {
+            get {
+                return ResourceManager.GetString("cubicle-keys-name", resourceCulture);
             }
         }
         
@@ -439,6 +448,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lucio.
+        /// </summary>
+        public static string lucio_name {
+            get {
+                return ResourceManager.GetString("lucio-name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Too much cards!.
         /// </summary>
         public static string max_cards_exceed {
@@ -538,6 +556,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You don&apos;t have at least two cards of the treasure you are trying to capture.
+        /// </summary>
+        public static string not_enough_treasure_cards {
+            get {
+                return ResourceManager.GetString("not_enough_treasure_cards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Treasure Cards.
+        /// </summary>
+        public static string not_enough_treasure_cards_title {
+            get {
+                return ResourceManager.GetString("not_enough_treasure_cards_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To escape from the FEI you have to be at the FEI Entrance (blue border tile).
         /// </summary>
         public static string not_escape_tile {
@@ -597,6 +633,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string online_friends {
             get {
                 return ResourceManager.GetString("online_friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parking Card.
+        /// </summary>
+        public static string parking_card_name {
+            get {
+                return ResourceManager.GetString("parking-card-name", resourceCulture);
             }
         }
         

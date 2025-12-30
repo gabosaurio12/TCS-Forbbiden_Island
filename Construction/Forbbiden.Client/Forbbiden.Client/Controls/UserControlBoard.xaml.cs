@@ -1,10 +1,13 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.ServiceModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -15,9 +18,12 @@ namespace Forbbiden.Client.Controls
     /// </summary>
     public partial class UserControlBoard : UserControl
     {
-        private readonly int NumberOfTreasures = 4;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserControlBoard));
+
+        public readonly int NumberOfTreasures = 4;
         private readonly string TilesImagesPath;
         private readonly string ImagesPath;
+        private readonly BoardManagerClient Client = new BoardManagerClient();
 
         public UserControlBoard()
         {
@@ -37,7 +43,7 @@ namespace Forbbiden.Client.Controls
         {
             BuildBoard();
             SetTreasureTiles();
-            FillTiles();
+            SetNonTreasureTiles();
         }
 
         private void BuildBoard()
@@ -124,37 +130,72 @@ namespace Forbbiden.Client.Controls
         private void SetTreasureTiles()
         {
             List<UserControlTile> innerTiles = GetInnerTilesFromGrid();
-            var shuffledTiles = innerTiles.OrderBy(x => MatchLogic.Rand.Next()).Take(NumberOfTreasures).ToList();
+            var shuffledTiles = innerTiles.OrderBy(
+                x => MatchLogic.Rand.Next()).Take(NumberOfTreasures).ToList();
 
             for (int i = 0; i < NumberOfTreasures; i++)
             {
                 string treasureImage = $"treasure{i + 1}.png";
+                Card treasureCard = null;
+                try
+                {
+                    treasureCard = Client.GetCard(treasureImage);
+                }
+                catch (FaultException<DBFault> ex)
+                {
+                    string classMethod = "UserControlBoard.SetTreasureTiles";
+                    Log.Error(classMethod, ex);
+                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                }
+
                 string treasureImagePath = System.IO.Path.Combine(TilesImagesPath, treasureImage);
                 var treasureBitmap = ViewUtils.GetBitmapImage(treasureImagePath);
-                shuffledTiles[i].SetTileAsTreasure(treasureBitmap);
+                shuffledTiles[i].SetTileAsTreasure(treasureBitmap, treasureCard);
             }
         }
 
-        private void FillTiles()
+        private void AddTileImageAndCardInfo(Card cardTile, UserControlTile tile)
+        {
+            string escapeCardName = "entrance-name";
+            if (cardTile.Name == escapeCardName)
+            {
+                tile.SetTileAsEscape();
+            }
+
+            string tileImage = cardTile.ImagePath;
+            string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
+            var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
+
+            tile.ImageFileName = tileImage;
+            tile.SetImage(tileBitmap);               
+        }
+
+        private void SetNonTreasureTiles()
         {
             List<UserControlTile> tiles = GetAllTilesFromGrid();
-            Console.WriteLine($"Total tiles to fill: {tiles.Count}");
-            var tilesImages = new BoardManagerClient().GetFloodCards();
+            Card[] tilesCards;
+            try
+            {
+                tilesCards = Client.GetFloodCards();
+            }
+            catch (FaultException<DBFault> ex)
+            {
+                string classMethod = "UserControlBoard.SetNonTreasureTiles";
+                Log.Error(classMethod, ex);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
+                return;
+            }
+            var shuffledTilesCards = MatchLogic.ShuffleCards(tilesCards.ToList());
 
             int tileIndex = 0;
             foreach (var tile in tiles)
             {
                 if (!tile.IsTreasure)
                 {
-                    string tileImage = tilesImages[tileIndex].ImagePath;
-                    string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
-                    var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
-
-                    tile.ImageFileName = tileImage;
-                    tile.SetImage(tileBitmap);
+                    AddTileImageAndCardInfo(shuffledTilesCards[tileIndex], tile);
                     tileIndex++;
                 }
-            }
+            }          
         }
 
         public UserControlTile AddPlayerAvatar(Player player)

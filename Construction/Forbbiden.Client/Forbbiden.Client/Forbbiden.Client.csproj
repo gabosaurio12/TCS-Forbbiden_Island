@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="logic\board\BoardStateContext.cs" />
     <Compile Include="logic\board\IBoardState.cs" />
+    <Compile Include="logic\board\states\CaptureTreasureState.cs" />
     <Compile Include="logic\board\states\DiscardCardState.cs" />
     <Compile Include="logic\board\states\MitigationState.cs" />
     <Compile Include="logic\board\states\MoveState.cs" />
@@ -703,6 +704,12 @@
     <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\cards\treasure3bw.png" />
+    <Resource Include="Images\cards\treasure3c.png" />
+    <Resource Include="Images\cards\treasure4bw.png" />
+    <Resource Include="Images\cards\treasure4c.png" />
+    <Resource Include="Images\cards\treasure2bw.png" />
+    <Resource Include="Images\cards\treasure2c.png" />
     <Resource Include="Images\cards\treasure1c.png" />
     <Resource Include="Images\cards\mitigation.png" />
     <Resource Include="Images\cards\escape-q.png" />

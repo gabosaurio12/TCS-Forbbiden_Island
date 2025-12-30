@@ -1,9 +1,4 @@
 ﻿using Forbbiden.Client.BoardManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Forbbiden.Client.logic.board.states
 {
@@ -20,9 +15,9 @@ namespace Forbbiden.Client.logic.board.states
         {
             if (Context.Board.ActionsRemain > 0)
             {
-                var tiles = MatchLogic.GetPossibleTilesToMove(
+                var tiles = MatchLogic.GetPossibleTilesToShore(
                     Context.Board.CurrentTile,
-                    Context.Board.Board);
+                    Context.Board.BoardControl);
 
                 Context.Board.ShowInteractiveTiles(tiles);
             }
@@ -34,33 +29,48 @@ namespace Forbbiden.Client.logic.board.states
 
         public void OnTileClicked(TileClickedEventArgs tile)
         {
-            Context.Board.ResetTiles();
-
-            var shoreTile = Context.Board.Board.GetTile(tile.Row, tile.Column);
+            var shoreTile = Context.Board.BoardControl.GetTile(tile.Row, tile.Column);
             shoreTile.IsFlood = false;
-            shoreTile.ResetBorderToDefault();
+            shoreTile.ResetBorder();
 
             Context.Board.EndAction();
-            Context.SetState(new NormalState(Context));
+
+            Exit();
         }
 
         public void OnCaptureTreasureClicked()
         {
-        }
-
-        public void OnCardClicked(Card card)
-        {
+            Context.SetState(new CaptureTreasureState(Context));
         }
 
         public void OnEndTurnClicked()
         {
+            Context.Board.EndTurn();
+            Exit();
         }
 
         public void OnMoveClicked()
         {
+            Context.SetState(new MoveState(Context));
         }
 
         public void OnShoreClicked()
+        {
+            Context.SetState(new ShoreState(Context));
+        }
+
+        public void OnUseTreasureCardClicked()
+        {
+            Context.SetState(new UseCardState(Context));
+        }
+
+        public void Exit()
+        {
+            Context.Board.ResetTiles();
+            Context.SetState(new NormalState(Context));
+        }
+
+        public void OnCardClicked(Card card)
         {
         }
     }

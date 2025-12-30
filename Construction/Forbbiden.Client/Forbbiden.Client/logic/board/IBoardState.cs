@@ -1,9 +1,4 @@
 ﻿using Forbbiden.Client.BoardManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Forbbiden.Client.logic.board
 {
@@ -16,5 +11,7 @@ namespace Forbbiden.Client.logic.board
         void OnShoreClicked();
         void OnEndTurnClicked();
         void OnCaptureTreasureClicked();
+        void OnUseTreasureCardClicked();
+        void Exit();
     }
 }

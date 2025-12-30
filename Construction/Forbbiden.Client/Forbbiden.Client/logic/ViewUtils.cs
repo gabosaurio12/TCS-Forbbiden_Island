@@ -46,7 +46,6 @@ namespace Forbbiden.Client.logic
             var bmp = new BitmapImage();
             bmp.BeginInit();
             bmp.CacheOption = BitmapCacheOption.OnLoad;
-            Console.WriteLine(imagePath);
             bmp.UriSource = new Uri(imagePath, UriKind.Absolute);
             bmp.EndInit();
 

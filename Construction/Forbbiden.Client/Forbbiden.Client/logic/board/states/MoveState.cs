@@ -17,7 +17,7 @@ namespace Forbbiden.Client.logic.board.states
             {
                 var tiles = MatchLogic.GetPossibleTilesToMove(
                     Context.Board.CurrentTile,
-                    Context.Board.Board);
+                    Context.Board.BoardControl);
 
                 Context.Board.ShowInteractiveTiles(tiles);
             }
@@ -31,26 +31,42 @@ namespace Forbbiden.Client.logic.board.states
         {
             Context.Board.RefreshAvatarTile(tile);
             Context.Board.EndAction();
+
+            Exit();
+        }
+
+        public void OnShoreClicked()
+        {
+            Context.SetState(new ShoreState(Context));
+        }
+
+        public void OnCaptureTreasureClicked()
+        {
+            Context.SetState(new CaptureTreasureState(Context));
+        }
+
+        public void OnUseTreasureCardClicked()
+        {
+            Context.SetState(new UseCardState(Context));
+        }
+
+        public void Exit()
+        {
+            Context.Board.ResetTiles();
             Context.SetState(new NormalState(Context));
+        }
+
+        public void OnEndTurnClicked()
+        {
+            Context.Board.EndTurn();
+            Exit();
         }
 
         public void OnCardClicked(Card card)
         {
         }
 
-        public void OnEndTurnClicked()
-        {
-        }
-
         public void OnMoveClicked()
-        {
-        }
-
-        public void OnShoreClicked()
-        {
-        }
-
-        public void OnCaptureTreasureClicked()
         {
         }
     }

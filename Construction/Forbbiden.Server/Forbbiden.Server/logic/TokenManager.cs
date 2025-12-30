@@ -25,9 +25,9 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
-        private void HandleEntityException(Exception ex)
+        private void HandleEntityException(EntityException ex, string classMethod)
         {
-            Log.Error(ex);
+            Log.Error(classMethod, ex);
 
             var fault = new DBFault
             {
@@ -35,8 +35,26 @@ namespace Forbbiden.Server.logic
                 Details = ex.Message
             };
 
+            string entityError = "EntityException";
+
             throw new FaultException<DBFault>(fault,
-                new FaultReason(fault.Error));
+                new FaultReason(entityError));
+        }
+
+        private void HandleException(Exception ex, string classMethod)
+        {
+            Log.Error(classMethod, ex);
+
+            var fault = new DBFault
+            {
+                Error = "Database Error",
+                Details = ex.Message
+            };
+
+            string entityError = "Exception";
+
+            throw new FaultException<DBFault>(fault,
+                new FaultReason(entityError));
         }
 
         public string CreateRandomToken()
@@ -74,7 +92,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "TokenManager.RemoveExistingToken";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -114,7 +133,8 @@ namespace Forbbiden.Server.logic
                     }
                     catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
                     {
-                        HandleEntityException(ex);
+                        string classMethod = "TokenManager.GenerateToken";
+                        HandleException(ex, classMethod);
                     }
                 } while (!success);
             }
@@ -164,7 +184,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "TokenManager.VerifyToken";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 

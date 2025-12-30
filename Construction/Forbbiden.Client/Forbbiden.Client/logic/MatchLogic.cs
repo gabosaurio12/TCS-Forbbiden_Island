@@ -49,11 +49,44 @@ namespace Forbbiden.Client.logic
             return possibleTiles;
         }
 
+        public static List<UserControlTile> GetPossibleTilesToShore(UserControlTile currentTile, UserControlBoard board)
+        {
+            var preliminaryTiles = GetPossibleTilesToMove(currentTile, board);
+            preliminaryTiles.Add(currentTile);
+            List<UserControlTile> possibleTiles = new List<UserControlTile>();
+
+            foreach(var tile in preliminaryTiles)
+            {
+                if (tile.IsFlood)
+                {
+                    possibleTiles.Add(tile);
+                }
+            }
+
+            return possibleTiles;
+        }
+
+        public static List<UserControlTile> GetPossibleTilesToMitigate(UserControlBoard board)
+        {
+            var preliminaryTiles = board.GetAllTilesFromGrid();
+            List<UserControlTile> possibleTiles = new List<UserControlTile>();
+
+            foreach(var tile in preliminaryTiles)
+            {
+                if (tile.IsFlood)
+                {
+                    possibleTiles.Add(tile);
+                }
+            }
+
+            return possibleTiles;
+        }
+
         public static void ResetTiles(List<UserControlTile> tiles)
         {
             foreach (var resetTile in tiles)
             {
-                resetTile.DesactivateMovement();
+                resetTile.DeactivateMovement();
                 resetTile.ResetBorder();
             }
         }

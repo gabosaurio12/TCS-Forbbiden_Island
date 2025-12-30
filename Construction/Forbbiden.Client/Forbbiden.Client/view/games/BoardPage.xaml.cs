@@ -5,13 +5,16 @@ using Forbbiden.Client.logic.board;
 using Forbbiden.Client.logic.board.states;
 using Forbbiden.Client.model;
 using Forbbiden.Client.view.info;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfAnimatedGif;
 
@@ -23,12 +26,14 @@ namespace Forbbiden.Client.view.games
     public partial class BoardPage : Page
     {
         // def fields //
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BoardPage));
 
         private BoardStateContext StateContext;
         private int PendingTreasureDraws;
 
-        public int ActionsRemain = 3;
         public UserControlTile CurrentTile;
+        public UserControlBoard BoardControl;
+        public int ActionsRemain = 3;
         public int TreasuresCaptured = 0;
 
         private List<Card> PlayerCards;
@@ -46,7 +51,6 @@ namespace Forbbiden.Client.view.games
 
         private readonly BoardManagerClient BoardManager = new BoardManagerClient();
 
-        public UserControlBoard Board;
         public int WaterLevelCount = 0;
 
         private readonly string ImagesPath;
@@ -78,7 +82,7 @@ namespace Forbbiden.Client.view.games
             Focus();
 
             SetBoard();
-            Board.TileClickedOnBoard += OnTileClickedFromBoard;
+            BoardControl.TileClickedOnBoard += OnTileClickedFromBoard;
             SetPlayersAvatars();
         }
 
@@ -94,16 +98,16 @@ namespace Forbbiden.Client.view.games
 
         private void SetBoard()
         {
-            Board = new UserControlBoard();
-            Grid.SetColumn(Board, 1);
-            Grid.SetRow(Board, 0);
+            BoardControl = new UserControlBoard();
+            Grid.SetColumn(BoardControl, 1);
+            Grid.SetRow(BoardControl, 0);
 
-            mainGrid.Children.Add(Board);
+            mainGrid.Children.Add(BoardControl);
         }
 
         private void SetPlayersAvatars()
         {
-            CurrentTile = Board.AddPlayerAvatar(ClientSession.GetPlayer());
+            CurrentTile = BoardControl.AddPlayerAvatar(ClientSession.GetPlayer());
         }
 
         // order
@@ -134,7 +138,7 @@ namespace Forbbiden.Client.view.games
         {
             var cardImageFileName = card.ImagePath;
 
-            foreach (var tile in Board.GetAllTilesFromGrid())
+            foreach (var tile in BoardControl.GetAllTilesFromGrid())
             {
                 if (tile.ImageFileName == cardImageFileName)
                 {
@@ -153,8 +157,7 @@ namespace Forbbiden.Client.view.games
 
         public void ResetTiles()
         {
-            var tiles = MatchLogic.GetPossibleTilesToMove(CurrentTile, Board);
-            tiles.Add(CurrentTile);
+            var tiles = BoardControl.GetAllTilesFromGrid();
             MatchLogic.ResetTiles(tiles);
         }
 
@@ -162,7 +165,7 @@ namespace Forbbiden.Client.view.games
         {
             ResetTiles();
 
-            var moveToTile = Board.GetTile(tile.Row, tile.Column);
+            var moveToTile = BoardControl.GetTile(tile.Row, tile.Column);
             Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
             CurrentTile.ClearAvatar(); 
             moveToTile.AddAvatar(avatar);
@@ -171,9 +174,12 @@ namespace Forbbiden.Client.view.games
 
         public void EndAction()
         {
-            ActionsRemain--;
-            var actionImage = actionsRemainingStack.Children[ActionsRemain];
-            actionImage.Visibility = Visibility.Hidden;
+            if (ActionsRemain > 0)
+            {
+                ActionsRemain--;
+                var actionImage = actionsRemainingStack.Children[ActionsRemain];
+                actionImage.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Move_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -188,17 +194,14 @@ namespace Forbbiden.Client.view.games
 
         private void UseTreasureCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is UserControlCard cardControl)
-            {
-                StateContext.CurrentState.OnCardClicked(cardControl.CardInfo);
-            }
+            StateContext.CurrentState.OnUseTreasureCardClicked();
         }
 
         private void CaptureTreasure_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (CurrentTile.IsTreasure)
             {
-                StateContext.CurrentState.OnCaptureTreasureClicked();
+                StateContext.OnCaptureTreasureClicked();
             }
             else
             {
@@ -226,9 +229,29 @@ namespace Forbbiden.Client.view.games
             }
         }
 
+        private void SubstractFromTreasureCardCounter(string treasureName)
+        {
+            switch (treasureName)
+            {
+                case "clean-code-name":
+                    CleanCodeCounter--;
+                    break;
+                case "cubicle-keys-name":
+                    CubicleKeysCounter--;
+                    break;
+                case "lucio-name":
+                    LucioCounter--;
+                    break;
+                case "parking-card-name":
+                    ParkingCardCounter--;
+                    break;
+            }
+        }
+
         public void DiscardCardFromHand(Card card)
         {
             PlayerCards.Remove(card);
+            SubstractFromTreasureCardCounter(card.Name);
             var cardControl = cardStack.Children
                 .OfType<UserControlCard>()
                 .FirstOrDefault(c => c.CardInfo.Name == card.Name);
@@ -241,16 +264,13 @@ namespace Forbbiden.Client.view.games
             TreasureDiscardStack.Add(card);
         }
 
-        public void EndTurn()
+        private void DiscardCardByName(string cardName)
         {
-            ActionsRemain = 3;
-            foreach (Image action in actionsRemainingStack.Children)
+            var card = PlayerCards.FirstOrDefault(c => c.Name == cardName);
+            if (card != null)
             {
-                action.Visibility = Visibility.Visible;
+                DiscardCardFromHand(card);
             }
-
-            PickTreasureCard();
-            PickFloodCard();
         }
 
         public void NotifyWin()
@@ -258,6 +278,7 @@ namespace Forbbiden.Client.view.games
             string title = Properties.Langs.Resources.win_title;
             string message = Properties.Langs.Resources.win_message;
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+            NavigationService?.Navigate(new MainPage());
         }
 
         public void NotifyLoose()
@@ -294,25 +315,80 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        public void CaptureTreasure(Card treasure)
+        private void RefreshTreasureImage(Card treasure)
         {
             string fileName = treasure.ImagePath.Split('.')[0];
             string newFileName = String.Concat(fileName, "C", ".png");
+            var projectDir = ViewUtils.GetProjectDir();
+            string newFilePath = System.IO.Path.Combine(projectDir, "images", "cards", newFileName);
+            BitmapImage treasureImageColor = ViewUtils.GetBitmapImage(newFilePath);
 
-            foreach(var card in PlayerCards)
+            var onBoardImage = new Dictionary<string, Image>
             {
-                if (card.Name == treasure.Name)
-                {
-                    DiscardCardFromHand(card);
-                }
+                { "clean-code-name", cleanCodeImage },
+                { "cubicle-keys-name", cubicleKeysImage },
+                { "lucio-name", lucioImage },
+                { "parking-card-name", parkingCardImage }
+            };
+
+            if (onBoardImage.TryGetValue(treasure.Name, out var image))
+            {
+                image.Source = treasureImageColor;
+                var stack = (StackPanel)image.Parent;
+
+                string treasureCapturedBlueHex = "#33689E";
+                var treasureCapturedBlue = (Brush)new BrushConverter()
+                    .ConvertFromString(treasureCapturedBlueHex);
+                stack.Background = treasureCapturedBlue;
+            }
+            else
+            {
+                string classMethod = "BoardPage.CaptureTreasure";
+                string error = "No mapped image for " + treasure.Name;
+                var ex = new Exception(error);
+                Log.Error(classMethod, ex);
+            }
+        }
+
+        private bool CanCaptureTreasure(Card treasure)
+        {
+            return PlayerCards.Count(c => c.Name == treasure.Name) >= 2;
+        }
+
+        public void CaptureTreasure(Card treasure)
+        {
+            if (CanCaptureTreasure(treasure))
+            {
+                RefreshTreasureImage(treasure);
+
+                DiscardCardByName(treasure.Name);
+                DiscardCardByName(treasure.Name);
+
+                TreasuresCaptured++;
+                EndAction();
+            }
+            else
+            {
+                Log.Error("BoardPage.CaptureTreasure", new InvalidOperationException(
+                    "Unexpected difference between treasure card counter and player's card hand"));
+                string title = Properties.Langs.Resources.not_enough_treasure_cards_title;
+                string message = Properties.Langs.Resources.not_enough_treasure_cards;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+            }
+        }
+
+        public void EndTurn()
+        {
+            ActionsRemain = 3;
+            foreach (Image action in actionsRemainingStack.Children)
+            {
+                action.Visibility = Visibility.Visible;
             }
 
-            cleanCodeImage.Source = ViewUtils.GetBitmapImage(newFileName);
-            TreasuresCaptured++;
+            PickTreasureCard();
         }
 
         // possible stay methods //
-
 
 
         private void ShowFloodTile(Card floodCard)
@@ -373,17 +449,22 @@ namespace Forbbiden.Client.view.games
                 ShowCardDraw(card);
                 ExecuteCardEffect(card);
             }
+            else
+            {
+                PickFloodCard();
+            }
         }
 
         private Card DrawCard()
         {
-            int index = MatchLogic.Rand.Next(0, TreasureStack.Count - 1);
             if (TreasureStack.Count == 0)
             {
                 var shuffledDiscardStack = MatchLogic.ShuffleCards(TreasureDiscardStack);
                 TreasureStack.AddRange(shuffledDiscardStack);
                 TreasureDiscardStack.Clear();
             }
+
+            int index = MatchLogic.Rand.Next(0, TreasureStack.Count - 1);
             Card card = TreasureStack[index];
             TreasureStack.Remove(card);
             return card;
@@ -415,6 +496,7 @@ namespace Forbbiden.Client.view.games
             {
                 IncreaseWaterLevel(card);
                 TreasureDiscardStack.Add(card);
+                ContinueTreasureDraw();
             }
             else
             {
@@ -435,7 +517,7 @@ namespace Forbbiden.Client.view.games
                 cardControl.MouseLeftButtonDown += OnCardClick;
 
                 cardStack.Children.Add(cardControl);
-                UpdatePlayerTreasureCards(card.Name);
+                AddToTreasureCardsCounter(card.Name);
 
                 ContinueTreasureDraw();
             }
@@ -458,7 +540,7 @@ namespace Forbbiden.Client.view.games
             }
         }
 
-        private void UpdatePlayerTreasureCards(string cardName)
+        private void AddToTreasureCardsCounter(string cardName)
         {
             switch (cardName)
             {

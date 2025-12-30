@@ -15,16 +15,17 @@ namespace Forbbiden.Client.Controls
     /// </summary>
     public partial class UserControlTile : UserControl
     {
+        public Card TreasureCard;
         public int Col { get; set; }
         public int Row { get; set; }
         public bool IsTreasure { get; set; }
         public bool IsFlood { get; set; }
         public bool IsLost { get; set; }
         public bool IsEscapeTile { get; set; }
-        public Card TreasureCard;
 
-        public Color DefaultGreen { get; }
+        public Color DefaultWhite { get; }
         public Color EscapeBlue { get; }
+        public Color FloodGray { get; }
         public Color Border { get; set; }
         public Color EnterBorder { get; set; }
         public Color RedColor { get; set; }
@@ -35,14 +36,17 @@ namespace Forbbiden.Client.Controls
         {
             InitializeComponent();
 
-            string defaultGreenHex = "#03A300";
-            DefaultGreen = (Color)ColorConverter.ConvertFromString(defaultGreenHex);
-            string defaultBlueHex = "#102E78";
-            EscapeBlue = (Color)ColorConverter.ConvertFromString(defaultBlueHex);
+            string whiteHex = "#EDEDED";
+            DefaultWhite = (Color)ColorConverter.ConvertFromString(whiteHex);
+            string escapeBlueHex = "#102E78";
+            EscapeBlue = (Color)ColorConverter.ConvertFromString(escapeBlueHex);
+            string floodGrayHex = "#454E5F";
+            FloodGray = (Color)ColorConverter.ConvertFromString(floodGrayHex);
             string redColorHex = "#A81D0F";
             RedColor = (Color)ColorConverter.ConvertFromString(redColorHex);
-            Border = DefaultGreen;
-            EnterBorder = DefaultGreen;
+
+            Border = DefaultWhite;
+            EnterBorder = DefaultWhite;
 
             IsHitTestVisible = false;
             Cursor = Cursors.Arrow;
@@ -53,15 +57,14 @@ namespace Forbbiden.Client.Controls
             TreasureCard = treasureCard;
             Border = EnterBorder = RedColor;
             SetImage(treasureBitmap);
-            UpdateBorderBrush();
+            RefreshBorderBrush();
             IsTreasure = true;
         }
 
-        public void SetTileAsEscape(BitmapImage escapeBitmap)
+        public void SetTileAsEscape()
         {
             Border = EnterBorder = EscapeBlue;
-            SetImage(escapeBitmap);
-            UpdateBorderBrush();
+            RefreshBorderBrush();
             IsEscapeTile = true;
         }
 
@@ -71,16 +74,16 @@ namespace Forbbiden.Client.Controls
             string orange = "#DE7A14";
             Border = (Color)ColorConverter.ConvertFromString(yellow);
             EnterBorder = (Color)ColorConverter.ConvertFromString(orange);
-            UpdateBorderBrush();
+            RefreshBorderBrush();
             ActivateMovement();
         }
 
-        public void UpdateBorderBrush()
+        public void RefreshBorderBrush()
         {
             tile.BorderBrush = new SolidColorBrush(Border);
         }
 
-        public void ResetBorderToDefault()
+        public void ResetBorder()
         {
             Color color;
             if (IsEscapeTile)
@@ -91,44 +94,31 @@ namespace Forbbiden.Client.Controls
             {
                 color = RedColor;
             }
+            else if (IsFlood)
+            {
+                color = FloodGray;
+            }
             else
             {
-                color = DefaultGreen;
+                color = DefaultWhite;
             }
 
             Border = EnterBorder = color;
             tile.BorderBrush = new SolidColorBrush(color);
         }
 
-        public void ResetBorder()
-        {
-            if (IsFlood)
-            {
-                FloodTile();
-            }
-            else
-            {
-                ResetBorderToDefault();
-            }
-        }
-
         public void FloodTile()
         {
             IsFlood = true;
-            string gray = "#5B677D";
-            Border = (Color)ColorConverter.ConvertFromString(gray);
-            EnterBorder = (Color)ColorConverter.ConvertFromString(gray);
-            UpdateBorderBrush();
+            Border = EnterBorder = FloodGray;
+            RefreshBorderBrush();
         }
 
         public void LoseTile()
         {
             IsLost = true;
-            string black = "#000000";
-            Border = (Color)ColorConverter.ConvertFromString(black);
-            EnterBorder = (Color)ColorConverter.ConvertFromString(black);
-            DesactivateMovement();
-            UpdateBorderBrush();
+            DeactivateMovement();
+            Visibility = Visibility.Hidden;
         }
 
         public void SetImage(BitmapImage image)
@@ -148,7 +138,7 @@ namespace Forbbiden.Client.Controls
             IsHitTestVisible = true;
         }
 
-        public void DesactivateMovement()
+        public void DeactivateMovement()
         {
             Cursor = Cursors.Arrow;
             IsHitTestVisible = false;

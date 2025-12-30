@@ -417,7 +417,7 @@
   <data name="treasures_saved" xml:space="preserve">
     <value>Tesoros Salvados</value>
   </data>
-  <data name="clean_code" xml:space="preserve">
+  <data name="clean-code-name" xml:space="preserve">
     <value>Clean Code</value>
   </data>
   <data name="win_title" xml:space="preserve">
@@ -443,5 +443,20 @@
   </data>
   <data name="not_treasure_tile_title" xml:space="preserve">
     <value>No es una Casilla de Tesoro</value>
+  </data>
+  <data name="cubicle-keys-name" xml:space="preserve">
+    <value>Llaves de Cubículo</value>
+  </data>
+  <data name="lucio-name" xml:space="preserve">
+    <value>Lucio</value>
+  </data>
+  <data name="parking-card-name" xml:space="preserve">
+    <value>Tarjeta de Estacionamiento</value>
+  </data>
+  <data name="not_enough_treasure_cards_title" xml:space="preserve">
+    <value>Faltan Cartas del Tesoro</value>
+  </data>
+  <data name="not_enough_treasure_cards" xml:space="preserve">
+    <value>No tienes al menos dos cartas del tesoro que intentas capturar</value>
   </data>
 </root>

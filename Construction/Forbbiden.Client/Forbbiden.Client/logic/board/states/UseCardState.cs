@@ -1,5 +1,4 @@
 ﻿using Forbbiden.Client.BoardManager;
-using System;
 using System.Windows;
 
 namespace Forbbiden.Client.logic.board.states
@@ -12,9 +11,9 @@ namespace Forbbiden.Client.logic.board.states
         {
             Context = context;
         }
+
         public void Enter()
         {
-            throw new NotImplementedException();
         }
 
         public void OnCardClicked(Card card)
@@ -25,7 +24,7 @@ namespace Forbbiden.Client.logic.board.states
                     Context.SetState(new MitigationState(Context));
                     break;
                 case "escape-q-name":
-                    if (Context.Board.TreasuresCaptured == 4)
+                    if (Context.Board.TreasuresCaptured == Context.Board.BoardControl.NumberOfTreasures)
                     {
                         if (Context.Board.CurrentTile.IsEscapeTile)
                         {
@@ -44,24 +43,41 @@ namespace Forbbiden.Client.logic.board.states
                         string message = Properties.Langs.Resources.missing_treasures;
                         ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(Context.Board));
                     }
+
+                    Exit();
                     break;
             }
         }
 
         public void OnCaptureTreasureClicked()
         {
+            Context.SetState(new CaptureTreasureState(Context));
         }
 
         public void OnEndTurnClicked()
         {
+            Context.Board.EndTurn();
+            Exit();
         }
 
         public void OnMoveClicked()
         {
+            Context.SetState(new MoveState(Context));
         }
 
         public void OnShoreClicked()
         {
+            Context.SetState(new ShoreState(Context));
+        }
+
+        public void Exit()
+        {
+            Context.SetState(new NormalState(Context));
+        }
+
+        public void OnUseTreasureCardClicked()
+        {
+            Context.SetState(new CaptureTreasureState(Context));
         }
 
         public void OnTileClicked(TileClickedEventArgs tile)

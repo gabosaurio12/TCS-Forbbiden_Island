@@ -15,7 +15,6 @@ namespace Forbbiden.Client.logic.board.states
 
         public void Enter()
         {
-            // TO-DO Resaltar cartas
         }
 
         public void OnCardClicked(Card card)
@@ -23,22 +22,35 @@ namespace Forbbiden.Client.logic.board.states
             Context.Board.DiscardCardFromHand(card);
             Context.Board.AddCardToHand(PendingCard);
             Context.SetState(new NormalState(Context));
-            Context.Board.ContinueTreasureDraw();
-        }
-
-        public void OnCaptureTreasureClicked()
-        {
-        }
-
-        public void OnEndTurnClicked()
-        {
         }
 
         public void OnMoveClicked()
         {
+            Context.SetState(new MoveState(Context));
         }
 
         public void OnShoreClicked()
+        {
+            Context.SetState(new ShoreState(Context));
+        }
+
+        public void OnUseTreasureCardClicked()
+        {
+            Context.SetState(new UseCardState(Context));
+        }
+
+        public void Exit()
+        {
+            Context.SetState(new NormalState(Context));
+        }
+
+        public void OnEndTurnClicked()
+        {
+            Context.Board.EndTurn();
+            Exit();
+        }
+
+        public void OnCaptureTreasureClicked()
         {
         }
 

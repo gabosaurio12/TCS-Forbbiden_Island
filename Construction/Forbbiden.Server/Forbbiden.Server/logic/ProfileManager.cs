@@ -20,12 +20,26 @@ namespace Forbbiden.Server.logic
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
         private readonly string ConnectionString;
         private readonly string DefaultAvatarPath = "defaultAvatar.png";
-        private readonly string DatabaseError = "Database Error";
-        private readonly string EntityError = "EntityException";
 
         public ProfileManager()
         {
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+        }
+
+        private void HandleEntityException(EntityException ex, string classMethod)
+        {
+            Log.Error(classMethod, ex);
+
+            var fault = new DBFault
+            {
+                Error = "Database Error",
+                Details = ex.Message
+            };
+
+            string entityError = "EntityException";
+
+            throw new FaultException<DBFault>(fault,
+                new FaultReason(entityError));
         }
 
         public bool ValidateEmail(string email)
@@ -396,12 +410,12 @@ namespace Forbbiden.Server.logic
 
                             var fault = new DBFault
                             {
-                                Error = DatabaseError,
+                                Error = "Database Error",
                                 Details = ex.Message
                             };
 
                             throw new FaultException<DBFault>(fault,
-                                new FaultReason(EntityError));
+                                new FaultReason("EntityException"));
                         }                        
                     }                    
                 }
@@ -446,20 +460,6 @@ namespace Forbbiden.Server.logic
             }
 
             return success;
-        }
-
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error("ERROR" + classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = DatabaseError,
-                Details = ex.Message
-            };
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(EntityError));
         }
 
         public bool ConnectPlayerByUsername(string username)

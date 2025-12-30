@@ -19,6 +19,9 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         List<Card> GetFloodCards();
+
+        [OperationContract]
+        Card GetCard(string path);
     }
 
     [DataContract]

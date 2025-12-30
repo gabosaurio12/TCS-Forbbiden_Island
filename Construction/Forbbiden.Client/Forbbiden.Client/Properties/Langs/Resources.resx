@@ -417,7 +417,7 @@
   <data name="treasures_saved" xml:space="preserve">
     <value>Treasures Saved</value>
   </data>
-  <data name="clean_code" xml:space="preserve">
+  <data name="clean-code-name" xml:space="preserve">
     <value>Clean Code</value>
   </data>
   <data name="win_title" xml:space="preserve">
@@ -443,5 +443,20 @@
   </data>
   <data name="not_treasure_tile_title" xml:space="preserve">
     <value>Not a Treasure Tile</value>
+  </data>
+  <data name="cubicle-keys-name" xml:space="preserve">
+    <value>Cubicle Keys</value>
+  </data>
+  <data name="lucio-name" xml:space="preserve">
+    <value>Lucio</value>
+  </data>
+  <data name="parking-card-name" xml:space="preserve">
+    <value>Parking Card</value>
+  </data>
+  <data name="not_enough_treasure_cards_title" xml:space="preserve">
+    <value>Missing Treasure Cards</value>
+  </data>
+  <data name="not_enough_treasure_cards" xml:space="preserve">
+    <value>You don't have at least two cards of the treasure you are trying to capture</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.ProfileManager;
 using log4net;
 using Microsoft.Win32;
 using System;
@@ -18,7 +19,7 @@ namespace Forbbiden.Client
     public partial class ProfilePage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
-        private ProfileManagerClient ProfileClient;
+        private readonly ProfileManagerClient ProfileClient;
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
@@ -193,14 +194,24 @@ namespace Forbbiden.Client
 
             if (SetPlayer(ref updatedPlayer))
             {
-                if (ProfileClient.UpdatePlayer(updatedPlayer))
+                try
                 {
-                    NavigationService?.Navigate(new MainPage());
+                    if (ProfileClient.UpdatePlayer(updatedPlayer))
+                    {
+                        NavigationService?.Navigate(new MainPage());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al actualizar el perfil.");
+                    }
                 }
-                else
+                catch (FaultException<DBFault> ex)
                 {
-                    MessageBox.Show("Error al actualizar el perfil.");
+                    string classMethod = "ProfilePage.BtnSave_Click";
+                    Log.Error(classMethod, ex);
+                    ViewUtils.ShowPushError(Window.GetWindow(this));
                 }
+                
             }
         }
 
@@ -209,7 +220,7 @@ namespace Forbbiden.Client
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg|All files (*.*)|*.*"
+                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg"
             };
             var result = openFileDialog.ShowDialog();
 
@@ -219,9 +230,7 @@ namespace Forbbiden.Client
 
                 UploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
 
-                imgAvatar.Fill = new ImageBrush(
-                    new System.Windows.Media.Imaging.BitmapImage(
-                        new Uri(UploadedAvatarOriginalPath)));
+                imgAvatar.Fill = ViewUtils.GetImageBrush(UploadedAvatarOriginalPath);
 
                 AvatarChanged = true;
             }

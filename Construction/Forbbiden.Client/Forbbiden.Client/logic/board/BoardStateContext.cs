@@ -19,5 +19,11 @@ namespace Forbbiden.Client.logic.board
             CurrentState = newState;
             newState.Enter();
         }
+
+        public void OnCaptureTreasureClicked()
+        {
+            SetState(new CaptureTreasureState(this));
+            CurrentState.OnCaptureTreasureClicked();
+        }
     }
 }
