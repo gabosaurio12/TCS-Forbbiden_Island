@@ -1,0 +1,156 @@
+
+== Descripciones de caso de uso
+
+Solo se realizaron las descripciones de caso de uso de los caso de uso tipo CRUD (registro de un jugador, consulta de perfil de amigos, eliminar amigos y actualización de perfil)
+
+=== CU01 Registrar Jugador
+
+*ID:* CU01
+*Nombre:* Registrar Jugador
+*Actor principal:* JUGADOR +
+*Actores secundarios:* SERVIDOR, CLIENTE (Juego WPF ForbbidenIslandFEIEdition) +
+*Descripción:* Este caso de uso permite al JUGADOR *crear una cuenta* del juego mediante la recopilación de su _Username_, _Email_ y _Password_ en el formulario de registro. El resultado es el *registro de la cuenta del JUGADOR en la base de datos*. +
+*Disparador:* JUGADOR selecciona "Registrar" LoginPageXAML +
+*Precondiciones:* N/A
+
+*Flujo Normal* +
+1. El CLIENTE muestra la SignupPageXAML al JUGADOR. +
+2. El JUGADOR ingresa su _Username_, _Email_ y _Password_. +
+3. El JUGADOR selecciona "Registrar". +
+4. El CLIENTE recupera de SignupPageXAML los datos ingresados del JUGADOR (_Username_, _Email_ y _Password_). +
+5. El CLIENTE valida que ninguno de los datos esté vacío, que _Username_ tenga un formato correcto y que _Password_ cumpla con los requisitos de seguridad  (ver FA01). +
+6. El CLIENTE envía al SERVIDOR el _Username_ y el _Email_ para que valide su disponibilidad y formato (ver EX01). +
+7. El SERVIDOR regresa si _Username_ e _Email_ son validos (ver FA01)(ver EX01). +
+8. El CLIENTE encripta la _Password_ y envía los datos para registrar al JUGADOR (ver EX01). +
+9. El SERVIDOR regresa el _ID_ del JUGADOR registrado (ver EX01). +
+10. El CLIENTE envía el _Email_ y _ID_ al SERVIDOR para que envíe el correo de verificación (ver EX01). +
+11. EL CLIENTE muestra la VerificationWindowXAML (ver FA01). +
+12. El JUGADOR ingresa el _Token_ que recibió en el correo. +
+13. El CLIENTE envía al SERVIDOR el _Token_ para que lo verifique (ver EX01). +
+14. El SERVIDOR regresa si el _Token_ fue verificado (ver EX02). +
+15. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que fue verificado correctamente. +
+16. El JUGADOR selecciona "Aceptar". +
+17. El CLIENTE cierra NotificationWindowXAML. +
+18. Termina el caso de uso.
+
+*Flujos Alternos*
+
+*FA01 - Datos inválidos* +
+1. El CLIENTE abre NotificationWindowXAMl informando al JUGADOR que algunos datos que ingresó son inválidos.
+2. El JUGADOR selecciona "Aceptar".
+3. El CLIENTE cierra NotificationWindowXAMl.
+4. El CLIENTE actualiza el color de los TextBlock de los datos inválidos a color Rojo.
+5. El JUGADOR corrige los datos inválidos.
+6. El JUGADOR selecciona "Registrar".
+7. Regresa al flujo normal 4.
+
+*FA02 - Omitir verificación* +
+1. El JUGADOR selecciona "Cancelar". +
+2. El CLIENTE cierra VerificationWindowXAML. +
+3. Termina el caso de uso. +
+
+*Excepciones*
+
+*EX01 - Error al conectarse con el Servidor* +
+1. El CLIENTE recibe un FaultException. +
+2. El CLIENTE registra en el Log la excepción. +
+3. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al conectarse con el SERVIDOR. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*Postcondiciones:*
+POST01: Se registró la cuenta del JUGADOR en la base de datos +
+*Reglas de negocio:* N/A +
+*Incluye:* N/A +
+*Extiende:* N/A
+
+=== CU02 Consultar Perfil de Amigo
+
+*ID:* CU02
+*Nombre:* Consultar Perfil de Amigo
+*Actor principal:* JUGADOR +
+*Actores secundarios:* SERVIDOR, CLIENTE (Juego WPF ForbbidenIslandFEIEdition) +
+*Descripción:* Este caso de uso permite al JUGADOR *consultar el perfil* de un amigo. El resultado es *ver el perfil del amigo*. +
+*Disparador:* JUGADOR selecciona "Ver Perfil" en FriendsPageXAML. +
+*Precondiciones:* PRE01: JUGADOR debe tener amigos.
+
+*Flujo Normal* +
+1. El CLIENTE envía al SERVIDOR el _Username_ del amigo (ver EX01). +
+2. EL SERVIDOR regresa la información del amigo (ver EX01). +
+3. El CLIENTE muestra FriendProfilePageXAML del amigo al JUGADOR. +
+4. Termina el caso de uso.
+
+*Flujos Alternos*
+
+*Excepciones*
+
+*EX01 - Error al conectarse con el Servidor* +
+1. El CLIENTE recibe un FaultException. +
+2. El CLIENTE registra en el Log la excepción. +
+3. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al conectarse con el SERVIDOR. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*Postcondiciones:*
+POST01: Se consultaron los datos de jugador del amigo en la base de datos +
+*Reglas de negocio:* N/A +
+*Incluye:* N/A +
+*Extiende:* N/A
+
+=== CU03 Actualizar Perfil
+
+*ID:* CU03
+*Nombre:* Actualizar Perfil
+*Actor principal:* JUGADOR +
+*Actores secundarios:* SERVIDOR, CLIENTE (Juego WPF ForbbidenIslandFEIEdition) +
+*Descripción:* Este caso de uso permite al JUGADOR *actualizar los datos de su cuenta* del juego. El resultado es la *actualización de la cuenta del JUGADOR en la base de datos*. +
+*Disparador:* JUGADOR selecciona "Perfil" en MainPageXAML +
+*Precondiciones:* N/A
+
+*Flujo Normal* +
+1. El CLIENTE recupera de la sesión actual los datos del JUGADOR. +
+2. El CLIENTE muestra ProfilePageXAML con los datos recuperados del JUGADOR. +
+3. El JUGADOR edita todos los campos que desea editar. +
+4. El JUGADOR actualiza su _Avatar_. +
+5. El JUGADOR selecciona "Guardar Cambios" (ver FA01).
+6. El CLIENTE recupera de ProfilePageXAML los datos ingresados del JUGADOR (_PlayerName_, _Username_, _Email_, _RedesSociales_ y _Avatar_). +
+7. El CLIENTE valida que los datos necesarios no estén vacíos (_Username, Email_) y que _Username_ tenga un formato correcto (ver FA02). +
+8. El CLIENTE copia a la carpeta de avatares la imagen del _Avatar_ nueva.
+9. El CLIENTE envía al SERVIDOR el _Username_ y el _Email_ para que valide su disponibilidad y formato (ver EX01). +
+10. El SERVIDOR regresa si _Username_ e _Email_ son validos (ver FA02)(ver EX01). +
+11. El CLIENTE envía al SERVIDOR los datos del JUGADOR actualizados para que los guarde (ver EX01). +
+12. Termina el caso de uso.
+
+*Flujos Alternos*
+
+*FA01 - Descartar Cambios*
+1. El JUGADOR selecciona "Descartar Cambios".
+2. El CLIENTE no actualiza ningún cambio realizado.
+2. Termina el caso de uso.
+
+*FA02 - Campos Inválidos* +
+1. El CLIENTE abre NotificationWindowXAMl informando al JUGADOR que algunos datos que ingresó son inválidos.
+2. El JUGADOR selecciona "Aceptar".
+3. El CLIENTE cierra NotificationWindowXAMl.
+4. El CLIENTE actualiza el color de los TextBlock de los datos inválidos a color Rojo.
+5. El JUGADOR corrige los datos inválidos.
+6. El JUGADOR selecciona "Registrar".
+7. Regresa al flujo normal 5.
+
+*Excepciones*
+
+*EX01 - Error al conectarse con el Servidor* +
+1. El CLIENTE recibe un FaultException. +
+2. El CLIENTE registra en el Log la excepción. +
+3. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al conectarse con el SERVIDOR. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*Postcondiciones:*
+POST01: Se actualizaron los datos del JUGADOR en la base de datos +
+*Reglas de negocio:* N/A +
+*Incluye:* N/A +
+*Extiende:* N/A
