@@ -154,3 +154,176 @@ POST01: Se actualizaron los datos del JUGADOR en la base de datos +
 *Reglas de negocio:* N/A +
 *Incluye:* N/A +
 *Extiende:* N/A
+
+=== CU04 Enviar Solicitud de Amistad
+
+*ID:* CU04
+*Nombre:* Enviar Solicitud de Amistad
+*Actor principal:* JUGADOR +
+*Actores secundarios:* SERVIDOR, CLIENTE (Juego WPF ForbbidenIslandFEIEdition) +
+*Descripción:* Este caso de uso permite al JUGADOR *enviar una _SolicitudDeAmistad_* a otro _Jugador_ del juego. El resultado es el registro de la _SolicitudDeAmistad_ en la base de datos. +
+*Disparador:* JUGADOR selecciona "Enviar Solicitud" en FriendsPageXAML o FriendRequestsPageXAML +
+*Precondiciones:* PRE01: El JUGADOR ingresó el _Username_ del otro _Jugador_ en la barra de búsqueda.
+
+*Flujo Normal* +
+1. El CLIENTE recupera de la barra de búsqueda el _Username_ del _Jugador_. +
+2. El CLIENTE envía el _Username_ recuperado al SERVIDOR (ver EX01). +
+3. El SERVIDOR regresa los datos del _Jugador_ (ver EX01). +
+4. El CLIENTE envía el _Username_ del JUGADOR y el _Username_ recuperado al SERVIDOR para registrar la _SolicitudDeAmistad_ (ver EX01). +
+5. El SERVIDOR regresa el estado de la _SolicitudDeAmistad_ (ver EX01, FA01).
+6. El CLIENTE abre NotificationWindowXAML informando al JUGADOR el estado recuperado de la _SolicitudDeAmistad_. +
+7. El JUGADOR selecciona "Aceptar". +
+8. El CLIENTE cierra NotificationWindowXAML.
+12. Termina el caso de uso.
+
+*Flujos Alternos*
+
+*FA01 - Jugador No Encontrado*
+1. El JUGADOR selecciona "Descartar Cambios".
+2. El CLIENTE no actualiza ningún cambio realizado.
+2. Termina el caso de uso.
+
+*Excepciones*
+
+*EX01 - Error al conectarse con el Servidor* +
+1. El CLIENTE recibe un FaultException. +
+2. El CLIENTE registra en el Log la excepción. +
+3. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al conectarse con el SERVIDOR. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*Postcondiciones:*
+POST01: Se creó una _SolicitudDeAmistad_ en la base de datos. +
+*Reglas de negocio:* N/A +
+*Incluye:* N/A +
+*Extiende:* N/A
+
+=== CU05 Consultar Lista de Amigos
+
+*ID:* CU05
+*Nombre:* Consultar Lista de Amigos
+*Actor principal:* JUGADOR +
+*Actores secundarios:* SERVIDOR, CLIENTE (Juego WPF ForbbidenIslandFEIEdition) +
+*Descripción:* Este caso de uso permite al JUGADOR *consultar su lista de amigos* en el juego. El resultado es la recuperación de amigos de la base de datos. +
+*Disparador:* JUGADOR selecciona "Amigos" en MainPageXAML +
+*Precondiciones:* N/A
+
+*Flujo Normal* +
+1. El CLIENTE solicita al SERVIDOR los amigos del JUGADOR enviando su _USERNAME_ (ver EX01). +
+2. El SERVIDOR regresa los amigos del JUGADOR (ver EX01). +
+3. El CLIENTE muestra FriendsPageXAML con los amigos recuperados. +
+4. El CLIENTE solicita al SERVIDOR las _SolicitudDeAmistad_ del JUGADOR enviando su _Username_ (ver EX01).
+5. El SERVIDOR regresa las _SolicitudDeAmistad_ del JUGADOR (ver EX01).
+6. Si el JUGADOR tiene _SolicitudDeAmistad_ pendientes se muestra una notificación (ver FA01).
+7. Termina el caso de uso.
+
+*Flujos Alternos*
+
+*FA01 - Ver Solicitudes de Amistad*
+1. El JUGADOR selecciona "Ver Solicitudes de Amistad" en la notificación.
+2. El CLIENTE muestra FriendRequestsPageXAML.
+3. Extiende al CU Consultar Solicitudes de Amistad.
+
+*Excepciones*
+
+*EX01 - Error al conectarse con el Servidor* +
+1. El CLIENTE recibe un FaultException. +
+2. El CLIENTE registra en el Log la excepción. +
+3. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al conectarse con el SERVIDOR. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*Postcondiciones:*
+POST01: Se consultaron los amigos y _SolicitudDeAmistad_ del JUGADOR en la base de datos. +
+*Reglas de negocio:* N/A +
+*Incluye:* N/A +
+*Extiende:* N/A
+
+=== CU06 Aceptar Solicitud de Amistad
+
+*ID:* CU06
+*Nombre:* Aceptar Solicitud de Amistad
+*Actor principal:* JUGADOR +
+*Actores secundarios:* SERVIDOR, CLIENTE (Juego WPF ForbbidenIslandFEIEdition) +
+*Descripción:* Este caso de uso permite al JUGADOR *aceptar una _SolicitudDeAmistad_* en el juego. El resultado es la actualización de estado de la _SolicitudDeAmistad_ en la base de datos. +
+*Disparador:* JUGADOR selecciona "Aceptar" en la _SolicitudDeAmistad_ que quiere aceptar en FriendsRequestsPageXAML +
+*Precondiciones:* N/A
+
+*Flujo Normal* +
+1. El CLIENTE recupera el _Username_ del _Jugador_ remitente y el _Username_ del JUGADOR (receptor) (Ver EX02). +
+2. El CLIENTE envía el _Username_ del remitente y receptor (JUGADOR) al SERVIDOR para aceptar la _SolicitudDeAmistad_ (ver EX01). +
+3. El CLIENTE actualiza las _SolicitudDeAmistad_ mostradas en FriendRequestsPageXAML. +
+4. Termina el caso de uso.
+
+*Flujos Alternos*
+
+*Excepciones*
+
+*EX01 - Error al conectarse con el Servidor* +
+1. El CLIENTE recibe un FaultException. +
+2. El CLIENTE registra en el Log la excepción. +
+3. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al conectarse con el SERVIDOR. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*EX02 - Error recuperar _Username_ del remitente* +
+1. El CLIENTE no puede recuperar el _Username_ del remitente. +
+2. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al aceptar la _SolicitudDeAmistad_. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*Postcondiciones:*
+POST01: Se actualizó el estado de la _SolicitudDeAmistad_ aceptada en la base de datos. +
+*Reglas de negocio:* N/A +
+*Incluye:* N/A +
+*Extiende:* N/A
+
+=== CU07 Eliminar Amigo
+
+*ID:* CU06
+*Nombre:* Eliminar Amigo
+*Actor principal:* JUGADOR +
+*Actores secundarios:* SERVIDOR, CLIENTE (Juego WPF ForbbidenIslandFEIEdition) +
+*Descripción:* Este caso de uso permite al JUGADOR *eliminar su amistad con otro _Jugador_* en el juego. El resultado es la eliminación de la amistad en la base de datos. +
+*Disparador:* JUGADOR selecciona "Eliminar" en el amigo que quiere eliminar en FriendsPageXAML +
+*Precondiciones:* N/A
+
+*Flujo Normal* +
+1. El CLIENTE recupera el _Username_ del amigo y el _Username_ del JUGADOR (Ver EX02). +
+2. El CLIENTE envía el _Username_ del amigo y del JUGADOR al SERVIDOR para eliminarlo de su lista de amigos (ver EX01). +
+3. EL SERVIDOR regresa si se eliminó con éxito la amistad (ver EX01).
+4. El CLIENTE recupera el resultado de la eliminación.
+5. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que se eliminó con éxito el amigo.
+6. El JUGADOR selecciona "Aceptar".
+7. El CLIENTE cierra NotificationWindowXAML.
+8. El CLIENTE actualiza los amigos mostrados en FriendPageXAML. +
+9. Termina el caso de uso.
+
+*Flujos Alternos*
+
+*Excepciones*
+
+*EX01 - Error al conectarse con el Servidor* +
+1. El CLIENTE recibe un FaultException. +
+2. El CLIENTE registra en el Log la excepción. +
+3. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al conectarse con el SERVIDOR. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*EX02 - Error recuperar _Username_ del amigo* +
+1. El CLIENTE no puede recuperar el _Username_ del amigo. +
+2. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que hubo un error al eliminar su amistad. +
+4. El JUGADOR selecciona "Aceptar". +
+5. El CLIENTE cierra NotificationWindowXAML. +
+6. Termina el caso de uso. +
+
+*Postcondiciones:*
+POST01: Se eliminó en la base de datos la amistad del JUGADOR. +
+*Reglas de negocio:* N/A +
+*Incluye:* N/A +
+*Extiende:* N/A
