@@ -134,6 +134,15 @@ namespace Forbbiden.Client.view.games
             }
         }
 
+        private void EnterEmergencyMoveState()
+        {
+            string title = Properties.Langs.Resources.emergency_move_title;
+            string message = Properties.Langs.Resources.emergency_move;
+            ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+
+            StateContext.EnterEmergencyMoveState();
+        }
+
         public void RefreshFloodTile(Card card)
         {
             var cardImageFileName = card.ImagePath;
@@ -144,6 +153,10 @@ namespace Forbbiden.Client.view.games
                 {
                     if (tile.IsFlood)
                     {
+                        if (tile == CurrentTile)
+                        {
+
+                        }
                         tile.LoseTile();
                     }
                     else

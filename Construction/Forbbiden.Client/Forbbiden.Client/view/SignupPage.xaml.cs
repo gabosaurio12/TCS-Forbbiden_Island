@@ -1,3 +1,4 @@
+using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
 using log4net;
@@ -98,13 +99,23 @@ namespace Forbbiden.Client
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
             }
-            if (!await Client.IsUsernameAvailableAsync(player.PlayerUsername))
+            try
             {
-                string message = Properties.Langs.Resources.signup_username_already_used;
-                OpenNotification(title, message);
-                isValid = false;
-                TurnTextBlockRed(txtBkUsername);
+                if (!await Client.IsUsernameAvailableAsync(player.PlayerUsername))
+                {
+                    string message = Properties.Langs.Resources.signup_username_already_used;
+                    OpenNotification(title, message);
+                    isValid = false;
+                    TurnTextBlockRed(txtBkUsername);
+                }
             }
+            catch (FaultException<DBFault> ex)
+            {
+                string classMethod = "SignupPage.ValidatePlayer";
+                Log.Error(classMethod, ex);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
+            }
+            
             if (!await Client.ValidateEmailAsync(player.PlayerEmail))
             {
                 string message = Properties.Langs.Resources.signup_invalid_email;
@@ -140,7 +151,8 @@ namespace Forbbiden.Client
             if (await ValidatePlayer(player))
             {
                 player.PlayerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
-                var playerId = await Client.SignUpAsync(player);
+                int playerId = await Client.SignUpAsync(player);
+                
                 if (playerId != -1)
                 {
                     if (await Client.SendEmailAsync(player.PlayerEmail, playerId))

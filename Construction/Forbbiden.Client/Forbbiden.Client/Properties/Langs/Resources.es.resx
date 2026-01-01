@@ -459,4 +459,13 @@
   <data name="not_enough_treasure_cards" xml:space="preserve">
     <value>No tienes al menos dos cartas del tesoro que intentas capturar</value>
   </data>
+  <data name="emergency_move_title" xml:space="preserve">
+    <value>¡Te Estás Ahogando!</value>
+  </data>
+  <data name="emergency_move" xml:space="preserve">
+    <value>Para evitar ahogarte debes moverte a otra casilla... ¡AHORA!</value>
+  </data>
+  <data name="you_drowned_message" xml:space="preserve">
+    <value>Te ahogaste ¡Mejor suerte para la próxima!</value>
+  </data>
 </root>

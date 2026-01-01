@@ -110,12 +110,22 @@ namespace Forbbiden.Client
             }
             else
             {
-                if (!ProfileClient.IsUsernameAvailable(username))
+                try
                 {
-                    MessageBox.Show("El nombre de usuario ya existe.");
-                    txtBkUsername.Foreground = Brushes.Red;
-                    isValid = false;
+                    if (!ProfileClient.IsUsernameAvailable(username))
+                    {
+                        MessageBox.Show("El nombre de usuario ya existe.");
+                        txtBkUsername.Foreground = Brushes.Red;
+                        isValid = false;
+                    }
                 }
+                catch (FaultException<DBFault> ex)
+                {
+                    string classMethod = "ProfilePage.ValidateUsername";
+                    Log.Error(classMethod, ex);
+                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                }
+                
             }
         }
 
@@ -138,7 +148,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private bool SetPlayer(ref Player player)
+        private void SetPlayer(ref Player player)
         {
             player.PlayerUsername = txtBxUsername.Text;
             player.PlayerEmail = txtBxEmail.Text;
@@ -166,8 +176,11 @@ namespace Forbbiden.Client
             else
             {
                 player.PlayerAvatarPath = this.ProfilePlayer.PlayerAvatarPath;
-            }
+            }            
+        }
 
+        private bool IsPlayerValid(Player player)
+        {
             bool isValid = true;
 
             if (player.PlayerUsername != this.ProfilePlayer.PlayerUsername)
@@ -192,7 +205,9 @@ namespace Forbbiden.Client
                 PlayerId = ProfilePlayer.PlayerId
             };
 
-            if (SetPlayer(ref updatedPlayer))
+            SetPlayer(ref updatedPlayer);
+
+            if (IsPlayerValid(updatedPlayer))
             {
                 try
                 {

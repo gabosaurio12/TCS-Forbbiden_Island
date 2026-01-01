@@ -459,4 +459,13 @@
   <data name="not_enough_treasure_cards" xml:space="preserve">
     <value>You don't have at least two cards of the treasure you are trying to capture</value>
   </data>
+  <data name="emergency_move_title" xml:space="preserve">
+    <value>You Are Drowning!</value>
+  </data>
+  <data name="emergency_move" xml:space="preserve">
+    <value>To avoid drowning you have to move to another tile... ¡NOW!</value>
+  </data>
+  <data name="you_drowned_message" xml:space="preserve">
+    <value>You have drowned, better luck next time!</value>
+  </data>
 </root>

@@ -205,6 +205,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To avoid drowning you have to move to another tile... ¡NOW!.
+        /// </summary>
+        public static string emergency_move {
+            get {
+                return ResourceManager.GetString("emergency_move", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Are Drowning!.
+        /// </summary>
+        public static string emergency_move_title {
+            get {
+                return ResourceManager.GetString("emergency_move_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string english {
@@ -1083,6 +1101,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string wrongPassword {
             get {
                 return ResourceManager.GetString("wrongPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have drowned, better luck next time!.
+        /// </summary>
+        public static string you_drowned_message {
+            get {
+                return ResourceManager.GetString("you_drowned_message", resourceCulture);
             }
         }
     }

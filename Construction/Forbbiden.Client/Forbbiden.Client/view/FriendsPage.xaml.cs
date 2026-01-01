@@ -2,10 +2,8 @@
 using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.FriendsNotificationManager;
 using log4net;
 using System;
-using System.Dynamic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -123,17 +121,37 @@ namespace Forbbiden.Client.view
             var requestControl = ViewUtils.FindParent<UserControlFriend>(imageClicked);
             string friendUsername = requestControl.usernameTxtBk.Text;
 
-            var isDeleted = await FriendsClient.DeleteFriendAsync(friendUsername, ClientSession.Username);
-
-            if (isDeleted)
+            if (!string.IsNullOrEmpty(friendUsername))
             {
-                ReloadFriends();
-                string title = Properties.Langs.Resources.friend_deleted_title;
-                string message = Properties.Langs.Resources.friend_deleted_message + friendUsername;    
+                bool isDeleted = false;
+
+                try
+                {
+                    isDeleted = await FriendsClient.DeleteFriendAsync(friendUsername, ClientSession.Username);
+                }
+                catch (FaultException<DBFault> ex)
+                {
+                    string classMethod = "FriendsPage.DeleteFriend_MouseLeftButtonDownAsync";
+                    Log.Error(classMethod, ex);
+                    ViewUtils.ShowPushError(Window.GetWindow(this));
+                }
+
+                if (isDeleted)
+                {
+                    ReloadFriends();
+                    string title = Properties.Langs.Resources.friend_deleted_title;
+                    string message = Properties.Langs.Resources.friend_deleted_message + friendUsername;
+                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                }
+            }
+            else
+            {
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.unexpected_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
+            
         }
-
 
         private async void SeeFriendProfile(Object sender, MouseButtonEventArgs e)
         {
@@ -141,11 +159,19 @@ namespace Forbbiden.Client.view
             var requestControl = ViewUtils.FindParent<UserControlFriend>(imageClicked);
             string friendUsername = requestControl.usernameTxtBk.Text;
 
-            var friend = await ProfileClient.GetPlayerByUsernameAsync(friendUsername, false);
-
-            if (friend.PlayerId != -1)
+            try
             {
-                NavigationService?.Navigate(new FriendProfilePage(friend));
+                var friend = await ProfileClient.GetPlayerByUsernameAsync(friendUsername, false);
+                if (friend.PlayerId != -1)
+                {
+                    NavigationService?.Navigate(new FriendProfilePage(friend));
+                }
+            }
+            catch (FaultException<DBFault> ex)
+            {
+                string classMethod = "FriendsPage.SeeFriendProfile";
+                Log.Error(classMethod, ex);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
             }
         }
 
@@ -214,7 +240,7 @@ namespace Forbbiden.Client.view
             }
             catch (FaultException<DBFault> dbFault)
             {
-                Log.Error("ERROR: FriendsPage.SendFriendRequest", dbFault);
+                Log.Error("FriendsPage.SendFriendRequest", dbFault);
                 ViewUtils.ShowPullError(Window.GetWindow(this));
             }
 

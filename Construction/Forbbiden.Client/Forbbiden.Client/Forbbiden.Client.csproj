@@ -134,6 +134,7 @@
     <Compile Include="logic\board\IBoardState.cs" />
     <Compile Include="logic\board\states\CaptureTreasureState.cs" />
     <Compile Include="logic\board\states\DiscardCardState.cs" />
+    <Compile Include="logic\board\states\EmergencyMoveState.cs" />
     <Compile Include="logic\board\states\MitigationState.cs" />
     <Compile Include="logic\board\states\MoveState.cs" />
     <Compile Include="logic\board\states\NormalState.cs" />

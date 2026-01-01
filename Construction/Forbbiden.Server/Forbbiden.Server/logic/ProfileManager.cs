@@ -160,6 +160,7 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
+                    playerId = -1;
                     string classMethod = "ProfileManager.SignUp ";
                     HandleEntityException(ex, classMethod);
                 }
