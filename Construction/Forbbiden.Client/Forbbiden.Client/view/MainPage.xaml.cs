@@ -63,6 +63,7 @@ namespace Forbbiden.Client
             }
             else
             {
+                ClientSession.SetGuestSession();
                 logInButton.Visibility = Visibility.Visible;
             }
         }

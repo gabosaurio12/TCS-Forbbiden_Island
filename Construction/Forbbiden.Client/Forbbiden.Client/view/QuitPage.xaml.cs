@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using log4net;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,6 +60,7 @@ namespace Forbbiden.Client.view
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             DisconnectPlayer(ClientSession.Username);
+            ClientSession.SetGuestSession();
             Properties.PlayerSettings.Default.CurrentPlayerId = 0;
             Properties.PlayerSettings.Default.Save();
             NavigationService?.Navigate(new MainPage());
