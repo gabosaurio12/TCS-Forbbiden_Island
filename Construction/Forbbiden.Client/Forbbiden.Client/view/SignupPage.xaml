@@ -86,14 +86,15 @@
                 <StackPanel Grid.Row="4" Orientation="Vertical"
                 HorizontalAlignment="Center" Margin="0,15,0,0">
                     <Button x:Name="signupButton" Content="{x:Static language:Resources.signup_button}" 
-                        Height="50" Width="175" Background="#39B349" 
-                        Foreground="White" FontSize="25"
-                        FontFamily="{StaticResource IrishGrover}"
-                        Click="SignupButton_Click" Margin="0,0,0,0"/>
+                            Height="50" Width="175" Background="#39B349" 
+                            Foreground="White" FontSize="25"
+                            FontFamily="{StaticResource IrishGrover}"
+                            Cursor="Hand"
+                            Click="SignupButton_Click" Margin="0,0,0,0"/>
                     <Label Content="{x:Static language:Resources.login_title}" Margin="0,5,0,0" 
-                        HorizontalAlignment="Center" VerticalAlignment="Center" 
-                        MouseDown="Login_MouseDown" Cursor="Hand" FontFamily="{StaticResource IrishGrover}"
-                        Foreground="White" FontSize="25" />
+                           HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           MouseDown="Login_MouseDown" Cursor="Hand" FontFamily="{StaticResource IrishGrover}"
+                           Foreground="White" FontSize="25" />
                 </StackPanel>
 
             </Grid>

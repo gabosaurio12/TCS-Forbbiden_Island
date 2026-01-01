@@ -59,6 +59,12 @@
   <wsdl:message name="IBoardManager_GetFloodCards_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFloodCardsResponse" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_GetCard_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCard" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetCard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardResponse" />
+  </wsdl:message>
   <wsdl:portType name="IBoardManager">
     <wsdl:operation name="GetTileImages">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetTileImages" message="tns:IBoardManager_GetTileImages_InputMessage" />
@@ -71,6 +77,10 @@
     <wsdl:operation name="GetFloodCards">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetFloodCards" message="tns:IBoardManager_GetFloodCards_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetFloodCardsResponse" message="tns:IBoardManager_GetFloodCards_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCard">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetCard" message="tns:IBoardManager_GetCard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetCardResponse" message="tns:IBoardManager_GetCard_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IBoardManager" type="tns:IBoardManager">
@@ -97,6 +107,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetFloodCards">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetFloodCards" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCard">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetCard" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

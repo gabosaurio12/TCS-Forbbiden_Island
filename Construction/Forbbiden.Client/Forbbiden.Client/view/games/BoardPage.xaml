@@ -52,18 +52,61 @@
                         <StackPanel x:Name="stacks" Orientation="Vertical"
                             HorizontalAlignment="Left" Grid.Row="0" Margin="20,20,0,0">
                             <!-- Treasure stack -->
-                            <TextBlock Text="{x:Static language:Resources.treasure_stack}"
+                            <TextBlock Text="{x:Static language:Resources.treasures_saved}"
                                 Margin="0,0,0,0"
                                 FontSize="32" FontFamily="{StaticResource IrishGrover}"
                                 Foreground="White" />
 
-                            <StackPanel Orientation="Horizontal" >
-                                <Rectangle
-                                    Height="200" Width="170" Margin="0,20,0,20"
-                                    Fill="#F2B9B3" Stroke="#A81D0F" StrokeThickness="15"
-                                    Cursor="Hand" />
-                            </StackPanel>
+                            <StackPanel x:Name="treasuresSavedStack" Orientation="Vertical"
+                                        Height="200">
+                                <StackPanel Orientation="Horizontal"
+                                            Background="#778899">
+                                    <Image  HorizontalAlignment="Left"
+                                            x:Name="cleanCodeImage"
+                                            Height="40" Margin="5"
+                                            Source="/Images/cards/treasure1bw.png"/>
+                                    <TextBlock Text="{x:Static language:Resources.clean_code_name}"
+                                               VerticalAlignment="Center" Margin="10,0,0,0"
+                                               FontSize="28" Foreground="White"
+                                               FontFamily="{StaticResource IrishGrover}"/>
+                                </StackPanel>
 
+                                <StackPanel Orientation="Horizontal"
+                                            Background="#778899">
+                                    <Image HorizontalAlignment="Left"
+                                           x:Name="cubicleKeysImage"
+                                           Height="40" Margin="5"
+                                           Source="/Images/cards/treasure2bw.png"/>
+                                    <TextBlock Text="{x:Static language:Resources.cubicle_keys_name}"
+                                               VerticalAlignment="Center" Margin="10,0,0,0"
+                                               FontSize="28" Foreground="White"
+                                               FontFamily="{StaticResource IrishGrover}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                                            Background="#778899">
+                                    <Image HorizontalAlignment="Left"
+                                           x:Name="lucioImage"
+                                           Height="40" Margin="5"
+                                           Source="/Images/cards/treasure3bw.png"/>
+                                    <TextBlock Text="{x:Static language:Resources.lucio_name}"
+                                               VerticalAlignment="Center" Margin="10,0,0,0"
+                                               FontSize="28" Foreground="White"
+                                               FontFamily="{StaticResource IrishGrover}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                                            Background="#778899">
+                                    <Image HorizontalAlignment="Left"
+                                           x:Name="parkingCardImage"
+                                           Height="40" Margin="5"
+                                           Source="/Images/cards/treasure4bw.png"/>
+                                    <TextBlock Text="{x:Static language:Resources.parking_card_name}"
+                                               VerticalAlignment="Center" Margin="10,0,0,0"
+                                               FontSize="28" Foreground="White"
+                                               FontFamily="{StaticResource IrishGrover}"/>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
 
                         <!-- Water level -->
@@ -150,8 +193,7 @@
                               MouseEnter="Moves_MouseEnter"
                               MouseLeave="Moves_MouseLeave"
                               HorizontalAlignment="Right"
-                              MouseLeftButtonDown="CaptureTreasure_MouseLeftButtonDown"
-                              IsEnabled="False">
+                              MouseLeftButtonDown="CaptureTreasure_MouseLeftButtonDown">
                             <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.capture_button}" 
                                        VerticalAlignment="Center" HorizontalAlignment="Right"
@@ -165,7 +207,7 @@
                               MouseEnter="Moves_MouseEnter"
                               MouseLeave="Moves_MouseLeave"
                               HorizontalAlignment="Right"
-                              IsEnabled="False">
+                              MouseLeftButtonDown="UseTreasureCard_MouseLeftButtonDown">
                             <Image Source="/Images/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.use_card}" 
                                        VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -192,6 +234,7 @@
                         Content="{x:Static language:Resources.finish_turn}"
                         FontFamily="{StaticResource IrishGrover}"
                         FontSize="28"
+                        Cursor="Hand"
                         Click="EndTurnButton_Click"
                         />
             </Grid>

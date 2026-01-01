@@ -25,9 +25,9 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
-        private void HandleEntityException(Exception ex)
+        private void HandleEntityException(EntityException ex, string classMethod)
         {
-            Log.Error(ex);
+            Log.Error(classMethod, ex);
 
             var fault = new DBFault
             {
@@ -35,8 +35,26 @@ namespace Forbbiden.Server.logic
                 Details = ex.Message
             };
 
+            string entityError = "EntityException";
+
             throw new FaultException<DBFault>(fault,
-                new FaultReason(fault.Error));
+                new FaultReason(entityError));
+        }
+
+        private void HandleException(Exception ex, string classMethod)
+        {
+            Log.Error(classMethod, ex);
+
+            var fault = new DBFault
+            {
+                Error = "Database Error",
+                Details = ex.Message
+            };
+
+            string entityError = "Exception";
+
+            throw new FaultException<DBFault>(fault,
+                new FaultReason(entityError));
         }
 
         public string CreateRandomToken()
@@ -57,15 +75,41 @@ namespace Forbbiden.Server.logic
             return randomTokenString;
         }
 
+        private bool RemoveExistingToken(int playerId)
+        {
+            bool removed = false;
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                try
+                {
+                    var existingToken = db.Token.FirstOrDefault(t => t.player_id == playerId);
+                    if (existingToken != null)
+                    {
+                        db.Token.Remove(existingToken);
+                        db.SaveChanges();
+                        removed = true;
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "TokenManager.RemoveExistingToken";
+                    HandleEntityException(ex, classMethod);
+                }
+            }
+
+            return removed;
+        }
+
         public Contracts.Token GenerateToken(int playerId)
         {
             string randomTokenString = CreateRandomToken();
             bool success = false;
-            do
+            RemoveExistingToken(playerId);
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
-                try
+                do
                 {
-                    using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                    try
                     {
                         var searchToken = db.Token.FirstOrDefault(t => t.token1 == randomTokenString);
                         if (searchToken == null)
@@ -87,12 +131,13 @@ namespace Forbbiden.Server.logic
                             };
                         }
                     }
-                }
-                catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
-                {
-                    HandleEntityException(ex);
-                }
-            } while (!success);
+                    catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
+                    {
+                        string classMethod = "TokenManager.GenerateToken";
+                        HandleException(ex, classMethod);
+                    }
+                } while (!success);
+            }
 
             return new Contracts.Token
             {
@@ -139,7 +184,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    HandleEntityException(ex);
+                    string classMethod = "TokenManager.VerifyToken";
+                    HandleEntityException(ex, classMethod);
                 }
             }
 

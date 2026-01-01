@@ -1,25 +1,29 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Forbbiden.Client.view.games
+namespace Forbbiden.Client.Controls
 {
     /// <summary>
     /// Interaction logic for UserControlBoard.xaml
     /// </summary>
     public partial class UserControlBoard : UserControl
     {
-        private readonly int NumberOfTreasures = 4;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserControlBoard));
+
+        public readonly int NumberOfTreasures = 4;
         private readonly string TilesImagesPath;
         private readonly string ImagesPath;
+        private readonly BoardManagerClient Client = new BoardManagerClient();
 
         public UserControlBoard()
         {
@@ -30,7 +34,7 @@ namespace Forbbiden.Client.view.games
             ImagesPath = System.IO.Path.Combine(
                 projectDir, "Images");
             TilesImagesPath = System.IO.Path.Combine(
-                projectDir, ImagesPath, "tiles");
+                ImagesPath, "tiles");
 
             GenerateBoard();
         }
@@ -39,7 +43,7 @@ namespace Forbbiden.Client.view.games
         {
             BuildBoard();
             SetTreasureTiles();
-            FillTiles();
+            SetNonTreasureTiles();
         }
 
         private void BuildBoard()
@@ -125,44 +129,73 @@ namespace Forbbiden.Client.view.games
 
         private void SetTreasureTiles()
         {
-            List<UserControlTile> tiles = GetInnerTilesFromGrid();
-            Random rand = new Random();
+            List<UserControlTile> innerTiles = GetInnerTilesFromGrid();
+            var shuffledTiles = innerTiles.OrderBy(
+                x => MatchLogic.Rand.Next()).Take(NumberOfTreasures).ToList();
 
-            var shuffledTiles = tiles.OrderBy(x => rand.Next()).Take(NumberOfTreasures).ToList();
-
-            for (int i = 0; i < shuffledTiles.Count; i++)
+            for (int i = 0; i < NumberOfTreasures; i++)
             {
                 string treasureImage = $"treasure{i + 1}.png";
+                Card treasureCard = null;
+                try
+                {
+                    treasureCard = Client.GetCard(treasureImage);
+                }
+                catch (FaultException<DBFault> ex)
+                {
+                    string classMethod = "UserControlBoard.SetTreasureTiles";
+                    Log.Error(classMethod, ex);
+                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                }
+
                 string treasureImagePath = System.IO.Path.Combine(TilesImagesPath, treasureImage);
                 var treasureBitmap = ViewUtils.GetBitmapImage(treasureImagePath);
-
-                UserControlTile tile = shuffledTiles[i];
-                tile.ImageFileName = treasureImage;
-                tile.SetTileAsTreasure(treasureBitmap);
+                shuffledTiles[i].SetTileAsTreasure(treasureBitmap, treasureCard);
             }
         }
 
-        private void FillTiles()
+        private void AddTileImageAndCardInfo(Card cardTile, UserControlTile tile)
+        {
+            string escapeCardName = "entrance-name";
+            if (cardTile.Name == escapeCardName)
+            {
+                tile.SetTileAsEscape();
+            }
+
+            string tileImage = cardTile.ImagePath;
+            string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
+            var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
+
+            tile.ImageFileName = tileImage;
+            tile.SetImage(tileBitmap);               
+        }
+
+        private void SetNonTreasureTiles()
         {
             List<UserControlTile> tiles = GetAllTilesFromGrid();
-            var tilesImages = new BoardManagerClient().GetFloodCards();
-
-            int tileNumber = 1;
-
-            for (int i = 0; i < tiles.Count; i++)
+            Card[] tilesCards;
+            try
             {
-
-                if (!tiles[i].IsTreasure)
-                {
-                    string tileImage = tilesImages[i].ImagePath;
-                    tileNumber++;
-                    string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
-                    var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
-
-                    tiles[i].ImageFileName = tileImage;
-                    tiles[i].SetImage(tileBitmap);
-                }                
+                tilesCards = Client.GetFloodCards();
             }
+            catch (FaultException<DBFault> ex)
+            {
+                string classMethod = "UserControlBoard.SetNonTreasureTiles";
+                Log.Error(classMethod, ex);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
+                return;
+            }
+            var shuffledTilesCards = MatchLogic.ShuffleCards(tilesCards.ToList());
+
+            int tileIndex = 0;
+            foreach (var tile in tiles)
+            {
+                if (!tile.IsTreasure)
+                {
+                    AddTileImageAndCardInfo(shuffledTilesCards[tileIndex], tile);
+                    tileIndex++;
+                }
+            }          
         }
 
         public UserControlTile AddPlayerAvatar(Player player)
@@ -174,7 +207,7 @@ namespace Forbbiden.Client.view.games
             UserControlTile spawnTile;
             do
             {
-                int spawnTileIndex = new Random().Next(tiles.Count);
+                int spawnTileIndex = MatchLogic.Rand.Next(tiles.Count);
                 spawnTile = tiles[spawnTileIndex];
                 if (!spawnTile.IsTreasure)
                 {

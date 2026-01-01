@@ -61,9 +61,8 @@ namespace Forbbiden.Client.view
             DisconnectPlayer(ClientSession.Username);
             Properties.PlayerSettings.Default.CurrentPlayerId = 0;
             Properties.PlayerSettings.Default.Save();
-            Application.Current.Shutdown();
-            Log.Info("App closed");
-            
+            NavigationService?.Navigate(new MainPage());
+            Log.Info("Player logged out");
         }
     }
 }

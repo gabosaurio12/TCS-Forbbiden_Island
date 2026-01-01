@@ -2,34 +2,25 @@
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.TokenManager;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Forbbiden.Client.view.info
 {
     /// <summary>
     /// Interaction logic for VerificationWIndow.xaml
     /// </summary>
-    public partial class VerificationWIndow : Window
+    public partial class VerificationWindow : Window
     {
         private readonly int PlayerID;
+        public event Action OnVerified;
 
-        public VerificationWIndow()
+        public VerificationWindow()
         {
             InitializeComponent();
         }
 
-        public VerificationWIndow(int playerId)
+        public VerificationWindow(int playerId)
         {
             InitializeComponent();
             PlayerID = playerId;
@@ -43,7 +34,6 @@ namespace Forbbiden.Client.view.info
             };
             notificationWindow.ShowDialog();
         }
-
 
         private string GetToken()
         {
@@ -70,6 +60,7 @@ namespace Forbbiden.Client.view.info
                     string message = Properties.Langs.Resources.player_verified_message;
 
                     ViewUtils.OpenNotificationWindow(title, message, GetWindow(this));
+                    OnVerified?.Invoke();
                     Close();
                 }
                 else

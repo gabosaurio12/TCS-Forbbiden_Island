@@ -143,6 +143,12 @@ namespace Forbbiden.Client.BoardManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetFloodCards", ReplyAction="http://tempuri.org/IBoardManager/GetFloodCardsResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card[]> GetFloodCardsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCard", ReplyAction="http://tempuri.org/IBoardManager/GetCardResponse")]
+        Forbbiden.Client.BoardManager.Card GetCard(string path);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCard", ReplyAction="http://tempuri.org/IBoardManager/GetCardResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardAsync(string path);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -194,6 +200,14 @@ namespace Forbbiden.Client.BoardManager {
         
         public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card[]> GetFloodCardsAsync() {
             return base.Channel.GetFloodCardsAsync();
+        }
+        
+        public Forbbiden.Client.BoardManager.Card GetCard(string path) {
+            return base.Channel.GetCard(path);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardAsync(string path) {
+            return base.Channel.GetCardAsync(path);
         }
     }
 }

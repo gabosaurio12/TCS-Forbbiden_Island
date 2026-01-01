@@ -21,5 +21,5 @@
 :tip-caption: Consejo
 :warning-caption: Advertencia
 
-
+include::usecases.adoc[]
 include::testcases.adoc[]

@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.ProfileManager;
 using log4net;
 using Microsoft.Win32;
 using System;
@@ -18,7 +19,7 @@ namespace Forbbiden.Client
     public partial class ProfilePage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
-        private ProfileManagerClient ProfileClient;
+        private readonly ProfileManagerClient ProfileClient;
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
@@ -109,12 +110,22 @@ namespace Forbbiden.Client
             }
             else
             {
-                if (!ProfileClient.IsUsernameAvailable(username))
+                try
                 {
-                    MessageBox.Show("El nombre de usuario ya existe.");
-                    txtBkUsername.Foreground = Brushes.Red;
-                    isValid = false;
+                    if (!ProfileClient.IsUsernameAvailable(username))
+                    {
+                        MessageBox.Show("El nombre de usuario ya existe.");
+                        txtBkUsername.Foreground = Brushes.Red;
+                        isValid = false;
+                    }
                 }
+                catch (FaultException<DBFault> ex)
+                {
+                    string classMethod = "ProfilePage.ValidateUsername";
+                    Log.Error(classMethod, ex);
+                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                }
+                
             }
         }
 
@@ -137,7 +148,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private bool SetPlayer(ref Player player)
+        private void SetPlayer(ref Player player)
         {
             player.PlayerUsername = txtBxUsername.Text;
             player.PlayerEmail = txtBxEmail.Text;
@@ -165,8 +176,11 @@ namespace Forbbiden.Client
             else
             {
                 player.PlayerAvatarPath = this.ProfilePlayer.PlayerAvatarPath;
-            }
+            }            
+        }
 
+        private bool IsPlayerValid(Player player)
+        {
             bool isValid = true;
 
             if (player.PlayerUsername != this.ProfilePlayer.PlayerUsername)
@@ -191,16 +205,28 @@ namespace Forbbiden.Client
                 PlayerId = ProfilePlayer.PlayerId
             };
 
-            if (SetPlayer(ref updatedPlayer))
+            SetPlayer(ref updatedPlayer);
+
+            if (IsPlayerValid(updatedPlayer))
             {
-                if (ProfileClient.UpdatePlayer(updatedPlayer))
+                try
                 {
-                    NavigationService?.Navigate(new MainPage());
+                    if (ProfileClient.UpdatePlayer(updatedPlayer))
+                    {
+                        NavigationService?.Navigate(new MainPage());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al actualizar el perfil.");
+                    }
                 }
-                else
+                catch (FaultException<DBFault> ex)
                 {
-                    MessageBox.Show("Error al actualizar el perfil.");
+                    string classMethod = "ProfilePage.BtnSave_Click";
+                    Log.Error(classMethod, ex);
+                    ViewUtils.ShowPushError(Window.GetWindow(this));
                 }
+                
             }
         }
 
@@ -209,7 +235,7 @@ namespace Forbbiden.Client
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg|All files (*.*)|*.*"
+                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg"
             };
             var result = openFileDialog.ShowDialog();
 
@@ -219,9 +245,7 @@ namespace Forbbiden.Client
 
                 UploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
 
-                imgAvatar.Fill = new ImageBrush(
-                    new System.Windows.Media.Imaging.BitmapImage(
-                        new Uri(UploadedAvatarOriginalPath)));
+                imgAvatar.Fill = ViewUtils.GetImageBrush(UploadedAvatarOriginalPath);
 
                 AvatarChanged = true;
             }

@@ -27,8 +27,8 @@ namespace Forbbiden.Client.logic
 
             Ellipse ellipse = new Ellipse
             {
-                Width = 100,
-                Height = 100,
+                Width = 70,
+                Height = 70,
                 Stroke = Brushes.LightGray,
                 StrokeThickness = 5,
                 Margin = new Thickness(0, 0, 0, 0),
@@ -46,7 +46,6 @@ namespace Forbbiden.Client.logic
             var bmp = new BitmapImage();
             bmp.BeginInit();
             bmp.CacheOption = BitmapCacheOption.OnLoad;
-            Console.WriteLine(imagePath);
             bmp.UriSource = new Uri(imagePath, UriKind.Absolute);
             bmp.EndInit();
 
