@@ -660,6 +660,16 @@ username = _DropPlayer_
 |Regresa __
 |**
 
+|FMT41
+|TestGetFriendRequestsReceiverEmpty
+|Verificar que no se regrese la lista de solicitudes de amistad recibidas si el receiver está en blanco
+|*Media*
+|PRE01: Deben existir solicitudes de amistad recibidas
+|receiver = _''_
+|Regresa _List<FriendRequest>.Count == 0_
+|Regresa __
+|**
+
 |===
 
 === TokenManager

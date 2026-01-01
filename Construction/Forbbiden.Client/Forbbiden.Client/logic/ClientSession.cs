@@ -41,6 +41,22 @@ namespace Forbbiden.Client.logic
             return player;
         }
 
+        public static void SetGuestSession()
+        {
+            var player = GetPlayer();
+            if (player != null)
+            {
+                player.PlayerId = 0;
+                player.PlayerUsername = "Guest";
+                player.PlayerPassword = "";
+                player.PlayerEmail = "";
+                player.PlayerAvatarPath = "defaultAvatar.png";
+                player.Status = 1;
+                player.IsVerified = 1;
+            }
+            SetPlayer(player);
+        }
+
         public static void LogOut()
         {
             CurrentPlayerId = -1;
