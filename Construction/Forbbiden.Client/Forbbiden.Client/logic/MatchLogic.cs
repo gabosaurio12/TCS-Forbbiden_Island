@@ -27,24 +27,27 @@ namespace Forbbiden.Client.logic
             HashSet<int> forbiddenCoordinates = new HashSet<int>() { 1, 4, 10, 15, 40, 45, 51, 54 };
 
             bool isValid = true;
-            if (possibleTile == null)
+            if (possibleTile != null)
             {
-                isValid = false;
+                if (possibleTile.IsLost)
+                {
+                    isValid = false;
+                }
+                int coordinate = (possibleTile.Row * 10) + possibleTile.Col;
+                if (forbiddenCoordinates.Contains(coordinate))
+                {
+                    isValid = false;
+                }
+                if (possibleTile.Row < 0 || possibleTile.Row > 5)
+                {
+                    isValid = false;
+                }
+                if (possibleTile.Col < 0 || possibleTile.Col > 5)
+                {
+                    isValid = false;
+                }
             }
-            if (possibleTile.IsLost)
-            {
-                isValid = false;
-            }
-            int coordinate = (possibleTile.Row * 10) + possibleTile.Col;
-            if (forbiddenCoordinates.Contains(coordinate))
-            {
-                isValid = false;
-            }
-            if (possibleTile.Row < 0 || possibleTile.Row > 5)
-            {
-                isValid = false;
-            }
-            if (possibleTile.Col < 0 || possibleTile.Col > 5)
+            else
             {
                 isValid = false;
             }
