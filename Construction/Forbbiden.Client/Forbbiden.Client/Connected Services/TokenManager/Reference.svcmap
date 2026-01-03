@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="d3d6392e-ed41-471d-a2ff-8b7f6a5595a1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="c72f9f3c-3024-4acb-80ab-0739f0dc0c9f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.1.77:8085/TokenManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://localhost:8085/TokenManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="b1abc48b-e1ca-4415-96d6-c6d24a99d3f4" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8085/TokenManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="69df7d7c-0c96-4d27-ae70-e9518ffa36fd" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8085/TokenManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="18922c6c-22e6-4f0b-91a5-bf9e38a6234e" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8085/TokenManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="9b4ca0ab-7a4a-4297-a048-143fd103f5b6" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8085/TokenManager/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="6e205592-4943-4b06-b7e1-f1c98c0f7777" SourceId="1" SourceUrl="net.tcp://localhost:8085/TokenManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ed0da929-a5dc-4e16-b5d9-9dfbe354ca86" SourceId="1" SourceUrl="net.tcp://localhost:8085/TokenManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="2c22dd65-ee59-45bc-ab4a-b869f646732f" SourceId="1" SourceUrl="net.tcp://localhost:8085/TokenManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="979df4c8-c851-4cdd-96c1-9c7784851837" SourceId="1" SourceUrl="net.tcp://localhost:8085/TokenManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

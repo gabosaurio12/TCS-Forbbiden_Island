@@ -498,4 +498,7 @@
   <data name="your_turn_message" xml:space="preserve">
     <value>It's your turn to play! Choose wisely your actions</value>
   </data>
+  <data name="clean_code_name" xml:space="preserve">
+    <value>Sepa</value>
+  </data>
 </root>

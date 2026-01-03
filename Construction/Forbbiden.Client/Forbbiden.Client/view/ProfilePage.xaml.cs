@@ -19,7 +19,7 @@ namespace Forbbiden.Client
     public partial class ProfilePage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
-        private readonly ProfileManagerClient ProfileClient;
+        private ProfileManagerClient ProfileClient;
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
@@ -162,7 +162,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private void SetPlayer(ref Player player)
+        private bool SetPlayer(ref Player player)
         {
             player.PlayerUsername = txtBxUsername.Text;
             player.PlayerEmail = txtBxEmail.Text;
@@ -178,23 +178,6 @@ namespace Forbbiden.Client
                 new SocialMedia { SocialMediaName = "facebook", SocialLink = txtBxFacebook.Text, PlayerId = this.ProfilePlayer.PlayerId }
             };
 
-            if (AvatarChanged)
-            {
-                player.PlayerAvatarPath = AvatarFileName;
-                string exeDir = AppContext.BaseDirectory;
-                string projectDir = Directory.GetParent(exeDir).Parent.Parent.FullName;
-
-                UploadedAvatarProjectPath = Path.Combine(projectDir, "avatars", AvatarFileName);
-                File.Copy(UploadedAvatarOriginalPath, UploadedAvatarProjectPath, true);
-            }
-            else
-            {
-                player.PlayerAvatarPath = this.ProfilePlayer.PlayerAvatarPath;
-            }            
-        }
-
-        private bool IsPlayerValid(Player player)
-        {
             bool isValid = true;
 
             if (player.PlayerUsername != this.ProfilePlayer.PlayerUsername)
@@ -219,28 +202,110 @@ namespace Forbbiden.Client
                 PlayerId = ProfilePlayer.PlayerId
             };
 
-            SetPlayer(ref updatedPlayer);
+            if (!SetPlayer(ref updatedPlayer))
+                return;
 
-            if (IsPlayerValid(updatedPlayer))
+            if (AvatarChanged)
             {
+                if (string.IsNullOrEmpty(UploadedAvatarOriginalPath) || string.IsNullOrEmpty(AvatarFileName))
+                {
+                    MessageBox.Show("Avatar no válido.");
+                    return;
+                }
+
                 try
                 {
-                    if (ProfileClient.UpdatePlayer(updatedPlayer))
+
+                    var bytes = GetAvatarBytesResized(UploadedAvatarOriginalPath, 256, 80);
+                    if (bytes == null || bytes.Length == 0)
                     {
-                        NavigationService?.Navigate(new MainPage());
+                        MessageBox.Show("No se pudo procesar la imagen.");
+                        return;
                     }
-                    else
+
+                    string savedFileName = null;
+                    try
                     {
-                        MessageBox.Show("Error al actualizar el perfil.");
+                        savedFileName = ProfileClient.UploadAvatar(ProfilePlayer.PlayerUsername, bytes, AvatarFileName);
+                    }
+                    catch (FaultException fex)
+                    {
+                        Log.Error("UploadAvatar Fault", fex);
+                        MessageBox.Show("Error al subir avatar: " + fex.Message);
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("UploadAvatar error", ex);
+                        MessageBox.Show("Error al subir avatar: " + ex.Message);
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(savedFileName))
+                    {
+                        MessageBox.Show("El servidor no devolvió un nombre para el avatar.");
+                        return;
+                    }
+
+                    try
+                    {
+                        string exeDir = AppContext.BaseDirectory;
+                        string projectDir = Directory.GetParent(exeDir).Parent.Parent.FullName;
+                        string localAvatarsDir = Path.Combine(projectDir, "avatars");
+                        if (!Directory.Exists(localAvatarsDir)) Directory.CreateDirectory(localAvatarsDir);
+
+                        string localPath = Path.Combine(localAvatarsDir, savedFileName);
+                        File.WriteAllBytes(localPath, bytes);
+
+                        updatedPlayer.PlayerAvatarPath = savedFileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn("No se pudo guardar copia local del avatar", ex);
+                        updatedPlayer.PlayerAvatarPath = savedFileName;
                     }
                 }
-                catch (FaultException<DBFault> ex)
+                catch (Exception ex)
                 {
-                    string classMethod = "ProfilePage.BtnSave_Click";
-                    Log.Error(classMethod, ex);
-                    ViewUtils.ShowPushError(Window.GetWindow(this));
+                    Log.Error("Error preparando o subiendo avatar", ex);
+                    MessageBox.Show("Error al procesar el avatar: " + ex.Message);
+                    return;
                 }
-                
+            }
+            else
+            {
+                updatedPlayer.PlayerAvatarPath = this.ProfilePlayer.PlayerAvatarPath;
+            }
+
+            try
+            {
+                if (ProfileClient.UpdatePlayer(updatedPlayer))
+                {
+                    try
+                    {
+                        var refreshed = ProfileClient.GetPlayerByUsername(updatedPlayer.PlayerUsername, true);
+                        if (refreshed != null && refreshed.PlayerId > 0)
+                        {
+                            ClientSession.SetPlayer(refreshed); 
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn("No se pudo refrescar la sesión después de UpdatePlayer", ex);
+                    }
+
+                    NavigationService?.Navigate(new MainPage());
+                }
+            }
+            catch (FaultException fex)
+            {
+                Log.Error("UpdatePlayer Fault", fex);
+                MessageBox.Show("Error al actualizar perfil: " + fex.Message);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("UpdatePlayer error", ex);
+                MessageBox.Show("Error al actualizar perfil: " + ex.Message);
             }
         }
 
@@ -249,7 +314,7 @@ namespace Forbbiden.Client
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg"
+                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg|All files (*.*)|*.*"
             };
             var result = openFileDialog.ShowDialog();
 
@@ -258,7 +323,9 @@ namespace Forbbiden.Client
                 AvatarFileName = Path.GetFileName(openFileDialog.FileName);
                 UploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
 
-                imgAvatar.Fill = ViewUtils.GetImageBrush(UploadedAvatarOriginalPath);
+                imgAvatar.Fill = new ImageBrush(
+                    new BitmapImage(
+                        new Uri(UploadedAvatarOriginalPath)));
 
                 AvatarChanged = true;
             }

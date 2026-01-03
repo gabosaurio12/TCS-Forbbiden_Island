@@ -20,26 +20,12 @@ namespace Forbbiden.Server.logic
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
         private readonly string ConnectionString;
         private readonly string DefaultAvatarPath = "defaultAvatar.png";
+        private readonly string DatabaseError = "Database Error";
+        private readonly string EntityError = "EntityException";
 
         public ProfileManager()
         {
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
-        }
-
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "EntityException";
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
         }
 
         public bool ValidateEmail(string email)
@@ -160,7 +146,6 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    playerId = -1;
                     string classMethod = "ProfileManager.SignUp ";
                     HandleEntityException(ex, classMethod);
                 }
@@ -366,6 +351,78 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
+        // ============================
+        // NEW: UploadAvatar - guarda la imagen en disco y devuelve el filename guardado
+        // ============================
+        public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
+        {
+            if (avatarBytes == null || avatarBytes.Length == 0)
+                throw new FaultException("Avatar vacío o nulo.");
+
+            try
+            {
+                var avatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
+                if (!Directory.Exists(avatarsDir)) Directory.CreateDirectory(avatarsDir);
+
+                // Obtener extensión segura
+                string ext = ".jpg";
+                try
+                {
+                    var maybeExt = Path.GetExtension(fileName);
+                    if (!string.IsNullOrEmpty(maybeExt))
+                        ext = maybeExt;
+                }
+                catch { /* ignore and fallback */ }
+
+                // Construir nombre único
+                var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{ext}";
+                var fullPath = Path.Combine(avatarsDir, safeFileName);
+
+                File.WriteAllBytes(fullPath, avatarBytes);
+
+                Log.Info($"Avatar uploaded for {username}, saved as {safeFileName}");
+                return safeFileName;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("UploadAvatar error", ex);
+                throw new FaultException("No se pudo guardar el avatar en el servidor.");
+            }
+        }
+
+        // ============================
+        // NEW: GetAvatar - devuelve los bytes del archivo solicitado (o null si no existe)
+        // ============================
+        public byte[] GetAvatar(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName)) return null;
+
+            try
+            {
+                var avatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
+                var fullPath = Path.Combine(avatarsDir, fileName);
+                if (!File.Exists(fullPath)) return null;
+
+                return File.ReadAllBytes(fullPath);
+            }
+            catch (Exception ex)
+            {
+                Log.Warn($"GetAvatar failed for {fileName}", ex);
+                return null;
+            }
+        }
+
+        // Helper para sanitizar nombres simples (quitar path separators)
+        private string SanitizeFileName(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return "user";
+            foreach (var c in Path.GetInvalidFileNameChars())
+            {
+                input = input.Replace(c, '_');
+            }
+            return input;
+        }
+
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
             bool success = false;
@@ -411,14 +468,14 @@ namespace Forbbiden.Server.logic
 
                             var fault = new DBFault
                             {
-                                Error = "Database Error",
+                                Error = DatabaseError,
                                 Details = ex.Message
                             };
 
                             throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
-                        }                        
-                    }                    
+                                new FaultReason(EntityError));
+                        }
+                    }
                 }
                 catch (EntityException ex)
                 {
@@ -461,6 +518,20 @@ namespace Forbbiden.Server.logic
             }
 
             return success;
+        }
+
+        private void HandleEntityException(EntityException ex, string classMethod)
+        {
+            Log.Error("ERROR" + classMethod, ex);
+
+            var fault = new DBFault
+            {
+                Error = DatabaseError,
+                Details = ex.Message
+            };
+
+            throw new FaultException<DBFault>(fault,
+                new FaultReason(EntityError));
         }
 
         public bool ConnectPlayerByUsername(string username)

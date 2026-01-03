@@ -151,6 +151,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cubicle Keys.
+        /// </summary>
+        public static string cubicle_keys_name {
+            get {
+                return ResourceManager.GetString("cubicle-keys-name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string delete {
