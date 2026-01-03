@@ -14,9 +14,8 @@ namespace Forbbiden.Server.logic
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class BoardManager : IBoardManager
     {
-
-        private static readonly ILog Log = LogManager.GetLogger(typeof(BoardManager));
         private readonly string ConnectionString;
+        private const string CLASS_METHOD = "BoardManger.SendOnPlayersTurnCallback";
 
         public BoardManager()
         {
@@ -148,13 +147,11 @@ namespace Forbbiden.Server.logic
             }
             catch (CommunicationException ex)
             {
-                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
             }
             catch (TimeoutException ex)
             {
-                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                ExceptionHandler.HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, CLASS_METHOD);
             }
         }
 
@@ -166,13 +163,11 @@ namespace Forbbiden.Server.logic
             }
             catch (CommunicationException ex)
             {
-                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
             }
             catch (TimeoutException ex)
             {
-                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                ExceptionHandler.HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, CLASS_METHOD);
             }
         }
 
@@ -184,8 +179,7 @@ namespace Forbbiden.Server.logic
             }
             catch (CommunicationException ex)
             {
-                string classMethod = "BoardManger.SendOnPlayersTurnCallback";
-                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
             }
             catch (TimeoutException ex)
             {

@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -62,7 +63,7 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        private bool RemoveExistingToken(int playerId)
+        private void RemoveExistingToken(int playerId)
         {
             bool removed = false;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
@@ -83,8 +84,6 @@ namespace Forbbiden.Server.logic
                     HandleEntityException(ex, classMethod);
                 }
             }
-
-            return removed;
         }
 
         public Contracts.Token GenerateToken(int playerId)
@@ -118,10 +117,15 @@ namespace Forbbiden.Server.logic
                             };
                         }
                     }
-                    catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
+                    catch (DbUpdateException ex)
                     {
                         string classMethod = "TokenManager.GenerateToken";
-                        HandleException(ex, classMethod);
+                        ExceptionHandler.HandleDbUpdateException(ex, classMethod);
+                    }
+                    catch (EntityException ex)
+                    {
+                        string classMethod = "TokenManager.GenerateToken";
+                        ExceptionHandler.HandleEntityException(ex, classMethod);
                     }
                 } while (!success);
             }

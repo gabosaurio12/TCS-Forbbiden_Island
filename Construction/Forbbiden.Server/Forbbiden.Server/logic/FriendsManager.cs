@@ -6,6 +6,7 @@ using log4net;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Security.Cryptography.Pkcs;
 using System.ServiceModel;
 
 namespace Forbbiden.Server.logic
@@ -71,7 +72,7 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-        private (Contracts.Player sender, Contracts.Player receiver) GetSenderReceiver(
+        private static (Contracts.Player sender, Contracts.Player receiver) GetSenderReceiver(
             string senderUsername, string receiverUsername)
         {
             var profileManager = new ProfileManager();
@@ -83,7 +84,6 @@ namespace Forbbiden.Server.logic
             {
                 sender = profileManager.GetPlayerByUsername(senderUsername);
                 receiver = profileManager.GetPlayerByUsername(receiverUsername);
-
             }
             catch (EntityException ex)
             {
