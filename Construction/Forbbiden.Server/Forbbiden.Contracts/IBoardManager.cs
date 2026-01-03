@@ -65,22 +65,4 @@ namespace Forbbiden.Contracts
         [DataMember]
         public string ImagePath { get; set; }
     }
-
-    [DataContract]
-    public class CallbackFault
-    {
-        [DataMember]
-        public string Error { get; set; }
-        [DataMember]
-        public string Details { get; set; }
-    }
-
-    [DataContract]
-    public class TimeoutFault
-    {
-        [DataMember]
-        public string Error { get; set; }
-        [DataMember]
-        public string Details { get; set; }
-    }
 }

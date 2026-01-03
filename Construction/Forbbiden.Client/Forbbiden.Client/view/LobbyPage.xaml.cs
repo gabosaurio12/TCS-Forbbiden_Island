@@ -21,7 +21,7 @@ namespace Forbbiden.Client.view
 {
     public partial class LobbyPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LobbyPage));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LobbyPage));
 
         private DispatcherTimer timer;
         private GameManagerClient gameClient;

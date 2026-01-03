@@ -7,14 +7,17 @@ using Forbbiden.Server.utils;
 
 namespace Forbbiden.Server
 {
-    class Server
+    public class Server
     {
+        private Server()
+        {
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Iniciando el servidor Forbbiden...");
             DotEnv.Load();
 
-            // SOLO SE INICIALIZAN LOS HOSTS
             var profileHost = new ServiceHost(typeof(ProfileManager));
             var friendsHost = new ServiceHost(typeof(FriendsManager));
             var matchHost = new ServiceHost(typeof(MatchManager));
@@ -26,7 +29,6 @@ namespace Forbbiden.Server
 
             try
             {
-                // NO SE CREAN ENDPOINTS AQUÍ
                 profileHost.Open();
                 friendsHost.Open();
                 matchHost.Open();

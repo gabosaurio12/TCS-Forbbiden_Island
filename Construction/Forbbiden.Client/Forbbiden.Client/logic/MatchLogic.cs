@@ -57,15 +57,9 @@ namespace Forbbiden.Client.logic
 
         private static List<UserControlTile> CleanPreliminaryTiles(UserControlTile[] preliminaryTiles)
         {
-            List<UserControlTile> possibleTiles = new List<UserControlTile>();
-
-            foreach (var possibleTile in preliminaryTiles)
-            {
-                if (ValidateTileToMove(possibleTile))
-                {
-                    possibleTiles.Add(possibleTile);
-                }
-            }
+            List<UserControlTile> possibleTiles = preliminaryTiles
+                .Where(ValidateTileToMove)
+                .ToList();
 
             return possibleTiles;
         }

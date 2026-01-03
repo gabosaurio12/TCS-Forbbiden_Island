@@ -71,12 +71,17 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar las partidas: {ex.Message}",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
             }
             finally
             {
+<<<<<<< HEAD
                 if (matchClient != null)
+=======
+                var currentPlayer = ClientSession.GetPlayer();
+
+                if (currentPlayer.PlayerId == -1)
+>>>>>>> 9f7f5277d2e69ec8bbe851940e50955f9fdfbb3d
                 {
                     try { matchClient.Close(); } catch { matchClient.Abort(); }
                 }

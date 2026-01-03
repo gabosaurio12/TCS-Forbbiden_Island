@@ -141,9 +141,6 @@
   <data name="english" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="error" xml:space="preserve">
-    <value>Error</value>
-  </data>
   <data name="friends" xml:space="preserve">
     <value>Friends</value>
   </data>
@@ -500,5 +497,7 @@
   </data>
   <data name="clean_code_name" xml:space="preserve">
     <value>Sepa</value>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
   </data>
 </root>

@@ -2,7 +2,6 @@
 using Forbbiden.Client.view.games;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 
@@ -23,13 +22,13 @@ namespace Forbbiden.Client.logic
 
         public static void CreateBoardPageFromJSON(string boardJson)
         {
-            var auxBoard = JsonSerializer.Deserialize<CallbackBoardPage>(boardJson);
-            MatchBoardPage = auxBoard.BOARD_PAGE;
-            PlayersUsername = auxBoard.PLAYERS_USERNAME.ToList();
+            var auxBoard = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
+            MatchBoardPage = auxBoard.Board;
+            PlayersUsername = auxBoard.PlayersUsernames.ToList();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MatchBoardPage.ReloadPage(auxBoard.BOARD_PAGE);
+                MatchBoardPage.ReloadPage(auxBoard.Board);
             });
         }
 
@@ -54,7 +53,7 @@ namespace Forbbiden.Client.logic
         public static void SendTurnFinishedCallback(BoardPage boardPage)
         {
             var client = new BoardManagerClient();
-            CallbackBoardPage page = new CallbackBoardPage(boardPage, PlayersUsername.ToArray());
+            BoardPageCallbackDto page = new BoardPageCallbackDto(boardPage, PlayersUsername.ToArray());
             string pageJson = HostLogic.CreateCallbackBoardPageJSON(page);
             client.SendOnTurnFinishedCallback(pageJson, PlayersUsername.ToArray());
         }

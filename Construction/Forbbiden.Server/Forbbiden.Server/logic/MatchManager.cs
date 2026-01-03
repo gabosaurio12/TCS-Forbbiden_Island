@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -16,7 +17,6 @@ namespace Forbbiden.Server.logic
         private static readonly ILog log = LogManager.GetLogger(typeof(MatchManager));
         private const string CLASS_NAME = "MatchManager.cs";
         private readonly string Guest = "Guest";
-        private const string ERROR_CODE = "[ERROR] MatchManager.cs - ";
         private readonly string connectionString;
         public MatchManager()
         {
@@ -27,6 +27,7 @@ namespace Forbbiden.Server.logic
         public int CreateMatch(CreateMatchRequest request)
         {
             log.Info("Creating new match");
+            int matchId = 0;
 
             // Validaciones básicas del request
             if (request == null)
@@ -84,24 +85,19 @@ namespace Forbbiden.Server.logic
                         db.SaveChanges();
                     }
 
-                    return newMatch.match_id;
+                    matchId = newMatch.match_id;
                 }
             }
             catch (DbEntityValidationException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Error validating match entity.");
+                ExceptionHandler.HandleEntityValidationException(ex, CLASS_NAME);
             }
             catch (EntityException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Database connection error while creating match.");
+                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
             }
-            catch (Exception ex)
-            {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Unexpected error while creating match: " + ex.Message);
-            }
+
+            return matchId;
         }
 
         // JoinMatch: ahora puede encontrar la sala por id, por match_name o por host username.
@@ -197,9 +193,10 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Database connection error while joining match.");
+                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
             }
+
+            return false;
         }
 
         // ListMatches: ahora incluye MatchName y Capacity en Contracts.Match
@@ -226,7 +223,8 @@ namespace Forbbiden.Server.logic
                                        HostUsername = host.player_username,
                                        Players = (from mp in db.match_players
                                                   where mp.match_id == m.match_id
-                                                  join p in db.Player on mp.player_id equals p.player_id into joined
+                                                  join p in db.Player on mp.player_id equals 
+                                                  p.player_id into joined
                                                   from p in joined.DefaultIfEmpty()
                                                   select new PlayerInfo
                                                   {
@@ -246,19 +244,20 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Error retrieving matches from database.");
+                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
             }
+            return new List<Match>();
         }
 
         // GetMatchById: incluye MatchName y Capacity
         public Contracts.Match GetMatchById(int matchId)
         {
+            Contracts.Match match = new Contracts.Match();
             try
             {
                 using (var db = new Forbbiden_FEIEntities(connectionString))
                 {
-                    var match = (from m in db.Matches
+                    match = (from m in db.Matches
                                  join host in db.Player on m.host_id equals host.player_id
                                  where m.match_id == matchId
                                  select new Contracts.Match
@@ -292,9 +291,9 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Database connection error while retrieving match.");
+                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
             }
+            return match;
         }
 
         // Añadir dentro de la clase MatchManager (Server)
