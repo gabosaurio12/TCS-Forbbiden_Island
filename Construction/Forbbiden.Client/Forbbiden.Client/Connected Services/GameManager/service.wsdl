@@ -1,33 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="GameService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsp:Policy wsu:Id="NetTcpBinding_IGameService_policy">
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="GameManager" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IGameManager_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256>
-                </sp:Basic256>
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict>
-                </sp:Strict>
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing>
         </wsaw:UsingAddressing>
       </wsp:All>
@@ -37,75 +14,107 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IGameService_JoinGame_InputMessage">
+  <wsdl:message name="IGameManager_JoinGame_InputMessage">
     <wsdl:part name="parameters" element="tns:JoinGame" />
   </wsdl:message>
-  <wsdl:message name="IGameService_JoinGame_OutputMessage">
+  <wsdl:message name="IGameManager_JoinGame_OutputMessage">
     <wsdl:part name="parameters" element="tns:JoinGameResponse" />
   </wsdl:message>
-  <wsdl:message name="IGameService_LeaveGame_InputMessage">
+  <wsdl:message name="IGameManager_LeaveGame_InputMessage">
     <wsdl:part name="parameters" element="tns:LeaveGame" />
   </wsdl:message>
-  <wsdl:message name="IGameService_LeaveGame_OutputMessage">
+  <wsdl:message name="IGameManager_LeaveGame_OutputMessage">
     <wsdl:part name="parameters" element="tns:LeaveGameResponse" />
   </wsdl:message>
-  <wsdl:message name="IGameService_SendChatMessage_InputMessage">
+  <wsdl:message name="IGameManager_SendChatMessage_InputMessage">
     <wsdl:part name="parameters" element="tns:SendChatMessage" />
   </wsdl:message>
-  <wsdl:message name="IGameService_SendChatMessage_OutputMessage">
+  <wsdl:message name="IGameManager_SendChatMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendChatMessageResponse" />
   </wsdl:message>
-  <wsdl:message name="IGameService_GetPlayers_InputMessage">
+  <wsdl:message name="IGameManager_GetPlayers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayers" />
   </wsdl:message>
-  <wsdl:message name="IGameService_GetPlayers_OutputMessage">
+  <wsdl:message name="IGameManager_GetPlayers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayersResponse" />
   </wsdl:message>
-  <wsdl:message name="IGameService_OnPlayerJoined_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnPlayerJoined" />
+  <wsdl:message name="IGameManager_SetReady_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetReady" />
   </wsdl:message>
-  <wsdl:message name="IGameService_OnPlayerLeft_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnPlayerLeft" />
+  <wsdl:message name="IGameManager_SetReady_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetReadyResponse" />
   </wsdl:message>
-  <wsdl:message name="IGameService_OnChatMessage_OutputCallbackMessage">
+  <wsdl:message name="IGameManager_StartMatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartMatch" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_StartMatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartMatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_OnPlayersUpdated_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnPlayersUpdated" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_OnChatMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnChatMessage" />
   </wsdl:message>
-  <wsdl:portType name="IGameService">
+  <wsdl:message name="IGameManager_OnGameStarting_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnGameStarting" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReadyStateChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReadyStateChanged" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_MatchStarting_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:MatchStarting" />
+  </wsdl:message>
+  <wsdl:portType name="IGameManager">
     <wsdl:operation name="JoinGame">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGameService/JoinGame" message="tns:IGameService_JoinGame_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGameService/JoinGameResponse" message="tns:IGameService_JoinGame_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/JoinGame" message="tns:IGameManager_JoinGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/JoinGameResponse" message="tns:IGameManager_JoinGame_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="LeaveGame">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGameService/LeaveGame" message="tns:IGameService_LeaveGame_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGameService/LeaveGameResponse" message="tns:IGameService_LeaveGame_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/LeaveGame" message="tns:IGameManager_LeaveGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/LeaveGameResponse" message="tns:IGameManager_LeaveGame_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendChatMessage">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGameService/SendChatMessage" message="tns:IGameService_SendChatMessage_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGameService/SendChatMessageResponse" message="tns:IGameService_SendChatMessage_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/SendChatMessage" message="tns:IGameManager_SendChatMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/SendChatMessageResponse" message="tns:IGameManager_SendChatMessage_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPlayers">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGameService/GetPlayers" message="tns:IGameService_GetPlayers_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGameService/GetPlayersResponse" message="tns:IGameService_GetPlayers_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/GetPlayers" message="tns:IGameManager_GetPlayers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/GetPlayersResponse" message="tns:IGameManager_GetPlayers_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OnPlayerJoined">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGameService/OnPlayerJoined" message="tns:IGameService_OnPlayerJoined_OutputCallbackMessage" />
+    <wsdl:operation name="SetReady">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/SetReady" message="tns:IGameManager_SetReady_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/SetReadyResponse" message="tns:IGameManager_SetReady_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OnPlayerLeft">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGameService/OnPlayerLeft" message="tns:IGameService_OnPlayerLeft_OutputCallbackMessage" />
+    <wsdl:operation name="StartMatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/StartMatch" message="tns:IGameManager_StartMatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/StartMatchResponse" message="tns:IGameManager_StartMatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OnPlayersUpdated">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/OnPlayersUpdated" message="tns:IGameManager_OnPlayersUpdated_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="OnChatMessage">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGameService/OnChatMessage" message="tns:IGameService_OnChatMessage_OutputCallbackMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/OnChatMessage" message="tns:IGameManager_OnChatMessage_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OnGameStarting">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/OnGameStarting" message="tns:IGameManager_OnGameStarting_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadyStateChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReadyStateChanged" message="tns:IGameManager_ReadyStateChanged_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MatchStarting">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/MatchStarting" message="tns:IGameManager_MatchStarting_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="NetTcpBinding_IGameService" type="tns:IGameService">
-    <wsp:PolicyReference URI="#NetTcpBinding_IGameService_policy">
+  <wsdl:binding name="NetTcpBinding_IGameManager" type="tns:IGameManager">
+    <wsp:PolicyReference URI="#NetTcpBinding_IGameManager_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="JoinGame">
-      <soap12:operation soapAction="http://tempuri.org/IGameService/JoinGame" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/JoinGame" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -114,7 +123,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="LeaveGame">
-      <soap12:operation soapAction="http://tempuri.org/IGameService/LeaveGame" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/LeaveGame" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -123,7 +132,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendChatMessage">
-      <soap12:operation soapAction="http://tempuri.org/IGameService/SendChatMessage" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/SendChatMessage" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -132,7 +141,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetPlayers">
-      <soap12:operation soapAction="http://tempuri.org/IGameService/GetPlayers" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/GetPlayers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -140,33 +149,60 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnPlayerJoined">
-      <soap12:operation soapAction="http://tempuri.org/IGameService/OnPlayerJoined" style="document" />
+    <wsdl:operation name="SetReady">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/SetReady" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnPlayerLeft">
-      <soap12:operation soapAction="http://tempuri.org/IGameService/OnPlayerLeft" style="document" />
+    <wsdl:operation name="StartMatch">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/StartMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OnPlayersUpdated">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/OnPlayersUpdated" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="OnChatMessage">
-      <soap12:operation soapAction="http://tempuri.org/IGameService/OnChatMessage" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/OnChatMessage" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OnGameStarting">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/OnGameStarting" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadyStateChanged">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ReadyStateChanged" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MatchStarting">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/MatchStarting" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="GameService">
-    <wsdl:port name="NetTcpBinding_IGameService" binding="tns:NetTcpBinding_IGameService">
-      <soap12:address location="net.tcp://localhost:9030/GameService" />
+  <wsdl:service name="GameManager">
+    <wsdl:port name="NetTcpBinding_IGameManager" binding="tns:NetTcpBinding_IGameManager">
+      <soap12:address location="net.tcp://192.168.1.77:9030/GameManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:9030/GameService</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LUMINA\leona</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://192.168.1.77:9030/GameManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

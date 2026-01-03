@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Client.logic;
+using System.Windows.Navigation;
 using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
@@ -21,27 +22,82 @@ namespace Forbbiden.Client.view.games
         private static readonly ILog log = LogManager.GetLogger(typeof(RiuvPage));
 
         private DispatcherTimer countdownTimer;
-        private int remainingSeconds = 10; 
-        private int correctHits = 0;       
+        private DispatcherTimer preCountdownTimer;
+
+        private int remainingSeconds = 15;
+        private int preCountdown = 3;
+        private int correctHits = 0;
 
         private readonly List<char> possibleKeys;
         private char currentKey;
+
+        private AudioManager audioManager;
 
         public RiuvPage()
         {
             InitializeComponent();
 
+            audioManager = new AudioManager();
+
+            Loaded += RiuvPage_Loaded;
+            Unloaded += RiuvPage_Unloaded;
+
             possibleKeys = new List<char>();
-            possibleKeys.AddRange(Enumerable.Range('A', 26).Select(c => (char)c)); // A-Z
-            possibleKeys.AddRange(Enumerable.Range(0, 10).Select(n => n.ToString()[0])); // 0-9
+            possibleKeys.AddRange(Enumerable.Range('A', 26).Select(c => (char)c));
+            possibleKeys.AddRange(Enumerable.Range(0, 10).Select(n => n.ToString()[0]));
 
             LoadPlayers();
             SetRandomKey();
-            StartCountdown();
+            StartPreCountdown();
 
-            this.Focusable = true;
-            this.Focus();
-            this.KeyDown += RiuvPage_KeyDown;
+            Focusable = true;
+            Focus();
+            KeyDown += RiuvPage_KeyDown;
+        }
+
+        private void RiuvPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Focus();
+        }
+
+        private void RiuvPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            audioManager?.Dispose();
+            audioManager = null;
+
+            countdownTimer?.Stop();
+            preCountdownTimer?.Stop();
+
+            KeyDown -= RiuvPage_KeyDown;
+        }
+
+        private void StartPreCountdown()
+        {
+            txtTimer.Text = preCountdown.ToString();
+            audioManager.PlayEffect("sounds/gameCountdown.mp3");
+
+            preCountdownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            preCountdownTimer.Tick += (s, e) =>
+            {
+                preCountdown--;
+
+                if (preCountdown > 0)
+                {
+                    txtTimer.Text = preCountdown.ToString();
+                }
+                else if (preCountdown == 0)
+                {
+                    txtTimer.Text = "YA";
+                }
+                else
+                {
+                    preCountdownTimer.Stop();
+                    txtTimer.Text = remainingSeconds.ToString("D2");
+                    audioManager.PlayBackground("sounds/riuvGameMusic.mp3", loop: true);
+                    StartCountdown();
+                }
+            };
+            preCountdownTimer.Start();
         }
 
         private void StartCountdown()
@@ -49,32 +105,27 @@ namespace Forbbiden.Client.view.games
             countdownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             countdownTimer.Tick += CountdownTimer_Tick;
             countdownTimer.Start();
-            UpdateTimerText();
         }
 
         private void CountdownTimer_Tick(object sender, EventArgs e)
         {
             remainingSeconds--;
-            UpdateTimerText();
+            txtTimer.Text = remainingSeconds.ToString("D2");
 
             if (remainingSeconds <= 0)
             {
                 countdownTimer.Stop();
-                this.KeyDown -= RiuvPage_KeyDown;
+                KeyDown -= RiuvPage_KeyDown;
+                audioManager.StopAll();
                 MessageBox.Show($"Time's up! Teclas correctas: {correctHits}");
             }
-        }
-
-        private void UpdateTimerText()
-        {
-            txtTimer.Text = remainingSeconds.ToString("D2");
         }
 
         private void SetRandomKey()
         {
             currentKey = possibleKeys[MatchLogic.Rand.Next(possibleKeys.Count)];
             txtKey1.Text = currentKey.ToString();
-            txtKey1.Foreground = Brushes.Black; 
+            txtKey1.Foreground = Brushes.Black;
         }
 
         private async void RiuvPage_KeyDown(object sender, KeyEventArgs e)
@@ -82,7 +133,6 @@ namespace Forbbiden.Client.view.games
             if (remainingSeconds <= 0) return;
 
             string pressedKey = e.Key.ToString().ToUpper();
-
             if (pressedKey.Length == 2 && pressedKey.StartsWith("D"))
                 pressedKey = pressedKey[1].ToString();
 
@@ -94,12 +144,9 @@ namespace Forbbiden.Client.view.games
             else
             {
                 txtKey1.Foreground = Brushes.Red;
-
-                // Penalización por error
                 await Task.Delay(500);
-
                 txtKey1.Foreground = Brushes.Black;
-                SetRandomKey(); 
+                SetRandomKey();
             }
         }
 
@@ -160,5 +207,6 @@ namespace Forbbiden.Client.view.games
                 log.Warn("No se pudo cargar avatar, usando fallback. " + ex.Message);
             }
         }
+
     }
 }

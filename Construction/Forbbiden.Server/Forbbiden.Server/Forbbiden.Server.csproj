@@ -81,7 +81,7 @@
     </Compile>
     <Compile Include="logic\BoardManager.cs" />
     <Compile Include="callbacks\FriendsNotificationManager.cs" />
-    <Compile Include="logic\GameService.cs" />
+    <Compile Include="logic\GameManager.cs" />
     <Compile Include="logic\FriendsManager.cs" />
     <Compile Include="logic\MatchManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />

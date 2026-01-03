@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="e8c1e436-d404-421f-aac3-667ff5eb804a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="5dc312a1-bc42-498f-8eb7-56e18d82fd48" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="c2d0807e-eb11-4c40-9020-a26fc4208967" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="9bece660-663d-4ce1-8a22-b23fba4f80a4" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="dddd8d15-4303-4886-afe3-4b0bd7880b7d" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="d202432b-48a8-4fd7-b88b-d2751efa0077" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="1f964661-172b-4555-8f51-70a998489115" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="cb389830-40d7-4f9d-93db-d125d0034f69" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="714f4a57-81bf-4084-8a65-3848650d1880" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="1635256f-9124-40f6-a857-695cfa1eafb4" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

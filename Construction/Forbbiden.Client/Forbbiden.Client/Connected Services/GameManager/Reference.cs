@@ -9,84 +9,245 @@
 //------------------------------------------------------------------------------
 
 namespace Forbbiden.Client.GameManager {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerInfo", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class PlayerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] AvatarBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AvatarFileNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsHostField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PositionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] AvatarBytes {
+            get {
+                return this.AvatarBytesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AvatarBytesField, value) != true)) {
+                    this.AvatarBytesField = value;
+                    this.RaisePropertyChanged("AvatarBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AvatarFileName {
+            get {
+                return this.AvatarFileNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AvatarFileNameField, value) != true)) {
+                    this.AvatarFileNameField = value;
+                    this.RaisePropertyChanged("AvatarFileName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsHost {
+            get {
+                return this.IsHostField;
+            }
+            set {
+                if ((this.IsHostField.Equals(value) != true)) {
+                    this.IsHostField = value;
+                    this.RaisePropertyChanged("IsHost");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId {
+            get {
+                return this.PlayerIdField;
+            }
+            set {
+                if ((this.PlayerIdField.Equals(value) != true)) {
+                    this.PlayerIdField = value;
+                    this.RaisePropertyChanged("PlayerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerName {
+            get {
+                return this.PlayerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerNameField, value) != true)) {
+                    this.PlayerNameField = value;
+                    this.RaisePropertyChanged("PlayerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerUsername {
+            get {
+                return this.PlayerUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerUsernameField, value) != true)) {
+                    this.PlayerUsernameField = value;
+                    this.RaisePropertyChanged("PlayerUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Position {
+            get {
+                return this.PositionField;
+            }
+            set {
+                if ((this.PositionField.Equals(value) != true)) {
+                    this.PositionField = value;
+                    this.RaisePropertyChanged("Position");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameManager.IGameService", CallbackContract=typeof(Forbbiden.Client.GameManager.IGameServiceCallback))]
-    public interface IGameService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameManager.IGameManager", CallbackContract=typeof(Forbbiden.Client.GameManager.IGameManagerCallback))]
+    public interface IGameManager {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/JoinGame", ReplyAction="http://tempuri.org/IGameService/JoinGameResponse")]
-        bool JoinGame(string matchId, string playerName);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/JoinGame", ReplyAction="http://tempuri.org/IGameManager/JoinGameResponse")]
+        bool JoinGame(string matchId, string playerName, byte[] avatarBytes, string avatarFileName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/JoinGame", ReplyAction="http://tempuri.org/IGameService/JoinGameResponse")]
-        System.Threading.Tasks.Task<bool> JoinGameAsync(string matchId, string playerName);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/JoinGame", ReplyAction="http://tempuri.org/IGameManager/JoinGameResponse")]
+        System.Threading.Tasks.Task<bool> JoinGameAsync(string matchId, string playerName, byte[] avatarBytes, string avatarFileName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/LeaveGame", ReplyAction="http://tempuri.org/IGameService/LeaveGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/LeaveGame", ReplyAction="http://tempuri.org/IGameManager/LeaveGameResponse")]
         void LeaveGame(string matchId, string playerName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/LeaveGame", ReplyAction="http://tempuri.org/IGameService/LeaveGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/LeaveGame", ReplyAction="http://tempuri.org/IGameManager/LeaveGameResponse")]
         System.Threading.Tasks.Task LeaveGameAsync(string matchId, string playerName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/SendChatMessage", ReplyAction="http://tempuri.org/IGameService/SendChatMessageResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SendChatMessage", ReplyAction="http://tempuri.org/IGameManager/SendChatMessageResponse")]
         void SendChatMessage(string matchId, string playerName, string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/SendChatMessage", ReplyAction="http://tempuri.org/IGameService/SendChatMessageResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SendChatMessage", ReplyAction="http://tempuri.org/IGameManager/SendChatMessageResponse")]
         System.Threading.Tasks.Task SendChatMessageAsync(string matchId, string playerName, string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/GetPlayers", ReplyAction="http://tempuri.org/IGameService/GetPlayersResponse")]
-        string[] GetPlayers(string matchId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/GetPlayers", ReplyAction="http://tempuri.org/IGameManager/GetPlayersResponse")]
+        Forbbiden.Client.GameManager.PlayerInfo[] GetPlayers(string matchId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/GetPlayers", ReplyAction="http://tempuri.org/IGameService/GetPlayersResponse")]
-        System.Threading.Tasks.Task<string[]> GetPlayersAsync(string matchId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/GetPlayers", ReplyAction="http://tempuri.org/IGameManager/GetPlayersResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.GameManager.PlayerInfo[]> GetPlayersAsync(string matchId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SetReady", ReplyAction="http://tempuri.org/IGameManager/SetReadyResponse")]
+        void SetReady(string matchId, string username, bool ready);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SetReady", ReplyAction="http://tempuri.org/IGameManager/SetReadyResponse")]
+        System.Threading.Tasks.Task SetReadyAsync(string matchId, string username, bool ready);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/StartMatch", ReplyAction="http://tempuri.org/IGameManager/StartMatchResponse")]
+        void StartMatch(string matchId, string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/StartMatch", ReplyAction="http://tempuri.org/IGameManager/StartMatchResponse")]
+        System.Threading.Tasks.Task StartMatchAsync(string matchId, string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGameServiceCallback {
+    public interface IGameManagerCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameService/OnPlayerJoined")]
-        void OnPlayerJoined(string playerName);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/OnPlayersUpdated")]
+        void OnPlayersUpdated(Forbbiden.Client.GameManager.PlayerInfo[] players);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameService/OnPlayerLeft")]
-        void OnPlayerLeft(string playerName);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameService/OnChatMessage")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/OnChatMessage")]
         void OnChatMessage(string playerName, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/OnGameStarting")]
+        void OnGameStarting();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/ReadyStateChanged")]
+        void ReadyStateChanged(string username, bool ready);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/MatchStarting")]
+        void MatchStarting();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGameServiceChannel : Forbbiden.Client.GameManager.IGameService, System.ServiceModel.IClientChannel {
+    public interface IGameManagerChannel : Forbbiden.Client.GameManager.IGameManager, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GameServiceClient : System.ServiceModel.DuplexClientBase<Forbbiden.Client.GameManager.IGameService>, Forbbiden.Client.GameManager.IGameService {
+    public partial class GameManagerClient : System.ServiceModel.DuplexClientBase<Forbbiden.Client.GameManager.IGameManager>, Forbbiden.Client.GameManager.IGameManager {
         
-        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
         }
         
-        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
                 base(callbackInstance, endpointConfigurationName) {
         }
         
-        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public bool JoinGame(string matchId, string playerName) {
-            return base.Channel.JoinGame(matchId, playerName);
+        public bool JoinGame(string matchId, string playerName, byte[] avatarBytes, string avatarFileName) {
+            return base.Channel.JoinGame(matchId, playerName, avatarBytes, avatarFileName);
         }
         
-        public System.Threading.Tasks.Task<bool> JoinGameAsync(string matchId, string playerName) {
-            return base.Channel.JoinGameAsync(matchId, playerName);
+        public System.Threading.Tasks.Task<bool> JoinGameAsync(string matchId, string playerName, byte[] avatarBytes, string avatarFileName) {
+            return base.Channel.JoinGameAsync(matchId, playerName, avatarBytes, avatarFileName);
         }
         
         public void LeaveGame(string matchId, string playerName) {
@@ -105,12 +266,28 @@ namespace Forbbiden.Client.GameManager {
             return base.Channel.SendChatMessageAsync(matchId, playerName, message);
         }
         
-        public string[] GetPlayers(string matchId) {
+        public Forbbiden.Client.GameManager.PlayerInfo[] GetPlayers(string matchId) {
             return base.Channel.GetPlayers(matchId);
         }
         
-        public System.Threading.Tasks.Task<string[]> GetPlayersAsync(string matchId) {
+        public System.Threading.Tasks.Task<Forbbiden.Client.GameManager.PlayerInfo[]> GetPlayersAsync(string matchId) {
             return base.Channel.GetPlayersAsync(matchId);
+        }
+        
+        public void SetReady(string matchId, string username, bool ready) {
+            base.Channel.SetReady(matchId, username, ready);
+        }
+        
+        public System.Threading.Tasks.Task SetReadyAsync(string matchId, string username, bool ready) {
+            return base.Channel.SetReadyAsync(matchId, username, ready);
+        }
+        
+        public void StartMatch(string matchId, string username) {
+            base.Channel.StartMatch(matchId, username);
+        }
+        
+        public System.Threading.Tasks.Task StartMatchAsync(string matchId, string username) {
+            return base.Channel.StartMatchAsync(matchId, username);
         }
     }
 }

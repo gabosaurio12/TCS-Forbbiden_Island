@@ -23,7 +23,6 @@ namespace Forbbiden.Client
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
-        private string UploadedAvatarProjectPath;
         private string AvatarFileName;
         private bool AvatarChanged = false;
 
@@ -72,18 +71,25 @@ namespace Forbbiden.Client
                 }
             }
 
-            if (player.PlayerAvatarPath != null)
+            if (!string.IsNullOrEmpty(player.PlayerAvatarPath))
             {
-                string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
-
-                var bmp = new BitmapImage();
-                bmp.BeginInit();
-                bmp.CacheOption = BitmapCacheOption.OnLoad;
-                bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-                bmp.EndInit();
-                imgAvatar.Fill = new ImageBrush(bmp);
+                string avatarPath = ResolveLocalAvatarPath(player.PlayerAvatarPath);
+                if (!string.IsNullOrEmpty(avatarPath) && File.Exists(avatarPath))
+                {
+                    try
+                    {
+                        var bmp = new BitmapImage();
+                        bmp.BeginInit();
+                        bmp.CacheOption = BitmapCacheOption.OnLoad;
+                        bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
+                        bmp.EndInit();
+                        imgAvatar.Fill = new ImageBrush(bmp);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn("No se pudo cargar avatar local: " + avatarPath, ex);
+                    }
+                }
             }
         }
 
@@ -119,13 +125,12 @@ namespace Forbbiden.Client
                         isValid = false;
                     }
                 }
-                catch (FaultException<DBFault> ex)
+                catch (Exception ex)
                 {
-                    string classMethod = "ProfilePage.ValidateUsername";
-                    Log.Error(classMethod, ex);
-                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                    Log.Warn("ValidateUsername error", ex);
+                    MessageBox.Show("No se pudo verificar el nombre de usuario.");
+                    isValid = false;
                 }
-                
             }
         }
 
@@ -139,10 +144,19 @@ namespace Forbbiden.Client
             }
             else
             {
-                if (!ProfileClient.ValidateEmail(email))
+                try
                 {
-                    MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
-                    txtBkEmail.Foreground = Brushes.Red;
+                    if (!ProfileClient.ValidateEmail(email))
+                    {
+                        MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
+                        txtBkEmail.Foreground = Brushes.Red;
+                        isValid = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Warn("ValidateEmail error", ex);
+                    MessageBox.Show("No se pudo validar el correo.");
                     isValid = false;
                 }
             }
@@ -156,7 +170,7 @@ namespace Forbbiden.Client
             player.Status = ProfilePlayer.Status;
             player.IsVerified = ProfilePlayer.IsVerified;
 
-            player.SocialMedia = new []
+            player.SocialMedia = new[]
             {
                 new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = this.ProfilePlayer.PlayerId },
                 new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = this.ProfilePlayer.PlayerId },
@@ -242,13 +256,62 @@ namespace Forbbiden.Client
             if (result == true)
             {
                 AvatarFileName = Path.GetFileName(openFileDialog.FileName);
-
                 UploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
 
                 imgAvatar.Fill = ViewUtils.GetImageBrush(UploadedAvatarOriginalPath);
 
                 AvatarChanged = true;
             }
+        }
+
+        private byte[] GetAvatarBytesResized(string filePath, int maxDimension = 256, int jpegQuality = 80)
+        {
+            try
+            {
+                if (!File.Exists(filePath)) return null;
+
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = new Uri(filePath);
+                bitmap.DecodePixelWidth = maxDimension;
+                bitmap.DecodePixelHeight = maxDimension;
+                bitmap.EndInit();
+                bitmap.Freeze();
+
+                var encoder = new JpegBitmapEncoder();
+                encoder.QualityLevel = jpegQuality;
+                encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+                using (var ms = new MemoryStream())
+                {
+                    encoder.Save(ms);
+                    return ms.ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warn("GetAvatarBytesResized failed", ex);
+                return null;
+            }
+        }
+
+        private string ResolveLocalAvatarPath(string avatarPathOrFileName)
+        {
+            try
+            {
+                if (Path.IsPathRooted(avatarPathOrFileName) && File.Exists(avatarPathOrFileName))
+                    return avatarPathOrFileName;
+
+                string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                var candidate = Path.Combine(projectDir, "avatars", avatarPathOrFileName);
+                if (File.Exists(candidate)) return candidate;
+
+                if (File.Exists(avatarPathOrFileName)) return avatarPathOrFileName;
+
+                return null;
+            }
+            catch { return null; }
         }
     }
 }
