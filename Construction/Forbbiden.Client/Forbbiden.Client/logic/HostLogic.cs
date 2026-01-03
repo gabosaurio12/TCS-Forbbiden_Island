@@ -15,7 +15,7 @@ namespace Forbbiden.Client.logic
         private static BoardManagerClient BoardClient = new BoardManagerClient();
         private static int PlayersTurnIndex = 0;
 
-        public HostLogic()
+        protected HostLogic()
         {
             MatchNotificationsSingleton.Instance.OnTurnFinished += SendTurnNotificationToPlayer;
         }

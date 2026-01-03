@@ -13,7 +13,7 @@ namespace Forbbiden.Client.logic
         private static BoardPage MatchBoardPage;
         private static List<string> PlayersUsername = new List<string>();
 
-        public PlayerLogic()
+        protected PlayerLogic()
         {
             MatchNotificationsSingleton.Instance.OnBoardCreated += CreateBoardPageFromJSON;
             MatchNotificationsSingleton.Instance.OnBoardUpdated += RefreshBoardFromJSON;
