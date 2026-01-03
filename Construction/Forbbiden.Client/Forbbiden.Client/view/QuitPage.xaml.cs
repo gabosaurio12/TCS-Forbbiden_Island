@@ -3,6 +3,7 @@ using Forbbiden.Client.ProfileManager;
 using log4net;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -27,7 +28,7 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private async void DisconnectPlayer(string username)
+        private async Task DisconnectPlayer(string username)
         {
             var client = new ProfileManagerClient();
 
@@ -52,7 +53,7 @@ namespace Forbbiden.Client.view
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
-            DisconnectPlayer(ClientSession.Username);
+            _ = DisconnectPlayer(ClientSession.Username);
             Application.Current.Shutdown();
             Log.Info("App closed");
         }

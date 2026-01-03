@@ -146,7 +146,7 @@ namespace Forbbiden.Client.view.games
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
         }
 
-        public void ShowInteractiveTiles(List<UserControlTile> tiles)
+        public static void ShowInteractiveTiles(List<UserControlTile> tiles)
         {
             foreach (var tile in tiles)
             {
@@ -314,6 +314,19 @@ namespace Forbbiden.Client.view.games
             }
         }
 
+        private Dictionary<string, Image> SetOnBoardImagesDictionary()
+        {
+            var onBoardImage = new Dictionary<string, Image>
+            {
+                { "clean-code-name", cleanCodeImage },
+                { "cubicle-keys-name", cubicleKeysImage },
+                { "lucio-name", lucioImage },
+                { "parking-card-name", parkingCardImage }
+            };
+
+            return onBoardImage;
+        }
+
         private void RefreshTreasureImage(Card treasure)
         {
             string fileName = treasure.ImagePath.Split('.')[0];
@@ -322,13 +335,7 @@ namespace Forbbiden.Client.view.games
             string newFilePath = System.IO.Path.Combine(projectDir, "images", "cards", newFileName);
             BitmapImage treasureImageColor = ViewUtils.GetBitmapImage(newFilePath);
 
-            var onBoardImage = new Dictionary<string, Image>
-            {
-                { "clean-code-name", cleanCodeImage },
-                { "cubicle-keys-name", cubicleKeysImage },
-                { "lucio-name", lucioImage },
-                { "parking-card-name", parkingCardImage }
-            };
+            var onBoardImage = SetOnBoardImagesDictionary();
 
             if (onBoardImage.TryGetValue(treasure.Name, out var image))
             {

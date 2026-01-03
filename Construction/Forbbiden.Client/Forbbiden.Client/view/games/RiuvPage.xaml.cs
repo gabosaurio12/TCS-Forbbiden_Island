@@ -72,8 +72,7 @@ namespace Forbbiden.Client.view.games
 
         private void SetRandomKey()
         {
-            var rand = new Random();
-            currentKey = possibleKeys[rand.Next(possibleKeys.Count)];
+            currentKey = possibleKeys[MatchLogic.Rand.Next(possibleKeys.Count)];
             txtKey1.Text = currentKey.ToString();
             txtKey1.Foreground = Brushes.Black; 
         }

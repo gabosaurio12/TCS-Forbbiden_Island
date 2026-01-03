@@ -59,19 +59,23 @@ namespace Forbbiden.Server.logic
         public string CreateRandomToken()
         {
             int tokenLength = 6;
-            var randomGenerator = new RandomNumberGenerator.Create();
-            int minRandom = 0;
-            int maxRandom = 9;
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < tokenLength; i++)
+            using (var randomGenerator = RandomNumberGenerator.Create())
             {
-                int randomToken = randomGenerator.Next(minRandom, maxRandom);
-                builder.Append(randomToken);
+                int minRandom = 0;
+                int maxRandom = 9;
+                StringBuilder builder = new StringBuilder();
+                byte[] randomNumber = new byte[1];
+                for (int i = 0; i < tokenLength; i++)
+                {
+                    randomGenerator.GetBytes(randomNumber);
+                    int randomToken = randomNumber[0] % (maxRandom - minRandom + 1) + minRandom;
+                    builder.Append(randomToken);
+                }
+
+                string randomTokenString = builder.ToString();
+
+                return randomTokenString;
             }
-
-            string randomTokenString = builder.ToString();
-
-            return randomTokenString;
         }
 
         private bool RemoveExistingToken(int playerId)
