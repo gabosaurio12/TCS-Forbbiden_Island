@@ -16,7 +16,7 @@ namespace Forbbiden.Contracts
         bool IsUsernameAvailable(string username);
 
         [OperationContract]
-        [FaultContract(typeof(EmailFault))]
+        [FaultContract(typeof(Fault))]
         bool SendEmail(string email, int playerId);
 
         [OperationContract]
