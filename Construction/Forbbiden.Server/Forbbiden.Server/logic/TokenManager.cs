@@ -3,10 +3,9 @@ using Forbbiden.Server.utils;
 using log4net;
 using System;
 using System.Data.Entity.Core;
-using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
 
@@ -60,13 +59,13 @@ namespace Forbbiden.Server.logic
         public string CreateRandomToken()
         {
             int tokenLength = 6;
-            Random random = new Random();
+            var randomGenerator = new RandomNumberGenerator.Create();
             int minRandom = 0;
             int maxRandom = 9;
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < tokenLength; i++)
             {
-                int randomToken = random.Next(minRandom, maxRandom);
+                int randomToken = randomGenerator.Next(minRandom, maxRandom);
                 builder.Append(randomToken);
             }
 
