@@ -28,7 +28,7 @@ namespace Forbbiden.Server.logic
         {
             Log.Error(classMethod, ex);
 
-            var fault = new DBFault
+            var fault = new Fault
             {
                 Error = "Database Error",
                 Details = ex.Message
@@ -36,23 +36,7 @@ namespace Forbbiden.Server.logic
 
             string entityError = "EntityException";
 
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
-        }
-
-        private void HandleException(Exception ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "Exception";
-
-            throw new FaultException<DBFault>(fault,
+            throw new FaultException<Fault>(fault,
                 new FaultReason(entityError));
         }
 

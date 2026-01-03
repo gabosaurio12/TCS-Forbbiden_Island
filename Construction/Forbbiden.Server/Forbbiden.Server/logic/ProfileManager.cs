@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -26,22 +27,6 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "EntityException";
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
-        }
-
         public bool ValidateEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -61,7 +46,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ValidateEmail ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -82,7 +67,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.IsUsernameAvailable ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
             return usernameFound;
@@ -118,15 +103,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (SmtpException ex)
                 {
-                    var fault = new EmailFault
-                    {
-                        Error = "SMTP Error",
-                        Details = ex.Message
-                    };
-                    Log.Error("ERROR: ProfileManager.SendEmail", ex);
-
-                    throw new FaultException<EmailFault>(fault,
-                        new FaultReason("SmtpException"));
+                    string classMethod = "ProfileManager.SendEmail";
+                    ExceptionHandler.HandleSmtpException(ex, classMethod);
                 }
             }
 
@@ -162,7 +140,7 @@ namespace Forbbiden.Server.logic
                 {
                     playerId = -1;
                     string classMethod = "ProfileManager.SignUp ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -199,7 +177,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.Login ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -258,7 +236,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.GetPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 if (player == null)
@@ -291,7 +269,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.GetPlayerById ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -321,7 +299,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.GetFriendsByID ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 var friendships = new List<Friendship>();
@@ -359,10 +337,34 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ClearSocials ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
+            return success;
+        }
+
+        private bool SaveUpdateChanges()
+        {
+            bool success = false;
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.SaveChanges();
+                        transaction.Commit();
+                        success = true;
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        transaction.Rollback();
+                        string classMethod = "ProfileManager.SaveUpdateChanges";
+                        ExceptionHandler.HandleDbUpdateException(ex, classMethod);
+                    }
+                }
+            }
             return success;
         }
 
@@ -395,35 +397,12 @@ namespace Forbbiden.Server.logic
                         }));
                     }
 
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player updated");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.ConnectPlayer", ex);
-
-                            var fault = new DBFault
-                            {
-                                Error = "Database Error",
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
-                        }                        
-                    }                    
+                    success = SaveUpdateChanges();                                        
                 }
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.UpdatePlayer ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
             return success;
@@ -456,7 +435,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.DeletePlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -477,35 +456,13 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ConnectPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 if (player != null)
                 {
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            player.player_status = 1;
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player connected");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
-                            var fault = new DBFault
-                            {
-                                Error = "Database Error",
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
-                        }
-                    }
+                    player.player_status = 1;
+                    success = SaveUpdateChanges();
                 }
             }
 
@@ -526,40 +483,17 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ConnectPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 if (player != null)
                 {
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            player.player_status = 0;
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player connected");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
-                            var fault = new DBFault
-                            {
-                                Error = "Database Error",
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
-                        }
-                    }
+                    player.player_status = 0;
+                    success = SaveUpdateChanges();
                 }
             }
 
             return success;
         }
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.callbacks;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -22,54 +23,6 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "EntityException";
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
-        }
-
-        private void HandleCommunicationException(CommunicationException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new CallbackFault
-            {
-                Error = "Communication Error",
-                Details = ex.Message
-            };
-
-            string communicationError = "CommunicationException";
-
-            throw new FaultException<CallbackFault>(fault,
-                new FaultReason(communicationError));
-        }
-
-        private void HandleTimeoutException(TimeoutException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new TimeoutFault
-            {
-                Error = "Timeout Error",
-                Details = ex.Message
-            };
-
-            string timeoutError = "TimeoutException";
-
-            throw new FaultException<TimeoutFault>(fault,
-                new FaultReason(timeoutError));
-        }
-
         public Contracts.Card GetCard(string path)
         {
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
@@ -82,7 +35,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetCard";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 Contracts.Card contractCard;
@@ -122,7 +75,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetFloodCards";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 List<Contracts.Card> floodCards = null;
@@ -163,7 +116,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetTreasureCards";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 List<Contracts.Card> treasureCards = null;
@@ -196,12 +149,12 @@ namespace Forbbiden.Server.logic
             catch (CommunicationException ex)
             {
                 string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                HandleCommunicationException(ex, classMethod);
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
             }
             catch (TimeoutException ex)
             {
                 string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
 
@@ -214,12 +167,12 @@ namespace Forbbiden.Server.logic
             catch (CommunicationException ex)
             {
                 string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                HandleCommunicationException(ex, classMethod);
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
             }
             catch (TimeoutException ex)
             {
                 string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
 
@@ -232,12 +185,12 @@ namespace Forbbiden.Server.logic
             catch (CommunicationException ex)
             {
                 string classMethod = "BoardManger.SendOnPlayersTurnCallback";
-                HandleCommunicationException(ex, classMethod);
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
             }
             catch (TimeoutException ex)
             {
                 string classMethod = "BoardManger.SendOnPlayersTurnCallback";
-                HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
 
@@ -250,12 +203,12 @@ namespace Forbbiden.Server.logic
             catch (CommunicationException ex)
             {
                 string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                HandleCommunicationException(ex, classMethod);
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
             }
             catch (TimeoutException ex)
             {
                 string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
     }
