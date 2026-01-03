@@ -149,6 +149,30 @@ namespace Forbbiden.Client.BoardManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCard", ReplyAction="http://tempuri.org/IBoardManager/GetCardResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardAsync(string path);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackResponse")]
+        void SendOnBoardCreatedCallback(string boardJson, string[] usernames);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackResponse")]
+        System.Threading.Tasks.Task SendOnBoardCreatedCallbackAsync(string boardJson, string[] usernames);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackResponse")]
+        void SendOnBoardUpdatedCallback(string boardJson, string[] usernames);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackResponse")]
+        System.Threading.Tasks.Task SendOnBoardUpdatedCallbackAsync(string boardJson, string[] usernames);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackResponse")]
+        void SendOnPlayersTurnCallback(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackResponse")]
+        System.Threading.Tasks.Task SendOnPlayersTurnCallbackAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackResponse")]
+        void SendOnTurnFinishedCallback(string boardJson, string[] usernames);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackResponse")]
+        System.Threading.Tasks.Task SendOnTurnFinishedCallbackAsync(string boardJson, string[] usernames);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -208,6 +232,38 @@ namespace Forbbiden.Client.BoardManager {
         
         public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardAsync(string path) {
             return base.Channel.GetCardAsync(path);
+        }
+        
+        public void SendOnBoardCreatedCallback(string boardJson, string[] usernames) {
+            base.Channel.SendOnBoardCreatedCallback(boardJson, usernames);
+        }
+        
+        public System.Threading.Tasks.Task SendOnBoardCreatedCallbackAsync(string boardJson, string[] usernames) {
+            return base.Channel.SendOnBoardCreatedCallbackAsync(boardJson, usernames);
+        }
+        
+        public void SendOnBoardUpdatedCallback(string boardJson, string[] usernames) {
+            base.Channel.SendOnBoardUpdatedCallback(boardJson, usernames);
+        }
+        
+        public System.Threading.Tasks.Task SendOnBoardUpdatedCallbackAsync(string boardJson, string[] usernames) {
+            return base.Channel.SendOnBoardUpdatedCallbackAsync(boardJson, usernames);
+        }
+        
+        public void SendOnPlayersTurnCallback(string username) {
+            base.Channel.SendOnPlayersTurnCallback(username);
+        }
+        
+        public System.Threading.Tasks.Task SendOnPlayersTurnCallbackAsync(string username) {
+            return base.Channel.SendOnPlayersTurnCallbackAsync(username);
+        }
+        
+        public void SendOnTurnFinishedCallback(string boardJson, string[] usernames) {
+            base.Channel.SendOnTurnFinishedCallback(boardJson, usernames);
+        }
+        
+        public System.Threading.Tasks.Task SendOnTurnFinishedCallbackAsync(string boardJson, string[] usernames) {
+            return base.Channel.SendOnTurnFinishedCallbackAsync(boardJson, usernames);
         }
     }
 }

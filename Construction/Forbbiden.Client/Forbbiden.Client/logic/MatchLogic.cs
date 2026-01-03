@@ -10,6 +10,18 @@ namespace Forbbiden.Client.logic
     {
         public static Random Rand = new Random();
 
+        public static List<UserControlTile> GetAvatarsBeginningTiles(UserControlBoard board, int numberOfPlayers)
+        {
+            var boardTiles = board.GetAllTilesFromGrid();
+            var beginningTiles = new List<UserControlTile>();
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                beginningTiles.Add(boardTiles[Rand.Next(0, boardTiles.Count)]);
+            }
+
+            return beginningTiles;
+        }
+
         public static List<UserControlTile> GetPossibleTilesToMove(UserControlTile tile, UserControlBoard board)
         {
             int[] forbbidenCoordinates = { 01, 04, 10, 15, 40, 45, 51, 54 };

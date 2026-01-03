@@ -1,6 +1,5 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.games;
 using log4net;
 using System.ServiceModel;
 using System.Windows;
@@ -62,8 +61,10 @@ namespace Forbbiden.Client.logic.board.states
 
         public void OnEndTurnClicked()
         {
+            Context.Board.ResetTiles();
             Context.Board.EndTurn();
-            Exit();
+            PlayerLogic.SendTurnFinishedCallback(Context.Board);
+            Context.SetState(new StandByState(Context));
         }
 
         public void OnMoveClicked()

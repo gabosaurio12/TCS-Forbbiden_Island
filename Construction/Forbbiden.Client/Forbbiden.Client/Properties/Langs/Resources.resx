@@ -468,4 +468,16 @@
   <data name="you_drowned_message" xml:space="preserve">
     <value>You have drowned, better luck next time!</value>
   </data>
+  <data name="not_your_turn_title" xml:space="preserve">
+    <value>It's Not Your Turn</value>
+  </data>
+  <data name="not_your_turn_message" xml:space="preserve">
+    <value>It's not your turn yet, wait a little bit!</value>
+  </data>
+  <data name="your_turn_title" xml:space="preserve">
+    <value>Your Turn!</value>
+  </data>
+  <data name="your_turn_message" xml:space="preserve">
+    <value>It's your turn to play! Choose wisely your actions</value>
+  </data>
 </root>

@@ -30,5 +30,10 @@ namespace Forbbiden.Client.logic.board
         {
             SetState(new EmergencyMoveState(this));
         }
+
+        public void EnterNormalState()
+        {
+            SetState(new NormalState(this));
+        }
     }
 }

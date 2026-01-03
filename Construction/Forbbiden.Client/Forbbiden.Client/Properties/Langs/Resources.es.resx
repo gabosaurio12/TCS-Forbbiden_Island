@@ -468,4 +468,16 @@
   <data name="you_drowned_message" xml:space="preserve">
     <value>Te ahogaste ¡Mejor suerte para la próxima!</value>
   </data>
+  <data name="not_your_turn_title" xml:space="preserve">
+    <value>No Es Tu Turno</value>
+  </data>
+  <data name="not_your_turn_message" xml:space="preserve">
+    <value>Aún no es tu turno ¡Espera un poco!</value>
+  </data>
+  <data name="your_turn_title" xml:space="preserve">
+    <value>¡Tu Turno!</value>
+  </data>
+  <data name="your_turn_message" xml:space="preserve">
+    <value>¡Es tu turno de jugar! Elige con sabiduría tus acciones</value>
+  </data>
 </root>

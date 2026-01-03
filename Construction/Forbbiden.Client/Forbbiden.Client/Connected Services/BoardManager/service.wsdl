@@ -65,6 +65,30 @@
   <wsdl:message name="IBoardManager_GetCard_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCardResponse" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallback" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallback" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallback" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallback" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallbackResponse" />
+  </wsdl:message>
   <wsdl:portType name="IBoardManager">
     <wsdl:operation name="GetTileImages">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetTileImages" message="tns:IBoardManager_GetTileImages_InputMessage" />
@@ -81,6 +105,22 @@
     <wsdl:operation name="GetCard">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetCard" message="tns:IBoardManager_GetCard_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetCardResponse" message="tns:IBoardManager_GetCard_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendOnBoardCreatedCallback">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback" message="tns:IBoardManager_SendOnBoardCreatedCallback_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackResponse" message="tns:IBoardManager_SendOnBoardCreatedCallback_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendOnBoardUpdatedCallback">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback" message="tns:IBoardManager_SendOnBoardUpdatedCallback_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackResponse" message="tns:IBoardManager_SendOnBoardUpdatedCallback_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendOnPlayersTurnCallback">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback" message="tns:IBoardManager_SendOnPlayersTurnCallback_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackResponse" message="tns:IBoardManager_SendOnPlayersTurnCallback_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendOnTurnFinishedCallback">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback" message="tns:IBoardManager_SendOnTurnFinishedCallback_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackResponse" message="tns:IBoardManager_SendOnTurnFinishedCallback_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IBoardManager" type="tns:IBoardManager">
@@ -116,6 +156,42 @@
     </wsdl:operation>
     <wsdl:operation name="GetCard">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOnBoardCreatedCallback">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOnBoardUpdatedCallback">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOnPlayersTurnCallback">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOnTurnFinishedCallback">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

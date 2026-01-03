@@ -628,6 +628,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It&apos;s not your turn yet, wait a little bit!.
+        /// </summary>
+        public static string not_your_turn_message {
+            get {
+                return ResourceManager.GetString("not_your_turn_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s Not Your Turn.
+        /// </summary>
+        public static string not_your_turn_title {
+            get {
+                return ResourceManager.GetString("not_your_turn_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Offline.
         /// </summary>
         public static string offline {
@@ -1110,6 +1128,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string you_drowned_message {
             get {
                 return ResourceManager.GetString("you_drowned_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s your turn to play! Choose wisely your actions.
+        /// </summary>
+        public static string your_turn_message {
+            get {
+                return ResourceManager.GetString("your_turn_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Turn!.
+        /// </summary>
+        public static string your_turn_title {
+            get {
+                return ResourceManager.GetString("your_turn_title", resourceCulture);
             }
         }
     }
