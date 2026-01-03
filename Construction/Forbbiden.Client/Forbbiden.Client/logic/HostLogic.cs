@@ -50,7 +50,7 @@ namespace Forbbiden.Client.logic
             return usernames;
         }
 
-        public static string CreateCallbackBoardPageJSON(CallbackBoardPage page)
+        public static string CreateCallbackBoardPageJSON(BoardPageCallbackDto page)
         {
             return JsonSerializer.Serialize(page);
         }
@@ -58,7 +58,7 @@ namespace Forbbiden.Client.logic
         public static void SendBoardToPlayers(Match matchInfo)
         {
             string[] usernames = GetPlayersUsernames(matchInfo.Players.ToList());
-            CallbackBoardPage callbackPage = new CallbackBoardPage(
+            BoardPageCallbackDto callbackPage = new BoardPageCallbackDto(
                 MatchBoardPage, usernames);
             string boardJson = CreateCallbackBoardPageJSON(callbackPage);
             BoardClient.SendOnBoardCreatedCallbackAsync(boardJson, usernames);

@@ -22,13 +22,11 @@ namespace Forbbiden.Client.view
             Loaded += JoinGameControl_Loaded;
         }
 
-        // Se ejecuta al cargar el control
         private void JoinGameControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadMatches();
         }
 
-        // Carga las partidas disponibles desde el servidor
         private void LoadMatches()
         {
             try
@@ -52,8 +50,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar las partidas: {ex.Message}",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
             }
         }
 
@@ -84,7 +81,6 @@ namespace Forbbiden.Client.view
         {
             if (sender is Button btn && btn.DataContext is MatchItem match)
             {
-                var profileClient = new ProfileManagerClient();
                 var currentPlayer = ClientSession.GetPlayer();
 
                 if (currentPlayer.PlayerId == -1)

@@ -99,7 +99,6 @@ namespace Forbbiden.Client
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            var profileClient = new ProfileManagerClient();
             var matchClient = new MatchManagerClient();
 
             try

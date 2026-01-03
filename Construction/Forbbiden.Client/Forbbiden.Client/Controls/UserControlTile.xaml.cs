@@ -16,7 +16,7 @@ namespace Forbbiden.Client.Controls
     /// </summary>
     public partial class UserControlTile : UserControl
     {
-        public Card TreasureCard;
+        public Card TreasureCard { get; set; }
         public int Col { get; set; }
         public int Row { get; set; }
         public bool IsTreasure { get; set; }
@@ -31,7 +31,7 @@ namespace Forbbiden.Client.Controls
         public Color EnterBorder { get; set; }
         public Color RedColor { get; set; }
 
-        public string ImageFileName;
+        public string ImageFileName { get; set; }
 
         public UserControlTile()
         {

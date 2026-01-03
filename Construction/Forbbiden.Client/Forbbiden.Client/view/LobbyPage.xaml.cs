@@ -5,7 +5,6 @@ using log4net;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,25 +17,25 @@ namespace Forbbiden.Client.view
 {
     public partial class LobbyPage : Page, IGameServiceCallback
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LobbyPage));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LobbyPage));
 
-        private DispatcherTimer timer;
-        private string currentPlayer;
+        private DispatcherTimer Timer;
+        private string CurrentPlayer;
 
-        private Dictionary<string, TextBlock> playerMsgMap;
+        private Dictionary<string, TextBlock> PlayerMsgMap;
 
-        private GameServiceClient gameClient;
-        private GameServiceCallback callback;
+        private readonly GameServiceClient GameClient;
+        private readonly GameServiceCallback Callback;
 
-        private int matchId;
-        private string username;
+        private readonly int MatchId;
+        private readonly string Username;
 
         //Host
         public LobbyPage(int matchId)
         {
             InitializeComponent();
 
-            this.matchId = matchId;
+            this.MatchId = matchId;
 
             StartClock();
             LoadPlayers();           
@@ -52,10 +51,10 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
 
-            this.matchId = matchId;
-            this.username = username;
-            this.gameClient = gameClient;
-            this.callback = callback;
+            this.MatchId = matchId;
+            this.Username = username;
+            this.GameClient = gameClient;
+            this.Callback = callback;
 
             StartClock();
             LoadPlayers();
@@ -69,9 +68,9 @@ namespace Forbbiden.Client.view
 
         private void StartClock()
         {
-            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -81,26 +80,27 @@ namespace Forbbiden.Client.view
 
         private void TrySubscribeToCallbackEvents()
         {
-            if (callback == null) return;
+            if (Callback == null) return;
 
             try
             {
-                var t = callback.GetType();
+                var t = Callback.GetType();
                 var ev = t.GetEvent("PlayerJoined");
                 if (ev != null)
-                    ev.AddEventHandler(callback, new Action<string>(OnPlayerJoined));
+                    ev.AddEventHandler(Callback, new Action<string>(OnPlayerJoined));
 
                 var ev2 = t.GetEvent("PlayerLeft");
                 if (ev2 != null)
-                    ev2.AddEventHandler(callback, new Action<string>(OnPlayerLeft));
+                    ev2.AddEventHandler(Callback, new Action<string>(OnPlayerLeft));
 
                 var ev3 = t.GetEvent("ChatMessage");
                 if (ev3 != null)
-                    ev3.AddEventHandler(callback, new Action<string, string>(OnChatMessage));
+                    ev3.AddEventHandler(Callback, new Action<string, string>(OnChatMessage));
             }
             catch (Exception ex)
             {
-                log.Warn("No se pudieron registrar eventos del callback (si no existen, está bien). " + ex.Message);
+                string message = "Callback events were not registered (if doesn't exist, it's fine).";
+                Log.Warn(message, ex);
             }
         }
 
@@ -114,14 +114,14 @@ namespace Forbbiden.Client.view
                 if (player != null && player.PlayerId != -1)
                 {
                     txtBkUser1.Text = player.PlayerUsername;
-                    currentPlayer = player.PlayerUsername;
+                    CurrentPlayer = player.PlayerUsername;
 
                     SetAvatar(imgAvatar1, player.PlayerAvatarPath);
                 }
                 else
                 {
                     txtBkUser1.Text = "Host";
-                    currentPlayer = "Host";
+                    CurrentPlayer = "Host";
                 }
 
                 txtBkUser2.Text = "Guest1";
@@ -137,7 +137,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Error("LobbyPage - LoadPlayers error", ex);
+                Log.Error("LobbyPage - LoadPlayers error", ex);
             }
         }
 
@@ -161,23 +161,23 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Warn("No se pudo cargar avatar, usando fallback. " + ex.Message);
+                Log.Warn("No se pudo cargar avatar, usando fallback. " + ex.Message);
             }
         }
 
         private void InitializePlayerMap()
         {
-            playerMsgMap = new Dictionary<string, TextBlock>();
+            PlayerMsgMap = new Dictionary<string, TextBlock>();
             try
             {
-                playerMsgMap[txtBkUser1.Text] = msgUser1;
-                playerMsgMap[txtBkUser2.Text] = msgUser2;
-                playerMsgMap[txtBkUser3.Text] = msgUser3;
-                playerMsgMap[txtBkUser4.Text] = msgUser4;
+                PlayerMsgMap[txtBkUser1.Text] = msgUser1;
+                PlayerMsgMap[txtBkUser2.Text] = msgUser2;
+                PlayerMsgMap[txtBkUser3.Text] = msgUser3;
+                PlayerMsgMap[txtBkUser4.Text] = msgUser4;
             }
             catch (Exception ex)
             {
-                log.Warn("InitializePlayerMap partial failed: " + ex.Message);
+                Log.Warn("InitializePlayerMap partial failed: " + ex.Message);
             }
         }
 
@@ -186,10 +186,10 @@ namespace Forbbiden.Client.view
             if (string.IsNullOrEmpty(playerName) || string.IsNullOrEmpty(message))
                 return;
 
-            if (!playerMsgMap.ContainsKey(playerName))
+            if (!PlayerMsgMap.ContainsKey(playerName))
                 return;
 
-            var msgBlock = playerMsgMap[playerName];
+            var msgBlock = PlayerMsgMap[playerName];
             msgBlock.Text = message;
             msgBlock.Visibility = Visibility.Visible;
 
@@ -203,10 +203,10 @@ namespace Forbbiden.Client.view
         }
         private void TxtChat_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(currentPlayer)) return;
+            if (string.IsNullOrWhiteSpace(CurrentPlayer)) return;
 
-            if (!txtBxChat.Text.StartsWith(currentPlayer + ":"))
-                txtBxChat.Text = $"{currentPlayer}: ";
+            if (!txtBxChat.Text.StartsWith(CurrentPlayer + ":"))
+                txtBxChat.Text = $"{CurrentPlayer}: ";
 
             txtBxChat.CaretIndex = txtBxChat.Text.Length;
         }
@@ -217,32 +217,32 @@ namespace Forbbiden.Client.view
 
             e.Handled = true;
 
-            if (string.IsNullOrWhiteSpace(currentPlayer)) return;
+            if (string.IsNullOrWhiteSpace(CurrentPlayer)) return;
 
             string fullText = txtBxChat.Text.Trim();
 
-            if (!fullText.StartsWith(currentPlayer + ":"))
-                fullText = $"{currentPlayer}: {fullText}";
+            if (!fullText.StartsWith(CurrentPlayer + ":"))
+                fullText = $"{CurrentPlayer}: {fullText}";
 
-            var prefix = currentPlayer + ": ";
+            var prefix = CurrentPlayer + ": ";
             string msg = fullText.Length > prefix.Length ? fullText.Substring(prefix.Length) : "";
 
             if (!string.IsNullOrEmpty(msg))
             {
-                DisplayMessage(currentPlayer, msg);
+                DisplayMessage(CurrentPlayer, msg);
 
                 try
                 {
-                    if (gameClient != null)
-                        gameClient.SendChatMessage(matchId.ToString(), username ?? currentPlayer, msg);
+                    if (GameClient != null)
+                        GameClient.SendChatMessage(MatchId.ToString(), Username ?? CurrentPlayer, msg);
                 }
                 catch (Exception ex)
                 {
-                    log.Warn("No se pudo enviar mensaje al servidor: " + ex.Message);
+                    Log.Warn("No se pudo enviar mensaje al servidor: " + ex.Message);
                 }
             }
 
-            txtBxChat.Text = $"{currentPlayer}: ";
+            txtBxChat.Text = $"{CurrentPlayer}: ";
             txtBxChat.CaretIndex = txtBxChat.Text.Length;
         }
 
@@ -292,7 +292,7 @@ namespace Forbbiden.Client.view
             catch (Exception ex)
             {
                 MessageBox.Show("Error al abrir la página de juego.");
-                log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
+                Log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
             }
         }
 
@@ -305,7 +305,7 @@ namespace Forbbiden.Client.view
             catch (Exception ex)
             {
                 MessageBox.Show("Error al abrir la página de juego.");
-                log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
+                Log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
             }
         }
     }
