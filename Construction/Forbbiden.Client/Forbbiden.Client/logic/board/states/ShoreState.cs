@@ -27,14 +27,18 @@ namespace Forbbiden.Client.logic.board.states
             }
         }
 
-        public void OnTileClicked(TileClickedEventArgs tile)
+        public static void ShoreTile(TileClickedEventArgs tile, BoardStateContext context)
         {
-            var shoreTile = Context.Board.BoardControl.GetTile(tile.Row, tile.Column);
+            var shoreTile = context.Board.BoardControl.GetTile(tile.Row, tile.Column);
             shoreTile.IsFlood = false;
             shoreTile.ResetBorder();
+        }
+
+        public void OnTileClicked(TileClickedEventArgs tile)
+        {
+            ShoreTile(tile, Context);
 
             Context.Board.EndAction();
-
             Exit();
         }
 

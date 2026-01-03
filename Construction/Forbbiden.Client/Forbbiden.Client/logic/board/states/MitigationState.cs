@@ -46,9 +46,8 @@ namespace Forbbiden.Client.logic.board.states
 
         public void OnTileClicked(TileClickedEventArgs tile)
         {
-            var shoreTile = Context.Board.BoardControl.GetTile(tile.Row, tile.Column);
-            shoreTile.IsFlood = false;
-            shoreTile.ResetBorder();
+            ShoreState.ShoreTile(tile, Context);
+
             DiscardMitigationCard();
             Context.Board.EndAction();
             Exit();
