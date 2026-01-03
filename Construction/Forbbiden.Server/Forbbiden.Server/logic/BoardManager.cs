@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.callbacks;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -35,6 +36,38 @@ namespace Forbbiden.Server.logic
 
             throw new FaultException<DBFault>(fault,
                 new FaultReason(entityError));
+        }
+
+        private void HandleCommunicationException(CommunicationException ex, string classMethod)
+        {
+            Log.Error(classMethod, ex);
+
+            var fault = new CallbackFault
+            {
+                Error = "Communication Error",
+                Details = ex.Message
+            };
+
+            string communicationError = "CommunicationException";
+
+            throw new FaultException<CallbackFault>(fault,
+                new FaultReason(communicationError));
+        }
+
+        private void HandleTimeoutException(TimeoutException ex, string classMethod)
+        {
+            Log.Error(classMethod, ex);
+
+            var fault = new TimeoutFault
+            {
+                Error = "Timeout Error",
+                Details = ex.Message
+            };
+
+            string timeoutError = "TimeoutException";
+
+            throw new FaultException<TimeoutFault>(fault,
+                new FaultReason(timeoutError));
         }
 
         public Contracts.Card GetCard(string path)
@@ -151,6 +184,78 @@ namespace Forbbiden.Server.logic
                 }
 
                 return treasureCards;
+            }
+        }
+
+        public void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnBoardCreatedCallback(boardJson, usernames);
+            }
+            catch (CommunicationException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                HandleCommunicationException(ex, classMethod);
+            }
+            catch (TimeoutException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                HandleTimeoutException(ex, classMethod);
+            }
+        }
+
+        public void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnBoardUpdatedCallback(boardJson, usernames);
+            }
+            catch (CommunicationException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                HandleCommunicationException(ex, classMethod);
+            }
+            catch (TimeoutException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                HandleTimeoutException(ex, classMethod);
+            }
+        }
+
+        public void SendOnPlayersTurnCallback(string username)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnPlayersTurnCallback(username);
+            }
+            catch (CommunicationException ex)
+            {
+                string classMethod = "BoardManger.SendOnPlayersTurnCallback";
+                HandleCommunicationException(ex, classMethod);
+            }
+            catch (TimeoutException ex)
+            {
+                string classMethod = "BoardManger.SendOnPlayersTurnCallback";
+                HandleTimeoutException(ex, classMethod);
+            }
+        }
+
+        public void SendOnTurnFinishedCallback(string boardJson, List<string> usernames)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnTurnFinishedCallback(boardJson, usernames);
+            }
+            catch (CommunicationException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                HandleCommunicationException(ex, classMethod);
+            }
+            catch (TimeoutException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                HandleTimeoutException(ex, classMethod);
             }
         }
     }

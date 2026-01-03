@@ -22,6 +22,7 @@ namespace Forbbiden.Server
             var boardHost = new ServiceHost(typeof(BoardManager));
             var tokenHost = new ServiceHost(typeof(TokenManager));
             var friendsNotificationHost = new ServiceHost(typeof(FriendsNotificationManager));
+            var matchNotificationHost = new ServiceHost(typeof(MatchNotificationManager));
 
             try
             {
@@ -33,6 +34,7 @@ namespace Forbbiden.Server
                 boardHost.Open();
                 tokenHost.Open();
                 friendsNotificationHost.Open();
+                matchNotificationHost.Open();
 
                 Console.WriteLine("=== Forbbiden Server ===");
                 Console.WriteLine("Servicios cargados desde App.config.");
@@ -85,6 +87,10 @@ namespace Forbbiden.Server
                 if (friendsNotificationHost.State == CommunicationState.Opened)
                 {
                     friendsNotificationHost.Close();
+                }
+                if (matchNotificationHost.State == CommunicationState.Opened)
+                {
+                    matchNotificationHost.Close();
                 }
 
                 Console.WriteLine("Servidor detenido.");

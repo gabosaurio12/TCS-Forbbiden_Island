@@ -38,7 +38,7 @@ namespace Forbbiden.Server.callbacks
 
             if (!Subscribers.TryGetValue(receiverUsername, out var subscriber))
             {
-                Log.Warn("[WARNING] - FriendsManager.SendFriendRequest - User unsuscribed");
+                Log.Warn("FriendsNotificationManager.SendRequestCallback - User unsuscribed");
             }
             else
             {
@@ -50,18 +50,16 @@ namespace Forbbiden.Server.callbacks
                 catch (CommunicationObjectAbortedException ex)
                 {
                     Subscribers.Remove(receiverUsername);
-
-                    Log.Warn("WARNING - FriendsNotificationManager.SendFriendRequest", ex);
+                    Log.Warn("FriendsNotificationManager.SendRequestCallback", ex);
                 }
                 catch (CommunicationException ex)
                 {
                     Subscribers.Remove(receiverUsername);
-
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRequestCallback", ex);
                 }
                 catch (TimeoutException ex)
                 {
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRequestCallback", ex);
                 }
             }
 
@@ -74,7 +72,7 @@ namespace Forbbiden.Server.callbacks
 
             if (!Subscribers.TryGetValue(username, out var subscriber))
             {
-                Log.Warn("[WARNING] - FriendsManager.SendFriendRequest - User unsuscribed");
+                Log.Warn("[WARNING] - FriendsNotificationManager.SendRefreshPageCallback - User unsuscribed");
             }
             else
             {
@@ -87,17 +85,17 @@ namespace Forbbiden.Server.callbacks
                 {
                     Subscribers.Remove(username);
 
-                    Log.Warn("WARNING - FriendsNotificationManager.SendFriendRequest", ex);
+                    Log.Warn("WARNING - FriendsNotificationManager.SendRefreshPageCallback", ex);
                 }
                 catch (CommunicationException ex)
                 {
                     Subscribers.Remove(username);
 
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRefreshPageCallback -", ex);
                 }
                 catch (TimeoutException ex)
                 {
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRefreshPageCallback -", ex);
                 }
             }
 

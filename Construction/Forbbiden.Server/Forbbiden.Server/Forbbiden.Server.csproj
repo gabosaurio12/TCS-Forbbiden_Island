@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="callbacks\MatchNotificationManager.cs" />
     <Compile Include="Card.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>

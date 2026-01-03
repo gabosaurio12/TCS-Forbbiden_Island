@@ -71,6 +71,7 @@
     <Compile Include="IFriendsNotificationManager.cs" />
     <Compile Include="IGameService.cs" />
     <Compile Include="IMatchManager.cs" />
+    <Compile Include="IMatchNotificationManager.cs" />
     <Compile Include="IProfileManager.cs" />
     <Compile Include="ITokenManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -22,6 +22,16 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         Card GetCard(string path);
+
+        [OperationContract]
+        void SendOnBoardCreatedCallback(string boardJson, List<string> usernames);
+        [OperationContract]
+        void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames);
+        [OperationContract]
+        void SendOnPlayersTurnCallback(string username);
+
+        [OperationContract]
+        void SendOnTurnFinishedCallback(string boardJson, List<string> usernames);
     }
 
     [DataContract]
@@ -54,5 +64,23 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public string ImagePath { get; set; }
+    }
+
+    [DataContract]
+    public class CallbackFault
+    {
+        [DataMember]
+        public string Error { get; set; }
+        [DataMember]
+        public string Details { get; set; }
+    }
+
+    [DataContract]
+    public class TimeoutFault
+    {
+        [DataMember]
+        public string Error { get; set; }
+        [DataMember]
+        public string Details { get; set; }
     }
 }
