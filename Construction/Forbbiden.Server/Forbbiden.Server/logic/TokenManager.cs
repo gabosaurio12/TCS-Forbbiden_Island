@@ -2,7 +2,6 @@
 using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
-using System;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -65,7 +64,6 @@ namespace Forbbiden.Server.logic
 
         private void RemoveExistingToken(int playerId)
         {
-            bool removed = false;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
@@ -75,7 +73,6 @@ namespace Forbbiden.Server.logic
                     {
                         db.Token.Remove(existingToken);
                         db.SaveChanges();
-                        removed = true;
                     }
                 }
                 catch (EntityException ex)
