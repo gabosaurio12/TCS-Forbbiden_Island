@@ -146,7 +146,7 @@ namespace Forbbiden.Client.view.games
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
         }
 
-        public static void ShowInteractiveTiles(List<UserControlTile> tiles)
+        public void ShowInteractiveTiles(List<UserControlTile> tiles)
         {
             foreach (var tile in tiles)
             {

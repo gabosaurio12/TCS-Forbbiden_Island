@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Client.logic.board.states;
 using Forbbiden.Client.view.games;
+using System.Runtime.Remoting.Contexts;
 
 namespace Forbbiden.Client.logic.board
 {
@@ -34,6 +35,14 @@ namespace Forbbiden.Client.logic.board
         public void EnterNormalState()
         {
             SetState(new NormalState(this));
+        }
+
+        public void EndTurnAndResetTiles()
+        {
+            Board.ResetTiles();
+            Board.EndTurn();
+            PlayerLogic.SendTurnFinishedCallback(Board);
+            SetState(new StandByState(this));
         }
     }
 }

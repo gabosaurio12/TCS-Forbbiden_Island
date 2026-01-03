@@ -127,6 +127,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\MatchNotificationManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ProfileManager\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -156,12 +161,16 @@
     <Compile Include="logic\board\states\MoveState.cs" />
     <Compile Include="logic\board\states\NormalState.cs" />
     <Compile Include="logic\board\states\ShoreState.cs" />
+    <Compile Include="logic\board\states\StandByState.cs" />
     <Compile Include="logic\board\states\UseCardState.cs" />
+    <Compile Include="logic\CallbackBoardPage.cs" />
     <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\FriendsNotificationSingleton.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
     <Compile Include="logic\HostLogic.cs" />
     <Compile Include="logic\MatchLogic.cs" />
+    <Compile Include="logic\MatchNotificationsSingleton.cs" />
+    <Compile Include="logic\PlayerLogic.cs" />
     <Compile Include="logic\TileClickedEventArgs.cs" />
     <Compile Include="logic\ViewUtils.cs" />
     <Compile Include="model\CardWindowSettings.cs" />
@@ -226,8 +235,8 @@
     <Compile Include="view\info\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\info\VerificationWIndow.xaml.cs">
-      <DependentUpon>VerificationWIndow.xaml</DependentUpon>
+    <Compile Include="view\info\VerificationWindow.xaml.cs">
+      <DependentUpon>VerificationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\JoinGameControl.xaml.cs">
       <DependentUpon>JoinGameControl.xaml</DependentUpon>
@@ -299,6 +308,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendsNotificationManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchNotificationManager\service.wsdl" />
+    <None Include="Connected Services\MatchNotificationManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchNotificationManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PlayerSettings.settings">
@@ -469,6 +485,7 @@
     <WCFMetadataStorage Include="Connected Services\FriendsNotificationManager\" />
     <WCFMetadataStorage Include="Connected Services\GameManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchManager\" />
+    <WCFMetadataStorage Include="Connected Services\MatchNotificationManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
     <WCFMetadataStorage Include="Connected Services\TokenManager\" />
   </ItemGroup>
@@ -553,7 +570,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\info\VerificationWIndow.xaml">
+    <Page Include="view\info\VerificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -772,6 +789,12 @@
     <None Include="Connected Services\FriendsNotificationManager\configuration91.svcinfo" />
     <None Include="Connected Services\FriendsNotificationManager\configuration.svcinfo" />
     <None Include="Connected Services\FriendsNotificationManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\MatchNotificationManager\configuration91.svcinfo" />
+    <None Include="Connected Services\MatchNotificationManager\configuration.svcinfo" />
+    <None Include="Connected Services\MatchNotificationManager\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

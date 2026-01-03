@@ -58,10 +58,7 @@ namespace Forbbiden.Client.logic.board.states
 
         public void OnEndTurnClicked()
         {
-            Context.Board.ResetTiles();
-            Context.Board.EndTurn();
-            PlayerLogic.SendTurnFinishedCallback(Context.Board);
-            Context.SetState(new StandByState(Context));
+            Context.EndTurnAndResetTiles();
         }
 
         public void OnCardClicked(Card card)
