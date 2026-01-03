@@ -7,8 +7,12 @@ using Forbbiden.Server.utils;
 
 namespace Forbbiden.Server
 {
-    class Server
+    public class Server
     {
+        private Server()
+        {
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Iniciando el servidor Forbbiden...");

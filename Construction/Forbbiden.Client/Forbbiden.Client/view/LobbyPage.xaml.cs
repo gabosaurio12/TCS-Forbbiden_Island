@@ -161,7 +161,8 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                Log.Warn("No se pudo cargar avatar, usando fallback. " + ex.Message);
+                string message = "We couldn't load the avatar, fallbakc is being used";
+                Log.Warn(message, ex);
             }
         }
 
@@ -177,7 +178,8 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                Log.Warn("InitializePlayerMap partial failed: " + ex.Message);
+                string message = "InitializePlayerMap partial failed";
+                Log.Warn(message, ex);
             }
         }
 
@@ -238,7 +240,8 @@ namespace Forbbiden.Client.view
                 }
                 catch (Exception ex)
                 {
-                    Log.Warn("No se pudo enviar mensaje al servidor: " + ex.Message);
+                    string message = "Sending message to Server failed";
+                    Log.Warn(message, ex);
                 }
             }
 
@@ -291,7 +294,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la página de juego.");
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
                 Log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
             }
         }
@@ -304,7 +307,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir la página de juego.");
+                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
                 Log.Error("MainPage.xaml.cs - PlayButton_Click", ex);
             }
         }

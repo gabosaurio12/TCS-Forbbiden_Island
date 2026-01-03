@@ -141,9 +141,6 @@
   <data name="english" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="error" xml:space="preserve">
-    <value>Error</value>
-  </data>
   <data name="friends" xml:space="preserve">
     <value>Friends</value>
   </data>
@@ -479,5 +476,8 @@
   </data>
   <data name="your_turn_message" xml:space="preserve">
     <value>It's your turn to play! Choose wisely your actions</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
   </data>
 </root>

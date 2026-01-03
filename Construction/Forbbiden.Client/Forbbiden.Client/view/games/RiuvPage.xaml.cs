@@ -157,7 +157,8 @@ namespace Forbbiden.Client.view.games
             }
             catch (Exception ex)
             {
-                log.Warn("No se pudo cargar avatar, usando fallback. " + ex.Message);
+                string message = "We couldn't load the avatar, using fallback";
+                log.Warn(message, ex);
             }
         }
     }

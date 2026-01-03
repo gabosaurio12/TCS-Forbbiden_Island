@@ -31,22 +31,22 @@ namespace Forbbiden.Client.view.games
         public readonly BoardStateContext StateContext;
         private int PendingTreasureDraws;
 
-        public UserControlTile CurrentTile;
-        public UserControlBoard BoardControl;
-        public int ActionsRemain = 3;
-        public int TreasuresCaptured = 0;
+        public UserControlTile CurrentTile { get; set; }
+        public UserControlBoard BoardControl { get; set; }
+        public int ActionsRemain { get; set; } = 3;
+        public int TreasuresCaptured { get; set; } = 0;
 
         private readonly List<Card> PlayerCards;
-        public List<Card> TreasureStack;
-        public List<Card> TreasureDiscardStack;
-        public List<Card> FloodStack;
-        public List<Card> FloodDiscardStack;
+        public List<Card> TreasureStack { get; set; }
+        public List<Card> TreasureDiscardStack { get; set; }
+        public List<Card> FloodStack { get; set; }
+        public List<Card> FloodDiscardStack { get; set; }
 
-        public int CleanCodeCounter = 0;
-        public int CubicleKeysCounter = 0;
-        public int LucioCounter = 0;
-        public int ParkingCardCounter = 0;
-        public int WaterLevelCount = 0;
+        public int CleanCodeCounter { get; set; } = 0;
+        public int CubicleKeysCounter { get; set; } = 0;
+        public int LucioCounter { get; set; } = 0;
+        public int ParkingCardCounter { get; set; } = 0;
+        public int WaterLevelCount { get; set; } = 0;
 
         private readonly string ImagesPath;
         private readonly string CardsImagesPath;

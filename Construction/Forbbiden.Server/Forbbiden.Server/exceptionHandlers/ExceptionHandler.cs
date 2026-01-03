@@ -9,7 +9,7 @@ using System.ServiceModel;
 
 namespace Forbbiden.Server.exceptionHandlers
 {
-    public class ExceptionHandler
+    public static class ExceptionHandler
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ExceptionHandler));
 
