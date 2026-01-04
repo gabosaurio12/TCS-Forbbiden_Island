@@ -119,13 +119,13 @@ namespace Forbbiden.Client.view
             LoadMatches();
         }
 
-        private async Task<bool> JoinToTheMatch(MatchItem match, Player currentPlayer, GameManagerClient gameClient)
+        private async Task<bool> JoinToAMatch(MatchItem match, Player currentPlayer, GameManagerClient gameClient)
         {
             bool joined = false;
             try
             {
                 string avatarFileName = null;
-                var avatarPath = currentPlayer?.PlayerAvatarPath;
+                var avatarPath = currentPlayer.PlayerAvatarPath;
                 if (!string.IsNullOrEmpty(avatarPath))
                 {
                     avatarFileName = System.IO.Path.GetFileName(avatarPath);
@@ -178,7 +178,7 @@ namespace Forbbiden.Client.view
 
             string username = currentPlayer.PlayerUsername;
 
-            bool joined = await JoinToTheMatch(match, currentPlayer, gameClient);
+            bool joined = await JoinToAMatch(match, currentPlayer, gameClient);
 
             if (!joined)
             {

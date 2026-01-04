@@ -401,13 +401,13 @@ namespace Forbbiden.Server.logic
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                return null;
+                return new List<byte>().ToArray();
             }
 
             if (!Regex.IsMatch(fileName, @"^[a-f0-9]{32}\.(jpg|png|jpeg)$",
                 RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(200)))
             {
-                return null;
+                return new List<byte>().ToArray();
             }
 
             var avatarsDir = Path.Combine(
@@ -419,14 +419,14 @@ namespace Forbbiden.Server.logic
 
             if (!File.Exists(fullPath))
             {
-                return null;
+                return new List<byte>().ToArray();
             }
 
             return File.ReadAllBytes(fullPath);
         }
 
 
-        private string SanitizeFileName(string input)
+        private static string SanitizeFileName(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -439,7 +439,7 @@ namespace Forbbiden.Server.logic
             return input;
         }
         
-        private bool SaveUpdateChanges(Forbbiden_FEIEntities db)
+        private static bool SaveUpdateChanges(Forbbiden_FEIEntities db)
         {
             bool success = false;
             using (var transaction = db.Database.BeginTransaction())
