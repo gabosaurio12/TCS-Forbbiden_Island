@@ -38,7 +38,7 @@ namespace Forbbiden.Client.view
         {
             MatchManagerClient matchClient = null;
 
-            LeaveGame();
+            _ = LeaveGame();
 
             matchClient = new MatchManagerClient();
             Match match = null;
@@ -59,7 +59,7 @@ namespace Forbbiden.Client.view
                 if (!string.IsNullOrEmpty(host) && string.Equals(
                     host, CurrentPlayer, StringComparison.OrdinalIgnoreCase))
                 {
-                    DeleteMatch(matchClient);
+                    _ = DeleteMatch(matchClient);
                 }
             }
 
@@ -70,7 +70,7 @@ namespace Forbbiden.Client.view
             NavigationService?.Navigate(new MainPage());
         }
 
-        private async void LeaveGame()
+        private async Task LeaveGame()
         {
             if (GameClient != null)
             {
@@ -88,7 +88,7 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private async void DeleteMatch(MatchManagerClient matchClient)
+        private async Task DeleteMatch(MatchManagerClient matchClient)
         {
             try
             {
@@ -125,6 +125,9 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private void lobbyPlayersUpdatedFallback(Forbbiden.Client.GameManager.PlayerInfo[] players) { }
+        private void LobbyPlayersUpdatedFallback(Forbbiden.Client.GameManager.PlayerInfo[] players) 
+        {
+            throw new NotSupportedException();
+        }
     }
 }

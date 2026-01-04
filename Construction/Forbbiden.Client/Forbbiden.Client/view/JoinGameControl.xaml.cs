@@ -52,7 +52,7 @@ namespace Forbbiden.Client.view
             }
             finally
             {
-                CloseClient(matchClient);
+                CloseMatchClient(matchClient);
             }
         }
 

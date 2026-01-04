@@ -88,7 +88,7 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advice!.
+        ///   Looks up a localized string similar to Warning!.
         /// </summary>
         public static string advice_title {
             get {
@@ -277,11 +277,29 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while creating the match, try later or contact tech support.
+        /// </summary>
+        public static string error_creating_match {
+            get {
+                return ResourceManager.GetString("error_creating_match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid avatar.
         /// </summary>
         public static string error_invalid_avatar {
             get {
                 return ResourceManager.GetString("error_invalid_avatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The match was created but there was an error while connecting to the lobby.
+        /// </summary>
+        public static string error_match_created_not_joined {
+            get {
+                return ResourceManager.GetString("error_match_created_not_joined", resourceCulture);
             }
         }
         
@@ -300,6 +318,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string error_processing_image {
             get {
                 return ResourceManager.GetString("error_processing_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server exceeded the response time.
+        /// </summary>
+        public static string error_server_timeout {
+            get {
+                return ResourceManager.GetString("error_server_timeout", resourceCulture);
             }
         }
         
@@ -1254,6 +1281,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string visibility {
             get {
                 return ResourceManager.GetString("visibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have to login to use this feature.
+        /// </summary>
+        public static string warning_login_permission {
+            get {
+                return ResourceManager.GetString("warning_login_permission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The room name must be twenty characters tops.
+        /// </summary>
+        public static string warning_room_char_limit {
+            get {
+                return ResourceManager.GetString("warning_room_char_limit", resourceCulture);
             }
         }
         

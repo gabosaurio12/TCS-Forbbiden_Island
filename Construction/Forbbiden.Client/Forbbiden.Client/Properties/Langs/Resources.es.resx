@@ -543,4 +543,19 @@
   <data name="error_processing_avatar" xml:space="preserve">
     <value>Hubo un error al procesar el avatar</value>
   </data>
+  <data name="warning_login_permission" xml:space="preserve">
+    <value>Debes iniciar sesión para usar esta funcionalidad</value>
+  </data>
+  <data name="warning_room_char_limit" xml:space="preserve">
+    <value>El nombre de la sala debe tener como máximo 20 caracteres</value>
+  </data>
+  <data name="error_creating_match" xml:space="preserve">
+    <value>Hubo un error al crear la partida, inténtalo de nuevo o contacta a servicio técnico</value>
+  </data>
+  <data name="error_match_created_not_joined" xml:space="preserve">
+    <value>La partida se creó, pero no se pudo unir al lobby</value>
+  </data>
+  <data name="error_server_timeout" xml:space="preserve">
+    <value>El servidor tardó demasiado en responder</value>
+  </data>
 </root>

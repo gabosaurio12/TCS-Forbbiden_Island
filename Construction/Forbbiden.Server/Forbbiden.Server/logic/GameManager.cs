@@ -127,8 +127,13 @@ namespace Forbbiden.Server.logic
 
             foreach (var client in toNotify)
             {
-                try { client.OnChatMessage(playerName, message); }
-                catch { /* ignorar client muerto aquí; cleanup en BroadcastPlayersUpdate */ }
+                try {
+                    client.OnChatMessage(playerName, message);
+                }
+                catch 
+                { 
+                    /* ignorar client muerto aquí; cleanup en BroadcastPlayersUpdate */ 
+                }
             }
         }
 
@@ -139,7 +144,6 @@ namespace Forbbiden.Server.logic
                 if (!roomPlayers.ContainsKey(matchId))
                     return new List<PlayerInfo>();
 
-                // devolver copia
                 return roomPlayers[matchId].Select(p => new PlayerInfo
                 {
                     PlayerId = p.PlayerId,
