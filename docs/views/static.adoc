@@ -4,7 +4,7 @@
 El *MD* nos muestra las relaciones entre las entidades del juego.
 
 .Modelo de dominio
-image:../images/domain.png[Modelo de dominio, width=600, align=left]
+image:../images/diagrams/classes/domain.png[Modelo de dominio, width=600, align=left]
 
 == Diagrama de clases
 

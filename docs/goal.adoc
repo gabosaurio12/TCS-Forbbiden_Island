@@ -1,0 +1,46 @@
+
+== Objetivo
+
+El objetivo del proyecto era construir un port del juego de mesa Forbidden Island a un videojuego mulitjugador en LAN. El objetivo era cada jugador pudiera jugar en tiempo real con sus amigos en su computadora.
+
+El proyecto debe cumplir con las siguientes métricas:
+
+* <2% deuda técnica
+
+* 0 smells
+
+* 0 hotspots de segurdidad
+
+Y los siguientes requisitos:
+
+* Juego multijugador (mínimo 2 máximo lo que aguante)
+
+* Soporte a inglés y español
+
+** Tiene detección de la cultura
+
+** Si el SO está en inglés el juego también
+
+* Se desarrollará en el ambiente de Microsoft
+
+** C#
+
+** .NET framework
+
+** Visual Studio o Rider
+
+** SQL Server
+
+** Entity Framework
+
+** WCF
+
+** WPF
+
+* Aprox 200 - 250 pruebas
+
+* Se usará SonarQube para analizar el código
+
+* Código con compleijdad ciclomática < 10
+
+* Control de versiones en GitHub
