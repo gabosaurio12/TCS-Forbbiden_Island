@@ -23,6 +23,8 @@ namespace Forbbiden.Server.logic
         private readonly string DefaultAvatarPath = "defaultAvatar.png";
         private readonly string DatabaseError = "Database Error";
         private readonly string EntityError = "EntityException";
+        private static string AvatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
+
 
         public ProfileManager()
         {
@@ -345,51 +347,75 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
+        private string BuildAvatarFilePath(string username, string fileName)
+        {
+            Directory.CreateDirectory(AvatarsDir);
+
+            string extension = ".jpg";
+
+            var maybeExt = Path.GetExtension(fileName);
+            if (!string.IsNullOrEmpty(maybeExt))
+            {
+                extension = maybeExt;
+            }
+
+            var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{extension}";
+            var avatarPath = Path.Combine(AvatarsDir, safeFileName);
+
+            return avatarPath;
+        }
+
         public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
             if (avatarBytes == null || avatarBytes.Length == 0)
+            { 
                 throw new FaultException("Avatar vacío o nulo.");
-
+            }
             try
             {
-                var avatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
-                if (!Directory.Exists(avatarsDir)) Directory.CreateDirectory(avatarsDir);
+                var fullPath = BuildAvatarFilePath(username, fileName);
 
-                // Obtener extensión segura
-                string ext = ".jpg";
-                try
+                string avatarsRoot = String.Concat(
+                    Path.GetFullPath(AvatarsDir),
+                    Path.DirectorySeparatorChar);
+
+                var normalizedFullPath = Path.GetFullPath(fullPath);
+
+                if (!normalizedFullPath.StartsWith(avatarsRoot, StringComparison.OrdinalIgnoreCase))
                 {
-                    var maybeExt = Path.GetExtension(fileName);
-                    if (!string.IsNullOrEmpty(maybeExt))
-                        ext = maybeExt;
+                    throw new FaultException("Invalid avatar path");
                 }
-                catch { /* ignore and fallback */ }
 
-                // Construir nombre único
-                var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{ext}";
-                var fullPath = Path.Combine(avatarsDir, safeFileName);
-
-                File.WriteAllBytes(fullPath, avatarBytes);
-
-                Log.Info($"Avatar uploaded for {username}, saved as {safeFileName}");
-                return safeFileName;
+                File.WriteAllBytes(normalizedFullPath, avatarBytes);
+                return Path.GetFileName(normalizedFullPath);
             }
             catch (Exception ex)
             {
                 Log.Error("UploadAvatar error", ex);
-                throw new FaultException("No se pudo guardar el avatar en el servidor.");
+                throw new FaultException("Server couldn't save the avatar.");
             }
         }
 
         public byte[] GetAvatar(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName)) return null;
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return null;
+            }
 
             try
             {
                 var avatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
-                var fullPath = Path.Combine(avatarsDir, fileName);
-                if (!File.Exists(fullPath)) return null;
+                var fullPath = Path.GetFullPath(
+                    Path.Combine(avatarsDir, fileName));
+
+                string root = String.Concat(Path.GetFullPath(avatarsDir),
+                    Path.DirectorySeparatorChar);
+
+                if (!File.Exists(fullPath))
+                {
+                    return null;
+                }
 
                 return File.ReadAllBytes(fullPath);
             }
@@ -400,10 +426,12 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        // Helper para sanitizar nombres simples (quitar path separators)
         private string SanitizeFileName(string input)
         {
-            if (string.IsNullOrEmpty(input)) return "user";
+            if (string.IsNullOrEmpty(input))
+            {
+                return "user";
+            }
             foreach (var c in Path.GetInvalidFileNameChars())
             {
                 input = input.Replace(c, '_');
