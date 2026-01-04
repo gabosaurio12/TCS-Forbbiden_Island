@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.GameManager; 
+﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
 using System;
@@ -45,7 +45,7 @@ namespace Forbbiden.Client.view
                         {
                             var coll = m.Players as System.Collections.ICollection;
                             if (coll != null) playersCount = coll.Count;
-                            else playersCount = m.Players.Count(); 
+                            else playersCount = m.Players.Count();
                         }
                     }
                     catch { playersCount = 0; }
@@ -71,17 +71,12 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                ViewUtils.ShowPullError(Window.GetWindow(this));
+                MessageBox.Show($"Error al cargar las partidas: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
-<<<<<<< HEAD
                 if (matchClient != null)
-=======
-                var currentPlayer = ClientSession.GetPlayer();
-
-                if (currentPlayer.PlayerId == -1)
->>>>>>> 9f7f5277d2e69ec8bbe851940e50955f9fdfbb3d
                 {
                     try { matchClient.Close(); } catch { matchClient.Abort(); }
                 }

@@ -23,7 +23,7 @@ namespace Forbbiden.Client.Controls
             ellipse.Fill = avatarImage;
         }
 
-        public static void SetFriendUsername(TextBlock textBlock, string username)
+        public void SetFriendUsername(TextBlock textBlock, string username)
         {
             textBlock.Text = username;
         }

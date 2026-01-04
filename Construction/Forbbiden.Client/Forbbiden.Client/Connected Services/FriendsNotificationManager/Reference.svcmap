@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.100.44:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="81fda394-5d5e-4755-a699-bbcbe71ecdf0" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="5b53a636-0353-4248-a7dd-2c849e51fd81" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="34d75cd8-2616-4f7e-8bac-643f1c8c04d1" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="120ac091-b496-47a2-9d0d-de11f6db6c81" SourceId="1" SourceUrl="net.tcp://localhost:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="429b3d8f-1db6-4b7c-b24a-af0d8de1c947" SourceId="1" SourceUrl="net.tcp://192.168.100.44:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="e541f03c-7e95-4a85-b166-ecd2b7111f8f" SourceId="1" SourceUrl="net.tcp://192.168.100.44:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="bda91ba9-06ee-4c60-b50d-e870e4572a59" SourceId="1" SourceUrl="net.tcp://192.168.100.44:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts1.xsd" MetadataType="Schema" ID="a3166264-238c-4dc6-b50a-2efea3f87bd8" SourceId="1" SourceUrl="net.tcp://192.168.100.44:8086/FriendsNotificationManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

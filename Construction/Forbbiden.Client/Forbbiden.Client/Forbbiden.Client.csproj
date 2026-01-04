@@ -143,15 +143,13 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
-    <Compile Include="Controls\UserControlButton.xaml.cs">
-      <DependentUpon>UserControlButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\UserControlFriend.xaml.cs">
       <DependentUpon>UserControlFriend.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="logic\BoardPageCallbackDto.cs" />
     <Compile Include="logic\board\BoardStateContext.cs" />
     <Compile Include="logic\board\IBoardState.cs" />
     <Compile Include="logic\board\states\CaptureTreasureState.cs" />
@@ -163,7 +161,6 @@
     <Compile Include="logic\board\states\ShoreState.cs" />
     <Compile Include="logic\board\states\StandByState.cs" />
     <Compile Include="logic\board\states\UseCardState.cs" />
-    <Compile Include="logic\CallbackBoardPage.cs" />
     <Compile Include="logic\AudioManager.cs" />
     <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\FriendsNotificationSingleton.cs" />
@@ -282,20 +279,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\BoardManager\Arrays.xsd">
+    <None Include="Connected Services\BoardManager\Arrays1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Card.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BoardManager\Forbbiden.Contracts.xsd">
+    <None Include="Connected Services\BoardManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\BoardManager\service.wsdl" />
-    <None Include="Connected Services\BoardManager\service.xsd">
+    <None Include="Connected Services\BoardManager\service1.wsdl" />
+    <None Include="Connected Services\BoardManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\BoardManager\service1.xsd">
+    <None Include="Connected Services\BoardManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.FriendRequest.datasource">
@@ -304,37 +301,37 @@
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.Friendship.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\FriendsManager\Forbbiden.Contracts.xsd">
+    <None Include="Connected Services\FriendsManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FriendsManager\service.wsdl" />
-    <None Include="Connected Services\FriendsManager\service.xsd">
+    <None Include="Connected Services\FriendsManager\service1.wsdl" />
+    <None Include="Connected Services\FriendsManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FriendsManager\service1.xsd">
+    <None Include="Connected Services\FriendsManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FriendsNotificationManager\Forbbiden.Contracts.xsd">
+    <None Include="Connected Services\FriendsNotificationManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FriendsNotificationManager\service.wsdl" />
-    <None Include="Connected Services\FriendsNotificationManager\service.xsd">
+    <None Include="Connected Services\FriendsNotificationManager\service1.wsdl" />
+    <None Include="Connected Services\FriendsNotificationManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FriendsNotificationManager\service1.xsd">
+    <None Include="Connected Services\FriendsNotificationManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameManager\Forbbiden.Client.GameManager.PlayerInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\GameManager\Forbbiden.Contracts.xsd">
+    <None Include="Connected Services\GameManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameManager\service.wsdl" />
-    <None Include="Connected Services\GameManager\service.xsd">
+    <None Include="Connected Services\GameManager\service1.wsdl" />
+    <None Include="Connected Services\GameManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameManager\service1.xsd">
+    <None Include="Connected Services\GameManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\MatchManager\Forbbiden.Client.MatchManager.Match.datasource">
@@ -500,10 +497,6 @@
     <WCFMetadataStorage Include="Connected Services\TokenManager\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\UserControlButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\UserControlFriend.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -689,9 +682,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\cards\water-rise.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\cards\treasure3bw.png" />

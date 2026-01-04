@@ -61,6 +61,7 @@
     <Compile Include="card_catalog.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="exceptionHandlers\ExceptionHandler.cs" />
     <Compile Include="ForbbidenModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

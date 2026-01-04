@@ -216,9 +216,6 @@
   <data name="online_friends" xml:space="preserve">
     <value>Online</value>
   </data>
-  <data name="password" xml:space="preserve">
-    <value>Password</value>
-  </data>
   <data name="play" xml:space="preserve">
     <value>Play</value>
   </data>
@@ -405,24 +402,6 @@
   <data name="keep_cards" xml:space="preserve">
     <value>Keep cards</value>
   </data>
-  <data name="create_room" xml:space="preserve">
-    <value>Create room</value>
-  </data>
-  <data name="room_name" xml:space="preserve">
-    <value>Room name</value>
-  </data>
-  <data name="visibility" xml:space="preserve">
-    <value>Visibility</value>
-  </data>
-  <data name="search_placeholder" xml:space="preserve">
-    <value>Search by room name or host...</value>
-  </data>
-  <data name="refresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="search_btn_text" xml:space="preserve">
-    <value>Search</value>
-  </data>
   <data name="verification_token_sent_title" xml:space="preserve">
     <value>Verification Token Sent</value>
   </data>
@@ -495,9 +474,25 @@
   <data name="your_turn_message" xml:space="preserve">
     <value>It's your turn to play! Choose wisely your actions</value>
   </data>
-  <data name="clean_code_name" xml:space="preserve">
-    <value>Sepa</value>
   <data name="error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="create_room" xml:space="preserve">
+    <value>Create room</value>
+  </data>
+  <data name="search_placeholder" xml:space="preserve">
+    <value>Search by room name or player</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="room_name" xml:space="preserve">
+    <value>Room name</value>
+  </data>
+  <data name="visibility" xml:space="preserve">
+    <value>Visibility</value>
   </data>
 </root>

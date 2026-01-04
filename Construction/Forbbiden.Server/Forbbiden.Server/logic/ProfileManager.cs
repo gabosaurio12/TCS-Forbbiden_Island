@@ -411,25 +411,22 @@ namespace Forbbiden.Server.logic
             return input;
         }
         
-        private bool SaveUpdateChanges()
+        private bool SaveUpdateChanges(Forbbiden_FEIEntities db)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var transaction = db.Database.BeginTransaction())
             {
-                using (var transaction = db.Database.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        db.SaveChanges();
-                        transaction.Commit();
-                        success = true;
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        transaction.Rollback();
-                        string classMethod = "ProfileManager.SaveUpdateChanges";
-                        ExceptionHandler.HandleDbUpdateException(ex, classMethod);
-                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    success = true;
+                }
+                catch (DbUpdateException ex)
+                {
+                    transaction.Rollback();
+                    string classMethod = "ProfileManager.SaveUpdateChanges";
+                    ExceptionHandler.HandleDbUpdateException(ex, classMethod);
                 }
             }
             return success;
@@ -464,7 +461,7 @@ namespace Forbbiden.Server.logic
                         }));
                     }
 
-                    success = SaveUpdateChanges();                                        
+                    success = SaveUpdateChanges(db);                                        
                 }
                 catch (EntityException ex)
                 {
@@ -509,20 +506,6 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error("ERROR" + classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = DatabaseError,
-                Details = ex.Message
-            };
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(EntityError));
-        }
-
         public bool ConnectPlayerByUsername(string username)
         {
             bool success = false;
@@ -543,7 +526,7 @@ namespace Forbbiden.Server.logic
                 if (player != null)
                 {
                     player.player_status = 1;
-                    success = SaveUpdateChanges();
+                    success = SaveUpdateChanges(db);
                 }
             }
 
@@ -570,7 +553,7 @@ namespace Forbbiden.Server.logic
                 if (player != null)
                 {
                     player.player_status = 0;
-                    success = SaveUpdateChanges();
+                    success = SaveUpdateChanges(db);
                 }
             }
 
