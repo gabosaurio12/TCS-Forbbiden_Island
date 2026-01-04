@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 
 namespace Forbbiden.Server.logic
 {
@@ -398,33 +399,32 @@ namespace Forbbiden.Server.logic
 
         public byte[] GetAvatar(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName))
+            if (string.IsNullOrWhiteSpace(fileName))
             {
                 return null;
             }
 
-            try
+            if (!Regex.IsMatch(fileName, @"^[a-f0-9]{32}\.(jpg|png|jpeg)$",
+                RegexOptions.IgnoreCase))
             {
-                var avatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
-                var fullPath = Path.GetFullPath(
-                    Path.Combine(avatarsDir, fileName));
-
-                string root = String.Concat(Path.GetFullPath(avatarsDir),
-                    Path.DirectorySeparatorChar);
-
-                if (!File.Exists(fullPath))
-                {
-                    return null;
-                }
-
-                return File.ReadAllBytes(fullPath);
-            }
-            catch (Exception ex)
-            {
-                Log.Warn($"GetAvatar failed for {fileName}", ex);
                 return null;
             }
+
+            var avatarsDir = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "avatars"
+            );
+
+            var fullPath = Path.Combine(avatarsDir, fileName);
+
+            if (!File.Exists(fullPath))
+            {
+                return null;
+            }
+
+            return File.ReadAllBytes(fullPath);
         }
+
 
         private string SanitizeFileName(string input)
         {
