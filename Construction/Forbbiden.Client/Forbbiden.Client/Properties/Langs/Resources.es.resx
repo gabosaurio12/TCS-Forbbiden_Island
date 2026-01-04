@@ -531,4 +531,16 @@
   <data name="chat_error_sending_message" xml:space="preserve">
     <value>Error al enviar mensaje</value>
   </data>
+  <data name="error_invalid_avatar" xml:space="preserve">
+    <value>Avatar inválido</value>
+  </data>
+  <data name="error_processing_image" xml:space="preserve">
+    <value>Hubo un error al procesar la imagen</value>
+  </data>
+  <data name="error_uploading_avatar" xml:space="preserve">
+    <value>Hubo un error mientras se subía la imagen</value>
+  </data>
+  <data name="error_processing_avatar" xml:space="preserve">
+    <value>Hubo un error al procesar el avatar</value>
+  </data>
 </root>

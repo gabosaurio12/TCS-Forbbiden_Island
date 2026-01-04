@@ -82,7 +82,7 @@ namespace Forbbiden.Client.view
             };
         }
 
-        private void CloseClient(MatchManagerClient client)
+        private static void CloseClient(MatchManagerClient client)
         {
             if (client == null)
             {
@@ -107,16 +107,11 @@ namespace Forbbiden.Client.view
         }
 
 
-        private int GetPlayersCount(MatchManager.PlayerInfo[] players)
+        private static int GetPlayersCount(MatchManager.PlayerInfo[] players)
         {
             if (players == null)
             {
                 return 0;
-            }
-
-            if (players is System.Collections.ICollection collection)
-            {
-                return collection.Count;
             }
 
             return players.Count();

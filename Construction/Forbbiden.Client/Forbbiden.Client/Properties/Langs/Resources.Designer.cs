@@ -277,6 +277,42 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid avatar.
+        /// </summary>
+        public static string error_invalid_avatar {
+            get {
+                return ResourceManager.GetString("error_invalid_avatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while processing the avatar.
+        /// </summary>
+        public static string error_processing_avatar {
+            get {
+                return ResourceManager.GetString("error_processing_avatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while processing the image.
+        /// </summary>
+        public static string error_processing_image {
+            get {
+                return ResourceManager.GetString("error_processing_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while uploading the avatar.
+        /// </summary>
+        public static string error_uploading_avatar {
+            get {
+                return ResourceManager.GetString("error_uploading_avatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finish Turn.
         /// </summary>
         public static string finish_turn {
