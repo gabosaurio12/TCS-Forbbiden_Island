@@ -405,7 +405,7 @@ namespace Forbbiden.Server.logic
             }
 
             if (!Regex.IsMatch(fileName, @"^[a-f0-9]{32}\.(jpg|png|jpeg)$",
-                RegexOptions.IgnoreCase))
+                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(200)))
             {
                 return null;
             }
