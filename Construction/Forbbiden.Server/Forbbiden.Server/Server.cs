@@ -7,14 +7,17 @@ using Forbbiden.Server.utils;
 
 namespace Forbbiden.Server
 {
-    class Server
+    public class Server
     {
+        private Server()
+        {
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Iniciando el servidor Forbbiden...");
             DotEnv.Load();
 
-            // SOLO SE INICIALIZAN LOS HOSTS
             var profileHost = new ServiceHost(typeof(ProfileManager));
             var friendsHost = new ServiceHost(typeof(FriendsManager));
             var matchHost = new ServiceHost(typeof(MatchManager));
@@ -22,10 +25,10 @@ namespace Forbbiden.Server
             var boardHost = new ServiceHost(typeof(BoardManager));
             var tokenHost = new ServiceHost(typeof(TokenManager));
             var friendsNotificationHost = new ServiceHost(typeof(FriendsNotificationManager));
+            var matchNotificationHost = new ServiceHost(typeof(MatchNotificationManager));
 
             try
             {
-                // NO SE CREAN ENDPOINTS AQUÍ
                 profileHost.Open();
                 friendsHost.Open();
                 matchHost.Open();
@@ -33,6 +36,7 @@ namespace Forbbiden.Server
                 boardHost.Open();
                 tokenHost.Open();
                 friendsNotificationHost.Open();
+                matchNotificationHost.Open();
 
                 Console.WriteLine("=== Forbbiden Server ===");
                 Console.WriteLine("Servicios cargados desde App.config.");
@@ -85,6 +89,10 @@ namespace Forbbiden.Server
                 if (friendsNotificationHost.State == CommunicationState.Opened)
                 {
                     friendsNotificationHost.Close();
+                }
+                if (matchNotificationHost.State == CommunicationState.Opened)
+                {
+                    matchNotificationHost.Close();
                 }
 
                 Console.WriteLine("Servidor detenido.");

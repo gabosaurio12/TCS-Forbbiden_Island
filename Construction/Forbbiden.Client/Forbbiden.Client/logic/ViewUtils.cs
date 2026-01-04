@@ -27,8 +27,8 @@ namespace Forbbiden.Client.logic
 
             Ellipse ellipse = new Ellipse
             {
-                Width = 100,
-                Height = 100,
+                Width = 70,
+                Height = 70,
                 Stroke = Brushes.LightGray,
                 StrokeThickness = 5,
                 Margin = new Thickness(0, 0, 0, 0),
@@ -46,11 +46,37 @@ namespace Forbbiden.Client.logic
             var bmp = new BitmapImage();
             bmp.BeginInit();
             bmp.CacheOption = BitmapCacheOption.OnLoad;
-            Console.WriteLine(imagePath);
             bmp.UriSource = new Uri(imagePath, UriKind.Absolute);
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
             bmp.EndInit();
+            bmp.Freeze();
 
             return bmp;
+        }
+
+        public static byte[] GetDecodedPixelBitmapImage(
+            string filePath, int maxDimension = 256, int jpegQuality = 80)
+        {
+            if (!File.Exists(filePath)) return null;
+
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(filePath);
+            bitmap.DecodePixelWidth = maxDimension;
+            bitmap.DecodePixelHeight = maxDimension;
+            bitmap.EndInit();
+            bitmap.Freeze();
+
+            var encoder = new JpegBitmapEncoder();
+            encoder.QualityLevel = jpegQuality;
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+            using (var ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                return ms.ToArray();
+            }
         }
 
         public static ImageBrush GetImageBrush(string avatarPath)

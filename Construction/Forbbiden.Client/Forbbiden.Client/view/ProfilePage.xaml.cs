@@ -39,7 +39,7 @@ namespace Forbbiden.Client
 
             ProfileClient = new ProfileManagerClient();
 
-            this.ProfilePlayer = player;
+            ProfilePlayer = player;
             txtBxUsername.Text = player.PlayerUsername;
             txtBxEmail.Text = player.PlayerEmail;
             txtBxName.Text = player.PlayerName;
@@ -209,7 +209,7 @@ namespace Forbbiden.Client
             {
                 if (string.IsNullOrEmpty(UploadedAvatarOriginalPath) || string.IsNullOrEmpty(AvatarFileName))
                 {
-                    MessageBox.Show("Avatar no válido.");
+                    MessageBox.Show("Avatar no válido."); // Fix ViewUtils.OpenNotification(title, message)
                     return;
                 }
 
@@ -219,7 +219,7 @@ namespace Forbbiden.Client
                     var bytes = GetAvatarBytesResized(UploadedAvatarOriginalPath, 256, 80);
                     if (bytes == null || bytes.Length == 0)
                     {
-                        MessageBox.Show("No se pudo procesar la imagen.");
+                        MessageBox.Show("No se pudo procesar la imagen."); // Fix ViewUtils.OpenNotification()
                         return;
                     }
 
@@ -231,19 +231,19 @@ namespace Forbbiden.Client
                     catch (FaultException fex)
                     {
                         Log.Error("UploadAvatar Fault", fex);
-                        MessageBox.Show("Error al subir avatar: " + fex.Message);
+                        MessageBox.Show("Error al subir avatar: " + fex.Message); // Fix ViewUtils.OpenNotification()
                         return;
                     }
                     catch (Exception ex)
                     {
                         Log.Error("UploadAvatar error", ex);
-                        MessageBox.Show("Error al subir avatar: " + ex.Message);
+                        MessageBox.Show("Error al subir avatar: " + ex.Message); // Fix ViewUtils.OpenNotification()
                         return;
                     }
 
                     if (string.IsNullOrEmpty(savedFileName))
                     {
-                        MessageBox.Show("El servidor no devolvió un nombre para el avatar.");
+                        MessageBox.Show("El servidor no devolvió un nombre para el avatar."); // Fix ViewUtils.OpenNotification()
                         return;
                     }
 
@@ -252,23 +252,27 @@ namespace Forbbiden.Client
                         string exeDir = AppContext.BaseDirectory;
                         string projectDir = Directory.GetParent(exeDir).Parent.Parent.FullName;
                         string localAvatarsDir = Path.Combine(projectDir, "avatars");
-                        if (!Directory.Exists(localAvatarsDir)) Directory.CreateDirectory(localAvatarsDir);
+                        if (!Directory.Exists(localAvatarsDir))
+                        {
+                            Directory.CreateDirectory(localAvatarsDir);
+                        }
 
                         string localPath = Path.Combine(localAvatarsDir, savedFileName);
                         File.WriteAllBytes(localPath, bytes);
-
-                        updatedPlayer.PlayerAvatarPath = savedFileName;
                     }
                     catch (Exception ex)
                     {
                         Log.Warn("No se pudo guardar copia local del avatar", ex);
+                    }
+                    finally
+                    {
                         updatedPlayer.PlayerAvatarPath = savedFileName;
                     }
                 }
                 catch (Exception ex)
                 {
                     Log.Error("Error preparando o subiendo avatar", ex);
-                    MessageBox.Show("Error al procesar el avatar: " + ex.Message);
+                    MessageBox.Show("Error al procesar el avatar: " + ex.Message); // Fix ViewUtils.OpenNotification()
                     return;
                 }
             }
@@ -314,7 +318,7 @@ namespace Forbbiden.Client
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg|All files (*.*)|*.*"
+                Filter = "Image files (*.png;*.jpg;*.jpeg)| *.png;*.jpg;*.jpeg"
             };
             var result = openFileDialog.ShowDialog();
 
@@ -323,9 +327,7 @@ namespace Forbbiden.Client
                 AvatarFileName = Path.GetFileName(openFileDialog.FileName);
                 UploadedAvatarOriginalPath = Path.GetFullPath(openFileDialog.FileName);
 
-                imgAvatar.Fill = new ImageBrush(
-                    new BitmapImage(
-                        new Uri(UploadedAvatarOriginalPath)));
+                imgAvatar.Fill = ViewUtils.GetImageBrush(UploadedAvatarOriginalPath);
 
                 AvatarChanged = true;
             }
@@ -335,26 +337,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                if (!File.Exists(filePath)) return null;
-
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = new Uri(filePath);
-                bitmap.DecodePixelWidth = maxDimension;
-                bitmap.DecodePixelHeight = maxDimension;
-                bitmap.EndInit();
-                bitmap.Freeze();
-
-                var encoder = new JpegBitmapEncoder();
-                encoder.QualityLevel = jpegQuality;
-                encoder.Frames.Add(BitmapFrame.Create(bitmap));
-
-                using (var ms = new MemoryStream())
-                {
-                    encoder.Save(ms);
-                    return ms.ToArray();
-                }
+                return ViewUtils.GetDecodedPixelBitmapImage(filePath, maxDimension, jpegQuality);
             }
             catch (Exception ex)
             {
@@ -370,11 +353,17 @@ namespace Forbbiden.Client
                 if (Path.IsPathRooted(avatarPathOrFileName) && File.Exists(avatarPathOrFileName))
                     return avatarPathOrFileName;
 
-                string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                string projectDir = ViewUtils.GetProjectDir();
                 var candidate = Path.Combine(projectDir, "avatars", avatarPathOrFileName);
-                if (File.Exists(candidate)) return candidate;
+                if (File.Exists(candidate))
+                {
+                    return candidate;
+                }
 
-                if (File.Exists(avatarPathOrFileName)) return avatarPathOrFileName;
+                if (File.Exists(avatarPathOrFileName))
+                {
+                    return avatarPathOrFileName;
+                }
 
                 return null;
             }

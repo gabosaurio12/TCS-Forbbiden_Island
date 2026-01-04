@@ -69,7 +69,7 @@ namespace Forbbiden.Client.view
 
                 MatchList.ItemsSource = allMatches;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show($"Error al cargar las partidas: {ex.Message}",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);

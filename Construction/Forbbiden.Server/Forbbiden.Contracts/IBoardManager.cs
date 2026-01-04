@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 
 namespace Forbbiden.Contracts
 {
@@ -19,6 +17,19 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         List<Card> GetFloodCards();
+
+        [OperationContract]
+        Card GetCard(string path);
+
+        [OperationContract]
+        void SendOnBoardCreatedCallback(string boardJson, List<string> usernames);
+        [OperationContract]
+        void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames);
+        [OperationContract]
+        void SendOnPlayersTurnCallback(string username);
+
+        [OperationContract]
+        void SendOnTurnFinishedCallback(string boardJson, List<string> usernames);
     }
 
     [DataContract]

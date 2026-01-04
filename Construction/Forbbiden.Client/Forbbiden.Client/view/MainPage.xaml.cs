@@ -8,7 +8,6 @@ using log4net;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,7 +20,7 @@ namespace Forbbiden.Client
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainPage));
         private readonly ProfileManagerClient Client;
-        public static logic.FriendsNotificationSingleton CallbackManager { get; private set; }
+        public static FriendsNotificationSingleton CallbackManager { get; private set; }
         public static IFriendsManager FriendsProxy { get; private set; }
 
         public MainPage()
@@ -64,6 +63,7 @@ namespace Forbbiden.Client
             }
             else
             {
+                ClientSession.SetGuestSession();
                 logInButton.Visibility = Visibility.Visible;
             }
         }
@@ -90,7 +90,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                NavigationService?.Navigate(new PlayPage());
+                NavigationService?.Navigate(new HostGameControl());
             }
             catch (Exception ex)
             {
@@ -145,7 +145,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private async void ConnectPlayer(string username)
+        private async Task ConnectPlayer(string username)
         {
             bool isConnected = false;
 
@@ -155,7 +155,7 @@ namespace Forbbiden.Client
             }
             catch (FaultException<DBFault> dbFault)
             {
-                Log.Error("ERROR: LoginPage.ConnectPlayer", dbFault);
+                Log.Error("MainPage.ConnectPlayer", dbFault);
                 ViewUtils.ShowPushError(Window.GetWindow(this));
             }
 
@@ -173,19 +173,22 @@ namespace Forbbiden.Client
                 {
                     verifyButton.Visibility = Visibility.Visible;
                 }
+                else
+                {
+                    verifyButton.Visibility = Visibility.Hidden;
+                }
 
                 txtBkUser.Text = player.PlayerUsername;
 
                 string projectDir = ViewUtils.GetProjectDir();
                 string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
                 imgAvatar.Fill = ViewUtils.GetImageBrush(avatarPath);
-                ConnectPlayer(ClientSession.Username);
-
+                _ = ConnectPlayer(ClientSession.Username);
             }
             catch (Exception ex)
             {
                 ViewUtils.HandlePageLoadError(Window.GetWindow(this));
-                Log.Error("ERROR: MainPage.ReloadMainPage", ex);
+                Log.Error("MainPage.ReloadMainPage", ex);
             }
         }
 
@@ -194,14 +197,41 @@ namespace Forbbiden.Client
             NavigationService?.Navigate(new FriendsPage());
         }
 
-        private void VerifyButton_Click(object sender, RoutedEventArgs e)
+        private void ShowVerificationWindow(ProfileManager.Player player)
         {
-            var player = ClientSession.GetPlayer();
-            var verificationWindow = new VerificationWIndow(player.PlayerId)
+            var verificationWindow = new VerificationWindow(player.PlayerId)
             {
                 Owner = Window.GetWindow(this)
             };
+
+            verificationWindow.OnVerified += async () =>
+            {
+                var profileManager = new ProfileManagerClient();
+                var updatedPlayer = await profileManager.GetPlayerByIdAsync(player.PlayerId, false);
+
+                Dispatcher.Invoke(() =>
+                {
+                    ClientSession.SetPlayer(updatedPlayer);
+                    ReloadMainPage(updatedPlayer);
+                });
+            };
+
             verificationWindow.ShowDialog();
+        }
+        
+        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var player = ClientSession.GetPlayer();
+            var result = await Client.SendEmailAsync(player.PlayerEmail, player.PlayerId);
+
+            if (result)
+            {
+                string title = Properties.Langs.Resources.verification_token_sent_title;
+                string message = Properties.Langs.Resources.verification_token_sent;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+
+                ShowVerificationWindow(player);
+            }
         }
     }
 }

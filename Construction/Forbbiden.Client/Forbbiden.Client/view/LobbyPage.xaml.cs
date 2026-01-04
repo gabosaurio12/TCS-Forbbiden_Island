@@ -16,12 +16,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.IO.Path;
+using Forbbiden.Client.view.games;
 
 namespace Forbbiden.Client.view
 {
     public partial class LobbyPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LobbyPage));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LobbyPage));
 
         private DispatcherTimer timer;
         private GameManagerClient gameClient;
@@ -147,7 +148,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Warn("Could not load match info", ex);
+                Log.Warn("Could not load match info", ex);
             }
 
             UpdateReadyButtonText();
@@ -176,7 +177,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (Exception ex)
                 {
-                    log.Warn("Error enviando mensaje de chat", ex);
+                    Log.Warn("Error enviando mensaje de chat", ex);
                     Dispatcher.BeginInvoke(new Action(() => AddChatLine($"Sistema: Error al enviar mensaje ({ex.Message})")));
                 }
             });
@@ -213,7 +214,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Warn("ShowChatMessageFromServer failed", ex);
+                Log.Warn("ShowChatMessageFromServer failed", ex);
             }
         }
 
@@ -230,7 +231,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Warn("AddChatLine failed", ex);
+                Log.Warn("AddChatLine failed", ex);
             }
         }
 
@@ -253,7 +254,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Warn("No se pudo obtener jugadores iniciales", ex);
+                Log.Warn("No se pudo obtener jugadores iniciales", ex);
             }
         }
 
@@ -289,7 +290,7 @@ namespace Forbbiden.Client.view
 
                     UpdateReadyButtonText();
                 }
-                catch (Exception ex) { log.Warn("Error OnPlayersUpdatedProxy", ex); }
+                catch (Exception ex) { Log.Warn("Error OnPlayersUpdatedProxy", ex); }
             }));
         }
 
@@ -375,7 +376,7 @@ namespace Forbbiden.Client.view
 
                 UpdateReadyButtonText();
             }
-            catch (Exception ex) { log.Warn("OnReadyStateChanged failed", ex); }
+            catch (Exception ex) {  Log.Warn("OnReadyStateChanged failed", ex); }
         }
 
         private void ApplyReadyVisual(string username, bool ready)
@@ -429,7 +430,7 @@ namespace Forbbiden.Client.view
                     }
                     catch (Exception ex)
                     {
-                        log.Warn("StartMatch RPC failed", ex);
+                        Log.Warn("StartMatch RPC failed", ex);
                         AddChatLine("Sistema: No se pudo iniciar la partida (error servidor).");
                     }
                     return;
@@ -452,7 +453,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (Exception ex)
                 {
-                    log.Warn("SetReady RPC failed", ex);
+                    Log.Warn("SetReady RPC failed", ex);
                     lock (readyLock) { readyStates[currentPlayer] = !newState; }
                     ApplyReadyVisual(currentPlayer, !newState);
                     UpdateReadyButtonText();
@@ -461,7 +462,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Warn("BtnReady_Click failed", ex);
+                Log.Warn("BtnReady_Click failed", ex);
             }
         }
 
@@ -497,7 +498,7 @@ namespace Forbbiden.Client.view
                 AddChatLine("Sistema: Iniciando cuenta regresiva...");
                 StartCountdown();
             }
-            catch (Exception ex) { log.Warn("OnMatchStarting failed", ex); }
+            catch (Exception ex) { Log.Warn("OnMatchStarting failed", ex); }
         }
 
         private void StartCountdown()
@@ -525,15 +526,15 @@ namespace Forbbiden.Client.view
                     AddChatLine("Sistema: ¡Comenzando partida!");
                     try
                     {
-                        NavigationService?.Navigate(new games.RiuvPage());
+                        NavigationService?.Navigate(new RiuvPage());
                     }
                     catch (Exception ex)
                     {
-                        log.Warn("Could not navigate to game page", ex);
+                        Log.Warn("Could not navigate to game page", ex);
                     }
                 }
             }
-            catch (Exception ex) { log.Warn("StartCountdownTimer_Tick failed", ex); }
+            catch (Exception ex) { Log.Warn("StartCountdownTimer_Tick failed", ex); }
         }
 
         private void CancelCountdown()
@@ -600,7 +601,7 @@ namespace Forbbiden.Client.view
                         }
                         catch (Exception ex)
                         {
-                            log.Warn("Error descargando avatar " + p?.AvatarFileName, ex);
+                            Log.Warn("Error descargando avatar " + p?.AvatarFileName, ex);
                         }
                     });
 

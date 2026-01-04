@@ -1,5 +1,5 @@
 
-== Casos de Prueba
+== Casos de Prueba Unitarios
 :page-orientation: landscape
 
 === ProfileManager
@@ -238,6 +238,24 @@ username = _DropPlayer_
 
 === FriendsManager
 
+==== Setup
+
+===== Jugadores creados
+
+* sender [playerUsername = "testSender", playerPassword = "T3st_pass", playerEmail = "testSender@email.net"]
+* receiver [playerUsername = "testReceiver", playerPassword = "T3st_pass", playerEmail = "testReceiver@email.net"]
+* firstFriend [playerUsername = "firstFriend", playerPassword = "T3st_pass", playerEmail = "firstFriend@email.net"]
+* secondFriend [playerUsername = "firstFriend", playerPassword = "T3st_pass", playerEmail = "secondFriend@email.net"]
+
+===== Solicitudes de amistad
+
+* sender -> firstFriend
+* sender -> secondFriend
+
+===== Amistades
+
+* firstFriend -> secondFriend
+
 [cols="1,1,1,1,1,1,1,1,1"]
 
 |===
@@ -253,16 +271,66 @@ username = _DropPlayer_
 |*Pasó*
 
 |FMT02
-|TestSendFriendRequestInvalidUsername
-|Comprobar que no se envíe una solicitud de amistad a un usuario que no existe
+|TestSendFriendRequestSenderNonExist
+|Comprobar que no se envíe una solicitud de amistad a un sender que no existe
 |*Media*
 |PRE01: Haber ingresado un username
-|sender = _testSender_ fakeReceiver = _FriendTest_
+|sender = _falseSender_ receiver = _testReceiver_
 |_False_
 |Regresa _false_
 |*Pasó*
 
 |FMT03
+|TestSendFriendRequestReceiverNonExist
+|Comprobar que no se envíe una solicitud de amistad a un receiver que no existe
+|*Media*
+|PRE01: Haber ingresado un username
+|sender = _testSender_ receiver = _falseReceiver_
+|_False_
+|Regresa _false_
+|*Pasó*
+
+|FMT04
+|TestSendFriendRequestSenderAndReceiverNonExist
+|Comprobar que no se envíe una solicitud de amistad a un sender y receiver que no existen
+|*Media*
+|PRE01: Haber ingresado un username
+|sender = _falseSender_ receiver = _falseReceiver_
+|_False_
+|Regresa _false_
+|*Pasó*
+
+|FMT05
+|TestSendFriendRequestSenderBlank
+|Comprobar que no se envíe una solicitud de amistad a un receiver en blanco
+|*Media*
+|PRE01: Haber ingresado un username
+|sender = _''_ receiver = _'testReceiver'_
+|_False_
+|Regresa _false_
+|**
+
+|FMT06
+|TestSendFriendRequestReceiverBlank
+|Comprobar que no se envíe una solicitud de amistad a un receiver en blanco
+|*Media*
+|PRE01: Haber ingresado un username
+|sender = _testSender_ receiver = _''_
+|_False_
+|Regresa _false_
+|**
+
+|FMT07
+|TestSendFriendRequestSenderAndReceiverBlank
+|Comprobar que no se envíe una solicitud de amistad a un sender y receiver en blanco
+|*Media*
+|PRE01: Haber ingresado un username
+|sender = _''_ receiver = _''_
+|_False_
+|Regresa _false_
+|*Pasó*
+
+|FMT08
 |TestSendFriendRequestDuplicateFriend
 |Comprobar que no se envíe una solicitud de amistad a con quien ya se tiene una amistad
 |*Media*
@@ -272,7 +340,7 @@ username = _DropPlayer_
 |Regresa _false_
 |*Pasó*
 
-|FMT04
+|FMT09
 |TestAcceptFriendRequestSuccess
 |El jugador acepta la solicitud de amistad
 |*Media*
@@ -282,17 +350,67 @@ username = _DropPlayer_
 |Regresa _true_
 |*Pasó*
 
-|FMT05
-|TestAcceptFriendRequestInvalidUsername
-|No se puede aceptar una solicitud de amistad que no existe
+|FMT10
+|TestAcceptFriendRequestSenderNonExist
+|No se puede aceptar una solicitud de amistad con sender que no existe
 |*Media*
 |PRE01: El jugador no debe haber recibido una solicitud de amistad
-|sender = _testSender_ receiver = _FriendTest_
+|sender = _FalseSender_ receiver = _firstFriend_
 |_False_
 |Regresa __
 |**
 
-|FMT06
+|FMT11
+|TestAcceptFriendRequestReceiverNonExist
+|No se puede aceptar una solicitud de amistad con receiver que no existe
+|*Media*
+|PRE01: El jugador no debe haber recibido una solicitud de amistad
+|sender = _testSender_ receiver = _falseFriend_
+|_False_
+|Regresa __
+|**
+
+|FMT12
+|TestAcceptFriendRequestSenderAndReceiverNonExist
+|No se puede aceptar una solicitud de amistad con sender y receiver que no existen
+|*Media*
+|PRE01: El jugador no debe haber recibido una solicitud de amistad
+|sender = _'falseSender'_ receiver = _'falseReceiver'_
+|_False_
+|Regresa __
+|**
+
+|FMT13
+|TestAcceptFriendRequestSenderBlank
+|No se puede aceptar una solicitud de amistad con sender en blanco
+|*Media*
+|PRE01: El jugador no debe haber recibido una solicitud de amistad
+|sender = _''_ receiver = _firstFriend_
+|_False_
+|Regresa __
+|**
+
+|FMT14
+|TestAcceptFriendRequestReceiverBlank
+|No se puede aceptar una solicitud de amistad con receiver en blanco
+|*Media*
+|PRE01: El jugador no debe haber recibido una solicitud de amistad
+|sender = _testSender_ receiver = _''_
+|_False_
+|Regresa __
+|**
+
+|FMT15
+|TestAcceptFriendRequestSenderAndReceiverBlank
+|No se puede aceptar una solicitud de amistad con sender y receiver en blanco
+|*Media*
+|PRE01: El jugador no debe haber recibido una solicitud de amistad
+|sender = _''_ receiver = _''_
+|_False_
+|Regresa __
+|**
+
+|FMT16
 |TestCancelFriendRequestSuccess
 |El jugador cancela la solicitud de amistad enviada
 |*Media*
@@ -302,13 +420,253 @@ username = _DropPlayer_
 |Regresa _true_
 |*Pasó*
 
-|FMT07
-|TestCancelFriendRequestInvalidUsername
-|No se puede cancelar una solicitud de amistad que no existe
+|FMT17
+|TestCancelFriendRequestSenderNonExist
+|No se puede cancelar una solicitud de amistad de un receiver que no existe
 |*Media*
 |PRE01: El jugador no debe haber enviado una solicitud de amistad
-|sender = _testSender_ receiver = _FriendTest_
+|sender = _falseSender_ receiver = _secondFriend_
 |_False_
+|Regresa __
+|**
+
+|FMT18
+|TestCancelFriendRequestReceiverNonExist
+|No se puede cancelar una solicitud de amistad de un receiver que no existe
+|*Media*
+|PRE01: El jugador no debe haber enviado una solicitud de amistad
+|sender = _testSender_ receiver = _falseFriend_
+|_False_
+|Regresa __
+|**
+
+|FMT19
+|TestCancelFriendRequestSenderAndReceiverNonExist
+|No se puede cancelar una solicitud de amistad de un sender y receiver que no existen
+|*Media*
+|PRE01: El jugador no debe haber enviado una solicitud de amistad
+|sender = _falseSender_ receiver = _falseFriend_
+|_False_
+|Regresa __
+|**
+
+|FMT20
+|TestCancelFriendRequestSenderBlank
+|No se puede cancelar una solicitud de amistad con un sender en blanco
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _''_ receiver = _secondFriend_
+|_False_
+|Regresa __
+|**
+
+|FMT21
+|TestCancelFriendRequestReceiverBlank
+|No se puede cancelar una solicitud de amistad con un receiver en blanco
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _testSender_ receiver = _''_
+|_False_
+|Regresa __
+|**
+
+|FMT22
+|TestCancelFriendRequestSenderAndReceiverBlank
+|No se puede cancelar una solicitud de amistad con un sender y receiver en blanco
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _''_ receiver = _''_
+|_False_
+|Regresa __
+|**
+
+|FMT23
+|TestGetSenderReceiverSuccess
+|Verificar que se regresen los jugadores solicitados
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _testSender_ receiver = _firstFriend_
+|_sender.PlayerId, receiver.PlayerId != -1_
+|Regresa __
+|**
+
+|FMT24
+|TestGetSenderReceiverSenderNonExist
+|Verificar que no se regresen los jugadores si uno no existe
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _falseSender_ receiver = _firstFriend_
+|Regresa _sender.PlayerId, receiver.PlayerId == -1_
+|Regresa __
+|**
+
+|FMT25
+|TestGetSenderReceiverReceiverNonExist
+|Verificar que no se regresen los jugadores si uno no existe
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _testSender_ receiver = _falseFriend_
+|Regresa _sender.PlayerId, receiver.PlayerId == -1_
+|Regresa __
+|**
+
+|FMT26
+|TestGetSenderReceiverSenderAndReceiverNonExist
+|Verificar que no se regresen los jugadores si ambos no existen
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _falseSender_ receiver = _falseFriend_
+|Regresa _sender.PlayerId, receiver.PlayerId == -1_
+|Regresa __
+|**
+
+|FMT27
+|TestGetSenderReceiverSenderBlank
+|Verificar que no se regresen los jugadores si un username está en blanco
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _''_ receiver = _firstFriend_
+|Regresa _sender.PlayerId, receiver.PlayerId == -1_
+|Regresa __
+|**
+
+|FMT28
+|TestGetSenderReceiverReceiverBlank
+|Verificar que no se regresen los jugadores si un username está en blanco
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _testSender_ receiver = _''_
+|Regresa _sender.PlayerId, receiver.PlayerId == -1_
+|Regresa __
+|**
+
+|FMT29
+|TestGetSenderReceiverSenderAndReceiverBlank
+|Verificar que no se regresen los jugadores si ambos username está en blanco
+|*Media*
+|PRE01: Debe existir una solicitud de amistad
+|sender = _''_ receiver = _''_
+|Regresa _sender.PlayerId, receiver.PlayerId == -1_
+|Regresa __
+|**
+
+|FMT30
+|TestDeleteFriendSuccess
+|Verificar que se elimine una amistad
+|*Media*
+|PRE01: Debe existir una amistad
+|sender = _firstFriend_ receiver = _SecondFriend_
+|Regresa _True_
+|Regresa __
+|**
+
+|FMT31
+|TestDeleteFriendSenderNonExist
+|Verificar que no se elimine una amistad si el sender no existe
+|*Media*
+|PRE01: Debe existir una amistad
+|sender = _falseSender_ receiver = _SecondFriend_
+|Regresa _False_
+|Regresa __
+|**
+
+|FMT32
+|TestDeleteFriendReceiverNonExist
+|Verificar que no se elimine una amistad si el receiver no existe
+|*Media*
+|PRE01: Debe existir una amistad
+|sender = _firstFriend_ receiver = _falseReceiver_
+|Regresa _False_
+|Regresa __
+|**
+
+|FMT33
+|TestDeleteFriendSenderAndReceiverNonExist
+|Verificar que no se elimine una amistad si el sender y receiver no existen
+|*Media*
+|PRE01: Debe existir una amistad
+|sender = _falseSender_ receiver = _falseReceiver_
+|Regresa _False_
+|Regresa __
+|**
+
+|FMT34
+|TestDeleteFriendSenderBlank
+|Verificar que no se elimine una amistad si el sender está en blanco
+|*Media*
+|PRE01: Debe existir una amistad
+|sender = _''_ receiver = _SecondFriend_
+|Regresa _False_
+|Regresa __
+|**
+
+|FMT35
+|TestDeleteFriendReceiverBlank
+|Verificar que no se elimine una amistad si el receiver está en blanco
+|*Media*
+|PRE01: Debe existir una amistad
+|sender = _firstFriend_ receiver = _''_
+|Regresa _False_
+|Regresa __
+|**
+
+|FMT36
+|TestDeleteFriendSenderAndReceiverBlank
+|Verificar que no se elimine una amistad si el sender y receiver están en blanco
+|*Media*
+|PRE01: Debe existir una amistad
+|sender = _''_ receiver = _''_
+|Regresa _False_
+|Regresa __
+|**
+
+|FMT37
+|TestGetFriendRequestsSuccess
+|Verificar que se regrese la lista de solicitudes de amistad recibidas
+|*Media*
+|PRE01: Deben existir solicitudes de amistad recibidas
+|receiver = _secondFriend_
+|Regresa _List<FriendRequest>.Count > 0_
+|Regresa __
+|**
+
+|FMT38
+|TestGetFriendRequestsEmptySuccess
+|Verificar que se regrese la lista de solicitudes de amistad recibidas aunque esté vacía
+|*Media*
+|PRE01: Deben existir solicitudes de amistad recibidas
+|receiver = _testSender_
+|Regresa _List<FriendRequest>.Count == 0_
+|Regresa __
+|**
+
+|FMT39
+|TestGetFriendRequestsReceiverNonExist
+|Verificar que no se regrese la lista de solicitudes de amistad recibidas si el receiver no existe
+|*Media*
+|PRE01: Deben existir solicitudes de amistad recibidas
+|receiver = _secondFriend_
+|Regresa _List<FriendRequest>.Count == 0_
+|Regresa __
+|**
+
+|FMT40
+|TestGetFriendRequestsReceiverEmpty
+|Verificar que no se regrese la lista de solicitudes de amistad recibidas si el receiver está en blanco
+|*Media*
+|PRE01: Deben existir solicitudes de amistad recibidas
+|receiver = _''_
+|Regresa _List<FriendRequest>.Count == 0_
+|Regresa __
+|**
+
+|FMT41
+|TestGetFriendRequestsReceiverEmpty
+|Verificar que no se regrese la lista de solicitudes de amistad recibidas si el receiver está en blanco
+|*Media*
+|PRE01: Deben existir solicitudes de amistad recibidas
+|receiver = _''_
+|Regresa _List<FriendRequest>.Count == 0_
 |Regresa __
 |**
 
@@ -348,6 +706,56 @@ username = _DropPlayer_
 |-1
 |_Token_ donde _Token.tokenId == -1_
 |Regresa _Token_ donde _Token.tokenId == -1_
+|**
+
+|===
+
+== Casos de Prueba de Casos de uso
+
+[cols="1,1,1,1,1,1,1,1,1"]
+
+|===
+
+|ID
+|Nombre
+|Objetivo
+|Prioridad
+|Precondiciones
+|Flujo
+|Resultados Esperados
+|Resultados Observados
+|Resultado
+
+|CPCU01
+|TestVerifyAccountWithTokenSuccess
+|Se verifica una cuenta con el token recibido por correo
+|*Alta*
+|PRE01: Se debe haber creado una cuenta +
+PRE02: Se debe haber recibido el token al correo
+|Crear cuenta -> ingresar código recibido en los campos de texto -> seleccionar "Verificar"
+|La cuenta se verificó con éxito
+|
+|**
+
+|CPCU02
+|TestUseQ!CardSuccess
+|Se verifica que se pueda usar la carta :q! correctamente para terminar la partida
+|*Alta*
+|PRE01: Haber capturado los cuatro tesoros +
+PRE02: Estar en la casilla de escape
+|Moverse a la casilla de escape -> seleccionar "Usar carta" -> seleccionar la carta de :q!
+|Se informa que ganaron la partida
+|
+|**
+
+|CPCU03
+|TestUseMitigationCardSuccess
+|Se verifica que se pueda usar la carta Mitigatioj correctamente para secar casillas
+|*Alta*
+|PRE01: Haber casillas inundadas +
+|Seleccionar "Usar carta" -> seleccionar la carta de Mitigation -> seleccionar la casilla a secar
+|Se seca la casilla
+|
 |**
 
 |===

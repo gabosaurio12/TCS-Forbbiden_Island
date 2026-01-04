@@ -141,9 +141,6 @@
   <data name="english" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="error" xml:space="preserve">
-    <value>Error</value>
-  </data>
   <data name="friends" xml:space="preserve">
     <value>Friends</value>
   </data>
@@ -218,9 +215,6 @@
   </data>
   <data name="online_friends" xml:space="preserve">
     <value>Online</value>
-  </data>
-  <data name="password" xml:space="preserve">
-    <value>Password</value>
   </data>
   <data name="play" xml:space="preserve">
     <value>Play</value>
@@ -339,9 +333,6 @@
   <data name="bossLogin" xml:space="preserve">
     <value>If you log in you can choose your avatar and make friends!</value>
   </data>
-  <data name="treasure_stack" xml:space="preserve">
-    <value>Treasure Stack</value>
-  </data>
   <data name="flood_stack" xml:space="preserve">
     <value>Flood Stack</value>
   </data>
@@ -414,19 +405,97 @@
   <data name="create_room" xml:space="preserve">
     <value>Create room</value>
   </data>
+  <data name="verification_token_sent_title" xml:space="preserve">
+    <value>Verification Token Sent</value>
+  </data>
+  <data name="verification_token_sent" xml:space="preserve">
+    <value>We have sent you a new verification token, please check your email</value>
+  </data>
+  <data name="treasures_saved" xml:space="preserve">
+    <value>Treasures Saved</value>
+  </data>
+  <data name="clean-code-name" xml:space="preserve">
+    <value>Clean Code</value>
+  </data>
+  <data name="win_title" xml:space="preserve">
+    <value>You Win!</value>
+  </data>
+  <data name="win_message" xml:space="preserve">
+    <value>You have saved all the treasures at the school! Thanks for playing!</value>
+  </data>
+  <data name="not_escape_tile_title" xml:space="preserve">
+    <value>Not a Escape Tile</value>
+  </data>
+  <data name="not_escape_tile" xml:space="preserve">
+    <value>To escape from the FEI you have to be at the FEI Entrance (blue border tile)</value>
+  </data>
+  <data name="missing_treasures_title" xml:space="preserve">
+    <value>Missing Treasures</value>
+  </data>
+  <data name="missing_treasures" xml:space="preserve">
+    <value>You haven't captured the four treasures at the FEI</value>
+  </data>
+  <data name="not_treasure_tile" xml:space="preserve">
+    <value>To capture a treasure you have to be at a treasure tile</value>
+  </data>
+  <data name="not_treasure_tile_title" xml:space="preserve">
+    <value>Not a Treasure Tile</value>
+  </data>
+  <data name="cubicle-keys-name" xml:space="preserve">
+    <value>Cubicle Keys</value>
+  </data>
+  <data name="lucio-name" xml:space="preserve">
+    <value>Lucio</value>
+  </data>
+  <data name="parking-card-name" xml:space="preserve">
+    <value>Parking Card</value>
+  </data>
+  <data name="not_enough_treasure_cards_title" xml:space="preserve">
+    <value>Missing Treasure Cards</value>
+  </data>
+  <data name="not_enough_treasure_cards" xml:space="preserve">
+    <value>You don't have at least two cards of the treasure you are trying to capture</value>
+  </data>
+  <data name="emergency_move_title" xml:space="preserve">
+    <value>You Are Drowning!</value>
+  </data>
+  <data name="emergency_move" xml:space="preserve">
+    <value>To avoid drowning you have to move to another tile... ¡NOW!</value>
+  </data>
+  <data name="you_drowned_message" xml:space="preserve">
+    <value>You have drowned, better luck next time!</value>
+  </data>
+  <data name="not_your_turn_title" xml:space="preserve">
+    <value>It's Not Your Turn</value>
+  </data>
+  <data name="not_your_turn_message" xml:space="preserve">
+    <value>It's not your turn yet, wait a little bit!</value>
+  </data>
+  <data name="your_turn_title" xml:space="preserve">
+    <value>Your Turn!</value>
+  </data>
+  <data name="your_turn_message" xml:space="preserve">
+    <value>It's your turn to play! Choose wisely your actions</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="create_room" xml:space="preserve">
+    <value>Create room</value>
+  </data>
+  <data name="search_placeholder" xml:space="preserve">
+    <value>Search by room name or player</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="room_name" xml:space="preserve">
     <value>Room name</value>
   </data>
   <data name="visibility" xml:space="preserve">
     <value>Visibility</value>
-  </data>
-  <data name="search_placeholder" xml:space="preserve">
-    <value>Search by room name or host...</value>
-  </data>
-  <data name="refresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="search_btn_text" xml:space="preserve">
-    <value>Search</value>
   </data>
 </root>

@@ -10,13 +10,14 @@ namespace Forbbiden.Test
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(TestProfileManager));
         private const string ClassName = "TestProfileManager - ";
+        private Player testPlayer;
 
         [OneTimeSetUp]
         public async Task Setup()
         {
             var client = new ProfileManagerClient();
 
-            ProfileManager.Player player = new ProfileManager.Player
+            testPlayer = new ProfileManager.Player
             {
                 PlayerUsername = "testUser",
                 PlayerPassword = "T3st_pass",
@@ -25,7 +26,7 @@ namespace Forbbiden.Test
 
             try
             {
-                await client.SignUpAsync(player);
+                testPlayer.PlayerId = await client.SignUpAsync(testPlayer);
             }
             catch (EntityException ex)
             {

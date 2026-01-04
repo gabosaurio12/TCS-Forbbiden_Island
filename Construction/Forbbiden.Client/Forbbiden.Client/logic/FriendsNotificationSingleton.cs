@@ -11,6 +11,7 @@ namespace Forbbiden.Client.logic
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsNotificationSingleton));
 
         private static FriendsNotificationSingleton PrivateInstance;
+
         public static FriendsNotificationSingleton Instance
         {
             get
@@ -56,7 +57,8 @@ namespace Forbbiden.Client.logic
             }
             catch (Exception ex)
             {
-                Log.Error(ex);
+                string classMethod = "FriendsNotificationSingleton.NewFriendRequest";
+                Log.Error(classMethod, ex);
             }
         }
 
@@ -71,7 +73,8 @@ namespace Forbbiden.Client.logic
             }
             catch (Exception ex)
             {
-                Log.Error(ex);
+                string classMethod = "FriendsNotificationSingleton.RefreshPageCallback";
+                Log.Error(classMethod, ex);
             }
         }
     }
