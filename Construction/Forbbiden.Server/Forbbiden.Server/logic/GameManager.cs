@@ -68,7 +68,7 @@ namespace Forbbiden.Server.logic
             return true;
         }
 
-        private void UpdateAvatarBytes(byte[] avatarBytes, PlayerInfo existing, string avatarFileName)
+        private static void UpdateAvatarBytes(byte[] avatarBytes, PlayerInfo existing, string avatarFileName)
         {
             if (avatarBytes != null && avatarBytes.Length > 0)
             {
@@ -94,8 +94,6 @@ namespace Forbbiden.Server.logic
 
                 if (callbackToRoom.ContainsKey(callback))
                     callbackToRoom.Remove(callback);
-
-                var removedCount = roomPlayers[matchId].RemoveAll(p => string.Equals(p.PlayerUsername, playerName, StringComparison.OrdinalIgnoreCase));
 
                 if (matchReady.TryGetValue(matchId, out var set) && set.Remove(playerName))
                 {
