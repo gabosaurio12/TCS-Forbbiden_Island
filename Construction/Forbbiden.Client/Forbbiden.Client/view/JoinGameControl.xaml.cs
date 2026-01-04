@@ -1,10 +1,15 @@
 ﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.view.games;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +20,8 @@ namespace Forbbiden.Client.view
 {
     public partial class JoinGameControl : UserControl
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(JoinGameControl));
+
         private List<MatchItem> allMatches = new List<MatchItem>();
 
         public JoinGameControl()
@@ -63,7 +70,9 @@ namespace Forbbiden.Client.view
                         Capacity = capacity,
                         Difficulty = m.Difficulty ?? "Normal",
                         Visibility = m.Visibility ?? "Public",
-                        LockIcon = (m.Visibility ?? "Public").Equals("Private", StringComparison.OrdinalIgnoreCase) ? "/Images/lock.png" : "/Images/unlock.png"
+                        LockIcon = (m.Visibility ?? "Public")
+                            .Equals("Private", StringComparison.OrdinalIgnoreCase)
+                            ? "/Images/lock.png" : "/Images/unlock.png"
                     };
                 }).ToList();
 
@@ -71,14 +80,21 @@ namespace Forbbiden.Client.view
             }
             catch (Exception)
             {
-                MessageBox.Show($"Error al cargar las partidas: {ex.Message}",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.loading_matches_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             finally
             {
                 if (matchClient != null)
                 {
-                    try { matchClient.Close(); } catch { matchClient.Abort(); }
+                    try { 
+                        matchClient.Close();
+                    }
+                    catch
+                    { 
+                        matchClient.Abort();
+                    }
                 }
             }
         }
@@ -103,6 +119,36 @@ namespace Forbbiden.Client.view
             LoadMatches();
         }
 
+        private async Task<bool> JoinToTheMatch(MatchItem match, Player currentPlayer, GameManagerClient gameClient)
+        {
+            bool joined = false;
+            try
+            {
+                string avatarFileName = null;
+                var avatarPath = currentPlayer?.PlayerAvatarPath;
+                if (!string.IsNullOrEmpty(avatarPath))
+                {
+                    avatarFileName = System.IO.Path.GetFileName(avatarPath);
+                }
+
+                joined = await gameClient.JoinGameAsync(
+                    match.MatchId.ToString(),
+                    currentPlayer.PlayerUsername,
+                    null,
+                    avatarFileName
+                );
+            }
+            catch (Exception ex)
+            {
+                Log.Error("JoinGameControl.JoinButtonClick", ex);
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.join_match_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+            }
+
+            return joined;
+        }
+
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(sender is Button btn && btn.DataContext is MatchItem match))
@@ -110,89 +156,46 @@ namespace Forbbiden.Client.view
 
             var currentPlayer = ClientSession.GetPlayer();
 
-            if (currentPlayer == null || currentPlayer.PlayerId == -1)
+            if (currentPlayer.PlayerId == -1)
             {
-                MessageBox.Show(
-                    "Debes iniciar sesión para unirte a una partida.",
-                    "Advertencia",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.unexpected_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 return;
             }
 
             if (match.CurrentPlayers >= match.Capacity)
             {
-                MessageBox.Show("La partida está llena.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                string title = Properties.Langs.Resources.advice_title;
+                string message = Properties.Langs.Resources.match_is_full_advice_message;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 return;
             }
 
+            var callback = new GameServiceCallback();
+            var context = new InstanceContext(callback);
+            var gameClient = new GameManagerClient(context);
+
             string username = currentPlayer.PlayerUsername;
 
-            MatchManagerClient matchClient = null;
-            try
+            bool joined = await JoinToTheMatch(match, currentPlayer, gameClient);
+
+            if (!joined)
             {
-                string avatarFileName = null;
-                try
-                {
-                    var avatarPath = currentPlayer?.PlayerAvatarPath;
-                    if (!string.IsNullOrEmpty(avatarPath))
-                    {
-                        avatarFileName = System.IO.Path.GetFileName(avatarPath);
-                    }
-                }
-                catch { /* no crítico */ }
-
-                var callback = new GameServiceCallback();
-                var context = new InstanceContext(callback);
-
-                var gameClient = new GameManagerClient(context);
-
-                bool joined = await gameClient.JoinGameAsync(
-                    match.MatchId.ToString(),
-                    username,
-                    null,
-                    avatarFileName
-                );
-
-                if (!joined)
-                {
-                    MessageBox.Show(
-                        "No fue posible unirse a la partida.",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                    return;
-                }
-
-                var lobbyPage = new LobbyPage(
-                    match.MatchId,
-                    username,
-                    gameClient,
-                    callback
-                );
-
-                NavigationService
-                    .GetNavigationService(this)?
-                    .Navigate(lobbyPage);
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.join_match_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    $"Error al unirse a la partida: {ex.Message}",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
-            }
-            finally
-            {
-                if (matchClient != null)
-                {
-                    try { matchClient.Close(); } catch { matchClient.Abort(); }
-                }
-            }
+
+            var lobbyPage = new LobbyPage(
+                match.MatchId,
+                username,
+                gameClient,
+                callback
+            );
+
+            NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
         }
     }
 

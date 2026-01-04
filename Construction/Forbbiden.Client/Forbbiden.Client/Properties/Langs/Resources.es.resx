@@ -495,4 +495,16 @@
   <data name="visibility" xml:space="preserve">
     <value>Visibilidad</value>
   </data>
+  <data name="loading_matches_error" xml:space="preserve">
+    <value>Hubo un error al cargar las partidas, intente de nuevo más tarde o contacte a soporte técnico</value>
+  </data>
+  <data name="advice_title" xml:space="preserve">
+    <value>¡Aviso!</value>
+  </data>
+  <data name="match_is_full_advice_message" xml:space="preserve">
+    <value>La partida está llena, no puedes unirte</value>
+  </data>
+  <data name="join_match_error" xml:space="preserve">
+    <value>Hubo un error al unirse a la partida</value>
+  </data>
 </root>

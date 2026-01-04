@@ -495,4 +495,16 @@
   <data name="visibility" xml:space="preserve">
     <value>Visibility</value>
   </data>
+  <data name="loading_matches_error" xml:space="preserve">
+    <value>There was an error while loading the matches, try again later or contact tech support</value>
+  </data>
+  <data name="advice_title" xml:space="preserve">
+    <value>Advice!</value>
+  </data>
+  <data name="match_is_full_advice_message" xml:space="preserve">
+    <value>The match is full, you can't join</value>
+  </data>
+  <data name="join_match_error" xml:space="preserve">
+    <value>There was an error while joining to the match</value>
+  </data>
 </root>
