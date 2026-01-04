@@ -54,6 +54,31 @@ namespace Forbbiden.Client.logic
             return bmp;
         }
 
+        public static byte[] GetDecodedPixelBitmapImage(
+            string filePath, int maxDimension = 256, int jpegQuality = 80)
+        {
+            if (!File.Exists(filePath)) return null;
+
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(filePath);
+            bitmap.DecodePixelWidth = maxDimension;
+            bitmap.DecodePixelHeight = maxDimension;
+            bitmap.EndInit();
+            bitmap.Freeze();
+
+            var encoder = new JpegBitmapEncoder();
+            encoder.QualityLevel = jpegQuality;
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+            using (var ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                return ms.ToArray();
+            }
+        }
+
         public static ImageBrush GetImageBrush(string avatarPath)
         {
             ImageBrush avatarImage = new ImageBrush(new BitmapImage(new Uri(avatarPath)));

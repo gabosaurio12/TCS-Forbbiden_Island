@@ -24,7 +24,7 @@ namespace Forbbiden.Server
             : base(connectionString)
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

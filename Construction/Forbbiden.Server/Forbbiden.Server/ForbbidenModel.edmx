@@ -76,7 +76,9 @@
           <Property Name="match_difficulty" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="match_visibility" Type="nvarchar" MaxLength="7" Nullable="false" />
           <Property Name="host_id" Type="int" />
-          <Property Name="created_at" Type="datetime" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="match_name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="match_capacity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Minigame">
           <Key>
@@ -132,7 +134,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Friend_Re__frien__1332DBDC">
+        <Association Name="FK__Friends__friend___693CA210">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
           <ReferentialConstraint>
@@ -144,7 +146,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Friend_Re__playe__123EB7A3">
+        <Association Name="FK__Friends__player___6A30C649">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
           <ReferentialConstraint>
@@ -156,7 +158,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Token__player_id__3D2915A8">
+        <Association Name="FK__Token__player_id__75A278F5">
           <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
           <End Role="Token" Type="Self.Token" Multiplicity="*" />
           <ReferentialConstraint>
@@ -316,15 +318,15 @@
           <EntitySet Name="Tile" EntityType="Self.Tile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Treasure" EntityType="Self.Treasure" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Friend_Re__frien__1332DBDC" Association="Self.FK__Friend_Re__frien__1332DBDC">
+          <AssociationSet Name="FK__Friends__friend___693CA210" Association="Self.FK__Friends__friend___693CA210">
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Friend_Re__playe__123EB7A3" Association="Self.FK__Friend_Re__playe__123EB7A3">
+          <AssociationSet Name="FK__Friends__player___6A30C649" Association="Self.FK__Friends__player___6A30C649">
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__3D2915A8" Association="Self.FK__Token__player_id__3D2915A8">
+          <AssociationSet Name="FK__Token__player_id__75A278F5" Association="Self.FK__Token__player_id__75A278F5">
             <End Role="Player" EntitySet="Player" />
             <End Role="Token" EntitySet="Token" />
           </AssociationSet>
@@ -464,8 +466,10 @@
           <NavigationProperty Name="match_players" Relationship="Self.FK_match_players_match" FromRole="Matches" ToRole="match_players" />
           <NavigationProperty Name="match_tiles" Relationship="Self.FK_match_tiles_match" FromRole="Matches" ToRole="match_tiles" />
           <Property Name="host_id" Type="Int32" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="created_at" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="Player" Relationship="Forbbiden_FEIModel.FK_Matches_Player" FromRole="Matches" ToRole="Player" />
+          <Property Name="match_name" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="match_capacity" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Minigame">
           <Key>
@@ -852,6 +856,8 @@
           <EntitySetMapping Name="Matches">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.Matches">
               <MappingFragment StoreEntitySet="Matches">
+                <ScalarProperty Name="match_capacity" ColumnName="match_capacity" />
+                <ScalarProperty Name="match_name" ColumnName="match_name" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="host_id" ColumnName="host_id" />
                 <ScalarProperty Name="match_id" ColumnName="match_id" />

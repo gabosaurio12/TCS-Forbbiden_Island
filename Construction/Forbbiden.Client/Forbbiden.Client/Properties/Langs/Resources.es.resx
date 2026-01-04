@@ -216,9 +216,6 @@
   <data name="online_friends" xml:space="preserve">
     <value>Conectados</value>
   </data>
-  <data name="password" xml:space="preserve">
-    <value>Contraseña</value>
-  </data>
   <data name="play" xml:space="preserve">
     <value>Jugar</value>
   </data>
@@ -479,5 +476,23 @@
   </data>
   <data name="error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="create_room" xml:space="preserve">
+    <value>Crear sala</value>
+  </data>
+  <data name="search_placeholder" xml:space="preserve">
+    <value>Buscar por nombre de sala o jugador</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="refresh" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="room_name" xml:space="preserve">
+    <value>Nombre de sala</value>
+  </data>
+  <data name="visibility" xml:space="preserve">
+    <value>Visibilidad</value>
   </data>
 </root>

@@ -1,28 +1,24 @@
-﻿using Forbbiden.Client.GameManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
+using Forbbiden.Client.GameManager;
 
 namespace Forbbiden.Client.logic
 {
-    public class GameServiceCallback : IGameServiceCallback
-    {
-        public void OnPlayerJoined(string playerName)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                MessageBox.Show($"{playerName} se unió al lobby.");
-            });
-        }
 
-        public void OnPlayerLeft(string playerName)
+    public class GameServiceCallback : IGameManagerCallback
+    {
+        public event Action<PlayerInfo[]> PlayersUpdated;
+        public event Action<string, string> ChatMessageReceived;
+        public event Action GameStarting;
+
+        public event Action<string, bool> ReadyStateChanged;
+        public event Action MatchStarting;
+
+        public void OnPlayersUpdated(PlayerInfo[] players)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show($"{playerName} salió del lobby.");
+                PlayersUpdated?.Invoke(players);
             });
         }
 
@@ -30,7 +26,33 @@ namespace Forbbiden.Client.logic
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show($"{playerName}: {message}");
+                ChatMessageReceived?.Invoke(playerName, message);
+            });
+        }
+
+        public void OnGameStarting()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                GameStarting?.Invoke();
+            });
+        }
+
+        void IGameManagerCallback.ReadyStateChanged(string username, bool ready)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                try { ReadyStateChanged?.Invoke(username, ready); }
+                catch { /* proteger la invocación */ }
+            });
+        }
+
+        void IGameManagerCallback.MatchStarting()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                try { MatchStarting?.Invoke(); }
+                catch { /* proteger la invocación */ }
             });
         }
     }
