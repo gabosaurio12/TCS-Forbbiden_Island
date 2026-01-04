@@ -348,7 +348,7 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-        private string BuildAvatarFilePath(string username, string fileName)
+        private static string BuildAvatarFilePath(string username, string fileName)
         {
             Directory.CreateDirectory(AvatarsDir);
 
