@@ -19,6 +19,9 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         Match GetMatchById(int matchId);
+
+        [OperationContract]
+        bool DeleteMatch(int matchId);
     }
 
     [DataContract]
@@ -26,6 +29,12 @@ namespace Forbbiden.Contracts
     {
         [DataMember]
         public int MatchId { get; set; }
+
+        [DataMember]
+        public string MatchName { get; set; }
+
+        [DataMember]
+        public int Capacity { get; set; } = 4;
 
         [DataMember]
         public string Difficulty { get; set; }
@@ -57,6 +66,15 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public bool IsHost { get; set; }
+
+        [DataMember]
+        public int Position { get; set; } 
+
+        [DataMember]
+        public byte[] AvatarBytes { get; set; } 
+
+        [DataMember]
+        public string AvatarFileName { get; set; } 
     }
 
 
@@ -71,16 +89,29 @@ namespace Forbbiden.Contracts
 
         [DataMember(IsRequired = true)]
         public string Visibility { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public string MatchName { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public int Capacity { get; set; } = 4;
     }
 
     [DataContract]
     public class JoinMatchRequest
     {
-        [DataMember(IsRequired = true)]
+
+        [DataMember(IsRequired = false)]
         public int MatchId { get; set; }
 
         [DataMember(IsRequired = true)]
         public string Username { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public string MatchName { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public string HostUsername { get; set; }
     }
 
     [DataContract]

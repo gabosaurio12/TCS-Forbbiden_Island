@@ -411,4 +411,22 @@
   <data name="keep_cards" xml:space="preserve">
     <value>Mantener las cartas</value>
   </data>
+  <data name="create_room" xml:space="preserve">
+    <value>Crear sala</value>
+  </data>
+  <data name="room_name" xml:space="preserve">
+    <value>Nombre de la sala</value>
+  </data>
+  <data name="visibility" xml:space="preserve">
+    <value>Visibilidad</value>
+  </data>
+  <data name="search_placeholder" xml:space="preserve">
+    <value>Buscar por nombre de sala o host...</value>
+  </data>
+  <data name="refresh" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="search_btn_text" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
 </root>

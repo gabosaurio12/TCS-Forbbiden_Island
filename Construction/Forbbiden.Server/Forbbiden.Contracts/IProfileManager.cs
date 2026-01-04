@@ -50,6 +50,12 @@ namespace Forbbiden.Contracts
         [OperationContract]
         [FaultContract(typeof(DBFault))]
         bool DisconnectPlayerByUsername(string username);
+
+        [OperationContract]
+        string UploadAvatar(string username, byte[] avatarBytes, string fileName);
+
+        [OperationContract]
+        byte[] GetAvatar(string fileName);
     }
 
     [DataContract]

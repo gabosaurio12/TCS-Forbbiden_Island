@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="7e7fec7b-6b6f-48c2-8bc5-497d43df37db" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="42f5c445-5965-4820-8901-3054459360fd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:8084/BoardManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.1.77:8084/BoardManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="2a6180f0-5563-45aa-91aa-022f1f997b56" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="d9121f8e-5f5f-41c7-84ba-94ca156e6ca9" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="805460b0-eb4f-42b2-8fb8-73444460df75" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="74cf77c8-6fd3-460e-b252-b73bf1b93fd4" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="3a288611-b7d3-4698-bd95-641bee799778" SourceId="1" SourceUrl="net.tcp://localhost:8084/BoardManager/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="b3560348-6978-4198-86de-2331bc4a325e" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ae9aecae-83c7-421d-a65a-ad90bb32e312" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="7cdb6006-80df-43b1-a03d-7ce1902aa097" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="af08498b-c1d7-4132-a90e-154e5082f6cd" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="29a59762-5e44-4afa-892a-c79fd31bfee1" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

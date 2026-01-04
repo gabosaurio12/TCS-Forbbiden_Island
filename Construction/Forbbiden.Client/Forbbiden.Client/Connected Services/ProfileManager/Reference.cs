@@ -558,6 +558,18 @@ namespace Forbbiden.Client.ProfileManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
         System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
+        string UploadAvatar(string username, byte[] avatarBytes, string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
+        System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatar", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarResponse")]
+        byte[] GetAvatar(string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatar", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarResponse")]
+        System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -673,6 +685,22 @@ namespace Forbbiden.Client.ProfileManager {
         
         public System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username) {
             return base.Channel.DisconnectPlayerByUsernameAsync(username);
+        }
+        
+        public string UploadAvatar(string username, byte[] avatarBytes, string fileName) {
+            return base.Channel.UploadAvatar(username, avatarBytes, fileName);
+        }
+        
+        public System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName) {
+            return base.Channel.UploadAvatarAsync(username, avatarBytes, fileName);
+        }
+        
+        public byte[] GetAvatar(string fileName) {
+            return base.Channel.GetAvatar(fileName);
+        }
+        
+        public System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName) {
+            return base.Channel.GetAvatarAsync(fileName);
         }
     }
 }

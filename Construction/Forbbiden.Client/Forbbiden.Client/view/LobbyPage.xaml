@@ -23,7 +23,20 @@
                        VerticalAlignment="Top"
                        Margin="0,20,40,0" Height="80" Width="284"/>
 
-            <!-- Chat -->
+            <!-- Chat histórico (arriba-izq) -->
+            <ListBox x:Name="lstChatHistory"
+                     Width="420" Height="260"
+                     Margin="40,40,0,0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Background="#CC000000"
+                     Foreground="White"
+                     BorderBrush="#66000000"
+                     BorderThickness="1"
+                     Padding="8"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+            <!-- Chat input (abajo-izq) -->
             <TextBox x:Name="txtBxChat"
                      Width="700" Height="110"
                      HorizontalAlignment="Left"
@@ -37,8 +50,7 @@
                      TextWrapping="Wrap"
                      AcceptsReturn="False"
                      KeyDown="TxtChat_KeyDown"
-                     GotFocus="TxtChat_GotFocus"
-                     Opacity="0.5"/>
+                     Opacity="0.9"/>
 
             <Button x:Name="btnReady"
                     Content="Ready"
@@ -66,17 +78,13 @@
 
                 <!-- Player 1 -->
                 <StackPanel Margin="20,0">
-                    <!-- Msg Player1 -->
-                    <TextBlock x:Name="msgUser1" Text="" FontSize="18"
-                               HorizontalAlignment="Center" Foreground="White"
-                               Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser1" Text="Player1"
                                FontSize="24" Foreground="White"
                                FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="Gray"/>
-                        <Ellipse x:Name="imgAvatar1" Margin="5">
+                        <Ellipse x:Name="imgAvatar1" Margin="5" StrokeThickness="0">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="/Images/defaultAvatar.png"/>
                             </Ellipse.Fill>
@@ -86,16 +94,13 @@
 
                 <!-- Player 2 -->
                 <StackPanel Margin="20,0">
-                    <TextBlock x:Name="msgUser2" Text="" FontSize="18"
-                               HorizontalAlignment="Center" Foreground="White"
-                               Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser2" Text="Player2"
                                FontSize="24" Foreground="White"
                                FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="LightGray"/>
-                        <Ellipse x:Name="imgAvatar2" Margin="5">
+                        <Ellipse x:Name="imgAvatar2" Margin="5" StrokeThickness="0">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="/Images/defaultAvatar.png"/>
                             </Ellipse.Fill>
@@ -105,16 +110,13 @@
 
                 <!-- Player 3 -->
                 <StackPanel Margin="20,0">
-                    <TextBlock x:Name="msgUser3" Text="" FontSize="18"
-                               HorizontalAlignment="Center" Foreground="White"
-                               Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser3" Text="Player3"
                                FontSize="24" Foreground="White"
                                FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="LightGray"/>
-                        <Ellipse x:Name="imgAvatar3" Margin="5">
+                        <Ellipse x:Name="imgAvatar3" Margin="5" StrokeThickness="0">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="/Images/defaultAvatar.png"/>
                             </Ellipse.Fill>
@@ -124,16 +126,13 @@
 
                 <!-- Player 4 -->
                 <StackPanel Margin="20,0">
-                    <TextBlock x:Name="msgUser4" Text="" FontSize="18"
-                               HorizontalAlignment="Center" Foreground="White"
-                               Visibility="Collapsed" Margin="0,0,0,5"/>
                     <TextBlock x:Name="txtBkUser4" Text="Player4"
                                FontSize="24" Foreground="White"
                                FontFamily="{StaticResource IrishGrover}"
                                FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Grid Width="150" Height="150">
                         <Ellipse Fill="LightGray"/>
-                        <Ellipse x:Name="imgAvatar4" Margin="5">
+                        <Ellipse x:Name="imgAvatar4" Margin="5" StrokeThickness="0">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="/Images/defaultAvatar.png"/>
                             </Ellipse.Fill>
@@ -141,19 +140,7 @@
                     </Grid>
                 </StackPanel>
             </StackPanel>
-            <Button x:Name="btnReady_Copy"
-                Content="Ready"
-                Width="200" Height="60"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="0,0,281,40"
-                BorderThickness="5"
-                BorderBrush="Black"
-                Background="#D9D9D9"
-                FontSize="30"
-                FontFamily="{StaticResource IrishGrover}"
-                FontWeight="Bold"
-                Cursor="Hand" Click="btnReady_Server"/>
+
         </Grid>
     </Viewbox>
 </Page>

@@ -90,7 +90,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                NavigationService?.Navigate(new BoardPage());
+                NavigationService?.Navigate(new PlayPage());
             }
             catch (Exception ex)
             {

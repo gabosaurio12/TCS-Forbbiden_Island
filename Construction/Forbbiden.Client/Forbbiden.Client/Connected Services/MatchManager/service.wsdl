@@ -5,29 +5,6 @@
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256>
-                </sp:Basic256>
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict>
-                </sp:Strict>
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing>
         </wsaw:UsingAddressing>
       </wsp:All>
@@ -64,6 +41,12 @@
   <wsdl:message name="IMatchManager_GetMatchById_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMatchByIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_DeleteMatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMatch" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_DeleteMatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMatchResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMatchManager">
     <wsdl:operation name="CreateMatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/CreateMatch" message="tns:IMatchManager_CreateMatch_InputMessage" />
@@ -80,6 +63,10 @@
     <wsdl:operation name="GetMatchById">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/GetMatchById" message="tns:IMatchManager_GetMatchById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/GetMatchByIdResponse" message="tns:IMatchManager_GetMatchById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/DeleteMatch" message="tns:IMatchManager_DeleteMatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/DeleteMatchResponse" message="tns:IMatchManager_DeleteMatch_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IMatchManager" type="tns:IMatchManager">
@@ -122,15 +109,21 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DeleteMatch">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/DeleteMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="MatchManager">
     <wsdl:port name="NetTcpBinding_IMatchManager" binding="tns:NetTcpBinding_IMatchManager">
-      <soap12:address location="net.tcp://localhost:8083/MatchManager" />
+      <soap12:address location="net.tcp://192.168.1.77:8083/MatchManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8083/MatchManager</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LUMINA\leona</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://192.168.1.77:8083/MatchManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

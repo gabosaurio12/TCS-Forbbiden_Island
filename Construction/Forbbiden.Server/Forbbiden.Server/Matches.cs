@@ -27,7 +27,9 @@ namespace Forbbiden.Server
         public string match_difficulty { get; set; }
         public string match_visibility { get; set; }
         public Nullable<int> host_id { get; set; }
-        public Nullable<System.DateTime> created_at { get; set; }
+        public System.DateTime created_at { get; set; }
+        public string match_name { get; set; }
+        public int match_capacity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_cards> match_cards { get; set; }

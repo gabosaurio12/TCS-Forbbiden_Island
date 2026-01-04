@@ -19,7 +19,7 @@ namespace Forbbiden.Client.Properties.Langs {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -138,6 +138,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string change_language {
             get {
                 return ResourceManager.GetString("change_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create room.
+        /// </summary>
+        public static string create_room {
+            get {
+                return ResourceManager.GetString("create_room", resourceCulture);
             }
         }
         
@@ -655,6 +664,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string refresh {
+            get {
+                return ResourceManager.GetString("refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remember Me.
         /// </summary>
         public static string remember_me {
@@ -664,11 +682,38 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Room name.
+        /// </summary>
+        public static string room_name {
+            get {
+                return ResourceManager.GetString("room_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Changes.
         /// </summary>
         public static string save_changes {
             get {
                 return ResourceManager.GetString("save_changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string search_btn_text {
+            get {
+                return ResourceManager.GetString("search_btn_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by room name or host....
+        /// </summary>
+        public static string search_placeholder {
+            get {
+                return ResourceManager.GetString("search_placeholder", resourceCulture);
             }
         }
         
@@ -903,6 +948,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string verify_account {
             get {
                 return ResourceManager.GetString("verify_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visibility.
+        /// </summary>
+        public static string visibility {
+            get {
+                return ResourceManager.GetString("visibility", resourceCulture);
             }
         }
         
