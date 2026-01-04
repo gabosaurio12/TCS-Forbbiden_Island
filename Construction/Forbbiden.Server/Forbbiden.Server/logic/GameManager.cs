@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Forbbiden.Server.logic
     )]
     public class GameManager : IGameManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(GameManager));
+
         private readonly Dictionary<string, List<IGameManagerCallback>> rooms = new Dictionary<string, List<IGameManagerCallback>>();
 
         private readonly Dictionary<string, List<PlayerInfo>> roomPlayers = new Dictionary<string, List<PlayerInfo>>();
@@ -86,27 +89,21 @@ namespace Forbbiden.Server.logic
             {
                 if (!rooms.ContainsKey(matchId)) return;
 
-                // remover callback
                 if (rooms[matchId].Contains(callback))
                     rooms[matchId].Remove(callback);
 
                 if (callbackToRoom.ContainsKey(callback))
                     callbackToRoom.Remove(callback);
 
-                // remover player del roomPlayers
                 var removedCount = roomPlayers[matchId].RemoveAll(p => string.Equals(p.PlayerUsername, playerName, StringComparison.OrdinalIgnoreCase));
 
-                // limpiar ready si estaba marcado
                 if (matchReady.TryGetValue(matchId, out var set) && set.Remove(playerName))
                 {
-                    // notificar a los demás que este jugador ya no está listo
                     BroadcastReadyState(matchId, playerName, false);
                 }
 
-                // reindex positions
                 if (roomPlayers[matchId].Count == 0)
                 {
-                    // si ya no quedan jugadores limpiamos estructuras
                     rooms.Remove(matchId);
                     roomPlayers.Remove(matchId);
                     matchReady.Remove(matchId);
@@ -121,7 +118,6 @@ namespace Forbbiden.Server.logic
             BroadcastPlayersUpdate(matchId);
         }
 
-        // ------------------- SendChatMessage -------------------
         public void SendChatMessage(string matchId, string playerName, string message)
         {
             List<IGameManagerCallback> toNotify;
@@ -138,7 +134,6 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        // ------------------- GetPlayers -------------------
         public List<PlayerInfo> GetPlayers(string matchId)
         {
             lock (syncRoot)
@@ -160,7 +155,6 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        // ------------------- SetReady -------------------
         public void SetReady(string matchId, string username, bool ready)
         {
             if (string.IsNullOrEmpty(matchId) || string.IsNullOrEmpty(username)) return;
@@ -175,10 +169,8 @@ namespace Forbbiden.Server.logic
                 else set.Remove(username);
             }
 
-            // notificar cambio a todos en la sala (UNA vez)
             BroadcastReadyState(matchId, username, ready);
 
-            // comprobar auto-start: si sala está llena y todos listos -> iniciar
             int currentPlayers = 0;
             int readyCount = 0;
             lock (syncRoot)
@@ -191,18 +183,17 @@ namespace Forbbiden.Server.logic
 
             if (currentPlayers > 0 && readyCount == currentPlayers)
             {
-                // iniciar partida automáticamente
                 BroadcastMatchStarting(matchId);
-                // Si quieres, aquí además puedes marcar la match como started y limpiar estructuras
             }
         }
 
-        // ------------------- StartMatch -------------------
         public void StartMatch(string matchId, string username)
         {
-            if (string.IsNullOrEmpty(matchId) || string.IsNullOrEmpty(username)) return;
+            if (string.IsNullOrEmpty(matchId) || string.IsNullOrEmpty(username))
+            {
+                return;
+            }
 
-            // validar que el username es host de la sala (según roomPlayers)
             bool isHost = false;
             int currentPlayers = 0;
             int readyCount = 0;
@@ -212,29 +203,31 @@ namespace Forbbiden.Server.logic
                 {
                     currentPlayers = players.Count;
                     var host = players.FirstOrDefault(p => p.IsHost);
-                    if (host != null && string.Equals(host.PlayerUsername, username, StringComparison.OrdinalIgnoreCase))
+                    if (host != null && string.Equals(
+                        host.PlayerUsername,
+                        username,
+                        StringComparison.OrdinalIgnoreCase))
+                    {
                         isHost = true;
+                    }
                 }
-
                 if (matchReady.TryGetValue(matchId, out var rset))
+                {
                     readyCount = rset.Count;
+                }
             }
 
-            if (!isHost) return;
+            if (!isHost)
+            {
+                return;
+            }
 
-            // política: permitir Start sólo si todos los presentes están listos
             if (currentPlayers > 0 && readyCount == currentPlayers)
             {
                 BroadcastMatchStarting(matchId);
-                // transición server-side if needed
-            }
-            else
-            {
-                // no permitido: host intentó iniciar sin que todos estén listos -> ignorar
             }
         }
 
-        // ------------------- Broadcast helpers -------------------
         private void BroadcastPlayersUpdate(string matchId)
         {
             List<IGameManagerCallback> toNotify;
@@ -255,34 +248,53 @@ namespace Forbbiden.Server.logic
                 }).ToList();
             }
 
+            SendCallbackToEachPlayer(toNotify, playersSnapshot);
+        }
+
+        private void SendCallbackToEachPlayer(List<IGameManagerCallback> toNotify, List<PlayerInfo> playersSnapshot)
+        {
             var failed = new List<IGameManagerCallback>();
             foreach (var client in toNotify)
             {
-                try { client.OnPlayersUpdated(playersSnapshot); }
-                catch { failed.Add(client); }
+                try {
+                    client.OnPlayersUpdated(playersSnapshot);
+                }
+                catch (Exception ex)
+                {
+                    Log.Warn("GameManager.SendCallbackToEachPlayer", ex);
+                    failed.Add(client);
+                }
             }
 
             if (failed.Count > 0)
             {
                 lock (syncRoot)
                 {
-                    foreach (var bad in failed)
-                    {
-                        if (callbackToRoom.TryGetValue(bad, out var r))
-                        {
-                            if (rooms.ContainsKey(r)) rooms[r].Remove(bad);
-                            callbackToRoom.Remove(bad);
-                        }
-                    }
-
-                    var empties = rooms.Where(kv => kv.Value.Count == 0).Select(kv => kv.Key).ToList();
-                    foreach (var e in empties)
-                    {
-                        rooms.Remove(e);
-                        roomPlayers.Remove(e);
-                        matchReady.Remove(e);
-                    }
+                    CleanupDisconnectedClients(failed);
                 }
+            }
+        }
+
+        private void CleanupDisconnectedClients(List<IGameManagerCallback> failed)
+        {
+            foreach (var bad in failed)
+            {
+                if (callbackToRoom.TryGetValue(bad, out var r))
+                {
+                    if (rooms.ContainsKey(r))
+                    {
+                        rooms[r].Remove(bad);
+                    }
+                    callbackToRoom.Remove(bad);
+                }
+            }
+
+            var empties = rooms.Where(kv => kv.Value.Count == 0).Select(kv => kv.Key).ToList();
+            foreach (var e in empties)
+            {
+                rooms.Remove(e);
+                roomPlayers.Remove(e);
+                matchReady.Remove(e);
             }
         }
 
