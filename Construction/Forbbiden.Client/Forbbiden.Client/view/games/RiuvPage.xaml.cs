@@ -1,5 +1,4 @@
 ﻿using Forbbiden.Client.logic;
-using System.Windows.Navigation;
 using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
@@ -205,7 +204,7 @@ namespace Forbbiden.Client.view.games
             }
             catch (Exception ex)
             {
-                log.Warn("No se pudo cargar avatar, usando fallback. " + ex.Message);
+                log.Error("RiuvPage.SetAvatar", ex);
             }
         }
 
