@@ -41,7 +41,6 @@ namespace Forbbiden.Client.view
 
         private readonly string[] SlotUser = new string[4];
 
-        private int MatchCapacity = 4;
         private string MatchHost = null;
 
         private DispatcherTimer StartCountdownTimer;
@@ -51,7 +50,7 @@ namespace Forbbiden.Client.view
         private Action<string, string> ChatMessageHandler;
         private Action GameStartingHandler;
         private Action<string, bool> ReadyStateHandler;
-        private Action MatchStartingHandler;
+        private readonly Action MatchStartingHandler;
 
         public LobbyPage(int matchId, string username, GameManagerClient gameClient, GameServiceCallback callback)
         {
@@ -129,20 +128,19 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                var mClient = new MatchManagerClient();
-                Forbbiden.Client.MatchManager.Match match = null;
+                var matchClient = new MatchManagerClient();
+                Match match = null;
                 try
                 {
-                    match = await Task.Run(() => mClient.GetMatchById(MatchId));
+                    match = await Task.Run(() => matchClient.GetMatchById(MatchId));
                 }
                 finally
                 {
-                    try { mClient.Close(); } catch { mClient.Abort(); }
+                    try { matchClient.Close(); } catch { matchClient.Abort(); }
                 }
 
                 if (match != null)
                 {
-                    MatchCapacity = match.Capacity > 0 ? match.Capacity : 4;
                     MatchHost = match.HostUsername;
                 }
             }
