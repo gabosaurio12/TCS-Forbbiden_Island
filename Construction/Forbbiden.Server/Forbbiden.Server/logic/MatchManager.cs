@@ -18,7 +18,7 @@ namespace Forbbiden.Server.logic
     public class MatchManager : IMatchManager
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatchManager));
-        private const string CLASS_NAME = "MatchManager.cs";
+        private const string ClassName = "MatchManager.cs";
         private readonly string Guest = "Guest";
         private readonly string ConnectionString;
         public MatchManager()
@@ -26,24 +26,20 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
-        // CreateMatch: ahora acepta MatchName (<=20 chars) y Capacity (2..4)
         public int CreateMatch(CreateMatchRequest request)
         {
             Log.Info("Creating new match");
             int matchId = 0;
 
-            // Validaciones básicas del request
             if (request == null)
                 throw new FaultException("Invalid request.");
 
             if (string.IsNullOrWhiteSpace(request.HostUsername))
                 throw new FaultException("Host username is required.");
 
-            // MatchName validación: si se pasa debe tener <= 20 chars
             if (!string.IsNullOrEmpty(request.MatchName) && request.MatchName.Length > 20)
                 throw new FaultException("Match name must be max 20 characters.");
 
-            // Capacity validación: 2..4, si no especificado usar 4
             int capacity = request.Capacity;
             if (capacity < 2 || capacity > 4)
                 capacity = 4;
@@ -93,11 +89,11 @@ namespace Forbbiden.Server.logic
             }
             catch (DbEntityValidationException ex)
             {
-                ExceptionHandler.HandleEntityValidationException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityValidationException(ex, ClassName);
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
 
             return matchId;
@@ -148,7 +144,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
 
             return false;
@@ -244,11 +240,10 @@ namespace Forbbiden.Server.logic
                                    {
                                        MatchId = m.match_id,
                                        MatchName = m.match_name,
-                                       // match_capacity is non-nullable int in EF model
-                                       Capacity = (m.match_capacity >= 2 && m.match_capacity <= 4) ? m.match_capacity : 4,
+                                       Capacity = (m.match_capacity >= 2 
+                                        && m.match_capacity <= 4) ? m.match_capacity : 4,
                                        Difficulty = m.match_difficulty,
                                        Visibility = m.match_visibility,
-                                       // created_at is non-nullable DateTime in EF model
                                        CreatedAt = m.created_at,
                                        HostUsername = host.player_username,
                                        Players = (from mp in db.match_players
@@ -274,12 +269,11 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
             return new List<Contracts.Match>();
         }
 
-        // GetMatchById: incluye MatchName y Capacity
         public Contracts.Match GetMatchById(int matchId)
         {
             Contracts.Match match = new Contracts.Match();
@@ -294,7 +288,8 @@ namespace Forbbiden.Server.logic
                                  {
                                      MatchId = m.match_id,
                                      MatchName = m.match_name,
-                                     Capacity = (m.match_capacity >= 2 && m.match_capacity <= 4) ? m.match_capacity : 4,
+                                     Capacity = (m.match_capacity >= 2 
+                                        && m.match_capacity <= 4) ? m.match_capacity : 4,
                                      Difficulty = m.match_difficulty,
                                      Visibility = m.match_visibility,
                                      CreatedAt = m.created_at,
@@ -321,7 +316,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
             return match;
         }

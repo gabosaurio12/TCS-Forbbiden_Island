@@ -82,7 +82,7 @@ namespace Forbbiden.Client.view
             };
         }
 
-        private static void CloseClient(MatchManagerClient client)
+        public static void CloseMatchClient(MatchManagerClient client)
         {
             if (client == null)
             {

@@ -263,7 +263,6 @@ namespace Forbbiden.Client
             {
                 Log.Error("ProfilePage.UploadAvatar", ex);
                 OpenNotificationError(Properties.Langs.Resources.error_processing_avatar);
-                return;
             }
         }
 
