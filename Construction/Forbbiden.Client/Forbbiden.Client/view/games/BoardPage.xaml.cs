@@ -450,7 +450,7 @@ namespace Forbbiden.Client.view.games
 
         private void PickFloodCard()
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < WaterLevelCount; i++)
             {
                 int minRand = 0;
                 int maxRand = FloodStack.Count - 1;

@@ -124,7 +124,7 @@
     <value>Importa una imagen de tu dispositivo para usarlo como ávatar</value>
   </data>
   <data name="capture_button" xml:space="preserve">
-    <value>Capturar Tesoro</value>
+    <value>RecuperarTesoro</value>
   </data>
   <data name="change_language" xml:space="preserve">
     <value>Cambiar lenguaje</value>
@@ -259,7 +259,7 @@
     <value>Configuración</value>
   </data>
   <data name="shore_up_button" xml:space="preserve">
-    <value>Secar</value>
+    <value>Asegurar</value>
   </data>
   <data name="show_password" xml:space="preserve">
     <value>Ver</value>
