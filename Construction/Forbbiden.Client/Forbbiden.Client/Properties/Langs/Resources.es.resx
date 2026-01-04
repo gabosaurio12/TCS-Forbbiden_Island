@@ -507,4 +507,28 @@
   <data name="join_match_error" xml:space="preserve">
     <value>Hubo un error al unirse a la partida</value>
   </data>
+  <data name="game_starting_title" xml:space="preserve">
+    <value>¡El Juego está Comenzando!</value>
+  </data>
+  <data name="game_starting_message" xml:space="preserve">
+    <value>El juego está a punto de comenzar ¡Prepárate!</value>
+  </data>
+  <data name="server_state_change_error" xml:space="preserve">
+    <value>Sistema: No se pudo cambiar el estado Ready (error servidor).</value>
+  </data>
+  <data name="player_x_joined" xml:space="preserve">
+    <value>Se unió a la partida</value>
+  </data>
+  <data name="system" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="player_x_disconnected" xml:space="preserve">
+    <value>Se desconectó de la partida</value>
+  </data>
+  <data name="chat_system_welcome" xml:space="preserve">
+    <value>Sistema: Bienvenido al lobby</value>
+  </data>
+  <data name="chat_error_sending_message" xml:space="preserve">
+    <value>Error al enviar mensaje</value>
+  </data>
 </root>

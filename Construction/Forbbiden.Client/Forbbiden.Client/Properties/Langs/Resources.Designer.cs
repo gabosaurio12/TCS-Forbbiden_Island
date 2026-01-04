@@ -151,6 +151,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error sending message.
+        /// </summary>
+        public static string chat_error_sending_message {
+            get {
+                return ResourceManager.GetString("chat_error_sending_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System: Welcome to the lobby.
+        /// </summary>
+        public static string chat_system_welcome {
+            get {
+                return ResourceManager.GetString("chat_system_welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clean Code.
         /// </summary>
         public static string clean_code_name {
@@ -372,6 +390,24 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string game_over_message {
             get {
                 return ResourceManager.GetString("game_over_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The game is about to start, Get Ready!.
+        /// </summary>
+        public static string game_starting_message {
+            get {
+                return ResourceManager.GetString("game_starting_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Start!.
+        /// </summary>
+        public static string game_starting_title {
+            get {
+                return ResourceManager.GetString("game_starting_title", resourceCulture);
             }
         }
         
@@ -772,6 +808,24 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disconnected from the match.
+        /// </summary>
+        public static string player_x_disconnected {
+            get {
+                return ResourceManager.GetString("player_x_disconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Joined the match.
+        /// </summary>
+        public static string player_x_joined {
+            get {
+                return ResourceManager.GetString("player_x_joined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Players.
         /// </summary>
         public static string players {
@@ -907,6 +961,15 @@ namespace Forbbiden.Client.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System: Ready State could not be updated (server error).
+        /// </summary>
+        public static string server_state_change_error {
+            get {
+                return ResourceManager.GetString("server_state_change_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string settings {
@@ -1038,6 +1101,15 @@ namespace Forbbiden.Client.Properties.Langs {
         public static string successful_signup_message {
             get {
                 return ResourceManager.GetString("successful_signup_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string system {
+            get {
+                return ResourceManager.GetString("system", resourceCulture);
             }
         }
         
