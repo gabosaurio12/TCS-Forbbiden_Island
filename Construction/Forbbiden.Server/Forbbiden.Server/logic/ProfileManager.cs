@@ -344,25 +344,22 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-        private bool SaveUpdateChanges()
+        private bool SaveUpdateChanges(Forbbiden_FEIEntities db)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var transaction = db.Database.BeginTransaction())
             {
-                using (var transaction = db.Database.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        db.SaveChanges();
-                        transaction.Commit();
-                        success = true;
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        transaction.Rollback();
-                        string classMethod = "ProfileManager.SaveUpdateChanges";
-                        ExceptionHandler.HandleDbUpdateException(ex, classMethod);
-                    }
+                    db.SaveChanges();
+                    transaction.Commit();
+                    success = true;
+                }
+                catch (DbUpdateException ex)
+                {
+                    transaction.Rollback();
+                    string classMethod = "ProfileManager.SaveUpdateChanges";
+                    ExceptionHandler.HandleDbUpdateException(ex, classMethod);
                 }
             }
             return success;
@@ -397,7 +394,7 @@ namespace Forbbiden.Server.logic
                         }));
                     }
 
-                    success = SaveUpdateChanges();                                        
+                    success = SaveUpdateChanges(db);                                        
                 }
                 catch (EntityException ex)
                 {
@@ -462,7 +459,7 @@ namespace Forbbiden.Server.logic
                 if (player != null)
                 {
                     player.player_status = 1;
-                    success = SaveUpdateChanges();
+                    success = SaveUpdateChanges(db);
                 }
             }
 
@@ -489,7 +486,7 @@ namespace Forbbiden.Server.logic
                 if (player != null)
                 {
                     player.player_status = 0;
-                    success = SaveUpdateChanges();
+                    success = SaveUpdateChanges(db);
                 }
             }
 

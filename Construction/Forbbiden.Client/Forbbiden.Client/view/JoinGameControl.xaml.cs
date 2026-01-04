@@ -48,7 +48,7 @@ namespace Forbbiden.Client.view
 
                 matchClient.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewUtils.ShowPullError(Window.GetWindow(this));
             }

@@ -40,7 +40,7 @@ namespace Forbbiden.Client
 
             ProfileClient = new ProfileManagerClient();
 
-            this.ProfilePlayer = player;
+            ProfilePlayer = player;
             txtBxUsername.Text = player.PlayerUsername;
             txtBxEmail.Text = player.PlayerEmail;
             txtBxName.Text = player.PlayerName;
@@ -74,9 +74,8 @@ namespace Forbbiden.Client
 
             if (player.PlayerAvatarPath != null)
             {
-                string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+                string projectDir = ViewUtils.GetProjectDir();
+                string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
 
                 var bmp = new BitmapImage();
                 bmp.BeginInit();
@@ -167,9 +166,7 @@ namespace Forbbiden.Client
             if (AvatarChanged)
             {
                 player.PlayerAvatarPath = AvatarFileName;
-                string exeDir = AppContext.BaseDirectory;
-                string projectDir = Directory.GetParent(exeDir).Parent.Parent.FullName;
-
+                string projectDir = ViewUtils.GetProjectDir();
                 UploadedAvatarProjectPath = Path.Combine(projectDir, "avatars", AvatarFileName);
                 File.Copy(UploadedAvatarOriginalPath, UploadedAvatarProjectPath, true);
             }

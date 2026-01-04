@@ -24,22 +24,6 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
         }
 
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new Fault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "EntityException";
-
-            throw new FaultException<Fault>(fault,
-                new FaultReason(entityError));
-        }
-
         public string CreateRandomToken()
         {
             int tokenLength = 6;
@@ -78,7 +62,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "TokenManager.RemoveExistingToken";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
         }
@@ -173,7 +157,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "TokenManager.VerifyToken";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 

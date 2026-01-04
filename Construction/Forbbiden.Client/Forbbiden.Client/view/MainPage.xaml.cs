@@ -188,7 +188,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 ViewUtils.HandlePageLoadError(Window.GetWindow(this));
-                Log.Error("ERROR: MainPage.ReloadMainPage", ex);
+                Log.Error("MainPage.ReloadMainPage", ex);
             }
         }
 
