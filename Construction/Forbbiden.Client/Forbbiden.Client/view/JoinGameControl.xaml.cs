@@ -2,14 +2,11 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.games;
 using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +19,7 @@ namespace Forbbiden.Client.view
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(JoinGameControl));
 
-        private List<MatchItem> allMatches = new List<MatchItem>();
+        private List<MatchItem> AllMatches = new List<MatchItem>();
 
         public JoinGameControl()
         {
@@ -43,7 +40,7 @@ namespace Forbbiden.Client.view
                 matchClient = new MatchManagerClient();
                 var matches = matchClient.ListMatches();
 
-                allMatches = matches.Select(m =>
+                AllMatches = matches.Select(m =>
                 {
                     int playersCount = 0;
                     try
@@ -76,7 +73,7 @@ namespace Forbbiden.Client.view
                     };
                 }).ToList();
 
-                MatchList.ItemsSource = allMatches;
+                MatchList.ItemsSource = AllMatches;
             }
             catch (Exception)
             {
@@ -103,7 +100,7 @@ namespace Forbbiden.Client.view
         {
             string filter = (SearchBox.Text ?? "").Trim().ToLower();
 
-            var filtered = allMatches.Where(m =>
+            var filtered = AllMatches.Where(m =>
                 (!string.IsNullOrEmpty(m.RoomName) && m.RoomName.ToLower().Contains(filter)) ||
                 (!string.IsNullOrEmpty(m.HostName) && m.HostName.ToLower().Contains(filter)) ||
                 m.MatchId.ToString().Contains(filter) ||

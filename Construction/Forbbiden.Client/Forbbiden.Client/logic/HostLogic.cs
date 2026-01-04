@@ -12,7 +12,7 @@ namespace Forbbiden.Client.logic
         private static BoardPage MatchBoardPage;
         private static List<string> PlayersUsername = new List<string>();
 
-        private static BoardManagerClient BoardClient = new BoardManagerClient();
+        private static readonly BoardManagerClient BoardClient = new BoardManagerClient();
         private static int PlayersTurnIndex = 0;
 
         protected HostLogic()

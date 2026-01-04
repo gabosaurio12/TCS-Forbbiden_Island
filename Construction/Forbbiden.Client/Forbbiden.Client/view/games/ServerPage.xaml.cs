@@ -15,17 +15,17 @@ namespace Forbbiden.Client.view.games
 {
     public partial class ServerPage : Page
     {
-        DispatcherTimer clockTimer;
-        DispatcherTimer initialTimer;
-        int currentTime = 0; 
-        int targetTime;
-        bool clockRunning = false;
+        DispatcherTimer ClockTimer;
+        DispatcherTimer InitialTimer;
+        int CurrentTime = 0; 
+        int TargetTime;
+        bool ClockRunning = false;
 
-        Dictionary<string, int> playerHits = new Dictionary<string, int>();
-        Dictionary<string, Ellipse> playerAvatars;
-        Dictionary<string, string> playerNames;
+        readonly Dictionary<string, int> PlayerHits = new Dictionary<string, int>();
+        Dictionary<string, Ellipse> PlayerAvatars;
+        Dictionary<string, string> PlayerNames;
 
-        bool clockBroken = false;
+        bool ClockBroken = false;
 
         public ServerPage()
         {
@@ -45,7 +45,7 @@ namespace Forbbiden.Client.view.games
         private void SetupPlayers()
         {
             
-            playerAvatars = new Dictionary<string, Ellipse>
+            PlayerAvatars = new Dictionary<string, Ellipse>
             {
                 { "Jugador1", Avatar1 },
                 { "Jugador2", Avatar2 },
@@ -53,7 +53,7 @@ namespace Forbbiden.Client.view.games
                 { "Jugador4", Avatar4 }
             };
 
-            playerNames = new Dictionary<string, string>
+            PlayerNames = new Dictionary<string, string>
             {
                 { "Jugador1", "Jugador 1" },
                 { "Jugador2", "Jugador 2" },
@@ -90,62 +90,62 @@ namespace Forbbiden.Client.view.games
 
         private void StartInitialCountdown()
         {
-            targetTime = MatchLogic.Rand.Next(10, 31); 
-            TargetTimeText.Text = $"Apaga el servidor a los 00:{targetTime:00}";
+            TargetTime = MatchLogic.Rand.Next(10, 31); 
+            TargetTimeText.Text = $"Apaga el servidor a los 00:{TargetTime:00}";
             TargetTimeText.Visibility = Visibility.Visible;
 
-            initialTimer = new DispatcherTimer();
-            initialTimer.Interval = TimeSpan.FromSeconds(4); 
-            initialTimer.Tick += (s, e) =>
+            InitialTimer = new DispatcherTimer();
+            InitialTimer.Interval = TimeSpan.FromSeconds(4); 
+            InitialTimer.Tick += (s, e) =>
             {
-                initialTimer.Stop();
+                InitialTimer.Stop();
                 TargetTimeText.Visibility = Visibility.Collapsed;
                 StartGame();
             };
-            initialTimer.Start();
+            InitialTimer.Start();
         }
 
         private void StartGame()
         {
-            currentTime = 0;
-            clockBroken = false;
+            CurrentTime = 0;
+            ClockBroken = false;
             ClockText.Text = "00:00";
-            clockRunning = true;
+            ClockRunning = true;
 
-            clockTimer = new DispatcherTimer();
-            clockTimer.Interval = TimeSpan.FromSeconds(1);
-            clockTimer.Tick += ClockTimer_Tick;
-            clockTimer.Start();
+            ClockTimer = new DispatcherTimer();
+            ClockTimer.Interval = TimeSpan.FromSeconds(1);
+            ClockTimer.Tick += ClockTimer_Tick;
+            ClockTimer.Start();
         }
 
         private void ClockTimer_Tick(object sender, EventArgs e)
         {
-            currentTime++;
+            CurrentTime++;
 
             // Mostrar tiempo los primeros 3 segundos
-            if (currentTime <= 3)
-                ClockText.Text = $"00:{currentTime:00}";
+            if (CurrentTime <= 3)
+                ClockText.Text = $"00:{CurrentTime:00}";
             else
             {
                 ClockText.Text = "✖_✖"; 
-                clockBroken = true;
+                ClockBroken = true;
             }
 
             // Terminar automáticamente 5 segundos después del objetivo
-            if (currentTime > targetTime + 5)
+            if (CurrentTime > TargetTime + 5)
                 EndGame();
         }
 
         private void ServerPage_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!clockRunning) return;
+            if (!ClockRunning) return;
             if (e.Key == Key.Space)
                 RegisterHit("Jugador1");
         }
 
         private void btnPlayer_Click(object sender, RoutedEventArgs e)
         {
-            if (!clockRunning) return;
+            if (!ClockRunning) return;
             Button btn = sender as Button;
             string playerId = btn?.Tag?.ToString() ?? "JugadorX";
             RegisterHit(playerId);
@@ -153,33 +153,33 @@ namespace Forbbiden.Client.view.games
 
         private void RegisterHit(string playerId)
         {
-            if (playerHits.ContainsKey(playerId)) return;
+            if (PlayerHits.ContainsKey(playerId)) return;
 
-            playerHits[playerId] = currentTime;
+            PlayerHits[playerId] = CurrentTime;
 
-            if (playerAvatars.ContainsKey(playerId))
+            if (PlayerAvatars.ContainsKey(playerId))
             {
-                playerAvatars[playerId].Opacity = 1;
-                playerAvatars[playerId].Stroke = Brushes.OrangeRed;
-                playerAvatars[playerId].StrokeThickness = 6;
+                PlayerAvatars[playerId].Opacity = 1;
+                PlayerAvatars[playerId].Stroke = Brushes.OrangeRed;
+                PlayerAvatars[playerId].StrokeThickness = 6;
             }
         }
 
         private void EndGame()
         {
-            if (!clockRunning) return;
+            if (!ClockRunning) return;
 
-            clockTimer.Stop();
-            clockRunning = false;
+            ClockTimer.Stop();
+            ClockRunning = false;
 
-            if (clockBroken)
-                ClockText.Text = $"00:{targetTime:00}"; 
+            if (ClockBroken)
+                ClockText.Text = $"00:{TargetTime:00}"; 
 
             // Mostrar resultados en pantalla
             ResultStack.Children.Clear();
             ResultPanel.Visibility = Visibility.Visible;
 
-            if (playerHits.Count == 0)
+            if (PlayerHits.Count == 0)
             {
                 //Sin Resultados
                 TextBlock loseText = new TextBlock
@@ -198,20 +198,20 @@ namespace Forbbiden.Client.view.games
             int minDiff = int.MaxValue;
             List<string> winners = new List<string>();
 
-            foreach (var p in playerAvatars.Keys)
+            foreach (var p in PlayerAvatars.Keys)
             {
-                if (playerHits.ContainsKey(p))
+                if (PlayerHits.ContainsKey(p))
                 {
-                    int diff = Math.Abs(playerHits[p] - targetTime);
+                    int diff = Math.Abs(PlayerHits[p] - TargetTime);
                     if (diff < minDiff)
                     {
                         minDiff = diff;
                         winners.Clear();
-                        winners.Add(playerNames[p]);
+                        winners.Add(PlayerNames[p]);
                     }
                     else if (diff == minDiff)
                     {
-                        winners.Add(playerNames[p]);
+                        winners.Add(PlayerNames[p]);
                     }
                 }
             }

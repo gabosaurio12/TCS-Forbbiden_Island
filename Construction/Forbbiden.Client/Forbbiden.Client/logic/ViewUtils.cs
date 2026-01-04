@@ -1,16 +1,8 @@
-﻿using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.games;
-using Forbbiden.Client.view.info;
-using log4net;
+﻿using Forbbiden.Client.view.info;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;

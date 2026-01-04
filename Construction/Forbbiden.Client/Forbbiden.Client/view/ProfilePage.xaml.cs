@@ -3,13 +3,11 @@ using Forbbiden.Client.ProfileManager;
 using log4net;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Forbbiden.Client
 {
@@ -19,7 +17,7 @@ namespace Forbbiden.Client
     public partial class ProfilePage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
-        private ProfileManagerClient ProfileClient;
+        private readonly ProfileManagerClient ProfileClient;
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
