@@ -57,7 +57,10 @@ namespace Forbbiden.Client.logic
         public static byte[] GetDecodedPixelBitmapImage(
             string filePath, int maxDimension = 256, int jpegQuality = 80)
         {
-            if (!File.Exists(filePath)) return null;
+            if (!File.Exists(filePath))
+            {
+                return new List<byte>().ToArray();
+            }
 
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
