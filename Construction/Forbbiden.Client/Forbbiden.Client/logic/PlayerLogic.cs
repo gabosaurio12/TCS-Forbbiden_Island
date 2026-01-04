@@ -9,7 +9,7 @@ namespace Forbbiden.Client.logic
 {
     public class PlayerLogic
     {
-        private static BoardPage MatchBoardPage;
+        public static BoardPage MatchBoardPage { get; set; }
         private static List<string> PlayersUsername = new List<string>();
 
         protected PlayerLogic()

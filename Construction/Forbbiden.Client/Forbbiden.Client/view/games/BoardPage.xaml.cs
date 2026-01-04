@@ -28,7 +28,7 @@ namespace Forbbiden.Client.view.games
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(BoardPage));
 
-        public readonly BoardStateContext StateContext;
+        public BoardStateContext StateContext;
         private int PendingTreasureDraws;
 
         public UserControlTile CurrentTile { get; set; }
@@ -36,7 +36,7 @@ namespace Forbbiden.Client.view.games
         public int ActionsRemain { get; set; } = 3;
         public int TreasuresCaptured { get; set; } = 0;
 
-        private readonly List<Card> PlayerCards;
+        private List<Card> PlayerCards;
         public List<Card> TreasureStack { get; set; }
         public List<Card> TreasureDiscardStack { get; set; }
         public List<Card> FloodStack { get; set; }
@@ -48,23 +48,16 @@ namespace Forbbiden.Client.view.games
         public int ParkingCardCounter { get; set; } = 0;
         public int WaterLevelCount { get; set; } = 0;
 
-        private readonly string ImagesPath;
-        private readonly string CardsImagesPath;
+        private string ImagesPath;
+        private string CardsImagesPath;
 
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
 
-            StateContext = new BoardStateContext(this);
-
-            string projectDir = ViewUtils.GetProjectDir();
-            ImagesPath = System.IO.Path.Combine(
-                projectDir, "Images");
-            CardsImagesPath = System.IO.Path.Combine(
-                projectDir, ImagesPath, "cards");
+            InitAttributes();
 
             BoardManagerClient boardClient = new BoardManagerClient();
-            PlayerCards = new List<Card>();
             TreasureStack = boardClient.GetTreasureCards().ToList();
             FloodStack = boardClient.GetFloodCards().ToList();
             TreasureDiscardStack = new List<Card>();
@@ -77,6 +70,28 @@ namespace Forbbiden.Client.view.games
             BoardControl.TileClickedOnBoard += OnTileClickedFromBoard;
 
             InitBoardPage(match);
+        }
+
+        public BoardPage()
+        {
+            InitializeComponent();
+
+            InitAttributes();
+
+            PlayerLogic.MatchBoardPage = this;
+        }
+
+        private void InitAttributes()
+        {
+            StateContext = new BoardStateContext(this);
+
+            string projectDir = ViewUtils.GetProjectDir();
+            ImagesPath = System.IO.Path.Combine(
+                projectDir, "Images");
+            CardsImagesPath = System.IO.Path.Combine(
+                projectDir, ImagesPath, "cards");
+
+            PlayerCards = new List<Card>();
         }
 
         private void InitBoardPage(MatchManager.Match match)
