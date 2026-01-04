@@ -131,7 +131,7 @@ namespace Forbbiden.Server.logic
 
                     Player player =  db.Player.FirstOrDefault(p => p.player_username == request.Username);
 
-                    if (CheckIfPlayerIsAlreadyJoined(player, match))
+                    if (player == null || CheckIfPlayerIsAlreadyJoined(player, match))
                     {
                         return false;
                     }
@@ -276,7 +276,7 @@ namespace Forbbiden.Server.logic
             {
                 ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
             }
-            return new List<Match>();
+            return new List<Contracts.Match>();
         }
 
         // GetMatchById: incluye MatchName y Capacity
@@ -326,27 +326,23 @@ namespace Forbbiden.Server.logic
             return match;
         }
 
-        // Añadir dentro de la clase MatchManager (Server)
         public bool DeleteMatch(int matchId)
         {
-            Log.Info($"Deleting match {matchId}");
-
             try
             {
                 using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    using (var tx = db.Database.BeginTransaction())
+                    using (var transaction = db.Database.BeginTransaction())
                     {
                         try
                         {
                             var match = db.Matches.FirstOrDefault(m => m.match_id == matchId);
                             if (match == null)
                             {
-                                Log.Warn($"DeleteMatch: match {matchId} not found");
+                                Log.DebugFormat("DeleteMatch: match {matchId} not found", matchId);
                                 return false;
                             }
 
-                            // Eliminar participantes (match_players) asociados
                             var players = db.match_players.Where(mp => mp.match_id == matchId).ToList();
                             if (players.Any())
                             {
@@ -354,18 +350,17 @@ namespace Forbbiden.Server.logic
                                 db.SaveChanges();
                             }
 
-                            // Eliminar la match
                             db.Matches.Remove(match);
                             db.SaveChanges();
 
-                            tx.Commit();
-                            Log.Info($"Match {matchId} deleted successfully");
+                            transaction.Commit();
                             return true;
                         }
-                        catch (Exception ex)
+                        catch (EntityException ex)
                         {
-                            try { tx.Rollback(); } catch { }
-                            Log.Error($"Error deleting match {matchId}", ex);
+                            transaction.Rollback();
+                            string classMethod = "MatchManager.DeleteMatch";
+                            ExceptionHandler.HandleEntityException(ex, classMethod);
                             return false;
                         }
                     }

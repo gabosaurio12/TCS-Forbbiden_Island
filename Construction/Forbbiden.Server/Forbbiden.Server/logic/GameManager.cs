@@ -12,21 +12,16 @@ namespace Forbbiden.Server.logic
     )]
     public class GameManager : IGameManager
     {
-        // Callbacks por sala (matchId -> callbacks)
         private readonly Dictionary<string, List<IGameManagerCallback>> rooms = new Dictionary<string, List<IGameManagerCallback>>();
 
-        // PlayerInfo por sala (mantiene posición y avatar)
         private readonly Dictionary<string, List<PlayerInfo>> roomPlayers = new Dictionary<string, List<PlayerInfo>>();
 
-        // Callback => matchId (para limpieza)
         private readonly Dictionary<IGameManagerCallback, string> callbackToRoom = new Dictionary<IGameManagerCallback, string>();
 
-        // Ready states por sala: matchId -> set of usernames ready
         private readonly Dictionary<string, HashSet<string>> matchReady = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
 
         private readonly object syncRoot = new object();
 
-        // ------------------- JoinGame -------------------
         public bool JoinGame(string matchId, string playerName, byte[] avatarBytes, string avatarFileName)
         {
             var callback = OperationContext.Current.GetCallbackChannel<IGameManagerCallback>();
@@ -39,11 +34,9 @@ namespace Forbbiden.Server.logic
                     matchReady[matchId] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 }
 
-                // registrar callback si no está
                 if (!rooms[matchId].Contains(callback))
                     rooms[matchId].Add(callback);
 
-                // Evitar duplicados por username; si ya existe no agregamos duplicado
                 var existing = roomPlayers[matchId].FirstOrDefault(p => string.Equals(p.PlayerUsername, playerName, StringComparison.OrdinalIgnoreCase));
                 if (existing == null)
                 {
@@ -53,39 +46,39 @@ namespace Forbbiden.Server.logic
                         PlayerId = 0,
                         PlayerUsername = playerName,
                         PlayerName = playerName,
-                        IsHost = (pos == 0), // el primero es host por convención (ajusta si necesitas otra lógica)
+                        IsHost = (pos == 0),
                         Position = pos,
                         AvatarBytes = (avatarBytes != null && avatarBytes.Length > 0) ? avatarBytes : null,
                         AvatarFileName = string.IsNullOrEmpty(avatarFileName) ? null : avatarFileName
                     };
 
-                    // añadir
                     roomPlayers[matchId].Add(pinfo);
                 }
                 else
                 {
-                    // reconexión / actualización: actualizamos avatar si llega
-                    if (avatarBytes != null && avatarBytes.Length > 0)
-                    {
-                        existing.AvatarBytes = avatarBytes;
-                        if (!string.IsNullOrEmpty(avatarFileName)) existing.AvatarFileName = avatarFileName;
-                    }
-                    else if (!string.IsNullOrEmpty(avatarFileName))
-                    {
-                        existing.AvatarFileName = avatarFileName;
-                        existing.AvatarBytes = null;
-                    }
+                    UpdateAvatarBytes(avatarBytes, existing, avatarFileName);
                 }
-
                 callbackToRoom[callback] = matchId;
             }
 
-            // broadcast con snapshot
             BroadcastPlayersUpdate(matchId);
             return true;
         }
 
-        // ------------------- LeaveGame -------------------
+        private void UpdateAvatarBytes(byte[] avatarBytes, PlayerInfo existing, string avatarFileName)
+        {
+            if (avatarBytes != null && avatarBytes.Length > 0)
+            {
+                existing.AvatarBytes = avatarBytes;
+                if (!string.IsNullOrEmpty(avatarFileName)) existing.AvatarFileName = avatarFileName;
+            }
+            else if (!string.IsNullOrEmpty(avatarFileName))
+            {
+                existing.AvatarFileName = avatarFileName;
+                existing.AvatarBytes = null;
+            }
+        }
+
         public void LeaveGame(string matchId, string playerName)
         {
             var callback = OperationContext.Current.GetCallbackChannel<IGameManagerCallback>();
