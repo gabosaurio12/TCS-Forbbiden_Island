@@ -69,7 +69,7 @@
     <Compile Include="IBoardManager.cs" />
     <Compile Include="IFriendsManager.cs" />
     <Compile Include="IFriendsNotificationManager.cs" />
-    <Compile Include="IGameService.cs" />
+    <Compile Include="IGameManager.cs" />
     <Compile Include="IMatchManager.cs" />
     <Compile Include="IMatchNotificationManager.cs" />
     <Compile Include="IProfileManager.cs" />

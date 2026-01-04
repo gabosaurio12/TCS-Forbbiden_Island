@@ -143,15 +143,13 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
-    <Compile Include="Controls\UserControlButton.xaml.cs">
-      <DependentUpon>UserControlButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\UserControlFriend.xaml.cs">
       <DependentUpon>UserControlFriend.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="logic\BoardPageCallbackDto.cs" />
     <Compile Include="logic\board\BoardStateContext.cs" />
     <Compile Include="logic\board\IBoardState.cs" />
     <Compile Include="logic\board\states\CaptureTreasureState.cs" />
@@ -163,7 +161,7 @@
     <Compile Include="logic\board\states\ShoreState.cs" />
     <Compile Include="logic\board\states\StandByState.cs" />
     <Compile Include="logic\board\states\UseCardState.cs" />
-    <Compile Include="logic\CallbackBoardPage.cs" />
+    <Compile Include="logic\AudioManager.cs" />
     <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\FriendsNotificationSingleton.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
@@ -241,6 +239,9 @@
     <Compile Include="view\JoinGameControl.xaml.cs">
       <DependentUpon>JoinGameControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\LeaveMenuPage.xaml.cs">
+      <DependentUpon>LeaveMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\LobbyPage.xaml.cs">
       <DependentUpon>LobbyPage.xaml</DependentUpon>
     </Compile>
@@ -278,20 +279,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\BoardManager\Arrays.xsd">
+    <None Include="Connected Services\BoardManager\Arrays1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Card.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BoardManager\Forbbiden.Contracts.xsd">
+    <None Include="Connected Services\BoardManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\BoardManager\service.wsdl" />
-    <None Include="Connected Services\BoardManager\service.xsd">
+    <None Include="Connected Services\BoardManager\service1.wsdl" />
+    <None Include="Connected Services\BoardManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\BoardManager\service1.xsd">
+    <None Include="Connected Services\BoardManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.FriendRequest.datasource">
@@ -300,32 +301,6 @@
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.Friendship.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\FriendsNotificationManager\Forbbiden.Contracts.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\FriendsNotificationManager\service.wsdl" />
-    <None Include="Connected Services\FriendsNotificationManager\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\FriendsNotificationManager\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\MatchNotificationManager\service.wsdl" />
-    <None Include="Connected Services\MatchNotificationManager\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\MatchNotificationManager\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\PlayerSettings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>PlayerSettings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Resource Include="Fonts\IrishGrover.ttf" />
     <None Include="Connected Services\FriendsManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -336,14 +311,27 @@
     <None Include="Connected Services\FriendsManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameManager\Arrays.xsd">
+    <None Include="Connected Services\FriendsNotificationManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameManager\service.wsdl" />
-    <None Include="Connected Services\GameManager\service.xsd">
+    <None Include="Connected Services\FriendsNotificationManager\service1.wsdl" />
+    <None Include="Connected Services\FriendsNotificationManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameManager\service1.xsd">
+    <None Include="Connected Services\FriendsNotificationManager\service21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\Forbbiden.Client.GameManager.PlayerInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameManager\Forbbiden.Contracts1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\service1.wsdl" />
+    <None Include="Connected Services\GameManager\service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\MatchManager\Forbbiden.Client.MatchManager.Match.datasource">
@@ -359,16 +347,23 @@
     <None Include="Connected Services\MatchManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\MatchNotificationManager\service.wsdl" />
+    <None Include="Connected Services\MatchNotificationManager\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchNotificationManager\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ProfileManager\Forbbiden.Client.ProfileManager.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ProfileManager\Forbbiden.Contracts.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ProfileManager\service.wsdl" />
     <None Include="Connected Services\ProfileManager\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ProfileManager\service1.wsdl" />
     <None Include="Connected Services\ProfileManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -385,6 +380,15 @@
     <None Include="Connected Services\TokenManager\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PlayerSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>PlayerSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Resource Include="Fonts\IrishGrover.ttf" />
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -473,27 +477,26 @@
     <Resource Include="Images\parkpx1080.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\profile_px.png" />
     <Resource Include="Images\x.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\BoardManager\" />
     <WCFMetadataStorage Include="Connected Services\BoardManager\" />
     <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
+    <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
+    <WCFMetadataStorage Include="Connected Services\FriendsNotificationManager\" />
     <WCFMetadataStorage Include="Connected Services\FriendsNotificationManager\" />
     <WCFMetadataStorage Include="Connected Services\GameManager\" />
+    <WCFMetadataStorage Include="Connected Services\GameManager\" />
+    <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchManager\" />
     <WCFMetadataStorage Include="Connected Services\MatchNotificationManager\" />
     <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
+    <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
+    <WCFMetadataStorage Include="Connected Services\TokenManager\" />
     <WCFMetadataStorage Include="Connected Services\TokenManager\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\UserControlButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\UserControlFriend.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -578,6 +581,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\LeaveMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\LobbyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -651,18 +658,6 @@
     <Resource Include="Images\boardButtons.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\FriendsManager\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\FriendsManager\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\FriendsManager\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="avatars\IMG_20191001_171350.jpg" />
     <Resource Include="avatars\Link con fondo.png" />
     <Resource Include="avatars\MASTER LALO %282%29.jpg" />
@@ -671,31 +666,7 @@
     <Resource Include="avatars\Patronus HD.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ProfileManager\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ProfileManager\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ProfileManager\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="avatars\Aiolos.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MatchManager\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MatchManager\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MatchManager\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="avatars\Screenshot_2020-06-01-00-03-15.png" />
@@ -707,37 +678,10 @@
     <Resource Include="avatars\Master chief.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GameManager\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameManager\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameManager\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Mundo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\BoardManager\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BoardManager\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BoardManager\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\cards\water-rise.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="avatars\Mi Patronus %28West Highland Terrier%29.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\cards\treasure3bw.png" />
@@ -779,13 +723,42 @@
     <Resource Include="Images\tiles\usability-lab.png" />
     <Resource Include="Images\tiles\yard.png" />
     <Resource Include="Images\recycle_bin.png" />
+    <None Include="Connected Services\BoardManager\configuration91.svcinfo" />
+    <None Include="Connected Services\BoardManager\configuration.svcinfo" />
+    <None Include="Connected Services\BoardManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\FriendsManager\configuration91.svcinfo" />
+    <None Include="Connected Services\FriendsManager\configuration.svcinfo" />
+    <None Include="Connected Services\FriendsManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <None Include="Connected Services\TokenManager\configuration91.svcinfo" />
     <None Include="Connected Services\TokenManager\configuration.svcinfo" />
     <None Include="Connected Services\TokenManager\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Resource Include="avatars\Reyna 1.jpg" />
+    <None Include="Connected Services\ProfileManager\configuration91.svcinfo" />
+    <None Include="Connected Services\ProfileManager\configuration.svcinfo" />
+    <None Include="Connected Services\ProfileManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\MatchManager\configuration91.svcinfo" />
+    <None Include="Connected Services\MatchManager\configuration.svcinfo" />
+    <None Include="Connected Services\MatchManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\GameManager\configuration91.svcinfo" />
+    <None Include="Connected Services\GameManager\configuration.svcinfo" />
+    <None Include="Connected Services\GameManager\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <None Include="Connected Services\FriendsNotificationManager\configuration91.svcinfo" />
     <None Include="Connected Services\FriendsNotificationManager\configuration.svcinfo" />
     <None Include="Connected Services\FriendsNotificationManager\Reference.svcmap">
@@ -798,12 +771,30 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="sounds\dramaticMusic.mp3" />
+    <Content Include="sounds\duelMusic.mp3" />
+    <Content Include="sounds\gameBonus.mp3" />
+    <Content Include="sounds\gameCountdown.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\gameOver.mp3" />
+    <Content Include="sounds\gameStart.mp3" />
+    <Content Include="sounds\newRecord.mp3" />
+    <Content Include="sounds\riuvGameMusic.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\shotGame.mp3" />
+    <Content Include="sounds\takeTreasure.mp3" />
+    <Content Include="sounds\victoryMusic.mp3" />
     <Content Include="Images\board_background.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\salaServidores.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />

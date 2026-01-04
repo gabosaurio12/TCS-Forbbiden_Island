@@ -1,0 +1,17 @@
+﻿<Page x:Class="Forbbiden.Client.view.LeaveMenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="LeaveMenu">
+    <Grid Background="#AA000000">
+        <!-- semi-transparente -->
+        <Border Width="360" Height="180" Background="White" CornerRadius="8" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid Margin="12">
+                <TextBlock Text="¿Quieres salir de la partida?" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,8,0,0" TextWrapping="Wrap" TextAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10" >
+                    <Button Name="BtnContinue" Width="120" Height="36" Margin="8" Click="BtnContinue_Click">Continuar</Button>
+                    <Button Name="BtnLeave" Width="120" Height="36" Margin="8" Click="BtnLeave_Click">Salir</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

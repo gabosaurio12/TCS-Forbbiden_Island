@@ -16,7 +16,7 @@ namespace Forbbiden.Contracts
         bool IsUsernameAvailable(string username);
 
         [OperationContract]
-        [FaultContract(typeof(EmailFault))]
+        [FaultContract(typeof(Fault))]
         bool SendEmail(string email, int playerId);
 
         [OperationContract]
@@ -50,6 +50,12 @@ namespace Forbbiden.Contracts
         [OperationContract]
         [FaultContract(typeof(Fault))]
         bool DisconnectPlayerByUsername(string username);
+
+        [OperationContract]
+        string UploadAvatar(string username, byte[] avatarBytes, string fileName);
+
+        [OperationContract]
+        byte[] GetAvatar(string fileName);
     }
 
     [DataContract]

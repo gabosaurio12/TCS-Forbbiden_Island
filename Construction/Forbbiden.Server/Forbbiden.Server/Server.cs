@@ -21,7 +21,7 @@ namespace Forbbiden.Server
             var profileHost = new ServiceHost(typeof(ProfileManager));
             var friendsHost = new ServiceHost(typeof(FriendsManager));
             var matchHost = new ServiceHost(typeof(MatchManager));
-            var gameHost = new ServiceHost(typeof(GameService));
+            var gameHost = new ServiceHost(typeof(GameManager));
             var boardHost = new ServiceHost(typeof(BoardManager));
             var tokenHost = new ServiceHost(typeof(TokenManager));
             var friendsNotificationHost = new ServiceHost(typeof(FriendsNotificationManager));

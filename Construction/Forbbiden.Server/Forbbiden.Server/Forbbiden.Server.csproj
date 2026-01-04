@@ -61,6 +61,7 @@
     <Compile Include="card_catalog.cs">
       <DependentUpon>ForbbidenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="exceptionHandlers\ExceptionHandler.cs" />
     <Compile Include="ForbbidenModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -81,7 +82,7 @@
     </Compile>
     <Compile Include="logic\BoardManager.cs" />
     <Compile Include="callbacks\FriendsNotificationManager.cs" />
-    <Compile Include="logic\GameService.cs" />
+    <Compile Include="logic\GameManager.cs" />
     <Compile Include="logic\FriendsManager.cs" />
     <Compile Include="logic\MatchManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />
