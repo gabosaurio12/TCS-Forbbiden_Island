@@ -40,38 +40,7 @@ namespace Forbbiden.Client.view
                 matchClient = new MatchManagerClient();
                 var matches = matchClient.ListMatches();
 
-                AllMatches = matches.Select(m =>
-                {
-                    int playersCount = 0;
-                    try
-                    {
-                        if (m.Players != null)
-                        {
-                            var coll = m.Players as System.Collections.ICollection;
-                            if (coll != null) playersCount = coll.Count;
-                            else playersCount = m.Players.Count();
-                        }
-                    }
-                    catch { playersCount = 0; }
-
-                    int capacity = (m.Capacity > 0) ? m.Capacity : 4;
-
-                    return new MatchItem
-                    {
-                        MatchId = m.MatchId,
-                        MatchName = m.MatchName,
-                        RoomName = !string.IsNullOrWhiteSpace(m.MatchName) ? m.MatchName : $"Room {m.MatchId}",
-                        HostName = m.HostUsername ?? "Unknown",
-                        PlayersInfo = $"{playersCount}/{capacity}",
-                        CurrentPlayers = playersCount,
-                        Capacity = capacity,
-                        Difficulty = m.Difficulty ?? "Normal",
-                        Visibility = m.Visibility ?? "Public",
-                        LockIcon = (m.Visibility ?? "Public")
-                            .Equals("Private", StringComparison.OrdinalIgnoreCase)
-                            ? "/Images/lock.png" : "/Images/unlock.png"
-                    };
-                }).ToList();
+                AllMatches = matches.Select(MapToMatchItem).ToList();
 
                 MatchList.ItemsSource = AllMatches;
             }
@@ -83,18 +52,76 @@ namespace Forbbiden.Client.view
             }
             finally
             {
-                if (matchClient != null)
-                {
-                    try { 
-                        matchClient.Close();
-                    }
-                    catch
-                    { 
-                        matchClient.Abort();
-                    }
-                }
+                CloseClient(matchClient);
             }
         }
+
+        private MatchItem MapToMatchItem(Match match)
+        {
+            int playersCount = GetPlayersCount(match.Players);
+            int capacity = match.Capacity > 0 ? match.Capacity : 4;
+            string visibility = match.Visibility ?? "Public";
+
+            return new MatchItem
+            {
+                MatchId = match.MatchId,
+                MatchName = match.MatchName,
+                RoomName = !string.IsNullOrWhiteSpace(match.MatchName)
+                    ? match.MatchName
+                    : $"Room {match.MatchId}",
+
+                HostName = match.HostUsername ?? "Unknown",
+                PlayersInfo = $"{playersCount}/{capacity}",
+                CurrentPlayers = playersCount,
+                Capacity = capacity,
+                Difficulty = match.Difficulty ?? "Normal",
+                Visibility = visibility,
+                LockIcon = visibility.Equals("Private", StringComparison.OrdinalIgnoreCase)
+                    ? "/Images/lock.png"
+                    : "/Images/unlock.png"
+            };
+        }
+
+        private void CloseClient(MatchManagerClient client)
+        {
+            if (client == null)
+            {
+                return;
+            }
+
+            try
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+            catch
+            {
+                client.Abort();
+            }
+        }
+
+
+        private int GetPlayersCount(MatchManager.PlayerInfo[] players)
+        {
+            if (players == null)
+            {
+                return 0;
+            }
+
+            if (players is System.Collections.ICollection collection)
+            {
+                return collection.Count;
+            }
+
+            return players.Count();
+        }
+
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {

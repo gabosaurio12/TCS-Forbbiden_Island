@@ -662,7 +662,7 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private void SetAvatarFromBytesSync(Ellipse avatar, byte[] bytes)
+        private static void SetAvatarFromBytesSync(Ellipse avatar, byte[] bytes)
         {
             try
             {
