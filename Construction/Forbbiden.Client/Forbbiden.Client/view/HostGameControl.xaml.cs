@@ -106,7 +106,7 @@ namespace Forbbiden.Client
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
         }
 
-        private CreateMatchRequest GetMatchRequest(MatchManagerClient matchClient)
+        private CreateMatchRequest GetMatchRequest()
         {
             var currentPlayer = ClientSession.GetPlayer();
             if (currentPlayer == null)
@@ -163,7 +163,7 @@ namespace Forbbiden.Client
 
             try
             {
-                var request = GetMatchRequest(matchClient);
+                var request = GetMatchRequest();
                 if (request == null)
                 {
                     return;

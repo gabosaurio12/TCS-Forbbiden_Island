@@ -3,6 +3,7 @@ using Forbbiden.Client.ProfileManager;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,31 +62,24 @@ namespace Forbbiden.Client.view.games
                 { "Jugador4", "Jugador 4" }
             };
 
-            try
+            var player = ClientSession.GetPlayer();
+            if (player != null && player.PlayerId != -1)
             {
-                var profileClient = new ProfileManagerClient();
-                var player = ClientSession.GetPlayer();
-                if (player != null && player.PlayerId != -1)
-                {
-                    SetAvatarImage(Avatar1, player.PlayerAvatarPath);
-                    Name1.Text = player.PlayerUsername;
-                }
+                SetAvatarImage(Avatar1, player.PlayerAvatarPath);
+                Name1.Text = player.PlayerUsername;
             }
-            catch { }
         }
 
         private void SetAvatarImage(Ellipse avatar, string avatarFile)
         {
-            try
-            {
-                string baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                string path = System.IO.Path.Combine(baseDir, "avatars", avatarFile ?? "");
-                if (!File.Exists(path))
-                    path = System.IO.Path.Combine(baseDir, "Images", "defaultAvatar.png");
-
-                avatar.Fill = new ImageBrush(new BitmapImage(new Uri(path, UriKind.Absolute)));
+            string baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+            string path = System.IO.Path.Combine(baseDir, "avatars", avatarFile ?? "");
+            if (!File.Exists(path))
+            { 
+                path = System.IO.Path.Combine(baseDir, "Images", "defaultAvatar.png");
             }
-            catch { }
+
+            avatar.Fill = new ImageBrush(new BitmapImage(new Uri(path, UriKind.Absolute)));
         }
 
         private void StartInitialCountdown()
@@ -122,7 +116,6 @@ namespace Forbbiden.Client.view.games
         {
             CurrentTime++;
 
-            // Mostrar tiempo los primeros 3 segundos
             if (CurrentTime <= 3)
                 ClockText.Text = $"00:{CurrentTime:00}";
             else
@@ -131,7 +124,6 @@ namespace Forbbiden.Client.view.games
                 ClockBroken = true;
             }
 
-            // Terminar automáticamente 5 segundos después del objetivo
             if (CurrentTime > TargetTime + 5)
                 EndGame();
         }
@@ -175,13 +167,11 @@ namespace Forbbiden.Client.view.games
             if (ClockBroken)
                 ClockText.Text = $"00:{TargetTime:00}"; 
 
-            // Mostrar resultados en pantalla
             ResultStack.Children.Clear();
             ResultPanel.Visibility = Visibility.Visible;
 
             if (PlayerHits.Count == 0)
             {
-                //Sin Resultados
                 TextBlock loseText = new TextBlock
                 {
                     FontSize = 36,
@@ -195,26 +185,16 @@ namespace Forbbiden.Client.view.games
                 return;
             }
 
-            int minDiff = int.MaxValue;
-            List<string> winners = new List<string>();
+            int minDiff = PlayerAvatars.Keys
+                .Where(p => PlayerHits.ContainsKey(p))
+                .Min(p => Math.Abs(PlayerHits[p] - TargetTime));
 
-            foreach (var p in PlayerAvatars.Keys)
-            {
-                if (PlayerHits.ContainsKey(p))
-                {
-                    int diff = Math.Abs(PlayerHits[p] - TargetTime);
-                    if (diff < minDiff)
-                    {
-                        minDiff = diff;
-                        winners.Clear();
-                        winners.Add(PlayerNames[p]);
-                    }
-                    else if (diff == minDiff)
-                    {
-                        winners.Add(PlayerNames[p]);
-                    }
-                }
-            }
+            List<string> winners = PlayerAvatars.Keys
+                .Where(p => PlayerHits.ContainsKey(p))
+                .Where(p => Math.Abs(PlayerHits[p] - TargetTime) == minDiff)
+                .Select(p => PlayerNames[p])
+                .ToList();
+
 
             TextBlock winnerText = new TextBlock
             {
