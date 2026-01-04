@@ -24,65 +24,65 @@ namespace Forbbiden.Client.view
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(LobbyPage));
 
-        private DispatcherTimer timer;
-        private GameManagerClient gameClient;
-        private GameServiceCallback callback;
+        private DispatcherTimer Timer;
+        private readonly GameManagerClient GameClient;
+        private readonly GameServiceCallback Callback;
 
-        private int matchId;
-        private string currentPlayer;
+        private readonly int MatchId;
+        private readonly string CurrentPlayer;
 
-        private readonly HashSet<string> pendingChatEcho = new HashSet<string>();
-        private readonly object pendingLock = new object();
+        private readonly HashSet<string> PendingChatEcho = new HashSet<string>();
+        private readonly object PendingLock = new object();
 
-        private List<string> previousPlayers = new List<string>();
+        private List<string> PreviousPlayers = new List<string>();
 
-        private readonly Dictionary<string, bool> readyStates = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
-        private readonly object readyLock = new object();
+        private readonly Dictionary<string, bool> ReadyStates = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+        private readonly object ReadyLock = new object();
 
-        private readonly string[] slotUser = new string[4];
+        private readonly string[] SlotUser = new string[4];
 
-        private int matchCapacity = 4;
-        private string matchHost = null;
+        private int MatchCapacity = 4;
+        private string MatchHost = null;
 
-        private DispatcherTimer startCountdownTimer;
-        private int countdownValue;
+        private DispatcherTimer StartCountdownTimer;
+        private int CountdownValue;
 
-        private Action<Forbbiden.Client.GameManager.PlayerInfo[]> playersUpdatedHandler;
-        private Action<string, string> chatMessageHandler;
-        private Action gameStartingHandler;
-        private Action<string, bool> readyStateHandler;
-        private Action matchStartingHandler;
+        private Action<GameManager.PlayerInfo[]> PlayersUpdatedHandler;
+        private Action<string, string> ChatMessageHandler;
+        private Action GameStartingHandler;
+        private Action<string, bool> ReadyStateHandler;
+        private Action MatchStartingHandler;
 
         public LobbyPage(int matchId, string username, GameManagerClient gameClient, GameServiceCallback callback)
         {
             InitializeComponent();
 
-            this.matchId = matchId;
-            this.currentPlayer = username;
-            this.gameClient = gameClient;
-            this.callback = callback;
+            this.MatchId = matchId;
+            this.CurrentPlayer = username;
+            this.GameClient = gameClient;
+            this.Callback = callback;
 
-            playersUpdatedHandler = OnPlayersUpdatedProxy;
-            chatMessageHandler = (p, m) => Dispatcher.BeginInvoke(new Action(() => ShowChatMessageFromServer(p, m)));
-            gameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => MessageBox.Show("¡La partida está por comenzar!")));
-            readyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(new Action(() => OnReadyStateChanged(user, isReady)));
-            matchStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => OnMatchStarting()));
+            PlayersUpdatedHandler = OnPlayersUpdatedProxy;
+            ChatMessageHandler = (p, m) => Dispatcher.BeginInvoke(new Action(() => ShowChatMessageFromServer(p, m)));
+            GameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => MessageBox.Show("¡La partida está por comenzar!")));
+            ReadyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(new Action(() => OnReadyStateChanged(user, isReady)));
+            MatchStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => OnMatchStarting()));
 
-            if (this.callback != null)
+            if (this.Callback != null)
             {
-                try { this.callback.PlayersUpdated -= playersUpdatedHandler; } catch { }
-                try { this.callback.ChatMessageReceived -= chatMessageHandler; } catch { }
-                try { this.callback.GameStarting -= gameStartingHandler; } catch { }
+                try { this.Callback.PlayersUpdated -= PlayersUpdatedHandler; } catch { }
+                try { this.Callback.ChatMessageReceived -= ChatMessageHandler; } catch { }
+                try { this.Callback.GameStarting -= GameStartingHandler; } catch { }
 
-                try { this.callback.ReadyStateChanged -= readyStateHandler; } catch { }
-                try { this.callback.MatchStarting -= matchStartingHandler; } catch { }
+                try { this.Callback.ReadyStateChanged -= ReadyStateHandler; } catch { }
+                try { this.Callback.MatchStarting -= MatchStartingHandler; } catch { }
 
-                this.callback.PlayersUpdated += playersUpdatedHandler;
-                this.callback.ChatMessageReceived += chatMessageHandler;
-                this.callback.GameStarting += gameStartingHandler;
+                this.Callback.PlayersUpdated += PlayersUpdatedHandler;
+                this.Callback.ChatMessageReceived += ChatMessageHandler;
+                this.Callback.GameStarting += GameStartingHandler;
 
-                this.callback.ReadyStateChanged += readyStateHandler;
-                this.callback.MatchStarting += matchStartingHandler;
+                this.Callback.ReadyStateChanged += ReadyStateHandler;
+                this.Callback.MatchStarting += MatchStartingHandler;
             }
 
             InitializePlayerUI();
@@ -108,7 +108,7 @@ namespace Forbbiden.Client.view
             if (e.Key == Key.Escape)
             {
                 e.Handled = true;
-                var leavePage = new LeaveMenuPage(matchId, currentPlayer, gameClient, callback);
+                var leavePage = new LeaveMenuPage(MatchId, CurrentPlayer, GameClient, Callback);
                 NavigationService?.Navigate(leavePage);
             }
         }
@@ -117,8 +117,8 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                if (!txtBxChat.Text.StartsWith(currentPlayer + ":"))
-                    txtBxChat.Text = $"{currentPlayer}: ";
+                if (!txtBxChat.Text.StartsWith(CurrentPlayer + ":"))
+                    txtBxChat.Text = $"{CurrentPlayer}: ";
 
                 txtBxChat.CaretIndex = txtBxChat.Text.Length;
             }
@@ -133,7 +133,7 @@ namespace Forbbiden.Client.view
                 Forbbiden.Client.MatchManager.Match match = null;
                 try
                 {
-                    match = await Task.Run(() => mClient.GetMatchById(matchId));
+                    match = await Task.Run(() => mClient.GetMatchById(MatchId));
                 }
                 finally
                 {
@@ -142,8 +142,8 @@ namespace Forbbiden.Client.view
 
                 if (match != null)
                 {
-                    matchCapacity = match.Capacity > 0 ? match.Capacity : 4;
-                    matchHost = match.HostUsername;
+                    MatchCapacity = match.Capacity > 0 ? match.Capacity : 4;
+                    MatchHost = match.HostUsername;
                 }
             }
             catch (Exception ex)
@@ -160,20 +160,20 @@ namespace Forbbiden.Client.view
             e.Handled = true;
 
             var raw = txtBxChat.Text ?? "";
-            var prefix = $"{currentPlayer}: ";
+            var prefix = $"{CurrentPlayer}: ";
             var msg = raw.Replace(prefix, "").Trim();
             if (string.IsNullOrEmpty(msg)) return;
 
-            AddChatLine($"{currentPlayer}: {msg}");
+            AddChatLine($"{CurrentPlayer}: {msg}");
 
-            var key = $"{currentPlayer}|{msg}";
-            lock (pendingLock) pendingChatEcho.Add(key);
+            var key = $"{CurrentPlayer}|{msg}";
+            lock (PendingLock) PendingChatEcho.Add(key);
 
             Task.Run(() =>
             {
                 try
                 {
-                    gameClient?.SendChatMessage(matchId.ToString(), currentPlayer, msg);
+                    GameClient?.SendChatMessage(MatchId.ToString(), CurrentPlayer, msg);
                 }
                 catch (Exception ex)
                 {
@@ -182,7 +182,7 @@ namespace Forbbiden.Client.view
                 }
             });
 
-            txtBxChat.Text = $"{currentPlayer}: ";
+            txtBxChat.Text = $"{CurrentPlayer}: ";
             txtBxChat.CaretIndex = txtBxChat.Text.Length;
         }
 
@@ -193,9 +193,9 @@ namespace Forbbiden.Client.view
                 if (string.IsNullOrEmpty(message)) return;
 
                 var key = $"{playerName}|{message}";
-                lock (pendingLock)
+                lock (PendingLock)
                 {
-                    if (pendingChatEcho.Remove(key))
+                    if (PendingChatEcho.Remove(key))
                     {
                         return;
                     }
@@ -237,7 +237,7 @@ namespace Forbbiden.Client.view
 
         private void InitializePlayerUI()
         {
-            txtBkUser1.Text = currentPlayer;
+            txtBkUser1.Text = CurrentPlayer;
             var player = ClientSession.GetPlayer();
             var local = ResolveLocalAvatarPath(player?.PlayerAvatarPath);
             SetAvatar(imgAvatar1, local);
@@ -249,7 +249,7 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                var serverPlayers = gameClient.GetPlayers(matchId.ToString());
+                var serverPlayers = GameClient.GetPlayers(MatchId.ToString());
                 UpdateSlotsFromPlayerInfos(serverPlayers);
             }
             catch (Exception ex)
@@ -260,9 +260,9 @@ namespace Forbbiden.Client.view
 
         private void StartClock()
         {
-            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += (s, e) => txtLobbyHour.Text = DateTime.Now.ToString("hh:mm tt");
-            timer.Start();
+            Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            Timer.Tick += (s, e) => txtLobbyHour.Text = DateTime.Now.ToString("hh:mm tt");
+            Timer.Start();
         }
 
         private void OnPlayersUpdatedProxy(Forbbiden.Client.GameManager.PlayerInfo[] players)
@@ -273,18 +273,18 @@ namespace Forbbiden.Client.view
                 {
                     var current = players?.Select(p => p?.PlayerUsername ?? "").Where(u => !string.IsNullOrEmpty(u)).ToList() ?? new List<string>();
 
-                    var added = current.Except(previousPlayers).ToList();
-                    var removed = previousPlayers.Except(current).ToList();
+                    var added = current.Except(PreviousPlayers).ToList();
+                    var removed = PreviousPlayers.Except(current).ToList();
 
                     foreach (var a in added) AddChatLine($"Sistema: {a} se unió a la partida");
                     foreach (var r in removed)
                     {
                         AddChatLine($"Sistema: {r} salió de la partida");
                         CancelCountdown();
-                        lock (readyLock) { readyStates.Remove(r); }
+                        lock (ReadyLock) { ReadyStates.Remove(r); }
                     }
 
-                    previousPlayers = current;
+                    PreviousPlayers = current;
 
                     UpdateSlotsFromPlayerInfos(players);
 
@@ -306,7 +306,7 @@ namespace Forbbiden.Client.view
             {
                 var p = ordered[i];
                 var username = p?.PlayerUsername ?? "";
-                slotUser[i] = username;
+                SlotUser[i] = username;
                 switch (i)
                 {
                     case 0:
@@ -327,16 +327,16 @@ namespace Forbbiden.Client.view
                         break;
                 }
 
-                lock (readyLock)
+                lock (ReadyLock)
                 {
-                    if (!readyStates.ContainsKey(username))
-                        readyStates[username] = false;
+                    if (!ReadyStates.ContainsKey(username))
+                        ReadyStates[username] = false;
                 }
             }
 
-            lock (readyLock)
+            lock (ReadyLock)
             {
-                foreach (var kv in readyStates.ToList())
+                foreach (var kv in ReadyStates.ToList())
                 {
                     if (!string.IsNullOrEmpty(kv.Key) && kv.Value)
                         ApplyReadyVisual(kv.Key, true);
@@ -353,7 +353,7 @@ namespace Forbbiden.Client.view
             txtBkUser3.Text = "";
             txtBkUser4.Text = "";
 
-            slotUser[0] = slotUser[1] = slotUser[2] = slotUser[3] = null;
+            SlotUser[0] = SlotUser[1] = SlotUser[2] = SlotUser[3] = null;
 
             SetAvatar(imgAvatar1, null);
             SetAvatar(imgAvatar2, null);
@@ -365,9 +365,9 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                lock (readyLock)
+                lock (ReadyLock)
                 {
-                    readyStates[username] = ready;
+                    ReadyStates[username] = ready;
                 }
 
                 ApplyReadyVisual(username, ready);
@@ -383,7 +383,7 @@ namespace Forbbiden.Client.view
         {
             for (int i = 0; i < 4; i++)
             {
-                var slotName = slotUser[i];
+                var slotName = SlotUser[i];
                 if (!string.IsNullOrEmpty(slotName) && string.Equals(slotName, username, StringComparison.OrdinalIgnoreCase))
                 {
                     Ellipse avatarEllipse = GetAvatarEllipseByIndex(i + 1);
@@ -420,13 +420,13 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                bool amHost = !string.IsNullOrEmpty(matchHost) && string.Equals(matchHost, currentPlayer, StringComparison.OrdinalIgnoreCase);
+                bool amHost = !string.IsNullOrEmpty(MatchHost) && string.Equals(MatchHost, CurrentPlayer, StringComparison.OrdinalIgnoreCase);
 
                 if (amHost && btnReady.Content?.ToString().Equals("Start", StringComparison.OrdinalIgnoreCase) == true)
                 {
                     try
                     {
-                        await Task.Run(() => gameClient.StartMatch(matchId.ToString(), currentPlayer));
+                        await Task.Run(() => GameClient.StartMatch(MatchId.ToString(), CurrentPlayer));
                     }
                     catch (Exception ex)
                     {
@@ -437,25 +437,25 @@ namespace Forbbiden.Client.view
                 }
 
                 bool newState;
-                lock (readyLock)
+                lock (ReadyLock)
                 {
-                    readyStates.TryGetValue(currentPlayer, out bool cur);
+                    ReadyStates.TryGetValue(CurrentPlayer, out bool cur);
                     newState = !cur;
-                    readyStates[currentPlayer] = newState;
+                    ReadyStates[CurrentPlayer] = newState;
                 }
 
-                ApplyReadyVisual(currentPlayer, newState);
+                ApplyReadyVisual(CurrentPlayer, newState);
                 UpdateReadyButtonText();
 
                 try
                 {
-                    await Task.Run(() => gameClient.SetReady(matchId.ToString(), currentPlayer, newState));
+                    await Task.Run(() => GameClient.SetReady(MatchId.ToString(), CurrentPlayer, newState));
                 }
                 catch (Exception ex)
                 {
                     Log.Warn("SetReady RPC failed", ex);
-                    lock (readyLock) { readyStates[currentPlayer] = !newState; }
-                    ApplyReadyVisual(currentPlayer, !newState);
+                    lock (ReadyLock) { ReadyStates[CurrentPlayer] = !newState; }
+                    ApplyReadyVisual(CurrentPlayer, !newState);
                     UpdateReadyButtonText();
                     AddChatLine("Sistema: No se pudo cambiar el estado Ready (error servidor).");
                 }
@@ -470,10 +470,10 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                bool amHost = !string.IsNullOrEmpty(matchHost) && string.Equals(matchHost, currentPlayer, StringComparison.OrdinalIgnoreCase);
-                int currentPlayers = slotUser.Count(s => !string.IsNullOrEmpty(s));
+                bool amHost = !string.IsNullOrEmpty(MatchHost) && string.Equals(MatchHost, CurrentPlayer, StringComparison.OrdinalIgnoreCase);
+                int currentPlayers = SlotUser.Count(s => !string.IsNullOrEmpty(s));
                 int readyCount;
-                lock (readyLock) { readyCount = readyStates.Count(kv => kv.Value && !string.IsNullOrEmpty(kv.Key)); }
+                lock (ReadyLock) { readyCount = ReadyStates.Count(kv => kv.Value && !string.IsNullOrEmpty(kv.Key)); }
                 bool allPresentReady = (currentPlayers > 0 && readyCount == currentPlayers);
 
                 if (amHost)
@@ -485,7 +485,7 @@ namespace Forbbiden.Client.view
                 }
                 else
                 {
-                    btnReady.Content = readyStates.TryGetValue(currentPlayer, out bool r) && r ? "Unready" : "Ready";
+                    btnReady.Content = ReadyStates.TryGetValue(CurrentPlayer, out bool r) && r ? "Unready" : "Ready";
                 }
             }
             catch { /* ignore */ }
@@ -504,21 +504,21 @@ namespace Forbbiden.Client.view
         private void StartCountdown()
         {
             CancelCountdown(); 
-            countdownValue = 3;
-            AddChatLine($"Sistema: Comenzando en {countdownValue}...");
-            startCountdownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            startCountdownTimer.Tick += StartCountdownTimer_Tick;
-            startCountdownTimer.Start();
+            CountdownValue = 3;
+            AddChatLine($"Sistema: Comenzando en {CountdownValue}...");
+            StartCountdownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            StartCountdownTimer.Tick += StartCountdownTimer_Tick;
+            StartCountdownTimer.Start();
         }
 
         private void StartCountdownTimer_Tick(object sender, EventArgs e)
         {
             try
             {
-                countdownValue--;
-                if (countdownValue > 0)
+                CountdownValue--;
+                if (CountdownValue > 0)
                 {
-                    AddChatLine($"Sistema: {countdownValue}...");
+                    AddChatLine($"Sistema: {CountdownValue}...");
                 }
                 else
                 {
@@ -541,11 +541,11 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                if (startCountdownTimer != null)
+                if (StartCountdownTimer != null)
                 {
-                    startCountdownTimer.Stop();
-                    startCountdownTimer.Tick -= StartCountdownTimer_Tick;
-                    startCountdownTimer = null;
+                    StartCountdownTimer.Stop();
+                    StartCountdownTimer.Tick -= StartCountdownTimer_Tick;
+                    StartCountdownTimer = null;
                 }
             }
             catch { }
@@ -555,13 +555,13 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                if (callback != null)
+                if (Callback != null)
                 {
-                    try { callback.PlayersUpdated -= playersUpdatedHandler; } catch { }
-                    try { callback.ChatMessageReceived -= chatMessageHandler; } catch { }
-                    try { callback.GameStarting -= gameStartingHandler; } catch { }
-                    try { callback.ReadyStateChanged -= readyStateHandler; } catch { }
-                    try { callback.MatchStarting -= matchStartingHandler; } catch { }
+                    try { Callback.PlayersUpdated -= PlayersUpdatedHandler; } catch { }
+                    try { Callback.ChatMessageReceived -= ChatMessageHandler; } catch { }
+                    try { Callback.GameStarting -= GameStartingHandler; } catch { }
+                    try { Callback.ReadyStateChanged -= ReadyStateHandler; } catch { }
+                    try { Callback.MatchStarting -= MatchStartingHandler; } catch { }
                 }
             }
             catch { }
@@ -658,7 +658,7 @@ namespace Forbbiden.Client.view
                     var profileClient = new ProfileManagerClient();
                     try
                     {
-                        var bytes = profileClient.GetAvatar(avatarFileName);
+                        var bytes = await profileClient.GetAvatarAsync(avatarFileName);
                         if (bytes != null && bytes.Length > 0)
                         {
                             File.WriteAllBytes(localPath, bytes);
