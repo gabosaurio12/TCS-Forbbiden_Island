@@ -4,6 +4,12 @@
 
 === ProfileManager
 
+==== Setup
+
+===== Jugadores creados
+
+* testPlayer [playerUsername = "testUser", playerPassword = "T3st_pass", playerEmail = "testuser@email.net"]
+
 [cols="1,1,1,1,1,1,1,1,1"]
 
 |===
@@ -38,7 +44,7 @@
 |*Pasó*
 
 |PMT03
-|TestValidateEmailEmailEmptyEmail
+|TestValidateEmailEmailBlank
 |Comprobar que no se acepte un email *vacío*
 |*Alta*
 |*PRE01*: Haber ingresado un email
@@ -75,10 +81,20 @@
 |*PRE01*: Haber ingresado un username
 |_testUser_
 |_False_
-|_true_
+|__
 |*Pasó*
 
 |PMT07
+|TestIsUsernameAvailableBlankUsername
+|Comprobar que no se acepte un username en blanco
+|*Alta*
+|*PRE01*: Haber ingresado un username en blanco
+|_""_
+|_False_
+|__
+|*Pasó*
+
+|PMT08
 |TestSendEmailSuccess
 |Comprobar que se envíe un correo de confirmación a un email
 |*Media*
@@ -88,7 +104,7 @@
 |__
 |**
 
-|PMT08
+|PMT09
 |TestSendEmailNotExist
 |Comprobar que ocurre si se envía un correo de confirmación a un email que no existe
 |*Media*
@@ -98,7 +114,17 @@
 |__
 |**
 
-|PMT09
+|PMT10
+|TestSendEmailBlankEmail
+|Comprobar que ocurre si se envía un correo de confirmación a un email que en blanco
+|*Media*
+|*PRE01*: Haber ingresado un email en blanco
+|_""_
+|_False_
+|__
+|**
+
+|PMT11
 |TestSignUpSuccess
 |Comprobar que se registre correctamente un jugador
 |*Alta*
@@ -108,41 +134,99 @@
 |__
 |**
 
-|PMT10
+|PMT12
+|TestSignUpPlayerExistsThrowsEntityException
+|Comprobar que se lance una excepción si se intenta registrar un jugador que ya existe
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario, contraseña e email
+|_testUser_+ _T3st_pass_ + _testuser@email.net_
+|_Lanza EntityException_
+|__
+|**
+
+|PMT13
 |TestLoginSuccess
 |Comprobar que se inicie correctamente sesión de un jugador registrado
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario y contraseña +
-*PRE02*: Guardar el CurrentLogin y limpiarlo (luego volver a actualizarlo)
 |_testUser_ + _T3st_pass_
 |_True_
 |__
 |**
 
-|PMT11
+|PMT14
 |TestLoginNotRegisteredPlayer
 |Comprobar que no se inicie correctamente sesión a un jugador no registrado
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario y contraseña +
-*PRE02*: Guardar el CurrentLogin y limpiarlo (luego volver a actualizarlo)
 |_fakePlayer_ + _F4ke_pass_
-|_True_
+|_Player.PlayerID = -1_
 |__
 |**
 
-|PMT12
-|TestGetPlayerByUsernameShouldReturnPlayer
+|PMT15
+|TestLoginUsernameEmpty
+|Comprobar que no se inicie correctamente sesión a un jugador con username en blanco
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario y contraseña +
+|_""_ + _T3st_pass_
+|_Player.PlayerID = -1_
+|__
+|**
+
+|PMT16
+|TestLoginPasswordEmpty
+|Comprobar que no se inicie correctamente sesión a un jugador con password en blanco
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario y contraseña +
+|_"testUser"_ + _""_
+|_Player.PlayerID = -1_
+|__
+|**
+
+|PMT17
+|TestLoginUsernameAndPasswordEmpty
+|Comprobar que no se inicie correctamente sesión a un jugador con username y password en blanco
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario y contraseña +
+|_""_ + _""_
+|_Player.PlayerID = -1_
+|__
+|**
+
+|PMT18
+|TestLoginWrongPassword
+|Comprobar que no se inicie correctamente sesión a un jugador con password en incorrecta
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario y contraseña +
+|_"testUser"_ + _"falsePassword"_
+|_Player.PlayerID = -1_
+|__
+|**
+
+|PMT19
+|TestLoginWrongUsername
+|Comprobar que no se inicie correctamente sesión a un jugador con password correcta pero username incorrecto
+|*Alta*
+|*PRE01*: Haber ingresado Nombre de usuario y contraseña +
+|_"falseUser"_ + _"T3st_pass"_
+|_Player.PlayerID = -1_
+|__
+|**
+
+|PMT20
+|TestGetPlayerByUsernameSuccess
 |Comprobar que si se encuentra un jugador este regrese con todos sus datos
 |*Alta*
 |*PRE01*: Haber ingresado un nombre de usuario
 |_testUser_
-|_Contracts.Player_
+|_Contracts.Player { PlayerID != -1 }_
 |__
 |**
 
-|PMT13
-|TestGetPlayerByUsernameShouldReturnEmptyPlayer
-|Comprobar que si se encuentra un jugador este regrese con todos sus datos
+|PMT21
+|TestGetPlayerByUsernameUsernameNotExists
+|Comprobar que se regrese un jugador con id -1 si se busca un username que no existe
 |*Alta*
 |*PRE01*: Haber ingresado un nombre de usuario
 |_fakePlayer_
@@ -150,58 +234,58 @@
 |__
 |**
 
-|PMT14
-|TestGetPlayerByIdShouldReturnPlayer
-|Comprobar que si se encuentra un jugador este regrese con todos sus datos
+|PMT22
+|TestGetPlayerByUsernameUsernameBlank
+|Comprobar que se regrese un jugador con id -1 si se busca uno con username en blanco
 |*Alta*
-|*PRE01*: Haber ingresado un ID de jugador
-|_ID de testUser_
-|_Contracts.Player_
-|__
-|**
-
-|PMT15
-|TestGetPlayerByIdShouldReturnEmptyPlayer
-|Comprobar que si se encuentra un jugador este regrese con todos sus datos
-|*Alta*
-|*PRE01*: Haber ingresado un ID de jugador
-|_ID de testUser_
+|*PRE01*: Haber ingresado un nombre de usuario
+|_""_
 |_Contracts.Player() { PlayerId = -1 }_
 |__
 |**
 
-|PMT16
-|TestGetCurrentLoginShouldReturnPlayer
-|Comprobar que sí se regrese un jugador si ha iniciado sesión
+|PMT23
+|TestGetPlayerByUsernameUsernameBlank
+|Comprobar que se regrese un jugador con id -1 si se busca uno con username inválido
 |*Alta*
-|
-|_testUser_
-|_Contracts.Player_
-|__
-|**
-
-|PMT17
-|TestGetCurrentLoginShouldReturnEmptyPlayer
-|Comprobar que no se regrese un jugador si no ha iniciado sesión
-|*Alta*
-|
-|_ID de testUser_
+|*PRE01*: Haber ingresado un nombre de usuario
+|_"fake player"_
 |_Contracts.Player() { PlayerId = -1 }_
 |__
 |**
 
-|PMT18
-|TestClearCurrentLoginShouldReturnTrue
-|Comprobar que se limpie el CurrentLogin
+|PMT24
+|TestGetPlayerByIdSuccess
+|Comprobar que si se encuentra un jugador este regrese con todos sus datos
 |*Alta*
-|*PRE-01*: Iniciar sesión con el jugador de prueba
-|Iniciar sesión con _testUser_
-|_True_
+|*PRE01*: Haber ingresado un ID de jugador
+|_testPlayer.PlayerId_
+|_Contracts.Player { PlayerId != -1 }_
 |__
 |**
 
-|PMT19
-|TestUpdatePlayerShouldReturnTrue
+|PMT25
+|TestGetPlayerByIdPlayerIdNonExists
+|Comprobar que se regrese un jugador con id -1 si se busca un id que no existe
+|*Alta*
+|*PRE01*: Haber ingresado un ID de jugador
+|_0_
+|_Contracts.Player() { PlayerId = -1 }_
+|__
+|**
+
+|PMT26
+|TestGetPlayerByIdPlayerIdInvalid
+|Comprobar que se regrese un jugador con id -1 si se busca un id inválido
+|*Alta*
+|*PRE01*: Haber ingresado un ID de jugador
+|_-2_
+|_Contracts.Player() { PlayerId = -1 }_
+|__
+|**
+
+|PMT27
+|TestUpdatePlayerSuccess
 |Comprobar que se actualice un jugador
 |*Alta*
 |*PRE-01*: Cambiar los datos de un jugador
@@ -210,11 +294,31 @@
 |__
 |**
 
-|PMT20
-|TestDeletePlayerByUsernameShouldReturnTrue
-|Comprobar que se elimina un jugador
+|PMT28
+|TestUpdatePlayerUsernameExists
+|Comprobar que no se actualice un jugador si el username ya existe
 |*Alta*
 |*PRE-01*: Cambiar los datos de un jugador
+|PlayerUsername = _testUser_
+|_False_
+|__
+|**
+
+|PMT29
+|TestUpdatePlayerEmailExists
+|Comprobar que no se actualice un jugador si el correo ya existe
+|*Alta*
+|*PRE-01*: Cambiar los datos de un jugador
+|PlayerEmail = _"testuser@email.net"_
+|_False_
+|__
+|**
+
+|PMT30
+|TestDeletePlayerByUsernameSuccess
+|Comprobar que se elimina un jugador usando su username
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador
 |Contracts.Player { +
 _PlayerUsername = "DropPlayer",_ +
 _PlayerEmail = "dropplayer@email.com",_ +
@@ -224,12 +328,85 @@ username = _DropPlayer_
 |__
 |**
 
-|PMT21
-|TestDeletePlayerByUsernameShouldReturnFalse
-|Comprobar que no se intenta eliminar un jugador con un nombre de usuario que no está registrado
+|PMT31
+|TestDeletePlayerByUsernameUsernameNonExist
+|Comprobar que no se intenta eliminar un jugador con un nombre de usuario que no existe
 |*Alta*
-|*PRE-01*: Cambiar los datos de un jugador
-|_DropPlayer_
+|*PRE-01*: Ingresar el username de un jugador
+|_falseDropPlayer_
+|_False_
+|__
+|**
+
+|PMT32
+|TestDeletePlayerByUsernameUsernameBlank
+|Comprobar que no se intenta eliminar un jugador con un nombre de usuario en blanco
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador
+|_""_
+|_False_
+|__
+|**
+
+|PMT33
+|TestConnectPlayerByUsernameSuccess
+|Comprobar que se conecta a un jugador con un nombre de usuario
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador
+|Contracts.Player { +
+_PlayerUsername = "connectPlayer",_ +
+_PlayerEmail = "connectPlayer@email.com",_ +
+_PlayerPassword = "C0nnect_player"_ } +
+|_True_
+|__
+|**
+
+|PMT34
+|TestConnectPlayerByUsernameUsernameNotExist
+|Comprobar que no se intenta conectar un jugador con un nombre de usuario que no existe
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador
+|_falseUsername_
+|_False_
+|__
+|**
+
+|PMT35
+|TestConnectPlayerByUsernameUsernameBlank
+|Comprobar que no se intenta conectar un jugador con un nombre de usuario en blanco
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador vacío
+|_""_
+|_False_
+|__
+|**
+
+|PMT36
+|TestDisconnectPlayerByUsernameSuccess
+|Comprobar que se desconecta a un jugador con un nombre de usuario
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador
+|_connectPlayer_
+|_True_
+|__
+|**
+
+|PMT37
+|TestDisconnectPlayerByUsernameUsernameNotExist
+|Comprobar que no se intenta desconectar un jugador con un nombre de usuario que no existe
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador
+|_falseUsername_
+|_False_
+|__
+|**
+
+|PMT38
+|TestConnectPlayerByUsernameUsernameBlank
+|Comprobar que no se intenta desconectar un jugador con un nombre de usuario en blanco
+|*Alta*
+|*PRE-01*: Ingresar el username de un jugador vacío
+|_""_
 |_False_
 |__
 |**
@@ -661,18 +838,47 @@ username = _DropPlayer_
 |**
 
 |FMT41
-|TestGetFriendRequestsReceiverEmpty
-|Verificar que no se regrese la lista de solicitudes de amistad recibidas si el receiver está en blanco
+|TestGetFriendsByIDSuccess
+|Verificar se regrese una lista con los datos de los amigos del jugador.
 |*Media*
-|PRE01: Deben existir solicitudes de amistad recibidas
-|receiver = _''_
-|Regresa _List<FriendRequest>.Count == 0_
+|PRE01: El jugador debe tener amigos
+|playerID = _firstFriend.PlayerID_
+|Regresa _List<Friendship>.Count > 0_
+|Regresa __
+|**
+
+|FMT42
+|TestGetFriendsByIDPlayerNonExist
+|Verificar no se regrese una lista con los datos de los amigos de un jugador que no existe.
+|*Media*
+|PRE01: El jugador no debe estar registrado
+|playerID = _0_
+|Regresa _List<Friendship>.Count == 0_
+|Regresa __
+|**
+
+|FMT43
+|TestGetFriendsByIDPlayerIDINvalid
+|Verificar no se regrese una lista con los datos de los amigos de un jugador con un ID inválido
+|*Media*
+|PRE01: El jugador no debe estar registrado
+|playerID = _-1_
+|Regresa _List<Friendship>.Count == 0_
 |Regresa __
 |**
 
 |===
 
 === TokenManager
+
+==== Setup
+
+===== Jugadores creados
+
+* testPlayer [playerUsername = "testPlayer", playerPassword = "T3st_pass", playerEmail = "testPlayer@email.net"]
+
+===== Token creados
+* testToken [testPlayer.PlayerId]
 
 [cols="1,1,1,1,1,1,1,1,1"]
 
@@ -689,12 +895,22 @@ username = _DropPlayer_
 |*Pasó*
 
 |TMT02
-|TestGenerateTokenSucces
-|Comprobar que no se envíe una solicitud de amistad a un usuario que no existe
+|TestGenerateTokenSuccess
+|Comprobar que se genere un token para el id de un jugador
 |*Alta*
-|PRE01: Haber registrado un jugador (testUser)
-|playerId = testUser.playerId
-|_Token_ donde _Token.playerId == testUser.playerId_
+|PRE01: Haber registrado un jugador (player)
+|_Contracts.Player { PlayerId = testUser.playerId, PlayerUsername = "testUser", PlayerPassword = "T3st_pass", PlayerEmail = "testuser@email.net" }_
+|playerId = player.PlayerId
+|Regresa _Token_ donde _Token.playerId == testUser.playerId_
+|*Pasó*
+
+|TMT02
+|TestGenerateTokenPlayerIdExistsSuccess
+|Comprobar que se genere un token para el id de un jugador que ya está registrado
+|*Alta*
+|PRE01: Haber registrado un jugador (player)
+|_Contracts.Player { PlayerId = testUser.playerId, PlayerUsername = "testUser", PlayerPassword = "T3st_pass", PlayerEmail = "testuser@email.net" }_
+|playerId = player.PlayerId
 |Regresa _Token_ donde _Token.playerId == testUser.playerId_
 |*Pasó*
 
