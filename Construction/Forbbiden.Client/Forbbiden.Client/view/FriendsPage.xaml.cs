@@ -273,7 +273,7 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void SendFriendRequestButton_Click(object sender, RoutedEventArgs e)
         {
             string receiverUsername = searchtxtBx.Text.Trim();
             await SendFriendRequest(receiverUsername);
