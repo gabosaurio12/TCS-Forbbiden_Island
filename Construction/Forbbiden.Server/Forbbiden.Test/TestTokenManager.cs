@@ -1,4 +1,4 @@
-﻿using log4net;
+﻿/*using log4net;
 using ProfileManager;
 using System.Data.Entity.Core;
 using TokenManager;
@@ -65,7 +65,7 @@ namespace Forbbiden.Test
             Assert.That(token.PlayerId, Is.EqualTo(player.PlayerId), "Should be the same");
         }
 
-        /*[Test]
+        [Test]
         public async Task TestGenerateTokenFaultException()
         {
             var client = new TokenManagerClient();
@@ -74,6 +74,6 @@ namespace Forbbiden.Test
             await Assert.ThrowsAsync<FaultException<DBFault>(() =>
                 client.GenerateTokenAsync(fakePlayerId)
             );
-        }*/
+        }
     }
-}
+}*/

@@ -14,45 +14,8 @@ namespace ProfileManager
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-    public partial class DBFault : object
-    {
-        
-        private string DetailsField;
-        
-        private string ErrorField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Details
-        {
-            get
-            {
-                return this.DetailsField;
-            }
-            set
-            {
-                this.DetailsField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Error
-        {
-            get
-            {
-                return this.ErrorField;
-            }
-            set
-            {
-                this.ErrorField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EmailFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-    public partial class EmailFault : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class Fault : object
     {
         
         private string DetailsField;
@@ -94,6 +57,8 @@ namespace ProfileManager
         
         private ProfileManager.Friendship[] FriendsField;
         
+        private int IsVerifiedField;
+        
         private string PlayerAvatarPathField;
         
         private string PlayerEmailField;
@@ -110,8 +75,6 @@ namespace ProfileManager
         
         private int StatusField;
         
-        private int VerifiedField;
-        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public ProfileManager.Friendship[] Friends
         {
@@ -122,6 +85,19 @@ namespace ProfileManager
             set
             {
                 this.FriendsField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IsVerified
+        {
+            get
+            {
+                return this.IsVerifiedField;
+            }
+            set
+            {
+                this.IsVerifiedField = value;
             }
         }
         
@@ -226,19 +202,6 @@ namespace ProfileManager
             set
             {
                 this.StatusField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Verified
-        {
-            get
-            {
-                return this.VerifiedField;
-            }
-            set
-            {
-                this.VerifiedField = value;
             }
         }
     }
@@ -353,48 +316,54 @@ namespace ProfileManager
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ValidateEmail", ReplyAction="http://tempuri.org/IProfileManager/ValidateEmailResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/ValidateEmailDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/ValidateEmailFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> ValidateEmailAsync(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsUsernameAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/IsUsernameAvailableDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/IsUsernameAvailableFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.EmailFault), Action="http://tempuri.org/IProfileManager/SendEmailEmailFaultFault", Name="EmailFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/SendEmailFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> SendEmailAsync(string email, int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/SignUpDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/SignUpFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<int> SignUpAsync(ProfileManager.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/Login", ReplyAction="http://tempuri.org/IProfileManager/LoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/LoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<bool> LoginAsync(ProfileManager.Player player);
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/LoginFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        System.Threading.Tasks.Task<ProfileManager.Player> LoginAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<ProfileManager.Player> GetPlayerByUsernameAsync(string username, bool includeFriends);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetPlayerById", ReplyAction="http://tempuri.org/IProfileManager/GetPlayerByIdResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetPlayerByIdDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/GetPlayerByIdFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<ProfileManager.Player> GetPlayerByIdAsync(int playerId, bool includeFriends);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/GetCurrentLoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/GetCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<ProfileManager.Player> GetCurrentLoginAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ClearCurrentLogin", ReplyAction="http://tempuri.org/IProfileManager/ClearCurrentLoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/ClearCurrentLoginDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        System.Threading.Tasks.Task<bool> ClearCurrentLoginAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UpdatePlayer", ReplyAction="http://tempuri.org/IProfileManager/UpdatePlayerResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/UpdatePlayerDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/UpdatePlayerFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> UpdatePlayerAsync(ProfileManager.Player updatedPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.DBFault), Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameDBFaultFault", Name="DBFault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> DeletePlayerByUsernameAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
+        System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatar", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarResponse")]
+        System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -467,9 +436,9 @@ namespace ProfileManager
             return base.Channel.SignUpAsync(player);
         }
         
-        public System.Threading.Tasks.Task<bool> LoginAsync(ProfileManager.Player player)
+        public System.Threading.Tasks.Task<ProfileManager.Player> LoginAsync(string username, string password)
         {
-            return base.Channel.LoginAsync(player);
+            return base.Channel.LoginAsync(username, password);
         }
         
         public System.Threading.Tasks.Task<ProfileManager.Player> GetPlayerByUsernameAsync(string username, bool includeFriends)
@@ -482,16 +451,6 @@ namespace ProfileManager
             return base.Channel.GetPlayerByIdAsync(playerId, includeFriends);
         }
         
-        public System.Threading.Tasks.Task<ProfileManager.Player> GetCurrentLoginAsync()
-        {
-            return base.Channel.GetCurrentLoginAsync();
-        }
-        
-        public System.Threading.Tasks.Task<bool> ClearCurrentLoginAsync()
-        {
-            return base.Channel.ClearCurrentLoginAsync();
-        }
-        
         public System.Threading.Tasks.Task<bool> UpdatePlayerAsync(ProfileManager.Player updatedPlayer)
         {
             return base.Channel.UpdatePlayerAsync(updatedPlayer);
@@ -500,6 +459,26 @@ namespace ProfileManager
         public System.Threading.Tasks.Task<bool> DeletePlayerByUsernameAsync(string username)
         {
             return base.Channel.DeletePlayerByUsernameAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ConnectPlayerByUsernameAsync(string username)
+        {
+            return base.Channel.ConnectPlayerByUsernameAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username)
+        {
+            return base.Channel.DisconnectPlayerByUsernameAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName)
+        {
+            return base.Channel.UploadAvatarAsync(username, avatarBytes, fileName);
+        }
+        
+        public System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName)
+        {
+            return base.Channel.GetAvatarAsync(fileName);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
@@ -522,6 +501,7 @@ namespace ProfileManager
                 result.MaxBufferSize = int.MaxValue;
                 result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
                 result.MaxReceivedMessageSize = int.MaxValue;
+                result.Security.Mode = System.ServiceModel.SecurityMode.None;
                 return result;
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
@@ -531,7 +511,7 @@ namespace ProfileManager
         {
             if ((endpointConfiguration == EndpointConfiguration.NetTcpBinding_IProfileManager))
             {
-                return new System.ServiceModel.EndpointAddress("net.tcp://localhost:8081/ProfileManager");
+                return new System.ServiceModel.EndpointAddress("net.tcp://192.168.100.15:8081/ProfileManager");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
