@@ -13,7 +13,7 @@ namespace Forbbiden.Server.logic
     public class GameManager : IGameManager
     {
         private readonly Dictionary<string, HashSet<string>> roomBans = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
-        private static readonly ILog log = LogManager.GetLogger(typeof(GameManager));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(GameManager));
         private readonly Dictionary<string, List<IGameManagerCallback>> rooms = new Dictionary<string, List<IGameManagerCallback>>();
         private readonly Dictionary<string, List<PlayerInfo>> roomPlayers = new Dictionary<string, List<PlayerInfo>>();
         private readonly Dictionary<IGameManagerCallback, string> callbackToRoom = new Dictionary<IGameManagerCallback, string>();
@@ -23,7 +23,7 @@ namespace Forbbiden.Server.logic
 
         public GameManager()
         {
-            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            connectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public bool JoinGame(string matchId, string playerName, byte[] avatarBytes, string avatarFileName)
@@ -409,12 +409,12 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error("ResolveOrCreatePlayerId DB error", ex);
+                Log.Error("ResolveOrCreatePlayerId DB error", ex);
                 return int.MinValue;
             }
             catch (Exception ex)
             {
-                log.Error("ResolveOrCreatePlayerId error", ex);
+                Log.Error("ResolveOrCreatePlayerId error", ex);
                 return int.MinValue;
             }
         }
@@ -436,11 +436,11 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error("RemovePlayerFromDb DB error", ex);
+                Log.Error("RemovePlayerFromDb DB error", ex);
             }
             catch (Exception ex)
             {
-                log.Error("RemovePlayerFromDb error", ex);
+                Log.Error("RemovePlayerFromDb error", ex);
             }
         }
 

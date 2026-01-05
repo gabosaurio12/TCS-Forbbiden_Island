@@ -1,11 +1,11 @@
 ﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
-using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.Linq;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,10 +27,10 @@ namespace Forbbiden.Client.view
         public LeaveMenuPage(int matchId, string currentPlayer, GameManagerClient gameClient, GameServiceCallback callback)
         {
             InitializeComponent();
-            this.matchId = matchId;
-            this.currentPlayer = currentPlayer;
-            this.gameClient = gameClient;
-            this.callback = callback;
+            MatchId = matchId;
+            CurrentPlayer = currentPlayer;
+            GameClient = gameClient;
+            Callback = callback;
 
             _ = DetermineHostAndLoadAsync();
         }
@@ -41,14 +41,14 @@ namespace Forbbiden.Client.view
             try
             {
                 matchClient = new MatchManagerClient();
-                var match = await Task.Run(() => matchClient.GetMatchById(matchId));
+                var match = await Task.Run(() => matchClient.GetMatchById(MatchId));
                 isHost = match != null &&
                          !string.IsNullOrEmpty(match.HostUsername) &&
-                         string.Equals(match.HostUsername, currentPlayer, StringComparison.OrdinalIgnoreCase);
+                         string.Equals(match.HostUsername, CurrentPlayer, StringComparison.OrdinalIgnoreCase);
             }
             catch (Exception ex)
             {
-                log.Warn("Error determining host", ex);
+                Log.Warn("Error determining host", ex);
                 isHost = false;
             }
             finally
@@ -59,7 +59,7 @@ namespace Forbbiden.Client.view
                 }
             }
 
-            Dispatcher.Invoke(async () =>
+            await Dispatcher.Invoke(async () =>
             {
                 KickSection.Visibility = isHost ? Visibility.Visible : Visibility.Collapsed;
                 if (isHost)
@@ -73,10 +73,10 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                var players = await Task.Run(() => gameClient.GetPlayers(matchId.ToString()));
+                var players = await Task.Run(() => GameClient.GetPlayers(MatchId.ToString()));
                 var names = players?
                     .Select(p => p?.PlayerUsername)
-                    .Where(u => !string.IsNullOrEmpty(u) && !string.Equals(u, currentPlayer, StringComparison.OrdinalIgnoreCase))
+                    .Where(u => !string.IsNullOrEmpty(u) && !string.Equals(u, CurrentPlayer, StringComparison.OrdinalIgnoreCase))
                     .Distinct(StringComparer.OrdinalIgnoreCase)
                     .ToList() ?? new System.Collections.Generic.List<string>();
 
@@ -86,19 +86,15 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                log.Warn("RefreshKickListAsync failed", ex);
+                Log.Warn("RefreshKickListAsync failed", ex);
                 KickCombo.ItemsSource = null;
                 KickEmpty.Visibility = Visibility.Visible;
             }
-            MatchId = matchId;
-            CurrentPlayer = currentPlayer;
-            GameClient = gameClient;
-            Callback = callback;
         }
 
         private void BtnContinue_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new LobbyPage(matchId, currentPlayer, gameClient, callback));
+            NavigationService?.Navigate(new LobbyPage(MatchId, CurrentPlayer, GameClient, Callback));
         }
 
         private async void BtnLeave_Click(object sender, RoutedEventArgs e)
@@ -107,44 +103,40 @@ namespace Forbbiden.Client.view
 
             try
             {
-                if (gameClient != null)
+                if (GameClient != null)
                 {
                     try
                     {
-                        await Task.Run(() => gameClient.LeaveGame(matchId.ToString(), currentPlayer));
+                        await Task.Run(() => GameClient.LeaveGame(MatchId.ToString(), CurrentPlayer));
                     }
                     catch (Exception ex)
                     {
-                        log.Warn("Error calling LeaveGame", ex);
+                        Log.Warn("Error calling LeaveGame", ex);
                     }
                 }
 
-            if (match != null)
-            {
-                var host = match.HostUsername;
-                if (!string.IsNullOrEmpty(host) && string.Equals(
-                    host, CurrentPlayer, StringComparison.OrdinalIgnoreCase))
+                try
                 {
                     matchClient = new MatchManagerClient();
-                    var match = await Task.Run(() => matchClient.GetMatchById(matchId));
+                    var match = await Task.Run(() => matchClient.GetMatchById(MatchId));
 
                     if (match != null &&
                         !string.IsNullOrEmpty(match.HostUsername) &&
-                        string.Equals(match.HostUsername, currentPlayer, StringComparison.OrdinalIgnoreCase))
+                        string.Equals(match.HostUsername, CurrentPlayer, StringComparison.OrdinalIgnoreCase))
                     {
                         try
                         {
-                            await Task.Run(() => matchClient.DeleteMatch(matchId));
+                            await Task.Run(() => matchClient.DeleteMatch(MatchId));
                         }
                         catch (Exception ex)
                         {
-                            log.Warn($"DeleteMatch failed for {matchId}", ex);
+                            Log.Warn($"DeleteMatch failed for {MatchId}", ex);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    log.Warn("MatchManager delete/leave flow failed", ex);
+                    Log.Warn("MatchManager delete/leave flow failed", ex);
                 }
                 finally
                 {
@@ -156,19 +148,19 @@ namespace Forbbiden.Client.view
 
                 try
                 {
-                    if (gameClient != null)
+                    if (GameClient != null)
                     {
-                        try { gameClient.Close(); } catch { gameClient.Abort(); }
+                        try { GameClient.Close(); } catch { GameClient.Abort(); }
                     }
                 }
                 catch (Exception ex)
                 {
-                    log.Warn("Error closing gameClient", ex);
+                    Log.Warn("Error closing gameClient", ex);
                 }
             }
             catch (Exception ex)
             {
-                log.Warn("Error during leave process", ex);
+                Log.Warn("Error during leave process", ex);
             }
             finally
             {
@@ -178,7 +170,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (Exception ex)
                 {
-                    log.Warn("Error navigating to MainPage after leave", ex);
+                    Log.Warn("Error navigating to MainPage after leave", ex);
                 }
             }
         }
@@ -190,23 +182,24 @@ namespace Forbbiden.Client.view
             var target = KickCombo.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(target))
             {
-                ViewUtils.OpenNotificationWindow(Properties.Resources.leave_menu_kick_no_selection_title,
-                                                 Properties.Resources.leave_menu_kick_no_selection_msg,
-                                                 Window.GetWindow(this));
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.leave_menu_kick_no_selection_title,
+                    Properties.Resources.leave_menu_kick_no_selection_msg,
+                    Window.GetWindow(this));
                 return;
             }
 
-            // Verificar que siga en la partida
-            var currentPlayers = await Task.Run(() => gameClient.GetPlayers(matchId.ToString()));
-            var targetStillThere = currentPlayers?.Any(p =>
+            var CurrentPlayers = await Task.Run(() => GameClient.GetPlayers(MatchId.ToString()));
+            var targetStillThere = CurrentPlayers?.Any(p =>
                 !string.IsNullOrEmpty(p?.PlayerUsername) &&
                 string.Equals(p.PlayerUsername, target, StringComparison.OrdinalIgnoreCase)) == true;
 
             if (!targetStillThere)
             {
-                ViewUtils.OpenNotificationWindow(Properties.Resources.leave_menu_kick_not_found_title,
-                                                 Properties.Resources.leave_menu_kick_not_found_msg,
-                                                 Window.GetWindow(this));
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.leave_menu_kick_not_found_title,
+                    Properties.Resources.leave_menu_kick_not_found_msg,
+                    Window.GetWindow(this));
                 await RefreshKickListAsync();
                 return;
             }
@@ -214,31 +207,33 @@ namespace Forbbiden.Client.view
             bool success = false;
             try
             {
-                await Task.Run(() => gameClient.KickPlayer(matchId.ToString(), currentPlayer, target));
+                await Task.Run(() => GameClient.KickPlayer(MatchId.ToString(), CurrentPlayer, target));
                 success = true;
             }
             catch (FaultException fex)
             {
-                log.Warn("KickPlayer fault", fex);
+                Log.Warn("KickPlayer fault", fex);
                 success = false;
             }
             catch (Exception ex)
             {
-                log.Warn("KickPlayer error", ex);
+                Log.Warn("KickPlayer error", ex);
                 success = false;
             }
 
             if (success)
             {
-                ViewUtils.OpenNotificationWindow(Properties.Resources.leave_menu_kick_success_title,
-                                                 string.Format(Properties.Resources.leave_menu_kick_success_msg, target),
-                                                 Window.GetWindow(this));
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.leave_menu_kick_success_title,
+                    string.Format(Properties.Resources.leave_menu_kick_success_msg, target),
+                    Window.GetWindow(this));
             }
             else
             {
-                ViewUtils.OpenNotificationWindow(Properties.Resources.leave_menu_kick_fail_title,
-                                                 Properties.Resources.leave_menu_kick_fail_msg,
-                                                 Window.GetWindow(this));
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.leave_menu_kick_fail_title,
+                    Properties.Resources.leave_menu_kick_fail_msg,
+                    Window.GetWindow(this));
             }
 
             await RefreshKickListAsync();

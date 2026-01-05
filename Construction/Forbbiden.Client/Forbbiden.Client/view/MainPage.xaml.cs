@@ -44,7 +44,7 @@ namespace Forbbiden.Client
                 {
                     currentLogin = await Client.GetPlayerByIdAsync(playerId, false);
                 }
-                catch (FaultException<DBFault> ex)
+                catch (FaultException<Fault> ex)
                 {
                     Log.Error("ERROR: MainPage.SetLogin", ex);
                     ViewUtils.ShowPullError(Window.GetWindow(this));
@@ -152,9 +152,9 @@ namespace Forbbiden.Client
             {
                 isConnected = await Client.ConnectPlayerByUsernameAsync(username);
             }
-            catch (FaultException<DBFault> dbFault)
+            catch (FaultException<Fault> fault)
             {
-                Log.Error("MainPage.ConnectPlayer", dbFault);
+                Log.Error("MainPage.ConnectPlayer", fault);
                 ViewUtils.ShowPushError(Window.GetWindow(this));
             }
 

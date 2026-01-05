@@ -8,6 +8,7 @@ using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Forbbiden.Client
 {
@@ -193,7 +194,7 @@ namespace Forbbiden.Client
 
         private void OpenNotificationError(string message)
         {
-            string title = Properties.Langs.Resources.error;
+            string title = Properties.Resources.error;
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
         }
 
@@ -227,8 +228,8 @@ namespace Forbbiden.Client
         {
             if (string.IsNullOrEmpty(UploadedAvatarOriginalPath) || string.IsNullOrEmpty(AvatarFileName))
             {
-                string message = Properties.Langs.Resources.error_invalid_avatar;
-                OpenNotificationError(message);
+                //string message = Properties.Resources.error_invalid_avatar;
+                //OpenNotificationError(message);
                 return;
             }
 
@@ -237,8 +238,8 @@ namespace Forbbiden.Client
                 var bytes = GetAvatarBytesResized(UploadedAvatarOriginalPath, 256, 80);
                 if (bytes == null || bytes.Length == 0)
                 {
-                    string message = Properties.Langs.Resources.error_processing_image;
-                    OpenNotificationError(message);
+                    //string message = Properties.Resources.error_processing_image;
+                    //OpenNotificationError(message);
                     return;
                 }
 
@@ -251,13 +252,13 @@ namespace Forbbiden.Client
                 catch (FaultException fex)
                 {
                     Log.Error("ProfilePage.BtnSave_Click", fex);
-                    OpenNotificationError(Properties.Langs.Resources.error_uploading_avatar);
+                    //OpenNotificationError(Properties.Resources.error_uploading_avatar);
                     return;
                 }
 
                 if (string.IsNullOrEmpty(savedFileName))
                 {
-                    OpenNotificationError(Properties.Langs.Resources.error_uploading_avatar);
+                    //OpenNotificationError(Properties.Resources.error_uploading_avatar);
                     return;
                 }
 
@@ -266,7 +267,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("ProfilePage.UploadAvatar", ex);
-                OpenNotificationError(Properties.Langs.Resources.error_processing_avatar);
+                //OpenNotificationError(Properties.Resources.error_processing_avatar);
             }
         }
 

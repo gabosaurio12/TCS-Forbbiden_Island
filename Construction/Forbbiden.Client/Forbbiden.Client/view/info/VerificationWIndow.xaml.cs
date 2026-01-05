@@ -60,7 +60,7 @@ namespace Forbbiden.Client.view.info
             {
                 player = await profileManager.GetPlayerByIdAsync(PlayerID, false);
             }
-            catch (FaultException<DBFault> ex)
+            catch (FaultException<Fault> ex)
             {
                 Log.Error("VerificationWindow.VerifyPlayer", ex);
                 ViewUtils.ShowPullError(GetWindow(this));
@@ -73,7 +73,7 @@ namespace Forbbiden.Client.view.info
                 {
                     isUpdated = await profileManager.UpdatePlayerAsync(player);
                 }
-                catch (FaultException<DBFault> ex)
+                catch (FaultException<Fault> ex)
                 {
                     Log.Error("VerificationWindow.VerifyPlayer", ex);
                     ViewUtils.ShowPushError(GetWindow(this));
@@ -111,7 +111,7 @@ namespace Forbbiden.Client.view.info
                 {
                     isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
                 }
-                catch (FaultException<DBFault> ex)
+                catch (FaultException<Fault> ex)
                 {
                     Log.Error("VerificationWindow.VerifyToken", ex);
                     ViewUtils.ShowPullError(GetWindow(this));

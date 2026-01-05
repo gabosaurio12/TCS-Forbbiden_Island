@@ -1,6 +1,5 @@
 using log4net;
 using ProfileManager;
-using System.Data.Entity.Core;
 using System.ServiceModel;
 
 namespace Forbbiden.Test
@@ -45,7 +44,6 @@ namespace Forbbiden.Test
         [OneTimeTearDown]
         public async Task TearDown()
         {
-            // delete tokens
             foreach (var username in UsernamesToDelete)
             {
                 try

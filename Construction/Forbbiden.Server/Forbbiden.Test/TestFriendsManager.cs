@@ -20,33 +20,33 @@ namespace Forbbiden.Test
         {
             FriendsClient = new FriendsManagerClient();
             UsernamesToDelete = [];
-            HashTestPass = BCrypt.Net.BCrypt.HashPassword("T3st_pass");
+            HashTestPass = BCrypt.Net.BCrypt.HashPassword(HashTestPass);
 
             ProfileManager.Player sender = new ProfileManager.Player
             {
                 PlayerUsername = "testSender",
-                PlayerPassword = "T3st_pass",
+                PlayerPassword = HashTestPass,
                 PlayerEmail = "testSender@email.net"
             };
 
             ProfileManager.Player receiver = new ProfileManager.Player
             {
                 PlayerUsername = "testReceiver",
-                PlayerPassword = "T3st_pass",
+                PlayerPassword = HashTestPass,
                 PlayerEmail = "testReceiver@email.net"
             };
 
             ProfileManager.Player firstFriend = new ProfileManager.Player
             {
                 PlayerUsername = "firstFriend",
-                PlayerPassword = "T3st_pass",
+                PlayerPassword = HashTestPass,
                 PlayerEmail = "firstFriend@email.net"
             };
 
             ProfileManager.Player secondFriend = new ProfileManager.Player
             {
                 PlayerUsername = "secondFriend",
-                PlayerPassword = "T3st_pass",
+                PlayerPassword = HashTestPass,
                 PlayerEmail = "secondFriend@email.net"
             };
 

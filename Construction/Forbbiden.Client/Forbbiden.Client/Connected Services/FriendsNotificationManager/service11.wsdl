@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="FriendsNotificationManager" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IFriendsNotificationManager_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IFriendsNotificationManager_Subscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Subscribe" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsNotificationManager_Subscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsNotificationManager_Unsubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unsubscribe" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsNotificationManager_Unsubscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsNotificationManager_NewFriendRequest_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NewFriendRequest" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsNotificationManager_RefreshPageCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RefreshPageCallback" />
+  </wsdl:message>
+  <wsdl:portType name="IFriendsNotificationManager">
+    <wsdl:operation name="Subscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsNotificationManager/Subscribe" message="tns:IFriendsNotificationManager_Subscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsNotificationManager/SubscribeResponse" message="tns:IFriendsNotificationManager_Subscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unsubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsNotificationManager/Unsubscribe" message="tns:IFriendsNotificationManager_Unsubscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsNotificationManager/UnsubscribeResponse" message="tns:IFriendsNotificationManager_Unsubscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NewFriendRequest">
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsNotificationManager/NewFriendRequest" message="tns:IFriendsNotificationManager_NewFriendRequest_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshPageCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsNotificationManager/RefreshPageCallback" message="tns:IFriendsNotificationManager_RefreshPageCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IFriendsNotificationManager" type="tns:IFriendsNotificationManager">
+    <wsp:PolicyReference URI="#NetTcpBinding_IFriendsNotificationManager_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Subscribe">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsNotificationManager/Subscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Unsubscribe">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsNotificationManager/Unsubscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewFriendRequest">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsNotificationManager/NewFriendRequest" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshPageCallback">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsNotificationManager/RefreshPageCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FriendsNotificationManager">
+    <wsdl:port name="NetTcpBinding_IFriendsNotificationManager" binding="tns:NetTcpBinding_IFriendsNotificationManager">
+      <soap12:address location="net.tcp://192.168.100.15:8086/FriendsNotificationManager" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.100.15:8086/FriendsNotificationManager</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

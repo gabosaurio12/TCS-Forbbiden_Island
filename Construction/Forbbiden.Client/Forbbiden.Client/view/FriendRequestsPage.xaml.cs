@@ -59,9 +59,9 @@ namespace Forbbiden.Client.view
                 {
                     requests = await FriendsClient.GetFriendRequestsAsync(ClientSession.Username);
                 }
-                catch (FaultException<DBFault> dbFault)
+                catch (FaultException<Fault> fault)
                 {
-                    Log.Error("ERROR: FriendRequestsPage.SetRequests", dbFault);
+                    Log.Error("ERROR: FriendRequestsPage.SetRequests", fault);
                     ViewUtils.ShowPullError(Window.GetWindow(this));
                     NavigationService?.Navigate(new FriendsPage());
                 }
@@ -102,9 +102,9 @@ namespace Forbbiden.Client.view
                             .AcceptFriendRequestAsync(senderUsername, receiver.PlayerUsername);
                         RemoveRequestStack(requestsStack, requestControl);
                     }
-                    catch (FaultException<DBFault> dbFault)
+                    catch (FaultException<Fault> fault)
                     {
-                        Log.Error("ERROR: FriendRequestsPage.AcceptButton_Clicks", dbFault);
+                        Log.Error("ERROR: FriendRequestsPage.AcceptButton_Clicks", fault);
                         ViewUtils.ShowPushError(Window.GetWindow(this));
 
                         NavigationService?.Navigate(new FriendsPage());
@@ -136,9 +136,9 @@ namespace Forbbiden.Client.view
                         await FriendsClient.CancelFriendRequestAsync(senderUsername, receiver.PlayerUsername);
                         RemoveRequestStack(requestsStack, requestControl);
                     }
-                    catch (FaultException<DBFault> dbFault)
+                    catch (FaultException<Fault> fault)
                     {
-                        Log.Error("ERROR: FriendRequestsPage.RejectButton_Click", dbFault);
+                        Log.Error("ERROR: FriendRequestsPage.RejectButton_Click", fault);
                         ViewUtils.ShowPushError(Window.GetWindow(this));
                         
                         NavigationService?.Navigate(new FriendsPage());
@@ -162,9 +162,9 @@ namespace Forbbiden.Client.view
             {
                 friend = await ProfileManager.GetPlayerByIdAsync(request.SenderID, false);
             }
-            catch (FaultException<DBFault> dbFault)
+            catch (FaultException<Fault> fault)
             {
-                Log.Error("ERROR: FriendRequestsPage.AddRequest", dbFault);
+                Log.Error("ERROR: FriendRequestsPage.AddRequest", fault);
                 ViewUtils.ShowPullError(Window.GetWindow(this));
 
                 NavigationService?.Navigate(new FriendsPage());
@@ -213,9 +213,9 @@ namespace Forbbiden.Client.view
             {
                 searchPlayer = await ProfileManager.GetPlayerByUsernameAsync(friendUsername, false);
             }
-            catch (FaultException<DBFault> dbFault)
+            catch (FaultException<Fault> fault)
             {
-                Log.Error("ERROR: FriendRequestsPage.SendFriendRequest", dbFault);
+                Log.Error("ERROR: FriendRequestsPage.SendFriendRequest", fault);
                 ViewUtils.ShowPullError(Window.GetWindow(this));
                 NavigationService?.Navigate(new FriendsPage());
             }
@@ -228,9 +228,9 @@ namespace Forbbiden.Client.view
                     requestStatus = await FriendsClient.SendFriendRequestAsync(
                         ClientSession.Username, searchPlayer.PlayerUsername);
                 }
-                catch (FaultException<DBFault> dbFault)
+                catch (FaultException<Fault> fault)
                 {
-                    Log.Error("ERROR: FriendRequestsPage.SendFriendRequest", dbFault);
+                    Log.Error("ERROR: FriendRequestsPage.SendFriendRequest", fault);
                     ViewUtils.ShowPushError(Window.GetWindow(this));
                     NavigationService?.Navigate(new FriendsPage());
                 }

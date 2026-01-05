@@ -300,17 +300,30 @@
     <None Include="Connected Services\BoardManager\Arrays1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\BoardManager\Arrays11.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Card.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\BoardManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\BoardManager\Forbbiden.Contracts11.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\BoardManager\service1.wsdl" />
+    <None Include="Connected Services\BoardManager\service11.wsdl" />
     <None Include="Connected Services\BoardManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\BoardManager\service21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BoardManager\service22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BoardManager\service23.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendsManager\Forbbiden.Client.FriendsManager.FriendRequest.datasource">
@@ -322,21 +335,41 @@
     <None Include="Connected Services\FriendsManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\FriendsManager\Forbbiden.Contracts11.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\FriendsManager\service1.wsdl" />
+    <None Include="Connected Services\FriendsManager\service11.wsdl" />
     <None Include="Connected Services\FriendsManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendsManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\FriendsManager\service22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsManager\service23.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\FriendsNotificationManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\FriendsNotificationManager\Forbbiden.Contracts11.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\FriendsNotificationManager\service1.wsdl" />
+    <None Include="Connected Services\FriendsNotificationManager\service11.wsdl" />
     <None Include="Connected Services\FriendsNotificationManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendsNotificationManager\service21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsNotificationManager\service22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendsNotificationManager\service23.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameManager\Forbbiden.Client.GameManager.PlayerInfo.datasource">
@@ -385,27 +418,27 @@
     <None Include="Connected Services\ProfileManager\Forbbiden.Client.ProfileManager.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ProfileManager\Forbbiden.Contracts.xsd">
+    <None Include="Connected Services\ProfileManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ProfileManager\service.wsdl" />
-    <None Include="Connected Services\ProfileManager\service.xsd">
+    <None Include="Connected Services\ProfileManager\service1.wsdl" />
+    <None Include="Connected Services\ProfileManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ProfileManager\service1.xsd">
+    <None Include="Connected Services\ProfileManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\TokenManager\Forbbiden.Client.TokenManager.Token.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\TokenManager\Forbbiden.Contracts.xsd">
+    <None Include="Connected Services\TokenManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\TokenManager\service.wsdl" />
-    <None Include="Connected Services\TokenManager\service.xsd">
+    <None Include="Connected Services\TokenManager\service1.wsdl" />
+    <None Include="Connected Services\TokenManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\TokenManager\service1.xsd">
+    <None Include="Connected Services\TokenManager\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PlayerSettings.settings">
@@ -849,13 +882,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\Langs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.es.resx">
-      <LastGenOutput>Resources.es.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.es.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
