@@ -36,3 +36,5 @@ Refactoring.Guru, “Observer,” Refactoring.Guru, Jan. 01, 2025. https://refac
 Refactoring.Guru, “Memento,” Refactoring.Guru, Jan. 01, 2025. https://refactoring.guru/design-patterns/memento
 
 Refactoring.Guru, “State,” Refactoring.Guru, Jan. 01, 2025. https://refactoring.guru/design-patterns/state
+
+K.Fakhroutdinov, “Unified Modeling Language (UML) description, UML diagram examples, tutorials and reference for all types of UML diagrams - use case diagrams, class, package, component, composite structure diagrams, deployments, activities, interactions, profiles, etc.” https://www.uml-diagrams.org/
