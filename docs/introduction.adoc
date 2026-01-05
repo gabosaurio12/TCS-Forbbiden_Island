@@ -1,8 +1,16 @@
 
 = Introducción
-La base del juego de mesa son cartas (casillas) y cada una tiene un diseño distinto, el
-tablero está formado de un cuadrado de 4 x 4 y luego se agregan dos cartas en el centro
-de cada cara.
-Existe una barra que indica el nivel de agua, que va en aumento durante la partida.
-En la FEI Editon el objetivo ya no es cooperar, es demostrar quién es el mejor y quién si es capaz de
-escapar primero.
+
+Como proyecto final para la materia de Tecnologías para la construcción de Software se solicitó un proyecto construido con .NET, WCF, WPF, Entity Framework y SQL Server.
+
+Se comenzó el proyecto a finales de Agosto / principios de Septiembre, el tiempo de desarrollo fue de tres a cuatro meses.
+
+Se utilizaron herramientas de apoyo como Git y SonarQube cloud.
+
+El proyecto debía tener temática de algún juego de mesa, elegimos Forbidden Island. La base del juego de mesa son cartas (casillas) y cada una tiene un diseño distinto, el tablero está formado de un cuadrado de 4 x 4 y luego se agregan dos cartas en el centro de cada cara.
+
+Existe una barra que indica el nivel de agua, que aumenta cada vez que aparece una carta "¡Las aguas suben!".
+
+El objetivo del juego es que entre todos los jugadores se "salven" los tesoros de la isla antes de que esta se inunde completamente.
+
+Nuestro juego se llama Forbidden Island FEI Edition y tiene el mismo objetivo, se deben recuperar los cuatro tesoros de la FEI antes de que se inunde. Al ser un videojuego se tiene cierta libertad en la creación, la FEI Edition incluye dos minijuegos que se llevan a cabo durante la partida.

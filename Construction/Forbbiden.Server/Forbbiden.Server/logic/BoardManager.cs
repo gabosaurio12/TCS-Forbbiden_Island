@@ -1,4 +1,6 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.callbacks;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -12,29 +14,12 @@ namespace Forbbiden.Server.logic
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class BoardManager : IBoardManager
     {
-
-        private static readonly ILog Log = LogManager.GetLogger(typeof(BoardManager));
         private readonly string ConnectionString;
+        private const string CLASS_METHOD = "BoardManger.SendOnPlayersTurnCallback";
 
         public BoardManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
-        }
-
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "EntityException";
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public Contracts.Card GetCard(string path)
@@ -49,7 +34,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetCard";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 Contracts.Card contractCard;
@@ -89,7 +74,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetFloodCards";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 List<Contracts.Card> floodCards = null;
@@ -130,7 +115,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetTreasureCards";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 List<Contracts.Card> treasureCards = null;
@@ -151,6 +136,73 @@ namespace Forbbiden.Server.logic
                 }
 
                 return treasureCards;
+            }
+        }
+
+        public void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnBoardCreatedCallback(boardJson, usernames);
+            }
+            catch (CommunicationException ex)
+            {
+                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
+            }
+            catch (TimeoutException ex)
+            {
+                ExceptionHandler.HandleTimeoutException(ex, CLASS_METHOD);
+            }
+        }
+
+        public void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnBoardUpdatedCallback(boardJson, usernames);
+            }
+            catch (CommunicationException ex)
+            {
+                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
+            }
+            catch (TimeoutException ex)
+            {
+                ExceptionHandler.HandleTimeoutException(ex, CLASS_METHOD);
+            }
+        }
+
+        public void SendOnPlayersTurnCallback(string username)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnPlayersTurnCallback(username);
+            }
+            catch (CommunicationException ex)
+            {
+                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
+            }
+            catch (TimeoutException ex)
+            {
+                string classMethod = "BoardManger.SendOnPlayersTurnCallback";
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
+            }
+        }
+
+        public void SendOnTurnFinishedCallback(string boardJson, List<string> usernames)
+        {
+            try
+            {
+                MatchNotificationManager.SendOnTurnFinishedCallback(boardJson, usernames);
+            }
+            catch (CommunicationException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+            }
+            catch (TimeoutException ex)
+            {
+                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
     }

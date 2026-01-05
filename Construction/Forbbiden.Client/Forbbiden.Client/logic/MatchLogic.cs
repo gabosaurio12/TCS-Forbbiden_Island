@@ -6,17 +6,70 @@ using System.Linq;
 
 namespace Forbbiden.Client.logic
 {
-    public class MatchLogic
+    public static class MatchLogic
     {
-        public static Random Rand = new Random();
+        public static Random Rand { get; } = new Random();
+
+        public static List<UserControlTile> GetAvatarsBeginningTiles(UserControlBoard board, int numberOfPlayers)
+        {
+            var boardTiles = board.GetAllTilesFromGrid();
+            var beginningTiles = new List<UserControlTile>();
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                beginningTiles.Add(boardTiles[Rand.Next(0, boardTiles.Count)]);
+            }
+
+            return beginningTiles;
+        }
+
+        private static bool ValidateTileToMove(UserControlTile possibleTile)
+        {
+            HashSet<int> forbiddenCoordinates = new HashSet<int>() { 1, 4, 10, 15, 40, 45, 51, 54 };
+
+            bool isValid = true;
+            if (possibleTile != null)
+            {
+                if (possibleTile.IsLost)
+                {
+                    isValid = false;
+                }
+                int coordinate = (possibleTile.Row * 10) + possibleTile.Col;
+                if (forbiddenCoordinates.Contains(coordinate))
+                {
+                    isValid = false;
+                }
+                if (possibleTile.Row < 0 || possibleTile.Row > 5)
+                {
+                    isValid = false;
+                }
+                if (possibleTile.Col < 0 || possibleTile.Col > 5)
+                {
+                    isValid = false;
+                }
+            }
+            else
+            {
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private static List<UserControlTile> CleanPreliminaryTiles(UserControlTile[] preliminaryTiles)
+        {
+            List<UserControlTile> possibleTiles = preliminaryTiles
+                .Where(ValidateTileToMove)
+                .ToList();
+
+            return possibleTiles;
+        }
 
         public static List<UserControlTile> GetPossibleTilesToMove(UserControlTile tile, UserControlBoard board)
-        {
-            int[] forbbidenCoordinates = { 01, 04, 10, 15, 40, 45, 51, 54 };
+        {            
             var row = tile.Row;
             var col = tile.Col;
 
-            List<UserControlTile> preliminaryTiles = new List<UserControlTile>
+            var neighbours = new []
             {
                 board.GetTile(row - 1, col),
                 board.GetTile(row + 1, col),
@@ -24,29 +77,8 @@ namespace Forbbiden.Client.logic
                 board.GetTile(row, col + 1)
             };
 
-            List<UserControlTile> possibleTiles = new List<UserControlTile>();
-
-            foreach (var possibleTile in preliminaryTiles)
-            {
-                if (!possibleTile.IsLost)
-                {
-                    int coordinate = (possibleTile.Row * 10) + possibleTile.Col;
-
-                    if (!forbbidenCoordinates.Contains(coordinate) || coordinate > -1)
-                    {
-                        if (possibleTile.Row > -1 || possibleTile.Row < 6)
-                        {
-                            possibleTiles.Add(possibleTile);
-                        }
-                        else if (possibleTile.Col > -1 || possibleTile.Col < 6)
-                        {
-                            possibleTiles.Add(possibleTile);
-                        }
-                    }
-                }                
-            }
-
-            return possibleTiles;
+            var possibleTilesToMove = CleanPreliminaryTiles(neighbours);
+            return possibleTilesToMove;
         }
 
         public static List<UserControlTile> GetPossibleTilesToShore(UserControlTile currentTile, UserControlBoard board)

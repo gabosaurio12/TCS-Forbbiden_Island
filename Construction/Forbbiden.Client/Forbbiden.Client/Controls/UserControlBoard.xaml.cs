@@ -87,21 +87,17 @@ namespace Forbbiden.Client.Controls
             }
         }
 
+        public void SetTile(UserControlTile newTile)
+        {
+            var oldTile = GetTile(newTile.Row, newTile.Col);
+            oldTile?.SetTile(newTile);
+        }
+
         public UserControlTile GetTile(int row, int col)
         {
-            UserControlTile tile = new UserControlTile
-            {
-                Row = -1,
-                Col = -1
-            };
-            foreach (UserControlTile childTile in boardGrid.Children)
-            {
-                if (childTile.Row == row && childTile.Col == col)
-                {
-                    tile = childTile;
-                    break;
-                }
-            }
+            UserControlTile tile = boardGrid.Children.
+                OfType<UserControlTile>().
+                FirstOrDefault(t => t.Row == row && t.Col == col);
             return tile;
         }
 
@@ -198,25 +194,12 @@ namespace Forbbiden.Client.Controls
             }          
         }
 
-        public UserControlTile AddPlayerAvatar(Player player)
+        public void AddPlayerAvatar(Player player, UserControlTile tile)
         {
             Ellipse boardAvatar = ViewUtils.GetAvatarEllipse(player.PlayerAvatarPath);
 
-            var tiles = GetAllTilesFromGrid();
-            bool avatarPlaced = false;
-            UserControlTile spawnTile;
-            do
-            {
-                int spawnTileIndex = MatchLogic.Rand.Next(tiles.Count);
-                spawnTile = tiles[spawnTileIndex];
-                if (!spawnTile.IsTreasure)
-                {
-                    spawnTile.tileGrid.Children.Add(boardAvatar);
-                    avatarPlaced = true;
-                }
-            } while (!avatarPlaced);
-
-            return spawnTile;
+            var spawnTile = GetTile(tile.Row, tile.Col);
+            spawnTile.tileGrid.Children.Add(boardAvatar);
         }
 
         public event EventHandler<TileClickedEventArgs> TileClickedOnBoard;

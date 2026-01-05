@@ -1,7 +1,9 @@
 ﻿using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.TokenManager;
+using log4net;
 using System;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -12,6 +14,8 @@ namespace Forbbiden.Client.view.info
     /// </summary>
     public partial class VerificationWindow : Window
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(VerificationWindow));
+
         private readonly int PlayerID;
         public event Action OnVerified;
 
@@ -49,12 +53,32 @@ namespace Forbbiden.Client.view.info
         private async Task VerifyPlayer()
         {
             var profileManager = new ProfileManagerClient();
-            var player = await profileManager.GetPlayerByIdAsync(PlayerID, false);
-            if (player != null)
+
+            Player player = new Player();
+
+            try
+            {
+                player = await profileManager.GetPlayerByIdAsync(PlayerID, false);
+            }
+            catch (FaultException<DBFault> ex)
+            {
+                Log.Error("VerificationWindow.VerifyPlayer", ex);
+                ViewUtils.ShowPullError(GetWindow(this));
+            }
+            if (player.PlayerId != -1)
             {
                 player.IsVerified = 1;
-                var updated = await profileManager.UpdatePlayerAsync(player);
-                if (updated)
+                bool isUpdated = false;
+                try
+                {
+                    isUpdated = await profileManager.UpdatePlayerAsync(player);
+                }
+                catch (FaultException<DBFault> ex)
+                {
+                    Log.Error("VerificationWindow.VerifyPlayer", ex);
+                    ViewUtils.ShowPushError(GetWindow(this));
+                }
+                if (isUpdated)
                 {
                     string title = Properties.Langs.Resources.player_verified;
                     string message = Properties.Langs.Resources.player_verified_message;
@@ -62,13 +86,6 @@ namespace Forbbiden.Client.view.info
                     ViewUtils.OpenNotificationWindow(title, message, GetWindow(this));
                     OnVerified?.Invoke();
                     Close();
-                }
-                else
-                {
-                    string title = Properties.Langs.Resources.error;
-                    string message = Properties.Langs.Resources.push_database_error;
-
-                    OpenNotification(title, message);
                 }
             }
         }
@@ -83,13 +100,22 @@ namespace Forbbiden.Client.view.info
             txtBx6?.Clear();
         }
 
-        private async void VerifyToken()
+        private async Task VerifyToken()
         {
             string token = GetToken();
             if (!String.IsNullOrEmpty(token))
             {
                 var tokenManager = new TokenManagerClient();
-                var isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
+                bool isToken = false;                
+                try
+                {
+                    isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
+                }
+                catch (FaultException<DBFault> ex)
+                {
+                    Log.Error("VerificationWindow.VerifyToken", ex);
+                    ViewUtils.ShowPullError(GetWindow(this));
+                }
                 if (isToken)
                 {
                     _ = VerifyPlayer();
@@ -106,7 +132,7 @@ namespace Forbbiden.Client.view.info
 
         private void VerifyButton_Click(object sender, RoutedEventArgs e)
         {
-            VerifyToken();
+            _ = VerifyToken();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

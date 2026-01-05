@@ -24,14 +24,8 @@ Solo se realizaron las descripciones de caso de uso de los caso de uso tipo CRUD
 8. El CLIENTE encripta la _Password_ y envía los datos para registrar al JUGADOR (ver EX01). +
 9. El SERVIDOR regresa el _ID_ del JUGADOR registrado (ver EX01). +
 10. El CLIENTE envía el _Email_ y _ID_ al SERVIDOR para que envíe el correo de verificación (ver EX01). +
-11. EL CLIENTE muestra la VerificationWindowXAML (ver FA01). +
-12. El JUGADOR ingresa el _Token_ que recibió en el correo. +
-13. El CLIENTE envía al SERVIDOR el _Token_ para que lo verifique (ver EX01). +
-14. El SERVIDOR regresa si el _Token_ fue verificado (ver EX02). +
-15. El CLIENTE abre NotificationWindowXAML informando al JUGADOR que fue verificado correctamente. +
-16. El JUGADOR selecciona "Aceptar". +
-17. El CLIENTE cierra NotificationWindowXAML. +
-18. Termina el caso de uso.
+11. Extiende CU Verificar Jugador (ver FA01). +
+12. Termina el caso de uso.
 
 *Flujos Alternos*
 
@@ -63,7 +57,7 @@ Solo se realizaron las descripciones de caso de uso de los caso de uso tipo CRUD
 POST01: Se registró la cuenta del JUGADOR en la base de datos +
 *Reglas de negocio:* N/A +
 *Incluye:* N/A +
-*Extiende:* N/A
+*Extiende:* CU Verificar Cuenta
 
 === CU02 Consultar Perfil de Amigo
 

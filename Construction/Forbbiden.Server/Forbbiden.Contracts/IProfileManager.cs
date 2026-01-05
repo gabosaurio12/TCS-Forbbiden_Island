@@ -8,48 +8,54 @@ namespace Forbbiden.Contracts
     public interface IProfileManager
     {
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         bool ValidateEmail(string email);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         bool IsUsernameAvailable(string username);
 
         [OperationContract]
-        [FaultContract(typeof(EmailFault))]
+        [FaultContract(typeof(Fault))]
         bool SendEmail(string email, int playerId);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         int SignUp(Player player);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         Player Login(string username, string password);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         Player GetPlayerByUsername(string username, bool includeFriends = true);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         Player GetPlayerById(int playerId, bool includeFriends = true);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         bool UpdatePlayer(Player updatedPlayer);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         bool DeletePlayerByUsername(string username);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         bool ConnectPlayerByUsername(string username);
 
         [OperationContract]
-        [FaultContract(typeof(DBFault))]
+        [FaultContract(typeof(Fault))]
         bool DisconnectPlayerByUsername(string username);
+
+        [OperationContract]
+        string UploadAvatar(string username, byte[] avatarBytes, string fileName);
+
+        [OperationContract]
+        byte[] GetAvatar(string fileName);
     }
 
     [DataContract]
@@ -91,20 +97,10 @@ namespace Forbbiden.Contracts
     }
 
     [DataContract]
-    public class DBFault
+    public class Fault
     {
         [DataMember]
         public string Error { get; set; }
-        [DataMember]
-        public string Details { get; set; }
-    }
-
-    [DataContract]
-    public class EmailFault
-    {
-        [DataMember]
-        public string Error { get; set; }
-
         [DataMember]
         public string Details { get; set; }
     }

@@ -1,12 +1,11 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
-using System;
 using System.Data.Entity.Core;
-using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
 
@@ -18,66 +17,36 @@ namespace Forbbiden.Server.logic
     public class TokenManager : ITokenManager
     {
         private readonly string ConnectionString;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
 
         public TokenManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
-        }
-
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "EntityException";
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
-        }
-
-        private void HandleException(Exception ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "Exception";
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public string CreateRandomToken()
         {
             int tokenLength = 6;
-            Random random = new Random();
-            int minRandom = 0;
-            int maxRandom = 9;
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < tokenLength; i++)
+            using (var randomGenerator = RandomNumberGenerator.Create())
             {
-                int randomToken = random.Next(minRandom, maxRandom);
-                builder.Append(randomToken);
+                int minRandom = 0;
+                int maxRandom = 9;
+                StringBuilder builder = new StringBuilder();
+                byte[] randomNumber = new byte[1];
+                for (int i = 0; i < tokenLength; i++)
+                {
+                    randomGenerator.GetBytes(randomNumber);
+                    int randomToken = randomNumber[0] % (maxRandom - minRandom + 1) + minRandom;
+                    builder.Append(randomToken);
+                }
+
+                string randomTokenString = builder.ToString();
+
+                return randomTokenString;
             }
-
-            string randomTokenString = builder.ToString();
-
-            return randomTokenString;
         }
 
-        private bool RemoveExistingToken(int playerId)
+        private void RemoveExistingToken(int playerId)
         {
-            bool removed = false;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
@@ -87,17 +56,14 @@ namespace Forbbiden.Server.logic
                     {
                         db.Token.Remove(existingToken);
                         db.SaveChanges();
-                        removed = true;
                     }
                 }
                 catch (EntityException ex)
                 {
                     string classMethod = "TokenManager.RemoveExistingToken";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
-
-            return removed;
         }
 
         public Contracts.Token GenerateToken(int playerId)
@@ -131,10 +97,15 @@ namespace Forbbiden.Server.logic
                             };
                         }
                     }
-                    catch (Exception ex) when (ex is DbUpdateException || ex is EntityException)
+                    catch (DbUpdateException ex)
                     {
                         string classMethod = "TokenManager.GenerateToken";
-                        HandleException(ex, classMethod);
+                        ExceptionHandler.HandleDbUpdateException(ex, classMethod);
+                    }
+                    catch (EntityException ex)
+                    {
+                        string classMethod = "TokenManager.GenerateToken";
+                        ExceptionHandler.HandleEntityException(ex, classMethod);
                     }
                 } while (!success);
             }
@@ -185,7 +156,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "TokenManager.VerifyToken";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 

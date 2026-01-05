@@ -1,34 +1,52 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 
 namespace Forbbiden.Server.logic
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class MatchManager : IMatchManager
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(MatchManager));
-        private const string CLASS_NAME = "MatchManager.cs";
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MatchManager));
+        private const string ClassName = "MatchManager.cs";
         private readonly string Guest = "Guest";
-        private const string ERROR_CODE = "[ERROR] MatchManager.cs - ";
-        private readonly string connectionString;
+        private readonly string ConnectionString;
         public MatchManager()
         {
-            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
+
         public int CreateMatch(CreateMatchRequest request)
         {
-            log.Info("Creating new match");
+            Log.Info("Creating new match");
+            int matchId = 0;
+
+            if (request == null)
+                throw new FaultException("Invalid request.");
+
+            if (string.IsNullOrWhiteSpace(request.HostUsername))
+                throw new FaultException("Host username is required.");
+
+            if (!string.IsNullOrEmpty(request.MatchName) && request.MatchName.Length > 20)
+                throw new FaultException("Match name must be max 20 characters.");
+
+            int capacity = request.Capacity;
+            if (capacity < 2 || capacity > 4)
+                capacity = 4;
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
                     int hostId = db.Player
                         .Where(p => p.player_username == request.HostUsername)
@@ -40,6 +58,8 @@ namespace Forbbiden.Server.logic
 
                     var newMatch = new Matches
                     {
+                        match_name = string.IsNullOrEmpty(request.MatchName) ? null : request.MatchName,
+                        match_capacity = capacity,
                         match_difficulty = request.Difficulty,
                         match_visibility = request.Visibility,
                         host_id = hostId,
@@ -64,39 +84,117 @@ namespace Forbbiden.Server.logic
                         db.SaveChanges();
                     }
 
-                    return newMatch.match_id;
+                    matchId = newMatch.match_id;
                 }
             }
             catch (DbEntityValidationException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Error validating match entity.");
+                ExceptionHandler.HandleEntityValidationException(ex, ClassName);
             }
             catch (EntityException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Database connection error while creating match.");
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
-            catch (Exception ex)
-            {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Unexpected error while creating match: " + ex.Message);
-            }
+
+            return matchId;
         }
 
         public bool JoinMatch(JoinMatchRequest request)
         {
+            if (request == null)
+            {
+                throw new FaultException("Invalid request.");
+            }
+
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    var match = db.Matches.FirstOrDefault(m => m.match_id == request.MatchId);
-                    if (match == null)
+                    Matches match = GetMatch(request);
+
+                    int currentPlayersCount = db.match_players.Count(mp => mp.match_id == match.match_id);
+
+                    int capacity = match.match_capacity;
+                    if (capacity < 2 || capacity > 4)
+                    {
+                        capacity = 4;
+                    }
+
+                    if (currentPlayersCount >= capacity)
+                    {
                         return false;
+                    }
 
-                    Player player = db.Player.FirstOrDefault(p => p.player_username == request.Username);
+                    Player player =  db.Player.FirstOrDefault(p => p.player_username == request.Username);
+
+                    if (player == null || CheckIfPlayerIsAlreadyJoined(player, match))
+                    {
+                        return false;
+                    }
+
+                    db.match_players.Add(new match_players
+                    {
+                        match_id = match.match_id,
+                        player_id = player.player_id
+                    });
+
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (EntityException ex)
+            {
+                ExceptionHandler.HandleEntityException(ex, ClassName);
+            }
+
+            return false;
+        }
+
+        private Matches GetMatch(JoinMatchRequest request)
+        {
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                try
+                {
+                    Matches match = new Matches();
+                    if (request.MatchId > 0)
+                    {
+                        match = db.Matches.FirstOrDefault(m => m.match_id == request.MatchId);
+                    }
+                    if (match == null && !string.IsNullOrEmpty(request.MatchName))
+                    {
+                        match = db.Matches.FirstOrDefault(m => m.match_name == request.MatchName);
+                    }
+                    if (match == null && !string.IsNullOrEmpty(request.HostUsername))
+                    {
+                        var host = db.Player.FirstOrDefault(p => p.player_username == request.HostUsername);
+                        if (host != null)
+                        {
+                            match = db.Matches
+                                .Where(m => m.host_id == host.player_id)
+                                .OrderByDescending(m => m.created_at)
+                                .FirstOrDefault();
+
+                            return match;
+                        }
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "MatchManager.GetMatch";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }
+            return new Matches();
+        }
+
+        private bool CheckIfPlayerIsAlreadyJoined(Player player, Matches match)
+        {
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                try
+                {
                     int playerId;
-
                     if (player != null)
                     {
                         playerId = player.player_id;
@@ -115,45 +213,43 @@ namespace Forbbiden.Server.logic
                         .Any(mp => mp.match_id == match.match_id && mp.player_id == playerId);
 
                     if (alreadyJoined)
-                        return false;
-
-                    db.match_players.Add(new match_players
                     {
-                        match_id = match.match_id,
-                        player_id = playerId
-                    });
-
-                    db.SaveChanges();
-                    return true;
+                        return true;
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "MatchManager.CheckIfPlayerIsAlreadyJoined";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
-            catch (EntityException ex)
-            {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Database connection error while joining match.");
-            }
+            return false;
         }
 
         public List<Contracts.Match> ListMatches()
         {
-            log.Info("Listing all matches");
+            Log.Info("Listing all matches");
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
                     var matches = (from m in db.Matches
                                    join host in db.Player on m.host_id equals host.player_id
                                    select new Contracts.Match
                                    {
                                        MatchId = m.match_id,
+                                       MatchName = m.match_name,
+                                       Capacity = (m.match_capacity >= 2 
+                                        && m.match_capacity <= 4) ? m.match_capacity : 4,
                                        Difficulty = m.match_difficulty,
                                        Visibility = m.match_visibility,
-                                       CreatedAt = m.created_at ?? DateTime.Now,
+                                       CreatedAt = m.created_at,
                                        HostUsername = host.player_username,
                                        Players = (from mp in db.match_players
                                                   where mp.match_id == m.match_id
-                                                  join p in db.Player on mp.player_id equals p.player_id into joined
+                                                  join p in db.Player on mp.player_id equals 
+                                                  p.player_id into joined
                                                   from p in joined.DefaultIfEmpty()
                                                   select new PlayerInfo
                                                   {
@@ -173,26 +269,30 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Error retrieving matches from database.");
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
+            return new List<Contracts.Match>();
         }
 
         public Contracts.Match GetMatchById(int matchId)
         {
+            Contracts.Match match = new Contracts.Match();
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    var match = (from m in db.Matches
+                    match = (from m in db.Matches
                                  join host in db.Player on m.host_id equals host.player_id
                                  where m.match_id == matchId
                                  select new Contracts.Match
                                  {
                                      MatchId = m.match_id,
+                                     MatchName = m.match_name,
+                                     Capacity = (m.match_capacity >= 2 
+                                        && m.match_capacity <= 4) ? m.match_capacity : 4,
                                      Difficulty = m.match_difficulty,
                                      Visibility = m.match_visibility,
-                                     CreatedAt = m.created_at ?? DateTime.Now,
+                                     CreatedAt = m.created_at,
                                      HostUsername = host.player_username,
                                      Players = (from mp in db.match_players
                                                 where mp.match_id == m.match_id
@@ -216,8 +316,55 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error(CLASS_NAME, ex);
-                throw new FaultException("Database connection error while retrieving match.");
+                ExceptionHandler.HandleEntityException(ex, ClassName);
+            }
+            return match;
+        }
+
+        public bool DeleteMatch(int matchId)
+        {
+            try
+            {
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var match = db.Matches.FirstOrDefault(m => m.match_id == matchId);
+                            if (match == null)
+                            {
+                                Log.DebugFormat("DeleteMatch: match {matchId} not found", matchId);
+                                return false;
+                            }
+
+                            var players = db.match_players.Where(mp => mp.match_id == matchId).ToList();
+                            if (players.Any())
+                            {
+                                db.match_players.RemoveRange(players);
+                                db.SaveChanges();
+                            }
+
+                            db.Matches.Remove(match);
+                            db.SaveChanges();
+
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch (EntityException ex)
+                        {
+                            transaction.Rollback();
+                            string classMethod = "MatchManager.DeleteMatch";
+                            ExceptionHandler.HandleEntityException(ex, classMethod);
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (EntityException ex)
+            {
+                Log.Error("Database error in DeleteMatch", ex);
+                return false;
             }
         }
     }

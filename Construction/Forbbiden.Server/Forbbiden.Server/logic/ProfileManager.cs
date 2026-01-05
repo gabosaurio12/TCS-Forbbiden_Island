@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 
 namespace Forbbiden.Server.logic
 {
@@ -18,28 +20,14 @@ namespace Forbbiden.Server.logic
     {
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
+        private static readonly string AvatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
+
         private readonly string ConnectionString;
         private readonly string DefaultAvatarPath = "defaultAvatar.png";
 
         public ProfileManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
-        }
-
-        private void HandleEntityException(EntityException ex, string classMethod)
-        {
-            Log.Error(classMethod, ex);
-
-            var fault = new DBFault
-            {
-                Error = "Database Error",
-                Details = ex.Message
-            };
-
-            string entityError = "EntityException";
-
-            throw new FaultException<DBFault>(fault,
-                new FaultReason(entityError));
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public bool ValidateEmail(string email)
@@ -61,7 +49,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ValidateEmail ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -82,7 +70,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.IsUsernameAvailable ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
             return usernameFound;
@@ -118,15 +106,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (SmtpException ex)
                 {
-                    var fault = new EmailFault
-                    {
-                        Error = "SMTP Error",
-                        Details = ex.Message
-                    };
-                    Log.Error("ERROR: ProfileManager.SendEmail", ex);
-
-                    throw new FaultException<EmailFault>(fault,
-                        new FaultReason("SmtpException"));
+                    string classMethod = "ProfileManager.SendEmail";
+                    ExceptionHandler.HandleSmtpException(ex, classMethod);
                 }
             }
 
@@ -160,9 +141,8 @@ namespace Forbbiden.Server.logic
                 }
                 catch (EntityException ex)
                 {
-                    playerId = -1;
                     string classMethod = "ProfileManager.SignUp ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -199,7 +179,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.Login ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -258,7 +238,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.GetPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 if (player == null)
@@ -291,7 +271,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.GetPlayerById ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -321,7 +301,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.GetFriendsByID ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 var friendships = new List<Friendship>();
@@ -359,10 +339,122 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ClearSocials ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
+            return success;
+        }
+
+        private static string BuildAvatarFilePath(string username, string fileName)
+        {
+            Directory.CreateDirectory(AvatarsDir);
+
+            string extension = ".jpg";
+
+            var maybeExt = Path.GetExtension(fileName);
+            if (!string.IsNullOrEmpty(maybeExt))
+            {
+                extension = maybeExt;
+            }
+
+            var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{extension}";
+            var avatarPath = Path.Combine(AvatarsDir, safeFileName);
+
+            return avatarPath;
+        }
+
+        public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
+        {
+            if (avatarBytes == null || avatarBytes.Length == 0)
+            { 
+                throw new FaultException("Avatar vacío o nulo.");
+            }
+            try
+            {
+                var fullPath = BuildAvatarFilePath(username, fileName);
+
+                string avatarsRoot = String.Concat(
+                    Path.GetFullPath(AvatarsDir),
+                    Path.DirectorySeparatorChar);
+
+                var normalizedFullPath = Path.GetFullPath(fullPath);
+
+                if (!normalizedFullPath.StartsWith(avatarsRoot, StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new FaultException("Invalid avatar path");
+                }
+
+                File.WriteAllBytes(normalizedFullPath, avatarBytes);
+                return Path.GetFileName(normalizedFullPath);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("UploadAvatar error", ex);
+                throw new FaultException("Server couldn't save the avatar.");
+            }
+        }
+
+        public byte[] GetAvatar(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                return new List<byte>().ToArray();
+            }
+
+            if (!Regex.IsMatch(fileName, @"^[a-f0-9]{32}\.(jpg|png|jpeg)$",
+                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(200)))
+            {
+                return new List<byte>().ToArray();
+            }
+
+            var avatarsDir = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "avatars"
+            );
+
+            var fullPath = Path.Combine(avatarsDir, fileName);
+
+            if (!File.Exists(fullPath))
+            {
+                return new List<byte>().ToArray();
+            }
+
+            return File.ReadAllBytes(fullPath);
+        }
+
+
+        private static string SanitizeFileName(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return "user";
+            }
+            foreach (var c in Path.GetInvalidFileNameChars())
+            {
+                input = input.Replace(c, '_');
+            }
+            return input;
+        }
+        
+        private static bool SaveUpdateChanges(Forbbiden_FEIEntities db)
+        {
+            bool success = false;
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.SaveChanges();
+                    transaction.Commit();
+                    success = true;
+                }
+                catch (DbUpdateException ex)
+                {
+                    transaction.Rollback();
+                    string classMethod = "ProfileManager.SaveUpdateChanges";
+                    ExceptionHandler.HandleDbUpdateException(ex, classMethod);
+                }
+            }
             return success;
         }
 
@@ -395,35 +487,12 @@ namespace Forbbiden.Server.logic
                         }));
                     }
 
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player updated");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.ConnectPlayer", ex);
-
-                            var fault = new DBFault
-                            {
-                                Error = "Database Error",
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
-                        }                        
-                    }                    
+                    success = SaveUpdateChanges(db);                                        
                 }
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.UpdatePlayer ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
             return success;
@@ -456,7 +525,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.DeletePlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
 
@@ -477,35 +546,13 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ConnectPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 if (player != null)
                 {
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            player.player_status = 1;
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player connected");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
-                            var fault = new DBFault
-                            {
-                                Error = "Database Error",
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
-                        }
-                    }
+                    player.player_status = 1;
+                    success = SaveUpdateChanges(db);
                 }
             }
 
@@ -526,40 +573,17 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "ProfileManager.ConnectPlayerByUsername ";
-                    HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
 
                 if (player != null)
                 {
-                    using (var transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            player.player_status = 0;
-                            db.SaveChanges();
-                            transaction.Commit();
-                            success = true;
-                            Log.Info("Player connected");
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            transaction.Rollback();
-                            Log.Error("ERROR: ProfileManager.ConnectPlayerByUsername", ex);
-                            var fault = new DBFault
-                            {
-                                Error = "Database Error",
-                                Details = ex.Message
-                            };
-
-                            throw new FaultException<DBFault>(fault,
-                                new FaultReason("EntityException"));
-                        }
-                    }
+                    player.player_status = 0;
+                    success = SaveUpdateChanges(db);
                 }
             }
 
             return success;
         }
-
     }
 }

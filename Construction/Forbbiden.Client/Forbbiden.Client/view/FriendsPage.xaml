@@ -132,7 +132,7 @@
                             Background="Green"
                             DockPanel.Dock="Right"
                             Cursor="Hand"
-                            Click="AddButton_Click"/>
+                            Click="SendFriendRequestButton_Click"/>
 
                     <TextBox x:Name="searchtxtBx" Height="60" Width="0"
                              MaxLength="30"

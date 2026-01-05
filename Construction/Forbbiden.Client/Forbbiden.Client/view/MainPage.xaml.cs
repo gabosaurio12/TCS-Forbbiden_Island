@@ -2,7 +2,6 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
-using Forbbiden.Client.view.games;
 using Forbbiden.Client.view.info;
 using log4net;
 using System;
@@ -90,7 +89,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                NavigationService?.Navigate(new BoardPage());
+                NavigationService?.Navigate(new HostGameControl());
             }
             catch (Exception ex)
             {
@@ -145,7 +144,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private async void ConnectPlayer(string username)
+        private async Task ConnectPlayer(string username)
         {
             bool isConnected = false;
 
@@ -155,7 +154,7 @@ namespace Forbbiden.Client
             }
             catch (FaultException<DBFault> dbFault)
             {
-                Log.Error("ERROR: LoginPage.ConnectPlayer", dbFault);
+                Log.Error("MainPage.ConnectPlayer", dbFault);
                 ViewUtils.ShowPushError(Window.GetWindow(this));
             }
 
@@ -183,12 +182,12 @@ namespace Forbbiden.Client
                 string projectDir = ViewUtils.GetProjectDir();
                 string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
                 imgAvatar.Fill = ViewUtils.GetImageBrush(avatarPath);
-                ConnectPlayer(ClientSession.Username);
+                _ = ConnectPlayer(ClientSession.Username);
             }
             catch (Exception ex)
             {
                 ViewUtils.HandlePageLoadError(Window.GetWindow(this));
-                Log.Error("ERROR: MainPage.ReloadMainPage", ex);
+                Log.Error("MainPage.ReloadMainPage", ex);
             }
         }
 

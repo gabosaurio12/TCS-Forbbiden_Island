@@ -124,7 +124,7 @@
     <value>Importa una imagen de tu dispositivo para usarlo como ávatar</value>
   </data>
   <data name="capture_button" xml:space="preserve">
-    <value>Capturar Tesoro</value>
+    <value>RecuperarTesoro</value>
   </data>
   <data name="change_language" xml:space="preserve">
     <value>Cambiar lenguaje</value>
@@ -140,9 +140,6 @@
   </data>
   <data name="english" xml:space="preserve">
     <value>Inglés</value>
-  </data>
-  <data name="error" xml:space="preserve">
-    <value>Error</value>
   </data>
   <data name="friends" xml:space="preserve">
     <value>Amigos</value>
@@ -219,9 +216,6 @@
   <data name="online_friends" xml:space="preserve">
     <value>Conectados</value>
   </data>
-  <data name="password" xml:space="preserve">
-    <value>Contraseña</value>
-  </data>
   <data name="play" xml:space="preserve">
     <value>Jugar</value>
   </data>
@@ -265,7 +259,7 @@
     <value>Configuración</value>
   </data>
   <data name="shore_up_button" xml:space="preserve">
-    <value>Secar</value>
+    <value>Asegurar</value>
   </data>
   <data name="show_password" xml:space="preserve">
     <value>Ver</value>
@@ -467,5 +461,101 @@
   </data>
   <data name="you_drowned_message" xml:space="preserve">
     <value>Te ahogaste ¡Mejor suerte para la próxima!</value>
+  </data>
+  <data name="not_your_turn_title" xml:space="preserve">
+    <value>No Es Tu Turno</value>
+  </data>
+  <data name="not_your_turn_message" xml:space="preserve">
+    <value>Aún no es tu turno ¡Espera un poco!</value>
+  </data>
+  <data name="your_turn_title" xml:space="preserve">
+    <value>¡Tu Turno!</value>
+  </data>
+  <data name="your_turn_message" xml:space="preserve">
+    <value>¡Es tu turno de jugar! Elige con sabiduría tus acciones</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="create_room" xml:space="preserve">
+    <value>Crear sala</value>
+  </data>
+  <data name="search_placeholder" xml:space="preserve">
+    <value>Buscar por nombre de sala o jugador</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="refresh" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="room_name" xml:space="preserve">
+    <value>Nombre de sala</value>
+  </data>
+  <data name="visibility" xml:space="preserve">
+    <value>Visibilidad</value>
+  </data>
+  <data name="loading_matches_error" xml:space="preserve">
+    <value>Hubo un error al cargar las partidas, intente de nuevo más tarde o contacte a soporte técnico</value>
+  </data>
+  <data name="advice_title" xml:space="preserve">
+    <value>¡Aviso!</value>
+  </data>
+  <data name="match_is_full_advice_message" xml:space="preserve">
+    <value>La partida está llena, no puedes unirte</value>
+  </data>
+  <data name="join_match_error" xml:space="preserve">
+    <value>Hubo un error al unirse a la partida</value>
+  </data>
+  <data name="game_starting_title" xml:space="preserve">
+    <value>¡El Juego está Comenzando!</value>
+  </data>
+  <data name="game_starting_message" xml:space="preserve">
+    <value>El juego está a punto de comenzar ¡Prepárate!</value>
+  </data>
+  <data name="server_state_change_error" xml:space="preserve">
+    <value>Sistema: No se pudo cambiar el estado Ready (error servidor).</value>
+  </data>
+  <data name="player_x_joined" xml:space="preserve">
+    <value>Se unió a la partida</value>
+  </data>
+  <data name="system" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="player_x_disconnected" xml:space="preserve">
+    <value>Se desconectó de la partida</value>
+  </data>
+  <data name="chat_system_welcome" xml:space="preserve">
+    <value>Sistema: Bienvenido al lobby</value>
+  </data>
+  <data name="chat_error_sending_message" xml:space="preserve">
+    <value>Error al enviar mensaje</value>
+  </data>
+  <data name="error_invalid_avatar" xml:space="preserve">
+    <value>Avatar inválido</value>
+  </data>
+  <data name="error_processing_image" xml:space="preserve">
+    <value>Hubo un error al procesar la imagen</value>
+  </data>
+  <data name="error_uploading_avatar" xml:space="preserve">
+    <value>Hubo un error mientras se subía la imagen</value>
+  </data>
+  <data name="error_processing_avatar" xml:space="preserve">
+    <value>Hubo un error al procesar el avatar</value>
+  </data>
+  <data name="warning_login_permission" xml:space="preserve">
+    <value>Debes iniciar sesión para usar esta funcionalidad</value>
+  </data>
+  <data name="warning_room_char_limit" xml:space="preserve">
+    <value>El nombre de la sala debe tener como máximo 20 caracteres</value>
+  </data>
+  <data name="error_creating_match" xml:space="preserve">
+    <value>Hubo un error al crear la partida, inténtalo de nuevo o contacta a servicio técnico</value>
+  </data>
+  <data name="error_match_created_not_joined" xml:space="preserve">
+    <value>La partida se creó, pero no se pudo unir al lobby</value>
+  </data>
+  <data name="error_server_timeout" xml:space="preserve">
+    <value>El servidor tardó demasiado en responder</value>
   </data>
 </root>

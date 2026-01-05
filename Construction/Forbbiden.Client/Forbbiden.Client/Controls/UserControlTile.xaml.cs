@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.logic;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace Forbbiden.Client.Controls
     /// </summary>
     public partial class UserControlTile : UserControl
     {
-        public Card TreasureCard;
+        public Card TreasureCard { get; set; }
         public int Col { get; set; }
         public int Row { get; set; }
         public bool IsTreasure { get; set; }
@@ -30,7 +31,7 @@ namespace Forbbiden.Client.Controls
         public Color EnterBorder { get; set; }
         public Color RedColor { get; set; }
 
-        public string ImageFileName;
+        public string ImageFileName { get; set; }
 
         public UserControlTile()
         {
@@ -50,6 +51,23 @@ namespace Forbbiden.Client.Controls
 
             IsHitTestVisible = false;
             Cursor = Cursors.Arrow;
+        }
+
+        public void SetTile(UserControlTile tile)
+        {
+            TreasureCard = tile.TreasureCard;
+            IsTreasure = tile.IsTreasure;
+            IsFlood = tile.IsFlood;
+            IsLost = tile.IsLost;
+            IsEscapeTile = tile.IsEscapeTile;
+            Border = tile.Border;
+            EnterBorder = tile.EnterBorder;
+            ImageFileName = tile.ImageFileName;
+            BorderBrush = tile.BorderBrush;
+
+            var image = ViewUtils.GetBitmapImage(ImageFileName);
+            SetImage(image);
+            ResetBorder();
         }
 
         public void SetTileAsTreasure(BitmapImage treasureBitmap, Card treasureCard)
@@ -104,7 +122,7 @@ namespace Forbbiden.Client.Controls
             }
 
             Border = EnterBorder = color;
-            tile.BorderBrush = new SolidColorBrush(color);
+            RefreshBorderBrush();
         }
 
         public void FloodTile()

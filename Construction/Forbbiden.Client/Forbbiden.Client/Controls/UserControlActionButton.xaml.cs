@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Forbbiden.Client.Controls
 {
@@ -29,50 +19,49 @@ namespace Forbbiden.Client.Controls
 
         private void Moves_MouseEnter(object sender, MouseEventArgs e)
         {
-            var grid = (Grid)sender;
-            var image = grid.Children.OfType<Image>().FirstOrDefault();
-            if (image == null) return;
-
-            var verticalZoom = new DoubleAnimation
-            {
-                From = 130,
-                To = 180,
-                Duration = TimeSpan.FromSeconds(0.15)
-            };
-
-            var horizontalZoom = new DoubleAnimation
-            {
-                From = 400,
-                To = 450,
-                Duration = TimeSpan.FromSeconds(0.15),
-            };
-
-            image.BeginAnimation(HeightProperty, verticalZoom);
-            image.BeginAnimation(WidthProperty, horizontalZoom);
+            ZoomIn(sender);
         }
 
         private void Moves_MouseLeave(object sender, MouseEventArgs e)
         {
+            ZoomOut(sender);
+        }
+
+        private void ZoomIn(object sender)
+        {
+            Animate(sender, (130, 180), (400, 450));
+        }
+
+        private void ZoomOut(object sender)
+        {
+            Animate(sender, (180, 130), (450, 400));
+        }
+
+        private void Animate(object sender,
+            (double from, double to) height,
+            (double from, double to) width)
+        {
             var grid = (Grid)sender;
             var image = grid.Children.OfType<Image>().FirstOrDefault();
-            if (image == null) return;
-
-            var verticalZoom = new DoubleAnimation
+            if (image != null)
             {
-                From = 180,
-                To = 130,
-                Duration = TimeSpan.FromSeconds(0.15)
-            };
+                var verticalZoom = new DoubleAnimation
+                {
+                    From = height.from,
+                    To = height.to,
+                    Duration = TimeSpan.FromSeconds(0.15)
+                };
 
-            var horizontalZoom = new DoubleAnimation
-            {
-                From = 450,
-                To = 400,
-                Duration = TimeSpan.FromSeconds(0.15),
-            };
+                var horizontalZoom = new DoubleAnimation
+                {
+                    From = width.from,
+                    To = width.to,
+                    Duration = TimeSpan.FromSeconds(0.15),
+                };
 
-            image.BeginAnimation(HeightProperty, verticalZoom);
-            image.BeginAnimation(WidthProperty, horizontalZoom);
+                image.BeginAnimation(HeightProperty, verticalZoom);
+                image.BeginAnimation(WidthProperty, horizontalZoom);
+            }
         }
     }
 }

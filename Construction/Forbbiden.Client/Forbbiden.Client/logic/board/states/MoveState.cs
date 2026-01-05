@@ -58,8 +58,7 @@ namespace Forbbiden.Client.logic.board.states
 
         public void OnEndTurnClicked()
         {
-            Context.Board.EndTurn();
-            Exit();
+            Context.EndTurnAndResetTiles();
         }
 
         public void OnCardClicked(Card card)

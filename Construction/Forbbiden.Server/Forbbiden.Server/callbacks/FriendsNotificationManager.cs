@@ -1,14 +1,11 @@
 ﻿using Forbbiden.Contracts;
-using Forbbiden.Server;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
 using System.ServiceModel;
 
 namespace Forbbiden.Server.callbacks
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "FriendsNotificationManager" in both code and config file together.
     public class FriendsNotificationManager : IFriendsNotificationManager
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsNotificationManager));
@@ -38,7 +35,7 @@ namespace Forbbiden.Server.callbacks
 
             if (!Subscribers.TryGetValue(receiverUsername, out var subscriber))
             {
-                Log.Warn("[WARNING] - FriendsManager.SendFriendRequest - User unsuscribed");
+                Log.Warn("FriendsNotificationManager.SendRequestCallback - User unsuscribed");
             }
             else
             {
@@ -50,18 +47,16 @@ namespace Forbbiden.Server.callbacks
                 catch (CommunicationObjectAbortedException ex)
                 {
                     Subscribers.Remove(receiverUsername);
-
-                    Log.Warn("WARNING - FriendsNotificationManager.SendFriendRequest", ex);
+                    Log.Warn("FriendsNotificationManager.SendRequestCallback", ex);
                 }
                 catch (CommunicationException ex)
                 {
                     Subscribers.Remove(receiverUsername);
-
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRequestCallback", ex);
                 }
                 catch (TimeoutException ex)
                 {
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRequestCallback", ex);
                 }
             }
 
@@ -74,7 +69,7 @@ namespace Forbbiden.Server.callbacks
 
             if (!Subscribers.TryGetValue(username, out var subscriber))
             {
-                Log.Warn("[WARNING] - FriendsManager.SendFriendRequest - User unsuscribed");
+                Log.Warn("[WARNING] - FriendsNotificationManager.SendRefreshPageCallback - User unsuscribed");
             }
             else
             {
@@ -87,17 +82,17 @@ namespace Forbbiden.Server.callbacks
                 {
                     Subscribers.Remove(username);
 
-                    Log.Warn("WARNING - FriendsNotificationManager.SendFriendRequest", ex);
+                    Log.Warn("WARNING - FriendsNotificationManager.SendRefreshPageCallback", ex);
                 }
                 catch (CommunicationException ex)
                 {
                     Subscribers.Remove(username);
 
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRefreshPageCallback -", ex);
                 }
                 catch (TimeoutException ex)
                 {
-                    Log.Warn("[WARNING] - FriendsManager.SendFriendRequest -", ex);
+                    Log.Warn("FriendsNotificationManager.SendRefreshPageCallback -", ex);
                 }
             }
 

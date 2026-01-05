@@ -30,5 +30,18 @@ namespace Forbbiden.Client.logic.board
         {
             SetState(new EmergencyMoveState(this));
         }
+
+        public void EnterNormalState()
+        {
+            SetState(new NormalState(this));
+        }
+
+        public void EndTurnAndResetTiles()
+        {
+            Board.ResetTiles();
+            Board.EndTurn();
+            PlayerLogic.SendTurnFinishedCallback(Board);
+            SetState(new StandByState(this));
+        }
     }
 }
