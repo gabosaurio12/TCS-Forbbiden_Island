@@ -11,7 +11,7 @@ namespace Forbbiden.Server.utils
 
         private static ConnectionStringSingleton instance;
         private static readonly object lockObject = new Object();
-        public string connectionString;
+        public string ConnectionString;
 
         private ConnectionStringSingleton() 
         {
@@ -37,7 +37,7 @@ namespace Forbbiden.Server.utils
                             $"data source={forbbidenHost};initial catalog={forbbidenDB};user id={forbbidenUser};password={forbbidenPass};" +
                             "trustservercertificate=True;MultipleActiveResultSets=True;App=EntityFramework";
 
-                        instance.connectionString =
+                        instance.ConnectionString =
                             $"metadata=res://*/ForbbidenModel.csdl|res://*/ForbbidenModel.ssdl|res://*/ForbbidenModel.msl;" +
                             $"provider=System.Data.SqlClient;" +
                             $"provider connection string=\"{sqlConnectionString}\"";

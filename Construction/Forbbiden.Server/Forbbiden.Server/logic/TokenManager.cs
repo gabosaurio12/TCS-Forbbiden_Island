@@ -20,7 +20,7 @@ namespace Forbbiden.Server.logic
 
         public TokenManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public string CreateRandomToken()

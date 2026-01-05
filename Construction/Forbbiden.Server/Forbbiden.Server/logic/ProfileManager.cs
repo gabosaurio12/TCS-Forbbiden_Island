@@ -20,16 +20,14 @@ namespace Forbbiden.Server.logic
     {
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
+        private static readonly string AvatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
+
         private readonly string ConnectionString;
         private readonly string DefaultAvatarPath = "defaultAvatar.png";
-        private readonly string DatabaseError = "Database Error";
-        private readonly string EntityError = "EntityException";
-        private static string AvatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
-
 
         public ProfileManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public bool ValidateEmail(string email)

@@ -17,7 +17,7 @@ namespace Forbbiden.Test
         {
             var client = new ProfileManagerClient();
 
-            testPlayer = new ProfileManager.Player
+            testPlayer = new Player
             {
                 PlayerUsername = "testUser",
                 PlayerPassword = "T3st_pass",

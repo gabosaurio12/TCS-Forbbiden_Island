@@ -23,7 +23,7 @@ namespace Forbbiden.Server.logic
         private readonly string ConnectionString;
         public MatchManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public int CreateMatch(CreateMatchRequest request)
