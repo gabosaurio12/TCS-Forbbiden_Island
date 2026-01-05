@@ -1,7 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.logic;
 using System;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

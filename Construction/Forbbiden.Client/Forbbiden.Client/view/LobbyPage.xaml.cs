@@ -78,6 +78,8 @@ namespace Forbbiden.Client.view
                 SubscribeCallbacks();
             }
 
+            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username);
+
             InitializePlayerUI();
             _ = LoadMatchInfoAsync();
             LoadInitialPlayers();

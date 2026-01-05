@@ -4,6 +4,12 @@
 
 === ProfileManager
 
+==== Setup
+
+===== Jugadores creados
+
+* testPlayer [playerUsername = "testUser", playerPassword = "T3st_pass", playerEmail = "testuser@email.net"]
+
 [cols="1,1,1,1,1,1,1,1,1"]
 
 |===
@@ -83,17 +89,17 @@
 |Comprobar que se envíe un correo de confirmación a un email
 |*Media*
 |*PRE01*: Haber ingresado un email
-|_mazinger.gl@gmail.com_
+|_mazinger.gl@gmail.com_, _testPlayer.PlayerId_
 |_True_
 |__
 |**
 
 |PMT08
 |TestSendEmailNotExist
-|Comprobar que ocurre si se envía un correo de confirmación a un email que no existe
+|Comprobar que se regrese false si se envía un correo de confirmación a un email que no existe
 |*Media*
 |*PRE01*: Haber ingresado un email
-|_testForbbiden@email.com_
+|_testForbbiden@email.com_, 0
 |_False_
 |__
 |**
@@ -113,8 +119,7 @@
 |Comprobar que se inicie correctamente sesión de un jugador registrado
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario y contraseña +
-*PRE02*: Guardar el CurrentLogin y limpiarlo (luego volver a actualizarlo)
-|_testUser_ + _T3st_pass_
+|_testPlayer_
 |_True_
 |__
 |**
@@ -124,25 +129,24 @@
 |Comprobar que no se inicie correctamente sesión a un jugador no registrado
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario y contraseña +
-*PRE02*: Guardar el CurrentLogin y limpiarlo (luego volver a actualizarlo)
 |_fakePlayer_ + _F4ke_pass_
 |_True_
 |__
 |**
 
 |PMT12
-|TestGetPlayerByUsernameShouldReturnPlayer
+|TestGetPlayerByUsernameSuccess
 |Comprobar que si se encuentra un jugador este regrese con todos sus datos
 |*Alta*
 |*PRE01*: Haber ingresado un nombre de usuario
-|_testUser_
+|_testUser_, false
 |_Contracts.Player_
 |__
 |**
 
 |PMT13
-|TestGetPlayerByUsernameShouldReturnEmptyPlayer
-|Comprobar que si se encuentra un jugador este regrese con todos sus datos
+|TestGetPlayerByUsernameNonExist
+|Comprobar que si no se encuentra un jugador regrese un jugador con id -1
 |*Alta*
 |*PRE01*: Haber ingresado un nombre de usuario
 |_fakePlayer_
@@ -151,7 +155,7 @@
 |**
 
 |PMT14
-|TestGetPlayerByIdShouldReturnPlayer
+|TestGetPlayerByIdSuccess
 |Comprobar que si se encuentra un jugador este regrese con todos sus datos
 |*Alta*
 |*PRE01*: Haber ingresado un ID de jugador

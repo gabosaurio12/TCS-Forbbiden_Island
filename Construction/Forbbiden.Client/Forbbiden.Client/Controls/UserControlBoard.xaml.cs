@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.logic;
+using Forbbiden.Client.model;
 using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
@@ -207,6 +208,25 @@ namespace Forbbiden.Client.Controls
         private void OnTileClicked(object sender, TileClickedEventArgs e)
         {
             TileClickedOnBoard?.Invoke(this, e);
+        }
+
+        public void SetAllTiles(List<TileDto> tiles)
+        {
+            var currentTiles = GetAllTilesFromGrid();
+            currentTiles.ForEach(tile =>
+            {
+                TileDto newTile = tiles.FirstOrDefault(t => t.Row == tile.Row && t.Column == tile.Col);
+
+                tile.TreasureCard = newTile.TreasureCard;
+                tile.Row = newTile.Row;
+                tile.Col = newTile.Column;
+                tile.IsTreasure = newTile.IsTreasure;
+                tile.IsFlood = newTile.IsFlood;
+                tile.IsLost = newTile.IsLost;
+                tile.IsEscapeTile = newTile.IsEscapeTile;
+                tile.ImageFileName = newTile.ImageFileName;
+                tile.SetTile(tile);
+            });
         }
     }
 }

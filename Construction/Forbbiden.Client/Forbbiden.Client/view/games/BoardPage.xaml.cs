@@ -100,7 +100,6 @@ namespace Forbbiden.Client.view.games
             SetBoard();
             SetPlayersAvatars(match.Players.ToList());
 
-            HostLogic.SubscribePlayers(match.Players.ToList());
             HostLogic.SetBoardPage(this);
             HostLogic.SetPlayersTurnOrder(match.Players.ToList());
 

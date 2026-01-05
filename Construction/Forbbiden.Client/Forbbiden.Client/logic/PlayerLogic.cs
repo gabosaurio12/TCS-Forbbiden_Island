@@ -1,4 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
+using Forbbiden.Client.Controls;
+using Forbbiden.Client.model;
 using Forbbiden.Client.view.games;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +25,13 @@ namespace Forbbiden.Client.logic
         public static void CreateBoardPageFromJSON(string boardJson)
         {
             var auxBoard = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
-            MatchBoardPage = auxBoard.Board;
+            var boardPage = BoardDtoToBoardPage(auxBoard.Board);
+            MatchBoardPage = boardPage;
             PlayersUsername = auxBoard.PlayersUsernames.ToList();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MatchBoardPage.ReloadPage(auxBoard.Board);
+                MatchBoardPage.ReloadPage(boardPage);
             });
         }
 
@@ -53,7 +56,9 @@ namespace Forbbiden.Client.logic
         public static void SendTurnFinishedCallback(BoardPage boardPage)
         {
             var client = new BoardManagerClient();
-            BoardPageCallbackDto page = new BoardPageCallbackDto(boardPage, PlayersUsername.ToArray());
+            var boardDto = BoardPageToDto();
+            BoardPageCallbackDto page = new BoardPageCallbackDto(
+                boardDto, PlayersUsername.ToArray());
             string pageJson = HostLogic.CreateCallbackBoardPageJSON(page);
             client.SendOnTurnFinishedCallback(pageJson, PlayersUsername.ToArray());
         }
@@ -68,6 +73,55 @@ namespace Forbbiden.Client.logic
             MatchBoardPage.FloodDiscardStack = auxBoard.FloodDiscardStack.ToList();
 
             RefreshBoardFromJSON(boardJson);
+        }
+
+        private static BoardPage BoardDtoToBoardPage(BoardPageDto board)
+        {
+            var boardControl = new UserControlBoard();
+            boardControl.SetAllTiles(board.Tiles);
+
+            return new BoardPage
+            {
+                ActionsRemain = board.ActionsRemain,
+                TreasuresCaptured = board.TreasureCaptured,
+                WaterLevelCount = board.WaterLevelCount,
+
+                TreasureStack = board.TreasureStack,
+                TreasureDiscardStack = board.TreasureDiscardStack,
+                FloodStack = board.FloodStack,
+                FloodDiscardStack = board.FloodDiscardStack,
+
+                BoardControl = boardControl
+            };
+        }
+
+        private static BoardPageDto BoardPageToDto()
+        {
+            return new BoardPageDto
+            {
+                ActionsRemain = MatchBoardPage.ActionsRemain,
+                TreasureCaptured = MatchBoardPage.TreasuresCaptured,
+                WaterLevelCount = MatchBoardPage.WaterLevelCount,
+
+                TreasureStack = MatchBoardPage.TreasureStack,
+                TreasureDiscardStack = MatchBoardPage.TreasureDiscardStack,
+                FloodStack = MatchBoardPage.FloodStack,
+                FloodDiscardStack = MatchBoardPage.FloodDiscardStack,
+
+                Tiles = MatchBoardPage.BoardControl.GetAllTilesFromGrid()
+                    .Select(t => new TileDto
+                    {
+                        Row = t.Row,
+                        Column = t.Col,
+                        IsFlood = t.IsFlood,
+                        IsLost = t.IsLost,
+                        IsTreasure = t.IsTreasure,
+                        IsEscapeTile = t.IsEscapeTile,
+                        ImageFileName = t.ImageFileName,
+                        TreasureCard = t.TreasureCard
+                    })
+                    .ToList()
+            };
         }
     }
 }

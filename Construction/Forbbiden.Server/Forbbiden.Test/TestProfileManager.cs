@@ -11,11 +11,14 @@ namespace Forbbiden.Test
         private static readonly ILog Log = LogManager.GetLogger(typeof(TestProfileManager));
         private const string ClassName = "TestProfileManager - ";
         private Player testPlayer;
+        private ProfileManagerClient ProfileClient;
+        private List<string> UsernamesToDelete;
 
         [OneTimeSetUp]
         public async Task Setup()
         {
-            var client = new ProfileManagerClient();
+            ProfileClient = new ProfileManagerClient();
+            UsernamesToDelete = [];
 
             testPlayer = new Player
             {
@@ -26,7 +29,7 @@ namespace Forbbiden.Test
 
             try
             {
-                testPlayer.PlayerId = await client.SignUpAsync(testPlayer);
+                testPlayer.PlayerId = await ProfileClient.SignUpAsync(testPlayer);
             }
             catch (EntityException ex)
             {
@@ -37,27 +40,26 @@ namespace Forbbiden.Test
         [OneTimeTearDown]
         public async Task TearDown()
         {
-            var client = new ProfileManagerClient();
             string username = "testUser";
             try
             {
-                await client.DeletePlayerByUsernameAsync(username);
+                await ProfileClient.DeletePlayerByUsernameAsync(username);
             }
             catch (EntityException ex)
             {
                 Log.Error(ClassName, ex);
             }
+            ProfileClient.Close();
         }
 
         [Test]
         public async Task TestValidateEmailSuccess()
         {
-            var client = new ProfileManagerClient();
             string email = "randomEmail@email.net";
 
             try
             {
-                var result = await client.ValidateEmailAsync(email);
+                var result = await ProfileClient.ValidateEmailAsync(email);
                 Assert.That(result, Is.True, "result should be true");
             }
             catch (EntityException ex)
@@ -69,12 +71,11 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestValidateEmailInvalidEmail()
         {
-            var client = new ProfileManagerClient();
             string email = "randomEmail.com";
 
             try
             {
-                var result = await client.ValidateEmailAsync(email);
+                var result = await ProfileClient.ValidateEmailAsync(email);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (EntityException ex)
@@ -86,12 +87,11 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestValidateEmailEmptyEmail()
         {
-            var client = new ProfileManagerClient();
             string email = "";
 
             try
             {
-                var result = await client.ValidateEmailAsync(email);
+                var result = await ProfileClient.ValidateEmailAsync(email);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (EntityException ex)
@@ -103,12 +103,11 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestValidateEmailTakenEmail()
         {
-            var client = new ProfileManagerClient();
-            string email = "testuser@email.net";
+            string email = testPlayer.PlayerEmail;
 
             try
             {
-                var result = await client.ValidateEmailAsync(email);
+                var result = await ProfileClient.ValidateEmailAsync(email);
                 Assert.That(result, Is.False, "result should be false");
             } catch (EntityException ex)
             {
@@ -119,12 +118,12 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestIsUsernameAvailableSucces()
         {
-            var client = new ProfileManagerClient();
+
             string username = "testUser098";
 
             try
             {
-                var result = await client.IsUsernameAvailableAsync(username);
+                var result = await ProfileClient.IsUsernameAvailableAsync(username);
                 Assert.That(result, Is.True, "result should be true");
             }
             catch (EntityException ex)
@@ -136,13 +135,138 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestIsUsernameAvailableTakenUsername()
         {
-            var client = new ProfileManagerClient();
-            string username = "testUser";
+
+            string username = testPlayer.PlayerUsername;
 
             try
             {
-                var result = await client.IsUsernameAvailableAsync(username);
+                var result = await ProfileClient.IsUsernameAvailableAsync(username);
                 Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSendEmailSuccess()
+        {
+
+            string email = "mazinger.gl@gmail.com";
+
+            try
+            {
+                var result = await ProfileClient.SendEmailAsync(email, testPlayer.PlayerId);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (EntityException ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSendEmailNotExist()
+        {
+
+            string email = "falseEmailTest@email.net";
+
+            try
+            {
+                var result = await ProfileClient.SendEmailAsync(email, 0);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSignUpSuccess()
+        {
+
+            var player = new Player
+            {
+                PlayerUsername = "testPlayer",
+                PlayerPassword = "T3st_player",
+                PlayerEmail = "testplayer@email.com"
+            };
+
+            try
+            {
+                var result = await ProfileClient.SignUpAsync(player);
+                UsernamesToDelete.Add(player.PlayerUsername);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (EntityException ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestLoginSuccess()
+        {
+
+
+            try
+            {
+                var result = await ProfileClient.LoginAsync(testPlayer);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (EntityException ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestLoginNotRegisteredPlayer()
+        {
+            var fakePlayer = new Player
+            {
+                PlayerUsername = "fakePlayer",
+                PlayerPassword = "F4ke_pass"
+            };
+
+            try
+            {
+                var result = await ProfileClient.LoginAsync(fakePlayer);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (EntityException ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestGetPlayerByUsernameSuccess()
+        {
+            string username = testPlayer.PlayerUsername;
+            try
+            {
+                var player = await ProfileClient.GetPlayerByUsernameAsync(username, false);
+                bool result = player.PlayerId != -1;
+                Assert.That(result, Is.True, "result should true");
+            }
+            catch (EntityException ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestGetPlayerByUsernameNonExist()
+        {
+            string username = "fakePlayer";
+            try
+            {
+                var player = await ProfileClient.GetPlayerByUsernameAsync(username, false);
+                bool result = player.PlayerId == -1;
+                Assert.That(result, Is.True, "result.PlayerId should be true");
             }
             catch (EntityException ex)
             {
