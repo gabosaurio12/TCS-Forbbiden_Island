@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="aba5b562-87d1-42ea-b868-00ab6b576f6b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="5e320814-308f-4e9a-bed2-fb94ed6bba34" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:8081/ProfileManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.1.77:8081/ProfileManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="cd50c667-51a1-46cc-9d17-ab6b20bf93d7" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="9ab42cff-17bb-4d19-b7fd-502df5b93e1d" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="29a24d17-c5b0-4030-b7a1-c812da468cf4" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="6e8c322a-97ea-47ab-ac95-0f9d1376c49b" SourceId="1" SourceUrl="net.tcp://localhost:8081/ProfileManager/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d5f31b15-7476-486a-a32d-bf6161951177" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="8bbb219d-bbab-4e9d-82b5-d5bcd2ff2e1d" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="341a6977-4790-46e3-85a6-87dd433d1368" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="b9f18dba-c2cb-443f-8804-860ca2416030" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

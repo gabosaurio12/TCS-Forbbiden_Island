@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.view.info;
 using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
@@ -40,11 +41,47 @@ namespace Forbbiden.Client.view
                 matchClient = new MatchManagerClient();
                 var matches = matchClient.ListMatches();
 
-                AllMatches = matches.Select(MapToMatchItem).ToList();
+                allMatches = matches.Select(m =>
+                {
+                    int playersCount = 0;
+                    try
+                    {
+                        if (m.Players is System.Collections.ICollection coll) playersCount = coll.Count;
+                        else if (m.Players != null) playersCount = m.Players.Count();
+                    }
+                    catch { playersCount = 0; }
 
-                MatchList.ItemsSource = AllMatches;
+                    int capacity = (m.Capacity > 0) ? m.Capacity : 4;
+
+                    return new MatchItem
+                    {
+                        MatchId = m.MatchId,
+                        MatchName = m.MatchName,
+                        RoomName = !string.IsNullOrWhiteSpace(m.MatchName)
+                            ? m.MatchName
+                            : string.Format(Properties.Resources.room_default, m.MatchId),
+                        HostName = string.IsNullOrEmpty(m.HostUsername) ? Properties.Resources.host_unknown : m.HostUsername,
+                        PlayersInfo = $"{playersCount}/{capacity}",
+                        CurrentPlayers = playersCount,
+                        Capacity = capacity,
+                        Difficulty = m.Difficulty ?? Properties.Resources.difficulty_normal,
+                        Visibility = m.Visibility ?? Properties.Resources.visibility_public_key,
+                        LockIcon = (m.Visibility ?? Properties.Resources.visibility_public_key)
+                            .Equals(Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase)
+                            ? "/Images/lock.png" : "/Images/unlock.png",
+                        VisibilityText = (m.Visibility ?? Properties.Resources.visibility_public_key)
+                            .Equals(Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase)
+                            ? Properties.Resources.visibility_private
+                            : Properties.Resources.visibility_public,
+                        VisibilityColor = (m.Visibility ?? Properties.Resources.visibility_public_key)
+                            .Equals(Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase)
+                            ? Brushes.IndianRed : Brushes.SeaGreen
+                    };
+                }).ToList();
+
+                MatchList.ItemsSource = allMatches;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 string title = Properties.Langs.Resources.error;
                 string message = Properties.Langs.Resources.loading_matches_error;
@@ -132,41 +169,11 @@ namespace Forbbiden.Client.view
             MatchList.ItemsSource = filtered;
         }
 
-
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             LoadMatches();
         }
 
-        private async Task<bool> JoinToAMatch(MatchItem match, Player currentPlayer, GameManagerClient gameClient)
-        {
-            bool joined = false;
-            try
-            {
-                string avatarFileName = null;
-                var avatarPath = currentPlayer.PlayerAvatarPath;
-                if (!string.IsNullOrEmpty(avatarPath))
-                {
-                    avatarFileName = System.IO.Path.GetFileName(avatarPath);
-                }
-
-                joined = await gameClient.JoinGameAsync(
-                    match.MatchId.ToString(),
-                    currentPlayer.PlayerUsername,
-                    null,
-                    avatarFileName
-                );
-            }
-            catch (Exception ex)
-            {
-                Log.Error("JoinGameControl.JoinButtonClick", ex);
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.join_match_error;
-                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
-            }
-
-            return joined;
-        }
 
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
@@ -185,6 +192,53 @@ namespace Forbbiden.Client.view
 
             if (match.CurrentPlayers >= match.Capacity)
             {
+                var wnd = new NotificationWindow(
+                    Properties.Resources.join_full_title,
+                    Properties.Resources.join_full_message);
+                wnd.Owner = Window.GetWindow(this);
+                wnd.ShowDialog();
+                return;
+            }
+
+            // Validación de código de invitación si es privada
+            bool isPrivate = string.Equals(match.Visibility, Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase);
+            string inviteCode = null;
+            if (isPrivate)
+            {
+                var codeWindow = new InviteCodeWindow();
+                if (codeWindow.ShowDialog() == true)
+                {
+                    inviteCode = codeWindow.Code;
+                }
+                else
+                {
+                    return; // canceló
+                }
+
+                var mClient = new MatchManagerClient();
+                bool ok = false;
+                try
+                {
+                    ok = await mClient.ValidateInviteAsync(match.MatchId, inviteCode);
+                }
+                catch (Exception ex)
+                {
+                    //falta
+                }
+                finally
+                {
+                    try { mClient.Close(); } catch { mClient.Abort(); }
+                }
+
+                if (!ok)
+                {
+                    ViewUtils.OpenNotificationWindow(
+                        Properties.Resources.invite_invalid_title,
+                        Properties.Resources.invite_invalid_message,
+                        Window.GetWindow(this));
+                    return;
+                }
+            }
                 string title = Properties.Langs.Resources.advice_title;
                 string message = Properties.Langs.Resources.match_is_full_advice_message;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
@@ -201,6 +255,63 @@ namespace Forbbiden.Client.view
 
             if (!joined)
             {
+                string avatarFileName = null;
+                try
+                {
+                    var avatarPath = currentPlayer?.PlayerAvatarPath;
+                    if (!string.IsNullOrEmpty(avatarPath))
+                    {
+                        avatarFileName = System.IO.Path.GetFileName(avatarPath);
+                    }
+                }
+                catch { }
+
+                var callback = new GameServiceCallback();
+                var context = new InstanceContext(callback);
+
+                var gameClient = new GameManagerClient(context);
+
+                bool joined = await gameClient.JoinGameAsync(
+                    match.MatchId.ToString(),
+                    username,
+                    null,
+                    avatarFileName
+                );
+
+                if (!joined)
+                {
+                    var wnd = new NotificationWindow(
+                        Properties.Resources.join_banned_title,
+                        Properties.Resources.join_banned_message);
+                    wnd.Owner = Window.GetWindow(this);
+                    wnd.ShowDialog();
+                    return;
+                }
+
+                var lobbyPage = new LobbyPage(
+                    match.MatchId,
+                    username,
+                    gameClient,
+                    callback
+                );
+
+                NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    string.Format(Properties.Resources.join_error, ex.Message),
+                    Properties.Resources.error_title,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
+            finally
+            {
+                if (matchClient != null)
+                {
+                    try { matchClient.Close(); } catch { matchClient.Abort(); }
+                }
                 string title = Properties.Langs.Resources.error;
                 string message = Properties.Langs.Resources.join_match_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
@@ -216,22 +327,22 @@ namespace Forbbiden.Client.view
 
             NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
         }
-    }
 
-    public class MatchItem
-    {
-        public int MatchId { get; set; }
-        public string MatchName { get; set; }
-        public string RoomName { get; set; }
-        public string HostName { get; set; }
-        public string PlayersInfo { get; set; }
-        public int CurrentPlayers { get; set; }
-        public int Capacity { get; set; }
-        public string Difficulty { get; set; }
-        public string Visibility { get; set; }
-        public string LockIcon { get; set; }
+        public class MatchItem
+        {
+            public int MatchId { get; set; }
+            public string MatchName { get; set; }
+            public string RoomName { get; set; }
+            public string HostName { get; set; }
+            public string PlayersInfo { get; set; }
+            public int CurrentPlayers { get; set; }
+            public int Capacity { get; set; }
+            public string Difficulty { get; set; }
+            public string Visibility { get; set; }
+            public string LockIcon { get; set; }
 
-        public string VisibilityText => string.Equals(Visibility, "Private", StringComparison.OrdinalIgnoreCase) ? "Privada" : "Pública";
-        public Brush VisibilityColor => string.Equals(Visibility, "Private", StringComparison.OrdinalIgnoreCase) ? Brushes.IndianRed : Brushes.SeaGreen;
+            public string VisibilityText { get; set; }
+            public Brush VisibilityColor { get; set; }
+        }
     }
 }

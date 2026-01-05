@@ -350,9 +350,9 @@
   </wsdl:binding>
   <wsdl:service name="ProfileManager">
     <wsdl:port name="NetTcpBinding_IProfileManager" binding="tns:NetTcpBinding_IProfileManager">
-      <soap12:address location="net.tcp://localhost:8081/ProfileManager" />
+      <soap12:address location="net.tcp://192.168.1.77:8081/ProfileManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/ProfileManager</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.1.77:8081/ProfileManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

@@ -4,9 +4,67 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Forbbiden.Client.view"
-      xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
+      xmlns:language="clr-namespace:Forbbiden.Client.Properties"
       mc:Ignorable="d" 
       Title="QuitPage">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryBar" Color="#1B2A4A"/>
+        <SolidColorBrush x:Key="CardBg" Color="#FFFFFFCC"/>
+        <SolidColorBrush x:Key="CardBorder" Color="#FFFFFF66"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#0D1B2A"/>
+
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontFamily" Value="{StaticResource IrishGrover}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBar}"/>
+            <Setter Property="BorderBrush" Value="#FFB7B7B7"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="16"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="500"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontFamily" Value="{StaticResource IrishGrover}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="#FFB7B7B7"/>
+            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,12,0,12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="14"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Page.Background>
         <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
@@ -20,59 +78,48 @@
             </Grid.RowDefinitions>
 
             <!-- Upper bar -->
-            <DockPanel Grid.Row="0" Background="#0F1945" LastChildFill="True">
+            <DockPanel Grid.Row="0" Background="{StaticResource PrimaryBar}" LastChildFill="True">
                 <Button x:Name="backButton"
-                    Content="&lt;"
-                    Width="100" Height="100"
-                    FontSize="40"
-                    FontFamily="{StaticResource IrishGrover}"
-                    BorderThickness="5" BorderBrush="#FFB7B7B7"
-                    Background="White"
-                    Foreground="Black"
-                    Margin="20,0,0,0"
-                    Cursor="Hand"
-                    DockPanel.Dock="Left"
-                    Click="BackButton_Click"/>
+                        Content="⟵"
+                        Style="{StaticResource BackButtonStyle}"
+                        Margin="20,0,0,0"
+                        DockPanel.Dock="Left"
+                        Click="BackButton_Click"/>
 
                 <TextBlock Text="{x:Static language:Resources.quit_game}"
-                       FontSize="60"
-                       FontWeight="Bold"
-                       Foreground="White"
-                       FontFamily="{StaticResource IrishGrover}"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+                           FontSize="60"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           FontFamily="{StaticResource IrishGrover}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
             </DockPanel>
 
-            <!-- Language Buttons -->
-            <StackPanel Grid.Row="1"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Orientation="Vertical">
+            <!-- Options -->
+            <Grid Grid.Row="1">
+                <Border Background="{StaticResource CardBg}"
+                        BorderBrush="{StaticResource CardBorder}"
+                        BorderThickness="2"
+                        CornerRadius="18"
+                        Padding="40"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                        <Button x:Name="quitButton"
+                                Content="{x:Static language:Resources.quit_game}"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Click="QuitButton_Click"/>
 
-                <Button x:Name="quitButton"
-                    Content="{x:Static language:Resources.quit_game}"
-                    Width="500" Height="80"
-                    BorderThickness="5" BorderBrush="#FFB7B7B7"
-                    FontFamily="{StaticResource IrishGrover}"
-                    FontSize="30"
-                    Background="LightGray"
-                    Foreground="Black"
-                    Cursor="Hand"
-                    Click="QuitButton_Click"/>
-
-                <Button x:Name="logOutButton"
-                        Content="{x:Static language:Resources.logout}"
-                        Width="500" Height="80"
-                        BorderThickness="5" BorderBrush="#FFB7B7B7"
-                        FontFamily="{StaticResource IrishGrover}"
-                        FontSize="30"
-                        Background="LightGray"
-                        Foreground="Black"
-                        Cursor="Hand"
-                        Visibility="Visible"
-                        Click="LogOutButton_Click"/>
-
-            </StackPanel>
+                        <Button x:Name="logOutButton"
+                                Content="{x:Static language:Resources.logout}"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Visibility="Visible"
+                                Click="LogOutButton_Click"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
 
         </Grid>
     </Viewbox>

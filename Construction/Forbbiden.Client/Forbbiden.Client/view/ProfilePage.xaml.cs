@@ -76,7 +76,11 @@ namespace Forbbiden.Client
                 {
                     try
                     {
-                        var bmp = ViewUtils.GetBitmapImage(player.PlayerAvatarPath);
+                        var bmp = new BitmapImage();
+                        bmp.BeginInit();
+                        bmp.CacheOption = BitmapCacheOption.OnLoad;
+                        bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
+                        bmp.EndInit();
                         imgAvatar.Fill = new ImageBrush(bmp);
                     }
                     catch (Exception ex)

@@ -1,0 +1,105 @@
+﻿<Page x:Class="Forbbiden.Client.view.GameTutorialRiuvPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:language="clr-namespace:Forbbiden.Client.Properties"
+      Title="GameTutorialRiuvPage">
+
+    <!-- Fondo con color solicitado -->
+    <Page.Background>
+        <SolidColorBrush Color="#FFEBE0"/>
+    </Page.Background>
+
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1280" Height="720">
+
+            <!-- Título (desde Resources en Forbbiden.Client.Properties.Langs) -->
+            <TextBlock x:Name="txtTitle"
+                       Text="{x:Static language:Resources.gameTutorial_Title}"
+                       FontSize="36"
+                       Foreground="Black"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,16,0,0"/>
+
+            <!-- Área principal: video (detrás) + boss (frente) + descripción abajo -->
+            <Grid Margin="40,80,320,120" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <!-- Fondo blanco (área donde aparece el video) -->
+                <Border Background="White" CornerRadius="6" BorderBrush="#D0D0D0" BorderThickness="1"/>
+                <!-- MediaElement: ocupa el mismo rectángulo y se reproduce siempre -->
+                <MediaElement x:Name="mediaTutorial"
+                              LoadedBehavior="Manual"
+                              UnloadedBehavior="Stop"
+                              Stretch="Uniform"
+                              Volume="0"
+                              MediaEnded="MediaTutorial_MediaEnded"/>
+
+                <!-- Boss (superpuesto a la derecha) -->
+                <Image Source="/Images/boss.png"
+                       Width="200"
+                       Height="300"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom"
+                       Margin="0,0,-20,0"
+                       IsHitTestVisible="False"/>
+            </Grid>
+
+            <!-- Panel de Controls (derecha) -->
+            <Border Background="White" CornerRadius="6" BorderBrush="#D0D0D0" BorderThickness="1"
+                    Width="260" Height="420" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,80,40,0">
+                <StackPanel Margin="12">
+                    <!-- Header (RIUV LOGIN) desde Resources -->
+                    <TextBlock Text="{x:Static language:Resources.gameTutorial_ControlsHeader}"
+                               FontWeight="Bold" FontSize="18" Margin="0,0,0,8"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="txtControls" Text="{x:Static language:Resources.gameTutorial_ControlsText}" TextWrapping="Wrap" FontSize="14"/>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+
+            <!-- Descripción debajo del área principal (desde Resources) -->
+            <Border Background="White" CornerRadius="4" BorderBrush="#D0D0D0" BorderThickness="1"
+                    HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,320,20" Height="100" Width="760">
+                <TextBlock x:Name="txtDescription" Text="{x:Static language:Resources.gameTutorial_Description}" TextWrapping="Wrap" Margin="12" FontSize="14"/>
+            </Border>
+
+            <!-- Indicador de teclas (Space / Enter) estilo prototipo - sin botón adicional, labels desde Resources -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,40,20" Height="48">
+                <Border Background="#F0F0F0" CornerRadius="20" Padding="10,6" VerticalAlignment="Center" Margin="0,0,12,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="txtKeySpace" Text="{x:Static language:Resources.gameTutorial_Key_Space}" FontSize="12" Margin="6,0,4,0"/>
+                        <TextBlock x:Name="txtKeySep" Text="{x:Static language:Resources.gameTutorial_Key_Separator}" FontSize="12" Margin="4,0"/>
+                        <TextBlock x:Name="txtKeyEnter" Text="{x:Static language:Resources.gameTutorial_Key_Enter}" FontSize="12" Margin="4,0"/>
+                        <TextBlock x:Name="txtKeyArrow" Text="→" FontSize="12" Margin="10,0"/>
+                        <TextBlock x:Name="txtKeyStart" Text="{x:Static language:Resources.gameTutorial_Key_Start}" FontSize="12" FontWeight="Bold" Margin="6,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Avatares (arriba a la derecha, debajo de Controls) -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Margin="0,0,40,80">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,0,6,0">
+                    <Ellipse x:Name="slotAvatar1" Width="56" Height="56" Fill="LightGray" StrokeThickness="0" />
+                    <TextBlock x:Name="txtSlot1" Text="" HorizontalAlignment="Center" FontSize="12"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,0,6,0">
+                    <Ellipse x:Name="slotAvatar2" Width="56" Height="56" Fill="LightGray" StrokeThickness="0" />
+                    <TextBlock x:Name="txtSlot2" Text="" HorizontalAlignment="Center" FontSize="12"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,0,6,0">
+                    <Ellipse x:Name="slotAvatar3" Width="56" Height="56" Fill="LightGray" StrokeThickness="0" />
+                    <TextBlock x:Name="txtSlot3" Text="" HorizontalAlignment="Center" FontSize="12"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,0,6,0">
+                    <Ellipse x:Name="slotAvatar4" Width="56" Height="56" Fill="LightGray" StrokeThickness="0" />
+                    <TextBlock x:Name="txtSlot4" Text="" HorizontalAlignment="Center" FontSize="12"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Viewbox>
+</Page>

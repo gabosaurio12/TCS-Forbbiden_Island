@@ -411,7 +411,7 @@
   <data name="treasures_saved" xml:space="preserve">
     <value>Tesoros Salvados</value>
   </data>
-  <data name="clean-code-name" xml:space="preserve">
+  <data name="clean_code_name" xml:space="preserve">
     <value>Clean Code</value>
   </data>
   <data name="win_title" xml:space="preserve">
@@ -438,13 +438,13 @@
   <data name="not_treasure_tile_title" xml:space="preserve">
     <value>No es una Casilla de Tesoro</value>
   </data>
-  <data name="cubicle-keys-name" xml:space="preserve">
+  <data name="cubicle_keys_name" xml:space="preserve">
     <value>Llaves de Cubículo</value>
   </data>
-  <data name="lucio-name" xml:space="preserve">
+  <data name="lucio_name" xml:space="preserve">
     <value>Lucio</value>
   </data>
-  <data name="parking-card-name" xml:space="preserve">
+  <data name="parking_card_name" xml:space="preserve">
     <value>Tarjeta de Estacionamiento</value>
   </data>
   <data name="not_enough_treasure_cards_title" xml:space="preserve">
@@ -481,7 +481,7 @@
     <value>Crear sala</value>
   </data>
   <data name="search_placeholder" xml:space="preserve">
-    <value>Buscar por nombre de sala o jugador</value>
+    <value>Buscar sala...</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Contraseña</value>
@@ -498,6 +498,236 @@
   <data name="loading_matches_error" xml:space="preserve">
     <value>Hubo un error al cargar las partidas, intente de nuevo más tarde o contacte a soporte técnico</value>
   </data>
+  <data name="gameTutorial_Title" xml:space="preserve">
+    <value>RIUV LOGIN</value>
+  </data>
+  <data name="gameTutorial_ControlsHeader" xml:space="preserve">
+    <value>RIUV LOGIN</value>
+  </data>
+  <data name="gameTutorial_ControlsText" xml:space="preserve">
+    <value>Utiliza tu teclado y presiona la tecla indicada.</value>
+  </data>
+  <data name="gameTutorial_Description" xml:space="preserve">
+    <value>Llegó la fecha de inscripciones, accede la contraseña de la RIUV lo más rápido posible para que puedas hacer tu inscripción.</value>
+  </data>
+  <data name="gameTutorial_Key_Space" xml:space="preserve">
+    <value>Barra espaciadora</value>
+  </data>
+  <data name="gameTutorial_Key_Separator" xml:space="preserve">
+    <value>/</value>
+  </data>
+  <data name="gameTutorial_Key_Enter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="gameTutorial_Key_Start" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
+  <data name="leave_menu_message" xml:space="preserve">
+    <value>Si sales, abandonarás la sala actual.</value>
+  </data>
+  <data name="leave_menu_continue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="leave_menu_leave" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="leave_menu_title" xml:space="preserve">
+    <value>¿Quieres salir de la partida?</value>
+  </data>
+  <data name="system_prefix" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="lobby_welcome" xml:space="preserve">
+    <value>Bienvenido al lobby</value>
+  </data>
+  <data name="player_joined" xml:space="preserve">
+    <value>{0} se unió a la partida.</value>
+  </data>
+  <data name="player_left" xml:space="preserve">
+    <value>{0} salió de la partida.</value>
+  </data>
+  <data name="player_ready" xml:space="preserve">
+    <value>{0} está listo.</value>
+  </data>
+  <data name="player_unready" xml:space="preserve">
+    <value>{0} ya no está listo.</value>
+  </data>
+  <data name="countdown_starting" xml:space="preserve">
+    <value>Iniciando cuenta regresiva...</value>
+  </data>
+  <data name="countdown_number" xml:space="preserve">
+    <value>Comenzando en {0}...</value>
+  </data>
+  <data name="countdown_go" xml:space="preserve">
+    <value>¡Comenzando partida!</value>
+  </data>
+  <data name="start_failed" xml:space="preserve">
+    <value>No se pudo iniciar la partida (error servidor).</value>
+  </data>
+  <data name="ready_failed" xml:space="preserve">
+    <value>No se pudo cambiar el estado Ready (error servidor).</value>
+  </data>
+  <data name="host_left_title" xml:space="preserve">
+    <value>Partida finalizada</value>
+  </data>
+  <data name="host_left_message" xml:space="preserve">
+    <value>El host dejó la partida. Regresando al menú principal.</value>
+  </data>
+  <data name="chat_send_error" xml:space="preserve">
+    <value>Error al enviar mensaje.</value>
+  </data>
+  <data name="match_not_found" xml:space="preserve">
+    <value>No se encontró la partida.</value>
+  </data>
+  <data name="tutorial_open_error" xml:space="preserve">
+    <value>Error al abrir el tutorial.</value>
+  </data>
+  <data name="ready_button_ready" xml:space="preserve">
+    <value>Listo</value>
+  </data>
+  <data name="ready_button_unready" xml:space="preserve">
+    <value>Quitar listo</value>
+  </data>
+  <data name="ready_button_start" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
+  <data name="chat_prefix_placeholder" xml:space="preserve">
+    <value>Jugador:</value>
+  </data>
+  <data name="host_label" xml:space="preserve">
+    <value>Anfitrión: </value>
+  </data>
+  <data name="room_default" xml:space="preserve">
+    <value>Sala {0}</value>
+  </data>
+  <data name="host_unknown" xml:space="preserve">
+    <value>Desconocido</value>
+  </data>
+  <data name="visibility_public_key" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="visibility_private_key" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="visibility_public" xml:space="preserve">
+    <value>Pública</value>
+  </data>
+  <data name="visibility_private" xml:space="preserve">
+    <value>Privada</value>
+  </data>
+  <data name="difficulty_normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="error_loading_matches" xml:space="preserve">
+    <value>Error al cargar las partidas: {0}</value>
+  </data>
+  <data name="error_title" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="warning_title" xml:space="preserve">
+    <value>Advertencia</value>
+  </data>
+  <data name="info_title" xml:space="preserve">
+    <value>Información</value>
+  </data>
+  <data name="join_need_login" xml:space="preserve">
+    <value>Debes iniciar sesión para unirte a una partida.</value>
+  </data>
+  <data name="join_full" xml:space="preserve">
+    <value>La partida está llena.</value>
+  </data>
+  <data name="join_failed" xml:space="preserve">
+    <value>No fue posible unirse a la partida.</value>
+  </data>
+  <data name="join_error" xml:space="preserve">
+    <value>Error al unirse a la partida: {0}</value>
+  </data>
+  <data name="missing_room_name_title" xml:space="preserve">
+    <value>Se requiere nombre de sala</value>
+  </data>
+  <data name="missing_room_name_message" xml:space="preserve">
+    <value>Ingresa un nombre de sala (máx 20 caracteres).</value>
+  </data>
+  <data name="join_full_title" xml:space="preserve">
+    <value>Partida llena</value>
+  </data>
+  <data name="join_full_message" xml:space="preserve">
+    <value>La partida está llena. Elige otra sala.</value>
+  </data>
+  <data name="change_password" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="leave_menu_kick_title" xml:space="preserve">
+    <value>Administrar jugadores</value>
+  </data>
+  <data name="leave_menu_kick_desc" xml:space="preserve">
+    <value>Expulsa a un jugador de la partida.</value>
+  </data>
+  <data name="leave_menu_kick_button" xml:space="preserve">
+    <value>Expulsar jugador</value>
+  </data>
+  <data name="leave_menu_kick_placeholder" xml:space="preserve">
+    <value>Selecciona un jugador para expulsar (funcionalidad pendiente).</value>
+  </data>
+  <data name="leave_menu_kick_none" xml:space="preserve">
+    <value>No hay jugadores para expulsar.</value>
+  </data>
+  <data name="leave_menu_kick_no_selection_title" xml:space="preserve">
+    <value>Ningún jugador seleccionado</value>
+  </data>
+  <data name="leave_menu_kick_no_selection_msg" xml:space="preserve">
+    <value>Selecciona un jugador para expulsar.</value>
+  </data>
+  <data name="leave_menu_kick_not_found_title" xml:space="preserve">
+    <value>Jugador no encontrado</value>
+  </data>
+  <data name="leave_menu_kick_not_found_msg" xml:space="preserve">
+    <value>El jugador ya salió de la partida. No se realizó acción.</value>
+  </data>
+  <data name="leave_menu_kick_success_title" xml:space="preserve">
+    <value>Jugador expulsado</value>
+  </data>
+  <data name="leave_menu_kick_success_msg" xml:space="preserve">
+    <value>Se expulsó a {0} de la partida.</value>
+  </data>
+  <data name="leave_menu_kick_fail_title" xml:space="preserve">
+    <value>No se pudo expulsar</value>
+  </data>
+  <data name="leave_menu_kick_fail_msg" xml:space="preserve">
+    <value>No se pudo expulsar al jugador. Intenta nuevamente.</value>
+  </data>
+	<data name="kicked_title" xml:space="preserve">
+    <value>Expulsado de la partida</value>
+  </data>
+	<data name="kicked_message" xml:space="preserve">
+    <value>El anfitrión te expulsó de la partida.</value>
+  </data>
+	<data name="join_banned_title" xml:space="preserve">
+    <value>No puedes unirte</value>
+  </data>
+	<data name="join_banned_message" xml:space="preserve">
+    <value>No puedes unirte a esta partida (fuiste expulsado por el anfitrión).</value>
+  </data>
+	<data name="invite_code_title" xml:space="preserve">
+    <value>Código de invitación</value>
+  </data>
+	<data name="invite_code_message" xml:space="preserve">
+    <value>Comparte este código con tus amigos: {0}</value>
+  </data>
+	<data name="invite_invalid_title" xml:space="preserve">
+    <value>Código inválido</value>
+  </data>
+	<data name="invite_invalid_message" xml:space="preserve">
+    <value>El código de invitación no es válido.</value>
+  </data>
+	<data name="invite_code_prompt" xml:space="preserve">
+    <value>Ingresa el código de invitación para unirte.</value>
+  </data>
+	<data name="invite_code_label" xml:space="preserve">
+    <value>Código de invitación:</value>
+  </data>
+	<data name="invite_code_not_available" xml:space="preserve">
+    <value>No disponible</value>
   <data name="advice_title" xml:space="preserve">
     <value>¡Aviso!</value>
   </data>

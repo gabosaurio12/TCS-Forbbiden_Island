@@ -411,7 +411,7 @@
   <data name="treasures_saved" xml:space="preserve">
     <value>Treasures Saved</value>
   </data>
-  <data name="clean-code-name" xml:space="preserve">
+  <data name="clean_code_name" xml:space="preserve">
     <value>Clean Code</value>
   </data>
   <data name="win_title" xml:space="preserve">
@@ -438,13 +438,13 @@
   <data name="not_treasure_tile_title" xml:space="preserve">
     <value>Not a Treasure Tile</value>
   </data>
-  <data name="cubicle-keys-name" xml:space="preserve">
+  <data name="cubicle_keys_name" xml:space="preserve">
     <value>Cubicle Keys</value>
   </data>
-  <data name="lucio-name" xml:space="preserve">
+  <data name="lucio_name" xml:space="preserve">
     <value>Lucio</value>
   </data>
-  <data name="parking-card-name" xml:space="preserve">
+  <data name="parking_card_name" xml:space="preserve">
     <value>Parking Card</value>
   </data>
   <data name="not_enough_treasure_cards_title" xml:space="preserve">
@@ -481,7 +481,7 @@
     <value>Create room</value>
   </data>
   <data name="search_placeholder" xml:space="preserve">
-    <value>Search by room name or player</value>
+    <value>Search room...</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Password</value>
@@ -498,6 +498,236 @@
   <data name="loading_matches_error" xml:space="preserve">
     <value>There was an error while loading the matches, try again later or contact tech support</value>
   </data>
+  <data name="gameTutorial_Title" xml:space="preserve">
+    <value>RIUV LOGIN</value>
+  </data>
+  <data name="gameTutorial_ControlsHeader" xml:space="preserve">
+    <value>RIUV LOGIN</value>
+  </data>
+  <data name="gameTutorial_ControlsText" xml:space="preserve">
+    <value>Use your keyboard and press the indicated key.</value>
+  </data>
+  <data name="gameTutorial_Description" xml:space="preserve">
+    <value>The registration date has arrived — retrieve the RIUV password as quickly as possible so you can complete your registration.</value>
+  </data>
+  <data name="gameTutorial_Key_Space" xml:space="preserve">
+    <value>Spacebar</value>
+  </data>
+  <data name="gameTutorial_Key_Separator" xml:space="preserve">
+    <value>/</value>
+  </data>
+  <data name="gameTutorial_Key_Enter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="gameTutorial_Key_Start" xml:space="preserve">
+    <value>Leave the match?</value>
+  </data>
+  <data name="leave_menu_message" xml:space="preserve">
+    <value>If you leave, you will exit the current room.</value>
+  </data>
+  <data name="leave_menu_continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="leave_menu_leave" xml:space="preserve">
+    <value>Leave</value>
+  </data>
+  <data name="leave_menu_title" xml:space="preserve">
+    <value>Leave the match?</value>
+  </data>
+  <data name="system_prefix" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="lobby_welcome" xml:space="preserve">
+    <value>Welcome to the lobby</value>
+  </data>
+  <data name="player_joined" xml:space="preserve">
+    <value>{0} joined the match.</value>
+  </data>
+  <data name="player_left" xml:space="preserve">
+    <value>{0} left the match.</value>
+  </data>
+  <data name="player_ready" xml:space="preserve">
+    <value>{0} is ready.</value>
+  </data>
+  <data name="player_unready" xml:space="preserve">
+    <value>{0} is not ready anymore.</value>
+  </data>
+  <data name="countdown_starting" xml:space="preserve">
+    <value>Starting countdown...</value>
+  </data>
+  <data name="countdown_number" xml:space="preserve">
+    <value>Starting in {0}...</value>
+  </data>
+  <data name="countdown_go" xml:space="preserve">
+    <value>Starting match!</value>
+  </data>
+  <data name="start_failed" xml:space="preserve">
+    <value>Could not start the match (server error).</value>
+  </data>
+  <data name="ready_failed" xml:space="preserve">
+    <value>Could not change the ready state (server error).</value>
+  </data>
+  <data name="host_left_title" xml:space="preserve">
+    <value>Match ended</value>
+  </data>
+  <data name="host_left_message" xml:space="preserve">
+    <value>The host left the match. Returning to the main menu.</value>
+  </data>
+  <data name="chat_send_error" xml:space="preserve">
+    <value>Error sending message.</value>
+  </data>
+  <data name="match_not_found" xml:space="preserve">
+    <value>Match not found.</value>
+  </data>
+  <data name="tutorial_open_error" xml:space="preserve">
+    <value>Error opening tutorial.</value>
+  </data>
+  <data name="ready_button_ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="ready_button_unready" xml:space="preserve">
+    <value>Unready</value>
+  </data>
+  <data name="ready_button_start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="chat_prefix_placeholder" xml:space="preserve">
+    <value>Player:</value>
+  </data>
+  <data name="host_label" xml:space="preserve">
+    <value>Host: </value>
+  </data>
+  <data name="room_default" xml:space="preserve">
+    <value>Room {0}</value>
+  </data>
+  <data name="host_unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="visibility_public_key" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="visibility_private_key" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="visibility_public" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="visibility_private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="difficulty_normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="error_loading_matches" xml:space="preserve">
+    <value>Error loading matches: {0}</value>
+  </data>
+  <data name="error_title" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="warning_title" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="info_title" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="join_need_login" xml:space="preserve">
+    <value>You must sign in to join a match.</value>
+  </data>
+  <data name="join_full" xml:space="preserve">
+    <value>The match is full.</value>
+  </data>
+  <data name="join_failed" xml:space="preserve">
+    <value>Could not join the match.</value>
+  </data>
+  <data name="join_error" xml:space="preserve">
+    <value>Error joining the match: {0}</value>
+  </data>
+  <data name="missing_room_name_title" xml:space="preserve">
+    <value>Room name required</value>
+  </data>
+  <data name="missing_room_name_message" xml:space="preserve">
+    <value>Please enter a room name (max 20 characters).</value>
+  </data>
+  <data name="join_full_title" xml:space="preserve">
+    <value>Match full</value>
+  </data>
+  <data name="join_full_message" xml:space="preserve">
+    <value>The match is full. Please choose another room.</value>
+  </data>
+  <data name="change_password" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="leave_menu_kick_title" xml:space="preserve">
+    <value>Manage players</value>
+  </data>
+  <data name="leave_menu_kick_desc" xml:space="preserve">
+    <value>Remove a player from this match.</value>
+  </data>
+  <data name="leave_menu_kick_button" xml:space="preserve">
+    <value>Kick player</value>
+  </data>
+  <data name="leave_menu_kick_placeholder" xml:space="preserve">
+    <value>Select a player to remove (feature pending).</value>
+  </data>
+  <data name="leave_menu_kick_none" xml:space="preserve">
+    <value>No players available to kick.</value>
+  </data>
+  <data name="leave_menu_kick_no_selection_title" xml:space="preserve">
+    <value>No player selected</value>
+  </data>
+  <data name="leave_menu_kick_no_selection_msg" xml:space="preserve">
+    <value>Please select a player to remove.</value>
+  </data>
+  <data name="leave_menu_kick_not_found_title" xml:space="preserve">
+    <value>Player not found</value>
+  </data>
+  <data name="leave_menu_kick_not_found_msg" xml:space="preserve">
+    <value>The player has already left the match. No action taken.</value>
+  </data>
+  <data name="leave_menu_kick_success_title" xml:space="preserve">
+    <value>Player removed</value>
+  </data>
+  <data name="leave_menu_kick_success_msg" xml:space="preserve">
+    <value>{0} was removed from the match.</value>
+  </data>
+  <data name="leave_menu_kick_fail_title" xml:space="preserve">
+    <value>Could not remove</value>
+  </data>
+  <data name="leave_menu_kick_fail_msg" xml:space="preserve">
+    <value>The player could not be removed. Please try again.</value>
+  </data>
+	<data name="kicked_title" xml:space="preserve">
+    <value>Removed from match</value>
+  </data>
+	<data name="kicked_message" xml:space="preserve">
+    <value>You were removed from the match by the host.</value>
+  </data>
+	<data name="join_banned_title" xml:space="preserve">
+    <value>Cannot join match</value>
+  </data>
+	<data name="join_banned_message" xml:space="preserve">
+    <value>You cannot join this match (you were removed by the host).</value>
+  </data>
+	<data name="invite_code_title" xml:space="preserve">
+    <value>Invitation code</value>
+  </data>
+	<data name="invite_code_message" xml:space="preserve">
+    <value>Share this code with your friends: {0}</value>
+  </data>
+	<data name="invite_invalid_title" xml:space="preserve">
+    <value>Invalid code</value>
+  </data>
+	<data name="invite_invalid_message" xml:space="preserve">
+    <value>The invitation code is not valid.</value>
+  </data>
+	<data name="invite_code_prompt" xml:space="preserve">
+    <value>Enter the invitation code to join.</value>
+  </data>
+	<data name="invite_code_label" xml:space="preserve">
+    <value>Invitation code:</value>
+  </data>
+	<data name="invite_code_not_available" xml:space="preserve">
+    <value>Not available</value>
   <data name="advice_title" xml:space="preserve">
     <value>Warning!</value>
   </data>

@@ -20,8 +20,8 @@ namespace Forbbiden.Client.logic.board.states
 
             if (tiles.Count == 0)
             {
-                string title = Properties.Langs.Resources.game_over;
-                string message = Properties.Langs.Resources.you_drowned_message;
+                string title = Properties.Resources.game_over;
+                string message = Properties.Resources.you_drowned_message;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(Context.Board));
                 Exit();
             }

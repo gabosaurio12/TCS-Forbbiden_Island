@@ -88,9 +88,9 @@
   </wsdl:binding>
   <wsdl:service name="FriendsNotificationManager">
     <wsdl:port name="NetTcpBinding_IFriendsNotificationManager" binding="tns:NetTcpBinding_IFriendsNotificationManager">
-      <soap12:address location="net.tcp://192.168.100.44:8086/FriendsNotificationManager" />
+      <soap12:address location="net.tcp://192.168.1.77:8086/FriendsNotificationManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.44:8086/FriendsNotificationManager</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.1.77:8086/FriendsNotificationManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

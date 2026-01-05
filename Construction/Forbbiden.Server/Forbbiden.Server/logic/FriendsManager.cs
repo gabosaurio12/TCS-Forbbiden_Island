@@ -6,7 +6,6 @@ using log4net;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
-using System.Security.Cryptography.Pkcs;
 using System.ServiceModel;
 
 namespace Forbbiden.Server.logic

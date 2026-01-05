@@ -1,11 +1,71 @@
 ﻿<Page x:Class="Forbbiden.Client.SelectLanguagePage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
-        mc:Ignorable="d"
-        Title="Select Language">
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:language="clr-namespace:Forbbiden.Client.Properties"
+      mc:Ignorable="d"
+      Title="Select Language">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryBar" Color="#1B2A4A"/>
+        <SolidColorBrush x:Key="Accent" Color="#FFA726"/>
+        <SolidColorBrush x:Key="AccentDark" Color="#F08A00"/>
+        <SolidColorBrush x:Key="CardBg" Color="#FFFFFFCC"/>
+        <SolidColorBrush x:Key="CardBorder" Color="#FFFFFF66"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#0D1B2A"/>
+
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontFamily" Value="{StaticResource IrishGrover}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBar}"/>
+            <Setter Property="BorderBrush" Value="#FFB7B7B7"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="16"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LanguageButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="500"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontFamily" Value="{StaticResource IrishGrover}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="#FFB7B7B7"/>
+            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="14"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="0,12,0,12"/>
+        </Style>
+    </Page.Resources>
 
     <Page.Background>
         <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
@@ -19,17 +79,11 @@
             </Grid.RowDefinitions>
 
             <!-- Upper bar -->
-            <DockPanel Grid.Row="0" Background="#0F1945" LastChildFill="True">
+            <DockPanel Grid.Row="0" Background="{StaticResource PrimaryBar}" LastChildFill="True">
                 <Button x:Name="backButton"
-                        Content="&lt;"
-                        Width="100" Height="100"
-                        FontSize="40"
-                        FontFamily="{StaticResource IrishGrover}"
-                        BorderThickness="5" BorderBrush="#FFB7B7B7"
-                        Background="White"
-                        Foreground="Black"
+                        Content="⟵"
+                        Style="{StaticResource BackButtonStyle}"
                         Margin="20,0,0,0"
-                        Cursor="Hand"
                         DockPanel.Dock="Left"
                         Click="BackButton_Click"/>
 
@@ -43,34 +97,29 @@
             </DockPanel>
 
             <!-- Language Buttons -->
-            <StackPanel Grid.Row="1"
-                        VerticalAlignment="Center"
+            <Grid Grid.Row="1">
+                <Border Background="{StaticResource CardBg}"
+                        BorderBrush="{StaticResource CardBorder}"
+                        BorderThickness="2"
+                        CornerRadius="18"
+                        Padding="40"
                         HorizontalAlignment="Center"
-                        Orientation="Vertical">
+                        VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                        <Button x:Name="englishButton"
+                                Content="{x:Static language:Resources.english}"
+                                Style="{StaticResource LanguageButtonStyle}"
+                                Click="EnglishButton_Click"/>
 
-                <Button x:Name="englishButton"
-                        Content="{x:Static language:Resources.english}"
-                        Width="500" Height="80"
-                        BorderThickness="5" BorderBrush="#FFB7B7B7"
-                        FontFamily="{StaticResource IrishGrover}"
-                        FontSize="30"
-                        Background="LightGray"
-                        Foreground="Black"
-                        Cursor="Hand"
-                        Click="EnglishButton_Click"/>
-
-                <Button x:Name="spanishButton"
-                        Content="{x:Static language:Resources.spanish}"
-                        Width="500" Height="80"
-                        BorderThickness="5" BorderBrush="#FFB7B7B7"
-                        FontFamily="{StaticResource IrishGrover}"
-                        FontSize="30"
-                        Background="LightGray"
-                        Foreground="Black"
-                        Cursor="Hand"
-                        Click="SpanishButton_Click"/>
-
-            </StackPanel>
+                        <Button x:Name="spanishButton"
+                                Content="{x:Static language:Resources.spanish}"
+                                Style="{StaticResource LanguageButtonStyle}"
+                                Click="SpanishButton_Click"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
 
         </Grid>
     </Viewbox>

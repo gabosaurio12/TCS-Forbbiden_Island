@@ -80,8 +80,8 @@ namespace Forbbiden.Client.view.info
                 }
                 if (isUpdated)
                 {
-                    string title = Properties.Langs.Resources.player_verified;
-                    string message = Properties.Langs.Resources.player_verified_message;
+                    string title = Properties.Resources.player_verified;
+                    string message = Properties.Resources.player_verified_message;
 
                     ViewUtils.OpenNotificationWindow(title, message, GetWindow(this));
                     OnVerified?.Invoke();
@@ -122,8 +122,8 @@ namespace Forbbiden.Client.view.info
                 }
                 else
                 {
-                    string title = Properties.Langs.Resources.wrong_token;
-                    string message = Properties.Langs.Resources.wrong_token_message;
+                    string title = Properties.Resources.wrong_token;
+                    string message = Properties.Resources.wrong_token_message;
                     OpenNotification(title, message);
                     ClearTokenTxtBx();
                 }

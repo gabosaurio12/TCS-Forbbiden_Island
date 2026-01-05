@@ -16,6 +16,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -149,6 +164,7 @@
     <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="logic\AudioManager.cs" />
     <Compile Include="logic\BoardPageCallbackDto.cs" />
     <Compile Include="logic\board\BoardStateContext.cs" />
     <Compile Include="logic\board\IBoardState.cs" />
@@ -161,7 +177,6 @@
     <Compile Include="logic\board\states\ShoreState.cs" />
     <Compile Include="logic\board\states\StandByState.cs" />
     <Compile Include="logic\board\states\UseCardState.cs" />
-    <Compile Include="logic\AudioManager.cs" />
     <Compile Include="logic\ClientSession.cs" />
     <Compile Include="logic\FriendsNotificationSingleton.cs" />
     <Compile Include="logic\GameServiceCallback.cs" />
@@ -171,16 +186,18 @@
     <Compile Include="logic\PlayerLogic.cs" />
     <Compile Include="logic\TileClickedEventArgs.cs" />
     <Compile Include="logic\ViewUtils.cs" />
+    <Compile Include="model\BoardPageDto.cs" />
     <Compile Include="model\CardWindowSettings.cs" />
-    <Compile Include="Properties\Langs\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="model\TileDto.cs" />
     <Compile Include="Properties\PlayerSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>PlayerSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -224,8 +241,14 @@
     <Compile Include="view\games\ServerPage.xaml.cs">
       <DependentUpon>ServerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\GameTutorialRiuvPage.xaml.cs">
+      <DependentUpon>GameTutorialRiuvPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\info\InviteCodeWindow.xaml.cs">
+      <DependentUpon>InviteCodeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\info\NotificationCardExceedWindow.xaml.cs">
       <DependentUpon>NotificationCardExceedWindow.xaml</DependentUpon>
@@ -274,11 +297,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Properties\Langs\Resources.es.resx" />
-    <EmbeddedResource Include="Properties\Langs\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="Connected Services\BoardManager\Arrays1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -327,11 +345,21 @@
     <None Include="Connected Services\GameManager\Forbbiden.Contracts1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\GameManager\Forbbiden.Contracts11.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\GameManager\service1.wsdl" />
+    <None Include="Connected Services\GameManager\service11.wsdl" />
     <None Include="Connected Services\GameManager\service2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameManager\service21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\service22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameManager\service23.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\MatchManager\Forbbiden.Client.MatchManager.Match.datasource">
@@ -480,21 +508,7 @@
     <Resource Include="Images\x.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\BoardManager\" />
-    <WCFMetadataStorage Include="Connected Services\BoardManager\" />
-    <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
-    <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
-    <WCFMetadataStorage Include="Connected Services\FriendsNotificationManager\" />
-    <WCFMetadataStorage Include="Connected Services\FriendsNotificationManager\" />
-    <WCFMetadataStorage Include="Connected Services\GameManager\" />
-    <WCFMetadataStorage Include="Connected Services\GameManager\" />
-    <WCFMetadataStorage Include="Connected Services\MatchManager\" />
-    <WCFMetadataStorage Include="Connected Services\MatchManager\" />
-    <WCFMetadataStorage Include="Connected Services\MatchNotificationManager\" />
-    <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
-    <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
-    <WCFMetadataStorage Include="Connected Services\TokenManager\" />
-    <WCFMetadataStorage Include="Connected Services\TokenManager\" />
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\UserControlFriend.xaml">
@@ -561,9 +575,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\GameTutorialRiuvPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="view\HostGameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\info\InviteCodeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\info\NotificationCardExceedWindow.xaml">
       <SubType>Designer</SubType>
@@ -702,6 +724,17 @@
     <Resource Include="Images\tiles\treasure2.png" />
     <Resource Include="Images\tiles\treasure3.png" />
     <Resource Include="Images\tiles\treasure4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\profile_px.png" />
+    <Resource Include="Images\actionsLeft.png" />
+    <Resource Include="Images\boardButtons2.png" />
+    <Resource Include="Images\defaultAvatar1.png" />
+    <Resource Include="Images\defaultAvatar2.png" />
+    <Resource Include="Images\FEI MainPage1.png" />
+    <Resource Include="Images\FEI MainPageNight.png" />
+    <Resource Include="Images\cards\antivirus.png" />
+    <Content Include="Videos\Meme.mp4" />
     <Resource Include="Images\tiles\mini-cafe.png" />
     <Resource Include="Images\tiles\accessibility-unity.png" />
     <Resource Include="Images\tiles\auditory.png" />
@@ -794,7 +827,41 @@
     <Resource Include="Images\salaServidores.png" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\BoardManager\" />
+    <WCFMetadataStorage Include="Connected Services\FriendsManager\" />
+    <WCFMetadataStorage Include="Connected Services\FriendsNotificationManager\" />
+    <WCFMetadataStorage Include="Connected Services\GameManager\" />
+    <WCFMetadataStorage Include="Connected Services\MatchManager\" />
+    <WCFMetadataStorage Include="Connected Services\MatchNotificationManager\" />
+    <WCFMetadataStorage Include="Connected Services\ProfileManager\" />
+    <WCFMetadataStorage Include="Connected Services\TokenManager\" />
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\Langs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.es.resx">
+      <LastGenOutput>Resources.es.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />

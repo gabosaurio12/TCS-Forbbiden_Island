@@ -32,15 +32,15 @@ namespace Forbbiden.Client.logic.board.states
                         }
                         else
                         {
-                            string title = Properties.Langs.Resources.not_escape_tile_title;
-                            string message = Properties.Langs.Resources.not_escape_tile;
+                            string title = Properties.Resources.not_escape_tile_title;
+                            string message = Properties.Resources.not_escape_tile;
                             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(Context.Board));
                         }
                     }
                     else
                     {
-                        string title = Properties.Langs.Resources.missing_treasures_title;
-                        string message = Properties.Langs.Resources.missing_treasures;
+                        string title = Properties.Resources.missing_treasures_title;
+                        string message = Properties.Resources.missing_treasures;
                         ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(Context.Board));
                     }
 

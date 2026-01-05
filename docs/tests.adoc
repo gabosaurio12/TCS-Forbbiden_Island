@@ -54,7 +54,7 @@
 |*Pasó*
 
 |PMT04
-|TestValidateEmailEmailTakenEmail
+|TestValidateEmailTakenEmail
 |Comprobar que no se acepte un email que ya esté *registrado*
 |*Alta*
 |*PRE01*: Haber ingresado un email +
@@ -99,17 +99,17 @@
 |Comprobar que se envíe un correo de confirmación a un email
 |*Media*
 |*PRE01*: Haber ingresado un email
-|_mazinger.gl@gmail.com_
+|_mazinger.gl@gmail.com_, _testPlayer.PlayerId_
 |_True_
 |__
 |**
 
 |PMT09
 |TestSendEmailNotExist
-|Comprobar que ocurre si se envía un correo de confirmación a un email que no existe
+|Comprobar que se regrese false si se envía un correo de confirmación a un email que no existe
 |*Media*
 |*PRE01*: Haber ingresado un email
-|_testForbbiden@email.com_
+|_testForbbiden@email.com_, 0
 |_False_
 |__
 |**
@@ -150,7 +150,7 @@
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario y contraseña +
 |_testUser_ + _T3st_pass_
-|_True_
+|_Player.PlayerID != -1_
 |__
 |**
 
@@ -180,7 +180,7 @@
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario y contraseña +
 |_"testUser"_ + _""_
-|_Player.PlayerID = -1_
+|_Player.PlayerID = -2_
 |__
 |**
 
@@ -200,7 +200,7 @@
 |*Alta*
 |*PRE01*: Haber ingresado Nombre de usuario y contraseña +
 |_"testUser"_ + _"falsePassword"_
-|_Player.PlayerID = -1_
+|_Player.PlayerID = -2_
 |__
 |**
 
@@ -245,7 +245,7 @@
 |**
 
 |PMT23
-|TestGetPlayerByUsernameUsernameBlank
+|TestGetPlayerByUsernameUsernameInvalid
 |Comprobar que se regrese un jugador con id -1 si se busca uno con username inválido
 |*Alta*
 |*PRE01*: Haber ingresado un nombre de usuario
@@ -289,7 +289,7 @@
 |Comprobar que se actualice un jugador
 |*Alta*
 |*PRE-01*: Cambiar los datos de un jugador
-|PlayerName = _"This is a Name"_
+|testPlayer.Name = _"Player's Name"_
 |_True_
 |__
 |**

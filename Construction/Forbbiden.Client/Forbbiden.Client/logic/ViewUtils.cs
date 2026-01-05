@@ -113,22 +113,22 @@ namespace Forbbiden.Client.logic
 
         public static void ShowPullError(Window window)
         {
-            string title = Properties.Langs.Resources.error;
-            string message = Properties.Langs.Resources.pull_database_error;
+            string title = Properties.Resources.error;
+            string message = Properties.Resources.pull_database_error;
             OpenNotificationWindow(title, message, window);
         }
 
         public static void ShowPushError(Window window)
         {
-            string title = Properties.Langs.Resources.error;
-            string message = Properties.Langs.Resources.push_database_error;
+            string title = Properties.Resources.error;
+            string message = Properties.Resources.push_database_error;
             OpenNotificationWindow(title, message, window);
         }
 
         public static void HandlePageLoadError(Window window)
         {
-            string title = Properties.Langs.Resources.error;
-            string message = Properties.Langs.Resources.load_page_error;
+            string title = Properties.Resources.error;
+            string message = Properties.Resources.load_page_error;
             OpenNotificationWindow(title, message, window);
         }
     }

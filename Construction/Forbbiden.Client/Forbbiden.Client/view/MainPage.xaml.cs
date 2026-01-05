@@ -89,7 +89,7 @@ namespace Forbbiden.Client
         {
             try
             {
-                NavigationService?.Navigate(new HostGameControl());
+                NavigationService?.Navigate(new PlayPage());
             }
             catch (Exception ex)
             {
@@ -225,8 +225,8 @@ namespace Forbbiden.Client
 
             if (result)
             {
-                string title = Properties.Langs.Resources.verification_token_sent_title;
-                string message = Properties.Langs.Resources.verification_token_sent;
+                string title = Properties.Resources.verification_token_sent_title;
+                string message = Properties.Resources.verification_token_sent;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
 
                 ShowVerificationWindow(player);
