@@ -4,7 +4,7 @@ using System.ServiceModel;
 namespace Forbbiden.Contracts
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IMatchNotificationManager" in both code and config file together.
-    [ServiceContract(CallbackContract = typeof(IMatchNotificationManager))]
+    [ServiceContract(CallbackContract = typeof(IMatchCallback))]
     public interface IMatchNotificationManager
     {
         [OperationContract]

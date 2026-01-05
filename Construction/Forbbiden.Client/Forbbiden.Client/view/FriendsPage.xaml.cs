@@ -139,15 +139,15 @@ namespace Forbbiden.Client.view
                 if (isDeleted)
                 {
                     ReloadFriends();
-                    string title = Properties.Langs.Resources.friend_deleted_title;
-                    string message = Properties.Langs.Resources.friend_deleted_message + friendUsername;
+                    string title = Properties.Resources.friend_deleted_title;
+                    string message = Properties.Resources.friend_deleted_message + friendUsername;
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 }
             }
             else
             {
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.unexpected_error;
+                string title = Properties.Resources.error;
+                string message = Properties.Resources.unexpected_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             
@@ -260,20 +260,20 @@ namespace Forbbiden.Client.view
 
                 if (requestStatus)
                 {
-                    string title = Properties.Langs.Resources.friend_request_sent_title;
-                    string message = Properties.Langs.Resources.friend_request_sent_message + receiverUsername;
+                    string title = Properties.Resources.friend_request_sent_title;
+                    string message = Properties.Resources.friend_request_sent_message + receiverUsername;
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 }
                 else
                 {
-                    string title = Properties.Langs.Resources.error;
-                    string message = Properties.Langs.Resources.friend_request_not_sent;
+                    string title = Properties.Resources.error;
+                    string message = Properties.Resources.friend_request_not_sent;
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 }
             }
         }
 
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void SendFriendRequestButton_Click(object sender, RoutedEventArgs e)
         {
             string receiverUsername = searchtxtBx.Text.Trim();
             await SendFriendRequest(receiverUsername);

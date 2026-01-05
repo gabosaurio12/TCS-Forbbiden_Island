@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="4aa750ea-1f0b-43e0-be2a-633cba5394a9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="7f757241-734b-46c3-8d9a-5e4cee299877" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,12 +19,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:8087/MatchNotificationManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="76684136-318b-4722-b05b-ee52cea6ad2b" SourceId="1" SourceUrl="net.tcp://localhost:8087/MatchNotificationManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="3349423e-8b3b-42ba-847e-b7431484cdcb" SourceId="1" SourceUrl="net.tcp://localhost:8087/MatchNotificationManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="eb9d71ca-35e8-4017-8c17-4e47850bbe37" SourceId="1" SourceUrl="net.tcp://localhost:8087/MatchNotificationManager/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d971f418-4a9d-4ba2-ae26-1ab2af025fed" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a9a5382a-92e2-4603-b284-0f10a45bcd67" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="bb7ffa21-6528-4be9-a620-0f441e4742da" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

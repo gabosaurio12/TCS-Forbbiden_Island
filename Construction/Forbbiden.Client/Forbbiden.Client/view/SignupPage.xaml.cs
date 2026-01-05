@@ -76,25 +76,25 @@ namespace Forbbiden.Client
         private async Task<bool> ValidatePlayer(Player player)
         {
             bool isValid = true;
-            string title = Properties.Langs.Resources.invalid_input;
+            string title = Properties.Resources.invalid_input;
 
             if (!ValidatePassword(player.PlayerPassword))
             {
-                string message = Properties.Langs.Resources.signup_invalid_password;
+                string message = Properties.Resources.signup_invalid_password;
                 OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkPassword);
             }
             if (string.IsNullOrWhiteSpace(player.PlayerUsername))
             {
-                string message = Properties.Langs.Resources.signup_empty_username;
+                string message = Properties.Resources.signup_empty_username;
                 OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
             }
             if (player.PlayerUsername.Contains(" "))
             {
-                string message = Properties.Langs.Resources.signup_space_username;
+                string message = Properties.Resources.signup_space_username;
                 OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkUsername);
@@ -103,7 +103,7 @@ namespace Forbbiden.Client
             {
                 if (!await Client.IsUsernameAvailableAsync(player.PlayerUsername))
                 {
-                    string message = Properties.Langs.Resources.signup_username_already_used;
+                    string message = Properties.Resources.signup_username_already_used;
                     OpenNotification(title, message);
                     isValid = false;
                     TurnTextBlockRed(txtBkUsername);
@@ -118,7 +118,7 @@ namespace Forbbiden.Client
             
             if (!await Client.ValidateEmailAsync(player.PlayerEmail))
             {
-                string message = Properties.Langs.Resources.signup_invalid_email;
+                string message = Properties.Resources.signup_invalid_email;
                 OpenNotification(title, message);
                 isValid = false;
                 TurnTextBlockRed(txtBkEmail);
@@ -157,30 +157,30 @@ namespace Forbbiden.Client
                 {
                     if (await Client.SendEmailAsync(player.PlayerEmail, playerId))
                     {
-                        string title = Properties.Langs.Resources.successful_signup;
-                        string message = Properties.Langs.Resources.successful_signup_message;
+                        string title = Properties.Resources.successful_signup;
+                        string message = Properties.Resources.successful_signup_message;
                         OpenNotification(title, message);
                         await VerifyPlayer(player.PlayerUsername);
                         NavigationService?.Navigate(new LoginPage());
                     }
                     else
                     {
-                        string title = Properties.Langs.Resources.error;
-                        string message = Properties.Langs.Resources.send_email_error;
+                        string title = Properties.Resources.error;
+                        string message = Properties.Resources.send_email_error;
                         OpenNotification(title, message);
                     }
                     
                 }
                 else
                 {
-                    string title = Properties.Langs.Resources.error;
-                    string message = Properties.Langs.Resources.signup_error;
+                    string title = Properties.Resources.error;
+                    string message = Properties.Resources.signup_error;
                     OpenNotification(title, message);
                 }
             }
             else
             {
-                txtBkBoss.Text = Properties.Langs.Resources.boss_invalid_inputs;
+                txtBkBoss.Text = Properties.Resources.boss_invalid_inputs;
             }
         }
 

@@ -2,6 +2,7 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.ServiceModel;
@@ -93,7 +94,6 @@ namespace Forbbiden.Client
 
             PublicToggle.Background = isPublic ? Brushes.LightBlue : Brushes.LightCoral;
         }
-
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             var matchClient = new MatchManagerClient();
@@ -108,9 +108,19 @@ namespace Forbbiden.Client
                 }
 
                 string username = currentPlayer.PlayerUsername;
-
                 var roomName = txtRoomName?.Text?.Trim();
-                if (!string.IsNullOrEmpty(roomName) && roomName.Length > 20)
+
+                if (string.IsNullOrWhiteSpace(roomName))
+                {
+                    var wnd = new NotificationWindow(
+                        Properties.Resources.missing_room_name_title,
+                        Properties.Resources.missing_room_name_message);
+                    wnd.Owner = Window.GetWindow(this);
+                    wnd.ShowDialog();
+                    return;
+                }
+
+                if (roomName.Length > 20)
                 {
                     MessageBox.Show("El nombre de la sala debe tener como máximo 20 caracteres.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -121,7 +131,7 @@ namespace Forbbiden.Client
                     HostUsername = username,
                     Difficulty = selectedDifficulty,
                     Visibility = selectedVisibility,
-                    MatchName = string.IsNullOrEmpty(roomName) ? null : roomName,
+                    MatchName = roomName,
                     Capacity = selectedCapacity
                 };
 
@@ -142,6 +152,8 @@ namespace Forbbiden.Client
                     MessageBox.Show("No se pudo crear la partida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+
+                // Se sigue generando el código en el servidor, pero ya no se muestra aquí.
 
                 string avatarFileName = null;
                 try
@@ -190,7 +202,7 @@ namespace Forbbiden.Client
             }
         }
 
-        private void PublicToggle_Checked()
+        private void PublicToggle_Checked(object sender, RoutedEventArgs e)
         {
 
         }

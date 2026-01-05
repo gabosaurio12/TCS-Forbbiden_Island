@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.model;
 using Forbbiden.Client.view.games;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Forbbiden.Client.logic
         private static BoardPage MatchBoardPage;
         private static List<string> PlayersUsername = new List<string>();
 
-        private static BoardManagerClient BoardClient = new BoardManagerClient();
+        private static readonly BoardManagerClient BoardClient = new BoardManagerClient();
         private static int PlayersTurnIndex = 0;
 
         protected HostLogic()
@@ -52,14 +53,17 @@ namespace Forbbiden.Client.logic
 
         public static string CreateCallbackBoardPageJSON(BoardPageCallbackDto page)
         {
-            return JsonSerializer.Serialize(page);
+            var json = JsonSerializer.Serialize(page);
+            return json;
         }
 
         public static void SendBoardToPlayers(Match matchInfo)
         {
             string[] usernames = GetPlayersUsernames(matchInfo.Players.ToList());
+            var boardDto = BoardPageToDto();
             BoardPageCallbackDto callbackPage = new BoardPageCallbackDto(
-                MatchBoardPage, usernames);
+                boardDto, usernames);
+
             string boardJson = CreateCallbackBoardPageJSON(callbackPage);
             BoardClient.SendOnBoardCreatedCallbackAsync(boardJson, usernames);
         }
@@ -75,6 +79,35 @@ namespace Forbbiden.Client.logic
             {
                 PlayersTurnIndex = 0;
             }
+        }
+
+        private static BoardPageDto BoardPageToDto()
+        {
+            return new BoardPageDto
+            {
+                ActionsRemain = MatchBoardPage.ActionsRemain,
+                TreasureCaptured = MatchBoardPage.TreasuresCaptured,
+                WaterLevelCount = MatchBoardPage.WaterLevelCount,
+
+                TreasureStack = MatchBoardPage.TreasureStack,
+                TreasureDiscardStack = MatchBoardPage.TreasureDiscardStack,
+                FloodStack = MatchBoardPage.FloodStack,
+                FloodDiscardStack = MatchBoardPage.FloodDiscardStack,
+
+                Tiles = MatchBoardPage.BoardControl.GetAllTilesFromGrid()
+                    .Select(t => new TileDto
+                    {
+                        Row = t.Row,
+                        Column = t.Col,
+                        IsFlood = t.IsFlood,
+                        IsLost = t.IsLost,
+                        IsTreasure = t.IsTreasure,
+                        IsEscapeTile = t.IsEscapeTile,
+                        ImageFileName = t.ImageFileName,
+                        TreasureCard = t.TreasureCard
+                    })
+                    .ToList()
+            };
         }
     }
 }

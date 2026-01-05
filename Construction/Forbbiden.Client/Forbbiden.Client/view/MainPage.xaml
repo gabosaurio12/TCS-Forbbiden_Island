@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/exc:\mac\home\documents\uv\5° semestre\tcs\tcs-forbbiden_island\construction\forbbiden.client\view\mainpage.xaml"
       xmlns:local="clr-namespace:Forbbiden.Client.Controls"
-      xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
+      xmlns:language="clr-namespace:Forbbiden.Client.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainWindow">

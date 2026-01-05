@@ -25,7 +25,7 @@ namespace Forbbiden.Client
 
         private static void ResetFields(TextBlock txtBkUser, TextBlock txtBkPassword, TextBlock txtBkBoss)
         {
-            txtBkBoss.Text = Properties.Langs.Resources.bossLogin;
+            txtBkBoss.Text = Properties.Resources.bossLogin;
             txtBkUser.Foreground = Brushes.White;
             txtBkPassword.Foreground = Brushes.White;
         }
@@ -85,12 +85,12 @@ namespace Forbbiden.Client
             else if (player.PlayerId == -1)
             {
                 BrushTextBlock(txtBkUser);
-                txtBkBoss.Text = Properties.Langs.Resources.usernameNoExists;
+                txtBkBoss.Text = Properties.Resources.usernameNoExists;
             }
             else
             {
                 BrushTextBlock(txtBkPassword);
-                txtBkBoss.Text = Properties.Langs.Resources.wrongPassword;
+                txtBkBoss.Text = Properties.Resources.wrongPassword;
             }
         }
 

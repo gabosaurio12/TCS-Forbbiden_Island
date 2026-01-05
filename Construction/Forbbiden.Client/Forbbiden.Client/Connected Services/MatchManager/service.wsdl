@@ -47,6 +47,18 @@
   <wsdl:message name="IMatchManager_DeleteMatch_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteMatchResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_GetInviteCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInviteCode" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_GetInviteCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInviteCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_ValidateInvite_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateInvite" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_ValidateInvite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateInviteResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMatchManager">
     <wsdl:operation name="CreateMatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/CreateMatch" message="tns:IMatchManager_CreateMatch_InputMessage" />
@@ -67,6 +79,14 @@
     <wsdl:operation name="DeleteMatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/DeleteMatch" message="tns:IMatchManager_DeleteMatch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/DeleteMatchResponse" message="tns:IMatchManager_DeleteMatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInviteCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/GetInviteCode" message="tns:IMatchManager_GetInviteCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/GetInviteCodeResponse" message="tns:IMatchManager_GetInviteCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateInvite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/ValidateInvite" message="tns:IMatchManager_ValidateInvite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/ValidateInviteResponse" message="tns:IMatchManager_ValidateInvite_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IMatchManager" type="tns:IMatchManager">
@@ -111,6 +131,24 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteMatch">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/DeleteMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInviteCode">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/GetInviteCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateInvite">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/ValidateInvite" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

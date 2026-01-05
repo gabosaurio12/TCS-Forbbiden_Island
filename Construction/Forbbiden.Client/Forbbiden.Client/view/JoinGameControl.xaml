@@ -1,14 +1,37 @@
 ﻿<UserControl x:Class="Forbbiden.Client.view.JoinGameControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
-             Background="LightGray">
+             xmlns:language="clr-namespace:Forbbiden.Client.Properties"
+             Background="#F2F2F2">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/ButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Paleta más neutra -->
+            <SolidColorBrush x:Key="Accent" Color="#FFA726"/>
+            <!-- ámbar suave -->
+            <SolidColorBrush x:Key="Border" Color="#D9D9D9"/>
+            <SolidColorBrush x:Key="CardBg" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="CardAlt" Color="#FAFAFA"/>
+            <SolidColorBrush x:Key="TextPrimary" Color="#222222"/>
+            <SolidColorBrush x:Key="TextSecondary" Color="#666666"/>
+
+            <Style x:Key="CardBorderStyle" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource CardBg}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+
+            <Style x:Key="RefreshButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource Accent}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -19,11 +42,10 @@
         </Grid.RowDefinitions>
 
         <!-- Buscador + Actualizar -->
-        <Border Background="White" CornerRadius="8" BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
@@ -33,10 +55,11 @@
                          FontSize="16"
                          VerticalContentAlignment="Center"
                          Padding="8"
+                         Background="{StaticResource CardAlt}"
+                         BorderBrush="{StaticResource Border}"
                          TextChanged="SearchBox_TextChanged"
                          ToolTip="{x:Static language:Resources.search_placeholder}" />
 
-                <!-- Botón Actualizar -->
                 <Button Grid.Column="1"
                         x:Name="BtnRefresh"
                         Content="{x:Static language:Resources.refresh}"
@@ -45,28 +68,22 @@
                         Margin="8,0,8,0"
                         VerticalAlignment="Center"
                         Click="RefreshButton_Click"
-                        Style="{StaticResource ButtonStyle}" />
-
-                <!-- (se mantiene la búsqueda por presionar) -->
+                        Style="{StaticResource RefreshButtonStyle}" />
             </Grid>
         </Border>
 
         <!-- Lista de partidas -->
         <Border Grid.Row="1"
-                Background="White"
-                CornerRadius="10"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                Padding="10">
+                Style="{StaticResource CardBorderStyle}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl x:Name="MatchList">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="#F8F8F8"
+                            <Border Background="{StaticResource CardAlt}"
                                     Margin="8"
                                     CornerRadius="10"
                                     Padding="16"
-                                    BorderBrush="#DDD"
+                                    BorderBrush="{StaticResource Border}"
                                     BorderThickness="1" Height="120">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -77,26 +94,26 @@
 
                                     <!-- Información principal -->
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding RoomName}" FontSize="20" FontWeight="Bold" Foreground="#222"/>
-                                        <TextBlock FontSize="13" Foreground="Gray">
+                                        <TextBlock Text="{Binding RoomName}" FontSize="20" FontWeight="Bold" Foreground="{StaticResource TextPrimary}"/>
+                                        <TextBlock FontSize="13" Foreground="{StaticResource TextSecondary}">
                                             <TextBlock.Inlines>
-                                                <Run Text="Host: " Foreground="Gray"/>
-                                                <Run Text="{Binding HostName}" Foreground="#333" FontWeight="SemiBold"/>
+                                                <Run Text="{x:Static language:Resources.host_label}" Foreground="{StaticResource TextSecondary}"/>
+                                                <Run Text="{Binding HostName}" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold"/>
                                             </TextBlock.Inlines>
                                         </TextBlock>
                                     </StackPanel>
 
                                     <!-- Información secundaria -->
                                     <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding PlayersInfo}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding PlayersInfo}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource TextPrimary}"/>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
-                                            <TextBlock Text="{Binding Difficulty}" FontSize="14" Foreground="Gray" Margin="0,0,8,0"/>
-                                            <TextBlock Text="•" Foreground="Gray" Margin="0,0,8,0"/>
+                                            <TextBlock Text="{Binding Difficulty}" FontSize="14" Foreground="{StaticResource TextSecondary}" Margin="0,0,8,0"/>
+                                            <TextBlock Text="•" Foreground="{StaticResource TextSecondary}" Margin="0,0,8,0"/>
                                             <TextBlock Text="{Binding VisibilityText}" FontSize="14" Foreground="{Binding VisibilityColor}"/>
                                         </StackPanel>
                                     </StackPanel>
 
-                                    <!-- Acción: icono + botón Entrar -->
+                                    <!-- Acción -->
                                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,0,0">
                                         <Image Width="28" Height="28" Source="{Binding LockIcon}" Margin="0,0,12,0"/>
                                         <Button Content=">"

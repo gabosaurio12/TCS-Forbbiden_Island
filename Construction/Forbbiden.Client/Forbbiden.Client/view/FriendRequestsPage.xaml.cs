@@ -22,7 +22,7 @@ namespace Forbbiden.Client.view
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendRequestsPage));
         private readonly ProfileManagerClient ProfileManager;
         private readonly FriendsManagerClient FriendsClient;
-        private readonly string ErrorTitle = Properties.Langs.Resources.error;
+        private readonly string ErrorTitle = Properties.Resources.error;
 
         public FriendRequestsPage()
         {
@@ -114,7 +114,7 @@ namespace Forbbiden.Client.view
             else
             {
                 string title = ErrorTitle;
-                string message = Properties.Langs.Resources.unexpected_error;
+                string message = Properties.Resources.unexpected_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
         }
@@ -148,7 +148,7 @@ namespace Forbbiden.Client.view
             else
             {
                 string title = ErrorTitle;
-                string message = Properties.Langs.Resources.unexpected_error;
+                string message = Properties.Resources.unexpected_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
         }
@@ -237,14 +237,14 @@ namespace Forbbiden.Client.view
 
                 if (requestStatus)
                 {
-                    string title = Properties.Langs.Resources.friend_request_sent_title;
-                    string message = Properties.Langs.Resources.friend_request_sent_message + friendUsername;
+                    string title = Properties.Resources.friend_request_sent_title;
+                    string message = Properties.Resources.friend_request_sent_message + friendUsername;
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 }
                 else
                 {
-                    string title = Properties.Langs.Resources.error;
-                    string message = Properties.Langs.Resources.friend_request_not_sent;
+                    string title = Properties.Resources.error;
+                    string message = Properties.Resources.friend_request_not_sent;
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 }
             }

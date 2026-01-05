@@ -22,6 +22,11 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         bool DeleteMatch(int matchId);
+        [OperationContract]
+        string GetInviteCode(int matchId);
+
+        [OperationContract]
+        bool ValidateInvite(int matchId, string inviteCode);
     }
 
     [DataContract]

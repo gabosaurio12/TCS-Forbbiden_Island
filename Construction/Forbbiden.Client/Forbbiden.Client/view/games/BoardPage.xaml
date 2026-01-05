@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Forbbiden.Client.view.games"
       xmlns:controls="clr-namespace:Forbbiden.Client.view.games;assembly=Forbbiden.Client"
-      xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
+      xmlns:language="clr-namespace:Forbbiden.Client.Properties"
       mc:Ignorable="d" 
       Title="Board">
 

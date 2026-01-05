@@ -22,8 +22,8 @@ namespace Forbbiden.Client.logic.board.states
 
         private void OpenNotYourTurnNotification()
         {
-            string title = Properties.Langs.Resources.not_your_turn_title;
-            string message = Properties.Langs.Resources.not_your_turn_message;
+            string title = Properties.Resources.not_your_turn_title;
+            string message = Properties.Resources.not_your_turn_message;
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(Context.Board));
         }
         public void OnCaptureTreasureClicked()

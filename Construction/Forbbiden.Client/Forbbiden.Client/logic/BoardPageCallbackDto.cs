@@ -1,13 +1,13 @@
-﻿using Forbbiden.Client.view.games;
+﻿using Forbbiden.Client.model;
 
 namespace Forbbiden.Client.logic
 {
     public class BoardPageCallbackDto
     {
-        public BoardPage Board { get; }
-        public string[] PlayersUsernames { get; }
+        public BoardPageDto Board { get; set; }
+        public string[] PlayersUsernames { get; set; }
 
-        public BoardPageCallbackDto(BoardPage boardPage, string[] usernames)
+        public BoardPageCallbackDto(BoardPageDto boardPage, string[] usernames)
         {
             Board = boardPage;
             PlayersUsernames = usernames;

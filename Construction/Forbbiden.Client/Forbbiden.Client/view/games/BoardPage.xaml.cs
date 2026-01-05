@@ -28,7 +28,7 @@ namespace Forbbiden.Client.view.games
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(BoardPage));
 
-        public readonly BoardStateContext StateContext;
+        public BoardStateContext StateContext { get; set; }
         private int PendingTreasureDraws;
 
         public UserControlTile CurrentTile { get; set; }
@@ -36,7 +36,7 @@ namespace Forbbiden.Client.view.games
         public int ActionsRemain { get; set; } = 3;
         public int TreasuresCaptured { get; set; } = 0;
 
-        private readonly List<Card> PlayerCards;
+        private List<Card> PlayerCards;
         public List<Card> TreasureStack { get; set; }
         public List<Card> TreasureDiscardStack { get; set; }
         public List<Card> FloodStack { get; set; }
@@ -48,23 +48,17 @@ namespace Forbbiden.Client.view.games
         public int ParkingCardCounter { get; set; } = 0;
         public int WaterLevelCount { get; set; } = 0;
 
-        private readonly string ImagesPath;
-        private readonly string CardsImagesPath;
+        private string ImagesPath;
+        private string CardsImagesPath;
 
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
-
-            StateContext = new BoardStateContext(this);
-
-            string projectDir = ViewUtils.GetProjectDir();
-            ImagesPath = System.IO.Path.Combine(
-                projectDir, "Images");
-            CardsImagesPath = System.IO.Path.Combine(
-                projectDir, ImagesPath, "cards");
+            
+            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username); 
+            InitAttributes();
 
             BoardManagerClient boardClient = new BoardManagerClient();
-            PlayerCards = new List<Card>();
             TreasureStack = boardClient.GetTreasureCards().ToList();
             FloodStack = boardClient.GetFloodCards().ToList();
             TreasureDiscardStack = new List<Card>();
@@ -74,9 +68,31 @@ namespace Forbbiden.Client.view.games
             Focusable = true;
             Focus();
 
+            InitBoardPage(match);
             BoardControl.TileClickedOnBoard += OnTileClickedFromBoard;
 
-            InitBoardPage(match);
+        }
+
+        public BoardPage()
+        {
+            InitializeComponent();
+
+            InitAttributes();
+
+            PlayerLogic.MatchBoardPage = this;
+        }
+
+        private void InitAttributes()
+        {
+            StateContext = new BoardStateContext(this);
+
+            string projectDir = ViewUtils.GetProjectDir();
+            ImagesPath = System.IO.Path.Combine(
+                projectDir, "Images");
+            CardsImagesPath = System.IO.Path.Combine(
+                projectDir, ImagesPath, "cards");
+
+            PlayerCards = new List<Card>();
         }
 
         private void InitBoardPage(MatchManager.Match match)
@@ -141,8 +157,8 @@ namespace Forbbiden.Client.view.games
 
         public void NotifyNoActionsRemain()
         {
-            string title = Properties.Langs.Resources.actions_left;
-            string message = Properties.Langs.Resources.no_more_actions;
+            string title = Properties.Resources.actions_left;
+            string message = Properties.Resources.no_more_actions;
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
         }
 
@@ -204,8 +220,8 @@ namespace Forbbiden.Client.view.games
             }
             else
             {
-                string title = Properties.Langs.Resources.not_treasure_tile_title;
-                string message = Properties.Langs.Resources.not_treasure_tile;
+                string title = Properties.Resources.not_treasure_tile_title;
+                string message = Properties.Resources.not_treasure_tile;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
         }
@@ -274,16 +290,16 @@ namespace Forbbiden.Client.view.games
 
         public void NotifyWin()
         {
-            string title = Properties.Langs.Resources.win_title;
-            string message = Properties.Langs.Resources.win_message;
+            string title = Properties.Resources.win_title;
+            string message = Properties.Resources.win_message;
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             NavigationService?.Navigate(new MainPage());
         }
 
         public void NotifyLoose()
         {
-            string title = Properties.Langs.Resources.game_over;
-            string message = Properties.Langs.Resources.game_over_message;
+            string title = Properties.Resources.game_over;
+            string message = Properties.Resources.game_over_message;
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
 
             NavigationService?.Navigate(new MainPage());
@@ -377,8 +393,8 @@ namespace Forbbiden.Client.view.games
             {
                 Log.Error("BoardPage.CaptureTreasure", new InvalidOperationException(
                     "Unexpected difference between treasure card counter and player's card hand"));
-                string title = Properties.Langs.Resources.not_enough_treasure_cards_title;
-                string message = Properties.Langs.Resources.not_enough_treasure_cards;
+                string title = Properties.Resources.not_enough_treasure_cards_title;
+                string message = Properties.Resources.not_enough_treasure_cards;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
         }
@@ -396,8 +412,8 @@ namespace Forbbiden.Client.view.games
 
         private void EnterEmergencyMoveState()
         {
-            string title = Properties.Langs.Resources.emergency_move_title;
-            string message = Properties.Langs.Resources.emergency_move;
+            string title = Properties.Resources.emergency_move_title;
+            string message = Properties.Resources.emergency_move;
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
 
             StateContext.EnterEmergencyMoveState();
@@ -450,7 +466,7 @@ namespace Forbbiden.Client.view.games
 
         private void PickFloodCard()
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < WaterLevelCount; i++)
             {
                 int minRand = 0;
                 int maxRand = FloodStack.Count - 1;
@@ -469,6 +485,7 @@ namespace Forbbiden.Client.view.games
                 FloodStack.Remove(floodCard);
                 FloodDiscardStack.Add(floodCard);
             }
+            StateContext.EndTurnAndResetTiles();
         }
 
         private void PickTreasureCard()

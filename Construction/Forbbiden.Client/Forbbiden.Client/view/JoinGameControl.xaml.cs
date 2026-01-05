@@ -1,6 +1,8 @@
-﻿using Forbbiden.Client.GameManager; 
+﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.view.info;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +43,8 @@ namespace Forbbiden.Client.view
                     int playersCount = 0;
                     try
                     {
-                        if (m.Players != null)
-                        {
-                            var coll = m.Players as System.Collections.ICollection;
-                            if (coll != null) playersCount = coll.Count;
-                            else playersCount = m.Players.Count(); 
-                        }
+                        if (m.Players is System.Collections.ICollection coll) playersCount = coll.Count;
+                        else if (m.Players != null) playersCount = m.Players.Count();
                     }
                     catch { playersCount = 0; }
 
@@ -56,23 +54,37 @@ namespace Forbbiden.Client.view
                     {
                         MatchId = m.MatchId,
                         MatchName = m.MatchName,
-                        RoomName = !string.IsNullOrWhiteSpace(m.MatchName) ? m.MatchName : $"Room {m.MatchId}",
-                        HostName = m.HostUsername ?? "Unknown",
+                        RoomName = !string.IsNullOrWhiteSpace(m.MatchName)
+                            ? m.MatchName
+                            : string.Format(Properties.Resources.room_default, m.MatchId),
+                        HostName = string.IsNullOrEmpty(m.HostUsername) ? Properties.Resources.host_unknown : m.HostUsername,
                         PlayersInfo = $"{playersCount}/{capacity}",
                         CurrentPlayers = playersCount,
                         Capacity = capacity,
-                        Difficulty = m.Difficulty ?? "Normal",
-                        Visibility = m.Visibility ?? "Public",
-                        LockIcon = (m.Visibility ?? "Public").Equals("Private", StringComparison.OrdinalIgnoreCase) ? "/Images/lock.png" : "/Images/unlock.png"
+                        Difficulty = m.Difficulty ?? Properties.Resources.difficulty_normal,
+                        Visibility = m.Visibility ?? Properties.Resources.visibility_public_key,
+                        LockIcon = (m.Visibility ?? Properties.Resources.visibility_public_key)
+                            .Equals(Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase)
+                            ? "/Images/lock.png" : "/Images/unlock.png",
+                        VisibilityText = (m.Visibility ?? Properties.Resources.visibility_public_key)
+                            .Equals(Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase)
+                            ? Properties.Resources.visibility_private
+                            : Properties.Resources.visibility_public,
+                        VisibilityColor = (m.Visibility ?? Properties.Resources.visibility_public_key)
+                            .Equals(Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase)
+                            ? Brushes.IndianRed : Brushes.SeaGreen
                     };
                 }).ToList();
 
                 MatchList.ItemsSource = allMatches;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar las partidas: {ex.Message}",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    string.Format(Properties.Resources.error_loading_matches, ex.Message),
+                    Properties.Resources.error_title,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
             finally
             {
@@ -97,11 +109,11 @@ namespace Forbbiden.Client.view
             MatchList.ItemsSource = filtered;
         }
 
-
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             LoadMatches();
         }
+
 
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
@@ -113,8 +125,8 @@ namespace Forbbiden.Client.view
             if (currentPlayer == null || currentPlayer.PlayerId == -1)
             {
                 MessageBox.Show(
-                    "Debes iniciar sesión para unirte a una partida.",
-                    "Advertencia",
+                    Properties.Resources.join_need_login,
+                    Properties.Resources.warning_title,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -123,8 +135,52 @@ namespace Forbbiden.Client.view
 
             if (match.CurrentPlayers >= match.Capacity)
             {
-                MessageBox.Show("La partida está llena.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                var wnd = new NotificationWindow(
+                    Properties.Resources.join_full_title,
+                    Properties.Resources.join_full_message);
+                wnd.Owner = Window.GetWindow(this);
+                wnd.ShowDialog();
                 return;
+            }
+
+            // Validación de código de invitación si es privada
+            bool isPrivate = string.Equals(match.Visibility, Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase);
+            string inviteCode = null;
+            if (isPrivate)
+            {
+                var codeWindow = new InviteCodeWindow();
+                if (codeWindow.ShowDialog() == true)
+                {
+                    inviteCode = codeWindow.Code;
+                }
+                else
+                {
+                    return; // canceló
+                }
+
+                var mClient = new MatchManagerClient();
+                bool ok = false;
+                try
+                {
+                    ok = await mClient.ValidateInviteAsync(match.MatchId, inviteCode);
+                }
+                catch (Exception ex)
+                {
+                    //falta
+                }
+                finally
+                {
+                    try { mClient.Close(); } catch { mClient.Abort(); }
+                }
+
+                if (!ok)
+                {
+                    ViewUtils.OpenNotificationWindow(
+                        Properties.Resources.invite_invalid_title,
+                        Properties.Resources.invite_invalid_message,
+                        Window.GetWindow(this));
+                    return;
+                }
             }
 
             string username = currentPlayer.PlayerUsername;
@@ -141,7 +197,7 @@ namespace Forbbiden.Client.view
                         avatarFileName = System.IO.Path.GetFileName(avatarPath);
                     }
                 }
-                catch { /* no crítico */ }
+                catch { }
 
                 var callback = new GameServiceCallback();
                 var context = new InstanceContext(callback);
@@ -157,12 +213,11 @@ namespace Forbbiden.Client.view
 
                 if (!joined)
                 {
-                    MessageBox.Show(
-                        "No fue posible unirse a la partida.",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
+                    var wnd = new NotificationWindow(
+                        Properties.Resources.join_banned_title,
+                        Properties.Resources.join_banned_message);
+                    wnd.Owner = Window.GetWindow(this);
+                    wnd.ShowDialog();
                     return;
                 }
 
@@ -173,15 +228,13 @@ namespace Forbbiden.Client.view
                     callback
                 );
 
-                NavigationService
-                    .GetNavigationService(this)?
-                    .Navigate(lobbyPage);
+                NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    $"Error al unirse a la partida: {ex.Message}",
-                    "Error",
+                    string.Format(Properties.Resources.join_error, ex.Message),
+                    Properties.Resources.error_title,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
                 );
@@ -194,22 +247,22 @@ namespace Forbbiden.Client.view
                 }
             }
         }
-    }
 
-    public class MatchItem
-    {
-        public int MatchId { get; set; }
-        public string MatchName { get; set; }
-        public string RoomName { get; set; }
-        public string HostName { get; set; }
-        public string PlayersInfo { get; set; }
-        public int CurrentPlayers { get; set; }
-        public int Capacity { get; set; }
-        public string Difficulty { get; set; }
-        public string Visibility { get; set; }
-        public string LockIcon { get; set; }
+        public class MatchItem
+        {
+            public int MatchId { get; set; }
+            public string MatchName { get; set; }
+            public string RoomName { get; set; }
+            public string HostName { get; set; }
+            public string PlayersInfo { get; set; }
+            public int CurrentPlayers { get; set; }
+            public int Capacity { get; set; }
+            public string Difficulty { get; set; }
+            public string Visibility { get; set; }
+            public string LockIcon { get; set; }
 
-        public string VisibilityText => string.Equals(Visibility, "Private", StringComparison.OrdinalIgnoreCase) ? "Privada" : "Pública";
-        public Brush VisibilityColor => string.Equals(Visibility, "Private", StringComparison.OrdinalIgnoreCase) ? Brushes.IndianRed : Brushes.SeaGreen;
+            public string VisibilityText { get; set; }
+            public Brush VisibilityColor { get; set; }
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forbbiden.Client.view.info"
         xmlns:control="clr-namespace:Forbbiden.Client.Controls"
-        xmlns:language ="clr-namespace:Forbbiden.Client.Properties.Langs"
+        xmlns:language ="clr-namespace:Forbbiden.Client.Properties"
         mc:Ignorable="d"
         Title="VerificationWIndow" Height="400" Width="700"
         WindowStyle="None"

@@ -1,34 +1,39 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.utils;
+using log4net;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.ServiceModel;
 
 namespace Forbbiden.Server.logic
 {
-    [ServiceBehavior(
-        InstanceContextMode = InstanceContextMode.Single,
-        ConcurrencyMode = ConcurrencyMode.Multiple
-    )]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class GameManager : IGameManager
     {
-        // Callbacks por sala (matchId -> callbacks)
+        private readonly Dictionary<string, HashSet<string>> roomBans = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
+        private static readonly ILog log = LogManager.GetLogger(typeof(GameManager));
         private readonly Dictionary<string, List<IGameManagerCallback>> rooms = new Dictionary<string, List<IGameManagerCallback>>();
-
-        // PlayerInfo por sala (mantiene posición y avatar)
         private readonly Dictionary<string, List<PlayerInfo>> roomPlayers = new Dictionary<string, List<PlayerInfo>>();
-
-        // Callback => matchId (para limpieza)
         private readonly Dictionary<IGameManagerCallback, string> callbackToRoom = new Dictionary<IGameManagerCallback, string>();
-
-        // Ready states por sala: matchId -> set of usernames ready
         private readonly Dictionary<string, HashSet<string>> matchReady = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
-
         private readonly object syncRoot = new object();
+        private readonly string connectionString;
 
-        // ------------------- JoinGame -------------------
+        public GameManager()
+        {
+            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
+        }
+
         public bool JoinGame(string matchId, string playerName, byte[] avatarBytes, string avatarFileName)
         {
+            if (roomBans.TryGetValue(matchId, out var bans) && bans.Contains(playerName))
+                return false;
+
+            int playerIdFromDb = ResolveOrCreatePlayerId(matchId, playerName);
+            if (playerIdFromDb == int.MinValue) return false;
+
             var callback = OperationContext.Current.GetCallbackChannel<IGameManagerCallback>();
             lock (syncRoot)
             {
@@ -39,32 +44,28 @@ namespace Forbbiden.Server.logic
                     matchReady[matchId] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 }
 
-                // registrar callback si no está
                 if (!rooms[matchId].Contains(callback))
                     rooms[matchId].Add(callback);
 
-                // Evitar duplicados por username; si ya existe no agregamos duplicado
                 var existing = roomPlayers[matchId].FirstOrDefault(p => string.Equals(p.PlayerUsername, playerName, StringComparison.OrdinalIgnoreCase));
                 if (existing == null)
                 {
                     var pos = roomPlayers[matchId].Count;
                     var pinfo = new PlayerInfo
                     {
-                        PlayerId = 0,
+                        PlayerId = playerIdFromDb,
                         PlayerUsername = playerName,
                         PlayerName = playerName,
-                        IsHost = (pos == 0), // el primero es host por convención (ajusta si necesitas otra lógica)
+                        IsHost = (pos == 0),
                         Position = pos,
                         AvatarBytes = (avatarBytes != null && avatarBytes.Length > 0) ? avatarBytes : null,
                         AvatarFileName = string.IsNullOrEmpty(avatarFileName) ? null : avatarFileName
                     };
-
-                    // añadir
                     roomPlayers[matchId].Add(pinfo);
                 }
                 else
                 {
-                    // reconexión / actualización: actualizamos avatar si llega
+                    existing.PlayerId = playerIdFromDb;
                     if (avatarBytes != null && avatarBytes.Length > 0)
                     {
                         existing.AvatarBytes = avatarBytes;
@@ -80,43 +81,39 @@ namespace Forbbiden.Server.logic
                 callbackToRoom[callback] = matchId;
             }
 
-            // broadcast con snapshot
             BroadcastPlayersUpdate(matchId);
             return true;
         }
-
-        // ------------------- LeaveGame -------------------
         public void LeaveGame(string matchId, string playerName)
         {
+            int? playerId = null;
             var callback = OperationContext.Current.GetCallbackChannel<IGameManagerCallback>();
             lock (syncRoot)
             {
                 if (!rooms.ContainsKey(matchId)) return;
 
-                // remover callback
                 if (rooms[matchId].Contains(callback))
                     rooms[matchId].Remove(callback);
 
                 if (callbackToRoom.ContainsKey(callback))
                     callbackToRoom.Remove(callback);
 
-                // remover player del roomPlayers
-                var removedCount = roomPlayers[matchId].RemoveAll(p => string.Equals(p.PlayerUsername, playerName, StringComparison.OrdinalIgnoreCase));
-
-                // limpiar ready si estaba marcado
-                if (matchReady.TryGetValue(matchId, out var set) && set.Remove(playerName))
+                var toRemove = roomPlayers[matchId].FirstOrDefault(p => string.Equals(p.PlayerUsername, playerName, StringComparison.OrdinalIgnoreCase));
+                if (toRemove != null)
                 {
-                    // notificar a los demás que este jugador ya no está listo
-                    BroadcastReadyState(matchId, playerName, false);
+                    playerId = toRemove.PlayerId;
+                    roomPlayers[matchId].Remove(toRemove);
                 }
 
-                // reindex positions
+                if (matchReady.TryGetValue(matchId, out var set))
+                    set.Remove(playerName);
+
                 if (roomPlayers[matchId].Count == 0)
                 {
-                    // si ya no quedan jugadores limpiamos estructuras
                     rooms.Remove(matchId);
                     roomPlayers.Remove(matchId);
                     matchReady.Remove(matchId);
+                    roomBans.Remove(matchId);
                 }
                 else
                 {
@@ -125,10 +122,12 @@ namespace Forbbiden.Server.logic
                 }
             }
 
+            if (playerId.HasValue)
+                RemovePlayerFromDb(matchId, playerId.Value);
+
             BroadcastPlayersUpdate(matchId);
         }
 
-        // ------------------- SendChatMessage -------------------
         public void SendChatMessage(string matchId, string playerName, string message)
         {
             List<IGameManagerCallback> toNotify;
@@ -141,11 +140,10 @@ namespace Forbbiden.Server.logic
             foreach (var client in toNotify)
             {
                 try { client.OnChatMessage(playerName, message); }
-                catch { /* ignorar client muerto aquí; cleanup en BroadcastPlayersUpdate */ }
+                catch { }
             }
         }
 
-        // ------------------- GetPlayers -------------------
         public List<PlayerInfo> GetPlayers(string matchId)
         {
             lock (syncRoot)
@@ -153,7 +151,6 @@ namespace Forbbiden.Server.logic
                 if (!roomPlayers.ContainsKey(matchId))
                     return new List<PlayerInfo>();
 
-                // devolver copia
                 return roomPlayers[matchId].Select(p => new PlayerInfo
                 {
                     PlayerId = p.PlayerId,
@@ -167,7 +164,6 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        // ------------------- SetReady -------------------
         public void SetReady(string matchId, string username, bool ready)
         {
             if (string.IsNullOrEmpty(matchId) || string.IsNullOrEmpty(username)) return;
@@ -182,10 +178,8 @@ namespace Forbbiden.Server.logic
                 else set.Remove(username);
             }
 
-            // notificar cambio a todos en la sala (UNA vez)
             BroadcastReadyState(matchId, username, ready);
 
-            // comprobar auto-start: si sala está llena y todos listos -> iniciar
             int currentPlayers = 0;
             int readyCount = 0;
             lock (syncRoot)
@@ -198,18 +192,14 @@ namespace Forbbiden.Server.logic
 
             if (currentPlayers > 0 && readyCount == currentPlayers)
             {
-                // iniciar partida automáticamente
                 BroadcastMatchStarting(matchId);
-                // Si quieres, aquí además puedes marcar la match como started y limpiar estructuras
             }
         }
 
-        // ------------------- StartMatch -------------------
         public void StartMatch(string matchId, string username)
         {
             if (string.IsNullOrEmpty(matchId) || string.IsNullOrEmpty(username)) return;
 
-            // validar que el username es host de la sala (según roomPlayers)
             bool isHost = false;
             int currentPlayers = 0;
             int readyCount = 0;
@@ -229,19 +219,12 @@ namespace Forbbiden.Server.logic
 
             if (!isHost) return;
 
-            // política: permitir Start sólo si todos los presentes están listos
             if (currentPlayers > 0 && readyCount == currentPlayers)
             {
                 BroadcastMatchStarting(matchId);
-                // transición server-side if needed
-            }
-            else
-            {
-                // no permitido: host intentó iniciar sin que todos estén listos -> ignorar
             }
         }
 
-        // ------------------- Broadcast helpers -------------------
         private void BroadcastPlayersUpdate(string matchId)
         {
             List<IGameManagerCallback> toNotify;
@@ -356,5 +339,103 @@ namespace Forbbiden.Server.logic
                 }
             }
         }
-    }
-}
+
+        private int ResolveOrCreatePlayerId(string matchId, string username)
+        {
+            if (!int.TryParse(matchId, out int mid)) return int.MinValue;
+            try
+            {
+                using (var db = new Forbbiden_FEIEntities(connectionString))
+                {
+                    var player = db.Player.FirstOrDefault(p => p.player_username == username);
+                    int playerId;
+                    if (player != null)
+                    {
+                        playerId = player.player_id;
+                    }
+                    else
+                    {
+                        int minGuestId = db.match_players
+                            .Where(mp => mp.match_id == mid && mp.player_id < 0)
+                            .Select(mp => mp.player_id)
+                            .DefaultIfEmpty(0)
+                            .Min();
+                        playerId = minGuestId - 1;
+                    }
+
+                    bool exists = db.match_players.Any(mp => mp.match_id == mid && mp.player_id == playerId);
+                    if (!exists)
+                    {
+                        db.match_players.Add(new match_players
+                        {
+                            match_id = mid,
+                            player_id = playerId
+                        });
+                        db.SaveChanges();
+                    }
+
+                    return playerId;
+                }
+            }
+            catch (EntityException ex)
+            {
+                log.Error("ResolveOrCreatePlayerId DB error", ex);
+                return int.MinValue;
+            }
+            catch (Exception ex)
+            {
+                log.Error("ResolveOrCreatePlayerId error", ex);
+                return int.MinValue;
+            }
+        }
+
+        private void RemovePlayerFromDb(string matchId, int playerId)
+        {
+            if (!int.TryParse(matchId, out int mid)) return;
+            try
+            {
+                using (var db = new Forbbiden_FEIEntities(connectionString))
+                {
+                    var rows = db.match_players.Where(mp => mp.match_id == mid && mp.player_id == playerId).ToList();
+                    if (rows.Any())
+                    {
+                        db.match_players.RemoveRange(rows);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (EntityException ex)
+            {
+                log.Error("RemovePlayerFromDb DB error", ex);
+            }
+            catch (Exception ex)
+            {
+                log.Error("RemovePlayerFromDb error", ex);
+            }
+        }
+
+        public void KickPlayer(string matchId, string hostUsername, string targetUsername)
+        {
+            if (string.IsNullOrWhiteSpace(matchId) ||
+                string.IsNullOrWhiteSpace(hostUsername) ||
+                string.IsNullOrWhiteSpace(targetUsername))
+                return;
+
+            lock (syncRoot)
+            {
+                if (!roomPlayers.ContainsKey(matchId)) return;
+
+                var players = roomPlayers[matchId];
+                var host = players.FirstOrDefault(p => p.IsHost);
+                if (host == null || !string.Equals(host.PlayerUsername, hostUsername, StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                if (!roomBans.ContainsKey(matchId))
+                    roomBans[matchId] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                roomBans[matchId].Add(targetUsername);
+            }
+
+            LeaveGame(matchId, targetUsername);
+        }
+    }       
+} 

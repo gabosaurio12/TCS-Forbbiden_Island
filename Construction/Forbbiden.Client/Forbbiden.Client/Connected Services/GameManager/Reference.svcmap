@@ -22,10 +22,10 @@
     <MetadataSource Address="net.tcp://192.168.1.77:9030/GameManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="dfa236a9-0927-4674-9719-b878dff8170c" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="f20fdbf5-5faa-44c2-a775-7c21d3fd6833" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="ae89246d-0900-4ff3-927f-ffbc0993bcdc" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="fb550c5f-798f-4ec9-94cb-88c6cb245e86" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
+    <MetadataFile FileName="service11.wsdl" MetadataType="Wsdl" ID="d30ffe03-a0f7-40f3-aab8-a470764a77b9" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
+    <MetadataFile FileName="service22.xsd" MetadataType="Schema" ID="dbd0daaa-14d9-435c-9807-e1d275cab014" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
+    <MetadataFile FileName="service23.xsd" MetadataType="Schema" ID="8d098eb7-15a0-40e8-9fdd-7c765c25fc36" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts11.xsd" MetadataType="Schema" ID="9200a290-c9a6-408a-9a1c-742ddf794c10" SourceId="1" SourceUrl="net.tcp://192.168.1.77:9030/GameManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

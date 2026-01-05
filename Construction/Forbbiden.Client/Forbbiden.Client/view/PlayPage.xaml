@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:language="clr-namespace:Forbbiden.Client.Properties.Langs"
+      xmlns:language="clr-namespace:Forbbiden.Client.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920">
 
@@ -12,40 +12,86 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/ButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="PrimaryColor" Color="#3CB7FF"/>
+            <SolidColorBrush x:Key="PrimaryDark" Color="#2894CC"/>
+            <SolidColorBrush x:Key="HeaderText" Color="#0B2F4A"/>
+            <SolidColorBrush x:Key="CardBg" Color="#F7FBFF"/>
+
+            <!-- Botón de cabecera -->
+            <Style x:Key="HeaderButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource PrimaryDark}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontFamily" Value="{StaticResource IrishGrover}"/>
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="12"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Tabs -->
+            <Style x:Key="TabButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource IrishGrover}"/>
+                <Setter Property="FontSize" Value="28"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Background" Value="#E8F5FF"/>
+                <Setter Property="Foreground" Value="#0B2F4A"/>
+                <Setter Property="BorderBrush" Value="#C7E4FF"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="Height" Value="80"/>
+            </Style>
         </ResourceDictionary>
     </Page.Resources>
 
     <Viewbox Stretch="Uniform">
-        <Grid Width="1920" Height="1080" Background="White">
+        <Grid Width="1920" Height="1080" Background="{StaticResource CardBg}">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="125"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
 
             <!-- Header -->
-            <DockPanel Grid.Row="0" Background="#3CB7FF" LastChildFill="True">
-                <Button Content="&lt;" Width="80" Height="80" FontSize="36" Margin="10" DockPanel.Dock="Left" Click="BackButton_Click"/>
+            <DockPanel Grid.Row="0" Background="{StaticResource PrimaryColor}" LastChildFill="True" Margin="0,0,0,8">
+                <Button Content="⟵"
+                        Width="80" Height="80"
+                        Margin="12"
+                        Style="{StaticResource HeaderButtonStyle}"
+                        DockPanel.Dock="Left"
+                        Click="BackButton_Click"/>
 
                 <Button Content="{x:Static language:Resources.friends}" 
-                        Background="Gold" Width="250" Height="80" FontSize="28"
-                        DockPanel.Dock="Right" Margin="10" Click="FriendsButton_Click"/>
+                        Width="250" Height="80"
+                        Margin="12"
+                        Style="{StaticResource HeaderButtonStyle}"
+                        DockPanel.Dock="Right"
+                        Click="FriendsButton_Click"/>
 
-                <Grid>
-                    <TextBlock Text="{x:Static language:Resources.play}"
-                               FontSize="64"
-                               FontWeight="Bold"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left" Margin="789,0,0,0"/>
-                </Grid>
+                <TextBlock Text="{x:Static language:Resources.play}"
+                           FontSize="56"
+                           FontFamily="{StaticResource IrishGrover}"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource HeaderText}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
             </DockPanel>
 
             <!-- Main content -->
             <Grid Grid.Row="1" Margin="30">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="311*"/>
-                    <ColumnDefinition Width="309*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
@@ -53,10 +99,20 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Orientation="Horizontal">
-                    <Button x:Name="HostButton" Content="{x:Static language:Resources.host_game}" Width="927" Height="80" FontSize="28" 
-                            Background="LightGray" Click="HostButton_Click" IsDefault="True" Style="{StaticResource ButtonStyle}"/>
-                    <Button x:Name="OnlineButton" Content="{x:Static language:Resources.online}" Width="919" Height="80" FontSize="28"
-                            Background="Gainsboro" Click="OnlineButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="HostButton"
+                            Content="{x:Static language:Resources.host_game}"
+                            Width="927"
+                            Style="{StaticResource TabButtonStyle}"
+                            Background="#D5EEFF"
+                            BorderBrush="#6DBDFF"
+                            Click="HostButton_Click"
+                            IsDefault="True"/>
+                    <Button x:Name="OnlineButton"
+                            Content="{x:Static language:Resources.online}"
+                            Width="919"
+                            Style="{StaticResource TabButtonStyle}"
+                            Margin="10,0,0,0"
+                            Click="OnlineButton_Click"/>
                 </StackPanel>
 
                 <ContentControl x:Name="TabContent" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>

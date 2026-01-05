@@ -6,7 +6,6 @@ namespace Forbbiden.Contracts
     [ServiceContract(CallbackContract = typeof(IGameManagerCallback))]
     public interface IGameManager
     {
-
         [OperationContract]
         bool JoinGame(string matchId, string playerName, byte[] avatarBytes, string avatarFileName);
 
@@ -16,7 +15,6 @@ namespace Forbbiden.Contracts
         [OperationContract]
         void SendChatMessage(string matchId, string playerName, string message);
 
-
         [OperationContract]
         List<PlayerInfo> GetPlayers(string matchId);
 
@@ -25,11 +23,13 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         void StartMatch(string matchId, string username);
+        
+        [OperationContract]
+        void KickPlayer(string matchId, string hostUsername, string targetUsername);
     }
 
     public interface IGameManagerCallback
     {
-
         [OperationContract(IsOneWay = true)]
         void OnPlayersUpdated(List<PlayerInfo> players);
 
