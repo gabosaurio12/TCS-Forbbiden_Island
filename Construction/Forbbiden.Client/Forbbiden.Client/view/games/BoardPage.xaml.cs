@@ -54,7 +54,7 @@ namespace Forbbiden.Client.view.games
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
-
+            InitGif();
             InitAttributes();
 
             BoardManagerClient boardClient = new BoardManagerClient();
@@ -75,7 +75,7 @@ namespace Forbbiden.Client.view.games
         public BoardPage()
         {
             InitializeComponent();
-
+            InitGif();
             InitAttributes();
 
             PlayerLogic.MatchBoardPage = this;
@@ -96,7 +96,6 @@ namespace Forbbiden.Client.view.games
 
         private void InitBoardPage(MatchManager.Match match)
         {
-            InitGif();
             SetBoard();
             SetPlayersAvatars(match.Players.ToList());
 
@@ -483,6 +482,8 @@ namespace Forbbiden.Client.view.games
                 FloodStack.Remove(floodCard);
                 FloodDiscardStack.Add(floodCard);
             }
+
+            StateContext.EndTurnAndResetTiles();
         }
 
         private void PickTreasureCard()

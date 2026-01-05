@@ -213,20 +213,26 @@ namespace Forbbiden.Client.Controls
         public void SetAllTiles(List<TileDto> tiles)
         {
             var currentTiles = GetAllTilesFromGrid();
-            currentTiles.ForEach(tile =>
-            {
-                TileDto newTile = tiles.FirstOrDefault(t => t.Row == tile.Row && t.Column == tile.Col);
+            var tileLookup = currentTiles.ToDictionary(t => (t.Row, t.Col));
 
-                tile.TreasureCard = newTile.TreasureCard;
-                tile.Row = newTile.Row;
-                tile.Col = newTile.Column;
-                tile.IsTreasure = newTile.IsTreasure;
-                tile.IsFlood = newTile.IsFlood;
-                tile.IsLost = newTile.IsLost;
-                tile.IsEscapeTile = newTile.IsEscapeTile;
-                tile.ImageFileName = newTile.ImageFileName;
-                tile.SetTile(tile);
-            });
+            foreach (var dto in tiles)
+            {
+                if (!tileLookup.TryGetValue((dto.Row, dto.Column), out var tile))
+                {
+                    continue;
+                }
+             
+                tile.TreasureCard = dto.TreasureCard;
+                tile.IsTreasure = dto.IsTreasure;
+                tile.IsFlood = dto.IsFlood;
+                tile.IsLost = dto.IsLost;
+                tile.IsEscapeTile = dto.IsEscapeTile;
+                tile.ImageFileName = dto.ImageFileName;
+
+                var image = ViewUtils.GetBitmapImage(tile.ImageFileName);
+                tile.SetImage(image);
+                tile.ResetBorder();
+            }
         }
     }
 }
