@@ -2,6 +2,7 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.view.info;
+using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace Forbbiden.Client.view
 {
     public partial class JoinGameControl : UserControl
     {
-        private List<MatchItem> allMatches = new List<MatchItem>();
+        private static readonly ILog Log = LogManager.GetLogger(typeof(JoinGameControl));
+
+        private List<MatchItem> AllMatches = new List<MatchItem>();
 
         public JoinGameControl()
         {
@@ -80,26 +83,83 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    string.Format(Properties.Resources.error_loading_matches, ex.Message),
-                    Properties.Resources.error_title,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.loading_matches_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             finally
             {
-                if (matchClient != null)
-                {
-                    try { matchClient.Close(); } catch { matchClient.Abort(); }
-                }
+                CloseMatchClient(matchClient);
             }
         }
+
+        private MatchItem MapToMatchItem(Match match)
+        {
+            int playersCount = GetPlayersCount(match.Players);
+            int capacity = match.Capacity > 0 ? match.Capacity : 4;
+            string visibility = match.Visibility ?? "Public";
+
+            return new MatchItem
+            {
+                MatchId = match.MatchId,
+                MatchName = match.MatchName,
+                RoomName = !string.IsNullOrWhiteSpace(match.MatchName)
+                    ? match.MatchName
+                    : $"Room {match.MatchId}",
+
+                HostName = match.HostUsername ?? "Unknown",
+                PlayersInfo = $"{playersCount}/{capacity}",
+                CurrentPlayers = playersCount,
+                Capacity = capacity,
+                Difficulty = match.Difficulty ?? "Normal",
+                Visibility = visibility,
+                LockIcon = visibility.Equals("Private", StringComparison.OrdinalIgnoreCase)
+                    ? "/Images/lock.png"
+                    : "/Images/unlock.png"
+            };
+        }
+
+        public static void CloseMatchClient(MatchManagerClient client)
+        {
+            if (client == null)
+            {
+                return;
+            }
+
+            try
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+            catch
+            {
+                client.Abort();
+            }
+        }
+
+
+        private static int GetPlayersCount(MatchManager.PlayerInfo[] players)
+        {
+            if (players == null)
+            {
+                return 0;
+            }
+
+            return players.Count();
+        }
+
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string filter = (SearchBox.Text ?? "").Trim().ToLower();
 
-            var filtered = allMatches.Where(m =>
+            var filtered = AllMatches.Where(m =>
                 (!string.IsNullOrEmpty(m.RoomName) && m.RoomName.ToLower().Contains(filter)) ||
                 (!string.IsNullOrEmpty(m.HostName) && m.HostName.ToLower().Contains(filter)) ||
                 m.MatchId.ToString().Contains(filter) ||
@@ -122,14 +182,11 @@ namespace Forbbiden.Client.view
 
             var currentPlayer = ClientSession.GetPlayer();
 
-            if (currentPlayer == null || currentPlayer.PlayerId == -1)
+            if (currentPlayer.PlayerId == -1)
             {
-                MessageBox.Show(
-                    Properties.Resources.join_need_login,
-                    Properties.Resources.warning_title,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.unexpected_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 return;
             }
 
@@ -182,11 +239,21 @@ namespace Forbbiden.Client.view
                     return;
                 }
             }
+                string title = Properties.Langs.Resources.advice_title;
+                string message = Properties.Langs.Resources.match_is_full_advice_message;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                return;
+            }
+
+            var callback = new GameServiceCallback();
+            var context = new InstanceContext(callback);
+            var gameClient = new GameManagerClient(context);
 
             string username = currentPlayer.PlayerUsername;
 
-            MatchManagerClient matchClient = null;
-            try
+            bool joined = await JoinToAMatch(match, currentPlayer, gameClient);
+
+            if (!joined)
             {
                 string avatarFileName = null;
                 try
@@ -245,7 +312,20 @@ namespace Forbbiden.Client.view
                 {
                     try { matchClient.Close(); } catch { matchClient.Abort(); }
                 }
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.join_match_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                return;
             }
+
+            var lobbyPage = new LobbyPage(
+                match.MatchId,
+                username,
+                gameClient,
+                callback
+            );
+
+            NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
         }
 
         public class MatchItem

@@ -728,5 +728,64 @@
   </data>
 	<data name="invite_code_not_available" xml:space="preserve">
     <value>Not available</value>
+  <data name="advice_title" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="match_is_full_advice_message" xml:space="preserve">
+    <value>The match is full, you can't join</value>
+  </data>
+  <data name="join_match_error" xml:space="preserve">
+    <value>There was an error while joining to the match</value>
+  </data>
+  <data name="game_starting_title" xml:space="preserve">
+    <value>Game Start!</value>
+  </data>
+  <data name="game_starting_message" xml:space="preserve">
+    <value>The game is about to start, Get Ready!</value>
+  </data>
+  <data name="server_state_change_error" xml:space="preserve">
+    <value>System: Ready State could not be updated (server error)</value>
+  </data>
+  <data name="player_x_joined" xml:space="preserve">
+    <value>Joined the match</value>
+  </data>
+  <data name="system" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="player_x_disconnected" xml:space="preserve">
+    <value>Disconnected from the match</value>
+  </data>
+  <data name="chat_system_welcome" xml:space="preserve">
+    <value>System: Welcome to the lobby</value>
+  </data>
+  <data name="chat_error_sending_message" xml:space="preserve">
+    <value>Error sending message</value>
+  </data>
+  <data name="error_invalid_avatar" xml:space="preserve">
+    <value>Invalid avatar</value>
+  </data>
+  <data name="error_processing_image" xml:space="preserve">
+    <value>There was an error while processing the image</value>
+  </data>
+  <data name="error_uploading_avatar" xml:space="preserve">
+    <value>There was an error while uploading the avatar</value>
+  </data>
+  <data name="error_processing_avatar" xml:space="preserve">
+    <value>There was an error while processing the avatar</value>
+  </data>
+  <data name="warning_login_permission" xml:space="preserve">
+    <value>You have to login to use this feature</value>
+  </data>
+  <data name="warning_room_char_limit" xml:space="preserve">
+    <value>The room name must be twenty characters tops</value>
+  </data>
+  <data name="error_creating_match" xml:space="preserve">
+    <value>There was an error while creating the match, try later or contact tech support</value>
+  </data>
+  <data name="error_match_created_not_joined" xml:space="preserve">
+    <value>The match was created but there was an error while connecting to the lobby</value>
+  </data>
+  <data name="error_server_timeout" xml:space="preserve">
+    <value>The server exceeded the response time</value>
   </data>
 </root>

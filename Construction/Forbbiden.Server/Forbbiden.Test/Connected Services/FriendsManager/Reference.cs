@@ -9,7 +9,321 @@
 
 namespace FriendsManager
 {
+    using System.Runtime.Serialization;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FriendRequest", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class FriendRequest : object
+    {
+        
+        private int ReceiverIDField;
+        
+        private int SenderIDField;
+        
+        private int StatusField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ReceiverID
+        {
+            get
+            {
+                return this.ReceiverIDField;
+            }
+            set
+            {
+                this.ReceiverIDField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SenderID
+        {
+            get
+            {
+                return this.SenderIDField;
+            }
+            set
+            {
+                this.SenderIDField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Status
+        {
+            get
+            {
+                return this.StatusField;
+            }
+            set
+            {
+                this.StatusField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Friendship", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class Friendship : object
+    {
+        
+        private FriendsManager.Player FriendField;
+        
+        private int PlayerIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FriendsManager.Player Friend
+        {
+            get
+            {
+                return this.FriendField;
+            }
+            set
+            {
+                this.FriendField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerID
+        {
+            get
+            {
+                return this.PlayerIDField;
+            }
+            set
+            {
+                this.PlayerIDField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class Player : object
+    {
+        
+        private FriendsManager.Friendship[] FriendsField;
+        
+        private int IsVerifiedField;
+        
+        private string PlayerAvatarPathField;
+        
+        private string PlayerEmailField;
+        
+        private int PlayerIdField;
+        
+        private string PlayerNameField;
+        
+        private string PlayerPasswordField;
+        
+        private string PlayerUsernameField;
+        
+        private FriendsManager.SocialMedia[] SocialMediaField;
+        
+        private int StatusField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FriendsManager.Friendship[] Friends
+        {
+            get
+            {
+                return this.FriendsField;
+            }
+            set
+            {
+                this.FriendsField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IsVerified
+        {
+            get
+            {
+                return this.IsVerifiedField;
+            }
+            set
+            {
+                this.IsVerifiedField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerAvatarPath
+        {
+            get
+            {
+                return this.PlayerAvatarPathField;
+            }
+            set
+            {
+                this.PlayerAvatarPathField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerEmail
+        {
+            get
+            {
+                return this.PlayerEmailField;
+            }
+            set
+            {
+                this.PlayerEmailField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId
+        {
+            get
+            {
+                return this.PlayerIdField;
+            }
+            set
+            {
+                this.PlayerIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerName
+        {
+            get
+            {
+                return this.PlayerNameField;
+            }
+            set
+            {
+                this.PlayerNameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerPassword
+        {
+            get
+            {
+                return this.PlayerPasswordField;
+            }
+            set
+            {
+                this.PlayerPasswordField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerUsername
+        {
+            get
+            {
+                return this.PlayerUsernameField;
+            }
+            set
+            {
+                this.PlayerUsernameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FriendsManager.SocialMedia[] SocialMedia
+        {
+            get
+            {
+                return this.SocialMediaField;
+            }
+            set
+            {
+                this.SocialMediaField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Status
+        {
+            get
+            {
+                return this.StatusField;
+            }
+            set
+            {
+                this.StatusField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SocialMedia", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class SocialMedia : object
+    {
+        
+        private int PlayerIdField;
+        
+        private string SocialLinkField;
+        
+        private int SocialMediaIdField;
+        
+        private string SocialMediaNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId
+        {
+            get
+            {
+                return this.PlayerIdField;
+            }
+            set
+            {
+                this.PlayerIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialLink
+        {
+            get
+            {
+                return this.SocialLinkField;
+            }
+            set
+            {
+                this.SocialLinkField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SocialMediaId
+        {
+            get
+            {
+                return this.SocialMediaIdField;
+            }
+            set
+            {
+                this.SocialMediaIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SocialMediaName
+        {
+            get
+            {
+                return this.SocialMediaNameField;
+            }
+            set
+            {
+                this.SocialMediaNameField = value;
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FriendsManager.IFriendsManager")]
@@ -25,11 +339,14 @@ namespace FriendsManager
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteFriendResponse")]
+        System.Threading.Tasks.Task<bool> DeleteFriendAsync(string friendUsername, string playerUsername);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername);
+        System.Threading.Tasks.Task<FriendsManager.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]
-        System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> GetFriendsByIDAsync(int playerID);
+        System.Threading.Tasks.Task<FriendsManager.Friendship[]> GetFriendsByIDAsync(int playerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -97,12 +414,17 @@ namespace FriendsManager
             return base.Channel.CancelFriendRequestAsync(senderUsername, receiverUsername);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername)
+        public System.Threading.Tasks.Task<bool> DeleteFriendAsync(string friendUsername, string playerUsername)
+        {
+            return base.Channel.DeleteFriendAsync(friendUsername, playerUsername);
+        }
+        
+        public System.Threading.Tasks.Task<FriendsManager.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername)
         {
             return base.Channel.GetFriendRequestsAsync(receiverUsername);
         }
         
-        public System.Threading.Tasks.Task<Forbbiden.Contracts.Friendship[]> GetFriendsByIDAsync(int playerID)
+        public System.Threading.Tasks.Task<FriendsManager.Friendship[]> GetFriendsByIDAsync(int playerID)
         {
             return base.Channel.GetFriendsByIDAsync(playerID);
         }
@@ -127,6 +449,7 @@ namespace FriendsManager
                 result.MaxBufferSize = int.MaxValue;
                 result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
                 result.MaxReceivedMessageSize = int.MaxValue;
+                result.Security.Mode = System.ServiceModel.SecurityMode.None;
                 return result;
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
@@ -136,7 +459,7 @@ namespace FriendsManager
         {
             if ((endpointConfiguration == EndpointConfiguration.NetTcpBinding_IFriendsManager))
             {
-                return new System.ServiceModel.EndpointAddress("net.tcp://localhost:8082/FriendsManager");
+                return new System.ServiceModel.EndpointAddress("net.tcp://192.168.100.15:8082/FriendsManager");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }

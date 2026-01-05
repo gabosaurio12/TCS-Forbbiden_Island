@@ -1,0 +1,12 @@
+
+== Aprendizajes de cada estudiante
+
+=== Gabriel Antonio González López
+
+Durante este proyecto considero que aprendí más sobre la metodología de desarrollo que sobre el uso de tecnologías en sí. Aunque era la primera vez que usaba .NET y SQL Server, mi mayor reto fue mantener una carga de trabajo constante, había días donde no tenía tanto tiempo para dedicarle las horas de trabajo necesarias al proyecto o el cansancio afectaba mi forma de pensar (lo que me llevaba a producir deuda técnica). 
+
+Considero que como estudiante es importante aprender a manejar esas cargas y administrar el tiempo para poder cumplir con las fechas de entrega (hubo un par que me atrasé o no cumplí con lo solicitado) y esto finalmente es entrenamiento para el ámbito profesional donde las fechas de entrega serán mucho más estrictas o aceleradas.
+
+En el aspecto técnico, aprendí a usar nuevas tecnologías y sobre todo a resolver problemas de incompatibilidad y entorno. Al ser usuario de Mac no podía instalar Visual Studio de manera nativa, por lo que tuve que usar una máquina virtual al principio y mediante docker instalar SQL Server en mi máquina física para con conectarme desde la máquina virtual con la IP de la máquina física, esto era complejo y conforme el proyecto avanzaba fue dejando de ser eficiente.
+
+Posteriormente aprendí a conectarme a la PC de mi casa en remoto mediante una VPN. Esta solución trajo nuevos retos como una red lenta, caídas de servicio provocando que se perdiera la conexión con la computadora pero, el objetivo siempre fue resolver y adaptarse a las condiciones.

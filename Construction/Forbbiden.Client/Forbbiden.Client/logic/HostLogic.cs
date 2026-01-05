@@ -21,14 +21,6 @@ namespace Forbbiden.Client.logic
             MatchNotificationsSingleton.Instance.OnTurnFinished += SendTurnNotificationToPlayer;
         }
 
-        public static void SubscribePlayers(List<PlayerInfo> players)
-        {
-            foreach (var player in players)
-            {
-                MatchNotificationsSingleton.Instance.Subscribe(player.PlayerUsername);
-            }
-        }
-
         public static void SetBoardPage(BoardPage page)
         {
             MatchBoardPage = page;

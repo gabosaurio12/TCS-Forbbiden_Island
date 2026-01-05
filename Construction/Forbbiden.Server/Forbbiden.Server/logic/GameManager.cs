@@ -77,7 +77,6 @@ namespace Forbbiden.Server.logic
                         existing.AvatarBytes = null;
                     }
                 }
-
                 callbackToRoom[callback] = matchId;
             }
 
@@ -198,7 +197,10 @@ namespace Forbbiden.Server.logic
 
         public void StartMatch(string matchId, string username)
         {
-            if (string.IsNullOrEmpty(matchId) || string.IsNullOrEmpty(username)) return;
+            if (string.IsNullOrEmpty(matchId) || string.IsNullOrEmpty(username))
+            {
+                return;
+            }
 
             bool isHost = false;
             int currentPlayers = 0;
@@ -209,15 +211,24 @@ namespace Forbbiden.Server.logic
                 {
                     currentPlayers = players.Count;
                     var host = players.FirstOrDefault(p => p.IsHost);
-                    if (host != null && string.Equals(host.PlayerUsername, username, StringComparison.OrdinalIgnoreCase))
+                    if (host != null && string.Equals(
+                        host.PlayerUsername,
+                        username,
+                        StringComparison.OrdinalIgnoreCase))
+                    {
                         isHost = true;
+                    }
                 }
-
                 if (matchReady.TryGetValue(matchId, out var rset))
+                {
                     readyCount = rset.Count;
+                }
             }
 
-            if (!isHost) return;
+            if (!isHost)
+            {
+                return;
+            }
 
             if (currentPlayers > 0 && readyCount == currentPlayers)
             {
@@ -245,34 +256,53 @@ namespace Forbbiden.Server.logic
                 }).ToList();
             }
 
+            SendCallbackToEachPlayer(toNotify, playersSnapshot);
+        }
+
+        private void SendCallbackToEachPlayer(List<IGameManagerCallback> toNotify, List<PlayerInfo> playersSnapshot)
+        {
             var failed = new List<IGameManagerCallback>();
             foreach (var client in toNotify)
             {
-                try { client.OnPlayersUpdated(playersSnapshot); }
-                catch { failed.Add(client); }
+                try {
+                    client.OnPlayersUpdated(playersSnapshot);
+                }
+                catch (Exception ex)
+                {
+                    Log.Warn("GameManager.SendCallbackToEachPlayer", ex);
+                    failed.Add(client);
+                }
             }
 
             if (failed.Count > 0)
             {
                 lock (syncRoot)
                 {
-                    foreach (var bad in failed)
-                    {
-                        if (callbackToRoom.TryGetValue(bad, out var r))
-                        {
-                            if (rooms.ContainsKey(r)) rooms[r].Remove(bad);
-                            callbackToRoom.Remove(bad);
-                        }
-                    }
-
-                    var empties = rooms.Where(kv => kv.Value.Count == 0).Select(kv => kv.Key).ToList();
-                    foreach (var e in empties)
-                    {
-                        rooms.Remove(e);
-                        roomPlayers.Remove(e);
-                        matchReady.Remove(e);
-                    }
+                    CleanupDisconnectedClients(failed);
                 }
+            }
+        }
+
+        private void CleanupDisconnectedClients(List<IGameManagerCallback> failed)
+        {
+            foreach (var bad in failed)
+            {
+                if (callbackToRoom.TryGetValue(bad, out var r))
+                {
+                    if (rooms.ContainsKey(r))
+                    {
+                        rooms[r].Remove(bad);
+                    }
+                    callbackToRoom.Remove(bad);
+                }
+            }
+
+            var empties = rooms.Where(kv => kv.Value.Count == 0).Select(kv => kv.Key).ToList();
+            foreach (var e in empties)
+            {
+                rooms.Remove(e);
+                roomPlayers.Remove(e);
+                matchReady.Remove(e);
             }
         }
 

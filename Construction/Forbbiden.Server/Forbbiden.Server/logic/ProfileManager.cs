@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 
 namespace Forbbiden.Server.logic
 {
@@ -19,14 +20,14 @@ namespace Forbbiden.Server.logic
     {
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
+        private static readonly string AvatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
+
         private readonly string ConnectionString;
         private readonly string DefaultAvatarPath = "defaultAvatar.png";
-        private readonly string DatabaseError = "Database Error";
-        private readonly string EntityError = "EntityException";
 
         public ProfileManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public bool ValidateEmail(string email)
@@ -59,6 +60,11 @@ namespace Forbbiden.Server.logic
         {
             bool usernameFound = false;
 
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return usernameFound;
+            }
+
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
                 try
@@ -75,51 +81,81 @@ namespace Forbbiden.Server.logic
             return usernameFound;
         }
 
-        public bool SendEmail(string email, int playerId)
+        private bool ValidatePlayerId(int playerId)
         {
-            Log.Info("Sending email");
-
-            bool success = false;
-            string receiver = email;
-            string emisor = Properties.email.Default.emailAddress;
-
-            var token = new TokenManager().GenerateToken(playerId);
-
-            using (var message = new MailMessage(emisor, receiver))
-            using (var client = new SmtpClient(Properties.email.Default.smtp))
+            if (playerId > 0)
             {
-                message.Subject = "Register confirmation";
-                message.Body = "Your account has been succesfully created. \n" +
-                    "This is your token: " + token.TokenString + "\n" +
-                    "Welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
-                client.Port = 587;
-                string emailCode = Properties.email.Default.emailCode;
-                client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
-                client.EnableSsl = true;
-
-                try
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    client.Send(message);
-                    Log.Info("Email sent");
-                    success = true;
-                }
-                catch (SmtpException ex)
-                {
-                    string classMethod = "ProfileManager.SendEmail";
-                    ExceptionHandler.HandleSmtpException(ex, classMethod);
+                    try
+                    {
+                        return db.Player.FirstOrDefault(p => p.player_id == playerId) != null;
+                    }
+                    catch (EntityException ex)
+                    {
+                        string classMethod = "ProfileManager.ValidatePlayerId ";
+                        ExceptionHandler.HandleEntityException(ex, classMethod);
+                    }
                 }
             }
+            
+            return false;
+        }
 
+        public bool SendEmail(string email, int playerId)
+        {
+            bool success = false;
+
+            if (ValidatePlayerId(playerId))
+            {
+                string receiver = email;
+                string emisor = Properties.email.Default.emailAddress;
+
+                var token = new TokenManager().GenerateToken(playerId);
+
+                using (var message = new MailMessage(emisor, receiver))
+                using (var client = new SmtpClient(Properties.email.Default.smtp))
+                {
+                    message.Subject = "Register confirmation";
+                    message.Body = "Your account has been succesfully created. \n" +
+                        "This is your token: " + token.TokenString + "\n" +
+                        "Welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
+                    client.Port = 587;
+                    string emailCode = Properties.email.Default.emailCode;
+                    client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
+                    client.EnableSsl = true;
+
+                    try
+                    {
+                        client.Send(message);
+                        Log.Info("Email sent");
+                        success = true;
+                    }
+                    catch (SmtpException ex)
+                    {
+                        string classMethod = "ProfileManager.SendEmail";
+                        ExceptionHandler.HandleSmtpException(ex, classMethod);
+                    }
+                }
+            }
+            
             return success;
         }
 
         public int SignUp(Contracts.Player player)
         {
-            Log.Info("Signing up new player");
-
             int playerId = -1;
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
+                bool exists = db.Player.Any(p =>
+                    p.player_username == player.PlayerUsername ||
+                    p.player_email == player.PlayerEmail);
+
+                if (exists)
+                {
+                    return playerId;
+                }
+
                 string avatar = Path.Combine(DefaultAvatarPath);
                 Player newPlayer = new Player
                 {
@@ -161,7 +197,7 @@ namespace Forbbiden.Server.logic
             {
                 try
                 {
-                    var searchPlayer = db.Player.First(p => p.player_username == username);
+                    var searchPlayer = db.Player.FirstOrDefault(p => p.player_username == username);
 
                     if (searchPlayer != null)
                     {
@@ -320,90 +356,90 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        public bool ClearSocials(Player player)
+        private static string BuildAvatarFilePath(string username, string fileName)
         {
-            bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            Directory.CreateDirectory(AvatarsDir);
+
+            string extension = ".jpg";
+
+            var maybeExt = Path.GetExtension(fileName);
+            if (!string.IsNullOrEmpty(maybeExt))
             {
-                try
-                {
-                    var socials = db.player_socialmedia.Where(s => s.player_id == player.player_id).ToList();
-                    foreach (var social in socials)
-                    {
-                        db.player_socialmedia.Remove(social);
-                    }
-                    db.SaveChanges();
-                    success = true;
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.ClearSocials ";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
-                }
+                extension = maybeExt;
             }
 
-            return success;
+            var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{extension}";
+            var avatarPath = Path.Combine(AvatarsDir, safeFileName);
+
+            return avatarPath;
         }
 
         public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
             if (avatarBytes == null || avatarBytes.Length == 0)
+            { 
                 throw new FaultException("Avatar vacío o nulo.");
-
+            }
             try
             {
-                var avatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
-                if (!Directory.Exists(avatarsDir)) Directory.CreateDirectory(avatarsDir);
+                var fullPath = BuildAvatarFilePath(username, fileName);
 
-                // Obtener extensión segura
-                string ext = ".jpg";
-                try
+                string avatarsRoot = String.Concat(
+                    Path.GetFullPath(AvatarsDir),
+                    Path.DirectorySeparatorChar);
+
+                var normalizedFullPath = Path.GetFullPath(fullPath);
+
+                if (!normalizedFullPath.StartsWith(avatarsRoot, StringComparison.OrdinalIgnoreCase))
                 {
-                    var maybeExt = Path.GetExtension(fileName);
-                    if (!string.IsNullOrEmpty(maybeExt))
-                        ext = maybeExt;
+                    throw new FaultException("Invalid avatar path");
                 }
-                catch { /* ignore and fallback */ }
 
-                // Construir nombre único
-                var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{ext}";
-                var fullPath = Path.Combine(avatarsDir, safeFileName);
-
-                File.WriteAllBytes(fullPath, avatarBytes);
-
-                Log.Info($"Avatar uploaded for {username}, saved as {safeFileName}");
-                return safeFileName;
+                File.WriteAllBytes(normalizedFullPath, avatarBytes);
+                return Path.GetFileName(normalizedFullPath);
             }
             catch (Exception ex)
             {
                 Log.Error("UploadAvatar error", ex);
-                throw new FaultException("No se pudo guardar el avatar en el servidor.");
+                throw new FaultException("Server couldn't save the avatar.");
             }
         }
 
         public byte[] GetAvatar(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName)) return null;
-
-            try
+            if (string.IsNullOrWhiteSpace(fileName))
             {
-                var avatarsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "avatars");
-                var fullPath = Path.Combine(avatarsDir, fileName);
-                if (!File.Exists(fullPath)) return null;
+                return new List<byte>().ToArray();
+            }
 
-                return File.ReadAllBytes(fullPath);
-            }
-            catch (Exception ex)
+            if (!Regex.IsMatch(fileName, @"^[a-f0-9]{32}\.(jpg|png|jpeg)$",
+                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(200)))
             {
-                Log.Warn($"GetAvatar failed for {fileName}", ex);
-                return null;
+                return new List<byte>().ToArray();
             }
+
+            var avatarsDir = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "avatars"
+            );
+
+            var fullPath = Path.Combine(avatarsDir, fileName);
+
+            if (!File.Exists(fullPath))
+            {
+                return new List<byte>().ToArray();
+            }
+
+            return File.ReadAllBytes(fullPath);
         }
 
-        // Helper para sanitizar nombres simples (quitar path separators)
-        private string SanitizeFileName(string input)
+
+        private static string SanitizeFileName(string input)
         {
-            if (string.IsNullOrEmpty(input)) return "user";
+            if (string.IsNullOrEmpty(input))
+            {
+                return "user";
+            }
             foreach (var c in Path.GetInvalidFileNameChars())
             {
                 input = input.Replace(c, '_');
@@ -411,7 +447,7 @@ namespace Forbbiden.Server.logic
             return input;
         }
         
-        private bool SaveUpdateChanges(Forbbiden_FEIEntities db)
+        private static bool SaveUpdateChanges(Forbbiden_FEIEntities db)
         {
             bool success = false;
             using (var transaction = db.Database.BeginTransaction())
@@ -472,6 +508,31 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
+        public bool ClearSocials(Player player)
+        {
+            bool success = false;
+            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            {
+                try
+                {
+                    var socials = db.player_socialmedia.Where(s => s.player_id == player.player_id).ToList();
+                    foreach (var social in socials)
+                    {
+                        db.player_socialmedia.Remove(social);
+                    }
+                    db.SaveChanges();
+                    success = true;
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "ProfileManager.ClearSocials ";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }
+
+            return success;
+        }
+
         public bool DeletePlayerByUsername(string username)
         {
             Log.Info("Deleting player by username");
@@ -485,8 +546,10 @@ namespace Forbbiden.Server.logic
                     var playerToDelete = db.Player.FirstOrDefault(dp => dp.player_username == username);
                     if (playerToDelete != null)
                     {
+                        var tokens = db.Token.Where(t => t.player_id == playerToDelete.player_id).ToList();
                         var friends = db.Friends.Where(f => f.player_id == playerToDelete.player_id).ToList();
 
+                        db.Token.RemoveRange(tokens);
                         db.Friends.RemoveRange(friends);
                         db.Player.Remove(playerToDelete);
                         db.SaveChanges();

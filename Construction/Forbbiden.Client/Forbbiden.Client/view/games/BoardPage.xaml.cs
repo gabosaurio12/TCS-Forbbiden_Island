@@ -95,13 +95,33 @@ namespace Forbbiden.Client.view.games
             PlayerCards = new List<Card>();
         }
 
+        public BoardPage()
+        {
+            InitializeComponent();
+            InitGif();
+            InitAttributes();
+
+            PlayerLogic.MatchBoardPage = this;
+        }
+
+        private void InitAttributes()
+        {
+            StateContext = new BoardStateContext(this);
+
+            string projectDir = ViewUtils.GetProjectDir();
+            ImagesPath = System.IO.Path.Combine(
+                projectDir, "Images");
+            CardsImagesPath = System.IO.Path.Combine(
+                projectDir, ImagesPath, "cards");
+
+            PlayerCards = new List<Card>();
+        }
+
         private void InitBoardPage(MatchManager.Match match)
         {
-            InitGif();
             SetBoard();
             SetPlayersAvatars(match.Players.ToList());
 
-            HostLogic.SubscribePlayers(match.Players.ToList());
             HostLogic.SetBoardPage(this);
             HostLogic.SetPlayersTurnOrder(match.Players.ToList());
 
@@ -485,6 +505,10 @@ namespace Forbbiden.Client.view.games
                 FloodStack.Remove(floodCard);
                 FloodDiscardStack.Add(floodCard);
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 39fe8e8f46a865ac49d019bb49e85c60aafc055b
             StateContext.EndTurnAndResetTiles();
         }
 

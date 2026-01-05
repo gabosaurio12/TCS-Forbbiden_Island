@@ -3,13 +3,16 @@ using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
+using Forbbiden.Client.view;
 using log4net;
 using System;
+using System.Linq.Expressions;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace Forbbiden.Client
@@ -53,18 +56,22 @@ namespace Forbbiden.Client
 
         private void UpdateVisibilityText(bool isPublic)
         {
-            if (PublicMessage != null) PublicMessage.Visibility = isPublic ? Visibility.Visible : Visibility.Collapsed;
-            if (PrivateMessage != null) PrivateMessage.Visibility = isPublic ? Visibility.Collapsed : Visibility.Visible;
+            if (PublicMessage != null)
+            {
+                PublicMessage.Visibility = isPublic ? Visibility.Visible : Visibility.Collapsed;
+            }
+            if (PrivateMessage != null)
+            {
+                PrivateMessage.Visibility = isPublic ? Visibility.Collapsed : Visibility.Visible;
+            }
         }
 
         private void PlayerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PlayerComboBox?.SelectedItem is ComboBoxItem item)
+            if (PlayerComboBox?.SelectedItem is ComboBoxItem item
+                && int.TryParse(item.Content?.ToString(), out int val))
             {
-                if (int.TryParse(item.Content?.ToString(), out int val))
-                {
-                    selectedCapacity = Math.Max(2, Math.Min(4, val));
-                }
+                selectedCapacity = Math.Max(2, Math.Min(4, val));
             }
         }
 
@@ -88,7 +95,7 @@ namespace Forbbiden.Client
 
         private void PublicToggle_Click(object sender, RoutedEventArgs e)
         {
-            bool isPublic = PublicToggle.IsChecked == true;
+            bool isPublic = (bool)PublicToggle.IsChecked;
             selectedVisibility = isPublic ? "Public" : "Private";
             UpdateVisibilityText(isPublic);
 
@@ -100,8 +107,8 @@ namespace Forbbiden.Client
 
             try
             {
-                var currentPlayer = ClientSession.GetPlayer();
-                if (currentPlayer == null)
+                var request = GetMatchRequest();
+                if (request == null)
                 {
                     MessageBox.Show("Debes iniciar sesión antes de crear una partida.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -152,59 +159,59 @@ namespace Forbbiden.Client
                     MessageBox.Show("No se pudo crear la partida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                int matchId = await CreateMatch(matchClient, request);
 
                 // Se sigue generando el código en el servidor, pero ya no se muestra aquí.
 
                 string avatarFileName = null;
-                try
+                var currentPlayer = ClientSession.GetPlayer();
+                string username = ClientSession.Username;
+                    
+                var avatarPath = currentPlayer?.PlayerAvatarPath;
+                if (!string.IsNullOrEmpty(avatarPath))
                 {
-                    var avatarPath = currentPlayer?.PlayerAvatarPath;
-                    if (!string.IsNullOrEmpty(avatarPath))
-                        avatarFileName = System.IO.Path.GetFileName(avatarPath);
+                    avatarFileName = System.IO.Path.GetFileName(avatarPath);
                 }
-                catch { /* no crítico */ }
 
                 var callback = new GameServiceCallback();
                 var context = new InstanceContext(callback);
                 var gameClient = new GameManagerClient(context);
 
-                bool joined = false;
-                try
-                {
-                    joined = await gameClient.JoinGameAsync(matchId.ToString(), username, null, avatarFileName);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("JoinGame error", ex);
-                    MessageBox.Show("No se pudo unir al lobby: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                bool joined = await gameClient.JoinGameAsync(matchId.ToString(), username, null, avatarFileName);
 
                 if (!joined)
                 {
-                    MessageBox.Show("La partida se creó, pero no se pudo unir al lobby.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    string title = Properties.Langs.Resources.error;
+                    string message = Properties.Langs.Resources.error_match_created_not_joined;
+                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                     return;
                 }
 
-                var lobbyPage = new Forbbiden.Client.view.LobbyPage(matchId, username, gameClient, callback);
+                var lobbyPage = new view.LobbyPage(matchId, username, gameClient, callback);
                 NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
             }
             catch (TimeoutException)
             {
-                MessageBox.Show("El servidor tardó demasiado en responder.", "Timeout", MessageBoxButton.OK, MessageBoxImage.Warning);
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.error_server_timeout;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Error("HostGameControl.PlayButton_Click", ex);
+                string title = Properties.Langs.Resources.error;
+                string message = Properties.Langs.Resources.unexpected_error;
+                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             finally
             {
-                try { matchClient.Close(); } catch { matchClient.Abort(); }
+                JoinGameControl.CloseMatchClient(matchClient);
             }
         }
 
         private void PublicToggle_Checked(object sender, RoutedEventArgs e)
         {
-
+            throw new NotSupportedException();
         }
     }
 }

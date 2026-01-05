@@ -6,7 +6,6 @@ using log4net;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
-using System.Security.Cryptography.Pkcs;
 using System.ServiceModel;
 
 namespace Forbbiden.Server.logic
@@ -16,12 +15,11 @@ namespace Forbbiden.Server.logic
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class FriendsManager : IFriendsManager
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsManager));
         private readonly string ConnectionString;
 
         public FriendsManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)
@@ -143,10 +141,7 @@ namespace Forbbiden.Server.logic
                             Status = 0
                         };
 
-                        if (FriendsNotificationManager.SendRequestCallback(friendRequestCallback, receiverUsername))
-                        {
-                            success = true;
-                        }
+                        success = FriendsNotificationManager.SendRequestCallback(friendRequestCallback, receiverUsername);
                     }
                 }
             }

@@ -6,8 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 
 namespace Forbbiden.Server.logic
 {
@@ -19,10 +22,10 @@ namespace Forbbiden.Server.logic
         private static readonly ILog log = LogManager.GetLogger(typeof(MatchManager));
         private const string CLASS_NAME = "MatchManager.cs";
         private readonly string Guest = "Guest";
-        private readonly string connectionString;
+        private readonly string ConnectionString;
         public MatchManager()
         {
-            connectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         private string GenerateInviteCode(int length = 6)
@@ -34,7 +37,7 @@ namespace Forbbiden.Server.logic
 
         public int CreateMatch(CreateMatchRequest request)
         {
-            log.Info("Creating new match");
+            Log.Info("Creating new match");
             int matchId = 0;
 
             if (request == null)
@@ -50,7 +53,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
                     int hostId = db.Player
                         .Where(p => p.player_username == request.HostUsername)
@@ -99,11 +102,11 @@ namespace Forbbiden.Server.logic
             }
             catch (DbEntityValidationException ex)
             {
-                ExceptionHandler.HandleEntityValidationException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityValidationException(ex, ClassName);
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
 
             return matchId;
@@ -131,13 +134,15 @@ namespace Forbbiden.Server.logic
         public bool JoinMatch(JoinMatchRequest request)
         {
             if (request == null)
+            {
                 throw new FaultException("Invalid request.");
+            }
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    Matches match = null;
+                    Matches match = GetMatch(request);
 
                     if (request.MatchId > 0)
                         match = db.Matches.FirstOrDefault(m => m.match_id == request.MatchId);
@@ -152,8 +157,19 @@ namespace Forbbiden.Server.logic
                                 .Where(m => m.host_id == host.player_id)
                                 .OrderByDescending(m => m.created_at)
                                 .FirstOrDefault();
+
+                            return match;
                         }
                     }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "MatchManager.GetMatch";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }
+            return new Matches();
+        }
 
                     if (match == null)
                         return false;
@@ -187,33 +203,26 @@ namespace Forbbiden.Server.logic
                         .Any(mp => mp.match_id == match.match_id && mp.player_id == playerId);
 
                     if (alreadyJoined)
-                        return false;
-
-                    db.match_players.Add(new match_players
                     {
-                        match_id = match.match_id,
-                        player_id = playerId
-                    });
-
-                    db.SaveChanges();
-                    return true;
+                        return true;
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "MatchManager.CheckIfPlayerIsAlreadyJoined";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
                 }
             }
-            catch (EntityException ex)
-            {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
-            }
-
             return false;
         }
 
         public List<Contracts.Match> ListMatches()
         {
-            log.Info("Listing all matches");
+            Log.Info("Listing all matches");
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
                     var matches = (from m in db.Matches
                                    join host in db.Player on m.host_id equals host.player_id
@@ -248,9 +257,9 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
-            return new List<Match>();
+            return new List<Contracts.Match>();
         }
 
         public Contracts.Match GetMatchById(int matchId)
@@ -258,7 +267,7 @@ namespace Forbbiden.Server.logic
             Contracts.Match match = new Contracts.Match();
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
                     match = (from m in db.Matches
                              join host in db.Player on m.host_id equals host.player_id
@@ -294,27 +303,25 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName);
             }
             return match;
         }
 
         public bool DeleteMatch(int matchId)
         {
-            log.Info($"Deleting match {matchId}");
-
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    using (var tx = db.Database.BeginTransaction())
+                    using (var transaction = db.Database.BeginTransaction())
                     {
                         try
                         {
                             var match = db.Matches.FirstOrDefault(m => m.match_id == matchId);
                             if (match == null)
                             {
-                                log.Warn($"DeleteMatch: match {matchId} not found");
+                                Log.DebugFormat("DeleteMatch: match {matchId} not found", matchId);
                                 return false;
                             }
 
@@ -333,10 +340,11 @@ namespace Forbbiden.Server.logic
                             lock (inviteLock) { inviteCodes.Remove(matchId); }
                             return true;
                         }
-                        catch (Exception ex)
+                        catch (EntityException ex)
                         {
-                            try { tx.Rollback(); } catch { }
-                            log.Error($"Error deleting match {matchId}", ex);
+                            transaction.Rollback();
+                            string classMethod = "MatchManager.DeleteMatch";
+                            ExceptionHandler.HandleEntityException(ex, classMethod);
                             return false;
                         }
                     }
@@ -344,7 +352,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                log.Error("Database error in DeleteMatch", ex);
+                Log.Error("Database error in DeleteMatch", ex);
                 return false;
             }
         }

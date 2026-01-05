@@ -17,11 +17,10 @@ namespace Forbbiden.Server.logic
     public class TokenManager : ITokenManager
     {
         private readonly string ConnectionString;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
 
         public TokenManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public string CreateRandomToken()

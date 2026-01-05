@@ -15,12 +15,12 @@ namespace Forbbiden.Client.view
 {
     public partial class LeaveMenuPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LeaveMenuPage));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LeaveMenuPage));
 
-        private readonly int matchId;
-        private readonly string currentPlayer;
-        private readonly GameManagerClient gameClient;
-        private readonly GameServiceCallback callback;
+        private readonly int MatchId;
+        private readonly string CurrentPlayer;
+        private readonly GameManagerClient GameClient;
+        private readonly GameServiceCallback Callback;
 
         private bool isHost = false;
 
@@ -90,6 +90,10 @@ namespace Forbbiden.Client.view
                 KickCombo.ItemsSource = null;
                 KickEmpty.Visibility = Visibility.Visible;
             }
+            MatchId = matchId;
+            CurrentPlayer = currentPlayer;
+            GameClient = gameClient;
+            Callback = callback;
         }
 
         private void BtnContinue_Click(object sender, RoutedEventArgs e)
@@ -115,7 +119,11 @@ namespace Forbbiden.Client.view
                     }
                 }
 
-                try
+            if (match != null)
+            {
+                var host = match.HostUsername;
+                if (!string.IsNullOrEmpty(host) && string.Equals(
+                    host, CurrentPlayer, StringComparison.OrdinalIgnoreCase))
                 {
                     matchClient = new MatchManagerClient();
                     var match = await Task.Run(() => matchClient.GetMatchById(matchId));

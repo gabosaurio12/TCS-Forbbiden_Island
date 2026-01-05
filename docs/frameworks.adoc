@@ -1,0 +1,41 @@
+
+== Frameworks
+
+Una parte importante de este proyecto era el uso de frameworks, siendo los principales:
+
+* .NET
+* EntityFramework
+* Windows Presentation Foundation (WPF)
+* Windows Communication Foundation (WCF)
+
+=== .NET
+
+Microsoft desarrolló .NET para crear aplicaciones utilizando lenguajes como C# o Visual Basic (entre otros), nosotros usamos C#. ¿Por qué usamos este framework? Porque era un requisito para el proyecto, pero la pregunta correcta en este contexto sería: ¿Por qué se eligió .NET para desarrollar este tipo de proyecto?
+
+Consideramos que una de las razones más importantes es porque es de código abierto, por lo que está gestionado por la comunidad lo cual lo hace muy rico en cuanto a consultas de información, ayudándonos así durante la curva de aprendizaje. Por otro lado .NET Core (que es el que usamos) ahora es multiplataforma, lo cual debería ayudar a los estudiantes si es que no tienen Windows. .NET también tiene muchas funcionalidades integradas y con NuGet muchos paquetes que se pueden usar para el proyecto, desde paquetes para seguridad hasta paquetes para generar números random, siendo estos dos básicos para desarrollos de videojuegos. Lo que nos lleva a otro punto, muchos videojuegos son desarrollados para Windows y usan C#, de esta forma ya nos estaríamos preparando para el campo laboral de esta área.
+
+=== Entity Framework
+
+Después tenemos EntityFramework, un ORM desarrollado por Microsoft. El uso de ORMs es sumamente recomendado para comunicación con base de datos, no solo aumenta seguridad, sino la escalabilidad y mantenimiento de un proyecto, por lo que si algún día decidimos cambiar de motor de base de datos (actualmente usamos SQL Server), solo deberíamos cambiar la configuración a la que apuntan nuestras entidades, ya no todo el código (esto por la sintaxis de cada base de datos, que con un ORM deja de ser importante). Con EF desacoplamos totalmente la base de datos de nuestro proyecto.
+
+=== Windows Presentation Foundation (WPF)
+
+Microsoft desarrolló WPF como un framework para crear aplicaciones visualmente atractivas y con muchas funcionalidades posibles en la cartera de opciones para los desarrolladores. Utiliza XAML, un lenguaje declarativo para definir la interfaz de usuario. Es flexible y poderoso, ideal para el desarrollo de un videojuego 2D como el del proyecto. Aparte está muy bien acoplado con .NET por lo que se puede usar sin ningún problema de compatibilidad. También se integra naturalmente con MVVM, el modelo que se debe usar para construir el proyecto.
+
+=== Windows Communication Fundation (WCF)
+
+Es un framework orientado a la creación de aplicaciones orientadas a servicios y sistemas distribuidos, proporciona un conjunto de APIs bastante completo. Este fue el framework que más nos costó entender el por qué fue elegido, si bien tiene varias funciones amplias y útiles, investigando descubrimos que ya no es recomendado por Microsoft, ya que actualmente recomiendan migrar de WCF a ASP.NET Core Web API o gRPC, dependiendo del tipo de proyecto o incluso SignalR, pero después de trabajar con él entendimos el por qué:
+
+1. Es muy bueno para entender el modelo Cliente/Servidor.
+
+2. Nos enseña a trabajar con contratos bien definidos.
+
+3. No necesita infraestructura extra.
+
+4. Funciona bien en LAN o con VPN.
+
+5. Integración directa con .NET (igual que WPF)
+
+6. Al ser Legacy no está tan simplificado o digerido como otras tecnologías actuales, lo que nos obliga a aprender el qué se hace, cómo se hace y por qué se hace de cada paso para construir el servidor.
+
+Entonces, si bien, tal vez no era la mejor opción para el videojuego, sí era la mejor para aprender a usar estas tecnologías que para nosotros son nuevas.

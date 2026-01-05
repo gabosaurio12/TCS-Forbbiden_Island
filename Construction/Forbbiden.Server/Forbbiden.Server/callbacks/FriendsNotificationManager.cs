@@ -1,14 +1,11 @@
 ﻿using Forbbiden.Contracts;
-using Forbbiden.Server;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
 using System.ServiceModel;
 
 namespace Forbbiden.Server.callbacks
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "FriendsNotificationManager" in both code and config file together.
     public class FriendsNotificationManager : IFriendsNotificationManager
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsNotificationManager));

@@ -7,14 +7,20 @@ using System.Data.Entity.Core;
 namespace Forbbiden.Test
 {
     [TestFixture]
-    public class TestFriendsManager
+    public class TestFriendsClient
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(TestFriendsManager));
-        private const string ClassName = "TestFriendsManager - ";
+        private static readonly ILog log = LogManager.GetLogger(typeof(TestFriendsClient));
+        private const string ClassName = "TestFriendsClient - ";
+        private FriendsManagerClient FriendsClient;
+        private List<string> UsernamesToDelete;
+        private string HashTestPass;
 
         [OneTimeSetUp]
         public async Task Setup()
         {
+            FriendsClient = new FriendsManagerClient();
+            UsernamesToDelete = [];
+            HashTestPass = BCrypt.Net.BCrypt.HashPassword("T3st_pass");
 
             ProfileManager.Player sender = new ProfileManager.Player
             {
@@ -49,12 +55,16 @@ namespace Forbbiden.Test
                 var profileClient = new ProfileManagerClient();
 
                 await profileClient.SignUpAsync(sender);
+                UsernamesToDelete.Add(sender.PlayerUsername);
                 await profileClient.SignUpAsync(receiver);
+                UsernamesToDelete.Add(receiver.PlayerUsername);
 
                 var frienshipClient = new FriendsManagerClient();
 
                 await profileClient.SignUpAsync(firstFriend);
+                UsernamesToDelete.Add(firstFriend.PlayerUsername);
                 await profileClient.SignUpAsync(secondFriend);
+                UsernamesToDelete.Add(secondFriend.PlayerUsername);
 
                 await frienshipClient.SendFriendRequestAsync(firstFriend.PlayerUsername, secondFriend.PlayerUsername);
                 await frienshipClient.AcceptFriendRequestAsync(firstFriend.PlayerUsername, secondFriend.PlayerUsername);
@@ -80,10 +90,8 @@ namespace Forbbiden.Test
                 string firstFriend = "firstFriend";
                 string secondFriend = "secondFriend";
 
-                var friendClient = new FriendsManagerClient();
-
-                await friendClient.CancelFriendRequestAsync(sender, firstFriend);
-                await friendClient.CancelFriendRequestAsync(sender, receiver);
+                await FriendsClient.CancelFriendRequestAsync(sender, firstFriend);
+                await FriendsClient.CancelFriendRequestAsync(sender, receiver);
                 await profileClient.DeletePlayerByUsernameAsync(sender);
                 await profileClient.DeletePlayerByUsernameAsync(receiver);
 
@@ -94,17 +102,17 @@ namespace Forbbiden.Test
             {
                 log.Error(ClassName, ex);
             }
-            
+            FriendsClient.Close();
         }
 
         [Test]
         public async Task TestSendFriendRequestSuccess()
         {
-            var client = new FriendsManagerClient();
+
             string sender = "testSender";
             string receiver = "testReceiver";
             try {
-                var result = await client.SendFriendRequestAsync(sender, receiver);
+                var result = await FriendsClient.SendFriendRequestAsync(sender, receiver);
 
                 Assert.That(result, Is.True, "result should be true");
             }
@@ -117,12 +125,12 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestSendFriendRequestInvalidUsername()
         {
-            var client = new FriendsManagerClient();
+
             string sender = "testSender";
             string fakeReceiver = "FriendTest";
             try
             {
-                var result = await client.SendFriendRequestAsync(sender, fakeReceiver);
+                var result = await FriendsClient.SendFriendRequestAsync(sender, fakeReceiver);
 
                 Assert.That(result, Is.False, "result should be false");
             }
@@ -135,12 +143,12 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestSendFriendRequestDuplicateFriend()
         {
-            var client = new FriendsManagerClient();
+
             string senderSim = "firstFriend";
             string receiverSim = "secondFriend";
             try
             {
-                var result = await client.SendFriendRequestAsync(senderSim, receiverSim);
+                var result = await FriendsClient.SendFriendRequestAsync(senderSim, receiverSim);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (EntityException ex)
@@ -152,13 +160,13 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestAcceptFriendRequestSuccess()
         {
-            var client = new FriendsManagerClient();
+
             string sender = "testSender";
             string recieverSim = "firstFriend";
 
             try
             {
-                var result = await client.AcceptFriendRequestAsync(sender, recieverSim);
+                var result = await FriendsClient.AcceptFriendRequestAsync(sender, recieverSim);
                 Assert.That(result, Is.True, "result should be true");
             }
             catch (EntityException ex)
@@ -170,13 +178,13 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestAcceptFriendRequestInvalidUsername()
         {
-            var client = new FriendsManagerClient();
+
             string sender = "testSender";
             string recieverSim = "FriendTest";
 
             try
             {
-                var result = await client.AcceptFriendRequestAsync(sender, recieverSim);
+                var result = await FriendsClient.AcceptFriendRequestAsync(sender, recieverSim);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (EntityException ex)
@@ -188,13 +196,13 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestCancelFriendRequestSuccess()
         {
-            var client = new FriendsManagerClient();
+
             string sender = "testSender";
             string recieverSim = "secondFriend";
 
             try
             {
-                var result = await client.CancelFriendRequestAsync(sender, recieverSim);
+                var result = await FriendsClient.CancelFriendRequestAsync(sender, recieverSim);
                 Assert.That(result, Is.True, "result should be true");
             }
             catch (EntityException ex)
@@ -206,13 +214,13 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestCancelFriendRequestInvalidUsername()
         {
-            var client = new FriendsManagerClient();
+
             string sender = "testSender";
             string recieverSim = "FriendTest";
 
             try
             {
-                var result = await client.CancelFriendRequestAsync(sender, recieverSim);
+                var result = await FriendsClient.CancelFriendRequestAsync(sender, recieverSim);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (EntityException ex)

@@ -177,8 +177,10 @@ namespace Forbbiden.Client.view
 
         public void AddOnlineFriend(ProfileManager.Player friend)
         {
-            var friendControl = new UserControlFriend();
-            friendControl.ContextMenu = new ContextMenu();
+            var friendControl = new UserControlFriend
+            {
+                ContextMenu = new ContextMenu()
+            };
 
             string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);

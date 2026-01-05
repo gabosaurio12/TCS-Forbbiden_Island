@@ -19,7 +19,7 @@ namespace Forbbiden.Server.logic
 
         public BoardManager()
         {
-            ConnectionString = ConnectionStringSingleton.GetInstance().connectionString;
+            ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
         public Contracts.Card GetCard(string path)

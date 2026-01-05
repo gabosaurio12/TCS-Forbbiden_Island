@@ -1,0 +1,40 @@
+
+== Referencias
+
+BillWagner, “Identifier names - rules and conventions - C#,” Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/identifier-names
+
+AMollis, “Coding guidelines,” Microsoft Learn. https://learn.microsoft.com/en-us/previous-versions/mixed-reality/world-locking-tools/Documentation/HowTos/CodingConventions
+
+Adegeo, “Create your first WPF app in Visual Studio 2019 - .NET Framework,” Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/desktop/wpf/get-started/walkthrough-my-first-wpf-desktop-application?view=netframeworkdesktop-4.8
+
+Ghogen, “Create a basic data app with WPF and Entity Framework 6 - Visual Studio (Windows),” Microsoft Learn. https://learn.microsoft.com/en-us/visualstudio/data-tools/create-a-simple-data-application-with-wpf-and-entity-framework-6?view=vs-2022
+
+Cmastr, “Entity Framework Overview - ADO.NET,” Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/ef/overview
+
+Mconnew, “Windows Communication Foundation - WCF,” Microsoft Learn. https://learn.microsoft.com/es-es/dotnet/framework/wcf/
+
+Mconnew, “Tutorial: Get started with Windows Communication Foundation applications - WCF,” Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/framework/wcf/getting-started-tutorial
+
+Kexugit, “WCF:  Working with One-Way Calls, Callbacks, And Events,” Microsoft Learn. https://learn.microsoft.com/en-us/archive/msdn-magazine/2006/october/wcf-working-with-one-way-calls-callbacks-and-events
+
+Adegeo, “How to: Implement Property Change Notification - WPF,” Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/how-to-implement-property-change-notification
+
+Faraz, “WCF hosted in WPF and how can i change control in MainWindow UI from wcf?,” Stack Overflow, Apr. 25, 2015. https://stackoverflow.com/questions/29864235/wcf-hosted-in-wpf-and-how-can-i-change-control-in-mainwindow-ui-from-wcf#:~:text=I%20suggest%20you%20start%20over,change%20the%20local%20UI%20mode.
+
+“Entity Framework Tutorial.” https://www.tutorialspoint.com/entity_framework/index.htm
+
+R.Karia, “Model-First Development with Entity Framework,” Jul. 18, 2025. https://www.entityframeworktutorial.net/entityframework6/Model-first-with-entity-framework.aspx
+
+R.C. Martin, Clean code: A Handbook of Agile Software Craftsmanship. Pearson Education, 2009.
+
+E.Gamma, R.Helm, R.Johnson, and J.Vlissides, Design patterns: Elements of Reusable Object-Oriented Software. Pearson Education, 1994.
+
+Refactoring.Guru, “Singleton,” Refactoring.Guru, Jan. 01, 2025. https://refactoring.guru/design-patterns/singleton
+
+Refactoring.Guru, “Observer,” Refactoring.Guru, Jan. 01, 2025. https://refactoring.guru/design-patterns/observer
+
+Refactoring.Guru, “Memento,” Refactoring.Guru, Jan. 01, 2025. https://refactoring.guru/design-patterns/memento
+
+Refactoring.Guru, “State,” Refactoring.Guru, Jan. 01, 2025. https://refactoring.guru/design-patterns/state
+
+K.Fakhroutdinov, “Unified Modeling Language (UML) description, UML diagram examples, tutorials and reference for all types of UML diagrams - use case diagrams, class, package, component, composite structure diagrams, deployments, activities, interactions, profiles, etc.” https://www.uml-diagrams.org/

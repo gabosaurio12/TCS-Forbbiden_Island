@@ -1,84 +1,98 @@
 ﻿using System;
 using System.Windows.Media;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Forbbiden.Client.logic
 {
     internal class AudioManager : IDisposable
     {
-        private MediaPlayer backgroundPlayer;
-        private MediaPlayer effectPlayer;
-        private bool backgroundLoop;
+        private MediaPlayer BackgroundPlayer;
+        private MediaPlayer EffectPlayer;
+        private bool BackgroundLoop;
 
         public double MusicVolume { get; set; } = 0.25;
         public double EffectsVolume { get; set; } = 1.0;
+
+        private bool Disposed;
 
         public void PlayBackground(string relativePath, bool loop = true)
         {
             StopBackGround();
 
-            backgroundLoop = loop;
+            BackgroundLoop = loop;
 
-            backgroundPlayer = new MediaPlayer();
-            backgroundPlayer.Open(new Uri(relativePath, UriKind.Relative));
-            backgroundPlayer.Volume = MusicVolume;
+            BackgroundPlayer = new MediaPlayer();
+            BackgroundPlayer.Open(new Uri(relativePath, UriKind.Relative));
+            BackgroundPlayer.Volume = MusicVolume;
 
-            if (backgroundLoop)
+            if (BackgroundLoop)
             {
-                backgroundPlayer.MediaEnded += Background_MediaEnded;
+                BackgroundPlayer.MediaEnded += Background_MediaEnded;
             }
 
-            backgroundPlayer.Play();
+            BackgroundPlayer.Play();
         }
 
 
         private void Background_MediaEnded(object sender, EventArgs e)
         {
-            if (!backgroundLoop || backgroundPlayer == null)
+            if (!BackgroundLoop || BackgroundPlayer == null)
             {
                 return;
             }
 
-            backgroundPlayer.Position = TimeSpan.Zero;
-            backgroundPlayer.Play();
+            BackgroundPlayer.Position = TimeSpan.Zero;
+            BackgroundPlayer.Play();
         }
 
         public void StopBackGround()
         {
-            if (backgroundPlayer != null)
+            if (BackgroundPlayer == null)
             {
-                backgroundPlayer.MediaEnded -= Background_MediaEnded;
-                backgroundPlayer?.Stop();
-                backgroundPlayer?.Close();
-                backgroundPlayer = null;
+                return;
             }
+
+            BackgroundPlayer.MediaEnded -= Background_MediaEnded;
+            BackgroundPlayer.Stop();
+            BackgroundPlayer.Close();
+            BackgroundPlayer = null;
         }
 
         public void PlayEffect(string relativePath)
         {
-            effectPlayer?.Stop();
-            effectPlayer?.Close();
+            EffectPlayer?.Stop();
+            EffectPlayer?.Close();
 
-            effectPlayer = new MediaPlayer();
-            effectPlayer.Open(new Uri(relativePath, UriKind.Relative));
-            effectPlayer.Volume = EffectsVolume;
-            effectPlayer.Play();
+            EffectPlayer = new MediaPlayer();
+            EffectPlayer.Open(new Uri(relativePath, UriKind.Relative));
+            EffectPlayer.Volume = EffectsVolume;
+            EffectPlayer.Play();
         }
 
         public void StopAll()
         {
             StopBackGround();
-            effectPlayer?.Stop();
-            effectPlayer?.Close();
-            effectPlayer = null;
+            EffectPlayer?.Stop();
+            EffectPlayer?.Close();
+            EffectPlayer = null;
         }
 
         public void Dispose()
         {
-            StopAll();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (Disposed)
+            {
+                return;
+            }
+            if (disposing)
+            {
+                StopAll();
+            }
+            Disposed = true;
         }
     }
 }

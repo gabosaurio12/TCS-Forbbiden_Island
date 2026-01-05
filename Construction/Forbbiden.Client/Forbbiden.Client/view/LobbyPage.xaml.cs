@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,24 +38,23 @@ namespace Forbbiden.Client.view
         private GameManagerClient gameClient;
         private GameServiceCallback callback;
 
-        private int matchId;
-        private string currentPlayer;
+        private readonly int MatchId;
+        private readonly string CurrentPlayer;
 
-        private readonly HashSet<string> pendingChatEcho = new HashSet<string>();
-        private readonly object pendingLock = new object();
+        private readonly HashSet<string> PendingChatEcho = new HashSet<string>();
+        private readonly object PendingLock = new object();
 
-        private List<string> previousPlayers = new List<string>();
+        private List<string> PreviousPlayers = new List<string>();
 
-        private readonly Dictionary<string, bool> readyStates = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
-        private readonly object readyLock = new object();
+        private readonly Dictionary<string, bool> ReadyStates = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+        private readonly object ReadyLock = new object();
 
-        private readonly string[] slotUser = new string[4];
+        private readonly string[] SlotUser = new string[4];
 
-        private int matchCapacity = 4;
-        private string matchHost = null;
+        private string MatchHost = null;
 
-        private DispatcherTimer startCountdownTimer;
-        private int countdownValue;
+        private DispatcherTimer StartCountdownTimer;
+        private int CountdownValue;
 
         private Action<GameManager.PlayerInfo[]> playersUpdatedHandler;
         private Action<string, string> chatMessageHandler;
@@ -103,21 +103,10 @@ namespace Forbbiden.Client.view
             readyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(new Action(() => OnReadyStateChanged(user, isReady)));
             matchStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => OnMatchStarting()));
 
-            if (this.callback != null)
+            if (Callback != null)
             {
-                try { this.callback.PlayersUpdated -= playersUpdatedHandler; } catch { }
-                try { this.callback.ChatMessageReceived -= chatMessageHandler; } catch { }
-                try { this.callback.GameStarting -= gameStartingHandler; } catch { }
-
-                try { this.callback.ReadyStateChanged -= readyStateHandler; } catch { }
-                try { this.callback.MatchStarting -= matchStartingHandler; } catch { }
-
-                this.callback.PlayersUpdated += playersUpdatedHandler;
-                this.callback.ChatMessageReceived += chatMessageHandler;
-                this.callback.GameStarting += gameStartingHandler;
-
-                this.callback.ReadyStateChanged += readyStateHandler;
-                this.callback.MatchStarting += matchStartingHandler;
+                UnsubscribeCallbacks();
+                SubscribeCallbacks();
             }
 
             this.Loaded += LobbyPage_Loaded;
@@ -138,12 +127,37 @@ namespace Forbbiden.Client.view
             };
         }
 
+        private void ShowGameStartingNotification()
+        {
+            string title = Properties.Langs.Resources.game_starting_title;
+            string message = Properties.Langs.Resources.game_starting_message;
+            ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+        }
+
+        private void SubscribeCallbacks()
+        {
+            Callback.PlayersUpdated += PlayersUpdatedHandler;
+            Callback.ChatMessageReceived += ChatMessageHandler;
+            Callback.GameStarting += GameStartingHandler;
+            Callback.ReadyStateChanged += ReadyStateHandler;
+            Callback.MatchStarting += MatchStartingHandler;
+        }
+
+        private void UnsubscribeCallbacks()
+        {
+            Callback.PlayersUpdated -= PlayersUpdatedHandler;
+            Callback.ChatMessageReceived -= ChatMessageHandler;
+            Callback.GameStarting -= GameStartingHandler;
+            Callback.ReadyStateChanged -= ReadyStateHandler;
+            Callback.MatchStarting -= MatchStartingHandler;
+        }
+
         private void LobbyPage_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
                 e.Handled = true;
-                var leavePage = new LeaveMenuPage(matchId, currentPlayer, gameClient, callback);
+                var leavePage = new LeaveMenuPage(MatchId, CurrentPlayer, GameClient, Callback);
                 NavigationService?.Navigate(leavePage);
             }
         }
@@ -190,11 +204,18 @@ namespace Forbbiden.Client.view
                 Match match = null;
                 try
                 {
-                    match = await Task.Run(() => mClient.GetMatchById(matchId));
+                    match = await Task.Run(() => matchClient.GetMatchById(MatchId));
                 }
                 finally
                 {
-                    try { mClient.Close(); } catch { mClient.Abort(); }
+                    try 
+                    { 
+                        matchClient.Close();
+                    } 
+                    catch 
+                    { 
+                        matchClient.Abort();
+                    }
                 }
 
                 if (match != null)
@@ -209,7 +230,7 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                Log.Warn("Could not load match info", ex);
+                Log.Error("LobbyPage.LoadMatchInfoAsync", ex);
             }
 
             UpdateReadyButtonText();
@@ -253,16 +274,16 @@ namespace Forbbiden.Client.view
             var msg = (txtChatMessage.Text ?? "").Trim();
             if (string.IsNullOrEmpty(msg)) return;
 
-            AddChatLine($"{currentPlayer}: {msg}");
+            AddChatLine($"{CurrentPlayer}: {msg}");
 
-            var key = $"{currentPlayer}|{msg}";
-            lock (pendingLock) pendingChatEcho.Add(key);
+            var key = $"{CurrentPlayer}|{msg}";
+            lock (PendingLock) PendingChatEcho.Add(key);
 
             Task.Run(() =>
             {
                 try
                 {
-                    gameClient?.SendChatMessage(matchId.ToString(), currentPlayer, msg);
+                    GameClient?.SendChatMessage(MatchId.ToString(), CurrentPlayer, msg);
                 }
                 catch (Exception ex)
                 {
@@ -286,9 +307,9 @@ namespace Forbbiden.Client.view
                 if (string.IsNullOrEmpty(message)) return;
 
                 var key = $"{playerName}|{message}";
-                lock (pendingLock)
+                lock (PendingLock)
                 {
-                    if (pendingChatEcho.Remove(key))
+                    if (PendingChatEcho.Remove(key))
                     {
                         return;
                     }
@@ -320,7 +341,10 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                if (lstChatHistory == null) return;
+                if (lstChatHistory == null)
+                {
+                    return;
+                }
                 lstChatHistory.Items.Add(text);
                 if (lstChatHistory.Items.Count > 0)
                 {
@@ -335,7 +359,7 @@ namespace Forbbiden.Client.view
 
         private void InitializePlayerUI()
         {
-            txtBkUser1.Text = currentPlayer;
+            txtBkUser1.Text = CurrentPlayer;
             var player = ClientSession.GetPlayer();
             var local = ResolveLocalAvatarPath(player?.PlayerAvatarPath);
             SetAvatar(imgAvatar1, local);
@@ -365,9 +389,9 @@ namespace Forbbiden.Client.view
 
         private void StartClock()
         {
-            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += (s, e) => txtLobbyHour.Text = DateTime.Now.ToString("hh:mm tt");
-            timer.Start();
+            Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            Timer.Tick += (s, e) => txtLobbyHour.Text = DateTime.Now.ToString("hh:mm tt");
+            Timer.Start();
         }
 
         private Window SafeGetWindow()
@@ -406,18 +430,18 @@ namespace Forbbiden.Client.view
                 {
                     var current = players?.Select(p => p?.PlayerUsername ?? "").Where(u => !string.IsNullOrEmpty(u)).ToList() ?? new List<string>();
 
-                    var added = current.Except(previousPlayers).ToList();
-                    var removed = previousPlayers.Except(current).ToList();
+                    var added = current.Except(PreviousPlayers).ToList();
+                    var removed = PreviousPlayers.Except(current).ToList();
 
                     foreach (var a in added) AddChatLine($"{Properties.Resources.system_prefix}: {string.Format(Properties.Resources.player_joined, a)}");
                     foreach (var r in removed)
                     {
                         AddChatLine($"{Properties.Resources.system_prefix}: {string.Format(Properties.Resources.player_left, r)}");
                         CancelCountdown();
-                        lock (readyLock) { readyStates.Remove(r); }
+                        lock (ReadyLock) { ReadyStates.Remove(r); }
                     }
 
-                    previousPlayers = current;
+                    PreviousPlayers = current;
 
                     bool hostPresent = string.IsNullOrEmpty(matchHost) || current.Any(u => string.Equals(u, matchHost, StringComparison.OrdinalIgnoreCase));
                     if (!hostPresent && !hostLeftNotified)
@@ -448,7 +472,10 @@ namespace Forbbiden.Client.view
 
                     UpdateReadyButtonText();
                 }
-                catch (Exception ex) { Log.Warn("Error OnPlayersUpdatedProxy", ex); }
+                catch (Exception ex)
+                { 
+                    Log.Warn("Error OnPlayersUpdatedProxy", ex);
+                }
             }));
         }
 
@@ -464,7 +491,7 @@ namespace Forbbiden.Client.view
             {
                 var p = ordered[i];
                 var username = p?.PlayerUsername ?? "";
-                slotUser[i] = username;
+                SlotUser[i] = username;
                 switch (i)
                 {
                     case 0:
@@ -485,19 +512,23 @@ namespace Forbbiden.Client.view
                         break;
                 }
 
-                lock (readyLock)
+                lock (ReadyLock)
                 {
-                    if (!readyStates.ContainsKey(username))
-                        readyStates[username] = false;
+                    if (!ReadyStates.ContainsKey(username))
+                    {
+                        ReadyStates[username] = false;
+                    }
                 }
             }
 
-            lock (readyLock)
+            lock (ReadyLock)
             {
-                foreach (var kv in readyStates.ToList())
+                foreach (var kv in ReadyStates.ToList())
                 {
                     if (!string.IsNullOrEmpty(kv.Key) && kv.Value)
+                    {
                         ApplyReadyVisual(kv.Key, true);
+                    }
                 }
             }
 
@@ -511,7 +542,7 @@ namespace Forbbiden.Client.view
             txtBkUser3.Text = "";
             txtBkUser4.Text = "";
 
-            slotUser[0] = slotUser[1] = slotUser[2] = slotUser[3] = null;
+            SlotUser[0] = SlotUser[1] = SlotUser[2] = SlotUser[3] = null;
 
             SetAvatar(imgAvatar1, null);
             SetAvatar(imgAvatar2, null);
@@ -552,8 +583,9 @@ namespace Forbbiden.Client.view
         {
             for (int i = 0; i < 4; i++)
             {
-                var slotName = slotUser[i];
-                if (!string.IsNullOrEmpty(slotName) && string.Equals(slotName, username, StringComparison.OrdinalIgnoreCase))
+                var slotName = SlotUser[i];
+                if (!string.IsNullOrEmpty(slotName)
+                    && string.Equals(slotName, username, StringComparison.OrdinalIgnoreCase))
                 {
                     Ellipse avatarEllipse = GetAvatarEllipseByIndex(i + 1);
                     if (avatarEllipse != null)
@@ -577,10 +609,14 @@ namespace Forbbiden.Client.view
         {
             switch (slot)
             {
-                case 1: return imgAvatar1;
-                case 2: return imgAvatar2;
-                case 3: return imgAvatar3;
-                case 4: return imgAvatar4;
+                case 1: 
+                    return imgAvatar1;
+                case 2:
+                    return imgAvatar2;
+                case 3:
+                    return imgAvatar3;
+                case 4:
+                    return imgAvatar4;
             }
             return null;
         }
@@ -589,13 +625,15 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                bool amHost = !string.IsNullOrEmpty(matchHost) && string.Equals(matchHost, currentPlayer, StringComparison.OrdinalIgnoreCase);
+                bool amHost = !string.IsNullOrEmpty(MatchHost) && string.Equals(
+                    MatchHost, CurrentPlayer, 
+                    StringComparison.OrdinalIgnoreCase);
 
                 if (amHost && btnReady.Content?.ToString().Equals(Properties.Resources.ready_button_start, StringComparison.OrdinalIgnoreCase) == true)
                 {
                     try
                     {
-                        await Task.Run(() => gameClient.StartMatch(matchId.ToString(), currentPlayer));
+                        await Task.Run(() => GameClient.StartMatch(MatchId.ToString(), CurrentPlayer));
                     }
                     catch (Exception ex)
                     {
@@ -606,32 +644,34 @@ namespace Forbbiden.Client.view
                 }
 
                 bool newState;
-                lock (readyLock)
+                lock (ReadyLock)
                 {
-                    readyStates.TryGetValue(currentPlayer, out bool cur);
+                    ReadyStates.TryGetValue(CurrentPlayer, out bool cur);
                     newState = !cur;
-                    readyStates[currentPlayer] = newState;
+                    ReadyStates[CurrentPlayer] = newState;
                 }
 
-                ApplyReadyVisual(currentPlayer, newState);
+                ApplyReadyVisual(CurrentPlayer, newState);
                 UpdateReadyButtonText();
 
                 try
                 {
-                    await Task.Run(() => gameClient.SetReady(matchId.ToString(), currentPlayer, newState));
+                    await Task.Run(() => GameClient.SetReady(MatchId.ToString(), CurrentPlayer, newState));
                 }
                 catch (Exception ex)
                 {
                     Log.Warn("SetReady RPC failed", ex);
-                    lock (readyLock) { readyStates[currentPlayer] = !newState; }
-                    ApplyReadyVisual(currentPlayer, !newState);
+                    lock (ReadyLock) {
+                        ReadyStates[CurrentPlayer] = !newState;
+                    }
+                    ApplyReadyVisual(CurrentPlayer, !newState);
                     UpdateReadyButtonText();
                     AddChatLine($"{Properties.Resources.system_prefix}: {Properties.Resources.ready_failed}");
                 }
             }
             catch (Exception ex)
             {
-                Log.Warn("BtnReady_Click failed", ex);
+                Log.Warn("LobbyPage.BtnReady_Click", ex);
             }
         }
 
@@ -749,7 +789,7 @@ namespace Forbbiden.Client.view
 
         private void CancelCountdown()
         {
-            try
+            if (StartCountdownTimer != null)
             {
                 if (startCountdownTimer != null)
                 {
@@ -757,7 +797,6 @@ namespace Forbbiden.Client.view
                     startCountdownTimer = null;
                 }
             }
-            catch { }
         }
 
         private void StartAvatarLoad(Ellipse avatar, GameManager.PlayerInfo p)
@@ -811,7 +850,7 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private void SetAvatarFromBytesSync(Ellipse avatar, byte[] bytes)
+        private static void SetAvatarFromBytesSync(Ellipse avatar, byte[] bytes)
         {
             try
             {
@@ -833,20 +872,29 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private async Task<string> EnsureAvatarLocalAsync(string avatarFileName)
+        private static string GetLocalPath(string avatarFileName)
         {
-            if (string.IsNullOrEmpty(avatarFileName)) return null;
+            string projectDir = ViewUtils.GetProjectDir();
+            string localAvatarsDir = Path.Combine(projectDir, "avatars");
+            Directory.CreateDirectory(localAvatarsDir);
 
+            return Path.Combine(localAvatarsDir, avatarFileName);
+        }
+
+        private static async Task<string> EnsureAvatarLocalAsync(string avatarFileName)
+        {
+            if (string.IsNullOrEmpty(avatarFileName))
+            {
+                return null;
+            }
+
+            string localPath = "";
+            ProfileManagerClient profileClient = null;
             try
             {
-                string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                string localAvatarsDir = Path.Combine(projectDir, "avatars");
-                if (!Directory.Exists(localAvatarsDir)) Directory.CreateDirectory(localAvatarsDir);
+                localPath = GetLocalPath(avatarFileName);
 
-                string localPath = Path.Combine(localAvatarsDir, avatarFileName);
-                if (File.Exists(localPath)) return localPath;
-
-                try
+                if (File.Exists(localPath))
                 {
                     var profileClient = new ProfileManagerClient();
                     try
@@ -870,13 +918,45 @@ namespace Forbbiden.Client.view
             }
             catch (Exception ex)
             {
-                Log.Warn("EnsureAvatarLocalAsync failed", ex);
+                Log.Error("LobbyPage.EnsureAvatarLocalAsync", ex);
+            }
+
+            try
+            {
+                profileClient = new ProfileManagerClient();
+                var bytes = await profileClient.GetAvatarAsync(avatarFileName);
+
+                if (bytes?.Length > 0)
+                {
+                    File.WriteAllBytes(localPath, bytes);
+                    return localPath;
+                }
+
+                profileClient.Close();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("LobbyPage.EnsureAvatarLocalAsync", ex);
+            }
+            finally
+            {
+                if (profileClient != null && profileClient.State != CommunicationState.Closed)
+                {
+                    try 
+                    {
+                        profileClient.Close();
+                    }
+                    catch
+                    { 
+                        profileClient.Abort();
+                    }
+                }
             }
 
             return null;
         }
 
-        private void SetAvatar(Ellipse avatar, string avatarFile)
+        private static void SetAvatar(Ellipse avatar, string avatarFile)
         {
             try
             {
@@ -905,22 +985,27 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private string ResolveLocalAvatarPath(string avatarPathOrFileName)
+        private static string ResolveLocalAvatarPath(string avatarPathOrFileName)
         {
-            try
+            if (string.IsNullOrEmpty(avatarPathOrFileName))
             {
-                if (string.IsNullOrEmpty(avatarPathOrFileName)) return null;
-
-                if (Path.IsPathRooted(avatarPathOrFileName) && File.Exists(avatarPathOrFileName))
-                    return avatarPathOrFileName;
-
-                string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                var candidate = Path.Combine(projectDir, "avatars", avatarPathOrFileName);
-                if (File.Exists(candidate)) return candidate;
-
                 return null;
             }
-            catch { return null; }
+
+            if (Path.IsPathRooted(avatarPathOrFileName) && File.Exists(avatarPathOrFileName))
+            {
+                return avatarPathOrFileName;
+            }
+
+            string projectDir = Directory.GetParent(
+                AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+            var candidate = Path.Combine(projectDir, "avatars", avatarPathOrFileName);
+            if (File.Exists(candidate))
+            { 
+                return candidate;
+            }
+
+            return null;
         }
     }
 }

@@ -886,7 +886,7 @@ namespace Forbbiden.Client.view.games
             }
             catch (Exception ex)
             {
-                log.Warn("SetAvatar failed", ex);
+                log.Error("RiuvPage.SetAvatar", ex);
             }
         }
 

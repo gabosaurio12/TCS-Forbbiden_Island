@@ -2,7 +2,6 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view;
-using Forbbiden.Client.view.games;
 using Forbbiden.Client.view.info;
 using log4net;
 using System;

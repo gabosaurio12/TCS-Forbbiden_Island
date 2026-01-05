@@ -1,0 +1,11 @@
+
+== Diagramas de Caso de Uso
+
+Se identificaron los siguientes casos de uso para el Jugador que interactúa con el Cliente, siendo un actor secundario el Servidor.
+
+.Casos de uso relacionados con el Perfil del Jugador
+image::../images/diagrams/usecases/ProfileUseCases.png[CU de Perfil del Jugador, width=500, align=center]
+
+.Casos de uso relacionados con el Juego
+image::../images/diagrams/usecases/GameplayUseCases.png[CU de Jugabilidad, width=500, align=center]
+

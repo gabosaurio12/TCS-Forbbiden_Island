@@ -1,16 +1,8 @@
-﻿using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.games;
-using Forbbiden.Client.view.info;
-using log4net;
+﻿using Forbbiden.Client.view.info;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -57,7 +49,10 @@ namespace Forbbiden.Client.logic
         public static byte[] GetDecodedPixelBitmapImage(
             string filePath, int maxDimension = 256, int jpegQuality = 80)
         {
-            if (!File.Exists(filePath)) return null;
+            if (!File.Exists(filePath))
+            {
+                return new List<byte>().ToArray();
+            }
 
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
