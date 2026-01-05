@@ -28,7 +28,7 @@ namespace Forbbiden.Client.view.games
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(BoardPage));
 
-        public BoardStateContext StateContext;
+        public BoardStateContext StateContext { get; set; }
         private int PendingTreasureDraws;
 
         public UserControlTile CurrentTile { get; set; }
