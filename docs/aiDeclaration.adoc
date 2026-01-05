@@ -1,0 +1,8 @@
+
+== Declaración de uso de IA
+
+=== Gabriel Antonio González López
+
+Usé únicamente la IA como apoyo para la comprensión de conceptos, patrones y estándares propios de .NET. También para investigación de patrones o soluciones ya existentes para algunos problemas o funcionalidades comunes (manejo de turnos, estados de juego o revolver cartas). No se usó para generar clases o métodos completos, pero sí para entender cómo se usa y en algunos casos generar una consulta LINQ. También lo usé un par de veces para que revisara la lógica de un método porque estaba confundido, lo cual me llevaba a refactorizar o rediseñarlo.
+
+IA utilizada: ChatGPT (GPT-5.2 o la versión gratuita cuando se acababa la cortesía de GPT-5)
