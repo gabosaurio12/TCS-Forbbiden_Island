@@ -1,0 +1,15 @@
+
+== Estándar de codificación
+
+include::introduccion.adoc[]
+include::proposito.adoc[]
+include::idioma.adoc[]
+include::reglas_nombramiento.adoc[]
+include::estilos_codigo.adoc[]
+include::namespaces.adoc[]
+include::comentarios.adoc[]
+include::manejo_excepciones.adoc[]
+include::pruebas.adoc[]
+include::seguridad.adoc[]
+include::declaracion_ia.adoc[]
+include::bibliografia.adoc[]

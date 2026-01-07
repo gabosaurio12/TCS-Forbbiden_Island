@@ -1,0 +1,4 @@
+
+== Problema
+
+Actualmente la única forma de jugar Forbidden Island es con el juego de mesa, esto requiere que los jugadores estén todos en presencial en el mismo lugar, barajear cartas, arreglar el tablero, etc. Esto en conjunto, a pesar de ser muy divertido, puede generar cierto deseo de poder jugar con amigos a distancia.

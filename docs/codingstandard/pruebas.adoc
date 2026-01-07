@@ -1,0 +1,34 @@
+
+=== Pruebas
+
+Las pruebas deberán abarcar algunos de los siguientes casos si es que aplican:
+
+1. Caso ideal
+2. Entradas límite
+3. Entradas inválidas
+4. Comportamiento con datos duplicados
+5. Efectos colaterales
+6. Excepciones
+7. Comprobación de retorno
+
+Solo deberán contar con una aserción por prueba.
+
+==== Nombrado de pruebas
+
+El nombre de una prueba consta de tres partes, la primera es el prefijo Test, seguido por el método (o comportamiento) que se probará y la última parte será el camino que se está calificando (exitoso, entradas mínimas, entradas vacías, etc.).
+
+*Buen uso*
+
+```
+public void TestLoginSuccessful()
+public void TestDatabaseConnectionWrongPassword()
+public void TestPlayersSyncInvalidToken()
+```
+
+*Mal uso*
+
+```
+public void RegisterTaskTest()
+public void CalculateSalaryWrong()
+public void TestConnectToDatabaseShouldReturnTrue()
+```

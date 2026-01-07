@@ -2,7 +2,7 @@
 = Forbbiden Island FEI Edition
 :doctype: book
 :toc: left
-:sectnums:
+:toc-title: Índice
 :icons: font
 :source-highlighter: highlight.js
 :imagesdir: images
@@ -33,7 +33,7 @@ include::views/static.adoc[]
 include::views/sequence.adoc[]
 include::views/database.adoc[]
 include::views/deployment.adoc[]
-include::codingStandard/standard.adoc[]
+include::codingstandard/codingstandard.adoc[]
 include::frameworks.adoc[]
 include::tests.adoc[]
 include::codeReport.adoc[]

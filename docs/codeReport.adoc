@@ -1,0 +1,12 @@
+
+== Reporte de código
+
+Hasta antes del pull:
+
+Reporte general de código:
+
+image::images/codeReportPre.jpeg[Reporte General, width=750, align=center]
+
+Reporte de smells:
+
+image::images/codeReportSmells.jpeg[Reporte de Smells, width=300, align=center]

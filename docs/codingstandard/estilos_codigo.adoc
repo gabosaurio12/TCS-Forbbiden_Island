@@ -1,0 +1,330 @@
+
+=== Estilos de código
+
+==== Indentación
+
+Para los espacios de indentación deberán usarse espacios en blanco como media, cada nivel equivale a 4 espacios. Un "tab" será igual a 4 espacios en blanco.
+
+*Buen uso*
+
+```
+public class Person
+{
+    private string PrivateName;
+    public string Name { get; set; }
+    
+    public void PrintName(int repetitions)
+    {
+        for (int i = 0; i < repetitions; i++)
+        {
+            Console.WriteLine(name);
+        }
+    }
+}
+```
+
+*Mal uso*
+
+```
+public class Person
+{
+  private string PrivateName;
+  public string Name { get; set; }
+}
+```
+
+==== Líneas
+
+Cada línea debe tener por mucho 120 caracteres, en caso de que se exceda esa cantidad se debe continuar en la siguiente línea cuando se encuentre alguno de los siguientes caracteres:
+
+- Operadores matemáticos (+, -, *, /).
+
+- Paréntesis (), cuando se abren o cierran.
+
+- Comas (,), especialmente en listas de argumentos.
+
+- Llaves ({}), si es el inicio o fin de un bloque de código.
+
+- Corchetes ([]), cuando se declaran o acceden a arreglos.
+
+
+*Buen uso*
+
+```
+string textType = "Very long text";
+string myVeryLongText = "This is a " + textType +
+    " I came up with");
+```
+
+*Mal uso*
+
+```
+string myVeryLongText = "This is a very long text that should be split but it's not, makint it hard to read and maintain in any code editor without horizontal scrolling."
+
+```
+
+==== Espacios en blanco
+
+Se usará un espacio en blanco cada vez que escribamos una palabra (el nombre de una variable cuenta como una palabra) o caracter:
+
+*Buen uso*
+
+```
+int totalSummatory = firstNumber + secondNumber;
+Console.WriteLine("Calculation result: " + totalSummatory);
+
+for (int currentIteration = 0; currentIteration < 10; currentIteration++)
+{
+    Console.WriteLine("Iteration: " + currentIteration);
+}
+```
+
+*Mal uso*
+
+```
+int sum=a+b;
+Console.WriteLine("Result: "+sum);
+for(int i=0;i<10;i++)
+{
+    Console.WriteLine(i);
+}
+```
+
+==== Uso de llaves
+
+Las llaves de apertura de clases, interfaces y métodos deben estar una línea después de la línea en la que se hizo la declaración. La llave de cierre debe estar en una nueva línea sola e identada para coincidir con el comienzo de la declaración.
+
+Los bloques de estructuras de control (while, for, foreach, switch) deben estar encerrados con llaves, aunque solo contengan una línea, a excepción de los if.
+
+*Buen uso*
+
+public class Client()
+{
+    public void Greet()
+    {
+        Console.WriteLine("Hello!");
+    }
+}
+
+*Mal uso*
+
+public class Client() {
+    public void Greet() { Console.WriteLine("Hello!"); }
+}
+
+==== Estructuras de control
+
+===== if - else
+
+Debe haber un espacio entre *if* y la condición, se deben utilizar llaves si el resultado es de más de una línea.
+
+El *else* debe ir en la línea de abajo de la llave de cierre del *if*.
+
+*Buen uso*
+
+```
+public void CheckAge(int studentAge)
+{
+    if (studentAge >= 18)
+    {
+        Console.WriteLine("The student is an adult.");
+    }
+    else
+    {
+        Console.WriteLine("The student is underage.");
+    }
+}
+```
+
+*Mal uso*
+
+```
+public void CheckAge(int studentAge)
+{
+    if(studentAge >= 18) {
+        Console.WriteLine("The student is an adult.");
+    } else { Console.WriteLine("The student is underage."); }
+}
+```
+
+===== If de una línea
+
+Cuando el procedimiento dentro de un *if* es de solo *una* línea y no es seguido por un *else* se pueden omitir los corchetes, esto con el fin de mejorar la legibilidad.
+
+*Buen uso*
+
+```
+public void CheckAge(int studentAge)
+{
+    if (studentAge >= 18)
+        Console.WriteLine("The student is an adult.");
+}
+```
+
+*Mal uso*
+
+```
+public void CheckAge(int studentAge)
+{
+    if (studentAge >= 18) Console.WriteLine("The student is an adult.");
+    else
+        Console.WriteLine("The student is underage.");
+}
+```
+
+===== Else If
+
+La estructura tiene que comenzar en la línea debajo de la última llave del bloque *if*. La structura *else if* tiene que ir seguida por un espcio en blanco antes de la condición y la llave de inicio.
+
+*Buen uso*
+
+```
+public void CheckGrade(int grade)
+{
+    if (grade >= 8)
+    {
+        Console.WriteLine("Excellent!");
+    }
+    else if (grade >= 6)
+    {
+        Console.WriteLine("Good!");
+    }
+    else
+    {
+        Console.WriteLine("You can do it better!");
+    }
+}
+```
+
+*Mal uso*
+
+```
+public void CheckGrade(int grade)
+{
+    if(grade >= 8)
+    {
+        Console.WriteLine("Excellent!");
+    }
+    else 
+    if(grade >= 6)
+    {
+        Console.WriteLine("Good!");
+    }
+    else
+    {
+        Console.WriteLine("You can do it better!");
+    }
+}
+```
+
+===== Switch
+
+Debe declararse en una nueva línea y debe tener un espacio antes de la condición. Cada uno de los *case* deben ser indentados un nivel.
+
+*Buen uso*
+
+```
+public void Menu(int option)
+{
+    switch (option)
+    {
+        case 1:
+            Console.WriteLine("You select the option 1");
+            break;
+        default:
+            Console.WriteLine("Select a valid option");
+            break;
+    }
+}
+```
+
+*Mal uso*
+
+```
+public void Menu(int option)
+{
+    switch(option)
+    {
+    case 1:
+    Console.WriteLine("You select the option 1");
+    break;
+    default:
+    Console.WriteLine("Select a valid option");
+    break;
+    }
+}
+```
+
+===== While
+
+Debe existir un espacio entre la palabra *while* y la condición. Siempre se deben utilizar llaves {}, incluso cuando el bloque contiene únicamente una línea.
+
+*Buen uso*
+
+```
+while (numberA >= 0)
+{
+    Console.WriteLine(numberA);
+}
+```
+
+*Mal uso*
+
+```
+while(true)
+    Console.WriteLine("Executting...");
+```
+
+===== Do-While
+
+En la línea siguiente a la palabra do debe ir la llave de inicio, la palabra while debe ir en la misma línea de la llave de cierre, separado por un espacio de la condición.
+
+*Buen uso*
+
+```
+int numberA = 0;
+do
+{
+    Console.WriteLine(numberA);
+    i++;
+} while (numberA <= 5);
+```
+
+*Mal uso*
+
+```
+string input;
+do
+{
+    input = Console.ReadLine();
+} while (!CheckInput(input));
+```
+
+===== For
+
+Debe haber un espacio entre la palabra *for* y la condición, la declaración dentro de los paréntesis debe estar separada por *;* junto con un espacio después de cada uno, la llave de inicio deberá ir en la línea siguiente a la declaraación del *for*.
+
+*Buen uso*
+
+```
+int evenCounter = 0;
+for (int currentNumber = 1; currentNumber <= 20; currentNumber++)
+{
+    if (currentNumber % 2 == 0)
+    {
+        evenCounter++;
+    }
+}
+Console.WriteLine("Even numbers:" + evenCounter);
+```
+
+*Mal uso*
+
+```
+int sum = 0;
+for(int currentNumber = 0;currentNumber<10;currentNumber++)
+{
+    sum += currentNumber;
+}
+Console.WriteLine("Sum:" + sum);
+```

@@ -1,0 +1,10 @@
+
+=== Introducción
+
+Este estándar está dirigido para estudiantes de Tecnologías para la Construcción de Software en
+la carrera de Ingeniería de Software, se recomienda usarlo para el desarrollo de los proyectos en
+clase y productos de software, con el objetivo de establecer una base para la construcción y
+lectura del código, promoviendo buenas prácticas de programación (convenciones del lenguaje
+brindadas por Microsoft), su legibilidad, orden, espaciado y nombramiento, accesibilidad a su
+mantenimiento para aquel que busque modificarlo y probarlo para verificar su seguridad y
+funcionamiento en el desarrollo de este producto de software.

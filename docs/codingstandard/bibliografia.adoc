@@ -1,0 +1,25 @@
+
+=== Bibliografía
+
+BillWagner. (n.d.-a). Identifier names - rules and conventions - C#. Microsoft Learn. 
+https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/identifier-names
+
+BillWagner. (n.d.-b). .NET Coding Conventions - C#. Microsoft Learn. 
+https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions
+
+Chidera, I. (2023, January 13). C# Coding Best Practices – Coding Conventions with Examples.
+freeCodeCamp.org. 
+https://www.freecodecamp.org/news/coding-best-practices-in-c-sharp/
+
+De Tinchicus, V. T. L. E. (2020, October 27). C# / Getter and setter. El Blog De Tinchicus.
+https://tinchicus.com/2020/10/27/c-getter-and-setter/
+
+BillWagner. (n.d.). Documentation comments - C# language specification. Microsoft Learn.
+https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/documentation-comments
+
+KrzysztofCwalina. (n.d.). Names of Namespaces - Framework design Guidelines. Microsoft Learn.
+https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-namespaces
+
+BillWagner. (n.d.-b). Instrucciones de control de excepciones: throw y try, catch, finally - C#
+reference. Microsoft Learn.
+https://learn.microsoft.com/es-es/dotnet/csharp/language-reference/statements/exception-handling-statements

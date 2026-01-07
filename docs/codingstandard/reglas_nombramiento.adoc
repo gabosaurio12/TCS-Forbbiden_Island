@@ -1,0 +1,324 @@
+
+=== Reglas de nombramiento
+
+Los nombres deben ser descriptivos, independientemente de si se está nombrando un método, variable o clase. Solo bajo algunos casos se podrán usar abreviaciones cuyo significado se podrá encontrar al final de la sección.
+
+==== Variables
+
+Para las variables se usará *camelCase* y un nombre descriptivo.
+
+*Buen uso*
+
+```
+int firstNumber;
+string clientOrder;
+bool isPrime = false;
+```
+
+*Mal uso*
+
+```
+int AccountTotal = 0;
+string Message = "hello world";
+int MAX_RND = 2000;
+```
+
+==== Campos y eventos
+
+Los campos y eventos de las clases deberán ser escritas con *PascalCase* (sin importar si son públicos, privados, internos, etc).
+
+*Buen uso*
+
+```
+private int MaxOfAccount;
+public static Random RandomInstance;
+private event Action OnMessageNotificationReceive;
+```
+
+*Mal uso*
+
+```
+private int number_Of_Orders;
+public static Queue csmrQ;
+private readonly Message;
+```
+
+Las variables constantes también deberán usar *PascalCase*.
+
+*Buen uso*
+
+```
+private const doubl Pi = 3.1459;
+public const int MaximumTry = 3;
+```
+
+*Mal uso*
+
+```
+private const int a = 10;
+public const double EULER = 2.71828;
+```
+
+==== Parámetros
+
+Para los parámetros se deberá usar camelCase junto con nombres que sean descriptivos y que reflejen un propósito y sean consistentes, se debe evitar el uso de abreviaciones.
+
+*Buen uso*
+
+```
+public void AddMountToClientCash(ref decimal clientCash, decimal mount)
+{
+    clientCash += mount;
+}
+```
+
+*Mal uso*
+
+```
+public int UpdateValue(ref decimal x, decimal y)
+{
+    x += y;
+}
+```
+
+==== Métodos
+
+Los métodos se deben nombrar según su *funcionalidad* para facilitar su lectura y comprensión, se usará _PascalCase_.
+
+*Buen uso*
+
+```
+public void CalculateSummatory(int aNumber, int bNumber)
+{
+    return aNumber + bNumber;
+}
+```
+
+*Mal uso*
+
+```
+public int calculatesum(int a, int b)
+{
+    return a + b;
+}
+
+public void P()
+{
+    Console.WriteLine("HelloWorld");
+}
+```
+
+==== Interfaces
+
+Las interfaces deben comenzar con la letra I mayúsucla (de Interface) seguido por el nombre de la interfaz escrito en _PascalCase_. El nombre debe ser descriptivo y representar una capacidad o contrato que implementan las clases.
+
+Cuando sean comportamientos se deben usar adjetivos o participios que terminen en "able" o "ible".
+
+*Buen uso*
+
+```
+public interface IPrinter
+{
+    void Print();
+}
+```
+
+*Mal uso*
+
+```
+public interface Client
+{
+    void DoSomething();
+}
+
+public interface IL()
+{
+    void Login();
+}
+```
+
+==== Clases
+
+Las clases deberán ser nombradas con un sustantivo descriptivo y escritas con _PascalCase_.
+
+*Buen uso*
+
+```
+public class Client
+{
+    private string Name { get; set; }
+}
+```
+
+*Mal uso*
+
+```
+public class myClass
+{
+    public string race;
+    public string name;
+}
+```
+
+===== Métodos get y set
+
+Las propiedades deben ser escritas en PascalCase y deben ser sustantivos que describen el valor.
+
+Se utiliza get para obtener valores y set para asignar respectivamente, siempre se escriben en minúsculas debido a que forman parte del lenguaje.
+
+Se pueden crear propiedades personalizadas para agregar lógica adicional al leer o asignar un valor.
+
+Se utilizan las propiedades para:
+
+- Validar datos antes de asignarlos.
+
+- Aplicar reglas de negocio.
+
+- Transformar información antes de devolverla.
+
+No se debe ocupar verbos como GetId o SetAge.
+
+*Buen uso* de propiedades automáticas
+
+```
+public class Client
+{
+    public string Name { get; set; }
+}
+```
+
+*Buen uso* de propiedades personalizadas
+
+```
+public class Client
+{
+    private int PrivateAge;
+    public int Age
+    {
+        get { return age; }
+        set
+        {
+            if (value < 0)
+            {
+                throw new ArgumentException("Age cant' be negative");
+            }
+            PrivateAge = value;
+        }
+    }
+}
+```
+
+*Mal uso*
+
+```
+public class Client
+{
+    public string getName {get; set; }
+}
+```
+
+==== Abreviaturas válidas
+
+[cols="1,1"]
+
+|===
+
+|*Abreviatura*
+|*Significado*
+
+|DAO
+|Data Access Object
+
+|DB
+|DataBase
+
+|Rand
+|Random
+
+|Max
+|Maximum
+
+|Min
+|Minimum
+
+|===
+
+
+==== Prefijos
+
+Especificamente en la capa gráfica se permitirán el uso de prefijos, a continuación se nombrarán los prefijos utilizados y sus significados, no deberán usarse otros que no estén en esta lista. Se deja a consideración del desarrollador si usarlos o no.
+
+[cols="1,1"]
+
+|===
+
+|*Prefijo*
+|*Significado*
+
+|Btn
+|Button
+
+|Lbl
+|Label
+
+|TxtBk
+|TextBlock
+
+|TxtBx
+|TextBox
+
+|PwdBx
+|PasswordBox
+
+|ChkBx
+|CheckBox
+
+|RBtn
+|RadioButton
+
+|CbBox
+|ComboBox
+
+|LstBox
+|ListBox
+
+|Sli
+|Slider
+
+|PBar
+|ProgressBar
+
+|Img
+|Image
+
+|MdElem
+|MediaElement
+
+|Lay
+|Layout
+
+|Stack
+|StackPanel
+
+|===
+
+*Buen uso*
+
+```
+<StackPanel x:Name="InteractionStack" Orientation="Vertical">
+    <TextBlock x:Name="TxtbkTitle2 Text = "Super App" />
+    <Slider x:Name="sliUserAge" Minimum="1" Maximum="120" />
+    <Button x:Name="BtnPlay" Content="Play" />
+    <Button x:Name="BtnQuit" Content="Quit" />
+</StackPanel>
+```
+
+*Mal uso*
+
+```
+<StackPanel x:Name="istack" Orientation="Vertical">
+    <Label x:Name="lbAge" />
+    <Slider x:Name="SAge" Minimum="1" Maximum="110" />
+    <Button x:Name="ButtQuit" Content="Quit" />
+</StackPanel>
+```
