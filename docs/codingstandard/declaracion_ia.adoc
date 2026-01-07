@@ -1,0 +1,4 @@
+
+=== Declaración de IA
+
+Se declara el uso de IA para verificar la gramática del estándar, generación de ejemplos y comprensión de algunos temas.

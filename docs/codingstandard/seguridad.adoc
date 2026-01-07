@@ -1,0 +1,14 @@
+
+=== Seguridad
+
+Desarrollar un sistema seguro es de gran importancia, especialmente si será un sistema con conexión en red, por lo que mencionamos aquí las principales pautas a seguir para poder mantener la información íntegra y privada.
+
+- Las contraseñas de los usuarios deberán estar hasheadas.
+- Las credenciales del sistema para ingresar a bases de datos o algún otro sistema deberán guardarse en otro archivo de configuración al que se accederá desde el código.
+** Una opción es usar variables de entorno.
+- *Jamás debe haber credenciales en el código*.
+- El código deberá estar libre de smells y no deberá ser susceptible a inyecciones, esto se puede revisar con alguna herramienta de revisión de código como SonarQube.
+- Las contraseñas deberán tener una longitud mínima de 8 caracteres y al menos un caracter de los siguientes:
+** Mayúsculas
+** Minúsculas
+** Número

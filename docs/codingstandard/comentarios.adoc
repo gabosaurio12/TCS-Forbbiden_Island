@@ -1,0 +1,136 @@
+
+=== Comentarios
+
+El uso de comentarios solo será permitido cuando la implementación que se dio es fuera de lo normal o requiere una explicación más avanzada y para anotar banderas de desarrollo.
+
+==== Comentarios de línea única
+
+Los comentarios de línea única deben estar rodeados de una línea en blanco, se usarán para expresar:
+
+- *TO-DO*: Funcionalidad que debe codificarse
+- *FIX*: Se debe arreglar alguna parte de ese código o funcionalidad
+- *TEST*: Se necesita probar esa funcionalidad
+- *REFACTOR*: Se debe refactorizar esa funcionalidad
+
+El mensaje debe estar entre dobles diagonales, un espacio y tres asteriscos:
+
+```
+// *** TO-DO *** //
+```
+
+*Buen uso*
+
+```
+// *** FIX *** //
+
+public void FibonacciSequence()
+{
+}
+
+// *** TO-DO *** //
+
+public void EulerSequence()
+{
+}
+
+// *** REFACTOR *** //
+
+public async Task GetAllStudents()
+{
+}
+```
+
+Donde _GetAllStudents()_ es un método de más de 30 líneas, viola el principio de responsabilidad única o tiene una complejidad ciclomática de más de 10, por poner algunos ejemplos.
+
+*Mal uso*
+
+```
+// This method has x functionality
+public void SuperCalculator()
+{
+}
+
+public void foo(List<T> l)
+{
+    // iterate over list
+    foreach (var something in l)
+    {
+        // process somoething
+    }
+}
+```
+
+==== Comentarios de bloque
+
+Los comentarios de bloque se pueden ocupar (no son recomendados) únicamente para explicar una implementación extraña en algún método ya probado, por ejemplo:
+
+- Implementaciones que no sean entendibles en una primera lectura.
+- Soluciones que no siguen un patrón ya existente para ese problema.
+-- Se debe explicar por qué no se usó la solución ya existente y probada.
+
+En general, los comentarios jamás deben explicar qué hace el código, sino el por qué se escribió así (en caso de que requiera explicación).
+
+Para comentar en bloque se usarán los comentarios multi línea (/*, */), se abrirá el comentario y se comenzará a escribir el comentario en la línea siguiente y se cerrará el comentario una línea después de que termine el mensaje.
+
+*Buen uso*
+
+```
+/*
+ShuffleCards is built this way because...
+*/
+
+public void ShuffleCards(List<Card> cards)
+{
+}
+```
+
+*Mal uso*
+
+```
+/* This method doesn't work well
+*/
+
+/*
+ This method is for...
+*/
+```
+
+En el segundo ejemplo del mal uso es incorrecto porque la funcionalidad de un método debe poderse deducir por su nombre, por lo que un comentario no debe explicar el qué hace.
+
+==== Comentarios de API pública
+
+Conocidos como _Comentarios de Documentación_, se escribe con tres diagonales (///), es recomendable que incluya un summary mediante una etiqueta XML (<sumary></summary>) donde se escribe un resumen del método y las etiquetas que correspondan, las más comunes son:
+
+- <param name="..."> Explica cada parámetro.
+- <returns> Describe qué devuelve la función.
+- <remarks> Agrega notas adicionales (a mayor detalle).
+- <example> Muestra un ejemplo de uso.
+- <exception> Describe la excepcion que la API puede tirar y bajo qué circunstancias.
+
+===== Ejemplo
+
+```
+/// <summary>
+/// Represents a basic calculator
+/// </summary>
+public class Calculator
+{
+    /// <summary>
+    /// Subtraction of two numbers
+    /// </summary>
+    /// <param name=”firstNumber”> The number we are subtracting of</param>
+    /// <param name=”secondNumber”> The number we are subtracting to firstNumber </param>
+    /// <returns> The remainder of firstNumber - secondNumber </returns>
+    /// <example>
+    /// Example of use:
+    /// <code>
+    /// var calculator = new Calculator();
+    /// int result = calculator.Substraction(10, 3);
+    /// </code>
+    /// </example>
+
+    public int Subtraction(int firstNumber, int secondNumber)
+    {
+        return firstNumber - secondNumber;
+    }
+```

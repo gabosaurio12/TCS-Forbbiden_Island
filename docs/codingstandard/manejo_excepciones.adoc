@@ -1,0 +1,107 @@
+
+=== Manejo de Excepciones
+
+Las excepciones se deben propagar cuando los métodos donde puede ocurrir la excepción se llamarán desde otro método de otra clase, y en la case donde se llaman es donde se capturarán las excepciones lanzadas. Un ejemplo de esto es un DAO que puede lanzar un SQLException, dentor del DAO se propagan mientras que capturamos las excepciones cuando los mandamos a llamar.
+
+En el caso de que un cliente llame a un método de un servidor el servidor registra en su log la excepción y le envía al cliente un _FaultException_ con la información que le interesa.
+
+Todos los errores se deben registrar en la bitácora (logger). En caso de que un error cause el cierre total del programa se debe informar al usuario que hubo un error inesperado y que se cerrará la aplicación, en casos como estos es de suma importancia que se registre en la bitácora. Se debe intentar perder la menor cantidad de información posible.
+
+Siempre que ocurra un error se debe informar a los interesados, por ejemplo, si no se pudo escribir alguna actualización solicitada por el usuario se le deberá avisar mediante un mensaje en la pantalla, si hubo algún error de compilación o vulnerabilidad que no afecte directamente a la UX se deberá registrar en el logger e informar al desarrollador.
+
+Las excepciones de tipo Exception se usarán como último recurso en el nivel de cacheo, es decir, primero se atraparán las excepciones específicas y por último la de tipo Exception en caso de ser necesario. Este manejo debe estar muy bien vigilado y justificado porque puede resultar en un antipatrón.
+
+==== Manejador de log (bitácora)
+
+Se debe usar *log4Net* para darle seguimiento a los errores y excepciones, se deberá mostrar el log en consola y en un archivo .log.
+
+En el mensaje del log se debe indicar en qué clase y método se causó la excepción. De la siguiente manera: "Clase.Método", ya después irá la excepción.
+
+*Buen uso*
+
+```
+catch (SQLException ex)
+{
+    logger.error("Trainer.CatchPokemon", ex);
+}
+
+catch (DivideByZeroException ex)
+{
+    logger.fatal("Calculator.Divide", ex);
+}
+```
+
+*Mal uso*
+
+```
+catch (SQLException e)
+{
+    logger.error("Error reading something", e);
+}
+
+catch (EntityException e)
+{
+    logger.error(e);
+}
+```
+
+==== Identificación de tipos de error
+
+===== Fatales
+
+Se consideran fatales las excepciones de las que la aplicación no podrá recuperarse y deberá cerrarse, por ejemplo:
+
+- OutOfMemoryException
+- StackOverflowException
+- FileNotFoundException (de archivos críticos de la aplicación)
+
+===== Errores
+
+Se considerar errores las excepciones de las cuales sí se puede recuperar la aplicación, por ejemplo:
+
+- IOException
+- NullReferenceException
+- EntityException
+
+===== Advertencias
+
+Se consideran advertencias las excepciones que sean momentáneas, es decir, que por alguna razón extraordinaria sucedieron y si se vuelve a ejecutar el proceso no deberían volver a pasar. También entran en esta categoría las que no afecten el rendimiento y/o funcionamiento de la aplicación. Ejemplos:
+
+- TimeoutException
+- ResourceNotFoundException
+- FileNotFoundException (En el caso de archivos que no afectan el funcionamiento del sistema, como fotos de perfil)
+
+==== Bloques Try-Catch
+
+Dentro del *try*, de preferencia, solo deberá estar el código que pueda lanzar una excepción, y la variable que almacena la excepción atrapada deberá llevar el nombre _ex_.
+
+Las llaves deberán estar abajo de la declaración del *try* y *catch*.
+
+Se evitará el uso de atrapar _Exception_ genérica y se recomienda el uso de excepciones específicas.
+
+*Buen uso*
+
+```
+try
+{
+    int[] numbers = {1, 2, 3};
+    Console.WriteLine(numbers[5]);
+}
+catch (IndexOutOfRangeException ex)
+{
+    logger.error("NumberArray.PrintNumber" + ex);
+}
+```
+
+Nota: Este fragmento siempre lanzará excepción, solo es un ejemplo.
+
+*Mal uso*
+
+```
+try {
+    int[] numbers = {1, 2, 3};
+    Console.WriteLine(numbers[5]);
+} catch (Exception e) {
+    Console.WriteLine(e.Message);
+}
+```
