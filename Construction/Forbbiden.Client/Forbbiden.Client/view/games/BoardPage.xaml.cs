@@ -82,19 +82,6 @@ namespace Forbbiden.Client.view.games
             PlayerLogic.MatchBoardPage = this;
         }
 
-        private void InitAttributes()
-        {
-            StateContext = new BoardStateContext(this);
-
-            string projectDir = ViewUtils.GetProjectDir();
-            ImagesPath = System.IO.Path.Combine(
-                projectDir, "Images");
-            CardsImagesPath = System.IO.Path.Combine(
-                projectDir, ImagesPath, "cards");
-
-            PlayerCards = new List<Card>();
-        }
-
         private void InitBoardPage(MatchManager.Match match)
         {
             SetBoard();
