@@ -67,9 +67,14 @@ namespace Forbbiden.Client
                 var client = new ProfileManagerClient();
                 player = await client.LoginAsync(player.PlayerUsername, player.PlayerPassword);
             }
-            catch (FaultException<DBFault> dbFault)
+            catch (FaultException<Fault> fault)
             {
-                Log.Error("ERROR: LoginPage.BtnLogin_Click", dbFault);
+                Log.Error("LoginPage.BtnLogin_Click", fault);
+                ViewUtils.ShowPullError(Window.GetWindow(this));
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error("LoginPage.BtnLogic_Click", ex);
                 ViewUtils.ShowPullError(Window.GetWindow(this));
             }
 

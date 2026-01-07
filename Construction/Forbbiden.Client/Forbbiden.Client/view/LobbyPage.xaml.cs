@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,9 +35,9 @@ namespace Forbbiden.Client.view
         private bool inviteLoading = false;
         private static readonly ILog Log = LogManager.GetLogger(typeof(LobbyPage));
         private bool kickedNotified = false;
-        private DispatcherTimer timer;
-        private GameManagerClient gameClient;
-        private GameServiceCallback callback;
+        private DispatcherTimer Timer;
+        private GameManagerClient GameClient;
+        private GameServiceCallback Callback;
 
         private readonly int MatchId;
         private readonly string CurrentPlayer;
@@ -56,24 +57,13 @@ namespace Forbbiden.Client.view
         private DispatcherTimer StartCountdownTimer;
         private int CountdownValue;
 
-        private Action<GameManager.PlayerInfo[]> playersUpdatedHandler;
-        private Action<string, string> chatMessageHandler;
-        private Action gameStartingHandler;
-        private Action<string, bool> readyStateHandler;
-        private Action matchStartingHandler;
+        private Action<GameManager.PlayerInfo[]> PlayersUpdatedHandler;
+        private Action<string, string> ChatMessageHandler;
+        private Action GameStartingHandler;
+        private Action<string, bool> ReadyStateHandler;
+        private Action MatchStartingHandler;
 
         private bool hostLeftNotified = false;
-
-        private void UnsubscribeCallbacks()
-        {
-            if (callback == null) return;
-
-            try { callback.PlayersUpdated -= playersUpdatedHandler; } catch { }
-            try { callback.ChatMessageReceived -= chatMessageHandler; } catch { }
-            try { callback.GameStarting -= gameStartingHandler; } catch { }
-            try { callback.ReadyStateChanged -= readyStateHandler; } catch { }
-            try { callback.MatchStarting -= matchStartingHandler; } catch { }
-        }
 
         private void LobbyPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -92,16 +82,16 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
             MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username);
-            this.matchId = matchId;
-            this.currentPlayer = username;
-            this.gameClient = gameClient;
-            this.callback = callback;
+            MatchId = matchId;
+            CurrentPlayer = username;
+            GameClient = gameClient;
+            Callback = callback;
 
-            playersUpdatedHandler = OnPlayersUpdatedProxy;
-            chatMessageHandler = (p, m) => Dispatcher.BeginInvoke(new Action(() => ShowChatMessageFromServer(p, m)));
-            gameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => AddChatLine($"{Properties.Resources.system_prefix}: {Properties.Resources.countdown_starting}")));
-            readyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(new Action(() => OnReadyStateChanged(user, isReady)));
-            matchStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => OnMatchStarting()));
+            PlayersUpdatedHandler = OnPlayersUpdatedProxy;
+            ChatMessageHandler = (p, m) => Dispatcher.BeginInvoke(new Action(() => ShowChatMessageFromServer(p, m)));
+            GameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => AddChatLine($"{Properties.Resources.system_prefix}: {Properties.Resources.countdown_starting}")));
+            ReadyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(new Action(() => OnReadyStateChanged(user, isReady)));
+            MatchStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => OnMatchStarting()));
 
             if (Callback != null)
             {
@@ -122,16 +112,16 @@ namespace Forbbiden.Client.view
                 this.Focusable = true;
                 this.Focus();
                 this.PreviewKeyDown += LobbyPage_PreviewKeyDown;
-                txtChatPrefix.Text = $"{currentPlayer}:";
+                txtChatPrefix.Text = $"{CurrentPlayer}:";
                 txtChatMessage.Focus();
             };
         }
 
         private void ShowGameStartingNotification()
         {
-            string title = Properties.Langs.Resources.game_starting_title;
-            string message = Properties.Langs.Resources.game_starting_message;
-            ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+            /*string title = Properties.Resources.game_starting_title;
+            string message = Properties.Resources.game_starting_message;
+            ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));*/
         }
 
         private void SubscribeCallbacks()
@@ -170,8 +160,8 @@ namespace Forbbiden.Client.view
                 return;
             }
 
-            bool amHost = !string.IsNullOrEmpty(matchHost) &&
-                          string.Equals(matchHost, currentPlayer, StringComparison.OrdinalIgnoreCase);
+            bool amHost = !string.IsNullOrEmpty(MatchHost) &&
+                          string.Equals(MatchHost, CurrentPlayer, StringComparison.OrdinalIgnoreCase);
 
             if (!amHost && playerCount < 2)
             {
@@ -200,8 +190,8 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                var mClient = new MatchManagerClient();
-                Match match = null;
+                var matchClient = new MatchManagerClient();
+                MatchManager.Match match = null;
                 try
                 {
                     match = await Task.Run(() => matchClient.GetMatchById(MatchId));
@@ -220,8 +210,6 @@ namespace Forbbiden.Client.view
 
                 if (match != null)
                 {
-                    matchCapacity = match.Capacity > 0 ? match.Capacity : 4;
-                    matchHost = match.HostUsername;
                     isPrivateMatch = string.Equals(match.Visibility, "Private", StringComparison.OrdinalIgnoreCase);
 
                     int initialCount = match.Players?.Count() ?? 0;
@@ -244,7 +232,7 @@ namespace Forbbiden.Client.view
                 string code = null;
                 try
                 {
-                    code = await Task.Run(() => mClient.GetInviteCode(matchId));
+                    code = await Task.Run(() => mClient.GetInviteCode(MatchId));
                 }
                 finally
                 {
@@ -371,9 +359,9 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                var serverPlayers = gameClient.GetPlayers(matchId.ToString());
+                var serverPlayers = GameClient.GetPlayers(MatchId.ToString());
 
-                previousPlayers = serverPlayers?
+                PreviousPlayers = serverPlayers?
                     .Select(p => p?.PlayerUsername)
                     .Where(u => !string.IsNullOrEmpty(u))
                     .ToList()
@@ -407,10 +395,10 @@ namespace Forbbiden.Client.view
 
             try
             {
-                if (gameClient != null)
+                if (GameClient != null)
                 {
-                    try { gameClient.Close(); }
-                    catch { gameClient.Abort(); }
+                    try { GameClient.Close(); }
+                    catch { GameClient.Abort(); }
                 }
             }
             catch { }
@@ -443,7 +431,7 @@ namespace Forbbiden.Client.view
 
                     PreviousPlayers = current;
 
-                    bool hostPresent = string.IsNullOrEmpty(matchHost) || current.Any(u => string.Equals(u, matchHost, StringComparison.OrdinalIgnoreCase));
+                    bool hostPresent = string.IsNullOrEmpty(MatchHost) || current.Any(u => string.Equals(u, MatchHost, StringComparison.OrdinalIgnoreCase));
                     if (!hostPresent && !hostLeftNotified)
                     {
                         hostLeftNotified = true;
@@ -454,7 +442,7 @@ namespace Forbbiden.Client.view
                         return;
                     }
 
-                    if (!kickedNotified && !current.Any(u => string.Equals(u, currentPlayer, StringComparison.OrdinalIgnoreCase)))
+                    if (!kickedNotified && !current.Any(u => string.Equals(u, CurrentPlayer, StringComparison.OrdinalIgnoreCase)))
                     {
                         kickedNotified = true;
                         CancelCountdown();
@@ -560,11 +548,11 @@ namespace Forbbiden.Client.view
 
                 try
                 {
-                    lock (readyLock)
+                    lock (ReadyLock)
                     {
-                        if (!readyStates.ContainsKey(username))
+                        if (!ReadyStates.ContainsKey(username))
                             return;
-                        readyStates[username] = ready;
+                        ReadyStates[username] = ready;
                     }
 
                     ApplyReadyVisual(username, ready);
@@ -679,10 +667,10 @@ namespace Forbbiden.Client.view
         {
             try
             {
-                bool amHost = !string.IsNullOrEmpty(matchHost) && string.Equals(matchHost, currentPlayer, StringComparison.OrdinalIgnoreCase);
-                int currentPlayers = slotUser.Count(s => !string.IsNullOrEmpty(s));
+                bool amHost = !string.IsNullOrEmpty(MatchHost) && string.Equals(MatchHost, CurrentPlayer, StringComparison.OrdinalIgnoreCase);
+                int currentPlayers = SlotUser.Count(s => !string.IsNullOrEmpty(s));
                 int readyCount;
-                lock (readyLock) { readyCount = readyStates.Count(kv => kv.Value && !string.IsNullOrEmpty(kv.Key)); }
+                lock (ReadyLock) { readyCount = ReadyStates.Count(kv => kv.Value && !string.IsNullOrEmpty(kv.Key)); }
                 bool allPresentReady = (currentPlayers > 0 && readyCount == currentPlayers);
 
                 if (amHost)
@@ -694,7 +682,7 @@ namespace Forbbiden.Client.view
                 }
                 else
                 {
-                    btnReady.Content = readyStates.TryGetValue(currentPlayer, out bool r) && r
+                    btnReady.Content = ReadyStates.TryGetValue(CurrentPlayer, out bool r) && r
                         ? Properties.Resources.ready_button_unready
                         : Properties.Resources.ready_button_ready;
                 }
@@ -720,22 +708,22 @@ namespace Forbbiden.Client.view
             countdownToken++;
 
             int localToken = countdownToken;
-            countdownValue = 3;
+            CountdownValue = 3;
 
-            AddChatLine($"{Properties.Resources.system_prefix}: {string.Format(Properties.Resources.countdown_number, countdownValue)}");
+            AddChatLine($"{Properties.Resources.system_prefix}: {string.Format(Properties.Resources.countdown_number, CountdownValue)}");
 
-            startCountdownTimer = new DispatcherTimer
+            StartCountdownTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(1)
             };
 
-            startCountdownTimer.Tick += (_, __) =>
+            StartCountdownTimer.Tick += (_, __) =>
             {
                 if (isClosing || localToken != countdownToken) return;
                 StartCountdownTimer_Tick();
             };
 
-            startCountdownTimer.Start();
+            StartCountdownTimer.Start();
         }
 
         private async void OpenBoardAsync(int matchId)
@@ -749,7 +737,7 @@ namespace Forbbiden.Client.view
             try
             {
                 var mClient = new MatchManagerClient();
-                Match match = null;
+                MatchManager.Match match = null;
                 try
                 {
                     match = await Task.Run(() => mClient.GetMatchById(matchId));
@@ -773,17 +761,17 @@ namespace Forbbiden.Client.view
 
         private void StartCountdownTimer_Tick()
         {
-            countdownValue--;
+            CountdownValue--;
 
-            if (countdownValue > 0)
+            if (CountdownValue > 0)
             {
-                AddChatLine($"{Properties.Resources.system_prefix}: {string.Format(Properties.Resources.countdown_number, countdownValue)}");
+                AddChatLine($"{Properties.Resources.system_prefix}: {string.Format(Properties.Resources.countdown_number, CountdownValue)}");
             }
             else
             {
                 CancelCountdown();
                 AddChatLine($"{Properties.Resources.system_prefix}: {Properties.Resources.countdown_go}");
-                OpenBoardAsync(matchId);
+                OpenBoardAsync(MatchId);
             }
         }
 
@@ -791,10 +779,10 @@ namespace Forbbiden.Client.view
         {
             if (StartCountdownTimer != null)
             {
-                if (startCountdownTimer != null)
+                if (StartCountdownTimer != null)
                 {
-                    startCountdownTimer.Stop();
-                    startCountdownTimer = null;
+                    StartCountdownTimer.Stop();
+                    StartCountdownTimer = null;
                 }
             }
         }
@@ -896,7 +884,7 @@ namespace Forbbiden.Client.view
 
                 if (File.Exists(localPath))
                 {
-                    var profileClient = new ProfileManagerClient();
+                    profileClient = new ProfileManagerClient();
                     try
                     {
                         var bytes = profileClient.GetAvatar(avatarFileName);
@@ -910,10 +898,6 @@ namespace Forbbiden.Client.view
                     {
                         try { profileClient.Close(); } catch { profileClient.Abort(); }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.Warn("Error descargando avatar desde ProfileManager", ex);
                 }
             }
             catch (Exception ex)

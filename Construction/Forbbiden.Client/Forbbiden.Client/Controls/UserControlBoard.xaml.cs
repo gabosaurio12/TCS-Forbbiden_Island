@@ -138,7 +138,7 @@ namespace Forbbiden.Client.Controls
                 {
                     treasureCard = Client.GetCard(treasureImage);
                 }
-                catch (FaultException<DBFault> ex)
+                catch (FaultException<Fault> ex)
                 {
                     string classMethod = "UserControlBoard.SetTreasureTiles";
                     Log.Error(classMethod, ex);
@@ -175,7 +175,7 @@ namespace Forbbiden.Client.Controls
             {
                 tilesCards = Client.GetFloodCards();
             }
-            catch (FaultException<DBFault> ex)
+            catch (FaultException<Fault> ex)
             {
                 string classMethod = "UserControlBoard.SetNonTreasureTiles";
                 Log.Error(classMethod, ex);

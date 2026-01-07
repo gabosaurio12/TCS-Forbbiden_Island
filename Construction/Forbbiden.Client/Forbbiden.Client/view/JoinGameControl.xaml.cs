@@ -2,13 +2,11 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.view.info;
-using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -41,7 +39,7 @@ namespace Forbbiden.Client.view
                 matchClient = new MatchManagerClient();
                 var matches = matchClient.ListMatches();
 
-                allMatches = matches.Select(m =>
+                AllMatches = matches.Select(m =>
                 {
                     int playersCount = 0;
                     try
@@ -79,44 +77,19 @@ namespace Forbbiden.Client.view
                     };
                 }).ToList();
 
-                MatchList.ItemsSource = allMatches;
+                MatchList.ItemsSource = AllMatches;
             }
             catch (Exception ex)
             {
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.loading_matches_error;
+                Log.Error("JoinGameControl.LoadMatches", ex);
+                string title = Properties.Resources.error;
+                string message = Properties.Resources.loading_matches_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             finally
             {
                 CloseMatchClient(matchClient);
             }
-        }
-
-        private MatchItem MapToMatchItem(Match match)
-        {
-            int playersCount = GetPlayersCount(match.Players);
-            int capacity = match.Capacity > 0 ? match.Capacity : 4;
-            string visibility = match.Visibility ?? "Public";
-
-            return new MatchItem
-            {
-                MatchId = match.MatchId,
-                MatchName = match.MatchName,
-                RoomName = !string.IsNullOrWhiteSpace(match.MatchName)
-                    ? match.MatchName
-                    : $"Room {match.MatchId}",
-
-                HostName = match.HostUsername ?? "Unknown",
-                PlayersInfo = $"{playersCount}/{capacity}",
-                CurrentPlayers = playersCount,
-                Capacity = capacity,
-                Difficulty = match.Difficulty ?? "Normal",
-                Visibility = visibility,
-                LockIcon = visibility.Equals("Private", StringComparison.OrdinalIgnoreCase)
-                    ? "/Images/lock.png"
-                    : "/Images/unlock.png"
-            };
         }
 
         public static void CloseMatchClient(MatchManagerClient client)
@@ -142,18 +115,6 @@ namespace Forbbiden.Client.view
                 client.Abort();
             }
         }
-
-
-        private static int GetPlayersCount(MatchManager.PlayerInfo[] players)
-        {
-            if (players == null)
-            {
-                return 0;
-            }
-
-            return players.Count();
-        }
-
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -184,8 +145,8 @@ namespace Forbbiden.Client.view
 
             if (currentPlayer.PlayerId == -1)
             {
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.unexpected_error;
+                string title = Properties.Resources.error;
+                string message = Properties.Resources.unexpected_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 return;
             }
@@ -200,7 +161,6 @@ namespace Forbbiden.Client.view
                 return;
             }
 
-            // Validación de código de invitación si es privada
             bool isPrivate = string.Equals(match.Visibility, Properties.Resources.visibility_private_key, StringComparison.OrdinalIgnoreCase);
             string inviteCode = null;
             if (isPrivate)
@@ -212,7 +172,7 @@ namespace Forbbiden.Client.view
                 }
                 else
                 {
-                    return; // canceló
+                    return;
                 }
 
                 var mClient = new MatchManagerClient();
@@ -223,7 +183,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (Exception ex)
                 {
-                    //falta
+                    Log.Error("JoinGameControl.JoinButton_Click", ex);
                 }
                 finally
                 {
@@ -239,81 +199,36 @@ namespace Forbbiden.Client.view
                     return;
                 }
             }
-                string title = Properties.Langs.Resources.advice_title;
-                string message = Properties.Langs.Resources.match_is_full_advice_message;
-                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
-                return;
-            }
-
-            var callback = new GameServiceCallback();
-            var context = new InstanceContext(callback);
-            var gameClient = new GameManagerClient(context);
 
             string username = currentPlayer.PlayerUsername;
 
-            bool joined = await JoinToAMatch(match, currentPlayer, gameClient);
+            string avatarFileName = null;
+            try
+            {
+                var avatarPath = currentPlayer?.PlayerAvatarPath;
+                if (!string.IsNullOrEmpty(avatarPath))
+                {
+                    avatarFileName = System.IO.Path.GetFileName(avatarPath);
+                }
+            }
+            catch { }
+
+            var callback = new GameServiceCallback();
+            var context = new InstanceContext(callback);
+
+            var gameClient = new GameManagerClient(context);
+
+            bool joined = await gameClient.JoinGameAsync(
+                match.MatchId.ToString(),
+                username,
+                null,
+                avatarFileName
+            );
 
             if (!joined)
             {
-                string avatarFileName = null;
-                try
-                {
-                    var avatarPath = currentPlayer?.PlayerAvatarPath;
-                    if (!string.IsNullOrEmpty(avatarPath))
-                    {
-                        avatarFileName = System.IO.Path.GetFileName(avatarPath);
-                    }
-                }
-                catch { }
-
-                var callback = new GameServiceCallback();
-                var context = new InstanceContext(callback);
-
-                var gameClient = new GameManagerClient(context);
-
-                bool joined = await gameClient.JoinGameAsync(
-                    match.MatchId.ToString(),
-                    username,
-                    null,
-                    avatarFileName
-                );
-
-                if (!joined)
-                {
-                    var wnd = new NotificationWindow(
-                        Properties.Resources.join_banned_title,
-                        Properties.Resources.join_banned_message);
-                    wnd.Owner = Window.GetWindow(this);
-                    wnd.ShowDialog();
-                    return;
-                }
-
-                var lobbyPage = new LobbyPage(
-                    match.MatchId,
-                    username,
-                    gameClient,
-                    callback
-                );
-
-                NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    string.Format(Properties.Resources.join_error, ex.Message),
-                    Properties.Resources.error_title,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
-            }
-            finally
-            {
-                if (matchClient != null)
-                {
-                    try { matchClient.Close(); } catch { matchClient.Abort(); }
-                }
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.join_match_error;
+                string title = Properties.Resources.join_banned_title;
+                string message = Properties.Resources.join_banned_message;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                 return;
             }

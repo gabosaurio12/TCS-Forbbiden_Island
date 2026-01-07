@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.100.15:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="1f964661-172b-4555-8f51-70a998489115" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="cb389830-40d7-4f9d-93db-d125d0034f69" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="714f4a57-81bf-4084-8a65-3848650d1880" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="1635256f-9124-40f6-a857-695cfa1eafb4" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service11.wsdl" MetadataType="Wsdl" ID="8211f1b1-ebc4-4513-bd4c-8250be475294" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service22.xsd" MetadataType="Schema" ID="35e7bd05-b399-44b1-b428-0688e267a664" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service23.xsd" MetadataType="Schema" ID="f1524ff5-5aac-4e54-a2b8-8b489ea55862" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts11.xsd" MetadataType="Schema" ID="40473e54-0637-4a3e-88f4-30b175a890c1" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8086/FriendsNotificationManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -36,9 +36,9 @@ namespace Forbbiden.Client.view
             {
                 await client.DisconnectPlayerByUsernameAsync(username);
             }
-            catch (FaultException<DBFault> dbFault)
+            catch (FaultException<Fault> fault)
             {
-                Log.Error("ERROR: LoginPage.ConnectPlayer", dbFault);
+                Log.Error("ERROR: LoginPage.ConnectPlayer", fault);
                 ViewUtils.ShowPushError(Window.GetWindow(this));
             }
         }
@@ -60,7 +60,7 @@ namespace Forbbiden.Client.view
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            DisconnectPlayer(ClientSession.Username);
+            _= DisconnectPlayer(ClientSession.Username);
             ClientSession.SetGuestSession();
             Properties.PlayerSettings.Default.CurrentPlayerId = 0;
             Properties.PlayerSettings.Default.Save();

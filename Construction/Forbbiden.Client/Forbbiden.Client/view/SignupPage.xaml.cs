@@ -109,7 +109,7 @@ namespace Forbbiden.Client
                     TurnTextBlockRed(txtBkUsername);
                 }
             }
-            catch (FaultException<DBFault> ex)
+            catch (FaultException<Fault> ex)
             {
                 string classMethod = "SignupPage.ValidatePlayer";
                 Log.Error(classMethod, ex);

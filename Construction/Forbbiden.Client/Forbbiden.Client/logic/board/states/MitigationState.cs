@@ -32,7 +32,7 @@ namespace Forbbiden.Client.logic.board.states
             {
                 card = new BoardManagerClient().GetCard(path);
             }
-            catch (FaultException<DBFault> ex)
+            catch (FaultException<Fault> ex)
             {
                 string methodClass = "MitigationState.DiscardMitigationCard";
                 Log.Error(methodClass, ex);

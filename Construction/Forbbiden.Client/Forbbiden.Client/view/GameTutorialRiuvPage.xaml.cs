@@ -466,7 +466,7 @@ namespace Forbbiden.Client.view
                         }
                     }
                     catch { }
-                    Dispatcher.BeginInvoke(new Action(() => UpdateReadyVisual()));
+                    await Dispatcher.BeginInvoke(new Action(() => UpdateReadyVisual()));
                 });
 
                 if (startCountdownTimer != null)
@@ -538,7 +538,7 @@ namespace Forbbiden.Client.view
                             var downloadedPath = await EnsureAvatarLocalAsync(p.AvatarFileName);
                             if (!string.IsNullOrEmpty(downloadedPath))
                             {
-                                Dispatcher.BeginInvoke(new Action(() =>
+                                await Dispatcher.BeginInvoke(new Action(() =>
                                 {
                                     SetAvatarEllipse(avatar, downloadedPath);
                                 }));
@@ -581,7 +581,7 @@ namespace Forbbiden.Client.view
                     var profileClient = new ProfileManagerClient();
                     try
                     {
-                        var bytes = profileClient.GetAvatar(avatarFileName);
+                        var bytes = await profileClient.GetAvatarAsync(avatarFileName);
                         if (bytes != null && bytes.Length > 0)
                         {
                             File.WriteAllBytes(localPath, bytes);

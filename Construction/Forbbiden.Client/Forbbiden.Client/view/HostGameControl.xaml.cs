@@ -1,18 +1,15 @@
 ﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
-using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.info;
 using Forbbiden.Client.view;
 using log4net;
 using System;
-using System.Linq.Expressions;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace Forbbiden.Client
@@ -101,20 +98,51 @@ namespace Forbbiden.Client
 
             PublicToggle.Background = isPublic ? Brushes.LightBlue : Brushes.LightCoral;
         }
+
+        private CreateMatchRequest GetMatchRequest(MatchManagerClient matchClient)
+        {
+            var currentPlayer = ClientSession.GetPlayer();
+            if (currentPlayer == null)
+            {
+                //ShowWarningNotification(Properties.Resources.warning_login_permission);
+                return null;
+            }
+
+            string username = currentPlayer.PlayerUsername;
+
+            var roomName = txtRoomName?.Text?.Trim();
+            if (!string.IsNullOrEmpty(roomName) && roomName.Length > 20)
+            {
+                //ShowWarningNotification(Properties.Resources.warning_room_char_limit);
+                return null;
+            }
+
+            var request = new CreateMatchRequest
+            {
+                HostUsername = username,
+                Difficulty = selectedDifficulty,
+                Visibility = selectedVisibility,
+                MatchName = string.IsNullOrEmpty(roomName) ? null : roomName,
+                Capacity = selectedCapacity
+            };
+
+            return request;
+        }
+
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             var matchClient = new MatchManagerClient();
 
             try
             {
-                var request = GetMatchRequest();
+                var request = GetMatchRequest(matchClient);
                 if (request == null)
                 {
                     MessageBox.Show("Debes iniciar sesión antes de crear una partida.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                string username = currentPlayer.PlayerUsername;
+                string username = ClientSession.Username;
                 var roomName = txtRoomName?.Text?.Trim();
 
                 if (string.IsNullOrWhiteSpace(roomName))
@@ -133,14 +161,14 @@ namespace Forbbiden.Client
                     return;
                 }
 
-                var request = new CreateMatchRequest
+                /*var request = new CreateMatchRequest
                 {
                     HostUsername = username,
                     Difficulty = selectedDifficulty,
                     Visibility = selectedVisibility,
                     MatchName = roomName,
                     Capacity = selectedCapacity
-                };
+                };*/
 
                 int matchId;
                 try
@@ -159,13 +187,10 @@ namespace Forbbiden.Client
                     MessageBox.Show("No se pudo crear la partida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                int matchId = await CreateMatch(matchClient, request);
 
-                // Se sigue generando el código en el servidor, pero ya no se muestra aquí.
 
                 string avatarFileName = null;
                 var currentPlayer = ClientSession.GetPlayer();
-                string username = ClientSession.Username;
                     
                 var avatarPath = currentPlayer?.PlayerAvatarPath;
                 if (!string.IsNullOrEmpty(avatarPath))
@@ -181,26 +206,26 @@ namespace Forbbiden.Client
 
                 if (!joined)
                 {
-                    string title = Properties.Langs.Resources.error;
-                    string message = Properties.Langs.Resources.error_match_created_not_joined;
-                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                    string title = Properties.Resources.error;
+                    //string message = Properties.Resources.error_match_created_not_joined;
+                    //ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                     return;
                 }
 
-                var lobbyPage = new view.LobbyPage(matchId, username, gameClient, callback);
+                var lobbyPage = new LobbyPage(matchId, username, gameClient, callback);
                 NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
             }
             catch (TimeoutException)
             {
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.error_server_timeout;
-                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                string title = Properties.Resources.error;
+                //string message = Properties.Resources.error_server_timeout;
+                //ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             catch (Exception ex)
             {
                 Log.Error("HostGameControl.PlayButton_Click", ex);
-                string title = Properties.Langs.Resources.error;
-                string message = Properties.Langs.Resources.unexpected_error;
+                string title = Properties.Resources.error;
+                string message = Properties.Resources.unexpected_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
             finally

@@ -23,8 +23,8 @@
   <wsdl:message name="IProfileManager_ValidateEmail_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidateEmailResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_ValidateEmail_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q1:DBFault" />
+  <wsdl:message name="IProfileManager_ValidateEmail_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q1:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_IsUsernameAvailable_InputMessage">
     <wsdl:part name="parameters" element="tns:IsUsernameAvailable" />
@@ -32,8 +32,8 @@
   <wsdl:message name="IProfileManager_IsUsernameAvailable_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsUsernameAvailableResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_IsUsernameAvailable_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q2:DBFault" />
+  <wsdl:message name="IProfileManager_IsUsernameAvailable_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q2:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_SendEmail_InputMessage">
     <wsdl:part name="parameters" element="tns:SendEmail" />
@@ -41,8 +41,8 @@
   <wsdl:message name="IProfileManager_SendEmail_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendEmailResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_SendEmail_EmailFaultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:EmailFault" />
+  <wsdl:message name="IProfileManager_SendEmail_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_SignUp_InputMessage">
     <wsdl:part name="parameters" element="tns:SignUp" />
@@ -50,8 +50,8 @@
   <wsdl:message name="IProfileManager_SignUp_OutputMessage">
     <wsdl:part name="parameters" element="tns:SignUpResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_SignUp_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:DBFault" />
+  <wsdl:message name="IProfileManager_SignUp_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_Login_InputMessage">
     <wsdl:part name="parameters" element="tns:Login" />
@@ -59,8 +59,8 @@
   <wsdl:message name="IProfileManager_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_Login_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:DBFault" />
+  <wsdl:message name="IProfileManager_Login_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_GetPlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerByUsername" />
@@ -68,8 +68,8 @@
   <wsdl:message name="IProfileManager_GetPlayerByUsername_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerByUsernameResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_GetPlayerByUsername_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:DBFault" />
+  <wsdl:message name="IProfileManager_GetPlayerByUsername_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_GetPlayerById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerById" />
@@ -77,8 +77,8 @@
   <wsdl:message name="IProfileManager_GetPlayerById_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerByIdResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_GetPlayerById_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:DBFault" />
+  <wsdl:message name="IProfileManager_GetPlayerById_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_UpdatePlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePlayer" />
@@ -86,8 +86,8 @@
   <wsdl:message name="IProfileManager_UpdatePlayer_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePlayerResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_UpdatePlayer_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:DBFault" />
+  <wsdl:message name="IProfileManager_UpdatePlayer_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_DeletePlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:DeletePlayerByUsername" />
@@ -95,8 +95,8 @@
   <wsdl:message name="IProfileManager_DeletePlayerByUsername_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeletePlayerByUsernameResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_DeletePlayerByUsername_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:DBFault" />
+  <wsdl:message name="IProfileManager_DeletePlayerByUsername_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_ConnectPlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:ConnectPlayerByUsername" />
@@ -104,8 +104,8 @@
   <wsdl:message name="IProfileManager_ConnectPlayerByUsername_OutputMessage">
     <wsdl:part name="parameters" element="tns:ConnectPlayerByUsernameResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_ConnectPlayerByUsername_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:DBFault" />
+  <wsdl:message name="IProfileManager_ConnectPlayerByUsername_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_DisconnectPlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:DisconnectPlayerByUsername" />
@@ -113,8 +113,8 @@
   <wsdl:message name="IProfileManager_DisconnectPlayerByUsername_OutputMessage">
     <wsdl:part name="parameters" element="tns:DisconnectPlayerByUsernameResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_DisconnectPlayerByUsername_DBFaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:DBFault" />
+  <wsdl:message name="IProfileManager_DisconnectPlayerByUsername_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_UploadAvatar_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadAvatar" />
@@ -132,57 +132,57 @@
     <wsdl:operation name="ValidateEmail">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmail" message="tns:IProfileManager_ValidateEmail_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmailResponse" message="tns:IProfileManager_ValidateEmail_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmailDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_ValidateEmail_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmailFaultFault" name="FaultFault" message="tns:IProfileManager_ValidateEmail_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="IsUsernameAvailable">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailable" message="tns:IProfileManager_IsUsernameAvailable_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse" message="tns:IProfileManager_IsUsernameAvailable_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailableDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_IsUsernameAvailable_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailableFaultFault" name="FaultFault" message="tns:IProfileManager_IsUsernameAvailable_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/SendEmail" message="tns:IProfileManager_SendEmail_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/SendEmailResponse" message="tns:IProfileManager_SendEmail_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/SendEmailEmailFaultFault" name="EmailFaultFault" message="tns:IProfileManager_SendEmail_EmailFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/SendEmailFaultFault" name="FaultFault" message="tns:IProfileManager_SendEmail_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SignUp">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/SignUp" message="tns:IProfileManager_SignUp_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/SignUpResponse" message="tns:IProfileManager_SignUp_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/SignUpDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_SignUp_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/SignUpFaultFault" name="FaultFault" message="tns:IProfileManager_SignUp_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/Login" message="tns:IProfileManager_Login_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/LoginResponse" message="tns:IProfileManager_Login_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/LoginDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_Login_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/LoginFaultFault" name="FaultFault" message="tns:IProfileManager_Login_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPlayerByUsername">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByUsername" message="tns:IProfileManager_GetPlayerByUsername_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameResponse" message="tns:IProfileManager_GetPlayerByUsername_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_GetPlayerByUsername_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByUsernameFaultFault" name="FaultFault" message="tns:IProfileManager_GetPlayerByUsername_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPlayerById">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerById" message="tns:IProfileManager_GetPlayerById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByIdResponse" message="tns:IProfileManager_GetPlayerById_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByIdDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_GetPlayerById_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/GetPlayerByIdFaultFault" name="FaultFault" message="tns:IProfileManager_GetPlayerById_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="UpdatePlayer">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/UpdatePlayer" message="tns:IProfileManager_UpdatePlayer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/UpdatePlayerResponse" message="tns:IProfileManager_UpdatePlayer_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/UpdatePlayerDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_UpdatePlayer_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/UpdatePlayerFaultFault" name="FaultFault" message="tns:IProfileManager_UpdatePlayer_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="DeletePlayerByUsername">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/DeletePlayerByUsername" message="tns:IProfileManager_DeletePlayerByUsername_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameResponse" message="tns:IProfileManager_DeletePlayerByUsername_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_DeletePlayerByUsername_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/DeletePlayerByUsernameFaultFault" name="FaultFault" message="tns:IProfileManager_DeletePlayerByUsername_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="ConnectPlayerByUsername">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsername" message="tns:IProfileManager_ConnectPlayerByUsername_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameResponse" message="tns:IProfileManager_ConnectPlayerByUsername_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_ConnectPlayerByUsername_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/ConnectPlayerByUsernameFaultFault" name="FaultFault" message="tns:IProfileManager_ConnectPlayerByUsername_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="DisconnectPlayerByUsername">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername" message="tns:IProfileManager_DisconnectPlayerByUsername_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse" message="tns:IProfileManager_DisconnectPlayerByUsername_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameDBFaultFault" name="DBFaultFault" message="tns:IProfileManager_DisconnectPlayerByUsername_DBFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameFaultFault" name="FaultFault" message="tns:IProfileManager_DisconnectPlayerByUsername_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="UploadAvatar">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/UploadAvatar" message="tns:IProfileManager_UploadAvatar_InputMessage" />
@@ -205,8 +205,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="IsUsernameAvailable">
@@ -217,8 +217,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
@@ -229,8 +229,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="EmailFaultFault">
-        <soap12:fault use="literal" name="EmailFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SignUp">
@@ -241,8 +241,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="Login">
@@ -253,8 +253,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetPlayerByUsername">
@@ -265,8 +265,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetPlayerById">
@@ -277,8 +277,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="UpdatePlayer">
@@ -289,8 +289,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DeletePlayerByUsername">
@@ -301,8 +301,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ConnectPlayerByUsername">
@@ -313,8 +313,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DisconnectPlayerByUsername">
@@ -325,8 +325,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DBFaultFault">
-        <soap12:fault use="literal" name="DBFaultFault" namespace="" />
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="UploadAvatar">
@@ -350,9 +350,9 @@
   </wsdl:binding>
   <wsdl:service name="ProfileManager">
     <wsdl:port name="NetTcpBinding_IProfileManager" binding="tns:NetTcpBinding_IProfileManager">
-      <soap12:address location="net.tcp://192.168.1.77:8081/ProfileManager" />
+      <soap12:address location="net.tcp://192.168.100.15:8081/ProfileManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.1.77:8081/ProfileManager</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.100.15:8081/ProfileManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

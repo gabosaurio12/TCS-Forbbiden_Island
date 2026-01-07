@@ -74,9 +74,9 @@ namespace Forbbiden.Client.view
             {
                 player = await ProfileClient.GetPlayerByUsernameAsync(ClientSession.Username, true);
             }
-            catch (FaultException<DBFault> dbFault)
+            catch (FaultException<Fault> fault)
             {
-                Log.Error("ERROR: FriendsPage.SetFriends", dbFault);
+                Log.Error("ERROR: FriendsPage.SetFriends", fault);
                 ViewUtils.ShowPullError(Window.GetWindow(this));
             }
             if (player.PlayerId != -1)
@@ -129,7 +129,7 @@ namespace Forbbiden.Client.view
                 {
                     isDeleted = await FriendsClient.DeleteFriendAsync(friendUsername, ClientSession.Username);
                 }
-                catch (FaultException<DBFault> ex)
+                catch (FaultException<Fault> ex)
                 {
                     string classMethod = "FriendsPage.DeleteFriend_MouseLeftButtonDownAsync";
                     Log.Error(classMethod, ex);
@@ -167,7 +167,7 @@ namespace Forbbiden.Client.view
                     NavigationService?.Navigate(new FriendProfilePage(friend));
                 }
             }
-            catch (FaultException<DBFault> ex)
+            catch (FaultException<Fault> ex)
             {
                 string classMethod = "FriendsPage.SeeFriendProfile";
                 Log.Error(classMethod, ex);
@@ -240,9 +240,9 @@ namespace Forbbiden.Client.view
             {
                 receiver = await ProfileClient.GetPlayerByUsernameAsync(receiverUsername, true);
             }
-            catch (FaultException<DBFault> dbFault)
+            catch (FaultException<Fault> fault)
             {
-                Log.Error("FriendsPage.SendFriendRequest", dbFault);
+                Log.Error("FriendsPage.SendFriendRequest", fault);
                 ViewUtils.ShowPullError(Window.GetWindow(this));
             }
 
@@ -254,9 +254,9 @@ namespace Forbbiden.Client.view
                 {
                     requestStatus = await FriendsClient.SendFriendRequestAsync(ClientSession.Username, receiver.PlayerUsername);
                 }
-                catch (FaultException<DBFault> dbFault)
+                catch (FaultException<Fault> fault)
                 {
-                    Log.Error("ERROR: FriendsPage.SendFriendRequest", dbFault);
+                    Log.Error("ERROR: FriendsPage.SendFriendRequest", fault);
                     ViewUtils.ShowPushError(Window.GetWindow(this));
                 }
 

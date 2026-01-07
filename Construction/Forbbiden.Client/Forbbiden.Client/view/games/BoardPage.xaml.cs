@@ -76,28 +76,6 @@ namespace Forbbiden.Client.view.games
         public BoardPage()
         {
             InitializeComponent();
-
-            InitAttributes();
-
-            PlayerLogic.MatchBoardPage = this;
-        }
-
-        private void InitAttributes()
-        {
-            StateContext = new BoardStateContext(this);
-
-            string projectDir = ViewUtils.GetProjectDir();
-            ImagesPath = System.IO.Path.Combine(
-                projectDir, "Images");
-            CardsImagesPath = System.IO.Path.Combine(
-                projectDir, ImagesPath, "cards");
-
-            PlayerCards = new List<Card>();
-        }
-
-        public BoardPage()
-        {
-            InitializeComponent();
             InitGif();
             InitAttributes();
 
@@ -492,6 +470,7 @@ namespace Forbbiden.Client.view.games
                 int maxRand = FloodStack.Count - 1;
                 int randomNumber = MatchLogic.Rand.Next(minRand, maxRand);
 
+            StateContext.EndTurnAndResetTiles();
                 if (FloodStack.Count == 0)
                 {
                     var shuffledDiscardStack = MatchLogic.ShuffleCards(FloodDiscardStack);
@@ -505,10 +484,6 @@ namespace Forbbiden.Client.view.games
                 FloodStack.Remove(floodCard);
                 FloodDiscardStack.Add(floodCard);
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 39fe8e8f46a865ac49d019bb49e85c60aafc055b
             StateContext.EndTurnAndResetTiles();
         }
 
