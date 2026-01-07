@@ -1,0 +1,8 @@
+
+== Alcance
+
+El juego incluye la implementación de funcionalidades relacionadas con el perfil del jugador como: registro, inicio de sesión, personalización de avatar, nombre de usuario y redes sociales. También funciones enfocadas al aspecto social como una lista de amigos y poder ver los perfiles de estos.
+
+En cuanto a la jugabilidad se abarca el crear salas, entrar a partidas, tener un chat y bannear jugadores (esto último solo lo podrá hacer el Host de la sala).
+
+Por último, el proyecto debe soportar localización (l10n).

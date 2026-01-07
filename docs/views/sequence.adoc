@@ -1,5 +1,5 @@
 
-= Diagrama de Secuencia
+== Diagrama de Secuencia
 
 Se realizó un diagrama de secuencia para comprender el flujo de un callback, se decidió usar el CU Enviar Solicitud de Amistad. Como todo diagrama de secuencia va acompañado de un diagrama de clases con las clases que usará, en este caso solo se modelaron los métodos que se usarían para evitar ruido y mejorar la legibilidad (sobre todo del lado del Servidor). Algunas partes del diagrama como declaraciones o tipos de objeto son de C# u herramientas que usamos (como Log4Net).
 

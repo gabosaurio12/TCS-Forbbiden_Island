@@ -38,3 +38,5 @@ Refactoring.Guru, “Memento,” Refactoring.Guru, Jan. 01, 2025. https://refact
 Refactoring.Guru, “State,” Refactoring.Guru, Jan. 01, 2025. https://refactoring.guru/design-patterns/state
 
 K.Fakhroutdinov, “Unified Modeling Language (UML) description, UML diagram examples, tutorials and reference for all types of UML diagrams - use case diagrams, class, package, component, composite structure diagrams, deployments, activities, interactions, profiles, etc.” https://www.uml-diagrams.org/
+
+Rprouse, “Pruebas unitarias de C# con NUnit y .NET Core - .NET,” Microsoft Learn. https://learn.microsoft.com/es-es/dotnet/core/testing/unit-testing-csharp-with-nunit

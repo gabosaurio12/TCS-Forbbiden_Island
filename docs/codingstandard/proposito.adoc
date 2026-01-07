@@ -1,0 +1,9 @@
+
+=== Propósito
+
+Este estándar tiene como propósito brindar especificaciones que ayuden a desarrollar un código
+seguro, mantenible y legible con C#. Así como brindar un seguimiento de parámetros definidos para contar con una guía clara y estructurada para el desarrollo de software apegada completamente a las siguientes pautas que
+hemos definido.
+
+Se entiende como código seguro a aquel que no sea susceptible a inyecciones de código, acceso
+a datos sensibles no cifrados o sin una verificación de credenciales previa. 

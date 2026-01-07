@@ -1,5 +1,5 @@
 
-= Introducción
+== Introducción
 
 Como proyecto final para la materia de Tecnologías para la construcción de Software se solicitó un proyecto construido con .NET, WCF, WPF, Entity Framework y SQL Server.
 
@@ -14,3 +14,7 @@ Existe una barra que indica el nivel de agua, que aumenta cada vez que aparece u
 El objetivo del juego es que entre todos los jugadores se "salven" los tesoros de la isla antes de que esta se inunde completamente.
 
 Nuestro juego se llama Forbidden Island FEI Edition y tiene el mismo objetivo, se deben recuperar los cuatro tesoros de la FEI antes de que se inunde. Al ser un videojuego se tiene cierta libertad en la creación, la FEI Edition incluye dos minijuegos que se llevan a cabo durante la partida.
+
+== Repositorio de Git
+
+https://github.com/gabosaurio12/TCS-Forbbiden_Island

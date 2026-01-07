@@ -1,0 +1,29 @@
+
+=== Namespaces
+
+Para los namespaces, los cuales son ncesarios para crear claridad para el programador para que cuando se usen sepa perfectamente qué es lo que contiene. Deberán tener la siguiente estructura:
+
+    <Compañía>.(<Producto>|Tecnología>)[.<Feature>][.<Subnamespace>]
+
+==== Nombramiento
+
+Se deben usar prefijos para nombrar los namespaces, estos se recomienda que sean las compañías.
+
+Se debe evitar usar nombres dependientes de la versión para el segundo nivel (Producto|Tecnología). El uso _PascalCase_ para escribirlos y separar componentes del namespace con puntos es necesario.
+
+Se pueden usar nombres en plural cuando sea apropieado, pero no se debe usar el mismo nombre para un namespace y tipo en ese namespace. Tampoco deberán usarse nombres genéricos como Element, Node, Log y Message.
+
+*Buen uso*
+
+```
+FEI.Eminus.ActivityAssignment
+System.Threading.Tasks
+Forbidden.Test
+```
+
+*Mal uso*
+
+```
+fei.ProPractices5_0StudentManagement
+Calculator.sqr
+```

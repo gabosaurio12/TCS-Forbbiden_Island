@@ -1,0 +1,6 @@
+
+=== Idioma
+
+Para el nombramiento del código se usará el idioma inglés. Se tomó esta decisión para motivar a los estudiantes a desarrollar y mejorar su dominio del idioma, así como adaptarse al ambiente laboral general del mundo.
+
+En cuanto al lenguaje de la GUI (Graphic User Interface) puede ser en cualquier idioma, los proyectos pueden incluír varios perfiles de idiomas.
