@@ -195,7 +195,7 @@ namespace Forbbiden.Server.logic
                     var player = profileClient.GetPlayerByUsername(playerUsername);
                     if (friend.PlayerId != -1 && player.PlayerId != -1)
                     {
-                        var friendRequest = db.Friends.FirstOrDefault(fr =>
+                        var friendship = db.Friends.FirstOrDefault(fr =>
                             (
                                 (fr.player_id == player.PlayerId && fr.friend_id == friend.PlayerId) ||
                                 (fr.player_id == friend.PlayerId && fr.friend_id == player.PlayerId)
@@ -203,15 +203,12 @@ namespace Forbbiden.Server.logic
                             && fr.status == 1
                         );
 
-                        if (friendRequest != null)
+                        if (friendship != null)
                         {
-                            db.Friends.Remove(friendRequest);
+                            db.Friends.Remove(friendship);
                             db.SaveChanges();
 
-                            if (FriendsNotificationManager.SendRefreshPageCallback(new FriendRequest(), friendUsername))
-                            {
-                                success = true;
-                            }
+                            FriendsNotificationManager.SendRefreshPageCallback(new FriendRequest(), friendUsername));
 
                             success = true;
                         }

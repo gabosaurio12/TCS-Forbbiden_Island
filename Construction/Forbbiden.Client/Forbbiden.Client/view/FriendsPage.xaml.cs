@@ -129,11 +129,14 @@ namespace Forbbiden.Client.view
                 {
                     isDeleted = await FriendsClient.DeleteFriendAsync(friendUsername, ClientSession.Username);
                 }
-                catch (FaultException<Fault> ex)
+                catch (FaultException<Fault>)
                 {
-                    string classMethod = "FriendsPage.DeleteFriend_MouseLeftButtonDownAsync";
-                    Log.Error(classMethod, ex);
                     ViewUtils.ShowPushError(Window.GetWindow(this));
+                }
+                catch (TimeoutException ex)
+                {
+                    Log.Error("FriendsPage.DeleteFriend_MouseLeftButtonDownAsync", ex);
+
                 }
 
                 if (isDeleted)
