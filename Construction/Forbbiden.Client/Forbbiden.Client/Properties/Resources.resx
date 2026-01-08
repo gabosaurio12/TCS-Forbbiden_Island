@@ -342,9 +342,6 @@
   <data name="max_cards_exceed_message" xml:space="preserve">
     <value>With this card you will have more than six cards, what do you want to do?</value>
   </data>
-  <data name="verify_account" xml:space="preserve">
-    <value>Verify Account</value>
-  </data>
   <data name="verify" xml:space="preserve">
     <value>Verify</value>
   </data>

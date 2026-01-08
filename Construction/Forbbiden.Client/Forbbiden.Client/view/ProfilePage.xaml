@@ -178,9 +178,12 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="0,8,0,0">
-                            <TextBox x:Name="txtBxUsername" Style="{StaticResource InputTextBoxStyle}" Margin="0,10,0,10"/>
-                            <TextBox x:Name="txtBxName" Style="{StaticResource InputTextBoxStyle}" Margin="0,10,0,10"/>
-                            <TextBox x:Name="txtBxEmail" Style="{StaticResource InputTextBoxStyle}" Margin="0,10,0,10"/>
+                            <TextBox x:Name="txtBxUsername" Style="{StaticResource InputTextBoxStyle}" Margin="0,10,0,10"
+                                     FontSize="24"/>
+                            <TextBox x:Name="txtBxName" Style="{StaticResource InputTextBoxStyle}" Margin="0,10,0,10"
+                                     FontSize="24"/>
+                            <TextBox x:Name="txtBxEmail" Style="{StaticResource InputTextBoxStyle}" Margin="0,10,0,10"
+                                     FontSize="24"/>
                         </StackPanel>
 
                         <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,20,0,0">
@@ -190,11 +193,13 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,8,20,8" VerticalAlignment="Center">
                                 <Image Source="/Images/discord.png" Width="64" Height="64" Margin="0,0,12,0"/>
-                                <TextBox x:Name="txtBxDiscord" Style="{StaticResource InputTextBoxStyle}" Width="350"/>
+                                <TextBox x:Name="txtBxDiscord" Style="{StaticResource InputTextBoxStyle}" Width="350"
+                                         FontSize="24"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,8,0,8" VerticalAlignment="Center">
                                 <Image Source="/Images/x.png" Width="64" Height="64" Margin="0,0,12,0"/>
-                                <TextBox x:Name="txtBxX" Style="{StaticResource InputTextBoxStyle}" Width="350"/>
+                                <TextBox x:Name="txtBxX" Style="{StaticResource InputTextBoxStyle}" Width="350"
+                                         FontSize="24"/>
                             </StackPanel>
                         </Grid>
 
@@ -205,11 +210,13 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,8,20,8" VerticalAlignment="Center">
                                 <Image Source="/Images/instagram.png" Width="64" Height="64" Margin="0,0,12,0"/>
-                                <TextBox x:Name="txtBxInstagram" Style="{StaticResource InputTextBoxStyle}" Width="350"/>
+                                <TextBox x:Name="txtBxInstagram" Style="{StaticResource InputTextBoxStyle}" Width="350"
+                                         FontSize="24"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,8,0,8" VerticalAlignment="Center">
                                 <Image Source="/Images/facebook.png" Width="64" Height="64" Margin="0,0,12,0"/>
-                                <TextBox x:Name="txtBxFacebook" Style="{StaticResource InputTextBoxStyle}" Width="350"/>
+                                <TextBox x:Name="txtBxFacebook" Style="{StaticResource InputTextBoxStyle}" Width="350"
+                                         FontSize="24"/>
                             </StackPanel>
                         </Grid>
 
@@ -220,7 +227,7 @@
                                     Background="{StaticResource PrimaryColor}"
                                     Style="{StaticResource ActionButtonStyle}"
                                     Margin="0,0,12,0"
-                                    Click="BtnSave_Click"/>
+                                    Click="BtnSave_ClickAsync"/>
                             <Button x:Name="btnDiscard"
                                     Content="{x:Static language:Resources.discard_changes}"
                                     Width="350" Height="90"

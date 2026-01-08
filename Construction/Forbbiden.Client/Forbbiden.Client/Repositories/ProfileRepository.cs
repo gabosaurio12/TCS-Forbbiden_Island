@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.TokenManager;
 using log4net;
 using System;
 using System.ServiceModel;
@@ -16,7 +17,7 @@ namespace Forbbiden.Client.Repositories
             bool result = false;
             try
             {
-                result = await ProfileClient.ValidateEmailAsync(email);
+                result = await ProfileClient.IsEmailAvailableAsync(email);
             }
             catch (FaultException<Fault> ex)
             {
@@ -49,12 +50,12 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> SendEmail(string email, int playerId)
+        public async Task<bool> SendSignupEmail(string email, string token)
         {
             bool result = false;
             try
             {
-                result = await ProfileClient.SendEmailAsync(email, playerId);
+                result = await ProfileClient.SendSignupEmailAsync(email, token);
             }
             catch (FaultException<Fault> ex)
             {
@@ -65,6 +66,24 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.SendEmail", ex);
             }
             return result;  
+        }
+
+        public async Task<bool> SendVerificationEmail(string email, string token)
+        {
+            bool result = false;
+            try
+            {
+                result = await ProfileClient.SendVerificationEmailAsync(email, token);
+            }
+            catch (FaultException<Fault> ex)
+            {
+                Log.Error("ProfileRepository.SendEmail", ex);
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error("ProfileRepository.SendEmail", ex);
+            }
+            return result;
         }
 
         public async Task<int> SignupPlayer(Player player)

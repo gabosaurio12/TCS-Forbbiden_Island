@@ -2,6 +2,7 @@
 using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using log4net;
 using System;
 using System.ServiceModel;
@@ -20,7 +21,7 @@ namespace Forbbiden.Client.view
     public partial class FriendRequestsPage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendRequestsPage));
-        private readonly ProfileManagerClient ProfileManager;
+        private readonly ProfileRepository ProfileRepo;
         private readonly FriendsManagerClient FriendsClient;
         private readonly string ErrorTitle = Properties.Resources.error;
 
@@ -28,7 +29,7 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
 
-            ProfileManager = new ProfileManagerClient();
+            ProfileRepo = new ProfileRepository();
             FriendsClient = new FriendsManagerClient();
 
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
@@ -160,7 +161,7 @@ namespace Forbbiden.Client.view
             var friend = new ProfileManager.Player();
             try
             {
-                friend = await ProfileManager.GetPlayerByIdAsync(request.SenderID, false);
+                friend = await ProfileRepo.GetPlayerById(request.SenderID, false);
             }
             catch (FaultException<Fault> fault)
             {
@@ -211,7 +212,7 @@ namespace Forbbiden.Client.view
             var searchPlayer = new ProfileManager.Player();
             try
             {
-                searchPlayer = await ProfileManager.GetPlayerByUsernameAsync(friendUsername, false);
+                searchPlayer = await ProfileRepo.GetPlayerByUsername(friendUsername, false);
             }
             catch (FaultException<Fault> fault)
             {

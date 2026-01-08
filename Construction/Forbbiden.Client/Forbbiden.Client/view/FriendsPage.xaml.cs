@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Input;
+using Forbbiden.Client.Repositories;
 
 namespace Forbbiden.Client.view
 {
@@ -22,7 +23,7 @@ namespace Forbbiden.Client.view
     public partial class FriendsPage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsPage));
-        private readonly ProfileManagerClient ProfileClient;
+        private readonly ProfileRepository ProfileRepo;
         private readonly FriendsManagerClient FriendsClient;
 
 
@@ -30,7 +31,7 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
 
-            ProfileClient = new ProfileManagerClient();
+            ProfileRepo = new ProfileRepository();
             FriendsClient = new FriendsManagerClient();
 
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
@@ -68,17 +69,8 @@ namespace Forbbiden.Client.view
 
         private async Task SetFriends()
         {
-            var player = new ProfileManager.Player();
-
-            try
-            {
-                player = await ProfileClient.GetPlayerByUsernameAsync(ClientSession.Username, true);
-            }
-            catch (FaultException<Fault> fault)
-            {
-                Log.Error("ERROR: FriendsPage.SetFriends", fault);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
-            }
+            var player = await ProfileRepo.GetPlayerByUsername(ClientSession.Username, true);
+            
             if (player.PlayerId != -1)
             {
                 var onlineFriends = player.Friends
@@ -162,19 +154,10 @@ namespace Forbbiden.Client.view
             var requestControl = ViewUtils.FindParent<UserControlFriend>(imageClicked);
             string friendUsername = requestControl.usernameTxtBk.Text;
 
-            try
+            var friend = await ProfileRepo.GetPlayerByUsername(friendUsername, false);
+            if (friend.PlayerId != -1)
             {
-                var friend = await ProfileClient.GetPlayerByUsernameAsync(friendUsername, false);
-                if (friend.PlayerId != -1)
-                {
-                    NavigationService?.Navigate(new FriendProfilePage(friend));
-                }
-            }
-            catch (FaultException<Fault> ex)
-            {
-                string classMethod = "FriendsPage.SeeFriendProfile";
-                Log.Error(classMethod, ex);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
+                NavigationService?.Navigate(new FriendProfilePage(friend));
             }
         }
 
@@ -238,16 +221,7 @@ namespace Forbbiden.Client.view
 
         private async Task SendFriendRequest(string receiverUsername)
         {
-            var receiver = new ProfileManager.Player();
-            try
-            {
-                receiver = await ProfileClient.GetPlayerByUsernameAsync(receiverUsername, true);
-            }
-            catch (FaultException<Fault> fault)
-            {
-                Log.Error("FriendsPage.SendFriendRequest", fault);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
-            }
+            var receiver = await ProfileRepo.GetPlayerByUsername(receiverUsername, true);
 
             if (receiver.PlayerId != -1)
             {

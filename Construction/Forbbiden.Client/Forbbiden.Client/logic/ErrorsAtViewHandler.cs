@@ -1,12 +1,7 @@
 ﻿using Forbbiden.Client.logic;
 using Forbbiden.Client.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Forbbiden.Client.Logic
 {

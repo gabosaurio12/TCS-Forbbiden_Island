@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Client.logic;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using Forbbiden.Client.TokenManager;
 using log4net;
 using System;
@@ -18,16 +19,18 @@ namespace Forbbiden.Client.view.info
 
         private readonly int PlayerID;
         public event Action OnVerified;
+        private bool IsPasswordChange;
 
         public VerificationWindow()
         {
             InitializeComponent();
         }
 
-        public VerificationWindow(int playerId)
+        public VerificationWindow(int playerId, bool isPasswordChange)
         {
             InitializeComponent();
             PlayerID = playerId;
+            IsPasswordChange = isPasswordChange;
         }
 
         private void OpenNotification(string title, string message)
@@ -52,13 +55,12 @@ namespace Forbbiden.Client.view.info
 
         private async Task VerifyPlayer()
         {
-            var profileManager = new ProfileManagerClient();
-
             Player player = new Player();
+            var profileRepository = new ProfileRepository();
 
             try
             {
-                player = await profileManager.GetPlayerByIdAsync(PlayerID, false);
+                player = await profileRepository.GetPlayerById(PlayerID, false);
             }
             catch (FaultException<Fault> ex)
             {
@@ -71,7 +73,7 @@ namespace Forbbiden.Client.view.info
                 bool isUpdated = false;
                 try
                 {
-                    isUpdated = await profileManager.UpdatePlayerAsync(player);
+                    isUpdated = await profileRepository.UpdatePlayerProfile(player);
                 }
                 catch (FaultException<Fault> ex)
                 {
@@ -103,22 +105,21 @@ namespace Forbbiden.Client.view.info
         private async Task VerifyToken()
         {
             string token = GetToken();
-            if (!String.IsNullOrEmpty(token))
+            if (!String.IsNullOrWhiteSpace(token))
             {
                 var tokenManager = new TokenManagerClient();
-                bool isToken = false;                
-                try
-                {
-                    isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
-                }
-                catch (FaultException<Fault> ex)
-                {
-                    Log.Error("VerificationWindow.VerifyToken", ex);
-                    ViewUtils.ShowPullError(GetWindow(this));
-                }
+                bool isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
+               
                 if (isToken)
                 {
-                    _ = VerifyPlayer();
+                    if (IsPasswordChange)
+                    {
+                        DialogResult = true;
+                    }
+                    else
+                    {
+                        _ = VerifyPlayer();
+                    }
                 }
                 else
                 {

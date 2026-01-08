@@ -22,7 +22,7 @@ namespace Forbbiden.Client.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Forbbiden.Client.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Forbbiden.Client.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Forbbiden.Client.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Public.
         /// </summary>
-        internal static string _public {
+        public static string _public {
             get {
                 return ResourceManager.GetString("public", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Accept.
         /// </summary>
-        internal static string accept {
+        public static string accept {
             get {
                 return ResourceManager.GetString("accept", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Actions Left.
         /// </summary>
-        internal static string actions_left {
+        public static string actions_left {
             get {
                 return ResourceManager.GetString("actions_left", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Import an image from your device to use as an avatar.
         /// </summary>
-        internal static string avatar_explanation {
+        public static string avatar_explanation {
             get {
                 return ResourceManager.GetString("avatar_explanation", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There were some invalid inputs in your form, check it out.
         /// </summary>
-        internal static string boss_invalid_inputs {
+        public static string boss_invalid_inputs {
             get {
                 return ResourceManager.GetString("boss_invalid_inputs", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to If you log in you can choose your avatar and make friends!.
         /// </summary>
-        internal static string bossLogin {
+        public static string bossLogin {
             get {
                 return ResourceManager.GetString("bossLogin", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string cancel {
+        public static string cancel {
             get {
                 return ResourceManager.GetString("cancel", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Capture Treasure.
         /// </summary>
-        internal static string capture_button {
+        public static string capture_button {
             get {
                 return ResourceManager.GetString("capture_button", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Change Language.
         /// </summary>
-        internal static string change_language {
+        public static string change_language {
             get {
                 return ResourceManager.GetString("change_language", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Change password.
         /// </summary>
-        internal static string change_password {
+        public static string change_password {
             get {
                 return ResourceManager.GetString("change_password", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Player:.
         /// </summary>
-        internal static string chat_prefix_placeholder {
+        public static string chat_prefix_placeholder {
             get {
                 return ResourceManager.GetString("chat_prefix_placeholder", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error sending message..
         /// </summary>
-        internal static string chat_send_error {
+        public static string chat_send_error {
             get {
                 return ResourceManager.GetString("chat_send_error", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Clean Code.
         /// </summary>
-        internal static string clean_code_name {
+        public static string clean_code_name {
             get {
                 return ResourceManager.GetString("clean_code_name", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Starting match!.
         /// </summary>
-        internal static string countdown_go {
+        public static string countdown_go {
             get {
                 return ResourceManager.GetString("countdown_go", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Starting in {0}....
         /// </summary>
-        internal static string countdown_number {
+        public static string countdown_number {
             get {
                 return ResourceManager.GetString("countdown_number", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Starting countdown....
         /// </summary>
-        internal static string countdown_starting {
+        public static string countdown_starting {
             get {
                 return ResourceManager.GetString("countdown_starting", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Create room.
         /// </summary>
-        internal static string create_room {
+        public static string create_room {
             get {
                 return ResourceManager.GetString("create_room", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cubicle Keys.
         /// </summary>
-        internal static string cubicle_keys_name {
+        public static string cubicle_keys_name {
             get {
                 return ResourceManager.GetString("cubicle_keys_name", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
-        internal static string delete {
+        public static string delete {
             get {
                 return ResourceManager.GetString("delete", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Difficulty.
         /// </summary>
-        internal static string difficulty {
+        public static string difficulty {
             get {
                 return ResourceManager.GetString("difficulty", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Normal.
         /// </summary>
-        internal static string difficulty_normal {
+        public static string difficulty_normal {
             get {
                 return ResourceManager.GetString("difficulty_normal", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Discard a Card.
         /// </summary>
-        internal static string discard_card {
+        public static string discard_card {
             get {
                 return ResourceManager.GetString("discard_card", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Discard Changes.
         /// </summary>
-        internal static string discard_changes {
+        public static string discard_changes {
             get {
                 return ResourceManager.GetString("discard_changes", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
-        internal static string email {
+        public static string email {
             get {
                 return ResourceManager.GetString("email", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to To avoid drowning you have to move to another tile... ¡NOW!.
         /// </summary>
-        internal static string emergency_move {
+        public static string emergency_move {
             get {
                 return ResourceManager.GetString("emergency_move", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You Are Drowning!.
         /// </summary>
-        internal static string emergency_move_title {
+        public static string emergency_move_title {
             get {
                 return ResourceManager.GetString("emergency_move_title", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
-        internal static string english {
+        public static string english {
             get {
                 return ResourceManager.GetString("english", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string error {
+        public static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error loading matches: {0}.
         /// </summary>
-        internal static string error_loading_matches {
+        public static string error_loading_matches {
             get {
                 return ResourceManager.GetString("error_loading_matches", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string error_title {
+        public static string error_title {
             get {
                 return ResourceManager.GetString("error_title", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Finish Turn.
         /// </summary>
-        internal static string finish_turn {
+        public static string finish_turn {
             get {
                 return ResourceManager.GetString("finish_turn", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Flood Stack.
         /// </summary>
-        internal static string flood_stack {
+        public static string flood_stack {
             get {
                 return ResourceManager.GetString("flood_stack", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You have successfully deleted your friendship with: .
         /// </summary>
-        internal static string friend_deleted_message {
+        public static string friend_deleted_message {
             get {
                 return ResourceManager.GetString("friend_deleted_message", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Friend Deleted.
         /// </summary>
-        internal static string friend_deleted_title {
+        public static string friend_deleted_title {
             get {
                 return ResourceManager.GetString("friend_deleted_title", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Friend Request Accepted.
         /// </summary>
-        internal static string friend_request_accepted {
+        public static string friend_request_accepted {
             get {
                 return ResourceManager.GetString("friend_request_accepted", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The friend request was accepted succesfully.
         /// </summary>
-        internal static string friend_request_accepted_message {
+        public static string friend_request_accepted_message {
             get {
                 return ResourceManager.GetString("friend_request_accepted_message", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an error while sending your friend request, try again later.
         /// </summary>
-        internal static string friend_request_not_sent {
+        public static string friend_request_not_sent {
             get {
                 return ResourceManager.GetString("friend_request_not_sent", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your friend request was successfully sent to .
         /// </summary>
-        internal static string friend_request_sent_message {
+        public static string friend_request_sent_message {
             get {
                 return ResourceManager.GetString("friend_request_sent_message", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Friend Request Sent.
         /// </summary>
-        internal static string friend_request_sent_title {
+        public static string friend_request_sent_title {
             get {
                 return ResourceManager.GetString("friend_request_sent_title", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Friend Requests.
         /// </summary>
-        internal static string friend_requests {
+        public static string friend_requests {
             get {
                 return ResourceManager.GetString("friend_requests", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Friends.
         /// </summary>
-        internal static string friends {
+        public static string friends {
             get {
                 return ResourceManager.GetString("friends", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to GAME OVER!.
         /// </summary>
-        internal static string game_over {
+        public static string game_over {
             get {
                 return ResourceManager.GetString("game_over", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The water reach the highest level! FEI IS NOW UNDER THE SEAS! Good Luck in your next adventure....
         /// </summary>
-        internal static string game_over_message {
+        public static string game_over_message {
             get {
                 return ResourceManager.GetString("game_over_message", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to RIUV LOGIN.
         /// </summary>
-        internal static string gameTutorial_ControlsHeader {
+        public static string gameTutorial_ControlsHeader {
             get {
                 return ResourceManager.GetString("gameTutorial_ControlsHeader", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Use your keyboard and press the indicated key..
         /// </summary>
-        internal static string gameTutorial_ControlsText {
+        public static string gameTutorial_ControlsText {
             get {
                 return ResourceManager.GetString("gameTutorial_ControlsText", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The registration date has arrived — retrieve the RIUV password as quickly as possible so you can complete your registration..
         /// </summary>
-        internal static string gameTutorial_Description {
+        public static string gameTutorial_Description {
             get {
                 return ResourceManager.GetString("gameTutorial_Description", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Enter.
         /// </summary>
-        internal static string gameTutorial_Key_Enter {
+        public static string gameTutorial_Key_Enter {
             get {
                 return ResourceManager.GetString("gameTutorial_Key_Enter", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to /.
         /// </summary>
-        internal static string gameTutorial_Key_Separator {
+        public static string gameTutorial_Key_Separator {
             get {
                 return ResourceManager.GetString("gameTutorial_Key_Separator", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Spacebar.
         /// </summary>
-        internal static string gameTutorial_Key_Space {
+        public static string gameTutorial_Key_Space {
             get {
                 return ResourceManager.GetString("gameTutorial_Key_Space", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Leave the match?.
         /// </summary>
-        internal static string gameTutorial_Key_Start {
+        public static string gameTutorial_Key_Start {
             get {
                 return ResourceManager.GetString("gameTutorial_Key_Start", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to RIUV LOGIN.
         /// </summary>
-        internal static string gameTutorial_Title {
+        public static string gameTutorial_Title {
             get {
                 return ResourceManager.GetString("gameTutorial_Title", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Guest.
         /// </summary>
-        internal static string guest {
+        public static string guest {
             get {
                 return ResourceManager.GetString("guest", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Hard.
         /// </summary>
-        internal static string hard {
+        public static string hard {
             get {
                 return ResourceManager.GetString("hard", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The water level starts at 3.
         /// </summary>
-        internal static string hard_message {
+        public static string hard_message {
             get {
                 return ResourceManager.GetString("hard_message", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Host Game.
         /// </summary>
-        internal static string host_game {
+        public static string host_game {
             get {
                 return ResourceManager.GetString("host_game", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Host: .
         /// </summary>
-        internal static string host_label {
+        public static string host_label {
             get {
                 return ResourceManager.GetString("host_label", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The host left the match. Returning to the main menu..
         /// </summary>
-        internal static string host_left_message {
+        public static string host_left_message {
             get {
                 return ResourceManager.GetString("host_left_message", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Match ended.
         /// </summary>
-        internal static string host_left_title {
+        public static string host_left_title {
             get {
                 return ResourceManager.GetString("host_left_title", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
-        internal static string host_unknown {
+        public static string host_unknown {
             get {
                 return ResourceManager.GetString("host_unknown", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Info.
         /// </summary>
-        internal static string info_title {
+        public static string info_title {
             get {
                 return ResourceManager.GetString("info_title", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The email you typed has multiple @, verify the format please.
         /// </summary>
-        internal static string invalid_email_contains_multiple_at {
+        public static string invalid_email_contains_multiple_at {
             get {
                 return ResourceManager.GetString("invalid_email_contains_multiple_at", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The email is already registered, you cant&apos; use that one.
         /// </summary>
-        internal static string invalid_email_not_available {
+        public static string invalid_email_not_available {
             get {
                 return ResourceManager.GetString("invalid_email_not_available", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The email you typed doesn&apos;t has an @, verify the format please.
         /// </summary>
-        internal static string invalid_email_not_contains_at {
+        public static string invalid_email_not_contains_at {
             get {
                 return ResourceManager.GetString("invalid_email_not_contains_at", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The email you typed doesn&apos;t has an extension, verify the format please.
         /// </summary>
-        internal static string invalid_email_not_contains_extension {
+        public static string invalid_email_not_contains_extension {
             get {
                 return ResourceManager.GetString("invalid_email_not_contains_extension", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The email field is empty. You have to type an email.
         /// </summary>
-        internal static string invalid_empty_email {
+        public static string invalid_empty_email {
             get {
                 return ResourceManager.GetString("invalid_empty_email", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The user name can&apos;t be empty.
         /// </summary>
-        internal static string invalid_empty_username {
+        public static string invalid_empty_username {
             get {
                 return ResourceManager.GetString("invalid_empty_username", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Invalid Input.
         /// </summary>
-        internal static string invalid_input {
+        public static string invalid_input {
             get {
                 return ResourceManager.GetString("invalid_input", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The password field is empty. You have to type a password.
         /// </summary>
-        internal static string invalid_password_empty {
+        public static string invalid_password_empty {
             get {
                 return ResourceManager.GetString("invalid_password_empty", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your password must have at least one lowercase letter.
         /// </summary>
-        internal static string invalid_password_missing_lowercase {
+        public static string invalid_password_missing_lowercase {
             get {
                 return ResourceManager.GetString("invalid_password_missing_lowercase", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your password must have at least one number.
         /// </summary>
-        internal static string invalid_password_missing_number {
+        public static string invalid_password_missing_number {
             get {
                 return ResourceManager.GetString("invalid_password_missing_number", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your password must have at least one special character (@, _, -).
         /// </summary>
-        internal static string invalid_password_missing_special_character {
+        public static string invalid_password_missing_special_character {
             get {
                 return ResourceManager.GetString("invalid_password_missing_special_character", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your password must have at least one uppercase letter.
         /// </summary>
-        internal static string invalid_password_missing_uppercase {
+        public static string invalid_password_missing_uppercase {
             get {
                 return ResourceManager.GetString("invalid_password_missing_uppercase", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The password is too short, it has to be at least 8 characters long.
         /// </summary>
-        internal static string invalid_password_too_short {
+        public static string invalid_password_too_short {
             get {
                 return ResourceManager.GetString("invalid_password_too_short", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The user name can&apos;t contain white spaces ( ).
         /// </summary>
-        internal static string invalid_username_contains_whitespace {
+        public static string invalid_username_contains_whitespace {
             get {
                 return ResourceManager.GetString("invalid_username_contains_whitespace", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Invitation code:.
         /// </summary>
-        internal static string invite_code_label {
+        public static string invite_code_label {
             get {
                 return ResourceManager.GetString("invite_code_label", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Share this code with your friends: {0}.
         /// </summary>
-        internal static string invite_code_message {
+        public static string invite_code_message {
             get {
                 return ResourceManager.GetString("invite_code_message", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Not available.
         /// </summary>
-        internal static string invite_code_not_available {
+        public static string invite_code_not_available {
             get {
                 return ResourceManager.GetString("invite_code_not_available", resourceCulture);
             }
@@ -756,7 +756,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Enter the invitation code to join..
         /// </summary>
-        internal static string invite_code_prompt {
+        public static string invite_code_prompt {
             get {
                 return ResourceManager.GetString("invite_code_prompt", resourceCulture);
             }
@@ -765,7 +765,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Invitation code.
         /// </summary>
-        internal static string invite_code_title {
+        public static string invite_code_title {
             get {
                 return ResourceManager.GetString("invite_code_title", resourceCulture);
             }
@@ -774,7 +774,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The invitation code is not valid..
         /// </summary>
-        internal static string invite_invalid_message {
+        public static string invite_invalid_message {
             get {
                 return ResourceManager.GetString("invite_invalid_message", resourceCulture);
             }
@@ -783,7 +783,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Invalid code.
         /// </summary>
-        internal static string invite_invalid_title {
+        public static string invite_invalid_title {
             get {
                 return ResourceManager.GetString("invite_invalid_title", resourceCulture);
             }
@@ -792,7 +792,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You cannot join this match (you were removed by the host)..
         /// </summary>
-        internal static string join_banned_message {
+        public static string join_banned_message {
             get {
                 return ResourceManager.GetString("join_banned_message", resourceCulture);
             }
@@ -801,7 +801,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cannot join match.
         /// </summary>
-        internal static string join_banned_title {
+        public static string join_banned_title {
             get {
                 return ResourceManager.GetString("join_banned_title", resourceCulture);
             }
@@ -810,7 +810,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error joining the match: {0}.
         /// </summary>
-        internal static string join_error {
+        public static string join_error {
             get {
                 return ResourceManager.GetString("join_error", resourceCulture);
             }
@@ -819,7 +819,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Could not join the match..
         /// </summary>
-        internal static string join_failed {
+        public static string join_failed {
             get {
                 return ResourceManager.GetString("join_failed", resourceCulture);
             }
@@ -828,7 +828,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The match is full..
         /// </summary>
-        internal static string join_full {
+        public static string join_full {
             get {
                 return ResourceManager.GetString("join_full", resourceCulture);
             }
@@ -837,7 +837,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The match is full. Please choose another room..
         /// </summary>
-        internal static string join_full_message {
+        public static string join_full_message {
             get {
                 return ResourceManager.GetString("join_full_message", resourceCulture);
             }
@@ -846,7 +846,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Match full.
         /// </summary>
-        internal static string join_full_title {
+        public static string join_full_title {
             get {
                 return ResourceManager.GetString("join_full_title", resourceCulture);
             }
@@ -855,7 +855,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You must sign in to join a match..
         /// </summary>
-        internal static string join_need_login {
+        public static string join_need_login {
             get {
                 return ResourceManager.GetString("join_need_login", resourceCulture);
             }
@@ -864,7 +864,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Keep cards.
         /// </summary>
-        internal static string keep_cards {
+        public static string keep_cards {
             get {
                 return ResourceManager.GetString("keep_cards", resourceCulture);
             }
@@ -873,7 +873,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You were removed from the match by the host..
         /// </summary>
-        internal static string kicked_message {
+        public static string kicked_message {
             get {
                 return ResourceManager.GetString("kicked_message", resourceCulture);
             }
@@ -882,7 +882,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Removed from match.
         /// </summary>
-        internal static string kicked_title {
+        public static string kicked_title {
             get {
                 return ResourceManager.GetString("kicked_title", resourceCulture);
             }
@@ -891,7 +891,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
-        internal static string leave_menu_continue {
+        public static string leave_menu_continue {
             get {
                 return ResourceManager.GetString("leave_menu_continue", resourceCulture);
             }
@@ -900,7 +900,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Kick player.
         /// </summary>
-        internal static string leave_menu_kick_button {
+        public static string leave_menu_kick_button {
             get {
                 return ResourceManager.GetString("leave_menu_kick_button", resourceCulture);
             }
@@ -909,7 +909,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Remove a player from this match..
         /// </summary>
-        internal static string leave_menu_kick_desc {
+        public static string leave_menu_kick_desc {
             get {
                 return ResourceManager.GetString("leave_menu_kick_desc", resourceCulture);
             }
@@ -918,7 +918,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The player could not be removed. Please try again..
         /// </summary>
-        internal static string leave_menu_kick_fail_msg {
+        public static string leave_menu_kick_fail_msg {
             get {
                 return ResourceManager.GetString("leave_menu_kick_fail_msg", resourceCulture);
             }
@@ -927,7 +927,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Could not remove.
         /// </summary>
-        internal static string leave_menu_kick_fail_title {
+        public static string leave_menu_kick_fail_title {
             get {
                 return ResourceManager.GetString("leave_menu_kick_fail_title", resourceCulture);
             }
@@ -936,7 +936,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please select a player to remove..
         /// </summary>
-        internal static string leave_menu_kick_no_selection_msg {
+        public static string leave_menu_kick_no_selection_msg {
             get {
                 return ResourceManager.GetString("leave_menu_kick_no_selection_msg", resourceCulture);
             }
@@ -945,7 +945,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No player selected.
         /// </summary>
-        internal static string leave_menu_kick_no_selection_title {
+        public static string leave_menu_kick_no_selection_title {
             get {
                 return ResourceManager.GetString("leave_menu_kick_no_selection_title", resourceCulture);
             }
@@ -954,7 +954,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No players available to kick..
         /// </summary>
-        internal static string leave_menu_kick_none {
+        public static string leave_menu_kick_none {
             get {
                 return ResourceManager.GetString("leave_menu_kick_none", resourceCulture);
             }
@@ -963,7 +963,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The player has already left the match. No action taken..
         /// </summary>
-        internal static string leave_menu_kick_not_found_msg {
+        public static string leave_menu_kick_not_found_msg {
             get {
                 return ResourceManager.GetString("leave_menu_kick_not_found_msg", resourceCulture);
             }
@@ -972,7 +972,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Player not found.
         /// </summary>
-        internal static string leave_menu_kick_not_found_title {
+        public static string leave_menu_kick_not_found_title {
             get {
                 return ResourceManager.GetString("leave_menu_kick_not_found_title", resourceCulture);
             }
@@ -981,7 +981,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Select a player to remove (feature pending)..
         /// </summary>
-        internal static string leave_menu_kick_placeholder {
+        public static string leave_menu_kick_placeholder {
             get {
                 return ResourceManager.GetString("leave_menu_kick_placeholder", resourceCulture);
             }
@@ -990,7 +990,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} was removed from the match..
         /// </summary>
-        internal static string leave_menu_kick_success_msg {
+        public static string leave_menu_kick_success_msg {
             get {
                 return ResourceManager.GetString("leave_menu_kick_success_msg", resourceCulture);
             }
@@ -999,7 +999,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Player removed.
         /// </summary>
-        internal static string leave_menu_kick_success_title {
+        public static string leave_menu_kick_success_title {
             get {
                 return ResourceManager.GetString("leave_menu_kick_success_title", resourceCulture);
             }
@@ -1008,7 +1008,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Manage players.
         /// </summary>
-        internal static string leave_menu_kick_title {
+        public static string leave_menu_kick_title {
             get {
                 return ResourceManager.GetString("leave_menu_kick_title", resourceCulture);
             }
@@ -1017,7 +1017,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Leave.
         /// </summary>
-        internal static string leave_menu_leave {
+        public static string leave_menu_leave {
             get {
                 return ResourceManager.GetString("leave_menu_leave", resourceCulture);
             }
@@ -1026,7 +1026,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to If you leave, you will exit the current room..
         /// </summary>
-        internal static string leave_menu_message {
+        public static string leave_menu_message {
             get {
                 return ResourceManager.GetString("leave_menu_message", resourceCulture);
             }
@@ -1035,7 +1035,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Leave the match?.
         /// </summary>
-        internal static string leave_menu_title {
+        public static string leave_menu_title {
             get {
                 return ResourceManager.GetString("leave_menu_title", resourceCulture);
             }
@@ -1044,7 +1044,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an error while loading the page, try again or contact us at: forbbidenislandfei@gmail.com.
         /// </summary>
-        internal static string load_page_error {
+        public static string load_page_error {
             get {
                 return ResourceManager.GetString("load_page_error", resourceCulture);
             }
@@ -1053,7 +1053,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an error while loading the matches, try again later or contact tech support.
         /// </summary>
-        internal static string loading_matches_error {
+        public static string loading_matches_error {
             get {
                 return ResourceManager.GetString("loading_matches_error", resourceCulture);
             }
@@ -1062,7 +1062,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Welcome to the lobby.
         /// </summary>
-        internal static string lobby_welcome {
+        public static string lobby_welcome {
             get {
                 return ResourceManager.GetString("lobby_welcome", resourceCulture);
             }
@@ -1071,7 +1071,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error while logging out at data base.
         /// </summary>
-        internal static string log_out_error {
+        public static string log_out_error {
             get {
                 return ResourceManager.GetString("log_out_error", resourceCulture);
             }
@@ -1080,7 +1080,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Log In.
         /// </summary>
-        internal static string login_button {
+        public static string login_button {
             get {
                 return ResourceManager.GetString("login_button", resourceCulture);
             }
@@ -1089,7 +1089,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
-        internal static string login_title {
+        public static string login_title {
             get {
                 return ResourceManager.GetString("login_title", resourceCulture);
             }
@@ -1098,7 +1098,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Login error. Please try again.
         /// </summary>
-        internal static string loginError {
+        public static string loginError {
             get {
                 return ResourceManager.GetString("loginError", resourceCulture);
             }
@@ -1107,7 +1107,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Log out.
         /// </summary>
-        internal static string logout {
+        public static string logout {
             get {
                 return ResourceManager.GetString("logout", resourceCulture);
             }
@@ -1116,7 +1116,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Lucio.
         /// </summary>
-        internal static string lucio_name {
+        public static string lucio_name {
             get {
                 return ResourceManager.GetString("lucio_name", resourceCulture);
             }
@@ -1125,7 +1125,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Match not found..
         /// </summary>
-        internal static string match_not_found {
+        public static string match_not_found {
             get {
                 return ResourceManager.GetString("match_not_found", resourceCulture);
             }
@@ -1134,7 +1134,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Too much cards!.
         /// </summary>
-        internal static string max_cards_exceed {
+        public static string max_cards_exceed {
             get {
                 return ResourceManager.GetString("max_cards_exceed", resourceCulture);
             }
@@ -1143,7 +1143,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to With this card you will have more than six cards, what do you want to do?.
         /// </summary>
-        internal static string max_cards_exceed_message {
+        public static string max_cards_exceed_message {
             get {
                 return ResourceManager.GetString("max_cards_exceed_message", resourceCulture);
             }
@@ -1152,7 +1152,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Max number of Players.
         /// </summary>
-        internal static string max_players {
+        public static string max_players {
             get {
                 return ResourceManager.GetString("max_players", resourceCulture);
             }
@@ -1161,7 +1161,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please enter a room name (max 20 characters)..
         /// </summary>
-        internal static string missing_room_name_message {
+        public static string missing_room_name_message {
             get {
                 return ResourceManager.GetString("missing_room_name_message", resourceCulture);
             }
@@ -1170,7 +1170,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Room name required.
         /// </summary>
-        internal static string missing_room_name_title {
+        public static string missing_room_name_title {
             get {
                 return ResourceManager.GetString("missing_room_name_title", resourceCulture);
             }
@@ -1179,7 +1179,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You haven&apos;t captured the four treasures at the FEI.
         /// </summary>
-        internal static string missing_treasures {
+        public static string missing_treasures {
             get {
                 return ResourceManager.GetString("missing_treasures", resourceCulture);
             }
@@ -1188,7 +1188,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Missing Treasures.
         /// </summary>
-        internal static string missing_treasures_title {
+        public static string missing_treasures_title {
             get {
                 return ResourceManager.GetString("missing_treasures_title", resourceCulture);
             }
@@ -1197,7 +1197,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Move.
         /// </summary>
-        internal static string move_button {
+        public static string move_button {
             get {
                 return ResourceManager.GetString("move_button", resourceCulture);
             }
@@ -1206,7 +1206,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
-        internal static string name {
+        public static string name {
             get {
                 return ResourceManager.GetString("name", resourceCulture);
             }
@@ -1215,7 +1215,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to New Game.
         /// </summary>
-        internal static string new_game {
+        public static string new_game {
             get {
                 return ResourceManager.GetString("new_game", resourceCulture);
             }
@@ -1224,7 +1224,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You ran out of actions, you have to steal treasure cards from the Treasure Stack (click on it).
         /// </summary>
-        internal static string no_more_actions {
+        public static string no_more_actions {
             get {
                 return ResourceManager.GetString("no_more_actions", resourceCulture);
             }
@@ -1233,7 +1233,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Normal.
         /// </summary>
-        internal static string normal {
+        public static string normal {
             get {
                 return ResourceManager.GetString("normal", resourceCulture);
             }
@@ -1242,7 +1242,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The water level starts at 1.
         /// </summary>
-        internal static string normal_message {
+        public static string normal_message {
             get {
                 return ResourceManager.GetString("normal_message", resourceCulture);
             }
@@ -1251,7 +1251,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You don&apos;t have at least two cards of the treasure you are trying to capture.
         /// </summary>
-        internal static string not_enough_treasure_cards {
+        public static string not_enough_treasure_cards {
             get {
                 return ResourceManager.GetString("not_enough_treasure_cards", resourceCulture);
             }
@@ -1260,7 +1260,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Missing Treasure Cards.
         /// </summary>
-        internal static string not_enough_treasure_cards_title {
+        public static string not_enough_treasure_cards_title {
             get {
                 return ResourceManager.GetString("not_enough_treasure_cards_title", resourceCulture);
             }
@@ -1269,7 +1269,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to To escape from the FEI you have to be at the FEI Entrance (blue border tile).
         /// </summary>
-        internal static string not_escape_tile {
+        public static string not_escape_tile {
             get {
                 return ResourceManager.GetString("not_escape_tile", resourceCulture);
             }
@@ -1278,7 +1278,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Not a Escape Tile.
         /// </summary>
-        internal static string not_escape_tile_title {
+        public static string not_escape_tile_title {
             get {
                 return ResourceManager.GetString("not_escape_tile_title", resourceCulture);
             }
@@ -1287,7 +1287,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to To capture a treasure you have to be at a treasure tile.
         /// </summary>
-        internal static string not_treasure_tile {
+        public static string not_treasure_tile {
             get {
                 return ResourceManager.GetString("not_treasure_tile", resourceCulture);
             }
@@ -1296,7 +1296,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Not a Treasure Tile.
         /// </summary>
-        internal static string not_treasure_tile_title {
+        public static string not_treasure_tile_title {
             get {
                 return ResourceManager.GetString("not_treasure_tile_title", resourceCulture);
             }
@@ -1305,7 +1305,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to It&apos;s not your turn yet, wait a little bit!.
         /// </summary>
-        internal static string not_your_turn_message {
+        public static string not_your_turn_message {
             get {
                 return ResourceManager.GetString("not_your_turn_message", resourceCulture);
             }
@@ -1314,7 +1314,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to It&apos;s Not Your Turn.
         /// </summary>
-        internal static string not_your_turn_title {
+        public static string not_your_turn_title {
             get {
                 return ResourceManager.GetString("not_your_turn_title", resourceCulture);
             }
@@ -1323,7 +1323,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Offline.
         /// </summary>
-        internal static string offline {
+        public static string offline {
             get {
                 return ResourceManager.GetString("offline", resourceCulture);
             }
@@ -1332,7 +1332,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Online.
         /// </summary>
-        internal static string online {
+        public static string online {
             get {
                 return ResourceManager.GetString("online", resourceCulture);
             }
@@ -1341,7 +1341,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Online.
         /// </summary>
-        internal static string online_friends {
+        public static string online_friends {
             get {
                 return ResourceManager.GetString("online_friends", resourceCulture);
             }
@@ -1350,7 +1350,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Parking Card.
         /// </summary>
-        internal static string parking_card_name {
+        public static string parking_card_name {
             get {
                 return ResourceManager.GetString("parking_card_name", resourceCulture);
             }
@@ -1359,7 +1359,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
-        internal static string password {
+        public static string password {
             get {
                 return ResourceManager.GetString("password", resourceCulture);
             }
@@ -1368,7 +1368,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pick a card.
         /// </summary>
-        internal static string pick_card {
+        public static string pick_card {
             get {
                 return ResourceManager.GetString("pick_card", resourceCulture);
             }
@@ -1377,7 +1377,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
-        internal static string play {
+        public static string play {
             get {
                 return ResourceManager.GetString("play", resourceCulture);
             }
@@ -1386,7 +1386,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} joined the match..
         /// </summary>
-        internal static string player_joined {
+        public static string player_joined {
             get {
                 return ResourceManager.GetString("player_joined", resourceCulture);
             }
@@ -1395,7 +1395,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} left the match..
         /// </summary>
-        internal static string player_left {
+        public static string player_left {
             get {
                 return ResourceManager.GetString("player_left", resourceCulture);
             }
@@ -1404,7 +1404,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} is ready..
         /// </summary>
-        internal static string player_ready {
+        public static string player_ready {
             get {
                 return ResourceManager.GetString("player_ready", resourceCulture);
             }
@@ -1413,7 +1413,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} is not ready anymore..
         /// </summary>
-        internal static string player_unready {
+        public static string player_unready {
             get {
                 return ResourceManager.GetString("player_unready", resourceCulture);
             }
@@ -1422,7 +1422,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Player Verified.
         /// </summary>
-        internal static string player_verified {
+        public static string player_verified {
             get {
                 return ResourceManager.GetString("player verified", resourceCulture);
             }
@@ -1431,7 +1431,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your account has been successfully verified.
         /// </summary>
-        internal static string player_verified_message {
+        public static string player_verified_message {
             get {
                 return ResourceManager.GetString("player_verified_message", resourceCulture);
             }
@@ -1440,7 +1440,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Players.
         /// </summary>
-        internal static string players {
+        public static string players {
             get {
                 return ResourceManager.GetString("players", resourceCulture);
             }
@@ -1449,7 +1449,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only the players with invitation can join .
         /// </summary>
-        internal static string private_message {
+        public static string private_message {
             get {
                 return ResourceManager.GetString("private_message", resourceCulture);
             }
@@ -1458,7 +1458,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
-        internal static string profile {
+        public static string profile {
             get {
                 return ResourceManager.GetString("profile", resourceCulture);
             }
@@ -1467,7 +1467,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Any player can join in your game.
         /// </summary>
-        internal static string public_message {
+        public static string public_message {
             get {
                 return ResourceManager.GetString("public_message", resourceCulture);
             }
@@ -1476,7 +1476,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an error while retrieving info from the database.
         /// </summary>
-        internal static string pull_database_error {
+        public static string pull_database_error {
             get {
                 return ResourceManager.GetString("pull_database_error", resourceCulture);
             }
@@ -1485,7 +1485,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an error while writing info to the database.
         /// </summary>
-        internal static string push_database_error {
+        public static string push_database_error {
             get {
                 return ResourceManager.GetString("push_database_error", resourceCulture);
             }
@@ -1494,7 +1494,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Quit game.
         /// </summary>
-        internal static string quit_game {
+        public static string quit_game {
             get {
                 return ResourceManager.GetString("quit_game", resourceCulture);
             }
@@ -1503,7 +1503,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error while closing application.
         /// </summary>
-        internal static string quit_game_error {
+        public static string quit_game_error {
             get {
                 return ResourceManager.GetString("quit_game_error", resourceCulture);
             }
@@ -1512,7 +1512,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ready.
         /// </summary>
-        internal static string ready_button_ready {
+        public static string ready_button_ready {
             get {
                 return ResourceManager.GetString("ready_button_ready", resourceCulture);
             }
@@ -1521,7 +1521,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Start.
         /// </summary>
-        internal static string ready_button_start {
+        public static string ready_button_start {
             get {
                 return ResourceManager.GetString("ready_button_start", resourceCulture);
             }
@@ -1530,7 +1530,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Unready.
         /// </summary>
-        internal static string ready_button_unready {
+        public static string ready_button_unready {
             get {
                 return ResourceManager.GetString("ready_button_unready", resourceCulture);
             }
@@ -1539,7 +1539,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Could not change the ready state (server error)..
         /// </summary>
-        internal static string ready_failed {
+        public static string ready_failed {
             get {
                 return ResourceManager.GetString("ready_failed", resourceCulture);
             }
@@ -1548,7 +1548,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Refresh.
         /// </summary>
-        internal static string refresh {
+        public static string refresh {
             get {
                 return ResourceManager.GetString("refresh", resourceCulture);
             }
@@ -1557,7 +1557,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Remember Me.
         /// </summary>
-        internal static string remember_me {
+        public static string remember_me {
             get {
                 return ResourceManager.GetString("remember_me", resourceCulture);
             }
@@ -1566,7 +1566,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Room {0}.
         /// </summary>
-        internal static string room_default {
+        public static string room_default {
             get {
                 return ResourceManager.GetString("room_default", resourceCulture);
             }
@@ -1575,7 +1575,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Room name.
         /// </summary>
-        internal static string room_name {
+        public static string room_name {
             get {
                 return ResourceManager.GetString("room_name", resourceCulture);
             }
@@ -1584,7 +1584,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Save Changes.
         /// </summary>
-        internal static string save_changes {
+        public static string save_changes {
             get {
                 return ResourceManager.GetString("save_changes", resourceCulture);
             }
@@ -1593,7 +1593,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Search room....
         /// </summary>
-        internal static string search_placeholder {
+        public static string search_placeholder {
             get {
                 return ResourceManager.GetString("search_placeholder", resourceCulture);
             }
@@ -1602,7 +1602,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
-        internal static string select_language {
+        public static string select_language {
             get {
                 return ResourceManager.GetString("select_language", resourceCulture);
             }
@@ -1611,7 +1611,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an error while sending your verification email, contact us at: forbbidenislandfei@gmail.com.
         /// </summary>
-        internal static string send_email_error {
+        public static string send_email_error {
             get {
                 return ResourceManager.GetString("send_email_error", resourceCulture);
             }
@@ -1620,7 +1620,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string settings {
+        public static string settings {
             get {
                 return ResourceManager.GetString("settings", resourceCulture);
             }
@@ -1629,7 +1629,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Shore up.
         /// </summary>
-        internal static string shore_up_button {
+        public static string shore_up_button {
             get {
                 return ResourceManager.GetString("shore_up_button", resourceCulture);
             }
@@ -1638,7 +1638,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
-        internal static string show_password {
+        public static string show_password {
             get {
                 return ResourceManager.GetString("show_password", resourceCulture);
             }
@@ -1647,7 +1647,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sign In.
         /// </summary>
-        internal static string signin {
+        public static string signin {
             get {
                 return ResourceManager.GetString("signin", resourceCulture);
             }
@@ -1656,7 +1656,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sign Up.
         /// </summary>
-        internal static string signup_button {
+        public static string signup_button {
             get {
                 return ResourceManager.GetString("signup_button", resourceCulture);
             }
@@ -1665,7 +1665,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an error while signing up, try again later.
         /// </summary>
-        internal static string signup_error {
+        public static string signup_error {
             get {
                 return ResourceManager.GetString("signup_error", resourceCulture);
             }
@@ -1674,7 +1674,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Password must have at least 8 characters, one upper case, one lower case, one number and one special character (@, &amp;, _).
         /// </summary>
-        internal static string signup_invalid_password {
+        public static string signup_invalid_password {
             get {
                 return ResourceManager.GetString("signup_invalid_password", resourceCulture);
             }
@@ -1683,7 +1683,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sign Up.
         /// </summary>
-        internal static string signup_title {
+        public static string signup_title {
             get {
                 return ResourceManager.GetString("signup_title", resourceCulture);
             }
@@ -1692,7 +1692,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to That user name is already being used.
         /// </summary>
-        internal static string signup_username_already_used {
+        public static string signup_username_already_used {
             get {
                 return ResourceManager.GetString("signup_username_already_used", resourceCulture);
             }
@@ -1701,7 +1701,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Spanish.
         /// </summary>
-        internal static string spanish {
+        public static string spanish {
             get {
                 return ResourceManager.GetString("spanish", resourceCulture);
             }
@@ -1710,7 +1710,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Could not start the match (server error)..
         /// </summary>
-        internal static string start_failed {
+        public static string start_failed {
             get {
                 return ResourceManager.GetString("start_failed", resourceCulture);
             }
@@ -1719,7 +1719,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successful Sign-Up.
         /// </summary>
-        internal static string successful_signup {
+        public static string successful_signup {
             get {
                 return ResourceManager.GetString("successful_signup", resourceCulture);
             }
@@ -1728,7 +1728,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The sign-up was successful, now you can log in.
         /// </summary>
-        internal static string successful_signup_message {
+        public static string successful_signup_message {
             get {
                 return ResourceManager.GetString("successful_signup_message", resourceCulture);
             }
@@ -1737,7 +1737,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to System.
         /// </summary>
-        internal static string system_prefix {
+        public static string system_prefix {
             get {
                 return ResourceManager.GetString("system_prefix", resourceCulture);
             }
@@ -1746,7 +1746,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Treasures Saved.
         /// </summary>
-        internal static string treasures_saved {
+        public static string treasures_saved {
             get {
                 return ResourceManager.GetString("treasures_saved", resourceCulture);
             }
@@ -1755,7 +1755,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error opening tutorial..
         /// </summary>
-        internal static string tutorial_open_error {
+        public static string tutorial_open_error {
             get {
                 return ResourceManager.GetString("tutorial_open_error", resourceCulture);
             }
@@ -1764,7 +1764,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There was an unexpected error, please contact client support.
         /// </summary>
-        internal static string unexpected_error {
+        public static string unexpected_error {
             get {
                 return ResourceManager.GetString("unexpected_error", resourceCulture);
             }
@@ -1773,7 +1773,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Upload Avatar.
         /// </summary>
-        internal static string upload_avatar {
+        public static string upload_avatar {
             get {
                 return ResourceManager.GetString("upload_avatar", resourceCulture);
             }
@@ -1782,7 +1782,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Use Card.
         /// </summary>
-        internal static string use_card {
+        public static string use_card {
             get {
                 return ResourceManager.GetString("use_card", resourceCulture);
             }
@@ -1791,7 +1791,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
-        internal static string username {
+        public static string username {
             get {
                 return ResourceManager.GetString("username", resourceCulture);
             }
@@ -1800,7 +1800,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Username or email.
         /// </summary>
-        internal static string username_email {
+        public static string username_email {
             get {
                 return ResourceManager.GetString("username_email", resourceCulture);
             }
@@ -1809,7 +1809,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The username does not exists.
         /// </summary>
-        internal static string usernameNoExists {
+        public static string usernameNoExists {
             get {
                 return ResourceManager.GetString("usernameNoExists", resourceCulture);
             }
@@ -1818,7 +1818,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to We have sent you a new verification token, please check your email.
         /// </summary>
-        internal static string verification_token_sent {
+        public static string verification_token_sent {
             get {
                 return ResourceManager.GetString("verification_token_sent", resourceCulture);
             }
@@ -1827,7 +1827,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Verification Token Sent.
         /// </summary>
-        internal static string verification_token_sent_title {
+        public static string verification_token_sent_title {
             get {
                 return ResourceManager.GetString("verification_token_sent_title", resourceCulture);
             }
@@ -1836,25 +1836,16 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Verify.
         /// </summary>
-        internal static string verify {
+        public static string verify {
             get {
                 return ResourceManager.GetString("verify", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verify Account.
-        /// </summary>
-        internal static string verify_account {
-            get {
-                return ResourceManager.GetString("verify_account", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Visibility.
         /// </summary>
-        internal static string visibility {
+        public static string visibility {
             get {
                 return ResourceManager.GetString("visibility", resourceCulture);
             }
@@ -1863,7 +1854,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Private.
         /// </summary>
-        internal static string visibility_private {
+        public static string visibility_private {
             get {
                 return ResourceManager.GetString("visibility_private", resourceCulture);
             }
@@ -1872,7 +1863,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Private.
         /// </summary>
-        internal static string visibility_private_key {
+        public static string visibility_private_key {
             get {
                 return ResourceManager.GetString("visibility_private_key", resourceCulture);
             }
@@ -1881,7 +1872,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Public.
         /// </summary>
-        internal static string visibility_public {
+        public static string visibility_public {
             get {
                 return ResourceManager.GetString("visibility_public", resourceCulture);
             }
@@ -1890,7 +1881,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Public.
         /// </summary>
-        internal static string visibility_public_key {
+        public static string visibility_public_key {
             get {
                 return ResourceManager.GetString("visibility_public_key", resourceCulture);
             }
@@ -1899,7 +1890,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
-        internal static string warning_title {
+        public static string warning_title {
             get {
                 return ResourceManager.GetString("warning_title", resourceCulture);
             }
@@ -1908,7 +1899,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Water Level.
         /// </summary>
-        internal static string water_level {
+        public static string water_level {
             get {
                 return ResourceManager.GetString("water_level", resourceCulture);
             }
@@ -1917,7 +1908,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You have saved all the treasures at the school! Thanks for playing!.
         /// </summary>
-        internal static string win_message {
+        public static string win_message {
             get {
                 return ResourceManager.GetString("win_message", resourceCulture);
             }
@@ -1926,7 +1917,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You Win!.
         /// </summary>
-        internal static string win_title {
+        public static string win_title {
             get {
                 return ResourceManager.GetString("win_title", resourceCulture);
             }
@@ -1935,7 +1926,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wrong Token.
         /// </summary>
-        internal static string wrong_token {
+        public static string wrong_token {
             get {
                 return ResourceManager.GetString("wrong_token", resourceCulture);
             }
@@ -1944,7 +1935,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The token you try to verify is not correct, please try again.
         /// </summary>
-        internal static string wrong_token_message {
+        public static string wrong_token_message {
             get {
                 return ResourceManager.GetString("wrong_token_message", resourceCulture);
             }
@@ -1953,7 +1944,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wrong Password.
         /// </summary>
-        internal static string wrongPassword {
+        public static string wrongPassword {
             get {
                 return ResourceManager.GetString("wrongPassword", resourceCulture);
             }
@@ -1962,7 +1953,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You have drowned, better luck next time!.
         /// </summary>
-        internal static string you_drowned_message {
+        public static string you_drowned_message {
             get {
                 return ResourceManager.GetString("you_drowned_message", resourceCulture);
             }
@@ -1971,7 +1962,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to It&apos;s your turn to play! Choose wisely your actions.
         /// </summary>
-        internal static string your_turn_message {
+        public static string your_turn_message {
             get {
                 return ResourceManager.GetString("your_turn_message", resourceCulture);
             }
@@ -1980,7 +1971,7 @@ namespace Forbbiden.Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your Turn!.
         /// </summary>
-        internal static string your_turn_title {
+        public static string your_turn_title {
             get {
                 return ResourceManager.GetString("your_turn_title", resourceCulture);
             }

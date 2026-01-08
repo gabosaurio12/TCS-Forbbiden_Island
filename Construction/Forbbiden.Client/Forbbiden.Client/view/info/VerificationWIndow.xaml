@@ -25,7 +25,7 @@
         <Grid Grid.Row="0" Background="#EFC437">
             <TextBlock x:Name="titletxtBk" Foreground="Black"
                        FontFamily="{StaticResource IrishGrover}"
-                       Text="{x:Static language:Resources.verify_account}"
+                       Text="{x:Static language:Resources.verify}"
                        FontSize="48"
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
@@ -35,26 +35,32 @@
             <TextBox x:Name="txtBx1" Width="80" Height="100"
                      Margin="5"
                      FontFamily="{StaticResource IrishGrover}"
+                     TextAlignment="Center"
                      FontSize="80"/>
             <TextBox x:Name="txtBx2" Width="80" Height="100"
                      Margin="5"
                      FontFamily="{StaticResource IrishGrover}"
+                     TextAlignment="Center"
                      FontSize="80"/>
             <TextBox x:Name="txtBx3" Width="80" Height="100"
                      Margin="5"
                      FontFamily="{StaticResource IrishGrover}"
+                     TextAlignment="Center"
                      FontSize="80"/>
             <TextBox x:Name="txtBx4" Width="80" Height="100"
                      Margin="5"
                      FontFamily="{StaticResource IrishGrover}"
+                     TextAlignment="Center"
                      FontSize="80"/>
             <TextBox x:Name="txtBx5" Width="80" Height="100"
                      Margin="5"
                      FontFamily="{StaticResource IrishGrover}"
+                     TextAlignment="Center"
                      FontSize="80"/>
             <TextBox x:Name="txtBx6" Width="80" Height="100"
                      Margin="5"
                      FontFamily="{StaticResource IrishGrover}"
+                     TextAlignment="Center"
                      FontSize="80"/>
         </StackPanel>
 

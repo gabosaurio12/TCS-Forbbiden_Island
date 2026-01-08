@@ -37,11 +37,14 @@ namespace Forbbiden.Client.Logic.Validations
             {
                 validationResult.Errors.Add(ValidationErrorCodes.PasswordEmpty);
             }
-            if (password.Length < PasswordMinLength)
+            else
             {
-                validationResult.Errors.Add(ValidationErrorCodes.PasswordTooShort);
+                if (password.Length < PasswordMinLength)
+                {
+                    validationResult.Errors.Add(ValidationErrorCodes.PasswordTooShort);
+                }
+                ValidateRegexPassword(password, validationResult);
             }
-            ValidateRegexPassword(password, validationResult);
             
             return validationResult;
         }
@@ -69,19 +72,27 @@ namespace Forbbiden.Client.Logic.Validations
             {
                 validationResult.Errors.Add(ValidationErrorCodes.EmailEmpty);
             }
-            string[] emailParts = email.Split('@');
-            if (emailParts.Length == 0)
+            else
             {
-                validationResult.Errors.Add(ValidationErrorCodes.EmailNotContaintsAt);
+                string[] emailParts = email.Split('@');
+                if (emailParts.Length == 1)
+                {
+                    validationResult.Errors.Add(ValidationErrorCodes.EmailNotContaintsAt);
+                }
+                else
+                {
+                    if (emailParts.Length > 2)
+                    {
+                        validationResult.Errors.Add(ValidationErrorCodes.EmailContainsMoreThanOneAt);
+                    }
+                    if (!emailParts[emailParts.Length - 1].Contains("."))
+                    {
+                        validationResult.Errors.Add(ValidationErrorCodes.EmailNotContainsExtension);
+                    }
+                }
             }
-            if (emailParts.Length > 2)
-            {
-                validationResult.Errors.Add(ValidationErrorCodes.EmailContainsMoreThanOneAt);
-            }
-            if (emailParts[1].Contains("."))
-            {
-                validationResult.Errors.Add(ValidationErrorCodes.EmailNotContainsExtension);
-            }
+                
+            
             return validationResult;
         }
     }

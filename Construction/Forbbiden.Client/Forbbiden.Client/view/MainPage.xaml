@@ -141,7 +141,7 @@
                     BorderThickness="5" BorderBrush="Black"
                     Background="#A1A1A1"
                     Cursor="Hand"
-                    Click="VerifyButton_Click"/>
+                    Click="VerifyButtonAsync_Click"/>
         </Grid>
     </Viewbox>
 </Page>
