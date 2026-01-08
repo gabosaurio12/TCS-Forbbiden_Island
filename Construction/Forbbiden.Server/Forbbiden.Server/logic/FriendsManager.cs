@@ -208,7 +208,7 @@ namespace Forbbiden.Server.logic
                             db.Friends.Remove(friendship);
                             db.SaveChanges();
 
-                            FriendsNotificationManager.SendRefreshPageCallback(new FriendRequest(), friendUsername));
+                            FriendsNotificationManager.SendRefreshPageCallback(new FriendRequest(), friendUsername);
 
                             success = true;
                         }

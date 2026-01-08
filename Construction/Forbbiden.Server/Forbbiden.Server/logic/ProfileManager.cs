@@ -30,7 +30,7 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
-        public bool ValidateEmail(string email)
+        public bool IsEmailAvailable(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {

@@ -9,7 +9,7 @@ namespace Forbbiden.Contracts
     {
         [OperationContract]
         [FaultContract(typeof(Fault))]
-        bool ValidateEmail(string email);
+        bool IsEmailAvailable(string email);
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
