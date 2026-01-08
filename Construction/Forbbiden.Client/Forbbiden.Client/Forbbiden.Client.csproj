@@ -247,6 +247,9 @@
     <Compile Include="view\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\info\ChangePasswordPage.xaml.cs">
+      <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\info\InviteCodeWindow.xaml.cs">
       <DependentUpon>InviteCodeWindow.xaml</DependentUpon>
     </Compile>
@@ -615,6 +618,10 @@
     <Page Include="view\HostGameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\info\ChangePasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\info\InviteCodeWindow.xaml">
       <SubType>Designer</SubType>

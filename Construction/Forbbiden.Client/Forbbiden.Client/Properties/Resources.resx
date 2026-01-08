@@ -309,17 +309,17 @@
   <data name="signup_invalid_password" xml:space="preserve">
     <value>Password must have at least 8 characters, one upper case, one lower case, one number and one special character (@, &amp;, _)</value>
   </data>
-  <data name="signup_empty_username" xml:space="preserve">
+  <data name="invalid_empty_username" xml:space="preserve">
     <value>The user name can't be empty</value>
   </data>
-  <data name="signup_space_username" xml:space="preserve">
+  <data name="invalid_username_contains_whitespace" xml:space="preserve">
     <value>The user name can't contain white spaces ( )</value>
   </data>
   <data name="signup_username_already_used" xml:space="preserve">
     <value>That user name is already being used</value>
   </data>
-  <data name="signup_invalid_email" xml:space="preserve">
-    <value>The email is not valid or is already registered</value>
+  <data name="invalid_email_not_available" xml:space="preserve">
+    <value>The email is already registered, you cant' use that one</value>
   </data>
   <data name="invalid_input" xml:space="preserve">
     <value>Invalid Input</value>
@@ -696,37 +696,67 @@
   <data name="leave_menu_kick_fail_msg" xml:space="preserve">
     <value>The player could not be removed. Please try again.</value>
   </data>
-	<data name="kicked_title" xml:space="preserve">
+  <data name="kicked_title" xml:space="preserve">
     <value>Removed from match</value>
   </data>
-	<data name="kicked_message" xml:space="preserve">
+  <data name="kicked_message" xml:space="preserve">
     <value>You were removed from the match by the host.</value>
   </data>
-	<data name="join_banned_title" xml:space="preserve">
+  <data name="join_banned_title" xml:space="preserve">
     <value>Cannot join match</value>
   </data>
-	<data name="join_banned_message" xml:space="preserve">
+  <data name="join_banned_message" xml:space="preserve">
     <value>You cannot join this match (you were removed by the host).</value>
   </data>
-	<data name="invite_code_title" xml:space="preserve">
+  <data name="invite_code_title" xml:space="preserve">
     <value>Invitation code</value>
   </data>
-	<data name="invite_code_message" xml:space="preserve">
+  <data name="invite_code_message" xml:space="preserve">
     <value>Share this code with your friends: {0}</value>
   </data>
-	<data name="invite_invalid_title" xml:space="preserve">
+  <data name="invite_invalid_title" xml:space="preserve">
     <value>Invalid code</value>
   </data>
-	<data name="invite_invalid_message" xml:space="preserve">
+  <data name="invite_invalid_message" xml:space="preserve">
     <value>The invitation code is not valid.</value>
   </data>
-	<data name="invite_code_prompt" xml:space="preserve">
+  <data name="invite_code_prompt" xml:space="preserve">
     <value>Enter the invitation code to join.</value>
   </data>
-	<data name="invite_code_label" xml:space="preserve">
+  <data name="invite_code_label" xml:space="preserve">
     <value>Invitation code:</value>
   </data>
-	<data name="invite_code_not_available" xml:space="preserve">
+  <data name="invite_code_not_available" xml:space="preserve">
     <value>Not available</value>
+  </data>
+  <data name="invalid_password_missing_uppercase" xml:space="preserve">
+    <value>Your password must have at least one uppercase letter</value>
+  </data>
+  <data name="invalid_password_missing_lowercase" xml:space="preserve">
+    <value>Your password must have at least one lowercase letter</value>
+  </data>
+  <data name="invalid_password_missing_number" xml:space="preserve">
+    <value>Your password must have at least one number</value>
+  </data>
+  <data name="invalid_password_missing_special_character" xml:space="preserve">
+    <value>Your password must have at least one special character (@, _, -)</value>
+  </data>
+  <data name="invalid_password_empty" xml:space="preserve">
+    <value>The password field is empty. You have to type a password</value>
+  </data>
+  <data name="invalid_password_too_short" xml:space="preserve">
+    <value>The password is too short, it has to be at least 8 characters long</value>
+  </data>
+  <data name="invalid_empty_email" xml:space="preserve">
+    <value>The email field is empty. You have to type an email</value>
+  </data>
+  <data name="invalid_email_not_contains_at" xml:space="preserve">
+    <value>The email you typed doesn't has an @, verify the format please</value>
+  </data>
+  <data name="invalid_email_contains_multiple_at" xml:space="preserve">
+    <value>The email you typed has multiple @, verify the format please</value>
+  </data>
+  <data name="invalid_email_not_contains_extension" xml:space="preserve">
+    <value>The email you typed doesn't has an extension, verify the format please</value>
   </data>
 </root>
