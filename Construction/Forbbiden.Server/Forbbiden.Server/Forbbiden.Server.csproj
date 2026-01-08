@@ -192,6 +192,12 @@
       <DependentUpon>ForbbidenModel.edmx</DependentUpon>
       <LastGenOutput>ForbbidenModel.cs</LastGenOutput>
     </Content>
+    <Content Include="SignupEmailMessage.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VerificationEmailMessage.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

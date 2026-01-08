@@ -33,24 +33,20 @@ namespace Forbbiden.Server.logic
         public bool IsEmailAvailable(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
-            {
                 return false;
-            }
-            if (email.Contains("@"))
+
+            try
             {
-                try
+                using (var db = new Forbbiden_FEIEntities(ConnectionString))
                 {
-                    using (var db = new Forbbiden_FEIEntities(ConnectionString))
-                    {
-                        var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
-                        return emailResult == null;
-                    }
+                    var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
+                    return emailResult == null;
                 }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.ValidateEmail ";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
-                }
+            }
+            catch (EntityException ex)
+            {
+                string classMethod = "ProfileManager.ValidateEmail ";
+                ExceptionHandler.HandleEntityException(ex, classMethod);
             }
 
             return false;
@@ -61,9 +57,7 @@ namespace Forbbiden.Server.logic
             bool usernameFound = false;
 
             if (string.IsNullOrWhiteSpace(username))
-            {
                 return usernameFound;
-            }
 
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
@@ -81,64 +75,91 @@ namespace Forbbiden.Server.logic
             return usernameFound;
         }
 
-        private bool ValidatePlayerId(int playerId)
-        {
-            if (playerId > 0)
-            {
-                using (var db = new Forbbiden_FEIEntities(ConnectionString))
-                {
-                    try
-                    {
-                        return db.Player.FirstOrDefault(p => p.player_id == playerId) != null;
-                    }
-                    catch (EntityException ex)
-                    {
-                        string classMethod = "ProfileManager.ValidatePlayerId ";
-                        ExceptionHandler.HandleEntityException(ex, classMethod);
-                    }
-                }
-            }
-            
-            return false;
-        }
-
-        public bool SendEmail(string email, int playerId)
+        public bool SendSignupEmail(string email, string token)
         {
             bool success = false;
 
-            if (ValidatePlayerId(playerId))
+            if (string.IsNullOrWhiteSpace(email) || token == null)
+                return success;
+
+            string emisor = Properties.email.Default.emailAddress;
+
+            var message = new MailMessage
             {
-                string receiver = email;
-                string emisor = Properties.email.Default.emailAddress;
+                From = new MailAddress(emisor)
+            };
+            message.To.Add(new MailAddress(email));
+            message.Subject = "Welcome to Forbbiden Island FEI Edition";
 
-                var token = new TokenManager().GenerateToken(playerId);
+            string htmlBody = File.ReadAllText("SignupEmailMessage.html");
+            htmlBody = htmlBody.Replace("{{TOKEN}}", token);
 
-                using (var message = new MailMessage(emisor, receiver))
-                using (var client = new SmtpClient(Properties.email.Default.smtp))
+            message.IsBodyHtml = true;
+            message.Body = htmlBody;
+
+            using (var client = new SmtpClient(Properties.email.Default.smtp))
+            {
+                client.Port = 587;
+                string emailCode = Properties.email.Default.emailCode;
+                client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
+                client.EnableSsl = true;
+
+                try
                 {
-                    message.Subject = "Register confirmation";
-                    message.Body = "Your account has been succesfully created. \n" +
-                        "This is your token: " + token.TokenString + "\n" +
-                        "Welcome to Forbbiden Island FEI Edition. Enjoy the adventure!";
-                    client.Port = 587;
-                    string emailCode = Properties.email.Default.emailCode;
-                    client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
-                    client.EnableSsl = true;
-
-                    try
-                    {
-                        client.Send(message);
-                        Log.Info("Email sent");
-                        success = true;
-                    }
-                    catch (SmtpException ex)
-                    {
-                        string classMethod = "ProfileManager.SendEmail";
-                        ExceptionHandler.HandleSmtpException(ex, classMethod);
-                    }
+                    client.Send(message);
+                    success = true;
+                }
+                catch (SmtpException ex)
+                {
+                    string classMethod = "ProfileManager.SendSignupEmail";
+                    ExceptionHandler.HandleSmtpException(ex, classMethod);
                 }
             }
             
+            return success;
+        }
+
+        public bool SendVerificationEmail(string email, string token)
+        {
+            bool success = false;
+
+            if (string.IsNullOrWhiteSpace(email) || token == null)
+                return success;
+
+            string emisor = Properties.email.Default.emailAddress;
+
+            var message = new MailMessage
+            {
+                From = new MailAddress(emisor)
+            };
+            message.To.Add(new MailAddress(email));
+            message.Subject = "Password changed";
+
+            string htmlBody = File.ReadAllText("VerificationEmailMessage.html");
+            htmlBody = htmlBody.Replace("{{TOKEN}}", token);
+
+            message.IsBodyHtml = true;
+            message.Body = htmlBody;
+
+            using (var client = new SmtpClient(Properties.email.Default.smtp))
+            {
+                client.Port = 587;
+                string emailCode = Properties.email.Default.emailCode;
+                client.Credentials = new System.Net.NetworkCredential(emisor, emailCode);
+                client.EnableSsl = true;
+
+                try
+                {
+                    client.Send(message);
+                    success = true;
+                }
+                catch (SmtpException ex)
+                {
+                    string classMethod = "ProfileManager.SendVerificationEmail";
+                    ExceptionHandler.HandleSmtpException(ex, classMethod);
+                }
+            }
+
             return success;
         }
 
@@ -480,6 +501,7 @@ namespace Forbbiden.Server.logic
 
                     formerPlayer.player_name = updatedPlayer.PlayerName;
                     formerPlayer.player_username = updatedPlayer.PlayerUsername;
+                    formerPlayer.player_password = updatedPlayer.PlayerPassword;
                     formerPlayer.player_email = updatedPlayer.PlayerEmail;
                     formerPlayer.player_avatar = updatedPlayer.PlayerAvatarPath;
                     formerPlayer.is_verified = updatedPlayer.IsVerified;
