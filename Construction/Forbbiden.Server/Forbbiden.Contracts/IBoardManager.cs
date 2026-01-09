@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Forbbiden.Contracts
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IBoardManager" in both code and config file together.
     [ServiceContract]
     public interface IBoardManager
     {
         [OperationContract]
         [FaultContract(typeof(Fault))]
-        List<String> GetTileImages();
+        bool CreateBoard(int matchId);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
+        List<Tile> RegisterBoardTiles(List<Tile> boardTiles);
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
@@ -74,5 +76,40 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public string ImagePath { get; set; }
+    }
+
+    [DataContract]
+    public class Board
+    {
+        [DataMember]
+        public int BoardId { get; set; }
+
+        [DataMember]
+        public int MatchId { get; set; }
+
+        [DataMember]
+        public List<Tile> Tiles { get; set; }
+    }
+
+    [DataContract]
+    public class Tile
+    {
+        [DataMember]
+        public int TileId { get; set; }
+
+        [DataMember]
+        public int Column { get; set; }
+
+        [DataMember]
+        public int Row { get; set; }
+
+        [DataMember]
+        public bool IsFlood { get; set; }
+
+        [DataMember]
+        public bool IsTreasure { get; set; }
+
+        [DataMember]
+        public bool IsEscape { get; set; }
     }
 }

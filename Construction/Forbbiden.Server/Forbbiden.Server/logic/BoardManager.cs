@@ -15,11 +15,40 @@ namespace Forbbiden.Server.logic
     public class BoardManager : IBoardManager
     {
         private readonly string ConnectionString;
-        private const string CLASS_METHOD = "BoardManger.SendOnPlayersTurnCallback";
 
         public BoardManager()
         {
             ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
+        }
+
+        public bool CreateBoard(int matchId)
+        {
+            bool success = false;
+            if (matchId < 1)
+                return success;
+
+            Contracts.Board contractBoard = new Contracts.Board();
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
+            {
+                Model.Board modelBoard = new Model.Board()
+                {
+                    match_id = matchId
+                };
+
+                try
+                {
+                    db.Board.Add(modelBoard);
+                    db.SaveChanges();
+                    success = true;
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "BoardManager.CreateBoard";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }
+
+            return success;
         }
 
         public Contracts.Card GetCard(string path)
@@ -98,11 +127,6 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        public List<string> GetTileImages()
-        {
-            return new List<string>();
-        }
-
         public List<Contracts.Card> GetTreasureCards()
         {
             using (var db = new Forbidden_FEIEntities(ConnectionString))
@@ -139,51 +163,114 @@ namespace Forbbiden.Server.logic
             }
         }
 
+        public List<Contracts.Tile> RegisterBoardTiles(List<Contracts.Tile> boardTiles)
+        {
+            List<Contracts.Tile> contractTiles = new List<Contracts.Tile>();
+            if (boardTiles != null && boardTiles.Any())
+            {
+                try
+                {
+                    using (var db = new Forbidden_FEIEntities(ConnectionString))
+                    {
+                        var modelTiles = new List<Model.Tile>();
+
+                        AddTilesToDatabase(db, modelTiles, boardTiles);
+
+                        db.SaveChanges();
+
+                        contractTiles = AssignTilesIDs(modelTiles, boardTiles);
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "BoardManager.RegisterTiles";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }          
+
+            return contractTiles;
+        }
+
+        private void AddTilesToDatabase(Forbidden_FEIEntities db, List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
+        {
+            foreach (var boardTile in boardTiles)
+            {
+                Model.Tile tile = GetModelTile(boardTile);
+                modelTiles.Add(tile);
+                db.Tile.Add(tile);
+            }
+        }
+
+        private Model.Tile GetModelTile(Contracts.Tile contractsTile)
+        {
+            return new Model.Tile()
+            {
+                col = contractsTile.Column,
+                row = contractsTile.Row,
+                isTreasure = contractsTile.IsTreasure ? 1 : 0,
+                isEscape = contractsTile.IsEscape ? 1 : 0,
+                isFlood = contractsTile.IsFlood ? 1 : 0
+            };
+        }
+
+        private List<Contracts.Tile> AssignTilesIDs(List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
+        {
+            List<Contracts.Tile> contractTiles = boardTiles.ToList();
+
+            for (int i = 0; i < modelTiles.Count; i++)
+            {
+                contractTiles[i].TileId = modelTiles[i].tile_id;
+            }
+            return contractTiles;
+        }
+
         public void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
         {
+            string classMethod = "BoardManger.SendOnBoardCreatedCallback";
             try
             {
                 MatchNotificationManager.SendOnBoardCreatedCallback(boardJson, usernames);
             }
             catch (CommunicationException ex)
             {
-                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
             }
             catch (TimeoutException ex)
             {
-                ExceptionHandler.HandleTimeoutException(ex, CLASS_METHOD);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
 
         public void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames)
         {
+            string classMethod = "BoardManger.SendOnBoardUpdatedCallback";
             try
             {
                 MatchNotificationManager.SendOnBoardUpdatedCallback(boardJson, usernames);
             }
             catch (CommunicationException ex)
             {
-                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
             }
             catch (TimeoutException ex)
             {
-                ExceptionHandler.HandleTimeoutException(ex, CLASS_METHOD);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
 
         public void SendOnPlayersTurnCallback(string username)
         {
+            string classMethod = "BoardManger.SendOnPlayersTurnCallback";
             try
             {
                 MatchNotificationManager.SendOnPlayersTurnCallback(username);
             }
             catch (CommunicationException ex)
             {
-                ExceptionHandler.HandleCommunicationException(ex, CLASS_METHOD);
+                ExceptionHandler.HandleCommunicationException(ex, classMethod);
             }
             catch (TimeoutException ex)
             {
-                string classMethod = "BoardManger.SendOnPlayersTurnCallback";
                 ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }
