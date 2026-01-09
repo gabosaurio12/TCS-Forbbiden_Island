@@ -1,3 +1,4 @@
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Validations;
@@ -46,7 +47,7 @@ namespace Forbbiden.Client
             if (!usernameValidationResults.IsValid)
             {
                 TurnTextBlockRed(txtBkUsername);
-                ErrorsAtViewHandler.ShowUsernameValidationErrors(
+                ErrorsNotificationManager.ShowUsernameValidationErrors(
                     usernameValidationResults.Errors, Window.GetWindow(this));
                 isValid = false;
             }
@@ -55,7 +56,7 @@ namespace Forbbiden.Client
             if (!emailValidationResults.IsValid)
             {
                 TurnTextBlockRed(txtBkEmail);
-                ErrorsAtViewHandler.ShowEmailValidationErrors(
+                ErrorsNotificationManager.ShowEmailValidationErrors(
                     emailValidationResults.Errors, Window.GetWindow(this));
                 isValid = false;
             }
@@ -64,7 +65,7 @@ namespace Forbbiden.Client
             if (!passwordValidationResults.IsValid)
             {
                 TurnTextBlockRed(txtBkPassword);
-                ErrorsAtViewHandler.ShowPasswordValidationErrors(
+                ErrorsNotificationManager.ShowPasswordValidationErrors(
                     passwordValidationResults.Errors, Window.GetWindow(this));
                 isValid = false;
             }
@@ -79,20 +80,27 @@ namespace Forbbiden.Client
 
             if (isValid)
             {
-                if (!await ProfileRepo.IsUsernameAvailable(player.PlayerUsername))
+                try
                 {
-                    string message = Properties.Resources.signup_username_already_used;
-                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
-                    TurnTextBlockRed(txtBkUsername);
-                    isValid = false;
-                }
+                    if (!await ProfileRepo.IsUsernameAvailable(player.PlayerUsername))
+                    {
+                        string message = Properties.Resources.signup_username_already_used;
+                        ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                        TurnTextBlockRed(txtBkUsername);
+                        isValid = false;
+                    }
 
-                if (!await ProfileRepo.IsEmailAvailable(player.PlayerEmail))
+                    if (!await ProfileRepo.IsEmailAvailable(player.PlayerEmail))
+                    {
+                        string message = Properties.Resources.invalid_email_not_available;
+                        ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                        TurnTextBlockRed(txtBkEmail);
+                        isValid = false;
+                    }
+                }
+                catch (ViewException ex)
                 {
-                    string message = Properties.Resources.invalid_email_not_available;
-                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
-                    TurnTextBlockRed(txtBkEmail);
-                    isValid = false;
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
             }
 

@@ -756,4 +756,13 @@
   <data name="invalid_email_not_contains_extension" xml:space="preserve">
     <value>The email you typed doesn't has an extension, verify the format please</value>
   </data>
+  <data name="error_timeout" xml:space="preserve">
+    <value>There was no response from the server, please try again later</value>
+  </data>
+  <data name="error_update_database" xml:space="preserve">
+    <value>There was an error while updating the database, changes were not registered</value>
+  </data>
+  <data name="error_avatar_download" xml:space="preserve">
+    <value>There was an error while downloading an Avatar</value>
+  </data>
 </root>

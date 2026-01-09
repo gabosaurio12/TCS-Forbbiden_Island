@@ -54,7 +54,7 @@ namespace Forbbiden.Client.view.info
             if (!validationResults.IsValid)
             {
                 PasswordTxtBx.BorderBrush = Brushes.Red;
-                ErrorsAtViewHandler.ShowPasswordValidationErrors(validationResults.Errors, this);
+                ErrorsNotificationManager.ShowPasswordValidationErrors(validationResults.Errors, this);
             }
             else
             {

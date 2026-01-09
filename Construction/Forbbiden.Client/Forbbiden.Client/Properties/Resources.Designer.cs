@@ -313,6 +313,15 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while downloading an Avatar.
+        /// </summary>
+        public static string error_avatar_download {
+            get {
+                return ResourceManager.GetString("error_avatar_download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading matches: {0}.
         /// </summary>
         public static string error_loading_matches {
@@ -322,11 +331,29 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was no response from the server, please try again later.
+        /// </summary>
+        public static string error_timeout {
+            get {
+                return ResourceManager.GetString("error_timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string error_title {
             get {
                 return ResourceManager.GetString("error_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while updating the database, changes were not registered.
+        /// </summary>
+        public static string error_update_database {
+            get {
+                return ResourceManager.GetString("error_update_database", resourceCulture);
             }
         }
         

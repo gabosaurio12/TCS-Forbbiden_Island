@@ -160,7 +160,7 @@ namespace Forbbiden.Client
                 if (!usernameValidationResults.IsValid)
                 {
                     txtBkUsername.Foreground = Brushes.Red;
-                    ErrorsAtViewHandler.ShowUsernameValidationErrors(
+                    ErrorsNotificationManager.ShowUsernameValidationErrors(
                         usernameValidationResults.Errors, Window.GetWindow(this));
                     isValid = false;
                 }
@@ -172,7 +172,7 @@ namespace Forbbiden.Client
                 if (!emailValidationResults.IsValid)
                 {
                     txtBkEmail.Foreground = Brushes.Red;
-                    ErrorsAtViewHandler.ShowEmailValidationErrors(
+                    ErrorsNotificationManager.ShowEmailValidationErrors(
                         emailValidationResults.Errors, Window.GetWindow(this));
                     isValid = false;
                 }
