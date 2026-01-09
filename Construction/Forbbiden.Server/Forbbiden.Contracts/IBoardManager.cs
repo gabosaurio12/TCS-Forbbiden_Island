@@ -9,7 +9,7 @@ namespace Forbbiden.Contracts
     {
         [OperationContract]
         [FaultContract(typeof(Fault))]
-        bool CreateBoard(int matchId);
+        bool CreateBoard(List<Tile> tiles, int matchId);
 
         [OperationContract]
         [FaultContract(typeof(Fault))]

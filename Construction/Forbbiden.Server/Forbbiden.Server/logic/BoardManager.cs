@@ -21,25 +21,29 @@ namespace Forbbiden.Server.logic
             ConnectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
         }
 
-        public bool CreateBoard(int matchId)
+        public bool CreateBoard(List<Contracts.Tile> tiles, int matchId)
         {
             bool success = false;
-            if (matchId < 1)
-                return success;
-
-            Contracts.Board contractBoard = new Contracts.Board();
-            using (var db = new Forbidden_FEIEntities(ConnectionString))
+            if (tiles?.Count > 0 && matchId > 0)
             {
-                Model.Board modelBoard = new Model.Board()
-                {
-                    match_id = matchId
-                };
-
                 try
                 {
-                    db.Board.Add(modelBoard);
-                    db.SaveChanges();
-                    success = true;
+                    using (var db = new Forbidden_FEIEntities(ConnectionString))
+                    {
+                        foreach (var tile in tiles)
+                        {
+                            Model.Board modelBoard = new Model.Board()
+                            {
+                                match_id = matchId,
+                                tile_id = tile.TileId
+                            };
+
+                            db.Board.Add(modelBoard);
+                        }
+                        
+                        db.SaveChanges();
+                        success = true;
+                    }
                 }
                 catch (EntityException ex)
                 {
