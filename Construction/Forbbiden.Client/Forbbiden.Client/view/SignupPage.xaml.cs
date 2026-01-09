@@ -122,8 +122,16 @@ namespace Forbbiden.Client
             if (await ValidatePlayer(player))
             {
                 player.PlayerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
-                int playerId = await ProfileRepo.SignupPlayer(player);
-                
+                int playerId = -1;
+                try
+                {
+                    playerId = await ProfileRepo.SignupPlayer(player);
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
+
                 if (playerId != -1)
                 {
                     string title = Properties.Resources.successful_signup;

@@ -23,7 +23,6 @@ namespace Forbbiden.Client.view
         {
             InitializeComponent();
 
-
             txtBkUsername.Text = player.PlayerUsername;
             txtBkEmail.Text = player.PlayerEmail;
             txtBkName.Text = player.PlayerName;

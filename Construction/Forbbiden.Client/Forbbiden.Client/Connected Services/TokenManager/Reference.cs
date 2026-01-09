@@ -15,6 +15,67 @@ namespace Forbbiden.Client.TokenManager {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Fault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Token", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
     [System.SerializableAttribute()]
     public partial class Token : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -95,24 +156,28 @@ namespace Forbbiden.Client.TokenManager {
     public interface ITokenManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/CreateRandomToken", ReplyAction="http://tempuri.org/ITokenManager/CreateRandomTokenResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.TokenManager.Fault), Action="http://tempuri.org/ITokenManager/CreateRandomTokenFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         string CreateRandomToken();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/CreateRandomToken", ReplyAction="http://tempuri.org/ITokenManager/CreateRandomTokenResponse")]
         System.Threading.Tasks.Task<string> CreateRandomTokenAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/GenerateToken", ReplyAction="http://tempuri.org/ITokenManager/GenerateTokenResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.TokenManager.Fault), Action="http://tempuri.org/ITokenManager/GenerateTokenFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.TokenManager.Token GenerateToken(int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/GenerateToken", ReplyAction="http://tempuri.org/ITokenManager/GenerateTokenResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.TokenManager.Token> GenerateTokenAsync(int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/GetToken", ReplyAction="http://tempuri.org/ITokenManager/GetTokenResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.TokenManager.Fault), Action="http://tempuri.org/ITokenManager/GetTokenFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.TokenManager.Token GetToken(int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/GetToken", ReplyAction="http://tempuri.org/ITokenManager/GetTokenResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.TokenManager.Token> GetTokenAsync(int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/VerifyToken", ReplyAction="http://tempuri.org/ITokenManager/VerifyTokenResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.TokenManager.Fault), Action="http://tempuri.org/ITokenManager/VerifyTokenFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool VerifyToken(string token, int playerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITokenManager/VerifyToken", ReplyAction="http://tempuri.org/ITokenManager/VerifyTokenResponse")]

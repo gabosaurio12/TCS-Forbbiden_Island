@@ -1,11 +1,8 @@
 ﻿using Forbbiden.Client.Controls;
 using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.logic;
-using Forbbiden.Client.ProfileManager;
-using log4net;
 using System;
 using System.Linq;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +11,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Input;
 using Forbbiden.Client.Repositories;
+using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.Logic;
+using System.Collections.Generic;
 
 namespace Forbbiden.Client.view
 {
@@ -22,17 +22,15 @@ namespace Forbbiden.Client.view
     /// </summary>
     public partial class FriendsPage : Page
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsPage));
         private readonly ProfileRepository ProfileRepo;
-        private readonly FriendsManagerClient FriendsClient;
-
+        private readonly FriendsRepository FriendsRepo;
 
         public FriendsPage()
         {
             InitializeComponent();
 
             ProfileRepo = new ProfileRepository();
-            FriendsClient = new FriendsManagerClient();
+            FriendsRepo = new FriendsRepository();
 
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
             FriendsNotificationSingleton.Instance.OnRefreshPage += RefreshFriends;
@@ -69,9 +67,17 @@ namespace Forbbiden.Client.view
 
         private async Task SetFriends()
         {
-            var player = await ProfileRepo.GetPlayerByUsername(ClientSession.Username, true);
-            
-            if (player.PlayerId != -1)
+            ProfileManager.Player player = new ProfileManager.Player();
+            try
+            {
+                player = await ProfileRepo.GetPlayerByUsername(ClientSession.Username, true);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+            }
+
+            if (player.PlayerId > 0)
             {
                 var onlineFriends = player.Friends
                     .Where(fs => fs.Friend.Status == 1)
@@ -94,8 +100,16 @@ namespace Forbbiden.Client.view
 
         private async Task SetFriendRequests()
         {
-            var requests = await FriendsClient.GetFriendRequestsAsync(ClientSession.Username);
-            if (requests.Length > 0)
+            List<FriendRequest> requests = new List<FriendRequest>();
+            try
+            {
+                requests = await FriendsRepo.GetFriendRequests(ClientSession.Username);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+            }
+            if (requests.Count > 0)
             {
                 Storyboard storyboard = (Storyboard)FindResource("ShowNotification");
                 storyboard.Begin();
@@ -113,22 +127,17 @@ namespace Forbbiden.Client.view
             var requestControl = ViewUtils.FindParent<UserControlFriend>(imageClicked);
             string friendUsername = requestControl.usernameTxtBk.Text;
 
-            if (!string.IsNullOrEmpty(friendUsername))
+            if (!string.IsNullOrWhiteSpace(friendUsername))
             {
                 bool isDeleted = false;
 
                 try
                 {
-                    isDeleted = await FriendsClient.DeleteFriendAsync(friendUsername, ClientSession.Username);
+                    isDeleted = await FriendsRepo.DeleteFriend(friendUsername, ClientSession.Username);
                 }
-                catch (FaultException<Fault>)
+                catch (ViewException ex)
                 {
-                    ViewUtils.ShowPushError(Window.GetWindow(this));
-                }
-                catch (TimeoutException ex)
-                {
-                    Log.Error("FriendsPage.DeleteFriend_MouseLeftButtonDownAsync", ex);
-
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (isDeleted)
@@ -154,8 +163,17 @@ namespace Forbbiden.Client.view
             var requestControl = ViewUtils.FindParent<UserControlFriend>(imageClicked);
             string friendUsername = requestControl.usernameTxtBk.Text;
 
-            var friend = await ProfileRepo.GetPlayerByUsername(friendUsername, false);
-            if (friend.PlayerId != -1)
+            ProfileManager.Player friend = new ProfileManager.Player();
+            try
+            {
+                friend = await ProfileRepo.GetPlayerByUsername(friendUsername, false);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+            }
+
+            if (friend.PlayerId > 0)
             {
                 NavigationService?.Navigate(new FriendProfilePage(friend));
             }
@@ -221,20 +239,30 @@ namespace Forbbiden.Client.view
 
         private async Task SendFriendRequest(string receiverUsername)
         {
-            var receiver = await ProfileRepo.GetPlayerByUsername(receiverUsername, true);
+            ProfileManager.Player receiver = new ProfileManager.Player();
 
-            if (receiver.PlayerId != -1)
+            try
+            {
+                receiver = await ProfileRepo.GetPlayerByUsername(receiverUsername, true);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+            }
+
+            if (receiver.PlayerId > 0)
             {
                 bool requestStatus = false;
 
                 try
                 {
-                    requestStatus = await FriendsClient.SendFriendRequestAsync(ClientSession.Username, receiver.PlayerUsername);
+                    requestStatus = await FriendsRepo.SendFriendRequest(
+                        ClientSession.Username, receiver.PlayerUsername);
                 }
-                catch (FaultException<Fault> fault)
+                catch (ViewException ex)
                 {
-                    Log.Error("ERROR: FriendsPage.SendFriendRequest", fault);
-                    ViewUtils.ShowPushError(Window.GetWindow(this));
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+
                 }
 
                 if (requestStatus)

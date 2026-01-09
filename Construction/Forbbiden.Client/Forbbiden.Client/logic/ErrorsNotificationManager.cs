@@ -94,14 +94,14 @@ namespace Forbbiden.Client.Logic
             }
         }
 
-        public static void ShowPullError(Window window)
+        private static void ShowPullError(Window window)
         {
             string title = Properties.Resources.error;
             string message = Properties.Resources.pull_database_error;
             ViewUtils.OpenNotificationWindow(title, message, window);
         }
 
-        public static void ShowPushError(Window window)
+        private static void ShowPushError(Window window)
         {
             string title = Properties.Resources.error;
             string message = Properties.Resources.push_database_error;
@@ -143,7 +143,6 @@ namespace Forbbiden.Client.Logic
                     message = Properties.Resources.error_avatar_download;
                     ViewUtils.OpenNotificationWindow(title, message, window);
                     break;
-
             }
         }
     }

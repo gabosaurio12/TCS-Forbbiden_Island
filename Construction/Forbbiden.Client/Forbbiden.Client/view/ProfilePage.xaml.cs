@@ -1,4 +1,5 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
@@ -227,10 +228,17 @@ namespace Forbbiden.Client
                 }
 
                 string savedFileName = null;
-                savedFileName = await ProfileRepo.UploadAvatar(
+                try
+                {
+                    savedFileName = await ProfileRepo.UploadAvatar(
                         ProfilePlayer.PlayerUsername, bytes, AvatarFileName);
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
 
-                if (string.IsNullOrEmpty(savedFileName))
+                if (string.IsNullOrWhiteSpace(savedFileName))
                 {
                     //OpenNotificationError(Properties.Resources.error_uploading_avatar);
                     return;
@@ -274,8 +282,16 @@ namespace Forbbiden.Client
         {
             if (await ProfileRepo.UpdatePlayerProfile(updatedPlayer))
             {
-                var refreshed = await ProfileRepo
-                    .GetPlayerByUsername(updatedPlayer.PlayerUsername, true);
+                Player refreshed = null;
+                try
+                {
+                    refreshed = await ProfileRepo
+                        .GetPlayerByUsername(updatedPlayer.PlayerUsername, true);
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
 
                 if (refreshed != null && refreshed.PlayerId > 0)
                 {

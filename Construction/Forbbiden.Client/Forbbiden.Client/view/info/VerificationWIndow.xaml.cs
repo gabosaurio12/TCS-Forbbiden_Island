@@ -1,10 +1,10 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.TokenManager;
-using log4net;
 using System;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -15,8 +15,6 @@ namespace Forbbiden.Client.view.info
     /// </summary>
     public partial class VerificationWindow : Window
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(VerificationWindow));
-
         private readonly int PlayerID;
         public event Action OnVerified;
         private bool IsPasswordChange;
@@ -62,10 +60,9 @@ namespace Forbbiden.Client.view.info
             {
                 player = await profileRepository.GetPlayerById(PlayerID, false);
             }
-            catch (FaultException<Fault> ex)
+            catch (ViewException ex)
             {
-                Log.Error("VerificationWindow.VerifyPlayer", ex);
-                ViewUtils.ShowPullError(GetWindow(this));
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
             if (player.PlayerId != -1)
             {
@@ -75,10 +72,9 @@ namespace Forbbiden.Client.view.info
                 {
                     isUpdated = await profileRepository.UpdatePlayerProfile(player);
                 }
-                catch (FaultException<Fault> ex)
+                catch (ViewException ex)
                 {
-                    Log.Error("VerificationWindow.VerifyPlayer", ex);
-                    ViewUtils.ShowPushError(GetWindow(this));
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
                 if (isUpdated)
                 {

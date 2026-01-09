@@ -1,8 +1,10 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.Controls;
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.logic.board;
 using Forbbiden.Client.logic.board.states;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.model;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.view.info;
@@ -134,8 +136,15 @@ namespace Forbbiden.Client.view.games
 
             for (int i = 1; i < players.Count; i++)
             {
-                var player = await new ProfileRepository().GetPlayerById(players[i].PlayerId, false);
-                BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
+                try
+                {
+                    var player = await new ProfileRepository().GetPlayerById(players[i].PlayerId, false);
+                    BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
             }
         }
 

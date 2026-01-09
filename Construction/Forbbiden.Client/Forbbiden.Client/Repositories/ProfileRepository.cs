@@ -22,12 +22,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.IsEmailAvailable", ex);
                 throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.IsEmailAvailable", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -64,12 +64,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.SendSignupEmail", ex);
                 throw new ViewException(ServerErrorCodes.sendEmailError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.IsEmailAvailable", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -85,12 +85,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.SendVerificationEmail", ex);
                 throw new ViewException(ServerErrorCodes.sendEmailError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.SendVerificationEmail", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -106,12 +106,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.SignupPlayer", ex);
                 throw new ViewException(ServerErrorCodes.pushingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.SignupPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -127,12 +127,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.LoginPlayer", ex);
                 throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.LoginPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -148,12 +148,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.GetPlayerByUsername", ex);
                 throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.GetPlayerByUsername", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -169,12 +169,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.GetPlayerById", ex);
                 throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.GetPlayerById", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -190,12 +190,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.UpdatePlayerProfile", ex);
                 throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.UpdatePlayerProfile", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -211,12 +211,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.DeletePlayer", ex);
                 throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.DeletePlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -232,12 +232,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.ConnectPlayer", ex);
                 throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.ConnectPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -253,12 +253,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.DisconnectPlayer", ex);
                 throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.DisconnectPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -275,12 +275,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.UploadAvatar", ex);
                 throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.UploadAvatar", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
@@ -296,12 +296,12 @@ namespace Forbbiden.Client.Repositories
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.DownloadAvatar", ex);
                 throw new ViewException(ServerErrorCodes.avatarDownloadError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                Log.Error("ProfileRepository.DownloadAvatar", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 

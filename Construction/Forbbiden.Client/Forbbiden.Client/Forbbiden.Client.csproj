@@ -164,8 +164,10 @@
     <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ErrorCodes\ServerErrorCodes.cs" />
+    <Compile Include="Exceptions\ViewException.cs" />
     <Compile Include="Logic\AudioManager.cs" />
-    <Compile Include="Logic\BoardPageCallbackDto.cs" />
+    <Compile Include="Model\BoardPageCallbackDto.cs" />
     <Compile Include="Logic\Board\BoardStateContext.cs" />
     <Compile Include="Logic\Board\IBoardState.cs" />
     <Compile Include="Logic\Board\States\CaptureTreasureState.cs" />
@@ -177,10 +179,10 @@
     <Compile Include="Logic\Board\States\ShoreState.cs" />
     <Compile Include="Logic\Board\States\StandByState.cs" />
     <Compile Include="Logic\Board\States\UseCardState.cs" />
-    <Compile Include="Logic\ClientSession.cs" />
+    <Compile Include="Model\ClientSession.cs" />
     <Compile Include="Logic\FriendsNotificationSingleton.cs" />
     <Compile Include="Logic\GameServiceCallback.cs" />
-    <Compile Include="Logic\ErrorsAtViewHandler.cs" />
+    <Compile Include="Logic\ErrorsNotificationManager.cs" />
     <Compile Include="Logic\HostLogic.cs" />
     <Compile Include="Logic\MatchLogic.cs" />
     <Compile Include="Logic\MatchNotificationsSingleton.cs" />
@@ -191,7 +193,7 @@
     <Compile Include="Model\BoardPageDto.cs" />
     <Compile Include="Model\CardWindowSettings.cs" />
     <Compile Include="Model\TileDto.cs" />
-    <Compile Include="Model\ValidationErrorCodes.cs" />
+    <Compile Include="ErrorCodes\ValidationErrorCodes.cs" />
     <Compile Include="Model\ValidationResults.cs" />
     <Compile Include="Properties\PlayerSettings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -850,21 +852,21 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="sounds\dramaticMusic.mp3" />
-    <Content Include="sounds\duelMusic.mp3" />
-    <Content Include="sounds\gameBonus.mp3" />
-    <Content Include="sounds\gameCountdown.mp3">
+    <Content Include="Sounds\dramaticMusic.mp3" />
+    <Content Include="Sounds\duelMusic.mp3" />
+    <Content Include="Sounds\gameBonus.mp3" />
+    <Content Include="Sounds\gameCountdown.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sounds\gameOver.mp3" />
-    <Content Include="sounds\gameStart.mp3" />
-    <Content Include="sounds\newRecord.mp3" />
-    <Content Include="sounds\riuvGameMusic.mp3">
+    <Content Include="Sounds\gameOver.mp3" />
+    <Content Include="Sounds\gameStart.mp3" />
+    <Content Include="Sounds\newRecord.mp3" />
+    <Content Include="Sounds\riuvGameMusic.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sounds\shotGame.mp3" />
-    <Content Include="sounds\takeTreasure.mp3" />
-    <Content Include="sounds\victoryMusic.mp3" />
+    <Content Include="Sounds\shotGame.mp3" />
+    <Content Include="Sounds\takeTreasure.mp3" />
+    <Content Include="Sounds\victoryMusic.mp3" />
     <Content Include="Images\board_background.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

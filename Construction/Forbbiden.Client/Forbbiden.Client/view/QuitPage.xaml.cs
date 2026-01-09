@@ -1,4 +1,6 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
 using log4net;
@@ -32,7 +34,14 @@ namespace Forbbiden.Client.view
         {
             var repository = new ProfileRepository();
 
-            await repository.DisconnectPlayer(username);
+            try
+            {
+                await repository.DisconnectPlayer(username);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

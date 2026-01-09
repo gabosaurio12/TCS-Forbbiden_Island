@@ -1,10 +1,8 @@
-﻿using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.TokenManager;
+﻿using Forbbiden.Client.TokenManager;
 using log4net;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 
 namespace Forbbiden.Client.Repositories
 {
