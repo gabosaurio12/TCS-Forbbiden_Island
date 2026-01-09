@@ -55,6 +55,111 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
+        public Contracts.Board GetBoard(int matchId)
+        {
+            Contracts.Board board = new Contracts.Board();
+            if (matchId > 0)
+            {
+                try
+                {
+                    using (var db = new Forbidden_FEIEntities(ConnectionString))
+                    {
+                        var boardTiles = db.Board.Where(b => b.match_id == matchId).ToList();
+                        board.Tiles = GetContractsTilesFromBoard(boardTiles, db);
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "BoardManager.GetBoard";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }
+            return board;
+        }
+
+        private List<Contracts.Tile> GetContractsTilesFromBoard(List<Model.Board> board, Forbidden_FEIEntities db)
+        {
+            var tilesIds = board.Select(b => b.tile_id).ToList();
+
+            var modelTiles = db.Tile.Where(t => tilesIds.Contains(t.tile_id)).ToList();
+
+            return modelTiles.Select(GetContractTile).ToList();
+        }
+
+        private Contracts.Tile GetContractTile(Model.Tile modelTile)
+        {
+            return new Contracts.Tile()
+            {
+                TileId = modelTile.tile_id,
+                Column = modelTile.col,
+                Row = modelTile.row,
+                IsFlood = modelTile.isFlood == 1,
+                IsTreasure = modelTile.isTreasure == 1,
+                IsEscape = modelTile.isEscape == 1
+            };
+        }
+
+        public List<Contracts.Tile> RegisterBoardTiles(List<Contracts.Tile> boardTiles)
+        {
+            List<Contracts.Tile> contractTiles = new List<Contracts.Tile>();
+            if (boardTiles != null && boardTiles.Any())
+            {
+                try
+                {
+                    using (var db = new Forbidden_FEIEntities(ConnectionString))
+                    {
+                        var modelTiles = new List<Model.Tile>();
+
+                        AddTilesToDatabase(db, modelTiles, boardTiles);
+
+                        db.SaveChanges();
+
+                        contractTiles = AssignTilesIDs(modelTiles, boardTiles);
+                    }
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "BoardManager.RegisterBoardTiles";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }
+
+            return contractTiles;
+        }
+
+        private void AddTilesToDatabase(Forbidden_FEIEntities db, List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
+        {
+            foreach (var boardTile in boardTiles)
+            {
+                Model.Tile tile = GetModelTile(boardTile);
+                modelTiles.Add(tile);
+                db.Tile.Add(tile);
+            }
+        }
+
+        private Model.Tile GetModelTile(Contracts.Tile contractsTile)
+        {
+            return new Model.Tile()
+            {
+                col = contractsTile.Column,
+                row = contractsTile.Row,
+                isTreasure = contractsTile.IsTreasure ? 1 : 0,
+                isEscape = contractsTile.IsEscape ? 1 : 0,
+                isFlood = contractsTile.IsFlood ? 1 : 0
+            };
+        }
+
+        private List<Contracts.Tile> AssignTilesIDs(List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
+        {
+            List<Contracts.Tile> contractTiles = boardTiles.ToList();
+
+            for (int i = 0; i < modelTiles.Count; i++)
+            {
+                contractTiles[i].TileId = modelTiles[i].tile_id;
+            }
+            return contractTiles;
+        }
+
         public Contracts.Card GetCard(string path)
         {
             using (var db = new Forbidden_FEIEntities(ConnectionString))
@@ -165,67 +270,6 @@ namespace Forbbiden.Server.logic
 
                 return treasureCards;
             }
-        }
-
-        public List<Contracts.Tile> RegisterBoardTiles(List<Contracts.Tile> boardTiles)
-        {
-            List<Contracts.Tile> contractTiles = new List<Contracts.Tile>();
-            if (boardTiles != null && boardTiles.Any())
-            {
-                try
-                {
-                    using (var db = new Forbidden_FEIEntities(ConnectionString))
-                    {
-                        var modelTiles = new List<Model.Tile>();
-
-                        AddTilesToDatabase(db, modelTiles, boardTiles);
-
-                        db.SaveChanges();
-
-                        contractTiles = AssignTilesIDs(modelTiles, boardTiles);
-                    }
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "BoardManager.RegisterTiles";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
-                }
-            }          
-
-            return contractTiles;
-        }
-
-        private void AddTilesToDatabase(Forbidden_FEIEntities db, List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
-        {
-            foreach (var boardTile in boardTiles)
-            {
-                Model.Tile tile = GetModelTile(boardTile);
-                modelTiles.Add(tile);
-                db.Tile.Add(tile);
-            }
-        }
-
-        private Model.Tile GetModelTile(Contracts.Tile contractsTile)
-        {
-            return new Model.Tile()
-            {
-                col = contractsTile.Column,
-                row = contractsTile.Row,
-                isTreasure = contractsTile.IsTreasure ? 1 : 0,
-                isEscape = contractsTile.IsEscape ? 1 : 0,
-                isFlood = contractsTile.IsFlood ? 1 : 0
-            };
-        }
-
-        private List<Contracts.Tile> AssignTilesIDs(List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
-        {
-            List<Contracts.Tile> contractTiles = boardTiles.ToList();
-
-            for (int i = 0; i < modelTiles.Count; i++)
-            {
-                contractTiles[i].TileId = modelTiles[i].tile_id;
-            }
-            return contractTiles;
         }
 
         public void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)

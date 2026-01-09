@@ -13,6 +13,10 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
+        Board GetBoard(int matchId);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Tile> RegisterBoardTiles(List<Tile> boardTiles);
 
         [OperationContract]
