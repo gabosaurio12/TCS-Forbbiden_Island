@@ -1,5 +1,6 @@
-﻿using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.TokenManager;
+﻿using Forbbiden.Client.ErrorCodes;
+using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.ProfileManager;
 using log4net;
 using System;
 using System.ServiceModel;
@@ -14,7 +15,7 @@ namespace Forbbiden.Client.Repositories
 
         public async Task<bool> IsEmailAvailable(string email)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.IsEmailAvailableAsync(email);
@@ -22,10 +23,12 @@ namespace Forbbiden.Client.Repositories
             catch (FaultException<Fault> ex)
             {
                 Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
                 Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
             return result;
@@ -33,7 +36,7 @@ namespace Forbbiden.Client.Repositories
 
         public async Task<bool> IsUsernameAvailable(string username)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.IsUsernameAvailableAsync(username);
@@ -41,10 +44,12 @@ namespace Forbbiden.Client.Repositories
             catch (FaultException<Fault> ex)
             {
                 Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
                 Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
             return result;
@@ -52,217 +57,254 @@ namespace Forbbiden.Client.Repositories
 
         public async Task<bool> SendSignupEmail(string email, string token)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.SendSignupEmailAsync(email, token);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.SendEmail", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.sendEmailError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.SendEmail", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return result;  
         }
 
         public async Task<bool> SendVerificationEmail(string email, string token)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.SendVerificationEmailAsync(email, token);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.SendEmail", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.sendEmailError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.SendEmail", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return result;
         }
 
         public async Task<int> SignupPlayer(Player player)
         {
-            int playerId = -1;
+            int playerId;
             try
             {
                 playerId = await ProfileClient.SignUpAsync(player);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.SignupPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.pushingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.SignupPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return playerId;
         }
 
         public async Task<Player> LoginPlayer(string username, string password)
         {
-            Player player = null;
+            Player player;
             try
             {
                 player = await ProfileClient.LoginAsync(username, password);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.LoginPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.LoginPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return player;
         }
 
         public async Task<Player> GetPlayerByUsername(string username, bool includeFriends)
         {
-            Player player = null;
+            Player player;
             try
             {
                 player = await ProfileClient.GetPlayerByUsernameAsync(username, includeFriends);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.GetPlayerByUsername", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.GetPlayerByUsername", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return player;
         }
 
         public async Task<Player> GetPlayerById(int playerId, bool includeFriends)
         {
-            Player player = null;
+            Player player;
             try
             {
                 player = await ProfileClient.GetPlayerByIdAsync(playerId, includeFriends);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.GetPlayerById", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.GetPlayerById", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return player;
         }
 
         public async Task<bool> UpdatePlayerProfile(Player player)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.UpdatePlayerAsync(player);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.UpdatePlayerProfile", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.UpdatePlayerProfile", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return result;
         }
 
         public async Task<bool> DeletePlayer(string username)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.DeletePlayerByUsernameAsync(username);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.DeletePlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.DeletePlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return result;
         }
 
         public async Task<bool> ConnectPlayer(string username)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.ConnectPlayerByUsernameAsync(username);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.ConnectPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.ConnectPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return result;
         }
 
         public async Task<bool> DisconnectPlayer(string username)
         {
-            bool result = false;
+            bool result;
             try
             {
                 result = await ProfileClient.DisconnectPlayerByUsernameAsync(username);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.DisconnectPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.DisconnectPlayer", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return result;
         }
 
         public async Task<string> UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
-            string avatarFileName = null;
+            string avatarFileName;
             try
             {
-                avatarFileName = await ProfileClient.UploadAvatarAsync(username, avatarBytes, fileName);
+                avatarFileName = await ProfileClient.UploadAvatarAsync(
+                    username, avatarBytes, fileName);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.UploadAvatar", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.updatingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.UploadAvatar", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return avatarFileName;
         }
 
         public async Task<byte[]> DownloadAvatar(string avatarFileName)
         {
-            byte[] avatarBytes = null;
+            byte[] avatarBytes;
             try
             {
                 avatarBytes = await ProfileClient.GetAvatarAsync(avatarFileName);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.DownloadAvatar", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.avatarDownloadError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.DownloadAvatar", ex);
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
             }
+
             return avatarBytes;
         }
     }
