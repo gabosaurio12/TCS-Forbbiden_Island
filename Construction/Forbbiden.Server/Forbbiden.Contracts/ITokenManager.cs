@@ -3,20 +3,23 @@ using System.ServiceModel;
 
 namespace Forbbiden.Contracts
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ITokenManager" in both code and config file together.
     [ServiceContract]
     public interface ITokenManager
     {
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         string CreateRandomToken();
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         Token GenerateToken(int playerId);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         Token GetToken(int playerId);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool VerifyToken(string token, int playerId);
     }
 
