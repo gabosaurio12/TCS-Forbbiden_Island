@@ -7,24 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Tile
+    public partial class Card
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tile()
+        public Card()
         {
-            this.match_tiles = new HashSet<match_tiles>();
+            this.match_cards = new HashSet<match_cards>();
         }
     
-        public int tile_id { get; set; }
-        public int flooded_level { get; set; }
+        public int card_id { get; set; }
+        public string card_name { get; set; }
+        public string description { get; set; }
         public string type { get; set; }
+        public string card_image_path { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<match_tiles> match_tiles { get; set; }
+        public virtual ICollection<match_cards> match_cards { get; set; }
     }
 }

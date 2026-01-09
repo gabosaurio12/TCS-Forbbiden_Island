@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class match_minigames
+    public partial class Token
     {
-        public int match_minigames_id { get; set; }
-        public int match_id { get; set; }
-        public int minigame_id { get; set; }
+        public int token_id { get; set; }
+        public string token1 { get; set; }
+        public Nullable<int> player_id { get; set; }
     
-        public virtual Minigame Minigame { get; set; }
-        public virtual Matches Matches { get; set; }
+        public virtual Player Player { get; set; }
     }
 }

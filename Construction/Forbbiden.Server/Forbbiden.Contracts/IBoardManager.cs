@@ -10,26 +10,38 @@ namespace Forbbiden.Contracts
     public interface IBoardManager
     {
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<String> GetTileImages();
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Card> GetTreasureCards();
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Card> GetFloodCards();
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         Card GetCard(string path);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnBoardCreatedCallback(string boardJson, List<string> usernames);
+        
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames);
+        
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnPlayersTurnCallback(string username);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnTurnFinishedCallback(string boardJson, List<string> usernames);
+
+        
     }
 
     [DataContract]

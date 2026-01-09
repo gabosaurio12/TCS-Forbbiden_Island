@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.callbacks;
 using Forbbiden.Server.exceptionHandlers;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System.Collections.Generic;
@@ -10,8 +11,6 @@ using System.ServiceModel;
 
 namespace Forbbiden.Server.logic
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "FriendsManager" in both code and config file together.
-
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class FriendsManager : IFriendsManager
     {
@@ -25,7 +24,7 @@ namespace Forbbiden.Server.logic
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -100,7 +99,7 @@ namespace Forbbiden.Server.logic
 
             if (sender.PlayerId != -1 && receiver.PlayerId != -1)
             { 
-                using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
                 {
                     Friends searchFriendRequest = new Friends();
                     try
@@ -153,7 +152,7 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
             
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -186,7 +185,7 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -226,7 +225,7 @@ namespace Forbbiden.Server.logic
 
         public List<FriendRequest> GetFriendRequests(string receiverUsername)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -264,7 +263,7 @@ namespace Forbbiden.Server.logic
 
         public List<Friendship> GetFriendsByID(int playerID)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var friends = new List<Friends>();
                 try

@@ -1,8 +1,8 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.callbacks;
 using Forbbiden.Server.exceptionHandlers;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -24,9 +24,9 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Card GetCard(string path)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
-                Card card = null;
+                Model.Card card = null;
                 try
                 {
                     card = db.Card.FirstOrDefault(c => c.card_image_path == path);
@@ -64,9 +64,9 @@ namespace Forbbiden.Server.logic
 
         public List<Contracts.Card> GetFloodCards()
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
-                List<Card> cards = null;
+                List<Model.Card> cards = null;
                 try
                 {
                     cards = db.Card.Where(c => c.type == "flood").ToList();
@@ -105,9 +105,9 @@ namespace Forbbiden.Server.logic
 
         public List<Contracts.Card> GetTreasureCards()
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
-                List<Card> cards = null;
+                List<Model.Card> cards = null;
                 try
                 {
                     cards = db.Card.Where(c => c.type == "treasure").ToList();

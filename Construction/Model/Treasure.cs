@@ -7,18 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class match_cards
+    public partial class Treasure
     {
-        public int match_cards_id { get; set; }
-        public int match_id { get; set; }
-        public int card_id { get; set; }
-    
-        public virtual Card Card { get; set; }
-        public virtual Matches Matches { get; set; }
+        public int treasure_id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
     }
 }

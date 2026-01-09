@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.exceptionHandlers;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -37,7 +38,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
                 {
                     var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
                     return emailResult == null;
@@ -59,7 +60,7 @@ namespace Forbbiden.Server.logic
             if (string.IsNullOrWhiteSpace(username))
                 return usernameFound;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -166,7 +167,7 @@ namespace Forbbiden.Server.logic
         public int SignUp(Contracts.Player player)
         {
             int playerId = -1;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 bool exists = db.Player.Any(p =>
                     p.player_username == player.PlayerUsername ||
@@ -178,7 +179,7 @@ namespace Forbbiden.Server.logic
                 }
 
                 string avatar = Path.Combine(DefaultAvatarPath);
-                Player newPlayer = new Player
+                Model.Player newPlayer = new Model.Player
                 {
                     player_username = player.PlayerUsername,
                     player_password = player.PlayerPassword,
@@ -214,7 +215,7 @@ namespace Forbbiden.Server.logic
                 PlayerId = -1
             };
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -242,7 +243,7 @@ namespace Forbbiden.Server.logic
             return player;
         }
 
-        private Contracts.Player SetPlayer(Player player, bool includeFriends = true)
+        private Contracts.Player SetPlayer(Model.Player player, bool includeFriends = true)
         {
             List<Friendship> friendsList = new List<Friendship>();
             if (includeFriends)
@@ -263,10 +264,10 @@ namespace Forbbiden.Server.logic
                 PlayerAvatarPath = player.player_avatar ?? avatar,
                 Status = (int)player.player_status,
                 IsVerified = (int)player.is_verified,
-                SocialMedia = player.player_socialmedia.Select(sm => new SocialMedia
+                SocialMedia = player.PlayerSocialmedia.Select(sm => new SocialMedia
                 {
                     PlayerId = player.player_id,
-                    SocialMediaId = sm.social_media,
+                    SocialMediaId = sm.social_media_id,
                     SocialMediaName = sm.social_media_name.Trim(),
                     SocialLink = sm.social_link
                 }).ToList(),
@@ -279,7 +280,7 @@ namespace Forbbiden.Server.logic
             Log.Info("Retrieving player by username");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -314,7 +315,7 @@ namespace Forbbiden.Server.logic
             Log.Info("Retrieving player by ID");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -344,7 +345,7 @@ namespace Forbbiden.Server.logic
 
         public List<Friendship> GetFriendsByID(int playerID)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var friends = new List<Friends>();
                 try
@@ -468,7 +469,7 @@ namespace Forbbiden.Server.logic
             return input;
         }
         
-        private static bool SaveUpdateChanges(Forbbiden_FEIEntities db)
+        private static bool SaveUpdateChanges(Forbidden_FEIEntities db)
         {
             bool success = false;
             using (var transaction = db.Database.BeginTransaction())
@@ -492,11 +493,11 @@ namespace Forbbiden.Server.logic
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
-                    Player formerPlayer = db.Player.Find(updatedPlayer.PlayerId);
+                    Model.Player formerPlayer = db.Player.Find(updatedPlayer.PlayerId);
                     if (formerPlayer == null) return false;
 
                     formerPlayer.player_name = updatedPlayer.PlayerName;
@@ -508,10 +509,10 @@ namespace Forbbiden.Server.logic
 
                     if (ClearSocials(formerPlayer))
                     {
-                        db.player_socialmedia.AddRange(
+                        db.PlayerSocialmedia.AddRange(
                         updatedPlayer.SocialMedia
                         .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
-                        .Select(social => new player_socialmedia
+                        .Select(social => new PlayerSocialmedia
                         {
                             social_media_name = social.SocialMediaName,
                             social_link = social.SocialLink,
@@ -530,17 +531,17 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-        public bool ClearSocials(Player player)
+        public bool ClearSocials(Model.Player player)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
-                    var socials = db.player_socialmedia.Where(s => s.player_id == player.player_id).ToList();
+                    var socials = db.PlayerSocialmedia.Where(s => s.player_id == player.player_id).ToList();
                     foreach (var social in socials)
                     {
-                        db.player_socialmedia.Remove(social);
+                        db.PlayerSocialmedia.Remove(social);
                     }
                     db.SaveChanges();
                     success = true;
@@ -561,7 +562,7 @@ namespace Forbbiden.Server.logic
 
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -595,9 +596,9 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
-                var player = new Player();
+                var player = new Model.Player();
                 try
                 {
                     player = db.Player.FirstOrDefault(p => p.player_username == username);
@@ -622,9 +623,9 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
-                var player = new Player();
+                var player = new Model.Player();
                 try
                 {
                     player = db.Player.FirstOrDefault(p => p.player_username == username);

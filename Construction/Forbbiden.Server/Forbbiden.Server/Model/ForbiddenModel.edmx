@@ -1,0 +1,1399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Forbbiden_FEIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="board_id" />
+          </Key>
+          <Property Name="board_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="match_id" Type="int" Nullable="false" />
+          <Property Name="tile_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="card_id" />
+          </Key>
+          <Property Name="card_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="card_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="150" />
+          <Property Name="type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="card_image_path" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="friend_id" />
+          </Key>
+          <Property Name="player_id" Type="int" Nullable="false" />
+          <Property Name="friend_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="match_id" />
+          </Key>
+          <Property Name="match_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="match_difficulty" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="match_visibility" Type="nvarchar" MaxLength="7" Nullable="false" />
+          <Property Name="host_id" Type="int" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="match_name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="match_capacity" Type="int" Nullable="false" />
+          <Property Name="board_id" Type="int" />
+        </EntityType>
+        <EntityType Name="match_cards">
+          <Key>
+            <PropertyRef Name="match_cards_id" />
+          </Key>
+          <Property Name="match_cards_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="match_id" Type="int" Nullable="false" />
+          <Property Name="card_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="match_minigames">
+          <Key>
+            <PropertyRef Name="match_minigames_id" />
+          </Key>
+          <Property Name="match_minigames_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="match_id" Type="int" Nullable="false" />
+          <Property Name="minigame_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="match_players">
+          <Key>
+            <PropertyRef Name="match_players_id" />
+          </Key>
+          <Property Name="match_players_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="match_id" Type="int" Nullable="false" />
+          <Property Name="player_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Minigame">
+          <Key>
+            <PropertyRef Name="minigame_id" />
+          </Key>
+          <Property Name="minigame_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="minigame_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="timer" Type="int" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="player_id" />
+          </Key>
+          <Property Name="player_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="player_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="player_username" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="player_password" Type="nchar" MaxLength="64" Nullable="false" />
+          <Property Name="player_email" Type="nvarchar" MaxLength="320" />
+          <Property Name="player_avatar" Type="nvarchar" MaxLength="500" />
+          <Property Name="player_status" Type="int" />
+          <Property Name="is_verified" Type="int" />
+        </EntityType>
+        <EntityType Name="PlayerSocialmedia">
+          <Key>
+            <PropertyRef Name="social_media_id" />
+          </Key>
+          <Property Name="social_media_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="player_id" Type="int" />
+          <Property Name="social_link" Type="nvarchar" MaxLength="50" />
+          <Property Name="social_media_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tile">
+          <Key>
+            <PropertyRef Name="tile_id" />
+          </Key>
+          <Property Name="tile_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="col" Type="int" Nullable="false" />
+          <Property Name="row" Type="int" Nullable="false" />
+          <Property Name="isTreasure" Type="int" />
+          <Property Name="isFlood" Type="int" />
+          <Property Name="isEscape" Type="int" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="token_id" />
+          </Key>
+          <Property Name="token_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="token" Type="nchar" MaxLength="6" Nullable="false" />
+          <Property Name="player_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Treasure">
+          <Key>
+            <PropertyRef Name="treasure_id" />
+          </Key>
+          <Property Name="treasure_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Friends__friend___02FC7413">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___14270015">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___25518C17">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___367C1819">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___5629CD9C">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___71D1E811">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___03F0984C">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___151B244E">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___2645B050">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___37703C52">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___571DF1D5">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___72C60C4A">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__04E4BC85">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__160F4887">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__2739D489">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__3864608B">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__628FA481">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__73BA3083">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_cards_card">
+          <End Role="Card" Type="Self.Card" Multiplicity="1" />
+          <End Role="match_cards" Type="Self.match_cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="card_id" />
+            </Principal>
+            <Dependent Role="match_cards">
+              <PropertyRef Name="card_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_cards_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="match_cards" Type="Self.match_cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="match_cards">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_minigame_minigame">
+          <End Role="Minigame" Type="Self.Minigame" Multiplicity="1" />
+          <End Role="match_minigames" Type="Self.match_minigames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Minigame">
+              <PropertyRef Name="minigame_id" />
+            </Principal>
+            <Dependent Role="match_minigames">
+              <PropertyRef Name="minigame_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_minigames_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="match_minigames" Type="Self.match_minigames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="match_minigames">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_players_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="match_players">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_tiles_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matches_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Match" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="host_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_player_socialmedia">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="PlayerSocialmedia" Type="Self.PlayerSocialmedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="PlayerSocialmedia">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_players_player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="match_players">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tile_match_tile">
+          <End Role="Tile" Type="Self.Tile" Multiplicity="0..1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tile">
+              <PropertyRef Name="tile_id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="tile_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Forbbiden_FEIModelStoreContainer">
+          <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="match_cards" EntityType="Self.match_cards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="match_minigames" EntityType="Self.match_minigames" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="match_players" EntityType="Self.match_players" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Minigame" EntityType="Self.Minigame" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlayerSocialmedia" EntityType="Self.PlayerSocialmedia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tile" EntityType="Self.Tile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treasure" EntityType="Self.Treasure" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Friends__friend___02FC7413" Association="Self.FK__Friends__friend___02FC7413">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___14270015" Association="Self.FK__Friends__friend___14270015">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___25518C17" Association="Self.FK__Friends__friend___25518C17">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___367C1819" Association="Self.FK__Friends__friend___367C1819">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___5629CD9C" Association="Self.FK__Friends__friend___5629CD9C">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___71D1E811" Association="Self.FK__Friends__friend___71D1E811">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___03F0984C" Association="Self.FK__Friends__player___03F0984C">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___151B244E" Association="Self.FK__Friends__player___151B244E">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___2645B050" Association="Self.FK__Friends__player___2645B050">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___37703C52" Association="Self.FK__Friends__player___37703C52">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___571DF1D5" Association="Self.FK__Friends__player___571DF1D5">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___72C60C4A" Association="Self.FK__Friends__player___72C60C4A">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__04E4BC85" Association="Self.FK__Token__player_id__04E4BC85">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__160F4887" Association="Self.FK__Token__player_id__160F4887">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__2739D489" Association="Self.FK__Token__player_id__2739D489">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__3864608B" Association="Self.FK__Token__player_id__3864608B">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__628FA481" Association="Self.FK__Token__player_id__628FA481">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__73BA3083" Association="Self.FK__Token__player_id__73BA3083">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_cards_card" Association="Self.FK_match_cards_card">
+            <End Role="Card" EntitySet="Card" />
+            <End Role="match_cards" EntitySet="match_cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_cards_match" Association="Self.FK_match_cards_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="match_cards" EntitySet="match_cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_minigame_minigame" Association="Self.FK_match_minigame_minigame">
+            <End Role="Minigame" EntitySet="Minigame" />
+            <End Role="match_minigames" EntitySet="match_minigames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_minigames_match" Association="Self.FK_match_minigames_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="match_minigames" EntitySet="match_minigames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_players_match" Association="Self.FK_match_players_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="match_players" EntitySet="match_players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_tiles_match" Association="Self.FK_match_tiles_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matches_Player" Association="Self.FK_Matches_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_player_socialmedia" Association="Self.FK_player_socialmedia">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlayerSocialmedia" EntitySet="PlayerSocialmedia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_players_player" Association="Self.FK_players_player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="match_players" EntitySet="match_players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tile_match_tile" Association="Self.FK_tile_match_tile">
+            <End Role="Tile" EntitySet="Tile" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Forbbiden_FEIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="board_id" />
+          </Key>
+          <Property Name="board_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="match_id" Type="Int32" Nullable="false" />
+          <Property Name="tile_id" Type="Int32" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_match_tiles_match" FromRole="Board" ToRole="Match" />
+          <NavigationProperty Name="Tile" Relationship="Self.FK_tile_match_tile" FromRole="Board" ToRole="Tile" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="card_id" />
+          </Key>
+          <Property Name="card_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="card_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="card_image_path" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="match_cards" Relationship="Self.FK_match_cards_card" FromRole="Card" ToRole="match_cards" />
+        </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="friend_id" />
+          </Key>
+          <Property Name="player_id" Type="Int32" Nullable="false" />
+          <Property Name="friend_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="Self.FK__Friends__friend___02FC7413" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player1" Relationship="Self.FK__Friends__friend___14270015" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player2" Relationship="Self.FK__Friends__friend___25518C17" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player3" Relationship="Self.FK__Friends__friend___367C1819" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player4" Relationship="Self.FK__Friends__friend___5629CD9C" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player5" Relationship="Self.FK__Friends__friend___71D1E811" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player6" Relationship="Self.FK__Friends__player___03F0984C" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player7" Relationship="Self.FK__Friends__player___151B244E" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player8" Relationship="Self.FK__Friends__player___2645B050" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player9" Relationship="Self.FK__Friends__player___37703C52" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player10" Relationship="Self.FK__Friends__player___571DF1D5" FromRole="Friends" ToRole="Player" />
+          <NavigationProperty Name="Player11" Relationship="Self.FK__Friends__player___72C60C4A" FromRole="Friends" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="match_id" />
+          </Key>
+          <Property Name="match_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="match_difficulty" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="match_visibility" Type="String" MaxLength="7" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="host_id" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="match_name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="match_capacity" Type="Int32" Nullable="false" />
+          <Property Name="board_id" Type="Int32" />
+          <NavigationProperty Name="Board" Relationship="Self.FK_match_tiles_match" FromRole="Match" ToRole="Board" />
+          <NavigationProperty Name="match_cards" Relationship="Self.FK_match_cards_match" FromRole="Match" ToRole="match_cards" />
+          <NavigationProperty Name="match_minigames" Relationship="Self.FK_match_minigames_match" FromRole="Match" ToRole="match_minigames" />
+          <NavigationProperty Name="match_players" Relationship="Self.FK_match_players_match" FromRole="Match" ToRole="match_players" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Matches_Player" FromRole="Match" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="match_cards">
+          <Key>
+            <PropertyRef Name="match_cards_id" />
+          </Key>
+          <Property Name="match_cards_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="match_id" Type="Int32" Nullable="false" />
+          <Property Name="card_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Card" Relationship="Self.FK_match_cards_card" FromRole="match_cards" ToRole="Card" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_match_cards_match" FromRole="match_cards" ToRole="Match" />
+        </EntityType>
+        <EntityType Name="match_minigames">
+          <Key>
+            <PropertyRef Name="match_minigames_id" />
+          </Key>
+          <Property Name="match_minigames_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="match_id" Type="Int32" Nullable="false" />
+          <Property Name="minigame_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_match_minigames_match" FromRole="match_minigames" ToRole="Match" />
+          <NavigationProperty Name="Minigame" Relationship="Self.FK_match_minigame_minigame" FromRole="match_minigames" ToRole="Minigame" />
+        </EntityType>
+        <EntityType Name="match_players">
+          <Key>
+            <PropertyRef Name="match_players_id" />
+          </Key>
+          <Property Name="match_players_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="match_id" Type="Int32" Nullable="false" />
+          <Property Name="player_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_match_players_match" FromRole="match_players" ToRole="Match" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_players_player" FromRole="match_players" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Minigame">
+          <Key>
+            <PropertyRef Name="minigame_id" />
+          </Key>
+          <Property Name="minigame_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="minigame_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="timer" Type="Int32" />
+          <NavigationProperty Name="match_minigames" Relationship="Self.FK_match_minigame_minigame" FromRole="Minigame" ToRole="match_minigames" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="player_id" />
+          </Key>
+          <Property Name="player_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="player_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="player_username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="player_password" Type="String" MaxLength="64" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="player_email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="player_avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="player_status" Type="Int32" />
+          <Property Name="is_verified" Type="Int32" />
+          <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__friend___02FC7413" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends1" Relationship="Self.FK__Friends__friend___14270015" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends2" Relationship="Self.FK__Friends__friend___25518C17" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends3" Relationship="Self.FK__Friends__friend___367C1819" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends4" Relationship="Self.FK__Friends__friend___5629CD9C" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends5" Relationship="Self.FK__Friends__friend___71D1E811" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends6" Relationship="Self.FK__Friends__player___03F0984C" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends7" Relationship="Self.FK__Friends__player___151B244E" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends8" Relationship="Self.FK__Friends__player___2645B050" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends9" Relationship="Self.FK__Friends__player___37703C52" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends10" Relationship="Self.FK__Friends__player___571DF1D5" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Friends11" Relationship="Self.FK__Friends__player___72C60C4A" FromRole="Player" ToRole="Friends" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_Matches_Player" FromRole="Player" ToRole="Match" />
+          <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
+          <NavigationProperty Name="Token" Relationship="Self.FK__Token__player_id__04E4BC85" FromRole="Player" ToRole="Token" />
+          <NavigationProperty Name="Token1" Relationship="Self.FK__Token__player_id__160F4887" FromRole="Player" ToRole="Token" />
+          <NavigationProperty Name="Token2" Relationship="Self.FK__Token__player_id__2739D489" FromRole="Player" ToRole="Token" />
+          <NavigationProperty Name="Token3" Relationship="Self.FK__Token__player_id__3864608B" FromRole="Player" ToRole="Token" />
+          <NavigationProperty Name="Token4" Relationship="Self.FK__Token__player_id__628FA481" FromRole="Player" ToRole="Token" />
+          <NavigationProperty Name="Token5" Relationship="Self.FK__Token__player_id__73BA3083" FromRole="Player" ToRole="Token" />
+          <NavigationProperty Name="PlayerSocialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="PlayerSocialmedia" />
+        </EntityType>
+        <EntityType Name="PlayerSocialmedia">
+          <Key>
+            <PropertyRef Name="social_media_id" />
+          </Key>
+          <Property Name="social_media_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="player_id" Type="Int32" />
+          <Property Name="social_link" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="social_media_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_player_socialmedia" FromRole="PlayerSocialmedia" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Tile">
+          <Key>
+            <PropertyRef Name="tile_id" />
+          </Key>
+          <Property Name="tile_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="col" Type="Int32" Nullable="false" />
+          <Property Name="row" Type="Int32" Nullable="false" />
+          <Property Name="isTreasure" Type="Int32" />
+          <Property Name="isFlood" Type="Int32" />
+          <Property Name="isEscape" Type="Int32" />
+          <NavigationProperty Name="Board" Relationship="Self.FK_tile_match_tile" FromRole="Tile" ToRole="Board" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="token_id" />
+          </Key>
+          <Property Name="token_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="token1" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="player_id" Type="Int32" />
+          <NavigationProperty Name="Player" Relationship="Self.FK__Token__player_id__04E4BC85" FromRole="Token" ToRole="Player" />
+          <NavigationProperty Name="Player1" Relationship="Self.FK__Token__player_id__160F4887" FromRole="Token" ToRole="Player" />
+          <NavigationProperty Name="Player2" Relationship="Self.FK__Token__player_id__2739D489" FromRole="Token" ToRole="Player" />
+          <NavigationProperty Name="Player3" Relationship="Self.FK__Token__player_id__3864608B" FromRole="Token" ToRole="Player" />
+          <NavigationProperty Name="Player4" Relationship="Self.FK__Token__player_id__628FA481" FromRole="Token" ToRole="Player" />
+          <NavigationProperty Name="Player5" Relationship="Self.FK__Token__player_id__73BA3083" FromRole="Token" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Treasure">
+          <Key>
+            <PropertyRef Name="treasure_id" />
+          </Key>
+          <Property Name="treasure_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_match_tiles_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tile_match_tile">
+          <End Role="Tile" Type="Self.Tile" Multiplicity="0..1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tile">
+              <PropertyRef Name="tile_id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="tile_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_cards_card">
+          <End Role="Card" Type="Self.Card" Multiplicity="1" />
+          <End Role="match_cards" Type="Self.match_cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="card_id" />
+            </Principal>
+            <Dependent Role="match_cards">
+              <PropertyRef Name="card_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___02FC7413">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___14270015">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___25518C17">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___367C1819">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___5629CD9C">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__friend___71D1E811">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___03F0984C">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___151B244E">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___2645B050">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___37703C52">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___571DF1D5">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friends__player___72C60C4A">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_cards_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="match_cards" Type="Self.match_cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="match_cards">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_minigames_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="match_minigames" Type="Self.match_minigames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="match_minigames">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_players_match">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="match_players">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matches_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Match" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="host_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_minigame_minigame">
+          <End Role="Minigame" Type="Self.Minigame" Multiplicity="1" />
+          <End Role="match_minigames" Type="Self.match_minigames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Minigame">
+              <PropertyRef Name="minigame_id" />
+            </Principal>
+            <Dependent Role="match_minigames">
+              <PropertyRef Name="minigame_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_players_player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="match_players">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__04E4BC85">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__160F4887">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__2739D489">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__3864608B">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__628FA481">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Token__player_id__73BA3083">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_player_socialmedia">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="PlayerSocialmedia" Type="Self.PlayerSocialmedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="PlayerSocialmedia">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Board" EntityType="Self.Board" />
+          <EntitySet Name="Card" EntityType="Self.Card" />
+          <EntitySet Name="Friends" EntityType="Self.Friends" />
+          <EntitySet Name="Match" EntityType="Self.Match" />
+          <EntitySet Name="match_cards" EntityType="Self.match_cards" />
+          <EntitySet Name="match_minigames" EntityType="Self.match_minigames" />
+          <EntitySet Name="match_players" EntityType="Self.match_players" />
+          <EntitySet Name="Minigame" EntityType="Self.Minigame" />
+          <EntitySet Name="Player" EntityType="Self.Player" />
+          <EntitySet Name="PlayerSocialmedia" EntityType="Self.PlayerSocialmedia" />
+          <EntitySet Name="Tile" EntityType="Self.Tile" />
+          <EntitySet Name="Token" EntityType="Self.Token" />
+          <EntitySet Name="Treasure" EntityType="Self.Treasure" />
+          <AssociationSet Name="FK_match_tiles_match" Association="Self.FK_match_tiles_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tile_match_tile" Association="Self.FK_tile_match_tile">
+            <End Role="Tile" EntitySet="Tile" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_cards_card" Association="Self.FK_match_cards_card">
+            <End Role="Card" EntitySet="Card" />
+            <End Role="match_cards" EntitySet="match_cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___02FC7413" Association="Self.FK__Friends__friend___02FC7413">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___14270015" Association="Self.FK__Friends__friend___14270015">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___25518C17" Association="Self.FK__Friends__friend___25518C17">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___367C1819" Association="Self.FK__Friends__friend___367C1819">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___5629CD9C" Association="Self.FK__Friends__friend___5629CD9C">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__friend___71D1E811" Association="Self.FK__Friends__friend___71D1E811">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___03F0984C" Association="Self.FK__Friends__player___03F0984C">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___151B244E" Association="Self.FK__Friends__player___151B244E">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___2645B050" Association="Self.FK__Friends__player___2645B050">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___37703C52" Association="Self.FK__Friends__player___37703C52">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___571DF1D5" Association="Self.FK__Friends__player___571DF1D5">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friends__player___72C60C4A" Association="Self.FK__Friends__player___72C60C4A">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_cards_match" Association="Self.FK_match_cards_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="match_cards" EntitySet="match_cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_minigames_match" Association="Self.FK_match_minigames_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="match_minigames" EntitySet="match_minigames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_players_match" Association="Self.FK_match_players_match">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="match_players" EntitySet="match_players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matches_Player" Association="Self.FK_Matches_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_minigame_minigame" Association="Self.FK_match_minigame_minigame">
+            <End Role="Minigame" EntitySet="Minigame" />
+            <End Role="match_minigames" EntitySet="match_minigames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_players_player" Association="Self.FK_players_player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="match_players" EntitySet="match_players" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__04E4BC85" Association="Self.FK__Token__player_id__04E4BC85">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__160F4887" Association="Self.FK__Token__player_id__160F4887">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__2739D489" Association="Self.FK__Token__player_id__2739D489">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__3864608B" Association="Self.FK__Token__player_id__3864608B">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__628FA481" Association="Self.FK__Token__player_id__628FA481">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Token__player_id__73BA3083" Association="Self.FK__Token__player_id__73BA3083">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK_player_socialmedia" Association="Self.FK_player_socialmedia">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlayerSocialmedia" EntitySet="PlayerSocialmedia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Forbbiden_FEIModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Board">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Board">
+              <MappingFragment StoreEntitySet="Board">
+                <ScalarProperty Name="board_id" ColumnName="board_id" />
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="tile_id" ColumnName="tile_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Card">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Card">
+              <MappingFragment StoreEntitySet="Card">
+                <ScalarProperty Name="card_id" ColumnName="card_id" />
+                <ScalarProperty Name="card_name" ColumnName="card_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="card_image_path" ColumnName="card_image_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friends">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Friends">
+              <MappingFragment StoreEntitySet="Friends">
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+                <ScalarProperty Name="friend_id" ColumnName="friend_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Match">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Match">
+              <MappingFragment StoreEntitySet="Match">
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="match_difficulty" ColumnName="match_difficulty" />
+                <ScalarProperty Name="match_visibility" ColumnName="match_visibility" />
+                <ScalarProperty Name="host_id" ColumnName="host_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="match_name" ColumnName="match_name" />
+                <ScalarProperty Name="match_capacity" ColumnName="match_capacity" />
+                <ScalarProperty Name="board_id" ColumnName="board_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="match_cards">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.match_cards">
+              <MappingFragment StoreEntitySet="match_cards">
+                <ScalarProperty Name="match_cards_id" ColumnName="match_cards_id" />
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="card_id" ColumnName="card_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="match_minigames">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.match_minigames">
+              <MappingFragment StoreEntitySet="match_minigames">
+                <ScalarProperty Name="match_minigames_id" ColumnName="match_minigames_id" />
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="minigame_id" ColumnName="minigame_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="match_players">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.match_players">
+              <MappingFragment StoreEntitySet="match_players">
+                <ScalarProperty Name="match_players_id" ColumnName="match_players_id" />
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Minigame">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Minigame">
+              <MappingFragment StoreEntitySet="Minigame">
+                <ScalarProperty Name="minigame_id" ColumnName="minigame_id" />
+                <ScalarProperty Name="minigame_name" ColumnName="minigame_name" />
+                <ScalarProperty Name="timer" ColumnName="timer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Player">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+                <ScalarProperty Name="player_name" ColumnName="player_name" />
+                <ScalarProperty Name="player_username" ColumnName="player_username" />
+                <ScalarProperty Name="player_password" ColumnName="player_password" />
+                <ScalarProperty Name="player_email" ColumnName="player_email" />
+                <ScalarProperty Name="player_avatar" ColumnName="player_avatar" />
+                <ScalarProperty Name="player_status" ColumnName="player_status" />
+                <ScalarProperty Name="is_verified" ColumnName="is_verified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerSocialmedia">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.PlayerSocialmedia">
+              <MappingFragment StoreEntitySet="PlayerSocialmedia">
+                <ScalarProperty Name="social_media_id" ColumnName="social_media_id" />
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+                <ScalarProperty Name="social_link" ColumnName="social_link" />
+                <ScalarProperty Name="social_media_name" ColumnName="social_media_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tile">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Tile">
+              <MappingFragment StoreEntitySet="Tile">
+                <ScalarProperty Name="tile_id" ColumnName="tile_id" />
+                <ScalarProperty Name="col" ColumnName="col" />
+                <ScalarProperty Name="row" ColumnName="row" />
+                <ScalarProperty Name="isTreasure" ColumnName="isTreasure" />
+                <ScalarProperty Name="isFlood" ColumnName="isFlood" />
+                <ScalarProperty Name="isEscape" ColumnName="isEscape" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Token">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="token_id" ColumnName="token_id" />
+                <ScalarProperty Name="token1" ColumnName="token" />
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treasure">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.Treasure">
+              <MappingFragment StoreEntitySet="Treasure">
+                <ScalarProperty Name="treasure_id" ColumnName="treasure_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

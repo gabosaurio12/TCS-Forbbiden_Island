@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.exceptionHandlers;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -50,7 +51,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     int hostId = db.Player
                         .Where(p => p.player_username == request.HostUsername)
@@ -60,18 +61,18 @@ namespace Forbbiden.Server.logic
                     if (hostId == 0)
                         throw new FaultException("Host player not found.");
 
-                    var newMatch = new Matches
+                    var newMatch = new Model.Match
                     {
                         match_name = string.IsNullOrEmpty(request.MatchName) ? null : request.MatchName,
                         match_capacity = capacity,
                         match_difficulty = request.Difficulty,
                         match_visibility = request.Visibility,
                         host_id = hostId,
-                        created_at = DateTime.Now
+                        created_at = DateTime.Now,
                     };
 
                     db.Configuration.AutoDetectChangesEnabled = false;
-                    db.Matches.Add(newMatch);
+                    db.Match.Add(newMatch);
                     db.SaveChanges();
                     db.Configuration.AutoDetectChangesEnabled = true;
 
@@ -135,20 +136,20 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
-                    Matches match = null;
+                    Model.Match match = null;
 
                     if (request.MatchId > 0)
-                        match = db.Matches.FirstOrDefault(m => m.match_id == request.MatchId);
+                        match = db.Match.FirstOrDefault(m => m.match_id == request.MatchId);
                     if (match == null && !string.IsNullOrEmpty(request.MatchName))
-                        match = db.Matches.FirstOrDefault(m => m.match_name == request.MatchName);
+                        match = db.Match.FirstOrDefault(m => m.match_name == request.MatchName);
                     if (match == null && !string.IsNullOrEmpty(request.HostUsername))
                     {
                         var host = db.Player.FirstOrDefault(p => p.player_username == request.HostUsername);
                         if (host != null)
                         {
-                            match = db.Matches
+                            match = db.Match
                                 .Where(m => m.host_id == host.player_id)
                                 .OrderByDescending(m => m.created_at)
                                 .FirstOrDefault();
@@ -166,7 +167,7 @@ namespace Forbbiden.Server.logic
                     if (currentPlayersCount >= capacity)
                         return false;
 
-                    Player player = null;
+                    Model.Player player = null;
                     int playerId;
                     if (!string.IsNullOrEmpty(request.Username))
                         player = db.Player.FirstOrDefault(p => p.player_username == request.Username);
@@ -213,9 +214,9 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
-                    var matches = (from m in db.Matches
+                    var matches = (from m in db.Match
                                    join host in db.Player on m.host_id equals host.player_id
                                    select new Contracts.Match
                                    {
@@ -250,7 +251,7 @@ namespace Forbbiden.Server.logic
             {
                 ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
             }
-            return new List<Match>();
+            return new List<Contracts.Match>();
         }
 
         public Contracts.Match GetMatchById(int matchId)
@@ -258,9 +259,9 @@ namespace Forbbiden.Server.logic
             Contracts.Match match = new Contracts.Match();
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
-                    match = (from m in db.Matches
+                    match = (from m in db.Match
                              join host in db.Player on m.host_id equals host.player_id
                              where m.match_id == matchId
                              select new Contracts.Match
@@ -305,13 +306,13 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     using (var tx = db.Database.BeginTransaction())
                     {
                         try
                         {
-                            var match = db.Matches.FirstOrDefault(m => m.match_id == matchId);
+                            var match = db.Match.FirstOrDefault(m => m.match_id == matchId);
                             if (match == null)
                             {
                                 log.Warn($"DeleteMatch: match {matchId} not found");
@@ -325,7 +326,7 @@ namespace Forbbiden.Server.logic
                                 db.SaveChanges();
                             }
 
-                            db.Matches.Remove(match);
+                            db.Match.Remove(match);
                             db.SaveChanges();
 
                             tx.Commit();

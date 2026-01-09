@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
@@ -23,6 +23,8 @@ namespace Forbbiden.Server
             this.player_socialmedia = new HashSet<player_socialmedia>();
             this.Matches = new HashSet<Matches>();
             this.Token = new HashSet<Token>();
+            this.Match = new HashSet<Match>();
+            this.PlayerSocialmedia = new HashSet<PlayerSocialmedia>();
         }
     
         public int player_id { get; set; }
@@ -47,5 +49,9 @@ namespace Forbbiden.Server
         public virtual ICollection<Matches> Matches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Token> Token { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Match> Match { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlayerSocialmedia> PlayerSocialmedia { get; set; }
     }
 }

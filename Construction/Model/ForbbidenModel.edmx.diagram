@@ -34,6 +34,16 @@
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Treasure" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Forbbiden_FEIModel.Token" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK__Token__player_id__3D2915A8" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Board" Width="1.5" PointX="6" PointY="26.75" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.Match" Width="1.5" PointX="3" PointY="28" />
+        <EntityTypeShape EntityType="Forbbiden_FEIModel.PlayerSocialmedia" Width="1.5" PointX="3" PointY="32.25" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_match_tiles_match1" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_tile_match_tile1" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_match_cards_match1" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_match_minigames_match1" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_match_players_match1" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_Matches_Player1" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_player_socialmedia1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

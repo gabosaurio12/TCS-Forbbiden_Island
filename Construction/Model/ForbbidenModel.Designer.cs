@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Repositorios\TCS-Forbbiden_Island\Construction\Forbbiden.Server\Forbbiden.Server\ForbbidenModel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\mazin\Documents\Codigos\Proyectos\TCS-Forbbiden_Island\Construction\Forbbiden.Server\Forbbiden.Server\Model\ForbbidenModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
