@@ -1,5 +1,5 @@
 ﻿using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for QuitPage.xaml

@@ -1,7 +1,7 @@
 ﻿using Forbbiden.Client.Controls;
 using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Repositories;
 using System;
@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for FriendRequestsPage.xaml

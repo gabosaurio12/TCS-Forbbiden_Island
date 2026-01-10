@@ -1,13 +1,13 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.Controls;
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
-using Forbbiden.Client.logic.board;
-using Forbbiden.Client.logic.board.states;
 using Forbbiden.Client.Logic;
-using Forbbiden.Client.model;
+using Forbbiden.Client.Logic.Board;
+using Forbbiden.Client.Logic.Board.States;
+using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.view.info;
+using Forbbiden.Client.View.info;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfAnimatedGif;
 
-namespace Forbbiden.Client.view.games
+namespace Forbbiden.Client.View.Games
 {
     /// <summary>
     /// Interaction logic for BoardPage.xaml
@@ -84,6 +84,16 @@ namespace Forbbiden.Client.view.games
             PlayerLogic.MatchBoardPage = this;
         }
 
+        private void InitGif()
+        {
+            string gifName = "board_background.gif";
+            string gifPath = System.IO.Path.Combine(
+                ImagesPath, gifName);
+            var gif = ViewUtils.GetBitmapImage(gifPath);
+
+            ImageBehavior.SetAnimatedSource(gifBackground, gif);
+        }
+
         private void InitAttributes()
         {
             StateContext = new BoardStateContext(this);
@@ -108,19 +118,10 @@ namespace Forbbiden.Client.view.games
             HostLogic.SendBoardToPlayers(match);
         }
 
-        private void InitGif()
-        {
-            string gifName = "board_background.gif";
-            string gifPath = System.IO.Path.Combine(
-                ImagesPath, gifName);
-            var gif = ViewUtils.GetBitmapImage(gifPath);
-
-            ImageBehavior.SetAnimatedSource(gifBackground, gif);
-        }
-
         private void SetBoard()
         {
             BoardControl = new UserControlBoard();
+            BoardControl.GenerateBoard();
             Grid.SetColumn(BoardControl, 1);
             Grid.SetRow(BoardControl, 0);
 

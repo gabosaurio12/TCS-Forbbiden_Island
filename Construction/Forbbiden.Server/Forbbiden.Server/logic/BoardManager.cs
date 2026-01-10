@@ -93,9 +93,13 @@ namespace Forbbiden.Server.logic
                 TileId = modelTile.tile_id,
                 Column = modelTile.col,
                 Row = modelTile.row,
-                IsFlood = modelTile.isFlood == 1,
-                IsTreasure = modelTile.isTreasure == 1,
-                IsEscape = modelTile.isEscape == 1
+                IsFlood = modelTile.is_flood == 1,
+                IsTreasure = modelTile.is_treasure == 1,
+                IsEscape = modelTile.is_escape == 1,
+                IsLost = modelTile.is_lost == 1,
+                ImageFileName = modelTile.image_file_name,
+                TreasureCard = modelTile.treasure_card_id.HasValue ?
+                    GetCardById((int)modelTile.treasure_card_id) : null
             };
         }
 
@@ -143,9 +147,12 @@ namespace Forbbiden.Server.logic
             {
                 col = contractsTile.Column,
                 row = contractsTile.Row,
-                isTreasure = contractsTile.IsTreasure ? 1 : 0,
-                isEscape = contractsTile.IsEscape ? 1 : 0,
-                isFlood = contractsTile.IsFlood ? 1 : 0
+                is_treasure = contractsTile.IsTreasure ? 1 : 0,
+                is_escape = contractsTile.IsEscape ? 1 : 0,
+                is_flood = contractsTile.IsFlood ? 1 : 0,
+                is_lost = contractsTile.IsLost ? 1 : 0,
+                image_file_name = contractsTile.ImageFileName,
+                treasure_card_id = contractsTile.TreasureCard.CardId
             };
         }
 
@@ -186,6 +193,46 @@ namespace Forbbiden.Server.logic
                         Description = card.description,
                         Type = card.type,
                         ImagePath = card.card_image_path
+                    };
+                }
+                else
+                {
+                    contractCard = new Contracts.Card
+                    {
+                        CardId = -1
+                    };
+                }
+
+                return contractCard;
+            }
+        }
+
+        public Contracts.Card GetCardById(int cardId)
+        {
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
+            {
+                Model.Card modelCard = null;
+                try
+                {
+                    modelCard = db.Card.FirstOrDefault(c => c.card_id == cardId);
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "BoardManager.GetCard";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+
+                Contracts.Card contractCard;
+
+                if (modelCard != null)
+                {
+                    contractCard = new Contracts.Card
+                    {
+                        CardId = modelCard.card_id,
+                        Name = modelCard.card_name,
+                        Description = modelCard.description,
+                        Type = modelCard.type,
+                        ImagePath = modelCard.card_image_path
                     };
                 }
                 else

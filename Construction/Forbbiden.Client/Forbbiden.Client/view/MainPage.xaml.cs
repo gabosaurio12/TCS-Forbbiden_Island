@@ -1,10 +1,10 @@
 ﻿using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.view;
-using Forbbiden.Client.view.info;
+using Forbbiden.Client.View;
+using Forbbiden.Client.View.info;
 using log4net;
 using System;
 using System.Globalization;

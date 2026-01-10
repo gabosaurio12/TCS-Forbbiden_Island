@@ -1,6 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
 
-namespace Forbbiden.Client.model
+namespace Forbbiden.Client.Model
 {
     public class TileDto
     {

@@ -1,18 +1,19 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.Controls;
-using Forbbiden.Client.model;
-using Forbbiden.Client.view.games;
+using Forbbiden.Client.Model;
+using Forbbiden.Client.View.Games;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Windows;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
     public class PlayerLogic
     {
         public static BoardPage MatchBoardPage { get; set; }
         private static List<string> PlayersUsername = new List<string>();
+        private static int MatchId;
 
         protected PlayerLogic()
         {
@@ -24,10 +25,12 @@ namespace Forbbiden.Client.logic
 
         public static void CreateBoardPageFromJSON(string boardJson)
         {
-            var auxBoard = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
-            var boardPage = BoardDtoToBoardPage(auxBoard.Board);
+            var auxBoardDto = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
+            MatchId = auxBoardDto.MatchId;
+
+            var boardPage = BoardDtoToBoardPage(auxBoardDto.Board);
             MatchBoardPage = boardPage;
-            PlayersUsername = auxBoard.PlayersUsernames.ToList();
+            PlayersUsername = auxBoardDto.PlayersUsernames.ToList();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -58,7 +61,7 @@ namespace Forbbiden.Client.logic
             var client = new BoardManagerClient();
             var boardDto = BoardPageToDto();
             BoardPageCallbackDto page = new BoardPageCallbackDto(
-                boardDto, PlayersUsername.ToArray());
+                boardDto, PlayersUsername.ToArray(), );
             string pageJson = HostLogic.CreateCallbackBoardPageJSON(page);
             client.SendOnTurnFinishedCallback(pageJson, PlayersUsername.ToArray());
         }

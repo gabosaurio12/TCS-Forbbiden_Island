@@ -765,4 +765,7 @@
   <data name="error_avatar_download" xml:space="preserve">
     <value>There was an error while downloading an Avatar</value>
   </data>
+  <data name="error_sending_callback" xml:space="preserve">
+    <value>There was an error while synchronizing the game with the server or the other players</value>
+  </data>
 </root>

@@ -33,6 +33,10 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
+        Card GetCardById(int cardId);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnBoardCreatedCallback(string boardJson, List<string> usernames);
         
         [OperationContract]
@@ -45,9 +49,7 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
-        void SendOnTurnFinishedCallback(string boardJson, List<string> usernames);
-
-        
+        void SendOnTurnFinishedCallback(string boardJson, List<string> usernames);  
     }
 
     [DataContract]
@@ -115,5 +117,14 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public bool IsEscape { get; set; }
+
+        [DataMember]
+        public bool IsLost { get; set; }
+
+        [DataMember]
+        public Card TreasureCard { get; set; }
+
+        [DataMember]
+        public string ImageFileName { get; set; }
     }
 }

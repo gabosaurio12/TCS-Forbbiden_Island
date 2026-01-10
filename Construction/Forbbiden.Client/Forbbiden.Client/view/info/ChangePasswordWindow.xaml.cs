@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Forbbiden.Client.view.info
+namespace Forbbiden.Client.View.info
 {
     /// <summary>
     /// Interaction logic for ChangePasswordPage.xaml

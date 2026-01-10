@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Forbbiden_FEIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Forbbiden_FEIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Board">
           <Key>
             <PropertyRef Name="board_id" />
@@ -106,9 +106,12 @@
           <Property Name="tile_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="col" Type="int" Nullable="false" />
           <Property Name="row" Type="int" Nullable="false" />
-          <Property Name="isTreasure" Type="int" />
-          <Property Name="isFlood" Type="int" />
-          <Property Name="isEscape" Type="int" />
+          <Property Name="is_treasure" Type="int" />
+          <Property Name="is_flood" Type="int" />
+          <Property Name="is_escape" Type="int" />
+          <Property Name="is_lost" Type="int" />
+          <Property Name="image_file_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="treasure_card_id" Type="int" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -450,6 +453,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tile_Card_id">
+          <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
+          <End Role="Tile" Type="Self.Tile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="card_id" />
+            </Principal>
+            <Dependent Role="Tile">
+              <PropertyRef Name="treasure_card_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tile_match_tile">
           <End Role="Tile" Type="Self.Tile" Multiplicity="0..1" />
           <End Role="Board" Type="Self.Board" Multiplicity="*" />
@@ -584,13 +599,16 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="match_players" EntitySet="match_players" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tile_Card_id" Association="Self.FK_Tile_Card_id">
+            <End Role="Card" EntitySet="Card" />
+            <End Role="Tile" EntitySet="Tile" />
+          </AssociationSet>
           <AssociationSet Name="FK_tile_match_tile" Association="Self.FK_tile_match_tile">
             <End Role="Tile" EntitySet="Tile" />
             <End Role="Board" EntitySet="Board" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Forbbiden_FEIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -614,6 +632,7 @@
           <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="card_image_path" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="match_cards" Relationship="Self.FK_match_cards_card" FromRole="Card" ToRole="match_cards" />
+          <NavigationProperty Name="Tile" Relationship="Forbbiden_FEIModel.FK_Tile_Card_id" FromRole="Card" ToRole="Tile" />
         </EntityType>
         <EntityType Name="Friends">
           <Key>
@@ -744,10 +763,14 @@
           <Property Name="tile_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="col" Type="Int32" Nullable="false" />
           <Property Name="row" Type="Int32" Nullable="false" />
-          <Property Name="isTreasure" Type="Int32" />
-          <Property Name="isFlood" Type="Int32" />
-          <Property Name="isEscape" Type="Int32" />
           <NavigationProperty Name="Board" Relationship="Self.FK_tile_match_tile" FromRole="Tile" ToRole="Board" />
+          <Property Name="is_treasure" Type="Int32" />
+          <Property Name="is_flood" Type="Int32" />
+          <Property Name="is_escape" Type="Int32" />
+          <Property Name="is_lost" Type="Int32" />
+          <Property Name="image_file_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="treasure_card_id" Type="Int32" />
+          <NavigationProperty Name="Card" Relationship="Forbbiden_FEIModel.FK_Tile_Card_id" FromRole="Tile" ToRole="Card" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -1233,7 +1256,23 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="PlayerSocialmedia" EntitySet="PlayerSocialmedia" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tile_Card_id" Association="Forbbiden_FEIModel.FK_Tile_Card_id">
+            <End Role="Card" EntitySet="Card" />
+            <End Role="Tile" EntitySet="Tile" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Tile_Card_id">
+          <End Type="Forbbiden_FEIModel.Card" Role="Card" Multiplicity="0..1" />
+          <End Type="Forbbiden_FEIModel.Tile" Role="Tile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="card_id" />
+            </Principal>
+            <Dependent Role="Tile">
+              <PropertyRef Name="treasure_card_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1346,13 +1385,16 @@
           <EntitySetMapping Name="Tile">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.Tile">
               <MappingFragment StoreEntitySet="Tile">
+                <ScalarProperty Name="treasure_card_id" ColumnName="treasure_card_id" />
+                <ScalarProperty Name="image_file_name" ColumnName="image_file_name" />
+                <ScalarProperty Name="is_lost" ColumnName="is_lost" />
+                <ScalarProperty Name="is_escape" ColumnName="is_escape" />
+                <ScalarProperty Name="is_flood" ColumnName="is_flood" />
+                <ScalarProperty Name="is_treasure" ColumnName="is_treasure" />
                 <ScalarProperty Name="tile_id" ColumnName="tile_id" />
                 <ScalarProperty Name="col" ColumnName="col" />
                 <ScalarProperty Name="row" ColumnName="row" />
-                <ScalarProperty Name="isTreasure" ColumnName="isTreasure" />
-                <ScalarProperty Name="isFlood" ColumnName="isFlood" />
-                <ScalarProperty Name="isEscape" ColumnName="isEscape" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Token">

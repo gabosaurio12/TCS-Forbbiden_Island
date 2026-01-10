@@ -1,6 +1,5 @@
 ﻿using Forbbiden.Client.ErrorCodes;
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Model;
 using System.Collections.Generic;
 using System.Windows;
@@ -141,6 +140,10 @@ namespace Forbbiden.Client.Logic
                     break;
                 case ServerErrorCodes.avatarDownloadError:
                     message = Properties.Resources.error_avatar_download;
+                    ViewUtils.OpenNotificationWindow(title, message, window);
+                    break;
+                case ServerErrorCodes.sendingCallbackError:
+                    message = Properties.Resources.error_sending_callback;
                     ViewUtils.OpenNotificationWindow(title, message, window);
                     break;
             }

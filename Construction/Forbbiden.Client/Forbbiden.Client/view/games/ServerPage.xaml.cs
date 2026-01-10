@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Forbbiden.Client.view.games
+namespace Forbbiden.Client.View.Games
 {
     public partial class ServerPage : Page
     {

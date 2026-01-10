@@ -1,5 +1,5 @@
 ﻿using Forbbiden.Client.BoardManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +22,7 @@ namespace Forbbiden.Client.Controls
         public bool IsFlood { get; set; }
         public bool IsLost { get; set; }
         public bool IsEscapeTile { get; set; }
+        public string ImageFileName { get; set; }
 
         public Color DefaultWhite { get; }
         public Color EscapeBlue { get; }
@@ -29,8 +30,6 @@ namespace Forbbiden.Client.Controls
         public Color Border { get; set; }
         public Color EnterBorder { get; set; }
         public Color RedColor { get; set; }
-
-        public string ImageFileName { get; set; }
 
         public UserControlTile()
         {

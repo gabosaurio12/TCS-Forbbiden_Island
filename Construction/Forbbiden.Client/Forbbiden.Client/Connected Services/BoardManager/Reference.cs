@@ -15,6 +15,179 @@ namespace Forbbiden.Client.BoardManager {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Tile", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Tile : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ColumnField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageFileNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEscapeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsFloodField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsLostField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsTreasureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RowField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TileIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.BoardManager.Card TreasureCardField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Column {
+            get {
+                return this.ColumnField;
+            }
+            set {
+                if ((this.ColumnField.Equals(value) != true)) {
+                    this.ColumnField = value;
+                    this.RaisePropertyChanged("Column");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImageFileName {
+            get {
+                return this.ImageFileNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageFileNameField, value) != true)) {
+                    this.ImageFileNameField = value;
+                    this.RaisePropertyChanged("ImageFileName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEscape {
+            get {
+                return this.IsEscapeField;
+            }
+            set {
+                if ((this.IsEscapeField.Equals(value) != true)) {
+                    this.IsEscapeField = value;
+                    this.RaisePropertyChanged("IsEscape");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsFlood {
+            get {
+                return this.IsFloodField;
+            }
+            set {
+                if ((this.IsFloodField.Equals(value) != true)) {
+                    this.IsFloodField = value;
+                    this.RaisePropertyChanged("IsFlood");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsLost {
+            get {
+                return this.IsLostField;
+            }
+            set {
+                if ((this.IsLostField.Equals(value) != true)) {
+                    this.IsLostField = value;
+                    this.RaisePropertyChanged("IsLost");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsTreasure {
+            get {
+                return this.IsTreasureField;
+            }
+            set {
+                if ((this.IsTreasureField.Equals(value) != true)) {
+                    this.IsTreasureField = value;
+                    this.RaisePropertyChanged("IsTreasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Row {
+            get {
+                return this.RowField;
+            }
+            set {
+                if ((this.RowField.Equals(value) != true)) {
+                    this.RowField = value;
+                    this.RaisePropertyChanged("Row");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TileId {
+            get {
+                return this.TileIdField;
+            }
+            set {
+                if ((this.TileIdField.Equals(value) != true)) {
+                    this.TileIdField = value;
+                    this.RaisePropertyChanged("TileId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.BoardManager.Card TreasureCard {
+            get {
+                return this.TreasureCardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TreasureCardField, value) != true)) {
+                    this.TreasureCardField = value;
+                    this.RaisePropertyChanged("TreasureCard");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Card", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
     [System.SerializableAttribute()]
     public partial class Card : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -122,53 +295,220 @@ namespace Forbbiden.Client.BoardManager {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Fault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Board", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Board : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int BoardIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MatchIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Forbbiden.Client.BoardManager.Tile[] TilesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int BoardId {
+            get {
+                return this.BoardIdField;
+            }
+            set {
+                if ((this.BoardIdField.Equals(value) != true)) {
+                    this.BoardIdField = value;
+                    this.RaisePropertyChanged("BoardId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MatchId {
+            get {
+                return this.MatchIdField;
+            }
+            set {
+                if ((this.MatchIdField.Equals(value) != true)) {
+                    this.MatchIdField = value;
+                    this.RaisePropertyChanged("MatchId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Forbbiden.Client.BoardManager.Tile[] Tiles {
+            get {
+                return this.TilesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TilesField, value) != true)) {
+                    this.TilesField = value;
+                    this.RaisePropertyChanged("Tiles");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BoardManager.IBoardManager")]
     public interface IBoardManager {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetTileImages", ReplyAction="http://tempuri.org/IBoardManager/GetTileImagesResponse")]
-        string[] GetTileImages();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/CreateBoard", ReplyAction="http://tempuri.org/IBoardManager/CreateBoardResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/CreateBoardFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool CreateBoard(Forbbiden.Client.BoardManager.Tile[] tiles, int matchId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetTileImages", ReplyAction="http://tempuri.org/IBoardManager/GetTileImagesResponse")]
-        System.Threading.Tasks.Task<string[]> GetTileImagesAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/CreateBoard", ReplyAction="http://tempuri.org/IBoardManager/CreateBoardResponse")]
+        System.Threading.Tasks.Task<bool> CreateBoardAsync(Forbbiden.Client.BoardManager.Tile[] tiles, int matchId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetBoard", ReplyAction="http://tempuri.org/IBoardManager/GetBoardResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetBoardFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.BoardManager.Board GetBoard(int matchId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetBoard", ReplyAction="http://tempuri.org/IBoardManager/GetBoardResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Board> GetBoardAsync(int matchId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/RegisterBoardTiles", ReplyAction="http://tempuri.org/IBoardManager/RegisterBoardTilesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/RegisterBoardTilesFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.BoardManager.Tile[] RegisterBoardTiles(Forbbiden.Client.BoardManager.Tile[] boardTiles);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/RegisterBoardTiles", ReplyAction="http://tempuri.org/IBoardManager/RegisterBoardTilesResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Tile[]> RegisterBoardTilesAsync(Forbbiden.Client.BoardManager.Tile[] boardTiles);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetTreasureCards", ReplyAction="http://tempuri.org/IBoardManager/GetTreasureCardsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetTreasureCardsFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.BoardManager.Card[] GetTreasureCards();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetTreasureCards", ReplyAction="http://tempuri.org/IBoardManager/GetTreasureCardsResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card[]> GetTreasureCardsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetFloodCards", ReplyAction="http://tempuri.org/IBoardManager/GetFloodCardsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetFloodCardsFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.BoardManager.Card[] GetFloodCards();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetFloodCards", ReplyAction="http://tempuri.org/IBoardManager/GetFloodCardsResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card[]> GetFloodCardsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCard", ReplyAction="http://tempuri.org/IBoardManager/GetCardResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetCardFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.BoardManager.Card GetCard(string path);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCard", ReplyAction="http://tempuri.org/IBoardManager/GetCardResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardAsync(string path);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCardById", ReplyAction="http://tempuri.org/IBoardManager/GetCardByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetCardByIdFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.BoardManager.Card GetCardById(int cardId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCardById", ReplyAction="http://tempuri.org/IBoardManager/GetCardByIdResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardByIdAsync(int cardId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void SendOnBoardCreatedCallback(string boardJson, string[] usernames);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackResponse")]
         System.Threading.Tasks.Task SendOnBoardCreatedCallbackAsync(string boardJson, string[] usernames);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void SendOnBoardUpdatedCallback(string boardJson, string[] usernames);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackResponse")]
         System.Threading.Tasks.Task SendOnBoardUpdatedCallbackAsync(string boardJson, string[] usernames);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void SendOnPlayersTurnCallback(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackResponse")]
         System.Threading.Tasks.Task SendOnPlayersTurnCallbackAsync(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void SendOnTurnFinishedCallback(string boardJson, string[] usernames);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackResponse")]
@@ -202,12 +542,28 @@ namespace Forbbiden.Client.BoardManager {
                 base(binding, remoteAddress) {
         }
         
-        public string[] GetTileImages() {
-            return base.Channel.GetTileImages();
+        public bool CreateBoard(Forbbiden.Client.BoardManager.Tile[] tiles, int matchId) {
+            return base.Channel.CreateBoard(tiles, matchId);
         }
         
-        public System.Threading.Tasks.Task<string[]> GetTileImagesAsync() {
-            return base.Channel.GetTileImagesAsync();
+        public System.Threading.Tasks.Task<bool> CreateBoardAsync(Forbbiden.Client.BoardManager.Tile[] tiles, int matchId) {
+            return base.Channel.CreateBoardAsync(tiles, matchId);
+        }
+        
+        public Forbbiden.Client.BoardManager.Board GetBoard(int matchId) {
+            return base.Channel.GetBoard(matchId);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Board> GetBoardAsync(int matchId) {
+            return base.Channel.GetBoardAsync(matchId);
+        }
+        
+        public Forbbiden.Client.BoardManager.Tile[] RegisterBoardTiles(Forbbiden.Client.BoardManager.Tile[] boardTiles) {
+            return base.Channel.RegisterBoardTiles(boardTiles);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Tile[]> RegisterBoardTilesAsync(Forbbiden.Client.BoardManager.Tile[] boardTiles) {
+            return base.Channel.RegisterBoardTilesAsync(boardTiles);
         }
         
         public Forbbiden.Client.BoardManager.Card[] GetTreasureCards() {
@@ -232,6 +588,14 @@ namespace Forbbiden.Client.BoardManager {
         
         public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardAsync(string path) {
             return base.Channel.GetCardAsync(path);
+        }
+        
+        public Forbbiden.Client.BoardManager.Card GetCardById(int cardId) {
+            return base.Channel.GetCardById(cardId);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardByIdAsync(int cardId) {
+            return base.Channel.GetCardByIdAsync(cardId);
         }
         
         public void SendOnBoardCreatedCallback(string boardJson, string[] usernames) {

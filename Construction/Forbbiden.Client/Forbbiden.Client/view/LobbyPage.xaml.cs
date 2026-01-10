@@ -1,8 +1,9 @@
 ﻿using Forbbiden.Client.GameManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.games;
+using Forbbiden.Client.View.Games;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.IO.Path;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     public partial class LobbyPage : Page
     {

@@ -13,16 +13,37 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IBoardManager_GetTileImages_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetTileImages" />
+  <wsdl:message name="IBoardManager_CreateBoard_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBoard" />
   </wsdl:message>
-  <wsdl:message name="IBoardManager_GetTileImages_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetTileImagesResponse" />
+  <wsdl:message name="IBoardManager_CreateBoard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBoardResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_CreateBoard_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q1:Fault" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetBoard_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBoard" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetBoard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBoardResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetBoard_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q2:Fault" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_RegisterBoardTiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterBoardTiles" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_RegisterBoardTiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterBoardTilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_RegisterBoardTiles_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetTreasureCards_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTreasureCards" />
@@ -30,11 +51,17 @@
   <wsdl:message name="IBoardManager_GetTreasureCards_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTreasureCardsResponse" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_GetTreasureCards_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
+  </wsdl:message>
   <wsdl:message name="IBoardManager_GetFloodCards_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFloodCards" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetFloodCards_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFloodCardsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetFloodCards_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetCard_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCard" />
@@ -42,11 +69,26 @@
   <wsdl:message name="IBoardManager_GetCard_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCardResponse" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_GetCard_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetCardById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardById" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetCardById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetCardById_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
+  </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallback" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallback" />
@@ -54,11 +96,17 @@
   <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallbackResponse" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
+  </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallback" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallback" />
@@ -66,52 +114,105 @@
   <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallbackResponse" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
+  </wsdl:message>
   <wsdl:portType name="IBoardManager">
-    <wsdl:operation name="GetTileImages">
-      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetTileImages" message="tns:IBoardManager_GetTileImages_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetTileImagesResponse" message="tns:IBoardManager_GetTileImages_OutputMessage" />
+    <wsdl:operation name="CreateBoard">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/CreateBoard" message="tns:IBoardManager_CreateBoard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/CreateBoardResponse" message="tns:IBoardManager_CreateBoard_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/CreateBoardFaultFault" name="FaultFault" message="tns:IBoardManager_CreateBoard_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBoard">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetBoard" message="tns:IBoardManager_GetBoard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetBoardResponse" message="tns:IBoardManager_GetBoard_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetBoardFaultFault" name="FaultFault" message="tns:IBoardManager_GetBoard_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterBoardTiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/RegisterBoardTiles" message="tns:IBoardManager_RegisterBoardTiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/RegisterBoardTilesResponse" message="tns:IBoardManager_RegisterBoardTiles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/RegisterBoardTilesFaultFault" name="FaultFault" message="tns:IBoardManager_RegisterBoardTiles_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTreasureCards">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetTreasureCards" message="tns:IBoardManager_GetTreasureCards_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetTreasureCardsResponse" message="tns:IBoardManager_GetTreasureCards_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetTreasureCardsFaultFault" name="FaultFault" message="tns:IBoardManager_GetTreasureCards_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFloodCards">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetFloodCards" message="tns:IBoardManager_GetFloodCards_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetFloodCardsResponse" message="tns:IBoardManager_GetFloodCards_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetFloodCardsFaultFault" name="FaultFault" message="tns:IBoardManager_GetFloodCards_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCard">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetCard" message="tns:IBoardManager_GetCard_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetCardResponse" message="tns:IBoardManager_GetCard_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetCardFaultFault" name="FaultFault" message="tns:IBoardManager_GetCard_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetCardById" message="tns:IBoardManager_GetCardById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetCardByIdResponse" message="tns:IBoardManager_GetCardById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetCardByIdFaultFault" name="FaultFault" message="tns:IBoardManager_GetCardById_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendOnBoardCreatedCallback">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback" message="tns:IBoardManager_SendOnBoardCreatedCallback_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackResponse" message="tns:IBoardManager_SendOnBoardCreatedCallback_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackFaultFault" name="FaultFault" message="tns:IBoardManager_SendOnBoardCreatedCallback_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendOnBoardUpdatedCallback">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback" message="tns:IBoardManager_SendOnBoardUpdatedCallback_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackResponse" message="tns:IBoardManager_SendOnBoardUpdatedCallback_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallbackFaultFault" name="FaultFault" message="tns:IBoardManager_SendOnBoardUpdatedCallback_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendOnPlayersTurnCallback">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback" message="tns:IBoardManager_SendOnPlayersTurnCallback_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackResponse" message="tns:IBoardManager_SendOnPlayersTurnCallback_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallbackFaultFault" name="FaultFault" message="tns:IBoardManager_SendOnPlayersTurnCallback_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendOnTurnFinishedCallback">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback" message="tns:IBoardManager_SendOnTurnFinishedCallback_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackResponse" message="tns:IBoardManager_SendOnTurnFinishedCallback_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallbackFaultFault" name="FaultFault" message="tns:IBoardManager_SendOnTurnFinishedCallback_FaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IBoardManager" type="tns:IBoardManager">
     <wsp:PolicyReference URI="#NetTcpBinding_IBoardManager_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="GetTileImages">
-      <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetTileImages" style="document" />
+    <wsdl:operation name="CreateBoard">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/CreateBoard" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoard">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetBoard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterBoardTiles">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/RegisterBoardTiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetTreasureCards">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetTreasureCards" style="document" />
@@ -121,6 +222,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetFloodCards">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetFloodCards" style="document" />
@@ -130,6 +234,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetCard">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetCard" style="document" />
@@ -139,6 +246,21 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardById">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetCardById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendOnBoardCreatedCallback">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback" style="document" />
@@ -148,6 +270,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendOnBoardUpdatedCallback">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnBoardUpdatedCallback" style="document" />
@@ -157,6 +282,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendOnPlayersTurnCallback">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnPlayersTurnCallback" style="document" />
@@ -166,6 +294,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendOnTurnFinishedCallback">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/SendOnTurnFinishedCallback" style="document" />
@@ -175,6 +306,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="BoardManager">

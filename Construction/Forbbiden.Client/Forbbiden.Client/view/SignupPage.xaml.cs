@@ -1,11 +1,11 @@
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.TokenManager;
-using Forbbiden.Client.view.info;
+using Forbbiden.Client.View.info;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;

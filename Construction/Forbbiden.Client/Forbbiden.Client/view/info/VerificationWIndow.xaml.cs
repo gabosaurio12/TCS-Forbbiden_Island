@@ -1,5 +1,5 @@
 ﻿using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
@@ -8,7 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Forbbiden.Client.view.info
+namespace Forbbiden.Client.View.info
 {
     /// <summary>
     /// Interaction logic for VerificationWIndow.xaml

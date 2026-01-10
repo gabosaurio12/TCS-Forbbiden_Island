@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Navigation;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// MainWindow.xaml interaction logic

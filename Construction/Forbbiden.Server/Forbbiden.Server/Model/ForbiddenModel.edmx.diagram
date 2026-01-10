@@ -46,6 +46,7 @@
         <AssociationConnector Association="Forbbiden_FEIModel.FK__Token__player_id__628FA481" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK__Token__player_id__73BA3083" ManuallyRouted="false" />
         <AssociationConnector Association="Forbbiden_FEIModel.FK_player_socialmedia" ManuallyRouted="false" />
+        <AssociationConnector Association="Forbbiden_FEIModel.FK_Tile_Card_id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

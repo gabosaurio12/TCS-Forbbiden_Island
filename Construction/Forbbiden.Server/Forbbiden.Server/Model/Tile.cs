@@ -23,11 +23,15 @@ namespace Forbbiden.Server.Model
         public int tile_id { get; set; }
         public int col { get; set; }
         public int row { get; set; }
-        public Nullable<int> isTreasure { get; set; }
-        public Nullable<int> isFlood { get; set; }
-        public Nullable<int> isEscape { get; set; }
+        public Nullable<int> is_treasure { get; set; }
+        public Nullable<int> is_flood { get; set; }
+        public Nullable<int> is_escape { get; set; }
+        public Nullable<int> is_lost { get; set; }
+        public string image_file_name { get; set; }
+        public Nullable<int> treasure_card_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Board> Board { get; set; }
+        public virtual Card Card { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.view.info;
+﻿using Forbbiden.Client.View.info;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
     public static class ViewUtils
     {

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
     public class TileClickedEventArgs : EventArgs
     {

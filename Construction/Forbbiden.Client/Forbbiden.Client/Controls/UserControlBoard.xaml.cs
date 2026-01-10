@@ -1,13 +1,13 @@
 ﻿using Forbbiden.Client.BoardManager;
-using Forbbiden.Client.logic;
-using Forbbiden.Client.model;
+using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.ProfileManager;
-using log4net;
+using Forbbiden.Client.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -19,12 +19,10 @@ namespace Forbbiden.Client.Controls
     /// </summary>
     public partial class UserControlBoard : UserControl
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserControlBoard));
-
         public readonly int NumberOfTreasures = 4;
         private readonly string TilesImagesPath;
         private readonly string ImagesPath;
-        private readonly BoardManagerClient Client = new BoardManagerClient();
+        private readonly BoardRepository BoardRepo = new BoardRepository();
 
         public UserControlBoard()
         {
@@ -37,12 +35,11 @@ namespace Forbbiden.Client.Controls
             TilesImagesPath = System.IO.Path.Combine(
                 ImagesPath, "tiles");
 
-            GenerateBoard();
+            BuildBoard();
         }
 
         public void GenerateBoard()
         {
-            BuildBoard();
             SetTreasureTiles();
             SetNonTreasureTiles();
         }
@@ -124,7 +121,7 @@ namespace Forbbiden.Client.Controls
                 .Where(t => t.IsFlood).ToList();
         }
 
-        private void SetTreasureTiles()
+        private async void SetTreasureTiles()
         {
             List<UserControlTile> innerTiles = GetInnerTilesFromGrid();
             var shuffledTiles = innerTiles.OrderBy(
@@ -136,13 +133,11 @@ namespace Forbbiden.Client.Controls
                 Card treasureCard = null;
                 try
                 {
-                    treasureCard = Client.GetCard(treasureImage);
+                    treasureCard = await BoardRepo.GetCard(treasureImage);
                 }
-                catch (FaultException<Fault> ex)
+                catch (ViewException ex)
                 {
-                    string classMethod = "UserControlBoard.SetTreasureTiles";
-                    Log.Error(classMethod, ex);
-                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 string treasureImagePath = System.IO.Path.Combine(TilesImagesPath, treasureImage);
@@ -167,19 +162,17 @@ namespace Forbbiden.Client.Controls
             tile.SetImage(tileBitmap);               
         }
 
-        private void SetNonTreasureTiles()
+        private async void SetNonTreasureTiles()
         {
             List<UserControlTile> tiles = GetAllTilesFromGrid();
-            Card[] tilesCards;
+            List<Card> tilesCards;
             try
             {
-                tilesCards = Client.GetFloodCards();
+                tilesCards = await BoardRepo.GetFloodCards();
             }
-            catch (FaultException<Fault> ex)
+            catch (ViewException ex)
             {
-                string classMethod = "UserControlBoard.SetNonTreasureTiles";
-                Log.Error(classMethod, ex);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 return;
             }
             var shuffledTilesCards = MatchLogic.ShuffleCards(tilesCards.ToList());

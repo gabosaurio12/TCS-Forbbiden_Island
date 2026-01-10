@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Logic;
 using Forbbiden.Client.GameManager;
 using Forbbiden.Client.ProfileManager;
 using log4net;
@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.IO.Path;
 
-namespace Forbbiden.Client.view.games
+namespace Forbbiden.Client.View.Games
 {
     public partial class RiuvPage : Page
     {

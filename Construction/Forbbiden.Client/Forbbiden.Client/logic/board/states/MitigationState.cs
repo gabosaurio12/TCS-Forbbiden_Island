@@ -4,7 +4,7 @@ using log4net;
 using System.ServiceModel;
 using System.Windows;
 
-namespace Forbbiden.Client.logic.board.states
+namespace Forbbiden.Client.Logic.Board.States
 {
     public class MitigationState : IBoardState
     {

@@ -1,6 +1,6 @@
 ﻿using Forbbiden.Client.Controls;
 using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.Logic;
 using System.Collections.Generic;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for FriendsPage.xaml

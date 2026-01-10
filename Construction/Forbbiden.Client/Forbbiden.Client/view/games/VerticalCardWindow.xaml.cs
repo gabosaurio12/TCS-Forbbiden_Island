@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.model;
+﻿using Forbbiden.Client.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Forbbiden.Client.view.games
+namespace Forbbiden.Client.View.Games
 {
     /// <summary>
     /// Interaction logic for VerticalCardWindow.xaml

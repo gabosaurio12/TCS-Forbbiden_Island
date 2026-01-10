@@ -331,6 +331,15 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while synchronizing the game with the server or the other players.
+        /// </summary>
+        public static string error_sending_callback {
+            get {
+                return ResourceManager.GetString("error_sending_callback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was no response from the server, please try again later.
         /// </summary>
         public static string error_timeout {
