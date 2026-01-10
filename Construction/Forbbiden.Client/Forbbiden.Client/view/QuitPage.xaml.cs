@@ -1,5 +1,8 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using log4net;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -15,7 +18,6 @@ namespace Forbbiden.Client.view
     /// </summary>
     public partial class QuitPage : Page
     {
-
         private static readonly ILog Log = LogManager.GetLogger(typeof(QuitPage));
 
         public QuitPage()
@@ -30,16 +32,15 @@ namespace Forbbiden.Client.view
 
         private async Task DisconnectPlayer(string username)
         {
-            var client = new ProfileManagerClient();
+            var repository = new ProfileRepository();
 
             try
             {
-                await client.DisconnectPlayerByUsernameAsync(username);
+                await repository.DisconnectPlayer(username);
             }
-            catch (FaultException<Fault> fault)
+            catch (ViewException ex)
             {
-                Log.Error("ERROR: LoginPage.ConnectPlayer", fault);
-                ViewUtils.ShowPushError(Window.GetWindow(this));
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
         }
 

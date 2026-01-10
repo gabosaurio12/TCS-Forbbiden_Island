@@ -8,8 +8,6 @@ namespace Forbbiden.Client
 {
     public partial class PlayPage : Page
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LoginPage));
-
         public PlayPage()
         {
             InitializeComponent();

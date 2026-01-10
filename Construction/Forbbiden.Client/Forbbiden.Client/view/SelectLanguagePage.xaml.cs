@@ -28,16 +28,16 @@ namespace Forbbiden.Client
             Properties.Settings.Default.languageCode = "es-MX";
             Properties.Settings.Default.Save();
 
-            if (this.NavigationService != null && this.NavigationService.CanGoBack)
+            if (NavigationService != null && NavigationService.CanGoBack)
             {
-                this.NavigationService.GoBack();
+                NavigationService.GoBack();
             }
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.NavigationService != null && this.NavigationService.CanGoBack)
+            if (NavigationService != null && NavigationService.CanGoBack)
             {
-                this.NavigationService.GoBack();
+                NavigationService.GoBack();
             }
         }
     }

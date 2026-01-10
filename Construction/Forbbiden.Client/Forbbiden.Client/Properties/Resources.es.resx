@@ -309,17 +309,17 @@
   <data name="signup_invalid_password" xml:space="preserve">
     <value>La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial (@, &amp;, _)</value>
   </data>
-  <data name="signup_empty_username" xml:space="preserve">
+  <data name="invalid_empty_username" xml:space="preserve">
     <value>El nombre de usuario no puede estar vacío</value>
   </data>
-  <data name="signup_space_username" xml:space="preserve">
+  <data name="invalid_username_contains_whitespace" xml:space="preserve">
     <value>El nombre de usuario no puede contener espacios</value>
   </data>
   <data name="signup_username_already_used" xml:space="preserve">
     <value>El nombre de usuario ya está en uso</value>
   </data>
-  <data name="signup_invalid_email" xml:space="preserve">
-    <value>El correo electrónico es inválido o ya está en uso</value>
+  <data name="invalid_email_not_available" xml:space="preserve">
+    <value>El correo electrónico ya está registrado, no puedes usar ese</value>
   </data>
   <data name="invalid_input" xml:space="preserve">
     <value>Campo Inválido</value>
@@ -341,9 +341,6 @@
   </data>
   <data name="max_cards_exceed_message" xml:space="preserve">
     <value>Con estas cartas tienes más de seis cartas ¿Qué quieres hacer?</value>
-  </data>
-  <data name="verify_account" xml:space="preserve">
-    <value>Verificar Cuenta</value>
   </data>
   <data name="verify" xml:space="preserve">
     <value>Verificar</value>
@@ -696,37 +693,76 @@
   <data name="leave_menu_kick_fail_msg" xml:space="preserve">
     <value>No se pudo expulsar al jugador. Intenta nuevamente.</value>
   </data>
-	<data name="kicked_title" xml:space="preserve">
+  <data name="kicked_title" xml:space="preserve">
     <value>Expulsado de la partida</value>
   </data>
-	<data name="kicked_message" xml:space="preserve">
+  <data name="kicked_message" xml:space="preserve">
     <value>El anfitrión te expulsó de la partida.</value>
   </data>
-	<data name="join_banned_title" xml:space="preserve">
+  <data name="join_banned_title" xml:space="preserve">
     <value>No puedes unirte</value>
   </data>
-	<data name="join_banned_message" xml:space="preserve">
+  <data name="join_banned_message" xml:space="preserve">
     <value>No puedes unirte a esta partida (fuiste expulsado por el anfitrión).</value>
   </data>
-	<data name="invite_code_title" xml:space="preserve">
+  <data name="invite_code_title" xml:space="preserve">
     <value>Código de invitación</value>
   </data>
-	<data name="invite_code_message" xml:space="preserve">
+  <data name="invite_code_message" xml:space="preserve">
     <value>Comparte este código con tus amigos: {0}</value>
   </data>
-	<data name="invite_invalid_title" xml:space="preserve">
+  <data name="invite_invalid_title" xml:space="preserve">
     <value>Código inválido</value>
   </data>
-	<data name="invite_invalid_message" xml:space="preserve">
+  <data name="invite_invalid_message" xml:space="preserve">
     <value>El código de invitación no es válido.</value>
   </data>
-	<data name="invite_code_prompt" xml:space="preserve">
+  <data name="invite_code_prompt" xml:space="preserve">
     <value>Ingresa el código de invitación para unirte.</value>
   </data>
-	<data name="invite_code_label" xml:space="preserve">
+  <data name="invite_code_label" xml:space="preserve">
     <value>Código de invitación:</value>
   </data>
-	<data name="invite_code_not_available" xml:space="preserve">
+  <data name="invite_code_not_available" xml:space="preserve">
     <value>No disponible</value>
+  </data>
+  <data name="invalid_password_missing_uppercase" xml:space="preserve">
+    <value>Tu contraseña debe tener al menos una letra mayúscula</value>
+  </data>
+  <data name="invalid_password_missing_lowercase" xml:space="preserve">
+    <value>Tu contraseña debe tener al menos una letra minúscula</value>
+  </data>
+  <data name="invalid_password_missing_number" xml:space="preserve">
+    <value>Tu contraseña debe tener al menos un número</value>
+  </data>
+  <data name="invalid_password_missing_special_character" xml:space="preserve">
+    <value>Tu contraseña debe tener al menos un carácter especial (@, _, -)</value>
+  </data>
+  <data name="invalid_password_empty" xml:space="preserve">
+    <value>El campo de la contraseña está vacío. Debes ingresar una contraseña</value>
+  </data>
+  <data name="invalid_password_too_short" xml:space="preserve">
+    <value>La contraseña es muy corta, debe ser de al menos 8 caracteres de largo</value>
+  </data>
+  <data name="invalid_empty_email" xml:space="preserve">
+    <value>El campo del correo está vacío. Debes ingresar un correo</value>
+  </data>
+  <data name="invalid_email_not_contains_at" xml:space="preserve">
+    <value>El correo que ingresaste no tiene un @, verifica el formato por favor</value>
+  </data>
+  <data name="invalid_email_contains_multiple_at" xml:space="preserve">
+    <value>El correo que ingresaste tiene varios @, verifica el formato por favor</value>
+  </data>
+  <data name="invalid_email_not_contains_extension" xml:space="preserve">
+    <value>El correo que ingresaste no tiene una extensión, verifica el formato por favor</value>
+  </data>
+  <data name="error_timeout" xml:space="preserve">
+    <value>No hubo una respuesta del servidor, inténtalo más tarde</value>
+  </data>
+  <data name="error_update_database" xml:space="preserve">
+    <value>Hubo un error al actualizar la base de datos, los datos no fueron registrados</value>
+  </data>
+  <data name="error_avatar_download" xml:space="preserve">
+    <value>Hubo un error al descargar un Avatar</value>
   </data>
 </root>

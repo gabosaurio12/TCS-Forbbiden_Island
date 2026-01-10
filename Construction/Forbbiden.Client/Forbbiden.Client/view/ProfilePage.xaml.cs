@@ -1,10 +1,15 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
+using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
+using Forbbiden.Client.view.info;
 using log4net;
 using Microsoft.Win32;
 using System;
 using System.IO;
-using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,25 +23,26 @@ namespace Forbbiden.Client
     public partial class ProfilePage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
-        private readonly ProfileManagerClient ProfileClient;
+        private readonly ProfileRepository ProfileRepo;
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
         private string AvatarFileName;
+        private string NewHashedPassword = null;
         private bool AvatarChanged = false;
 
         public ProfilePage()
         {
             InitializeComponent();
 
-            ProfileClient = new ProfileManagerClient();
+            ProfileRepo = new ProfileRepository();
         }
 
         public ProfilePage(Player player)
         {
             InitializeComponent();
 
-            ProfileClient = new ProfileManagerClient();
+            ProfileRepo = new ProfileRepository();
 
             ProfilePlayer = player;
             txtBxUsername.Text = player.PlayerUsername;
@@ -70,7 +76,7 @@ namespace Forbbiden.Client
                 }
             }
 
-            if (!string.IsNullOrEmpty(player.PlayerAvatarPath))
+            if (!string.IsNullOrWhiteSpace(player.PlayerAvatarPath))
             {
                 string avatarPath = ResolveLocalAvatarPath(player.PlayerAvatarPath);
                 if (!string.IsNullOrEmpty(avatarPath) && File.Exists(avatarPath))
@@ -94,8 +100,8 @@ namespace Forbbiden.Client
 
         private void BtnDiscard_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService != null && NavigationService.CanGoBack)
-                NavigationService?.Navigate(new MainPage());
+            NewHashedPassword = null;
+            NavigationService?.Navigate(new MainPage());
         }
 
         private static void ResetFieldColors(TextBlock txtBkUsername, TextBlock txtBkName, TextBlock txtBkEmail)
@@ -105,100 +111,78 @@ namespace Forbbiden.Client
             txtBkEmail.Foreground = Brushes.Black;
         }
 
-        private void ValidateUsername(string username, ref bool isValid)
+        private SocialMedia[] GetSocialMediaArray()
         {
-            if (string.IsNullOrEmpty(username))
+            return new[]
             {
-                MessageBox.Show("El nombre de usuario no puede estar vacío.");
-                txtBkUsername.Foreground = Brushes.Red;
-                isValid = false;
-            }
-            else
-            {
-                try
+                new SocialMedia
                 {
-                    if (!ProfileClient.IsUsernameAvailable(username))
-                    {
-                        MessageBox.Show("El nombre de usuario ya existe.");
-                        txtBkUsername.Foreground = Brushes.Red;
-                        isValid = false;
-                    }
-                }
-                catch (Exception ex)
+                    SocialMediaName = "discord",
+                    SocialLink = txtBxDiscord.Text,
+                    PlayerId = ProfilePlayer.PlayerId
+                },
+                new SocialMedia
                 {
-                    Log.Warn("ValidateUsername error", ex);
-                    MessageBox.Show("No se pudo verificar el nombre de usuario.");
-                    isValid = false;
+                    SocialMediaName = "x",
+                    SocialLink = txtBxX.Text,
+                    PlayerId = ProfilePlayer.PlayerId
+                },
+                new SocialMedia
+                {
+                    SocialMediaName = "instagram",
+                    SocialLink = txtBxInstagram.Text,
+                    PlayerId = ProfilePlayer.PlayerId
+                },
+                new SocialMedia
+                {
+                    SocialMediaName = "facebook",
+                    SocialLink = txtBxFacebook.Text,
+                    PlayerId = ProfilePlayer.PlayerId
                 }
-            }
+            };
         }
 
-        private void ValidateEmail(string email, ref bool isValid)
-        {
-            if (string.IsNullOrEmpty(email))
-            {
-                MessageBox.Show("El correo no puede estar vació.");
-                txtBkEmail.Foreground = Brushes.Red;
-                isValid = false;
-            }
-            else
-            {
-                try
-                {
-                    if (!ProfileClient.ValidateEmail(email))
-                    {
-                        MessageBox.Show("El correo electrónico debe contener un @ o ya está registrado.");
-                        txtBkEmail.Foreground = Brushes.Red;
-                        isValid = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Warn("ValidateEmail error", ex);
-                    MessageBox.Show("No se pudo validar el correo.");
-                    isValid = false;
-                }
-            }
-        }
-
-        private bool SetPlayer(ref Player player)
+        private bool SetPlayer(Player player)
         {
             player.PlayerUsername = txtBxUsername.Text;
+            player.PlayerPassword = NewHashedPassword ?? ProfilePlayer.PlayerPassword;
             player.PlayerEmail = txtBxEmail.Text;
             player.PlayerName = txtBxName.Text;
             player.Status = ProfilePlayer.Status;
             player.IsVerified = ProfilePlayer.IsVerified;
 
-            player.SocialMedia = new[]
-            {
-                new SocialMedia { SocialMediaName = "discord", SocialLink = txtBxDiscord.Text, PlayerId = this.ProfilePlayer.PlayerId },
-                new SocialMedia { SocialMediaName = "x", SocialLink = txtBxX.Text, PlayerId = this.ProfilePlayer.PlayerId },
-                new SocialMedia { SocialMediaName = "instagram", SocialLink = txtBxInstagram.Text, PlayerId = this.ProfilePlayer.PlayerId },
-                new SocialMedia { SocialMediaName = "facebook", SocialLink = txtBxFacebook.Text, PlayerId = this.ProfilePlayer.PlayerId }
-            };
+            player.SocialMedia = GetSocialMediaArray();
 
             bool isValid = true;
 
-            if (player.PlayerUsername != this.ProfilePlayer.PlayerUsername)
+            if (player.PlayerUsername != ProfilePlayer.PlayerUsername)
             {
-                ValidateUsername(player.PlayerUsername, ref isValid);
+                var usernameValidationResults = ValidationUtils.ValidateUsername(player.PlayerUsername);
+                if (!usernameValidationResults.IsValid)
+                {
+                    txtBkUsername.Foreground = Brushes.Red;
+                    ErrorsNotificationManager.ShowUsernameValidationErrors(
+                        usernameValidationResults.Errors, Window.GetWindow(this));
+                    isValid = false;
+                }
             }
 
-            if (player.PlayerEmail != this.ProfilePlayer.PlayerEmail)
+            if (player.PlayerEmail != ProfilePlayer.PlayerEmail)
             {
-                ValidateEmail(player.PlayerEmail, ref isValid);
+                var emailValidationResults = ValidationUtils.ValidateEmail(player.PlayerEmail);
+                if (!emailValidationResults.IsValid)
+                {
+                    txtBkEmail.Foreground = Brushes.Red;
+                    ErrorsNotificationManager.ShowEmailValidationErrors(
+                        emailValidationResults.Errors, Window.GetWindow(this));
+                    isValid = false;
+                }
             }
 
             return isValid;
         }
 
-        private void OpenNotificationError(string message)
-        {
-            string title = Properties.Resources.error;
-            ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
-        }
-
-        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        private async void BtnSave_ClickAsync(object sender, RoutedEventArgs e)
         {
             ResetFieldColors(txtBkUsername, txtBkName, txtBkEmail);
 
@@ -207,24 +191,24 @@ namespace Forbbiden.Client
                 PlayerId = ProfilePlayer.PlayerId
             };
 
-            if (!SetPlayer(ref updatedPlayer))
+            if (!SetPlayer(updatedPlayer))
             {
                 return;
             }
 
             if (AvatarChanged)
             {
-                UploadAvatar(updatedPlayer);
+                await UploadAvatar(updatedPlayer);
             }
             else
             {
                 updatedPlayer.PlayerAvatarPath = ProfilePlayer.PlayerAvatarPath;
             }
 
-            SaveProfileChanges(updatedPlayer);
+            await SaveProfileChanges(updatedPlayer);
         }
 
-        private void UploadAvatar(Player updatedPlayer)
+        private async Task UploadAvatar(Player updatedPlayer)
         {
             if (string.IsNullOrEmpty(UploadedAvatarOriginalPath) || string.IsNullOrEmpty(AvatarFileName))
             {
@@ -246,17 +230,15 @@ namespace Forbbiden.Client
                 string savedFileName = null;
                 try
                 {
-                    savedFileName = ProfileClient.UploadAvatar(
+                    savedFileName = await ProfileRepo.UploadAvatar(
                         ProfilePlayer.PlayerUsername, bytes, AvatarFileName);
                 }
-                catch (FaultException fex)
+                catch (ViewException ex)
                 {
-                    Log.Error("ProfilePage.BtnSave_Click", fex);
-                    //OpenNotificationError(Properties.Resources.error_uploading_avatar);
-                    return;
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
-                if (string.IsNullOrEmpty(savedFileName))
+                if (string.IsNullOrWhiteSpace(savedFileName))
                 {
                     //OpenNotificationError(Properties.Resources.error_uploading_avatar);
                     return;
@@ -296,33 +278,27 @@ namespace Forbbiden.Client
             }
         }
 
-        private void SaveProfileChanges(Player updatedPlayer)
+        private async Task SaveProfileChanges(Player updatedPlayer)
         {
-            try
+            if (await ProfileRepo.UpdatePlayerProfile(updatedPlayer))
             {
-                if (ProfileClient.UpdatePlayer(updatedPlayer))
+                Player refreshed = null;
+                try
                 {
-                    try
-                    {
-                        var refreshed = ProfileClient.GetPlayerByUsername(updatedPlayer.PlayerUsername, true);
-                        if (refreshed != null && refreshed.PlayerId > 0)
-                        {
-                            ClientSession.SetPlayer(refreshed);
-                        }
-                    }
-                    catch (FaultException ex)
-                    {
-                        Log.Error("ProfilePage.SaveProfileChanges", ex);
-                        ViewUtils.ShowPullError(Window.GetWindow(this));
-                    }
-
-                    NavigationService?.Navigate(new MainPage());
+                    refreshed = await ProfileRepo
+                        .GetPlayerByUsername(updatedPlayer.PlayerUsername, true);
                 }
-            }
-            catch (FaultException fex)
-            {
-                Log.Error("ProfilePage.SaveProfileChanges", fex);
-                ViewUtils.ShowPushError(Window.GetWindow(this));
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
+
+                if (refreshed != null && refreshed.PlayerId > 0)
+                {
+                    ClientSession.SetPlayer(refreshed);
+                }
+
+                NavigationService?.Navigate(new MainPage());
             }
         }
 
@@ -343,6 +319,19 @@ namespace Forbbiden.Client
                 imgAvatar.Fill = ViewUtils.GetImageBrush(UploadedAvatarOriginalPath);
 
                 AvatarChanged = true;
+            }
+        }
+
+        private void BtnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            var changePasswordWindow = new ChangePasswordWindow()
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            if (changePasswordWindow.ShowDialog() == true)
+            {
+                NewHashedPassword = changePasswordWindow.HashedPassword;
             }
         }
 

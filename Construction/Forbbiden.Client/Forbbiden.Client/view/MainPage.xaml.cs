@@ -1,13 +1,14 @@
-﻿using Forbbiden.Client.FriendsManager;
+﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.logic;
-using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Logic;
+using Forbbiden.Client.Repositories;
 using Forbbiden.Client.view;
 using Forbbiden.Client.view.info;
 using log4net;
 using System;
 using System.Globalization;
 using System.IO;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ namespace Forbbiden.Client
     public partial class MainPage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainPage));
-        private readonly ProfileManagerClient Client;
+        private readonly ProfileRepository ProfileRepo;
         public static FriendsNotificationSingleton CallbackManager { get; private set; }
         public static IFriendsManager FriendsProxy { get; private set; }
 
@@ -26,7 +27,7 @@ namespace Forbbiden.Client
         {
             InitializeComponent();
 
-            Client = new ProfileManagerClient();
+            ProfileRepo = new ProfileRepository();
 
             _ = SetLogin();
             SetBackground(background);
@@ -38,17 +39,7 @@ namespace Forbbiden.Client
 
             if (playerId > 0)
             {
-                ProfileManager.Player currentLogin = new ProfileManager.Player();
-
-                try
-                {
-                    currentLogin = await Client.GetPlayerByIdAsync(playerId, false);
-                }
-                catch (FaultException<Fault> ex)
-                {
-                    Log.Error("ERROR: MainPage.SetLogin", ex);
-                    ViewUtils.ShowPullError(Window.GetWindow(this));
-                }
+                ProfileManager.Player currentLogin = await ProfileRepo.GetPlayerById(playerId, false);
 
                 if (currentLogin.PlayerId > 0)
                 {
@@ -93,8 +84,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
-                Log.Error("ERROR: MainPage.PlayButton_Click", ex);
+                Log.Error("MainPage.PlayButton_Click", ex);
+                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -106,8 +97,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
-                Log.Error("ERROR: MainPage.SettingsButton_Click", ex);
+                Log.Error("MainPage.SettingsButton_Click", ex);
+                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -126,8 +117,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
-                Log.Error("ERROR: MainPage.ProfileButton_Click", ex);
+                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("MainPage.ProfileButton_Click", ex);
             }
         }
 
@@ -139,8 +130,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
-                Log.Error("ERROR: MainPage.LogInButton_Click", ex);
+                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                Log.Error("MainPage.LogInButton_Click", ex);
             }
         }
 
@@ -150,12 +141,11 @@ namespace Forbbiden.Client
 
             try
             {
-                isConnected = await Client.ConnectPlayerByUsernameAsync(username);
+                isConnected = await ProfileRepo.ConnectPlayer(username);
             }
-            catch (FaultException<Fault> fault)
+            catch (ViewException ex)
             {
-                Log.Error("MainPage.ConnectPlayer", fault);
-                ViewUtils.ShowPushError(Window.GetWindow(this));
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (isConnected)
@@ -186,8 +176,8 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ViewUtils.HandlePageLoadError(Window.GetWindow(this));
                 Log.Error("MainPage.ReloadMainPage", ex);
+                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -198,33 +188,54 @@ namespace Forbbiden.Client
 
         private void ShowVerificationWindow(ProfileManager.Player player)
         {
-            var verificationWindow = new VerificationWindow(player.PlayerId)
+            var verificationWindow = new VerificationWindow(player.PlayerId, false)
             {
                 Owner = Window.GetWindow(this)
             };
 
             verificationWindow.OnVerified += async () =>
             {
-                var profileManager = new ProfileManagerClient();
-                var updatedPlayer = await profileManager.GetPlayerByIdAsync(player.PlayerId, false);
-
-                Dispatcher.Invoke(() =>
+                ProfileManager.Player updatedPlayer = null;
+                try
                 {
-                    ClientSession.SetPlayer(updatedPlayer);
-                    ReloadMainPage(updatedPlayer);
-                });
+                    updatedPlayer = await new ProfileRepository().GetPlayerById(
+                        player.PlayerId, false);
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
+
+                if (updatedPlayer != null && updatedPlayer.PlayerId != -1)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ClientSession.SetPlayer(updatedPlayer);
+                        ReloadMainPage(updatedPlayer);
+                    });
+                }                
             };
 
             verificationWindow.ShowDialog();
         }
         
-        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
+        private async void VerifyButtonAsync_Click(object sender, RoutedEventArgs e)
         {
-            var player = ClientSession.GetPlayer();
-            var result = await Client.SendEmailAsync(player.PlayerEmail, player.PlayerId);
+            var tokenRepo = new TokenRepository();
+            bool result = false;
+            try
+            {
+                var token = await tokenRepo.GenerateToken(ClientSession.CurrentPlayerId);
+                result = await ProfileRepo.SendSignupEmail(ClientSession.Email, token.TokenString);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+            }
 
             if (result)
             {
+                var player = ClientSession.GetPlayer();
                 string title = Properties.Resources.verification_token_sent_title;
                 string message = Properties.Resources.verification_token_sent;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));

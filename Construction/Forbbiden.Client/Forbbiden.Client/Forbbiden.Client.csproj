@@ -164,31 +164,37 @@
     <Compile Include="Controls\UserControlFriendRequest.xaml.cs">
       <DependentUpon>UserControlFriendRequest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="logic\AudioManager.cs" />
-    <Compile Include="logic\BoardPageCallbackDto.cs" />
-    <Compile Include="logic\board\BoardStateContext.cs" />
-    <Compile Include="logic\board\IBoardState.cs" />
-    <Compile Include="logic\board\states\CaptureTreasureState.cs" />
-    <Compile Include="logic\board\states\DiscardCardState.cs" />
-    <Compile Include="logic\board\states\EmergencyMoveState.cs" />
-    <Compile Include="logic\board\states\MitigationState.cs" />
-    <Compile Include="logic\board\states\MoveState.cs" />
-    <Compile Include="logic\board\states\NormalState.cs" />
-    <Compile Include="logic\board\states\ShoreState.cs" />
-    <Compile Include="logic\board\states\StandByState.cs" />
-    <Compile Include="logic\board\states\UseCardState.cs" />
-    <Compile Include="logic\ClientSession.cs" />
-    <Compile Include="logic\FriendsNotificationSingleton.cs" />
-    <Compile Include="logic\GameServiceCallback.cs" />
-    <Compile Include="logic\HostLogic.cs" />
-    <Compile Include="logic\MatchLogic.cs" />
-    <Compile Include="logic\MatchNotificationsSingleton.cs" />
-    <Compile Include="logic\PlayerLogic.cs" />
-    <Compile Include="logic\TileClickedEventArgs.cs" />
-    <Compile Include="logic\ViewUtils.cs" />
-    <Compile Include="model\BoardPageDto.cs" />
-    <Compile Include="model\CardWindowSettings.cs" />
-    <Compile Include="model\TileDto.cs" />
+    <Compile Include="ErrorCodes\ServerErrorCodes.cs" />
+    <Compile Include="Exceptions\ViewException.cs" />
+    <Compile Include="Logic\AudioManager.cs" />
+    <Compile Include="Model\BoardPageCallbackDto.cs" />
+    <Compile Include="Logic\Board\BoardStateContext.cs" />
+    <Compile Include="Logic\Board\IBoardState.cs" />
+    <Compile Include="Logic\Board\States\CaptureTreasureState.cs" />
+    <Compile Include="Logic\Board\States\DiscardCardState.cs" />
+    <Compile Include="Logic\Board\States\EmergencyMoveState.cs" />
+    <Compile Include="Logic\Board\States\MitigationState.cs" />
+    <Compile Include="Logic\Board\States\MoveState.cs" />
+    <Compile Include="Logic\Board\States\NormalState.cs" />
+    <Compile Include="Logic\Board\States\ShoreState.cs" />
+    <Compile Include="Logic\Board\States\StandByState.cs" />
+    <Compile Include="Logic\Board\States\UseCardState.cs" />
+    <Compile Include="Model\ClientSession.cs" />
+    <Compile Include="Logic\FriendsNotificationSingleton.cs" />
+    <Compile Include="Logic\GameServiceCallback.cs" />
+    <Compile Include="Logic\ErrorsNotificationManager.cs" />
+    <Compile Include="Logic\HostLogic.cs" />
+    <Compile Include="Logic\MatchLogic.cs" />
+    <Compile Include="Logic\MatchNotificationsSingleton.cs" />
+    <Compile Include="Logic\PlayerLogic.cs" />
+    <Compile Include="Logic\TileClickedEventArgs.cs" />
+    <Compile Include="Logic\Validations\ValidationUtils.cs" />
+    <Compile Include="Logic\ViewUtils.cs" />
+    <Compile Include="Model\BoardPageDto.cs" />
+    <Compile Include="Model\CardWindowSettings.cs" />
+    <Compile Include="Model\TileDto.cs" />
+    <Compile Include="ErrorCodes\ValidationErrorCodes.cs" />
+    <Compile Include="Model\ValidationResults.cs" />
     <Compile Include="Properties\PlayerSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -204,20 +210,22 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\ProfileRepository.cs" />
+    <Compile Include="Repositories\TokenRepository.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="view\FriendProfilePage.xaml.cs">
+    <Compile Include="View\FriendProfilePage.xaml.cs">
       <DependentUpon>FriendProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\FriendRequestsPage.xaml.cs">
+    <Compile Include="View\FriendRequestsPage.xaml.cs">
       <DependentUpon>FriendRequestsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\FriendsPage.xaml.cs">
+    <Compile Include="View\FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\BoardPage.xaml.cs">
+    <Compile Include="View\Games\BoardPage.xaml.cs">
       <DependentUpon>BoardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\HorizontalCardWindow.xaml.cs">
+    <Compile Include="View\Games\HorizontalCardWindow.xaml.cs">
       <DependentUpon>HorizontalCardWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\UserControlActionButton.xaml.cs">
@@ -232,64 +240,67 @@
     <Compile Include="Controls\UserControlCard.xaml.cs">
       <DependentUpon>UserControlCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\VerticalCardWindow.xaml.cs">
+    <Compile Include="View\Games\VerticalCardWindow.xaml.cs">
       <DependentUpon>VerticalCardWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\RiuvPage.xaml.cs">
+    <Compile Include="View\Games\RiuvPage.xaml.cs">
       <DependentUpon>RiuvPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\games\ServerPage.xaml.cs">
+    <Compile Include="View\Games\ServerPage.xaml.cs">
       <DependentUpon>ServerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\GameTutorialRiuvPage.xaml.cs">
+    <Compile Include="View\GameTutorialRiuvPage.xaml.cs">
       <DependentUpon>GameTutorialRiuvPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\HostGameControl.xaml.cs">
+    <Compile Include="View\HostGameControl.xaml.cs">
       <DependentUpon>HostGameControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\info\InviteCodeWindow.xaml.cs">
+    <Compile Include="View\Info\ChangePasswordWindow.xaml.cs">
+      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Info\InviteCodeWindow.xaml.cs">
       <DependentUpon>InviteCodeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\info\NotificationCardExceedWindow.xaml.cs">
+    <Compile Include="View\Info\NotificationCardExceedWindow.xaml.cs">
       <DependentUpon>NotificationCardExceedWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\info\NotificationWindow.xaml.cs">
+    <Compile Include="View\Info\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\info\VerificationWindow.xaml.cs">
+    <Compile Include="View\Info\VerificationWindow.xaml.cs">
       <DependentUpon>VerificationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\JoinGameControl.xaml.cs">
+    <Compile Include="View\JoinGameControl.xaml.cs">
       <DependentUpon>JoinGameControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\LeaveMenuPage.xaml.cs">
+    <Compile Include="View\LeaveMenuPage.xaml.cs">
       <DependentUpon>LeaveMenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\LobbyPage.xaml.cs">
+    <Compile Include="View\LobbyPage.xaml.cs">
       <DependentUpon>LobbyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\LoginPage.xaml.cs">
+    <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\MainPage.xaml.cs">
+    <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\PlayPage.xaml.cs">
+    <Compile Include="View\PlayPage.xaml.cs">
       <DependentUpon>PlayPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\ProfilePage.xaml.cs">
+    <Compile Include="View\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\QuitPage.xaml.cs">
+    <Compile Include="View\QuitPage.xaml.cs">
       <DependentUpon>QuitPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\SelectLanguagePage.xaml.cs">
+    <Compile Include="View\SelectLanguagePage.xaml.cs">
       <DependentUpon>SelectLanguagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\SignupPage.xaml.cs">
+    <Compile Include="View\SignupPage.xaml.cs">
       <DependentUpon>SignupPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -560,23 +571,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\FriendProfilePage.xaml">
+    <Page Include="View\FriendProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\FriendRequestsPage.xaml">
+    <Page Include="View\FriendRequestsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\FriendsPage.xaml">
+    <Page Include="View\FriendsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\BoardPage.xaml">
+    <Page Include="View\Games\BoardPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\HorizontalCardWindow.xaml">
+    <Page Include="View\Games\HorizontalCardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -596,83 +607,87 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\VerticalCardWindow.xaml">
+    <Page Include="View\Games\VerticalCardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\RiuvPage.xaml">
+    <Page Include="View\Games\RiuvPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\games\ServerPage.xaml">
+    <Page Include="View\Games\ServerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\GameTutorialRiuvPage.xaml">
+    <Page Include="View\GameTutorialRiuvPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\HostGameControl.xaml">
+    <Page Include="View\HostGameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\info\InviteCodeWindow.xaml">
+    <Page Include="View\Info\ChangePasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\info\NotificationCardExceedWindow.xaml">
+    <Page Include="View\Info\InviteCodeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\info\NotificationWindow.xaml">
+    <Page Include="View\Info\NotificationCardExceedWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\info\VerificationWindow.xaml">
+    <Page Include="View\Info\NotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\JoinGameControl.xaml">
+    <Page Include="View\Info\VerificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\LeaveMenuPage.xaml">
+    <Page Include="View\JoinGameControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\LobbyPage.xaml">
+    <Page Include="View\LeaveMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\LoginPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\PlayPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\ProfilePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\QuitPage.xaml">
+    <Page Include="View\LobbyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\SelectLanguagePage.xaml">
+    <Page Include="View\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\SignupPage.xaml">
+    <Page Include="View\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PlayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ProfilePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\QuitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SelectLanguagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SignupPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -837,21 +852,21 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="sounds\dramaticMusic.mp3" />
-    <Content Include="sounds\duelMusic.mp3" />
-    <Content Include="sounds\gameBonus.mp3" />
-    <Content Include="sounds\gameCountdown.mp3">
+    <Content Include="Sounds\dramaticMusic.mp3" />
+    <Content Include="Sounds\duelMusic.mp3" />
+    <Content Include="Sounds\gameBonus.mp3" />
+    <Content Include="Sounds\gameCountdown.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sounds\gameOver.mp3" />
-    <Content Include="sounds\gameStart.mp3" />
-    <Content Include="sounds\newRecord.mp3" />
-    <Content Include="sounds\riuvGameMusic.mp3">
+    <Content Include="Sounds\gameOver.mp3" />
+    <Content Include="Sounds\gameStart.mp3" />
+    <Content Include="Sounds\newRecord.mp3" />
+    <Content Include="Sounds\riuvGameMusic.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sounds\shotGame.mp3" />
-    <Content Include="sounds\takeTreasure.mp3" />
-    <Content Include="sounds\victoryMusic.mp3" />
+    <Content Include="Sounds\shotGame.mp3" />
+    <Content Include="Sounds\takeTreasure.mp3" />
+    <Content Include="Sounds\victoryMusic.mp3" />
     <Content Include="Images\board_background.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -882,16 +897,14 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.es.resx">
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources.es.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

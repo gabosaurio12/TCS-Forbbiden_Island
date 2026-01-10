@@ -13,8 +13,8 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ITokenManager_CreateRandomToken_InputMessage">
@@ -23,11 +23,17 @@
   <wsdl:message name="ITokenManager_CreateRandomToken_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateRandomTokenResponse" />
   </wsdl:message>
+  <wsdl:message name="ITokenManager_CreateRandomToken_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q1:Fault" />
+  </wsdl:message>
   <wsdl:message name="ITokenManager_GenerateToken_InputMessage">
     <wsdl:part name="parameters" element="tns:GenerateToken" />
   </wsdl:message>
   <wsdl:message name="ITokenManager_GenerateToken_OutputMessage">
     <wsdl:part name="parameters" element="tns:GenerateTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITokenManager_GenerateToken_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q2:Fault" />
   </wsdl:message>
   <wsdl:message name="ITokenManager_GetToken_InputMessage">
     <wsdl:part name="parameters" element="tns:GetToken" />
@@ -35,28 +41,38 @@
   <wsdl:message name="ITokenManager_GetToken_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTokenResponse" />
   </wsdl:message>
+  <wsdl:message name="ITokenManager_GetToken_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:Fault" />
+  </wsdl:message>
   <wsdl:message name="ITokenManager_VerifyToken_InputMessage">
     <wsdl:part name="parameters" element="tns:VerifyToken" />
   </wsdl:message>
   <wsdl:message name="ITokenManager_VerifyToken_OutputMessage">
     <wsdl:part name="parameters" element="tns:VerifyTokenResponse" />
   </wsdl:message>
+  <wsdl:message name="ITokenManager_VerifyToken_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
+  </wsdl:message>
   <wsdl:portType name="ITokenManager">
     <wsdl:operation name="CreateRandomToken">
       <wsdl:input wsaw:Action="http://tempuri.org/ITokenManager/CreateRandomToken" message="tns:ITokenManager_CreateRandomToken_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITokenManager/CreateRandomTokenResponse" message="tns:ITokenManager_CreateRandomToken_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITokenManager/CreateRandomTokenFaultFault" name="FaultFault" message="tns:ITokenManager_CreateRandomToken_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GenerateToken">
       <wsdl:input wsaw:Action="http://tempuri.org/ITokenManager/GenerateToken" message="tns:ITokenManager_GenerateToken_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITokenManager/GenerateTokenResponse" message="tns:ITokenManager_GenerateToken_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITokenManager/GenerateTokenFaultFault" name="FaultFault" message="tns:ITokenManager_GenerateToken_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetToken">
       <wsdl:input wsaw:Action="http://tempuri.org/ITokenManager/GetToken" message="tns:ITokenManager_GetToken_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITokenManager/GetTokenResponse" message="tns:ITokenManager_GetToken_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITokenManager/GetTokenFaultFault" name="FaultFault" message="tns:ITokenManager_GetToken_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="VerifyToken">
       <wsdl:input wsaw:Action="http://tempuri.org/ITokenManager/VerifyToken" message="tns:ITokenManager_VerifyToken_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITokenManager/VerifyTokenResponse" message="tns:ITokenManager_VerifyToken_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITokenManager/VerifyTokenFaultFault" name="FaultFault" message="tns:ITokenManager_VerifyToken_FaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_ITokenManager" type="tns:ITokenManager">
@@ -71,6 +87,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GenerateToken">
       <soap12:operation soapAction="http://tempuri.org/ITokenManager/GenerateToken" style="document" />
@@ -80,6 +99,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetToken">
       <soap12:operation soapAction="http://tempuri.org/ITokenManager/GetToken" style="document" />
@@ -89,6 +111,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="VerifyToken">
       <soap12:operation soapAction="http://tempuri.org/ITokenManager/VerifyToken" style="document" />
@@ -98,6 +123,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="TokenManager">

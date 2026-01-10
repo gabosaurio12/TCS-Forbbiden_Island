@@ -421,12 +421,12 @@ namespace Forbbiden.Client.ProfileManager {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ProfileManager.IProfileManager")]
     public interface IProfileManager {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ValidateEmail", ReplyAction="http://tempuri.org/IProfileManager/ValidateEmailResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/ValidateEmailFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        bool ValidateEmail(string email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsEmailAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsEmailAvailableResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/IsEmailAvailableFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool IsEmailAvailable(string email);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/ValidateEmail", ReplyAction="http://tempuri.org/IProfileManager/ValidateEmailResponse")]
-        System.Threading.Tasks.Task<bool> ValidateEmailAsync(string email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsEmailAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsEmailAvailableResponse")]
+        System.Threading.Tasks.Task<bool> IsEmailAvailableAsync(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsUsernameAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/IsUsernameAvailableFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -435,12 +435,19 @@ namespace Forbbiden.Client.ProfileManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/IsUsernameAvailable", ReplyAction="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse")]
         System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/SendEmailFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
-        bool SendEmail(string email, int playerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendSignupEmail", ReplyAction="http://tempuri.org/IProfileManager/SendSignupEmailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/SendSignupEmailFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool SendSignupEmail(string email, string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendEmail", ReplyAction="http://tempuri.org/IProfileManager/SendEmailResponse")]
-        System.Threading.Tasks.Task<bool> SendEmailAsync(string email, int playerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendSignupEmail", ReplyAction="http://tempuri.org/IProfileManager/SendSignupEmailResponse")]
+        System.Threading.Tasks.Task<bool> SendSignupEmailAsync(string email, string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendVerificationEmail", ReplyAction="http://tempuri.org/IProfileManager/SendVerificationEmailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/SendVerificationEmailFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool SendVerificationEmail(string email, string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SendVerificationEmail", ReplyAction="http://tempuri.org/IProfileManager/SendVerificationEmailResponse")]
+        System.Threading.Tasks.Task<bool> SendVerificationEmailAsync(string email, string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/SignUp", ReplyAction="http://tempuri.org/IProfileManager/SignUpResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/SignUpFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -538,12 +545,12 @@ namespace Forbbiden.Client.ProfileManager {
                 base(binding, remoteAddress) {
         }
         
-        public bool ValidateEmail(string email) {
-            return base.Channel.ValidateEmail(email);
+        public bool IsEmailAvailable(string email) {
+            return base.Channel.IsEmailAvailable(email);
         }
         
-        public System.Threading.Tasks.Task<bool> ValidateEmailAsync(string email) {
-            return base.Channel.ValidateEmailAsync(email);
+        public System.Threading.Tasks.Task<bool> IsEmailAvailableAsync(string email) {
+            return base.Channel.IsEmailAvailableAsync(email);
         }
         
         public bool IsUsernameAvailable(string username) {
@@ -554,12 +561,20 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.IsUsernameAvailableAsync(username);
         }
         
-        public bool SendEmail(string email, int playerId) {
-            return base.Channel.SendEmail(email, playerId);
+        public bool SendSignupEmail(string email, string token) {
+            return base.Channel.SendSignupEmail(email, token);
         }
         
-        public System.Threading.Tasks.Task<bool> SendEmailAsync(string email, int playerId) {
-            return base.Channel.SendEmailAsync(email, playerId);
+        public System.Threading.Tasks.Task<bool> SendSignupEmailAsync(string email, string token) {
+            return base.Channel.SendSignupEmailAsync(email, token);
+        }
+        
+        public bool SendVerificationEmail(string email, string token) {
+            return base.Channel.SendVerificationEmail(email, token);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SendVerificationEmailAsync(string email, string token) {
+            return base.Channel.SendVerificationEmailAsync(email, token);
         }
         
         public int SignUp(Forbbiden.Client.ProfileManager.Player player) {

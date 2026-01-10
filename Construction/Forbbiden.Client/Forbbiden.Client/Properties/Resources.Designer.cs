@@ -19,7 +19,7 @@ namespace Forbbiden.Client.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -313,6 +313,15 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while downloading an Avatar.
+        /// </summary>
+        public static string error_avatar_download {
+            get {
+                return ResourceManager.GetString("error_avatar_download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading matches: {0}.
         /// </summary>
         public static string error_loading_matches {
@@ -322,11 +331,29 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was no response from the server, please try again later.
+        /// </summary>
+        public static string error_timeout {
+            get {
+                return ResourceManager.GetString("error_timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string error_title {
             get {
                 return ResourceManager.GetString("error_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while updating the database, changes were not registered.
+        /// </summary>
+        public static string error_update_database {
+            get {
+                return ResourceManager.GetString("error_update_database", resourceCulture);
             }
         }
         
@@ -601,11 +628,128 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The email you typed has multiple @, verify the format please.
+        /// </summary>
+        public static string invalid_email_contains_multiple_at {
+            get {
+                return ResourceManager.GetString("invalid_email_contains_multiple_at", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email is already registered, you cant&apos; use that one.
+        /// </summary>
+        public static string invalid_email_not_available {
+            get {
+                return ResourceManager.GetString("invalid_email_not_available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email you typed doesn&apos;t has an @, verify the format please.
+        /// </summary>
+        public static string invalid_email_not_contains_at {
+            get {
+                return ResourceManager.GetString("invalid_email_not_contains_at", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email you typed doesn&apos;t has an extension, verify the format please.
+        /// </summary>
+        public static string invalid_email_not_contains_extension {
+            get {
+                return ResourceManager.GetString("invalid_email_not_contains_extension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email field is empty. You have to type an email.
+        /// </summary>
+        public static string invalid_empty_email {
+            get {
+                return ResourceManager.GetString("invalid_empty_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user name can&apos;t be empty.
+        /// </summary>
+        public static string invalid_empty_username {
+            get {
+                return ResourceManager.GetString("invalid_empty_username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Input.
         /// </summary>
         public static string invalid_input {
             get {
                 return ResourceManager.GetString("invalid_input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password field is empty. You have to type a password.
+        /// </summary>
+        public static string invalid_password_empty {
+            get {
+                return ResourceManager.GetString("invalid_password_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password must have at least one lowercase letter.
+        /// </summary>
+        public static string invalid_password_missing_lowercase {
+            get {
+                return ResourceManager.GetString("invalid_password_missing_lowercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password must have at least one number.
+        /// </summary>
+        public static string invalid_password_missing_number {
+            get {
+                return ResourceManager.GetString("invalid_password_missing_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password must have at least one special character (@, _, -).
+        /// </summary>
+        public static string invalid_password_missing_special_character {
+            get {
+                return ResourceManager.GetString("invalid_password_missing_special_character", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password must have at least one uppercase letter.
+        /// </summary>
+        public static string invalid_password_missing_uppercase {
+            get {
+                return ResourceManager.GetString("invalid_password_missing_uppercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password is too short, it has to be at least 8 characters long.
+        /// </summary>
+        public static string invalid_password_too_short {
+            get {
+                return ResourceManager.GetString("invalid_password_too_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user name can&apos;t contain white spaces ( ).
+        /// </summary>
+        public static string invalid_username_contains_whitespace {
+            get {
+                return ResourceManager.GetString("invalid_username_contains_whitespace", resourceCulture);
             }
         }
         
@@ -1546,15 +1690,6 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The user name can&apos;t be empty.
-        /// </summary>
-        public static string signup_empty_username {
-            get {
-                return ResourceManager.GetString("signup_empty_username", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to There was an error while signing up, try again later.
         /// </summary>
         public static string signup_error {
@@ -1564,29 +1699,11 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The email is not valid or is already registered.
-        /// </summary>
-        public static string signup_invalid_email {
-            get {
-                return ResourceManager.GetString("signup_invalid_email", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Password must have at least 8 characters, one upper case, one lower case, one number and one special character (@, &amp;, _).
         /// </summary>
         public static string signup_invalid_password {
             get {
                 return ResourceManager.GetString("signup_invalid_password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The user name can&apos;t contain white spaces ( ).
-        /// </summary>
-        public static string signup_space_username {
-            get {
-                return ResourceManager.GetString("signup_space_username", resourceCulture);
             }
         }
         
@@ -1749,15 +1866,6 @@ namespace Forbbiden.Client.Properties {
         public static string verify {
             get {
                 return ResourceManager.GetString("verify", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Verify Account.
-        /// </summary>
-        public static string verify_account {
-            get {
-                return ResourceManager.GetString("verify_account", resourceCulture);
             }
         }
         

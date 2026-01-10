@@ -1,10 +1,11 @@
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
+using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
+using Forbbiden.Client.TokenManager;
 using Forbbiden.Client.view.info;
-using log4net;
-using System;
-using System.ServiceModel;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,47 +19,12 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class SignupPage : Page
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(SignupPage));
-        private const int PasswordMinLength = 7;
-        private readonly ProfileManagerClient Client;
+        private readonly ProfileRepository ProfileRepo;
         public SignupPage()
         {
             InitializeComponent();
 
-            Client = new ProfileManagerClient();
-        }
-
-        private void OpenNotification(string title, string message)
-        {
-            var notificationWindow = new NotificationWindow(title, message)
-            {
-                Owner = Window.GetWindow(this)
-            };
-            notificationWindow.ShowDialog();
-        }
-
-        private static bool ValidatePassword(string password)
-        {
-            if (!string.IsNullOrWhiteSpace(password) && password.Length > PasswordMinLength)
-            {
-                var passwordUpperCase = Regex.IsMatch(password, @"[A-Z]", 
-                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
-                if (!passwordUpperCase) return false;
-                var passwordLowerCase = Regex.IsMatch(password, @"[a-z]", 
-                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
-                if (!passwordLowerCase) return false;
-                var passwordNumbers = Regex.IsMatch(password, @"[0-9]", 
-                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
-                if (!passwordNumbers) return false;
-                var passwordSpecialChar = Regex.IsMatch(password, @"[\W_]", 
-                    RegexOptions.None, TimeSpan.FromMilliseconds(100));
-                if (!passwordSpecialChar) return false;
-            }
-            else
-            {
-                return false;
-            }
-            return true;
+            ProfileRepo = new ProfileRepository();
         }
 
         private static void TurnTextBlockRed(TextBlock textBlock)
@@ -73,68 +39,73 @@ namespace Forbbiden.Client
             txtBlockPassword.Foreground = Brushes.White;
         }
 
-        private async Task<bool> ValidatePlayer(Player player)
+        private bool ValidatePlayerData(Player player)
         {
             bool isValid = true;
-            string title = Properties.Resources.invalid_input;
 
-            if (!ValidatePassword(player.PlayerPassword))
+            var usernameValidationResults = ValidationUtils.ValidateUsername(player.PlayerUsername);
+            if (!usernameValidationResults.IsValid)
             {
-                string message = Properties.Resources.signup_invalid_password;
-                OpenNotification(title, message);
-                isValid = false;
-                TurnTextBlockRed(txtBkPassword);
-            }
-            if (string.IsNullOrWhiteSpace(player.PlayerUsername))
-            {
-                string message = Properties.Resources.signup_empty_username;
-                OpenNotification(title, message);
-                isValid = false;
                 TurnTextBlockRed(txtBkUsername);
-            }
-            if (player.PlayerUsername.Contains(" "))
-            {
-                string message = Properties.Resources.signup_space_username;
-                OpenNotification(title, message);
+                ErrorsNotificationManager.ShowUsernameValidationErrors(
+                    usernameValidationResults.Errors, Window.GetWindow(this));
                 isValid = false;
-                TurnTextBlockRed(txtBkUsername);
             }
-            try
+
+            var emailValidationResults = ValidationUtils.ValidateEmail(player.PlayerEmail);
+            if (!emailValidationResults.IsValid)
             {
-                if (!await Client.IsUsernameAvailableAsync(player.PlayerUsername))
-                {
-                    string message = Properties.Resources.signup_username_already_used;
-                    OpenNotification(title, message);
-                    isValid = false;
-                    TurnTextBlockRed(txtBkUsername);
-                }
-            }
-            catch (FaultException<Fault> ex)
-            {
-                string classMethod = "SignupPage.ValidatePlayer";
-                Log.Error(classMethod, ex);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
-            }
-            
-            if (!await Client.ValidateEmailAsync(player.PlayerEmail))
-            {
-                string message = Properties.Resources.signup_invalid_email;
-                OpenNotification(title, message);
-                isValid = false;
                 TurnTextBlockRed(txtBkEmail);
+                ErrorsNotificationManager.ShowEmailValidationErrors(
+                    emailValidationResults.Errors, Window.GetWindow(this));
+                isValid = false;
             }
-           
+
+            var passwordValidationResults = ValidationUtils.ValidatePassword(player.PlayerPassword);
+            if (!passwordValidationResults.IsValid)
+            {
+                TurnTextBlockRed(txtBkPassword);
+                ErrorsNotificationManager.ShowPasswordValidationErrors(
+                    passwordValidationResults.Errors, Window.GetWindow(this));
+                isValid = false;
+            }
+
             return isValid;
         }
 
-        private async Task VerifyPlayer(string username)
+        private async Task<bool> ValidatePlayer(Player player)
         {
-            var player = await Client.GetPlayerByUsernameAsync(username, false);
-            var verificationWindow = new VerificationWindow(player.PlayerId)
+            bool isValid = ValidatePlayerData(player);
+            string title = Properties.Resources.invalid_input;
+
+            if (isValid)
             {
-                Owner = Window.GetWindow(this)
-            };
-            verificationWindow.ShowDialog();
+                try
+                {
+                    if (!await ProfileRepo.IsUsernameAvailable(player.PlayerUsername))
+                    {
+                        string message = Properties.Resources.signup_username_already_used;
+                        ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                        TurnTextBlockRed(txtBkUsername);
+                        isValid = false;
+                    }
+
+                    if (!await ProfileRepo.IsEmailAvailable(player.PlayerEmail))
+                    {
+                        string message = Properties.Resources.invalid_email_not_available;
+                        ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                        TurnTextBlockRed(txtBkEmail);
+                        isValid = false;
+                    }
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
+            }
+
+
+            return isValid;
         }
 
         private async void SignupButton_Click(object sender, RoutedEventArgs e)
@@ -151,31 +122,29 @@ namespace Forbbiden.Client
             if (await ValidatePlayer(player))
             {
                 player.PlayerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
-                int playerId = await Client.SignUpAsync(player);
-                
+                int playerId = -1;
+                try
+                {
+                    playerId = await ProfileRepo.SignupPlayer(player);
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
+
                 if (playerId != -1)
                 {
-                    if (await Client.SendEmailAsync(player.PlayerEmail, playerId))
-                    {
-                        string title = Properties.Resources.successful_signup;
-                        string message = Properties.Resources.successful_signup_message;
-                        OpenNotification(title, message);
-                        await VerifyPlayer(player.PlayerUsername);
-                        NavigationService?.Navigate(new LoginPage());
-                    }
-                    else
-                    {
-                        string title = Properties.Resources.error;
-                        string message = Properties.Resources.send_email_error;
-                        OpenNotification(title, message);
-                    }
-                    
+                    string title = Properties.Resources.successful_signup;
+                    string message = Properties.Resources.successful_signup_message;
+                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                    NavigationService?.Navigate(new LoginPage());
                 }
                 else
                 {
                     string title = Properties.Resources.error;
                     string message = Properties.Resources.signup_error;
-                    OpenNotification(title, message);
+                    ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                    _ = ProfileRepo.DeletePlayer(player.PlayerUsername);
                 }
             }
             else

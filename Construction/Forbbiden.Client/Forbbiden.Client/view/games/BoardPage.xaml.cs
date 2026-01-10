@@ -1,10 +1,12 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.Controls;
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.logic.board;
 using Forbbiden.Client.logic.board.states;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.model;
-using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using Forbbiden.Client.view.info;
 using log4net;
 using System;
@@ -112,7 +114,7 @@ namespace Forbbiden.Client.view.games
             mainGrid.Children.Add(BoardControl);
         }
 
-        private void SetPlayersAvatars(List<MatchManager.PlayerInfo> players)
+        private async void SetPlayersAvatars(List<MatchManager.PlayerInfo> players)
         {
             var beginningTiles = MatchLogic.GetAvatarsBeginningTiles(BoardControl, players.Count);
 
@@ -121,8 +123,15 @@ namespace Forbbiden.Client.view.games
 
             for (int i = 1; i < players.Count; i++)
             {
-                var player = new ProfileManagerClient().GetPlayerById(players[i].PlayerId, false);
-                BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
+                try
+                {
+                    var player = await new ProfileRepository().GetPlayerById(players[i].PlayerId, false);
+                    BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
+                }
+                catch (ViewException ex)
+                {
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                }
             }
         }
 

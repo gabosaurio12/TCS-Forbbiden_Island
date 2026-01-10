@@ -9,7 +9,7 @@ namespace Forbbiden.Contracts
     {
         [OperationContract]
         [FaultContract(typeof(Fault))]
-        bool ValidateEmail(string email);
+        bool IsEmailAvailable(string email);
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
@@ -17,7 +17,11 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
-        bool SendEmail(string email, int playerId);
+        bool SendSignupEmail(string email, string token);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
+        bool SendVerificationEmail(string email, string token);
 
         [OperationContract]
         [FaultContract(typeof(Fault))]

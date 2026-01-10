@@ -15,6 +15,67 @@ namespace Forbbiden.Client.FriendsManager {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Fault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FriendRequest", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
     [System.SerializableAttribute()]
     public partial class FriendRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -438,36 +499,42 @@ namespace Forbbiden.Client.FriendsManager {
     public interface IFriendsManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/SendFriendRequestResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/SendFriendRequestFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool SendFriendRequest(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/SendFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> SendFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/AcceptFriendRequestResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/AcceptFriendRequestFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool AcceptFriendRequest(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/AcceptFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> AcceptFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/CancelFriendRequestFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool CancelFriendRequest(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
         System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteFriendResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/DeleteFriendFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool DeleteFriend(string friendUsername, string playerUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteFriendResponse")]
         System.Threading.Tasks.Task<bool> DeleteFriendAsync(string friendUsername, string playerUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/GetFriendRequestsFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.FriendsManager.FriendRequest[] GetFriendRequests(string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.FriendsManager.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/GetFriendsByIDFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.FriendsManager.Friendship[] GetFriendsByID(int playerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]

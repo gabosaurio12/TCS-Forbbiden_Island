@@ -1,9 +1,10 @@
-﻿using Forbbiden.Client.logic;
+﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using Forbbiden.Client.TokenManager;
-using log4net;
 using System;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,20 +15,20 @@ namespace Forbbiden.Client.view.info
     /// </summary>
     public partial class VerificationWindow : Window
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(VerificationWindow));
-
         private readonly int PlayerID;
         public event Action OnVerified;
+        private bool IsPasswordChange;
 
         public VerificationWindow()
         {
             InitializeComponent();
         }
 
-        public VerificationWindow(int playerId)
+        public VerificationWindow(int playerId, bool isPasswordChange)
         {
             InitializeComponent();
             PlayerID = playerId;
+            IsPasswordChange = isPasswordChange;
         }
 
         private void OpenNotification(string title, string message)
@@ -52,18 +53,16 @@ namespace Forbbiden.Client.view.info
 
         private async Task VerifyPlayer()
         {
-            var profileManager = new ProfileManagerClient();
-
             Player player = new Player();
+            var profileRepository = new ProfileRepository();
 
             try
             {
-                player = await profileManager.GetPlayerByIdAsync(PlayerID, false);
+                player = await profileRepository.GetPlayerById(PlayerID, false);
             }
-            catch (FaultException<Fault> ex)
+            catch (ViewException ex)
             {
-                Log.Error("VerificationWindow.VerifyPlayer", ex);
-                ViewUtils.ShowPullError(GetWindow(this));
+                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
             if (player.PlayerId != -1)
             {
@@ -71,12 +70,11 @@ namespace Forbbiden.Client.view.info
                 bool isUpdated = false;
                 try
                 {
-                    isUpdated = await profileManager.UpdatePlayerAsync(player);
+                    isUpdated = await profileRepository.UpdatePlayerProfile(player);
                 }
-                catch (FaultException<Fault> ex)
+                catch (ViewException ex)
                 {
-                    Log.Error("VerificationWindow.VerifyPlayer", ex);
-                    ViewUtils.ShowPushError(GetWindow(this));
+                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
                 if (isUpdated)
                 {
@@ -103,22 +101,21 @@ namespace Forbbiden.Client.view.info
         private async Task VerifyToken()
         {
             string token = GetToken();
-            if (!String.IsNullOrEmpty(token))
+            if (!String.IsNullOrWhiteSpace(token))
             {
                 var tokenManager = new TokenManagerClient();
-                bool isToken = false;                
-                try
-                {
-                    isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
-                }
-                catch (FaultException<Fault> ex)
-                {
-                    Log.Error("VerificationWindow.VerifyToken", ex);
-                    ViewUtils.ShowPullError(GetWindow(this));
-                }
+                bool isToken = await tokenManager.VerifyTokenAsync(token, PlayerID);
+               
                 if (isToken)
                 {
-                    _ = VerifyPlayer();
+                    if (IsPasswordChange)
+                    {
+                        DialogResult = true;
+                    }
+                    else
+                    {
+                        _ = VerifyPlayer();
+                    }
                 }
                 else
                 {

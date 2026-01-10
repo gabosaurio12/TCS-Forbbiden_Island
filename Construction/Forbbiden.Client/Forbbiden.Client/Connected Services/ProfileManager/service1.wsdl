@@ -17,13 +17,13 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IProfileManager_ValidateEmail_InputMessage">
-    <wsdl:part name="parameters" element="tns:ValidateEmail" />
+  <wsdl:message name="IProfileManager_IsEmailAvailable_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsEmailAvailable" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_ValidateEmail_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ValidateEmailResponse" />
+  <wsdl:message name="IProfileManager_IsEmailAvailable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsEmailAvailableResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_ValidateEmail_FaultFault_FaultMessage">
+  <wsdl:message name="IProfileManager_IsEmailAvailable_FaultFault_FaultMessage">
     <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q1:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_IsUsernameAvailable_InputMessage">
@@ -35,14 +35,23 @@
   <wsdl:message name="IProfileManager_IsUsernameAvailable_FaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q2:Fault" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_SendEmail_InputMessage">
-    <wsdl:part name="parameters" element="tns:SendEmail" />
+  <wsdl:message name="IProfileManager_SendSignupEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendSignupEmail" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_SendEmail_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SendEmailResponse" />
+  <wsdl:message name="IProfileManager_SendSignupEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendSignupEmailResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_SendEmail_FaultFault_FaultMessage">
+  <wsdl:message name="IProfileManager_SendSignupEmail_FaultFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:Fault" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_SendVerificationEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendVerificationEmail" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_SendVerificationEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendVerificationEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_SendVerificationEmail_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_SignUp_InputMessage">
     <wsdl:part name="parameters" element="tns:SignUp" />
@@ -51,7 +60,7 @@
     <wsdl:part name="parameters" element="tns:SignUpResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_SignUp_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_Login_InputMessage">
     <wsdl:part name="parameters" element="tns:Login" />
@@ -60,7 +69,7 @@
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_Login_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_GetPlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerByUsername" />
@@ -69,7 +78,7 @@
     <wsdl:part name="parameters" element="tns:GetPlayerByUsernameResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_GetPlayerByUsername_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_GetPlayerById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerById" />
@@ -78,7 +87,7 @@
     <wsdl:part name="parameters" element="tns:GetPlayerByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_GetPlayerById_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_UpdatePlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePlayer" />
@@ -87,7 +96,7 @@
     <wsdl:part name="parameters" element="tns:UpdatePlayerResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_UpdatePlayer_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:Fault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_DeletePlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:DeletePlayerByUsername" />
@@ -96,7 +105,7 @@
     <wsdl:part name="parameters" element="tns:DeletePlayerByUsernameResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_DeletePlayerByUsername_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_ConnectPlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:ConnectPlayerByUsername" />
@@ -105,7 +114,7 @@
     <wsdl:part name="parameters" element="tns:ConnectPlayerByUsernameResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_ConnectPlayerByUsername_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_DisconnectPlayerByUsername_InputMessage">
     <wsdl:part name="parameters" element="tns:DisconnectPlayerByUsername" />
@@ -114,7 +123,7 @@
     <wsdl:part name="parameters" element="tns:DisconnectPlayerByUsernameResponse" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_DisconnectPlayerByUsername_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q12:Fault" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_UploadAvatar_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadAvatar" />
@@ -129,20 +138,25 @@
     <wsdl:part name="parameters" element="tns:GetAvatarResponse" />
   </wsdl:message>
   <wsdl:portType name="IProfileManager">
-    <wsdl:operation name="ValidateEmail">
-      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmail" message="tns:IProfileManager_ValidateEmail_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmailResponse" message="tns:IProfileManager_ValidateEmail_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/ValidateEmailFaultFault" name="FaultFault" message="tns:IProfileManager_ValidateEmail_FaultFault_FaultMessage" />
+    <wsdl:operation name="IsEmailAvailable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/IsEmailAvailable" message="tns:IProfileManager_IsEmailAvailable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/IsEmailAvailableResponse" message="tns:IProfileManager_IsEmailAvailable_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/IsEmailAvailableFaultFault" name="FaultFault" message="tns:IProfileManager_IsEmailAvailable_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="IsUsernameAvailable">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailable" message="tns:IProfileManager_IsUsernameAvailable_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailableResponse" message="tns:IProfileManager_IsUsernameAvailable_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/IsUsernameAvailableFaultFault" name="FaultFault" message="tns:IProfileManager_IsUsernameAvailable_FaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendEmail">
-      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/SendEmail" message="tns:IProfileManager_SendEmail_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/SendEmailResponse" message="tns:IProfileManager_SendEmail_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/SendEmailFaultFault" name="FaultFault" message="tns:IProfileManager_SendEmail_FaultFault_FaultMessage" />
+    <wsdl:operation name="SendSignupEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/SendSignupEmail" message="tns:IProfileManager_SendSignupEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/SendSignupEmailResponse" message="tns:IProfileManager_SendSignupEmail_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/SendSignupEmailFaultFault" name="FaultFault" message="tns:IProfileManager_SendSignupEmail_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendVerificationEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/SendVerificationEmail" message="tns:IProfileManager_SendVerificationEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/SendVerificationEmailResponse" message="tns:IProfileManager_SendVerificationEmail_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/SendVerificationEmailFaultFault" name="FaultFault" message="tns:IProfileManager_SendVerificationEmail_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SignUp">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/SignUp" message="tns:IProfileManager_SignUp_InputMessage" />
@@ -197,8 +211,8 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IProfileManager_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="ValidateEmail">
-      <soap12:operation soapAction="http://tempuri.org/IProfileManager/ValidateEmail" style="document" />
+    <wsdl:operation name="IsEmailAvailable">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/IsEmailAvailable" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -221,8 +235,20 @@
         <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="SendEmail">
-      <soap12:operation soapAction="http://tempuri.org/IProfileManager/SendEmail" style="document" />
+    <wsdl:operation name="SendSignupEmail">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/SendSignupEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SendVerificationEmail">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/SendVerificationEmail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

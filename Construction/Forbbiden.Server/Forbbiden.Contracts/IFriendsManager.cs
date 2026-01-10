@@ -8,16 +8,22 @@ namespace Forbbiden.Contracts
     public interface IFriendsManager
     {
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool SendFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool AcceptFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool CancelFriendRequest(string senderUsername, string receiverUsername);
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool DeleteFriend(string friendUsername, string playerUsername);
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<FriendRequest> GetFriendRequests(string receiverUsername);
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Friendship> GetFriendsByID(int playerID);
     }
 

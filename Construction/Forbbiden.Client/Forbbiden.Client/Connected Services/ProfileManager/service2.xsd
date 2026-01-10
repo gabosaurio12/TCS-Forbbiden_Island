@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
-  <xs:element name="ValidateEmail">
+  <xs:element name="IsEmailAvailable">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ValidateEmailResponse">
+  <xs:element name="IsEmailAvailableResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="ValidateEmailResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsEmailAvailableResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -29,18 +29,33 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendEmail">
+  <xs:element name="SendSignupEmail">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="playerId" type="xs:int" />
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendEmailResponse">
+  <xs:element name="SendSignupEmailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="SendEmailResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="SendSignupEmailResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendVerificationEmail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendVerificationEmailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendVerificationEmailResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

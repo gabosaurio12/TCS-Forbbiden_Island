@@ -2,7 +2,6 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.Properties;
 using Forbbiden.Client.view.games;
 using log4net;
 using System;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;

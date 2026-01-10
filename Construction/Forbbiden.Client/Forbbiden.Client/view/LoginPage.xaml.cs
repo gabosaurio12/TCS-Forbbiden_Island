@@ -1,9 +1,11 @@
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using log4net;
 using System;
 using System.IO;
-using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -62,20 +64,15 @@ namespace Forbbiden.Client
 
             Player player = GetPlayerInput();
 
+            var repository = new ProfileRepository();
             try
             {
-                var client = new ProfileManagerClient();
-                player = await client.LoginAsync(player.PlayerUsername, player.PlayerPassword);
+                player = await repository.LoginPlayer(player.PlayerUsername, player.PlayerPassword);
             }
-            catch (FaultException<Fault> fault)
+            catch (ViewException ex)
             {
-                Log.Error("LoginPage.BtnLogin_Click", fault);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
-            }
-            catch (TimeoutException ex)
-            {
-                Log.Error("LoginPage.BtnLogic_Click", ex);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
+                ErrorsNotificationManager.ShowViewExceptionNotification(
+                    ex, ViewUtils.FindParent<Window>(this));
             }
 
             if (player.PlayerId > 0)
@@ -101,7 +98,7 @@ namespace Forbbiden.Client
 
         private void TogglePassword_Click(object sender, RoutedEventArgs e)
         {
-            string projectPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
+            string projectPath = ViewUtils.GetProjectDir();
 
             if (!PasswordVisible)
             {
