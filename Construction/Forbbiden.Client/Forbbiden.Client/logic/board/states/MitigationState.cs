@@ -1,5 +1,7 @@
 ﻿using Forbbiden.Client.BoardManager;
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using log4net;
 using System.ServiceModel;
 using System.Windows;
@@ -24,19 +26,18 @@ namespace Forbbiden.Client.Logic.Board.States
             Context.Board.ShowInteractiveTiles(tiles);
         }
 
-        private void DiscardMitigationCard()
+        private async void DiscardMitigationCard()
         {
             string path = "mitigation.png";
             Card card;
             try
             {
-                card = new BoardManagerClient().GetCard(path);
+                card = await BoardRepository.GetCard(path);
             }
-            catch (FaultException<Fault> ex)
+            catch (ViewException ex)
             {
-                string methodClass = "MitigationState.DiscardMitigationCard";
-                Log.Error(methodClass, ex);
-                ViewUtils.ShowPullError(Window.GetWindow(Context.Board));
+                ExceptionViewManager.ShowViewExceptionNotification(
+                    ex, Window.GetWindow(Context.Board));
                 return;
             }
 

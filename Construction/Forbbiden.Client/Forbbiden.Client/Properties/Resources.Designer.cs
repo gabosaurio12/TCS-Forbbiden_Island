@@ -322,6 +322,15 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while communicating with the server, try again later please.
+        /// </summary>
+        public static string error_communication {
+            get {
+                return ResourceManager.GetString("error_communication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading matches: {0}.
         /// </summary>
         public static string error_loading_matches {

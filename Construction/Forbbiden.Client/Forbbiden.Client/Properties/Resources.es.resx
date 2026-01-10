@@ -768,4 +768,7 @@
   <data name="error_sending_callback" xml:space="preserve">
     <value>Hubo un error al sincronizar el juego con el servidor u otros jugadores</value>
   </data>
+  <data name="error_communication" xml:space="preserve">
+    <value>Hubo un error mientras al comunicarse con el servidor, intenta más tarde por favor</value>
+  </data>
 </root>

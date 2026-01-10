@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.ServiceModel;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Forbbiden.Server.logic
@@ -175,14 +176,17 @@ namespace Forbbiden.Server.logic
 
                 if (exists)
                 {
+                    playerId = -2;
                     return playerId;
                 }
 
                 string avatar = Path.Combine(DefaultAvatarPath);
+                string normalizedPassword = player.PlayerPassword.Normalize(NormalizationForm.FormC);
+                string password = BCrypt.Net.BCrypt.HashPassword(normalizedPassword);
                 Model.Player newPlayer = new Model.Player
                 {
                     player_username = player.PlayerUsername,
-                    player_password = player.PlayerPassword,
+                    player_password = password,
                     player_email = player.PlayerEmail,
                     player_name = "",
                     player_avatar = avatar,
@@ -193,6 +197,7 @@ namespace Forbbiden.Server.logic
                 {
                     db.Player.Add(newPlayer);
                     db.SaveChanges();
+
                     playerId = newPlayer.player_id;
                     Log.Info("New player signed up");
                 }
@@ -223,7 +228,9 @@ namespace Forbbiden.Server.logic
 
                     if (searchPlayer != null)
                     {
-                        if (BCrypt.Net.BCrypt.Verify(password, searchPlayer.player_password))
+                        string normalizedPassword = password.Normalize(NormalizationForm.FormC);
+                        bool passwordIsCorrect = BCrypt.Net.BCrypt.Verify(normalizedPassword, searchPlayer.player_password);
+                        if (passwordIsCorrect)
                         {
                             player = SetPlayer(searchPlayer, false);
                         }
@@ -313,22 +320,25 @@ namespace Forbbiden.Server.logic
         public Contracts.Player GetPlayerById(int playerId, bool includeFriends = true)
         {
             Log.Info("Retrieving player by ID");
-
             Contracts.Player player = null;
-            using (var db = new Forbidden_FEIEntities(ConnectionString))
+
+            if (playerId > 0)
             {
-                try
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
                 {
-                    var playerResult = db.Player.Find(playerId);
-                    if (playerResult != null)
+                    try
                     {
-                        player = SetPlayer(playerResult, includeFriends);
+                        var playerResult = db.Player.FirstOrDefault(p => p.player_id == playerId);
+                        if (playerResult != null)
+                        {
+                            player = SetPlayer(playerResult, includeFriends);
+                        }
                     }
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.GetPlayerById ";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    catch (EntityException ex)
+                    {
+                        string classMethod = "ProfileManager.GetPlayerById ";
+                        ExceptionHandler.HandleEntityException(ex, classMethod);
+                    }
                 }
             }
 

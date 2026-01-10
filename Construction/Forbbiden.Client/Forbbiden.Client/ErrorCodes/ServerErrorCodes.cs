@@ -9,6 +9,7 @@ namespace Forbbiden.Client.ErrorCodes
         updatingDataError,
         sendEmailError,
         avatarDownloadError,
-        sendingCallbackError
+        sendingCallbackError,
+        communicationError
     }
 }

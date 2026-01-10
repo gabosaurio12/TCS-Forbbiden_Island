@@ -182,7 +182,7 @@
     <Compile Include="Model\ClientSession.cs" />
     <Compile Include="Logic\FriendsNotificationSingleton.cs" />
     <Compile Include="Logic\GameServiceCallback.cs" />
-    <Compile Include="Logic\ErrorsNotificationManager.cs" />
+    <Compile Include="Logic\ExceptionViewManager.cs" />
     <Compile Include="Logic\HostLogic.cs" />
     <Compile Include="Logic\MatchLogic.cs" />
     <Compile Include="Logic\MatchNotificationsSingleton.cs" />
@@ -192,7 +192,6 @@
     <Compile Include="Logic\ViewUtils.cs" />
     <Compile Include="Model\BoardPageDto.cs" />
     <Compile Include="Model\CardWindowSettings.cs" />
-    <Compile Include="Model\TileDto.cs" />
     <Compile Include="ErrorCodes\ValidationErrorCodes.cs" />
     <Compile Include="Model\ValidationResults.cs" />
     <Compile Include="Properties\PlayerSettings.Designer.cs">
@@ -210,6 +209,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\BoardRepository.cs" />
     <Compile Include="Repositories\FriendsRepository.cs" />
     <Compile Include="Repositories\ProfileRepository.cs" />
     <Compile Include="Repositories\TokenRepository.cs" />
@@ -315,7 +315,13 @@
     <None Include="Connected Services\BoardManager\Arrays11.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Board.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Card.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Tile.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\BoardManager\Forbbiden.Contracts1.xsd">

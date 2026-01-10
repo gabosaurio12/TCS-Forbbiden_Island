@@ -128,12 +128,17 @@ namespace Forbbiden.Client.Repositories
             catch (FaultException<Fault> ex)
             {
                 Log.Error("ProfileRepository.LoginPlayer", ex);
-                throw new ViewException(ServerErrorCodes.pullingDataError);
+                throw new ViewException(ServerErrorCodes.pushingDataError);
             }
             catch (TimeoutException ex)
             {
                 Log.Error("ProfileRepository.LoginPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.LoginPlayer", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return player;

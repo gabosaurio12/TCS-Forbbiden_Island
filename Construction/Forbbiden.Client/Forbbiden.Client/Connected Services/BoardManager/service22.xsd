@@ -45,6 +45,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetBoardTiles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="matchId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBoardTilesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetBoardTilesResult" nillable="true" type="q5:ArrayOfTile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetTreasureCards">
     <xs:complexType>
       <xs:sequence />
@@ -53,7 +67,7 @@
   <xs:element name="GetTreasureCardsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetTreasureCardsResult" nillable="true" type="q5:ArrayOfCard" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetTreasureCardsResult" nillable="true" type="q6:ArrayOfCard" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -65,7 +79,7 @@
   <xs:element name="GetFloodCardsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetFloodCardsResult" nillable="true" type="q6:ArrayOfCard" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetFloodCardsResult" nillable="true" type="q7:ArrayOfCard" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -79,7 +93,7 @@
   <xs:element name="GetCardResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetCardResult" nillable="true" type="q7:Card" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetCardResult" nillable="true" type="q8:Card" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -93,7 +107,7 @@
   <xs:element name="GetCardByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetCardByIdResult" nillable="true" type="q8:Card" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetCardByIdResult" nillable="true" type="q9:Card" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -101,7 +115,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="boardJson" nillable="true" type="xs:string" />
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="usernames" nillable="true" type="q9:ArrayOfstring" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="usernames" nillable="true" type="q10:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -114,7 +128,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="boardJson" nillable="true" type="xs:string" />
-        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="usernames" nillable="true" type="q10:ArrayOfstring" />
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="usernames" nillable="true" type="q11:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -139,7 +153,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="boardJson" nillable="true" type="xs:string" />
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="usernames" nillable="true" type="q11:ArrayOfstring" />
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="usernames" nillable="true" type="q12:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

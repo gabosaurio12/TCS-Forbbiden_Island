@@ -167,6 +167,27 @@ namespace Forbbiden.Server.logic
             return contractTiles;
         }
 
+        public List<Contracts.Tile> GetBoardTiles(int matchId)
+        {
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
+            {
+                List<Contracts.Tile> tiles = new List<Contracts.Tile>();
+                List<Model.Board> board = null;
+                try
+                {
+                    board = db.Board.Where(b => b.match_id == matchId).ToList();
+                    tiles = GetContractsTilesFromBoard(board, db);
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "BoardManager.GetBoardTiles";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+
+                return tiles;
+            }
+        }
+
         public Contracts.Card GetCard(string path)
         {
             using (var db = new Forbidden_FEIEntities(ConnectionString))

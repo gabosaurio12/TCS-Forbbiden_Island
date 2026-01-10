@@ -45,6 +45,15 @@
   <wsdl:message name="IBoardManager_RegisterBoardTiles_FaultFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:Fault" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_GetBoardTiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBoardTiles" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetBoardTiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBoardTilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetBoardTiles_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
+  </wsdl:message>
   <wsdl:message name="IBoardManager_GetTreasureCards_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTreasureCards" />
   </wsdl:message>
@@ -52,7 +61,7 @@
     <wsdl:part name="parameters" element="tns:GetTreasureCardsResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetTreasureCards_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetFloodCards_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFloodCards" />
@@ -61,7 +70,7 @@
     <wsdl:part name="parameters" element="tns:GetFloodCardsResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetFloodCards_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetCard_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCard" />
@@ -70,7 +79,7 @@
     <wsdl:part name="parameters" element="tns:GetCardResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetCard_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetCardById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCardById" />
@@ -79,7 +88,7 @@
     <wsdl:part name="parameters" element="tns:GetCardByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_GetCardById_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallback" />
@@ -88,7 +97,7 @@
     <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:Fault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallback" />
@@ -97,7 +106,7 @@
     <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallback" />
@@ -106,7 +115,7 @@
     <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallback" />
@@ -115,7 +124,7 @@
     <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q12:Fault" />
   </wsdl:message>
   <wsdl:portType name="IBoardManager">
     <wsdl:operation name="CreateBoard">
@@ -132,6 +141,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/RegisterBoardTiles" message="tns:IBoardManager_RegisterBoardTiles_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/RegisterBoardTilesResponse" message="tns:IBoardManager_RegisterBoardTiles_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/RegisterBoardTilesFaultFault" name="FaultFault" message="tns:IBoardManager_RegisterBoardTiles_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBoardTiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetBoardTiles" message="tns:IBoardManager_GetBoardTiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetBoardTilesResponse" message="tns:IBoardManager_GetBoardTiles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetBoardTilesFaultFault" name="FaultFault" message="tns:IBoardManager_GetBoardTiles_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTreasureCards">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetTreasureCards" message="tns:IBoardManager_GetTreasureCards_InputMessage" />
@@ -204,6 +218,18 @@
     </wsdl:operation>
     <wsdl:operation name="RegisterBoardTiles">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/RegisterBoardTiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoardTiles">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetBoardTiles" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

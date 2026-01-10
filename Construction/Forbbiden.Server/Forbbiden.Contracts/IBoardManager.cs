@@ -21,6 +21,10 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
+        List<Tile> GetBoardTiles(int matchId);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Card> GetTreasureCards();
 
         [OperationContract]

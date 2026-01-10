@@ -458,6 +458,13 @@ namespace Forbbiden.Client.BoardManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/RegisterBoardTiles", ReplyAction="http://tempuri.org/IBoardManager/RegisterBoardTilesResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Tile[]> RegisterBoardTilesAsync(Forbbiden.Client.BoardManager.Tile[] boardTiles);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetBoardTiles", ReplyAction="http://tempuri.org/IBoardManager/GetBoardTilesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetBoardTilesFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.BoardManager.Tile[] GetBoardTiles(int matchId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetBoardTiles", ReplyAction="http://tempuri.org/IBoardManager/GetBoardTilesResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Tile[]> GetBoardTilesAsync(int matchId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetTreasureCards", ReplyAction="http://tempuri.org/IBoardManager/GetTreasureCardsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetTreasureCardsFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.BoardManager.Card[] GetTreasureCards();
@@ -564,6 +571,14 @@ namespace Forbbiden.Client.BoardManager {
         
         public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Tile[]> RegisterBoardTilesAsync(Forbbiden.Client.BoardManager.Tile[] boardTiles) {
             return base.Channel.RegisterBoardTilesAsync(boardTiles);
+        }
+        
+        public Forbbiden.Client.BoardManager.Tile[] GetBoardTiles(int matchId) {
+            return base.Channel.GetBoardTiles(matchId);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Tile[]> GetBoardTilesAsync(int matchId) {
+            return base.Channel.GetBoardTilesAsync(matchId);
         }
         
         public Forbbiden.Client.BoardManager.Card[] GetTreasureCards() {

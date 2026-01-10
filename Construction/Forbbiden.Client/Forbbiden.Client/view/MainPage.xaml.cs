@@ -1,7 +1,7 @@
 ﻿using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.FriendsManager;
 using Forbbiden.Client.Logic;
-using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.View;
 using Forbbiden.Client.View.info;
@@ -85,7 +85,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("MainPage.PlayButton_Click", ex);
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -98,7 +98,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("MainPage.SettingsButton_Click", ex);
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -117,7 +117,7 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
                 Log.Error("MainPage.ProfileButton_Click", ex);
             }
         }
@@ -130,7 +130,7 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
                 Log.Error("MainPage.LogInButton_Click", ex);
             }
         }
@@ -145,7 +145,7 @@ namespace Forbbiden.Client
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (isConnected)
@@ -177,7 +177,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("MainPage.ReloadMainPage", ex);
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -203,7 +203,7 @@ namespace Forbbiden.Client
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (updatedPlayer != null && updatedPlayer.PlayerId != -1)
@@ -230,7 +230,7 @@ namespace Forbbiden.Client
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (result)

@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace Forbbiden.Client.Logic
 {
-    internal class ErrorsNotificationManager
+    internal class ExceptionViewManager
     {
 
         public static void ShowUsernameValidationErrors(List<ValidationErrorCodes> errors, Window window)
@@ -144,6 +144,10 @@ namespace Forbbiden.Client.Logic
                     break;
                 case ServerErrorCodes.sendingCallbackError:
                     message = Properties.Resources.error_sending_callback;
+                    ViewUtils.OpenNotificationWindow(title, message, window);
+                    break;
+                case ServerErrorCodes.communicationError:
+                    message = Properties.Resources.error_communication;
                     ViewUtils.OpenNotificationWindow(title, message, window);
                     break;
             }

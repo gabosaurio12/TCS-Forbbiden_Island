@@ -99,6 +99,12 @@ namespace Forbbiden.Client.Controls
             tile.BorderBrush = new SolidColorBrush(Border);
         }
 
+        public void RefreshTile()
+        {
+            RefreshBorderBrush();
+            SetImage(ViewUtils.GetBitmapImage(ImageFileName));
+        }
+
         public void ResetBorder()
         {
             Color color;

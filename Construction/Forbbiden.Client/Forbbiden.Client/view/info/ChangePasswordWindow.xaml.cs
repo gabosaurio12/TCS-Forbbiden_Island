@@ -1,7 +1,6 @@
 ﻿using Forbbiden.Client.Logic;
-using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Validations;
-using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,7 +53,7 @@ namespace Forbbiden.Client.View.info
             if (!validationResults.IsValid)
             {
                 PasswordTxtBx.BorderBrush = Brushes.Red;
-                ErrorsNotificationManager.ShowPasswordValidationErrors(validationResults.Errors, this);
+                ExceptionViewManager.ShowPasswordValidationErrors(validationResults.Errors, this);
             }
             else
             {

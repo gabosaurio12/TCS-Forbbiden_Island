@@ -84,7 +84,7 @@
           <Property Name="player_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="player_name" Type="nvarchar" MaxLength="100" />
           <Property Name="player_username" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="player_password" Type="nchar" MaxLength="64" Nullable="false" />
+          <Property Name="player_password" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="player_email" Type="nvarchar" MaxLength="320" />
           <Property Name="player_avatar" Type="nvarchar" MaxLength="500" />
           <Property Name="player_status" Type="int" />
@@ -129,7 +129,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Friends__friend___02FC7413">
+        <Association Name="fk_friend_id_Friends">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
           <ReferentialConstraint>
@@ -138,210 +138,6 @@
             </Principal>
             <Dependent Role="Friends">
               <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___14270015">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___25518C17">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___367C1819">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___5629CD9C">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___71D1E811">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___03F0984C">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___151B244E">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___2645B050">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___37703C52">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___571DF1D5">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___72C60C4A">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__04E4BC85">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__160F4887">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__2739D489">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__3864608B">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__628FA481">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__73BA3083">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -426,6 +222,30 @@
             </Principal>
             <Dependent Role="Match">
               <PropertyRef Name="host_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_player_id_Friends">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_player_id_token">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="player_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -491,77 +311,9 @@
           <EntitySet Name="Tile" EntityType="Self.Tile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Treasure" EntityType="Self.Treasure" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Friends__friend___02FC7413" Association="Self.FK__Friends__friend___02FC7413">
+          <AssociationSet Name="fk_friend_id_Friends" Association="Self.fk_friend_id_Friends">
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___14270015" Association="Self.FK__Friends__friend___14270015">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___25518C17" Association="Self.FK__Friends__friend___25518C17">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___367C1819" Association="Self.FK__Friends__friend___367C1819">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___5629CD9C" Association="Self.FK__Friends__friend___5629CD9C">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___71D1E811" Association="Self.FK__Friends__friend___71D1E811">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___03F0984C" Association="Self.FK__Friends__player___03F0984C">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___151B244E" Association="Self.FK__Friends__player___151B244E">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___2645B050" Association="Self.FK__Friends__player___2645B050">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___37703C52" Association="Self.FK__Friends__player___37703C52">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___571DF1D5" Association="Self.FK__Friends__player___571DF1D5">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___72C60C4A" Association="Self.FK__Friends__player___72C60C4A">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__04E4BC85" Association="Self.FK__Token__player_id__04E4BC85">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__160F4887" Association="Self.FK__Token__player_id__160F4887">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__2739D489" Association="Self.FK__Token__player_id__2739D489">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__3864608B" Association="Self.FK__Token__player_id__3864608B">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__628FA481" Association="Self.FK__Token__player_id__628FA481">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__73BA3083" Association="Self.FK__Token__player_id__73BA3083">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
           </AssociationSet>
           <AssociationSet Name="FK_match_cards_card" Association="Self.FK_match_cards_card">
             <End Role="Card" EntitySet="Card" />
@@ -590,6 +342,14 @@
           <AssociationSet Name="FK_Matches_Player" Association="Self.FK_Matches_Player">
             <End Role="Player" EntitySet="Player" />
             <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="fk_player_id_Friends" Association="Self.fk_player_id_Friends">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="fk_player_id_token" Association="Self.fk_player_id_token">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Token" EntitySet="Token" />
           </AssociationSet>
           <AssociationSet Name="FK_player_socialmedia" Association="Self.FK_player_socialmedia">
             <End Role="Player" EntitySet="Player" />
@@ -643,18 +403,8 @@
           <Property Name="friend_id" Type="Int32" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Player" Relationship="Self.FK__Friends__friend___02FC7413" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player1" Relationship="Self.FK__Friends__friend___14270015" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player2" Relationship="Self.FK__Friends__friend___25518C17" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player3" Relationship="Self.FK__Friends__friend___367C1819" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player4" Relationship="Self.FK__Friends__friend___5629CD9C" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player5" Relationship="Self.FK__Friends__friend___71D1E811" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player6" Relationship="Self.FK__Friends__player___03F0984C" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player7" Relationship="Self.FK__Friends__player___151B244E" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player8" Relationship="Self.FK__Friends__player___2645B050" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player9" Relationship="Self.FK__Friends__player___37703C52" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player10" Relationship="Self.FK__Friends__player___571DF1D5" FromRole="Friends" ToRole="Player" />
-          <NavigationProperty Name="Player11" Relationship="Self.FK__Friends__player___72C60C4A" FromRole="Friends" ToRole="Player" />
-        </EntityType>
+          <NavigationProperty Name="Player1" Relationship="Self.FK__Friends__player___03F0984C" FromRole="Friends" ToRole="Player" />
+          </EntityType>
         <EntityType Name="Match">
           <Key>
             <PropertyRef Name="match_id" />
@@ -719,31 +469,15 @@
           <Property Name="player_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="player_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="player_username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="player_password" Type="String" MaxLength="64" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="player_password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="player_email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
           <Property Name="player_avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="player_status" Type="Int32" />
           <Property Name="is_verified" Type="Int32" />
           <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__friend___02FC7413" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends1" Relationship="Self.FK__Friends__friend___14270015" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends2" Relationship="Self.FK__Friends__friend___25518C17" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends3" Relationship="Self.FK__Friends__friend___367C1819" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends4" Relationship="Self.FK__Friends__friend___5629CD9C" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends5" Relationship="Self.FK__Friends__friend___71D1E811" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends6" Relationship="Self.FK__Friends__player___03F0984C" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends7" Relationship="Self.FK__Friends__player___151B244E" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends8" Relationship="Self.FK__Friends__player___2645B050" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends9" Relationship="Self.FK__Friends__player___37703C52" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends10" Relationship="Self.FK__Friends__player___571DF1D5" FromRole="Player" ToRole="Friends" />
-          <NavigationProperty Name="Friends11" Relationship="Self.FK__Friends__player___72C60C4A" FromRole="Player" ToRole="Friends" />
           <NavigationProperty Name="Match" Relationship="Self.FK_Matches_Player" FromRole="Player" ToRole="Match" />
           <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
           <NavigationProperty Name="Token" Relationship="Self.FK__Token__player_id__04E4BC85" FromRole="Player" ToRole="Token" />
-          <NavigationProperty Name="Token1" Relationship="Self.FK__Token__player_id__160F4887" FromRole="Player" ToRole="Token" />
-          <NavigationProperty Name="Token2" Relationship="Self.FK__Token__player_id__2739D489" FromRole="Player" ToRole="Token" />
-          <NavigationProperty Name="Token3" Relationship="Self.FK__Token__player_id__3864608B" FromRole="Player" ToRole="Token" />
-          <NavigationProperty Name="Token4" Relationship="Self.FK__Token__player_id__628FA481" FromRole="Player" ToRole="Token" />
-          <NavigationProperty Name="Token5" Relationship="Self.FK__Token__player_id__73BA3083" FromRole="Player" ToRole="Token" />
           <NavigationProperty Name="PlayerSocialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="PlayerSocialmedia" />
         </EntityType>
         <EntityType Name="PlayerSocialmedia">
@@ -780,11 +514,6 @@
           <Property Name="token1" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="player_id" Type="Int32" />
           <NavigationProperty Name="Player" Relationship="Self.FK__Token__player_id__04E4BC85" FromRole="Token" ToRole="Player" />
-          <NavigationProperty Name="Player1" Relationship="Self.FK__Token__player_id__160F4887" FromRole="Token" ToRole="Player" />
-          <NavigationProperty Name="Player2" Relationship="Self.FK__Token__player_id__2739D489" FromRole="Token" ToRole="Player" />
-          <NavigationProperty Name="Player3" Relationship="Self.FK__Token__player_id__3864608B" FromRole="Token" ToRole="Player" />
-          <NavigationProperty Name="Player4" Relationship="Self.FK__Token__player_id__628FA481" FromRole="Token" ToRole="Player" />
-          <NavigationProperty Name="Player5" Relationship="Self.FK__Token__player_id__73BA3083" FromRole="Token" ToRole="Player" />
         </EntityType>
         <EntityType Name="Treasure">
           <Key>
@@ -842,129 +571,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Friends__friend___14270015">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___25518C17">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___367C1819">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___5629CD9C">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__friend___71D1E811">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="friend_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Friends__player___03F0984C">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___151B244E">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___2645B050">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___37703C52">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___571DF1D5">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Friends__player___72C60C4A">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <End Type="Self.Player" Multiplicity="1" Role="Player" />
+          <End Type="Self.Friends" Multiplicity="*" Role="Friends" />
           <ReferentialConstraint>
             <Principal Role="Player">
               <PropertyRef Name="player_id" />
@@ -1058,66 +667,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Token__player_id__160F4887">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__2739D489">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__3864608B">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__628FA481">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Token__player_id__73BA3083">
-          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
-          <End Role="Token" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="Token">
-              <PropertyRef Name="player_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_player_socialmedia">
           <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
           <End Role="PlayerSocialmedia" Type="Self.PlayerSocialmedia" Multiplicity="*" />
@@ -1160,49 +709,9 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___14270015" Association="Self.FK__Friends__friend___14270015">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___25518C17" Association="Self.FK__Friends__friend___25518C17">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___367C1819" Association="Self.FK__Friends__friend___367C1819">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___5629CD9C" Association="Self.FK__Friends__friend___5629CD9C">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__friend___71D1E811" Association="Self.FK__Friends__friend___71D1E811">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
           <AssociationSet Name="FK__Friends__player___03F0984C" Association="Self.FK__Friends__player___03F0984C">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___151B244E" Association="Self.FK__Friends__player___151B244E">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___2645B050" Association="Self.FK__Friends__player___2645B050">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___37703C52" Association="Self.FK__Friends__player___37703C52">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___571DF1D5" Association="Self.FK__Friends__player___571DF1D5">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Friends__player___72C60C4A" Association="Self.FK__Friends__player___72C60C4A">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Friends" EntitySet="Friends" />
+            <End EntitySet="Player" Role="Player" />
+            <End EntitySet="Friends" Role="Friends" />
           </AssociationSet>
           <AssociationSet Name="FK_match_cards_match" Association="Self.FK_match_cards_match">
             <End Role="Match" EntitySet="Match" />
@@ -1229,26 +738,6 @@
             <End Role="match_players" EntitySet="match_players" />
           </AssociationSet>
           <AssociationSet Name="FK__Token__player_id__04E4BC85" Association="Self.FK__Token__player_id__04E4BC85">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__160F4887" Association="Self.FK__Token__player_id__160F4887">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__2739D489" Association="Self.FK__Token__player_id__2739D489">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__3864608B" Association="Self.FK__Token__player_id__3864608B">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__628FA481" Association="Self.FK__Token__player_id__628FA481">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Token" EntitySet="Token" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Token__player_id__73BA3083" Association="Self.FK__Token__player_id__73BA3083">
             <End Role="Player" EntitySet="Player" />
             <End Role="Token" EntitySet="Token" />
           </AssociationSet>

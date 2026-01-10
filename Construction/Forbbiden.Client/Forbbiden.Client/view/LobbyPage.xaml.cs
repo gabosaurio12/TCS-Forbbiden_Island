@@ -46,7 +46,8 @@ namespace Forbbiden.Client.View
 
         private List<string> PreviousPlayers = new List<string>();
 
-        private readonly Dictionary<string, bool> ReadyStates = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, bool> ReadyStates = 
+            new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
         private readonly object ReadyLock = new object();
 
         private readonly string[] SlotUser = new string[4];
@@ -88,8 +89,10 @@ namespace Forbbiden.Client.View
 
             PlayersUpdatedHandler = OnPlayersUpdatedProxy;
             ChatMessageHandler = (p, m) => Dispatcher.BeginInvoke(new Action(() => ShowChatMessageFromServer(p, m)));
-            GameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => AddChatLine($"{Properties.Resources.system_prefix}: {Properties.Resources.countdown_starting}")));
-            ReadyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(new Action(() => OnReadyStateChanged(user, isReady)));
+            GameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => AddChatLine(
+                $"{Properties.Resources.system_prefix}: {Properties.Resources.countdown_starting}")));
+            ReadyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(
+                new Action(() => OnReadyStateChanged(user, isReady)));
             MatchStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => OnMatchStarting()));
 
             if (Callback != null)

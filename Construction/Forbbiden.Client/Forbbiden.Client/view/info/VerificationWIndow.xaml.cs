@@ -1,6 +1,5 @@
 ﻿using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.Logic;
-using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.TokenManager;
@@ -62,7 +61,7 @@ namespace Forbbiden.Client.View.info
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
             if (player.PlayerId != -1)
             {
@@ -74,7 +73,7 @@ namespace Forbbiden.Client.View.info
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
                 if (isUpdated)
                 {

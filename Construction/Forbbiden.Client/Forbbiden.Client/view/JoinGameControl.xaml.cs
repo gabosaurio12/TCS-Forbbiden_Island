@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.View.info;
 using log4net;
 using System;

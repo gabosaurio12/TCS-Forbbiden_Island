@@ -20,15 +20,5 @@ namespace Forbbiden.Server.Model
     
         public virtual Player Player { get; set; }
         public virtual Player Player1 { get; set; }
-        public virtual Player Player2 { get; set; }
-        public virtual Player Player3 { get; set; }
-        public virtual Player Player4 { get; set; }
-        public virtual Player Player5 { get; set; }
-        public virtual Player Player6 { get; set; }
-        public virtual Player Player7 { get; set; }
-        public virtual Player Player8 { get; set; }
-        public virtual Player Player9 { get; set; }
-        public virtual Player Player10 { get; set; }
-        public virtual Player Player11 { get; set; }
     }
 }

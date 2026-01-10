@@ -19,10 +19,5 @@ namespace Forbbiden.Server.Model
         public Nullable<int> player_id { get; set; }
     
         public virtual Player Player { get; set; }
-        public virtual Player Player1 { get; set; }
-        public virtual Player Player2 { get; set; }
-        public virtual Player Player3 { get; set; }
-        public virtual Player Player4 { get; set; }
-        public virtual Player Player5 { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Forbbiden.Client.Logic;
-using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;

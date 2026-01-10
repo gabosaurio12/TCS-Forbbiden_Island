@@ -115,7 +115,7 @@
                         <Button x:Name="logOutButton"
                                 Content="{x:Static language:Resources.logout}"
                                 Style="{StaticResource ActionButtonStyle}"
-                                Visibility="Visible"
+                                Visibility="Collapsed"
                                 Click="LogOutButton_Click"/>
                     </StackPanel>
                 </Border>

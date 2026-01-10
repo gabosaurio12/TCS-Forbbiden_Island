@@ -1,11 +1,8 @@
 ﻿using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.Logic;
-using Forbbiden.Client.Logic;
-using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using log4net;
-using System.Collections.Generic;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,7 +37,7 @@ namespace Forbbiden.Client.View
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
         }
 

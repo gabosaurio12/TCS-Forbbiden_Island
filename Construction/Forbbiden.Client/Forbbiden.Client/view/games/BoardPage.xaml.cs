@@ -4,7 +4,6 @@ using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Board;
 using Forbbiden.Client.Logic.Board.States;
-using Forbbiden.Client.Logic;
 using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.View.info;
@@ -144,7 +143,7 @@ namespace Forbbiden.Client.View.Games
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
             }
         }

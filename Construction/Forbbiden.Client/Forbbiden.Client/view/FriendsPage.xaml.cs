@@ -12,8 +12,8 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.Logic;
 using System.Collections.Generic;
+using Forbbiden.Client.Model;
 
 namespace Forbbiden.Client.View
 {
@@ -74,7 +74,7 @@ namespace Forbbiden.Client.View
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (player.PlayerId > 0)
@@ -107,7 +107,7 @@ namespace Forbbiden.Client.View
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
             if (requests.Count > 0)
             {
@@ -137,7 +137,7 @@ namespace Forbbiden.Client.View
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (isDeleted)
@@ -170,7 +170,7 @@ namespace Forbbiden.Client.View
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (friend.PlayerId > 0)
@@ -247,7 +247,7 @@ namespace Forbbiden.Client.View
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (receiver.PlayerId > 0)
@@ -261,7 +261,7 @@ namespace Forbbiden.Client.View
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
 
                 }
 

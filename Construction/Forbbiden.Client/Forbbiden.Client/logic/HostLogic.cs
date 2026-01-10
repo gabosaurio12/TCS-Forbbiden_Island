@@ -18,7 +18,6 @@ namespace Forbbiden.Client.Logic
         private static BoardPage MatchBoardPage;
         private static List<string> PlayersUsername = new List<string>();
 
-        private static readonly BoardRepository BoardRepo = new BoardRepository();
         private static int PlayersTurnIndex = 0;
 
         protected HostLogic()
@@ -78,12 +77,12 @@ namespace Forbbiden.Client.Logic
                         boardDto, matchInfo.MatchId, usernames);
 
                     string boardJson = CreateCallbackBoardPageJSON(callbackPage);
-                    BoardRepo.SendOnBoardCreatedCallback(boardJson, usernames.ToList());
+                    BoardRepository.SendOnBoardCreatedCallback(boardJson, usernames.ToList());
                 }
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(
+                ExceptionViewManager.ShowViewExceptionNotification(
                     ex, Window.GetWindow(MatchBoardPage));
             }
         }
@@ -96,9 +95,9 @@ namespace Forbbiden.Client.Logic
 
             try
             {
-                var updatedBoardTiles = await BoardRepo.RegisterBoardTiles(boardTiles);
+                var updatedBoardTiles = await BoardRepository.RegisterBoardTiles(boardTiles);
                 if (updatedBoardTiles.Equals(boardTiles))
-                    result = await BoardRepo.CreateBoard(updatedBoardTiles, matchId);
+                    result = await BoardRepository.CreateBoard(updatedBoardTiles, matchId);
             }
             catch (ViewException ex)
             {
@@ -133,7 +132,7 @@ namespace Forbbiden.Client.Logic
             if (PlayersTurnIndex < PlayersUsername.Count)
             {
                 string playerUsername = PlayersUsername[PlayersTurnIndex++];
-                BoardRepo.SendOnPlayersTurnCallback(playerUsername);
+                BoardRepository.SendOnPlayersTurnCallback(playerUsername);
             }
             else
             {

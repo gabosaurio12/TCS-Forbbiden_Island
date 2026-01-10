@@ -13,9 +13,9 @@ namespace Forbbiden.Client.Repositories
     public class BoardRepository
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(BoardRepository));
-        private readonly BoardManagerClient BoardClient = new BoardManagerClient();
+        private static readonly BoardManagerClient BoardClient = new BoardManagerClient();
 
-        public async Task<bool> CreateBoard(List<Tile> tiles, int matchId)
+        public static async Task<bool> CreateBoard(List<Tile> tiles, int matchId)
         {
             bool created;
             try
@@ -35,7 +35,7 @@ namespace Forbbiden.Client.Repositories
             return created;
         }
 
-        public async Task<Board> Getboard(int matchId)
+        public static async Task<Board> Getboard(int matchId)
         {
             Board board;
             try
@@ -55,7 +55,7 @@ namespace Forbbiden.Client.Repositories
             return board;
         }
 
-        public async Task<List<Tile>> RegisterBoardTiles(List<Tile> boardTiles)
+        public static async Task<List<Tile>> RegisterBoardTiles(List<Tile> boardTiles)
         {
             Tile[] registeredTiles;
             try
@@ -75,7 +75,27 @@ namespace Forbbiden.Client.Repositories
             return registeredTiles.ToList();
         }
 
-        public async Task<List<Card>> GetTreasureCards()
+        public static async Task<List<Tile>> GetBoardTiles(int matchId)
+        {
+            Tile[] tiles;
+            try
+            {
+                tiles = await BoardClient.GetBoardTilesAsync(matchId);
+            }
+            catch (FaultException<Fault> ex)
+            {
+                Log.Error("BoardRepository.GetBoardTiles", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error("BoardRepository.GetBoardTiles", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            return tiles.ToList();
+        }
+
+        public static async Task<List<Card>> GetTreasureCards()
         {
             Card[] cards;
             try
@@ -95,7 +115,7 @@ namespace Forbbiden.Client.Repositories
             return cards.ToList();
         }
 
-        public async Task<List<Card>> GetFloodCards()
+        public static async Task<List<Card>> GetFloodCards()
         {
             Card[] cards;
             try
@@ -115,7 +135,7 @@ namespace Forbbiden.Client.Repositories
             return cards.ToList();
         }
 
-        public async Task<Card> GetCard(string path)
+        public static async Task<Card> GetCard(string path)
         {
             Card card;
             try
@@ -135,7 +155,7 @@ namespace Forbbiden.Client.Repositories
             return card;
         }
 
-        public async void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
+        public static async void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
         {
             try
             {
@@ -153,7 +173,7 @@ namespace Forbbiden.Client.Repositories
             }
         }
 
-        public async void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames)
+        public static async void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames)
         {
             try
             {
@@ -171,7 +191,7 @@ namespace Forbbiden.Client.Repositories
             }
         }
 
-        public async void SendOnPlayersTurnCallback(string username)
+        public static async void SendOnPlayersTurnCallback(string username)
         {
             try
             {
@@ -189,7 +209,7 @@ namespace Forbbiden.Client.Repositories
             }
         }
 
-        public async void SendOnTurnFinishedCallback(string boardJson, List<string> usernames)
+        public static async void SendOnTurnFinishedCallback(string boardJson, List<string> usernames)
         {
             try
             {
