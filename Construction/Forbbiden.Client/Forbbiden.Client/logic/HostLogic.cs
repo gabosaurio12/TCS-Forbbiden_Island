@@ -37,31 +37,14 @@ namespace Forbbiden.Client.Logic
 
         public static string[] GetPlayersUsernames(List<PlayerInfo> players)
         {
-            string[] usernames = new string[players.Count];
-            int usernameIndex = 0;
+            List<string> usernames = new List<string>();
             foreach (var player in players)
             {
-                usernames[usernameIndex++] = player.PlayerUsername;
+                usernames.Add(player.PlayerUsername);
             }
+            usernames.Remove(ClientSession.Username);
 
-            return usernames;
-        }
-
-        private static List<Tile> ConvertControlTilesToTiles(List<UserControlTile> controlTiles)
-        {
-            var tiles = controlTiles.Select(t => new Tile
-            {
-                Row = t.Row,
-                Column = t.Col,
-                IsFlood = t.IsFlood,
-                IsTreasure = t.IsTreasure,
-                IsEscape = t.IsEscapeTile,
-                IsLost = t.IsLost,
-                ImageFileName = t.ImageFileName,
-                TreasureCard = t.TreasureCard,
-            })
-            .ToList();
-            return tiles;
+            return usernames.ToArray();
         }
 
         public static async void SendBoardToPlayers(Match matchInfo)
@@ -73,8 +56,12 @@ namespace Forbbiden.Client.Logic
                     string[] usernames = GetPlayersUsernames(matchInfo.Players.ToList());
 
                     var boardDto = GetBoardPageToDto();
-                    BoardPageCallbackDto callbackPage = new BoardPageCallbackDto(
-                        boardDto, matchInfo.MatchId, usernames);
+                    BoardPageCallbackDto callbackPage = new BoardPageCallbackDto()
+                    {
+                        Board = boardDto,
+                        MatchId = matchInfo.MatchId,
+                        PlayersUsernames = usernames
+                    };
 
                     string boardJson = CreateCallbackBoardPageJSON(callbackPage);
                     BoardRepository.SendOnBoardCreatedCallback(boardJson, usernames.ToList());
@@ -96,7 +83,7 @@ namespace Forbbiden.Client.Logic
             try
             {
                 var updatedBoardTiles = await BoardRepository.RegisterBoardTiles(boardTiles);
-                if (updatedBoardTiles.Equals(boardTiles))
+                if (!updatedBoardTiles.Equals(boardTiles))
                     result = await BoardRepository.CreateBoard(updatedBoardTiles, matchId);
             }
             catch (ViewException ex)
@@ -107,6 +94,23 @@ namespace Forbbiden.Client.Logic
             return result;
         }
 
+        private static List<Tile> ConvertControlTilesToTiles(List<UserControlTile> controlTiles)
+        {
+            var tiles = controlTiles.Select(t => new Tile
+            {
+                Row = t.Row,
+                Column = t.Col,
+                IsFlood = t.IsFlood,
+                IsTreasure = t.IsTreasure,
+                IsEscape = t.IsEscapeTile,
+                IsLost = t.IsLost,
+                ImageFileName = t.ImageFileName,
+                TreasureCard = t.TreasureCard,
+            })
+            .ToList();
+            return tiles;
+        }
+
         private static BoardPageDto GetBoardPageToDto()
         {
             return new BoardPageDto
@@ -114,11 +118,29 @@ namespace Forbbiden.Client.Logic
                 TreasureCaptured = MatchBoardPage.TreasuresCaptured,
                 WaterLevelCount = MatchBoardPage.WaterLevelCount,
 
-                TreasureStack = MatchBoardPage.TreasureStack,
-                TreasureDiscardStack = MatchBoardPage.TreasureDiscardStack,
-                FloodStack = MatchBoardPage.FloodStack,
-                FloodDiscardStack = MatchBoardPage.FloodDiscardStack
+                TreasureStack = ConvertCardToCardDtoList(MatchBoardPage.TreasureStack),
+                TreasureDiscardStack = ConvertCardToCardDtoList(MatchBoardPage.TreasureDiscardStack),
+                FloodStack = ConvertCardToCardDtoList(MatchBoardPage.FloodStack),
+                FloodDiscardStack = ConvertCardToCardDtoList(MatchBoardPage.FloodDiscardStack)
             };
+        }
+
+        private static List<CardDto> ConvertCardToCardDtoList(List<Card> cards)
+        {
+            List<CardDto> cardsDto = new List<CardDto>();
+            foreach (Card card in cards)
+            {
+                cardsDto.Add(new CardDto()
+                {
+                    CardId = card.CardId,
+                    Description = card.Description,
+                    ImagePath = card.ImagePath,
+                    Name = card.Name,
+                    Type = card.Type,
+                });
+            }
+
+            return cardsDto;
         }
 
         public static string CreateCallbackBoardPageJSON(BoardPageCallbackDto page)

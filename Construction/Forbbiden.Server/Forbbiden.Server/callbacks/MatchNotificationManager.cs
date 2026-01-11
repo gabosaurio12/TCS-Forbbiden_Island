@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using log4net;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -9,15 +10,15 @@ namespace Forbbiden.Server.callbacks
     internal class MatchNotificationManager : IMatchNotificationManager
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatchNotificationManager));
-        private static readonly Dictionary<string, IMatchCallback> Subscribers =
-            new Dictionary<string, IMatchCallback>();
+        private static readonly ConcurrentDictionary<string, IMatchCallback> Subscribers =
+            new ConcurrentDictionary<string, IMatchCallback>();
 
         public void Subscribe(string username)
         {
             IMatchCallback callback = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
             if (!Subscribers.ContainsKey(username))
             {
-                Subscribers.Add(username, callback);
+                Subscribers.TryAdd(username, callback);
             }
         }
 
@@ -25,164 +26,195 @@ namespace Forbbiden.Server.callbacks
         {
             if (Subscribers.ContainsKey(username))
             {
-                Subscribers.Remove(username);
+                Subscribers.TryRemove(username, out var _);
             }
         }
 
-        public static bool SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
+        public static void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
         {
-            bool success = true;
-            foreach(var username in usernames)
+            foreach (var username in usernames)
             {
                 if (!Subscribers.TryGetValue(username, out var subscriber))
                 {
                     Log.Warn("MatchNotificationManager.SendOnBoardCreatedCallback - User unsubscribed");
-                    success = false;
+                    continue;
                 }
-                else
+
+                if (!(subscriber is ICommunicationObject channel))
                 {
-                    try
-                    {
-                        subscriber.OnBoardCreatedCallback(boardJson);
-                    }
-                    catch (CommunicationObjectAbortedException ex)
-                    {
-                        success = false;
-                        Subscribers.Remove(username);
-                        Log.Warn("MatchNotificationManager.SendOnBoardCreatedCallback", ex);
-                        throw;
-                    }
-                    catch (CommunicationException ex)
-                    {
-                        success = false;
-                        Subscribers.Remove(username);
-                        Log.Warn("MatchNotificationManager.SendOnBoardCreatedCallback", ex);
-                        throw;
-                    }
-                    catch (TimeoutException ex)
-                    {
-                        success = false;
-                        Log.Warn("MatchNotificationManager.SendOnBoardCreatedCallback", ex);
-                        throw;
-                    }
+                    Subscribers.TryRemove(username, out var _);
+                    continue;
+                }
+
+                if (channel.State != CommunicationState.Opened)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    continue;
+                }
+
+                try
+                {
+                    subscriber.OnBoardCreatedCallback(boardJson);
+                }
+                catch (ObjectDisposedException ex)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationmanager.SendOnBoardCreatedCallback", ex);
+                }
+                catch (CommunicationObjectAbortedException ex)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationManager.SendOnBoardCreatedCallback", ex);
+                }
+                catch (CommunicationException ex)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationManager.SendOnBoardCreatedCallback", ex);
+                }
+                catch (TimeoutException ex)
+                {
+                    Log.Warn("MatchNotificationManager.SendOnBoardCreatedCallback", ex);
                 }
             }
-
-            return success;
         }
 
-        public static bool SendOnBoardUpdatedCallback(string boardJson, List<string> usernames)
+        public static void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames)
         {
-            bool success = true;
             foreach (var username in usernames)
             {
                 if (!Subscribers.TryGetValue(username, out var subscriber))
                 {
                     Log.Warn("MatchNotificationManager.SendOnBoardUpdatedCallback - User unsubscribed");
-                    success = false;
                 }
-                else
+
+                if (!(subscriber is ICommunicationObject channel))
                 {
-                    try
-                    {
-                        subscriber.OnBoardUpdatedCallback(boardJson);
-                    }
-                    catch (CommunicationObjectAbortedException ex)
-                    {
-                        success = false;
-                        Subscribers.Remove(username);
-                        Log.Warn("MatchNotificationManager.SendOnBoardUpdatedCallback", ex);
-                    }
-                    catch (CommunicationException ex)
-                    {
-                        success = false;
-                        Subscribers.Remove(username);
-                        Log.Warn("MatchNotificationManager.SendOnBoardUpdatedCallback", ex);
-                    }
-                    catch (TimeoutException ex)
-                    {
-                        success = false;
-                        Log.Warn("MatchNotificationManager.SendOnBoardUpdatedCallback", ex);
-                    }
+                    Subscribers.TryRemove(username, out var _);
+                    continue;
                 }
-            }
 
-            return success;
-        }
+                if (channel.State != CommunicationState.Opened)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    continue;
+                }
 
-        public static bool SendOnPlayersTurnCallback(string username)
-        {
-            bool success = true;
-            if (!Subscribers.TryGetValue(username, out var subscriber))
-            {
-                Log.Warn("MatchNotificationManager.SendOnPlayersTurnCallback - User unsubscribed");
-                success = false;
-            }
-            else
-            {
                 try
                 {
-                    subscriber.OnPlayersTurnCallback();
+                    subscriber.OnBoardUpdatedCallback(boardJson);
+                }
+                catch (ObjectDisposedException ex)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationmanager.SendOnBoardUpdatedCallback", ex);
                 }
                 catch (CommunicationObjectAbortedException ex)
                 {
-                    success = false;
-                    Subscribers.Remove(username);
-                    Log.Warn("MatchNotificationManager.SendOnPlayersTurnCallback", ex);
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationManager.SendOnBoardUpdatedCallback", ex);
                 }
                 catch (CommunicationException ex)
                 {
-                    success = false;
-                    Subscribers.Remove(username);
-                    Log.Warn("MatchNotificationManager.SendOnPlayersTurnCallback", ex);
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
                 }
                 catch (TimeoutException ex)
                 {
-                    success = false;
-                    Log.Warn("MatchNotificationManager.SendOnPlayersTurnCallback", ex);
+                    Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
                 }
             }
-
-            return success;
         }
 
-        public static bool SendOnTurnFinishedCallback(string boardJson, List<string> usernames)
+        public static void SendOnPlayersTurnCallback(string username)
         {
-            bool success = true;
+            if (!Subscribers.TryGetValue(username, out var subscriber))
+            {
+                Log.Warn("MatchNotificationManager.SendOnPlayersTurnCallback - User unsubscribed");
+                return;
+            }
+
+            if (!(subscriber is ICommunicationObject channel))
+            {
+                Subscribers.TryRemove(username, out var _);
+                return;
+            }
+
+            if (channel.State != CommunicationState.Opened)
+            {
+                Subscribers.TryRemove(username, out var _);
+                return;
+            }
+
+            try
+            {
+                subscriber.OnPlayersTurnCallback();
+            }
+            catch (ObjectDisposedException ex)
+            {
+                Subscribers.TryRemove(username, out var _);
+                Log.Warn("MatchNotificationmanager.SendOnPlayersTurnCallback", ex);
+            }
+            catch (CommunicationObjectAbortedException ex)
+            {
+                Subscribers.TryRemove(username, out var _);
+                Log.Warn("MatchNotificationManager.SendOnPlayersTurnCallback", ex);
+            }
+            catch (CommunicationException ex)
+            {
+                Subscribers.TryRemove(username, out var _);
+                Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
+            }
+        }
+
+        public static void SendOnTurnFinishedCallback(string boardJson, List<string> usernames)
+        {
             foreach (var username in usernames)
             {
                 if (!Subscribers.TryGetValue(username, out var subscriber))
                 {
                     Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback - User unsubscribed");
-                    success = false;
                 }
-                else
+
+                if (!(subscriber is ICommunicationObject channel))
                 {
-                    try
-                    {
-                        subscriber.OnTurnFinishedCallback(boardJson);
-                    }
-                    catch (CommunicationObjectAbortedException ex)
-                    {
-                        success = false;
-                        Subscribers.Remove(username);
-                        Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
-                    }
-                    catch (CommunicationException ex)
-                    {
-                        success = false;
-                        Subscribers.Remove(username);
-                        Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
-                    }
-                    catch (TimeoutException ex)
-                    {
-                        success = false;
-                        Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
-                    }
+                    Subscribers.TryRemove(username, out var _);
+                    continue;
+                }
+
+                if (channel.State != CommunicationState.Opened)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    continue;
+                }
+
+                try
+                {
+                    subscriber.OnTurnFinishedCallback(boardJson);
+                }
+                catch (ObjectDisposedException ex)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationmanager.SendOnTurnFinishedCallback", ex);
+                }
+                catch (CommunicationObjectAbortedException ex)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
+                }
+                catch (CommunicationException ex)
+                {
+                    Subscribers.TryRemove(username, out var _);
+                    Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
+                }
+                catch (TimeoutException ex)
+                {
+                    Log.Warn("MatchNotificationManager.SendOnTurnFinishedCallback", ex);
                 }
             }
-
-            return success;
         }
     }
 }

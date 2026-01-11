@@ -3,6 +3,7 @@ using Forbbiden.Server.callbacks;
 using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -14,6 +15,7 @@ namespace Forbbiden.Server.logic
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class BoardManager : IBoardManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BoardManager));
         private readonly string ConnectionString;
 
         public BoardManager()
@@ -349,7 +351,7 @@ namespace Forbbiden.Server.logic
             }
             catch (CommunicationException ex)
             {
-                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+                Log.Warn(classMethod, ex);
             }
             catch (TimeoutException ex)
             {
@@ -366,7 +368,7 @@ namespace Forbbiden.Server.logic
             }
             catch (CommunicationException ex)
             {
-                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+                Log.Warn(classMethod, ex);
             }
             catch (TimeoutException ex)
             {
@@ -383,7 +385,7 @@ namespace Forbbiden.Server.logic
             }
             catch (CommunicationException ex)
             {
-                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+                Log.Warn(classMethod, ex);
             }
             catch (TimeoutException ex)
             {
@@ -393,18 +395,17 @@ namespace Forbbiden.Server.logic
 
         public void SendOnTurnFinishedCallback(string boardJson, List<string> usernames)
         {
+            string classMethod = "BoardManger.SendOnBoardCreatedCallback";
             try
             {
                 MatchNotificationManager.SendOnTurnFinishedCallback(boardJson, usernames);
             }
             catch (CommunicationException ex)
             {
-                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
-                ExceptionHandler.HandleCommunicationException(ex, classMethod);
+                Log.Warn(classMethod, ex);
             }
             catch (TimeoutException ex)
             {
-                string classMethod = "BoardManger.SendOnBoardCreatedCallback";
                 ExceptionHandler.HandleTimeoutException(ex, classMethod);
             }
         }

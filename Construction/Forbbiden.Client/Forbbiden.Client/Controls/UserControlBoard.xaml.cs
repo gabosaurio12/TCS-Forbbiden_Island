@@ -37,10 +37,10 @@ namespace Forbbiden.Client.Controls
             BuildBoard();
         }
 
-        public async void GenerateBoard()
+        public async Task FillBoardTiles()
         {
             await SetTreasureTiles();
-            SetNonTreasureTiles();
+            await SetNonTreasureTiles();
         }
 
         private void BuildBoard()
@@ -147,7 +147,7 @@ namespace Forbbiden.Client.Controls
             }
         }
 
-        private async void SetNonTreasureTiles()
+        private async Task SetNonTreasureTiles()
         {
             List<Card> tilesCards;
             try

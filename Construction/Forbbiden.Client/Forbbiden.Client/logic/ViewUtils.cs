@@ -69,6 +69,34 @@ namespace Forbbiden.Client.Logic
             return bmp;
         }
 
+        public static BitmapImage GetBitmapImageFromFileName(string imagePath)
+        {
+            string fullImagePath = System.IO.Path.Combine(GetProjectDir(), "Images",  imagePath);
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.UriSource = new Uri(fullImagePath, UriKind.Absolute);
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.EndInit();
+            bmp.Freeze();
+
+            return bmp;
+        }
+
+        public static BitmapImage GetTileBitmapImageFromFileName(string imagePath)
+        {
+            string fullImagePath = System.IO.Path.Combine(GetProjectDir(), "Images", "tiles", imagePath);
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.UriSource = new Uri(fullImagePath, UriKind.Absolute);
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.EndInit();
+            bmp.Freeze();
+
+            return bmp;
+        }
+
         public static void SetBackground(ImageBrush background)
         {
             DateTime currentTime = DateTime.Now;
