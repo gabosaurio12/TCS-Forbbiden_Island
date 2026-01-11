@@ -1,5 +1,4 @@
-﻿using Forbbiden.Client.Model;
-
+﻿
 namespace Forbbiden.Client.Model
 {
     public class BoardPageCallbackDto

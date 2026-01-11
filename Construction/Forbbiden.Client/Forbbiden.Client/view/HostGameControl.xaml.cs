@@ -237,7 +237,6 @@ namespace Forbbiden.Client
 
         private void PublicToggle_Checked(object sender, RoutedEventArgs e)
         {
-            throw new NotSupportedException();
         }
     }
 }

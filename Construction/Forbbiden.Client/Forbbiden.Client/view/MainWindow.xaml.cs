@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using Forbbiden.Client.Logic;
+using System;
+using System.Globalization;
 using System.Windows.Navigation;
 
 namespace Forbbiden.Client.View

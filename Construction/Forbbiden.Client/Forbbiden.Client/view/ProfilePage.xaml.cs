@@ -212,8 +212,8 @@ namespace Forbbiden.Client
         {
             if (string.IsNullOrEmpty(UploadedAvatarOriginalPath) || string.IsNullOrEmpty(AvatarFileName))
             {
-                //string message = Properties.Resources.error_invalid_avatar;
-                //OpenNotificationError(message);
+                string message = Properties.Resources.error_invalid_avatar;
+                ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
                 return;
             }
 
@@ -222,8 +222,8 @@ namespace Forbbiden.Client
                 var bytes = GetAvatarBytesResized(UploadedAvatarOriginalPath, 256, 80);
                 if (bytes == null || bytes.Length == 0)
                 {
-                    //string message = Properties.Resources.error_processing_image;
-                    //OpenNotificationError(message);
+                    string message = Properties.Resources.error_processing_image;
+                    ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
                     return;
                 }
 
@@ -240,7 +240,8 @@ namespace Forbbiden.Client
 
                 if (string.IsNullOrWhiteSpace(savedFileName))
                 {
-                    //OpenNotificationError(Properties.Resources.error_uploading_avatar);
+                    string message = Properties.Resources.error_uploading_avatar;
+                    ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
                     return;
                 }
 
@@ -249,7 +250,8 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("ProfilePage.UploadAvatar", ex);
-                //OpenNotificationError(Properties.Resources.error_processing_avatar);
+                string message = Properties.Resources.error_processing_image;
+                ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
             }
         }
 

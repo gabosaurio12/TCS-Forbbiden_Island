@@ -193,7 +193,7 @@ namespace Forbbiden.Client.View
             try
             {
                 var matchClient = new MatchManagerClient();
-                MatchManager.Match match = null;
+                Match match = null;
                 try
                 {
                     match = await Task.Run(() => matchClient.GetMatchById(MatchId));
@@ -739,7 +739,7 @@ namespace Forbbiden.Client.View
             try
             {
                 var mClient = new MatchManagerClient();
-                MatchManager.Match match = null;
+                Match match = null;
                 try
                 {
                     match = await Task.Run(() => mClient.GetMatchById(matchId));
@@ -751,8 +751,10 @@ namespace Forbbiden.Client.View
 
                 if (match != null && isLoaded)
                 {
-                    
-                    NavigationService?.Navigate(new BoardPage(match));
+                    if (ClientSession.Username == match.HostUsername)
+                        NavigationService?.Navigate(new BoardPage(match));
+                    else
+                        NavigationService?.Navigate(new BoardPage());
                 }
             }
             catch (Exception ex)

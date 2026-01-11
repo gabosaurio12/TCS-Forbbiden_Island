@@ -27,6 +27,7 @@
   <xs:element name="ArrayOfMatch" nillable="true" type="tns:ArrayOfMatch" />
   <xs:complexType name="Match">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BoardId" type="xs:int" />
       <xs:element minOccurs="0" name="Capacity" type="xs:int" />
       <xs:element minOccurs="0" name="CreatedAt" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Difficulty" nillable="true" type="xs:string" />

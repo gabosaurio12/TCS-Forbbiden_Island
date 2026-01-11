@@ -8,6 +8,11 @@ namespace Forbbiden.Client.Logic
 {
     internal class ExceptionViewManager
     {
+        public static void ShowErrorNotification(string message, Window window)
+        {
+            string title = Properties.Resources.error;
+            ViewUtils.OpenNotificationWindow(title, message, window);
+        }
 
         public static void ShowUsernameValidationErrors(List<ValidationErrorCodes> errors, Window window)
         {

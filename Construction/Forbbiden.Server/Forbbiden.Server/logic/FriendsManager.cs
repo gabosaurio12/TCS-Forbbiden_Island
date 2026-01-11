@@ -93,7 +93,7 @@ namespace Forbbiden.Server.logic
 
         public bool SendFriendRequest(string senderUsername, string receiverUsername)
         {
-            bool success = false;
+            bool success = true;
 
             var (sender, receiver) = GetSenderReceiver(senderUsername, receiverUsername);
 
@@ -129,6 +129,7 @@ namespace Forbbiden.Server.logic
                         }
                         catch (EntityException ex)
                         {
+                            success = false;
                             string classMethod = "FriendsManager.SendFriendRequest";
                             ExceptionHandler.HandleEntityException(ex, classMethod);
                         }
@@ -140,7 +141,7 @@ namespace Forbbiden.Server.logic
                             Status = 0
                         };
 
-                        success = FriendsNotificationManager.SendRequestCallback(friendRequestCallback, receiverUsername);
+                        FriendsNotificationManager.SendRequestCallback(friendRequestCallback, receiverUsername);
                     }
                 }
             }
@@ -206,10 +207,10 @@ namespace Forbbiden.Server.logic
                         {
                             db.Friends.Remove(friendship);
                             db.SaveChanges();
+                            success = true;
 
                             FriendsNotificationManager.SendRefreshPageCallback(new FriendRequest(), friendUsername);
 
-                            success = true;
                         }
                     }
                 }

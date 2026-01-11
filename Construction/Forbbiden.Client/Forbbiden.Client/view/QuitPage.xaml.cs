@@ -20,6 +20,7 @@ namespace Forbbiden.Client.View
         public QuitPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
 
             if (ClientSession.CurrentPlayerId > 0)
             {

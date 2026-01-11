@@ -18,7 +18,7 @@ namespace Forbbiden.Client.Repositories
 
         public async Task<bool> SendFriendRequest(string senderUsername, string receiverUsername)
         {
-            bool result;
+            bool result = false;
             try
             {
                 result = await FriendsClient.SendFriendRequestAsync(senderUsername, receiverUsername);
@@ -32,6 +32,11 @@ namespace Forbbiden.Client.Repositories
             {
                 Log.Error("FriendsRepository.SendFriendRequest", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+
+            catch (CommunicationException ex)
+            {
+                Log.Error("FriendsRepository.SendFriendRequest", ex);
             }
 
             return result;

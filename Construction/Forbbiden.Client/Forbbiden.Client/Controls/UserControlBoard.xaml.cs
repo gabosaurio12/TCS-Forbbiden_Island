@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -36,9 +37,9 @@ namespace Forbbiden.Client.Controls
             BuildBoard();
         }
 
-        public void GenerateBoard()
+        public async void GenerateBoard()
         {
-            SetTreasureTiles();
+            await SetTreasureTiles();
             SetNonTreasureTiles();
         }
 
@@ -101,6 +102,8 @@ namespace Forbbiden.Client.Controls
         {
             return boardGrid.Children
                 .OfType<UserControlTile>()
+                .OrderBy(t => Grid.GetRow(t))
+                .ThenBy(t => Grid.GetColumn(t))
                 .ToList();
         }
 
@@ -119,7 +122,7 @@ namespace Forbbiden.Client.Controls
                 .Where(t => t.IsFlood).ToList();
         }
 
-        private async void SetTreasureTiles()
+        private async Task SetTreasureTiles()
         {
             List<UserControlTile> innerTiles = GetInnerTilesFromGrid();
             var shuffledTiles = innerTiles.OrderBy(
@@ -144,25 +147,8 @@ namespace Forbbiden.Client.Controls
             }
         }
 
-        private void AddTileImageAndCardInfo(Card cardTile, UserControlTile tile)
-        {
-            string escapeCardName = "entrance-name";
-            if (cardTile.Name == escapeCardName)
-            {
-                tile.SetTileAsEscape();
-            }
-
-            string tileImage = cardTile.ImagePath;
-            string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
-            var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
-
-            tile.ImageFileName = tileImage;
-            tile.SetImage(tileBitmap);               
-        }
-
         private async void SetNonTreasureTiles()
         {
-            List<UserControlTile> tiles = GetAllTilesFromGrid();
             List<Card> tilesCards;
             try
             {
@@ -174,21 +160,44 @@ namespace Forbbiden.Client.Controls
                 return;
             }
             var shuffledTilesCards = MatchLogic.ShuffleCards(tilesCards.ToList());
+            List<UserControlTile> tiles = GetAllTilesFromGrid();
+            var nonTreasureTiles = tiles.Where(t => !t.IsTreasure).ToList();
+            int count = Math.Min(nonTreasureTiles.Count, shuffledTilesCards.Count);
 
-            int tileIndex = 0;
-            foreach (var tile in tiles)
+            for (int i = 0; i < count; i++)
             {
-                if (!tile.IsTreasure)
-                {
-                    AddTileImageAndCardInfo(shuffledTilesCards[tileIndex], tile);
-                    tileIndex++;
-                }
-            }          
+                AddTileImageAndCardInfo(shuffledTilesCards[i], nonTreasureTiles[i]);
+            }         
+        }
+
+        private void AddTileImageAndCardInfo(Card cardTile, UserControlTile tile)
+        {
+            string tileImage = cardTile.ImagePath;
+            string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
+            var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
+
+            string escapeCardName = "entrance-name";
+            if (cardTile.Name == escapeCardName)
+            {
+                tile.SetTileAsEscape(tileBitmap, cardTile);
+            }
+            else
+            {
+                tile.SetTileAsNormal(tileBitmap, cardTile);
+            }
         }
 
         public void AddPlayerAvatar(Player player, UserControlTile tile)
         {
             Ellipse boardAvatar = ViewUtils.GetAvatarEllipse(player.PlayerAvatarPath);
+
+            var spawnTile = GetTile(tile.Row, tile.Col);
+            spawnTile.tileGrid.Children.Add(boardAvatar);
+        }
+
+        public void AddPlayerWithDefaultAvatar(UserControlTile tile)
+        {
+            Ellipse boardAvatar = ViewUtils.GetDefaultAvatarEllipse();
 
             var spawnTile = GetTile(tile.Row, tile.Col);
             spawnTile.tileGrid.Children.Add(boardAvatar);

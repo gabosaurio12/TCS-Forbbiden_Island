@@ -152,7 +152,7 @@ namespace Forbbiden.Server.logic
                 is_flood = contractsTile.IsFlood ? 1 : 0,
                 is_lost = contractsTile.IsLost ? 1 : 0,
                 image_file_name = contractsTile.ImageFileName,
-                treasure_card_id = contractsTile.TreasureCard.CardId
+                treasure_card_id = contractsTile.TreasureCard?.CardId
             };
         }
 

@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Xml.Linq;
 
 namespace Forbbiden.Client.View
 {
@@ -28,10 +29,12 @@ namespace Forbbiden.Client.View
         public FriendRequestsPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
 
             ProfileRepo = new ProfileRepository();
             FriendsRepo = new FriendsRepository();
 
+            FriendsNotificationSingleton.Instance.Subscribe(ClientSession.Username);
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
 
             _ = SetRequests();
@@ -155,7 +158,7 @@ namespace Forbbiden.Client.View
             var friend = new ProfileManager.Player();
             try
             {
-                friend = await ProfileRepo.GetPlayerById(request.SenderID, false);
+                friend = await ProfileRepository.GetPlayerById(request.SenderID, false);
             }
             catch (ViewException ex)
             {
@@ -172,8 +175,7 @@ namespace Forbbiden.Client.View
 
             if (!downloaded)
             {
-                avatarPath = Path.Combine(projectDir, "avatars", "defaultAvatar.png");
-                avatarImage = ViewUtils.GetImageBrush(avatarPath);
+                avatarImage = ViewUtils.GetDefaultAvatarBrush();
             }
             else
             {
@@ -194,7 +196,7 @@ namespace Forbbiden.Client.View
             bool downloaded = false;
             if (!File.Exists(avatarPath))
             {
-                var bytes = await ProfileRepo.DownloadAvatar(Path.GetFileName(avatarPath));
+                var bytes = await ProfileRepository.DownloadAvatar(Path.GetFileName(avatarPath));
                 downloaded = bytes.Length > 0;
             }
 

@@ -10,7 +10,7 @@
       Title="FriendRequestsPage">
 
     <Page.Background>
-        <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
+        <ImageBrush x:Name="background" ImageSource="/Images/FEIMainPageDay.png" Stretch="Fill"/>
     </Page.Background>
 
     <Page.Resources>

@@ -11,6 +11,7 @@ using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -51,19 +52,15 @@ namespace Forbbiden.Client.View.Games
 
         private string ImagesPath;
         private string CardsImagesPath;
+        private string BoardImagesPath;
 
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
-            
-            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username); 
             InitAttributes();
-
-            BoardManagerClient boardClient = new BoardManagerClient();
-            TreasureStack = boardClient.GetTreasureCards().ToList();
-            FloodStack = boardClient.GetFloodCards().ToList();
-            TreasureDiscardStack = new List<Card>();
-            FloodDiscardStack = new List<Card>();
+            _ = InitCardsStacks();
+            InitGif();
+            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username);
 
             KeyDown += BoardPage_KeyDown;
             Focusable = true;
@@ -71,26 +68,15 @@ namespace Forbbiden.Client.View.Games
 
             InitBoardPage(match);
             BoardControl.TileClickedOnBoard += OnTileClickedFromBoard;
-
         }
 
         public BoardPage()
         {
             InitializeComponent();
-            InitGif();
             InitAttributes();
+            InitGif();
 
             PlayerLogic.MatchBoardPage = this;
-        }
-
-        private void InitGif()
-        {
-            string gifName = "board_background.gif";
-            string gifPath = System.IO.Path.Combine(
-                ImagesPath, gifName);
-            var gif = ViewUtils.GetBitmapImage(gifPath);
-
-            ImageBehavior.SetAnimatedSource(gifBackground, gif);
         }
 
         private void InitAttributes()
@@ -102,8 +88,28 @@ namespace Forbbiden.Client.View.Games
                 projectDir, "Images");
             CardsImagesPath = System.IO.Path.Combine(
                 projectDir, ImagesPath, "cards");
+            BoardImagesPath = System.IO.Path.Combine(
+                projectDir, ImagesPath, "board");
 
             PlayerCards = new List<Card>();
+        }
+
+        private async Task InitCardsStacks()
+        {
+            TreasureStack = await BoardRepository.GetTreasureCards();
+            FloodStack = await BoardRepository.GetFloodCards();
+            TreasureDiscardStack = new List<Card>();
+            FloodDiscardStack = new List<Card>();
+        }
+
+        private void InitGif()
+        {
+            string gifName = "board_background.gif";
+            string gifPath = System.IO.Path.Combine(
+                BoardImagesPath, gifName);
+            var gif = ViewUtils.GetBitmapImage(gifPath);
+
+            ImageBehavior.SetAnimatedSource(gifBackground, gif);
         }
 
         private void InitBoardPage(MatchManager.Match match)
@@ -113,7 +119,7 @@ namespace Forbbiden.Client.View.Games
 
             HostLogic.SetBoardPage(this);
             HostLogic.SetPlayersTurnOrder(match.Players.ToList());
-
+            PlayerLogic.MatchBoardPage = this;
             HostLogic.SendBoardToPlayers(match);
         }
 
@@ -127,6 +133,8 @@ namespace Forbbiden.Client.View.Games
             mainGrid.Children.Add(BoardControl);
         }
 
+        // *** TO-DO reconstruir con bytes el avatar *** //
+
         private async void SetPlayersAvatars(List<MatchManager.PlayerInfo> players)
         {
             var beginningTiles = MatchLogic.GetAvatarsBeginningTiles(BoardControl, players.Count);
@@ -138,8 +146,16 @@ namespace Forbbiden.Client.View.Games
             {
                 try
                 {
-                    var player = await new ProfileRepository().GetPlayerById(players[i].PlayerId, false);
-                    BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
+                    var player = await ProfileRepository.GetPlayerById(players[i].PlayerId, false);
+                    var avatarBytes = await ProfileRepository.DownloadAvatar(player.PlayerAvatarPath);
+                    if (avatarBytes.Length > 0)
+                    {
+                        BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
+                    }
+                    else
+                    {
+                        BoardControl.AddPlayerWithDefaultAvatar(beginningTiles[i]);
+                    }
                 }
                 catch (ViewException ex)
                 {
@@ -317,7 +333,7 @@ namespace Forbbiden.Client.View.Games
             WaterLevelCount++;
 
             string waterLevelImagePath = System.IO.Path.Combine(
-                    ImagesPath, $"waterLevel-{WaterLevelCount}.png");
+                    BoardImagesPath, $"waterLevel-{WaterLevelCount}.png");
             waterLevel.Source = ViewUtils.GetBitmapImage(waterLevelImagePath);
 
             if (WaterLevelCount < 6)

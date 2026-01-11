@@ -57,7 +57,7 @@ namespace Forbbiden.Client.View.info
 
             try
             {
-                player = await profileRepository.GetPlayerById(PlayerID, false);
+                player = await ProfileRepository.GetPlayerById(PlayerID, false);
             }
             catch (ViewException ex)
             {

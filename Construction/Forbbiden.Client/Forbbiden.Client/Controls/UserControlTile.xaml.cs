@@ -68,6 +68,14 @@ namespace Forbbiden.Client.Controls
             ResetBorder();
         }
 
+        public void SetTileAsNormal(BitmapImage imageBitmap, Card treasureCard)
+        {
+            TreasureCard = treasureCard;
+            Border = EnterBorder = DefaultWhite;
+            SetImage(imageBitmap);
+            RefreshBorderBrush();
+        }
+
         public void SetTileAsTreasure(BitmapImage treasureBitmap, Card treasureCard)
         {
             TreasureCard = treasureCard;
@@ -77,9 +85,11 @@ namespace Forbbiden.Client.Controls
             IsTreasure = true;
         }
 
-        public void SetTileAsEscape()
+        public void SetTileAsEscape(BitmapImage treasureBitmap, Card treasureCard)
         {
+            TreasureCard = treasureCard;
             Border = EnterBorder = EscapeBlue;
+            SetImage(treasureBitmap);
             RefreshBorderBrush();
             IsEscapeTile = true;
         }

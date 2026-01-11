@@ -72,7 +72,7 @@ namespace Forbbiden.Client.Logic
                 {
                     string[] usernames = GetPlayersUsernames(matchInfo.Players.ToList());
 
-                    var boardDto = BoardPageToDto();
+                    var boardDto = GetBoardPageToDto();
                     BoardPageCallbackDto callbackPage = new BoardPageCallbackDto(
                         boardDto, matchInfo.MatchId, usernames);
 
@@ -107,7 +107,7 @@ namespace Forbbiden.Client.Logic
             return result;
         }
 
-        private static BoardPageDto BoardPageToDto()
+        private static BoardPageDto GetBoardPageToDto()
         {
             return new BoardPageDto
             {

@@ -21,6 +21,7 @@ namespace Forbbiden.Client
         public SignupPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
         }
 
         private static void TurnTextBlockRed(TextBlock textBlock)

@@ -31,11 +31,17 @@ namespace Forbbiden.Client.MatchNotificationManager {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IMatchNotificationManagerCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchNotificationManager/Subscribe", ReplyAction="http://tempuri.org/IMatchNotificationManager/SubscribeResponse")]
-        void Subscribe(string username);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchNotificationManager/OnBoardCreatedCallback")]
+        void OnBoardCreatedCallback(string boardJson);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchNotificationManager/Unsubscribe", ReplyAction="http://tempuri.org/IMatchNotificationManager/UnsubscribeResponse")]
-        void Unsubscribe(string username);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchNotificationManager/OnBoardUpdatedCallback")]
+        void OnBoardUpdatedCallback(string boardJson);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchNotificationManager/OnPlayersTurnCallback")]
+        void OnPlayersTurnCallback();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchNotificationManager/OnTurnFinishedCallback")]
+        void OnTurnFinishedCallback(string boardJson);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

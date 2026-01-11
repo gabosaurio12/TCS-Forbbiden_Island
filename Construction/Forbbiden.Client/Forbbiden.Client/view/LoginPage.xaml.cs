@@ -21,6 +21,7 @@ namespace Forbbiden.Client
         public LoginPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
         }
 
         private static void ResetFields(TextBlock txtBkUser, TextBlock txtBkPassword, TextBlock txtBkBoss)
@@ -40,22 +41,20 @@ namespace Forbbiden.Client
             string username = txtBxUsername.Text.Trim();
 
             string password;
-            /*if (chkPassword.IsChecked == true)
+            if (chkPassword.IsChecked == true)
             {
                 password = txtBxPasswordVisible.Text.Trim();
             }
             else
             {
                 password = pwdBxPassword.Password.Trim();
-            }*/
-            password = pwdBxPassword.Password.Trim();
+            }
 
             return new Player
             {
                 PlayerUsername = username,
                 PlayerPassword = password,
             };
-
         }
 
         private async void BtnLogin_Click(object sender, RoutedEventArgs e)

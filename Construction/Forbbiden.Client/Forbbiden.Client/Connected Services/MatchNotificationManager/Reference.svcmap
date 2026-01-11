@@ -19,12 +19,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.100.15:8087/MatchNotificationManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d971f418-4a9d-4ba2-ae26-1ab2af025fed" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a9a5382a-92e2-4603-b284-0f10a45bcd67" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="bb7ffa21-6528-4be9-a620-0f441e4742da" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8087/MatchNotificationManager/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="16944cdd-09ed-45f2-919b-2b6179935b13" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8087/MatchNotificationManager/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="a7903af4-ee2a-4bf3-b852-c49a1780fa5f" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8087/MatchNotificationManager/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="e25acabb-e5c8-407a-8886-e20e78b67390" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8087/MatchNotificationManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

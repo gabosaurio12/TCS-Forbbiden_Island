@@ -159,9 +159,9 @@
   </wsdl:binding>
   <wsdl:service name="MatchManager">
     <wsdl:port name="NetTcpBinding_IMatchManager" binding="tns:NetTcpBinding_IMatchManager">
-      <soap12:address location="net.tcp://192.168.1.77:8083/MatchManager" />
+      <soap12:address location="net.tcp://192.168.100.15:8083/MatchManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.1.77:8083/MatchManager</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.100.15:8083/MatchManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

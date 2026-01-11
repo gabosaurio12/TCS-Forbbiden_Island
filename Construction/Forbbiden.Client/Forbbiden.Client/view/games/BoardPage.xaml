@@ -114,7 +114,7 @@
                             <Image x:Name="waterLevel" HorizontalAlignment="Left"
                             Height="400" Width="250" 
                             Margin="0,20,0,0"
-                            Source="/Images/waterLevel-0.png" />
+                            Source="/Images/board/waterLevel-0.png" />
                             <TextBlock Text="{x:Static language:Resources.water_level}"
                             FontSize="32" Foreground="White"
                             FontFamily="{StaticResource IrishGrover}" />
@@ -147,11 +147,11 @@
                     <StackPanel x:Name="actionsRemainingStack"
                                 Height="145"
                                 Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <Image Source="/Images/actionsLeft2.png"
+                        <Image Source="/Images/board/actionsLeft.png"
                                Height="133" Width="133" />
-                        <Image Source="/Images/actionsLeft2.png"
+                        <Image Source="/Images/board/actionsLeft.png"
                                Height="133" Width="133"/>
-                        <Image Source="/Images/actionsLeft2.png"
+                        <Image Source="/Images/board/actionsLeft.png"
                                Height="133" Width="133"/>
                     </StackPanel>
 
@@ -166,7 +166,7 @@
                               MouseLeave="Moves_MouseLeave"
                               MouseLeftButtonDown="Move_MouseLeftButtonDown"
                               HorizontalAlignment="Right">
-                            <Image Source="/Images/boardButtons.png" Cursor="Hand" />
+                            <Image Source="/Images/board/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.move_button}" 
                                        VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Margin="40,0,0,0"
@@ -180,7 +180,7 @@
                               MouseLeave="Moves_MouseLeave"
                               HorizontalAlignment="Right"
                               MouseLeftButtonDown="Shore_MouseLeftButtonDown">
-                            <Image Source="/Images/boardButtons.png" Cursor="Hand" />
+                            <Image Source="/Images/board/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.shore_up_button}" 
                                        VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Margin="40,0,0,0"
@@ -194,7 +194,7 @@
                               MouseLeave="Moves_MouseLeave"
                               HorizontalAlignment="Right"
                               MouseLeftButtonDown="CaptureTreasure_MouseLeftButtonDown">
-                            <Image Source="/Images/boardButtons.png" Cursor="Hand" />
+                            <Image Source="/Images/board/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.capture_button}" 
                                        VerticalAlignment="Center" HorizontalAlignment="Right"
                                        Margin="0,0,20,0"
@@ -208,7 +208,7 @@
                               MouseLeave="Moves_MouseLeave"
                               HorizontalAlignment="Right"
                               MouseLeftButtonDown="UseTreasureCard_MouseLeftButtonDown">
-                            <Image Source="/Images/boardButtons.png" Cursor="Hand" />
+                            <Image Source="/Images/board/boardButtons.png" Cursor="Hand" />
                             <TextBlock Text="{x:Static language:Resources.use_card}" 
                                        VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Margin="40,0,0,0"

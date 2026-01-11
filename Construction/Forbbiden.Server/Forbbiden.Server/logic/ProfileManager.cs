@@ -517,7 +517,7 @@ namespace Forbbiden.Server.logic
                     formerPlayer.player_avatar = updatedPlayer.PlayerAvatarPath;
                     formerPlayer.is_verified = updatedPlayer.IsVerified;
 
-                    if (ClearSocials(formerPlayer))
+                    if (ClearSocials(formerPlayer, db))
                     {
                         db.PlayerSocialmedia.AddRange(
                         updatedPlayer.SocialMedia
@@ -541,26 +541,23 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-        public bool ClearSocials(Model.Player player)
+        public bool ClearSocials(Model.Player player, Forbidden_FEIEntities db)
         {
             bool success = false;
-            using (var db = new Forbidden_FEIEntities(ConnectionString))
+            try
             {
-                try
+                var socials = db.PlayerSocialmedia.Where(s => s.player_id == player.player_id).ToList();
+                foreach (var social in socials)
                 {
-                    var socials = db.PlayerSocialmedia.Where(s => s.player_id == player.player_id).ToList();
-                    foreach (var social in socials)
-                    {
-                        db.PlayerSocialmedia.Remove(social);
-                    }
-                    db.SaveChanges();
-                    success = true;
+                    db.PlayerSocialmedia.Remove(social);
                 }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.ClearSocials ";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
-                }
+                db.SaveChanges();
+                success = true;
+            }
+            catch (EntityException ex)
+            {
+                string classMethod = "ProfileManager.ClearSocials ";
+                ExceptionHandler.HandleEntityException(ex, classMethod);
             }
 
             return success;
