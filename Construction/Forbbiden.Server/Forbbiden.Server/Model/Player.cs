@@ -19,9 +19,9 @@ namespace Forbbiden.Server.Model
         {
             this.Friends = new HashSet<Friends>();
             this.Match = new HashSet<Match>();
-            this.match_players = new HashSet<match_players>();
             this.Token = new HashSet<Token>();
             this.PlayerSocialmedia = new HashSet<PlayerSocialmedia>();
+            this.MatchPlayers = new HashSet<MatchPlayers>();
         }
     
         public int player_id { get; set; }
@@ -38,10 +38,10 @@ namespace Forbbiden.Server.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Match> Match { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<match_players> match_players { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Token> Token { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlayerSocialmedia> PlayerSocialmedia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MatchPlayers> MatchPlayers { get; set; }
     }
 }

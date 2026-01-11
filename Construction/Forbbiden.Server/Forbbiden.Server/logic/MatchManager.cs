@@ -76,12 +76,12 @@ namespace Forbbiden.Server.logic
                     db.SaveChanges();
                     db.Configuration.AutoDetectChangesEnabled = true;
 
-                    bool hostExists = db.match_players
+                    bool hostExists = db.MatchPlayers
                         .Any(mp => mp.match_id == newMatch.match_id && mp.player_id == hostId);
 
                     if (!hostExists)
                     {
-                        db.match_players.Add(new match_players
+                        db.MatchPlayers.Add(new MatchPlayers
                         {
                             match_id = newMatch.match_id,
                             player_id = hostId
@@ -159,7 +159,7 @@ namespace Forbbiden.Server.logic
                     if (match == null)
                         return false;
 
-                    int currentPlayersCount = db.match_players.Count(mp => mp.match_id == match.match_id);
+                    int currentPlayersCount = db.MatchPlayers.Count(mp => mp.match_id == match.match_id);
                     int capacity = match.match_capacity;
                     if (capacity < 2 || capacity > 4)
                         capacity = 4;
@@ -176,7 +176,7 @@ namespace Forbbiden.Server.logic
                         playerId = player.player_id;
                     else
                     {
-                        int minGuestId = db.match_players
+                        int minGuestId = db.MatchPlayers
                             .Where(mp => mp.match_id == match.match_id && mp.player_id < 0)
                             .Select(mp => mp.player_id)
                             .DefaultIfEmpty(0)
@@ -184,13 +184,13 @@ namespace Forbbiden.Server.logic
                         playerId = minGuestId - 1;
                     }
 
-                    bool alreadyJoined = db.match_players
+                    bool alreadyJoined = db.MatchPlayers
                         .Any(mp => mp.match_id == match.match_id && mp.player_id == playerId);
 
                     if (alreadyJoined)
                         return false;
 
-                    db.match_players.Add(new match_players
+                    db.MatchPlayers.Add(new MatchPlayers
                     {
                         match_id = match.match_id,
                         player_id = playerId
@@ -227,7 +227,7 @@ namespace Forbbiden.Server.logic
                                        Visibility = m.match_visibility,
                                        CreatedAt = m.created_at,
                                        HostUsername = host.player_username,
-                                       Players = (from mp in db.match_players
+                                       Players = (from mp in db.MatchPlayers
                                                   where mp.match_id == m.match_id
                                                   join p in db.Player on mp.player_id equals p.player_id into joined
                                                   from p in joined.DefaultIfEmpty()
@@ -273,7 +273,7 @@ namespace Forbbiden.Server.logic
                                  Visibility = m.match_visibility,
                                  CreatedAt = m.created_at,
                                  HostUsername = host.player_username,
-                                 Players = (from mp in db.match_players
+                                 Players = (from mp in db.MatchPlayers
                                             where mp.match_id == m.match_id
                                             join p in db.Player on mp.player_id equals p.player_id into joined
                                             from p in joined.DefaultIfEmpty()
@@ -319,10 +319,10 @@ namespace Forbbiden.Server.logic
                                 return false;
                             }
 
-                            var players = db.match_players.Where(mp => mp.match_id == matchId).ToList();
+                            var players = db.MatchPlayers.Where(mp => mp.match_id == matchId).ToList();
                             if (players.Any())
                             {
-                                db.match_players.RemoveRange(players);
+                                db.MatchPlayers.RemoveRange(players);
                                 db.SaveChanges();
                             }
 

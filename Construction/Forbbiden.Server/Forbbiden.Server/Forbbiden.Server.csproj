@@ -90,13 +90,13 @@
     <Compile Include="Model\Match.cs">
       <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\MatchPlayers.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\match_cards.cs">
       <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\match_minigames.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\match_players.cs">
       <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Minigame.cs">

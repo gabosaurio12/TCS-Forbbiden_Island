@@ -61,13 +61,15 @@
           <Property Name="match_id" Type="int" Nullable="false" />
           <Property Name="minigame_id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="match_players">
+        <EntityType Name="MatchPlayers">
           <Key>
             <PropertyRef Name="match_players_id" />
           </Key>
           <Property Name="match_players_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="match_id" Type="int" Nullable="false" />
           <Property Name="player_id" Type="int" Nullable="false" />
+          <Property Name="row" Type="int" />
+          <Property Name="col" Type="int" />
         </EntityType>
         <EntityType Name="Minigame">
           <Key>
@@ -191,12 +193,12 @@
         </Association>
         <Association Name="FK_match_players_match">
           <End Role="Match" Type="Self.Match" Multiplicity="1" />
-          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
+          <End Role="MatchPlayers" Type="Self.MatchPlayers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Match">
               <PropertyRef Name="match_id" />
             </Principal>
-            <Dependent Role="match_players">
+            <Dependent Role="MatchPlayers">
               <PropertyRef Name="match_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -263,12 +265,12 @@
         </Association>
         <Association Name="FK_players_player">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
+          <End Role="MatchPlayers" Type="Self.MatchPlayers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Player">
               <PropertyRef Name="player_id" />
             </Principal>
-            <Dependent Role="match_players">
+            <Dependent Role="MatchPlayers">
               <PropertyRef Name="player_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -304,7 +306,7 @@
           <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="match_cards" EntityType="Self.match_cards" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="match_minigames" EntityType="Self.match_minigames" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="match_players" EntityType="Self.match_players" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchPlayers" EntityType="Self.MatchPlayers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Minigame" EntityType="Self.Minigame" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerSocialmedia" EntityType="Self.PlayerSocialmedia" Schema="dbo" store:Type="Tables" />
@@ -333,7 +335,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_match_players_match" Association="Self.FK_match_players_match">
             <End Role="Match" EntitySet="Match" />
-            <End Role="match_players" EntitySet="match_players" />
+            <End Role="MatchPlayers" EntitySet="MatchPlayers" />
           </AssociationSet>
           <AssociationSet Name="FK_match_tiles_match" Association="Self.FK_match_tiles_match">
             <End Role="Match" EntitySet="Match" />
@@ -357,7 +359,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_players_player" Association="Self.FK_players_player">
             <End Role="Player" EntitySet="Player" />
-            <End Role="match_players" EntitySet="match_players" />
+            <End Role="MatchPlayers" EntitySet="MatchPlayers" />
           </AssociationSet>
           <AssociationSet Name="FK_Tile_Card_id" Association="Self.FK_Tile_Card_id">
             <End Role="Card" EntitySet="Card" />
@@ -420,8 +422,8 @@
           <NavigationProperty Name="Board" Relationship="Self.FK_match_tiles_match" FromRole="Match" ToRole="Board" />
           <NavigationProperty Name="match_cards" Relationship="Self.FK_match_cards_match" FromRole="Match" ToRole="match_cards" />
           <NavigationProperty Name="match_minigames" Relationship="Self.FK_match_minigames_match" FromRole="Match" ToRole="match_minigames" />
-          <NavigationProperty Name="match_players" Relationship="Self.FK_match_players_match" FromRole="Match" ToRole="match_players" />
           <NavigationProperty Name="Player" Relationship="Self.FK_Matches_Player" FromRole="Match" ToRole="Player" />
+          <NavigationProperty Name="MatchPlayers" Relationship="Forbbiden_FEIModel.FK_match_players_match1" FromRole="Match" ToRole="MatchPlayers" />
         </EntityType>
         <EntityType Name="match_cards">
           <Key>
@@ -442,16 +444,6 @@
           <Property Name="minigame_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Match" Relationship="Self.FK_match_minigames_match" FromRole="match_minigames" ToRole="Match" />
           <NavigationProperty Name="Minigame" Relationship="Self.FK_match_minigame_minigame" FromRole="match_minigames" ToRole="Minigame" />
-        </EntityType>
-        <EntityType Name="match_players">
-          <Key>
-            <PropertyRef Name="match_players_id" />
-          </Key>
-          <Property Name="match_players_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="match_id" Type="Int32" Nullable="false" />
-          <Property Name="player_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Match" Relationship="Self.FK_match_players_match" FromRole="match_players" ToRole="Match" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_players_player" FromRole="match_players" ToRole="Player" />
         </EntityType>
         <EntityType Name="Minigame">
           <Key>
@@ -476,9 +468,9 @@
           <Property Name="is_verified" Type="Int32" />
           <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__friend___02FC7413" FromRole="Player" ToRole="Friends" />
           <NavigationProperty Name="Match" Relationship="Self.FK_Matches_Player" FromRole="Player" ToRole="Match" />
-          <NavigationProperty Name="match_players" Relationship="Self.FK_players_player" FromRole="Player" ToRole="match_players" />
           <NavigationProperty Name="Token" Relationship="Self.FK__Token__player_id__04E4BC85" FromRole="Player" ToRole="Token" />
           <NavigationProperty Name="PlayerSocialmedia" Relationship="Self.FK_player_socialmedia" FromRole="Player" ToRole="PlayerSocialmedia" />
+          <NavigationProperty Name="MatchPlayers" Relationship="Forbbiden_FEIModel.FK_players_player1" FromRole="Player" ToRole="MatchPlayers" />
         </EntityType>
         <EntityType Name="PlayerSocialmedia">
           <Key>
@@ -607,18 +599,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_match_players_match">
-          <End Role="Match" Type="Self.Match" Multiplicity="1" />
-          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Match">
-              <PropertyRef Name="match_id" />
-            </Principal>
-            <Dependent Role="match_players">
-              <PropertyRef Name="match_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Matches_Player">
           <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
           <End Role="Match" Type="Self.Match" Multiplicity="*" />
@@ -640,18 +620,6 @@
             </Principal>
             <Dependent Role="match_minigames">
               <PropertyRef Name="minigame_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_players_player">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="match_players" Type="Self.match_players" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="player_id" />
-            </Principal>
-            <Dependent Role="match_players">
-              <PropertyRef Name="player_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -686,7 +654,6 @@
           <EntitySet Name="Match" EntityType="Self.Match" />
           <EntitySet Name="match_cards" EntityType="Self.match_cards" />
           <EntitySet Name="match_minigames" EntityType="Self.match_minigames" />
-          <EntitySet Name="match_players" EntityType="Self.match_players" />
           <EntitySet Name="Minigame" EntityType="Self.Minigame" />
           <EntitySet Name="Player" EntityType="Self.Player" />
           <EntitySet Name="PlayerSocialmedia" EntityType="Self.PlayerSocialmedia" />
@@ -721,10 +688,6 @@
             <End Role="Match" EntitySet="Match" />
             <End Role="match_minigames" EntitySet="match_minigames" />
           </AssociationSet>
-          <AssociationSet Name="FK_match_players_match" Association="Self.FK_match_players_match">
-            <End Role="Match" EntitySet="Match" />
-            <End Role="match_players" EntitySet="match_players" />
-          </AssociationSet>
           <AssociationSet Name="FK_Matches_Player" Association="Self.FK_Matches_Player">
             <End Role="Player" EntitySet="Player" />
             <End Role="Match" EntitySet="Match" />
@@ -732,10 +695,6 @@
           <AssociationSet Name="FK_match_minigame_minigame" Association="Self.FK_match_minigame_minigame">
             <End Role="Minigame" EntitySet="Minigame" />
             <End Role="match_minigames" EntitySet="match_minigames" />
-          </AssociationSet>
-          <AssociationSet Name="FK_players_player" Association="Self.FK_players_player">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="match_players" EntitySet="match_players" />
           </AssociationSet>
           <AssociationSet Name="FK__Token__player_id__04E4BC85" Association="Self.FK__Token__player_id__04E4BC85">
             <End Role="Player" EntitySet="Player" />
@@ -749,6 +708,15 @@
             <End Role="Card" EntitySet="Card" />
             <End Role="Tile" EntitySet="Tile" />
           </AssociationSet>
+          <EntitySet Name="MatchPlayers" EntityType="Forbbiden_FEIModel.MatchPlayers" />
+          <AssociationSet Name="FK_match_players_match1" Association="Forbbiden_FEIModel.FK_match_players_match1">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="MatchPlayers" EntitySet="MatchPlayers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_players_player1" Association="Forbbiden_FEIModel.FK_players_player1">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="MatchPlayers" EntitySet="MatchPlayers" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Tile_Card_id">
           <End Type="Forbbiden_FEIModel.Card" Role="Card" Multiplicity="0..1" />
@@ -759,6 +727,42 @@
             </Principal>
             <Dependent Role="Tile">
               <PropertyRef Name="treasure_card_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MatchPlayers">
+          <Key>
+            <PropertyRef Name="match_players_id" />
+          </Key>
+          <Property Name="match_players_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="match_id" Type="Int32" Nullable="false" />
+          <Property Name="player_id" Type="Int32" Nullable="false" />
+          <Property Name="row" Type="Int32" />
+          <Property Name="col" Type="Int32" />
+          <NavigationProperty Name="Match" Relationship="Forbbiden_FEIModel.FK_match_players_match1" FromRole="MatchPlayers" ToRole="Match" />
+          <NavigationProperty Name="Player" Relationship="Forbbiden_FEIModel.FK_players_player1" FromRole="MatchPlayers" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK_match_players_match1">
+          <End Type="Forbbiden_FEIModel.Match" Role="Match" Multiplicity="1" />
+          <End Type="Forbbiden_FEIModel.MatchPlayers" Role="MatchPlayers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+            </Principal>
+            <Dependent Role="MatchPlayers">
+              <PropertyRef Name="match_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_players_player1">
+          <End Type="Forbbiden_FEIModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="Forbbiden_FEIModel.MatchPlayers" Role="MatchPlayers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="player_id" />
+            </Principal>
+            <Dependent Role="MatchPlayers">
+              <PropertyRef Name="player_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -829,15 +833,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="match_players">
-            <EntityTypeMapping TypeName="Forbbiden_FEIModel.match_players">
-              <MappingFragment StoreEntitySet="match_players">
-                <ScalarProperty Name="match_players_id" ColumnName="match_players_id" />
-                <ScalarProperty Name="match_id" ColumnName="match_id" />
-                <ScalarProperty Name="player_id" ColumnName="player_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Minigame">
             <EntityTypeMapping TypeName="Forbbiden_FEIModel.Minigame">
               <MappingFragment StoreEntitySet="Minigame">
@@ -901,6 +896,17 @@
                 <ScalarProperty Name="treasure_id" ColumnName="treasure_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchPlayers">
+            <EntityTypeMapping TypeName="Forbbiden_FEIModel.MatchPlayers">
+              <MappingFragment StoreEntitySet="MatchPlayers">
+                <ScalarProperty Name="col" ColumnName="col" />
+                <ScalarProperty Name="row" ColumnName="row" />
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="match_players_id" ColumnName="match_players_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
