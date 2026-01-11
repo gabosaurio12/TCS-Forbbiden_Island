@@ -117,7 +117,7 @@ namespace Forbbiden.Server.logic
                     ExceptionHandler.HandleSmtpException(ex, classMethod);
                 }
             }
-            
+
             return success;
         }
 
@@ -409,7 +409,7 @@ namespace Forbbiden.Server.logic
         public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
             if (avatarBytes == null || avatarBytes.Length == 0)
-            { 
+            {
                 throw new FaultException("Avatar vacío o nulo.");
             }
             try
@@ -478,7 +478,7 @@ namespace Forbbiden.Server.logic
             }
             return input;
         }
-        
+
         private static bool SaveUpdateChanges(Forbidden_FEIEntities db)
         {
             bool success = false;
@@ -530,7 +530,7 @@ namespace Forbbiden.Server.logic
                         }));
                     }
 
-                    success = SaveUpdateChanges(db);                                        
+                    success = SaveUpdateChanges(db);
                 }
                 catch (EntityException ex)
                 {
