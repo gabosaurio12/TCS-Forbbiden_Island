@@ -16,7 +16,7 @@ namespace Forbbiden.Client.View.info
     {
         private readonly int PlayerID;
         public event Action OnVerified;
-        private bool IsPasswordChange;
+        private readonly bool IsPasswordChange;
 
         public VerificationWindow()
         {
