@@ -11,7 +11,7 @@ namespace Forbbiden.Client.Repositories
     public class ProfileRepository
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileRepository));
-        private readonly ProfileManagerClient ProfileClient = new ProfileManagerClient();
+        private static readonly ProfileManagerClient ProfileClient = new ProfileManagerClient();
 
         public async Task<bool> IsEmailAvailable(string email)
         {
@@ -128,12 +128,17 @@ namespace Forbbiden.Client.Repositories
             catch (FaultException<Fault> ex)
             {
                 Log.Error("ProfileRepository.LoginPlayer", ex);
-                throw new ViewException(ServerErrorCodes.pullingDataError);
+                throw new ViewException(ServerErrorCodes.pushingDataError);
             }
             catch (TimeoutException ex)
             {
                 Log.Error("ProfileRepository.LoginPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.LoginPlayer", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return player;
@@ -160,7 +165,7 @@ namespace Forbbiden.Client.Repositories
             return player;
         }
 
-        public async Task<Player> GetPlayerById(int playerId, bool includeFriends)
+        public static async Task<Player> GetPlayerById(int playerId, bool includeFriends)
         {
             Player player;
             try
@@ -287,7 +292,7 @@ namespace Forbbiden.Client.Repositories
             return avatarFileName;
         }
 
-        public async Task<byte[]> DownloadAvatar(string avatarFileName)
+        public static async Task<byte[]> DownloadAvatar(string avatarFileName)
         {
             byte[] avatarBytes;
             try

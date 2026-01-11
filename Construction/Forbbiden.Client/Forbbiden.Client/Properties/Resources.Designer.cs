@@ -322,11 +322,47 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while communicating with the server, try again later please.
+        /// </summary>
+        public static string error_communication {
+            get {
+                return ResourceManager.GetString("error_communication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You tried to upload an invalid avatar.
+        /// </summary>
+        public static string error_invalid_avatar {
+            get {
+                return ResourceManager.GetString("error_invalid_avatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading matches: {0}.
         /// </summary>
         public static string error_loading_matches {
             get {
                 return ResourceManager.GetString("error_loading_matches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while processing the image.
+        /// </summary>
+        public static string error_processing_image {
+            get {
+                return ResourceManager.GetString("error_processing_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while synchronizing the game with the server or the other players.
+        /// </summary>
+        public static string error_sending_callback {
+            get {
+                return ResourceManager.GetString("error_sending_callback", resourceCulture);
             }
         }
         
@@ -354,6 +390,15 @@ namespace Forbbiden.Client.Properties {
         public static string error_update_database {
             get {
                 return ResourceManager.GetString("error_update_database", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error while uploading the avatar.
+        /// </summary>
+        public static string error_uploading_avatar {
+            get {
+                return ResourceManager.GetString("error_uploading_avatar", resourceCulture);
             }
         }
         

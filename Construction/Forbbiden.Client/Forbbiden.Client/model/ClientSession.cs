@@ -1,6 +1,6 @@
 ﻿using Forbbiden.Client.ProfileManager;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Model
 {
     public static class ClientSession
     {

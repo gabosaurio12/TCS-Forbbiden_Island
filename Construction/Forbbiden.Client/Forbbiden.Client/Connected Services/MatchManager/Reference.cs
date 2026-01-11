@@ -221,6 +221,9 @@ namespace Forbbiden.Client.MatchManager {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int BoardIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int CapacityField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -251,6 +254,19 @@ namespace Forbbiden.Client.MatchManager {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int BoardId {
+            get {
+                return this.BoardIdField;
+            }
+            set {
+                if ((this.BoardIdField.Equals(value) != true)) {
+                    this.BoardIdField = value;
+                    this.RaisePropertyChanged("BoardId");
+                }
             }
         }
         

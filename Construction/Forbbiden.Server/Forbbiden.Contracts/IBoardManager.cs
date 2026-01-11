@@ -1,35 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Forbbiden.Contracts
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IBoardManager" in both code and config file together.
     [ServiceContract]
     public interface IBoardManager
     {
         [OperationContract]
-        List<String> GetTileImages();
+        [FaultContract(typeof(Fault))]
+        bool CreateBoard(List<Tile> tiles, int matchId);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
+        Board GetBoard(int matchId);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
+        List<Tile> RegisterBoardTiles(List<Tile> boardTiles);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
+        List<Tile> GetBoardTiles(int matchId);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Card> GetTreasureCards();
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Card> GetFloodCards();
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         Card GetCard(string path);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
+        Card GetCardById(int cardId);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnBoardCreatedCallback(string boardJson, List<string> usernames);
+        
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnBoardUpdatedCallback(string boardJson, List<string> usernames);
+        
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnPlayersTurnCallback(string username);
 
         [OperationContract]
-        void SendOnTurnFinishedCallback(string boardJson, List<string> usernames);
+        [FaultContract(typeof(Fault))]
+        void SendOnTurnFinishedCallback(string boardJson, List<string> usernames);  
     }
 
     [DataContract]
@@ -62,5 +86,49 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public string ImagePath { get; set; }
+    }
+
+    [DataContract]
+    public class Board
+    {
+        [DataMember]
+        public int BoardId { get; set; }
+
+        [DataMember]
+        public int MatchId { get; set; }
+
+        [DataMember]
+        public List<Tile> Tiles { get; set; }
+    }
+
+    [DataContract]
+    public class Tile
+    {
+        [DataMember]
+        public int TileId { get; set; }
+
+        [DataMember]
+        public int Column { get; set; }
+
+        [DataMember]
+        public int Row { get; set; }
+
+        [DataMember]
+        public bool IsFlood { get; set; }
+
+        [DataMember]
+        public bool IsTreasure { get; set; }
+
+        [DataMember]
+        public bool IsEscape { get; set; }
+
+        [DataMember]
+        public bool IsLost { get; set; }
+
+        [DataMember]
+        public Card TreasureCard { get; set; }
+
+        [DataMember]
+        public string ImageFileName { get; set; }
     }
 }

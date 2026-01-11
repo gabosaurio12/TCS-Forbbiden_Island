@@ -1,5 +1,5 @@
 ﻿using Forbbiden.Client.GameManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
 using log4net;
 using System;
@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     public partial class LeaveMenuPage : Page
     {

@@ -1,7 +1,7 @@
-﻿using Forbbiden.Client.logic.board.states;
-using Forbbiden.Client.view.games;
+﻿using Forbbiden.Client.Logic.Board.States;
+using Forbbiden.Client.View.Games;
 
-namespace Forbbiden.Client.logic.board
+namespace Forbbiden.Client.Logic.Board
 {
     public class BoardStateContext
     {

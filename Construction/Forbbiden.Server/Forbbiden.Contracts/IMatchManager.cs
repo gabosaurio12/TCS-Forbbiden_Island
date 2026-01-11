@@ -55,6 +55,9 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public List<PlayerInfo> Players { get; set; } = new List<PlayerInfo>();
+
+        [DataMember]
+        public int BoardId { get; set; }
     }
 
     [DataContract]

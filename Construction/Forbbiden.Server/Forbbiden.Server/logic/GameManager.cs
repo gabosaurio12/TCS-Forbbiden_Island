@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -375,7 +376,7 @@ namespace Forbbiden.Server.logic
             if (!int.TryParse(matchId, out int mid)) return int.MinValue;
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     var player = db.Player.FirstOrDefault(p => p.player_username == username);
                     int playerId;
@@ -424,7 +425,7 @@ namespace Forbbiden.Server.logic
             if (!int.TryParse(matchId, out int mid)) return;
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     var rows = db.match_players.Where(mp => mp.match_id == mid && mp.player_id == playerId).ToList();
                     if (rows.Any())
