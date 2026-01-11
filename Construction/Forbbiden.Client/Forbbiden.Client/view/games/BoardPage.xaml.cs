@@ -57,26 +57,35 @@ namespace Forbbiden.Client.View.Games
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
+            SubscribeCallbacks();
             InitAttributes();
             _ = InitCardsStacks();
             InitGif();
-            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username);
-
-            KeyDown += BoardPage_KeyDown;
-            Focusable = true;
-            Focus();
 
             InitBoardPage(match);
-            BoardControl.TileClickedOnBoard += OnTileClickedFromBoard;
+            InitKeyHandlers();
         }
 
         public BoardPage()
         {
             InitializeComponent();
+            SubscribeCallbacks();
             InitAttributes();
             InitGif();
 
+            SetBoard();
+            InitKeyHandlers();
             PlayerLogic.MatchBoardPage = this;
+        }
+
+        private void SubscribeCallbacks()
+        {
+            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username);
+
+            MatchNotificationsSingleton.Instance.OnBoardCreated += PlayerLogic.RefreshBoardFromJSON;
+            MatchNotificationsSingleton.Instance.OnBoardUpdated += PlayerLogic.RefreshBoardFromJSON;
+            MatchNotificationsSingleton.Instance.OnPlayersTurn += PlayerLogic.OnTurnStarted;
+            MatchNotificationsSingleton.Instance.OnTurnFinished += PlayerLogic.OnTurnFinishedCallbackReceived;
         }
 
         private void InitAttributes()
@@ -112,21 +121,31 @@ namespace Forbbiden.Client.View.Games
             ImageBehavior.SetAnimatedSource(gifBackground, gif);
         }
 
-        private void InitBoardPage(MatchManager.Match match)
+        private void InitKeyHandlers()
+        {
+            KeyDown += BoardPage_KeyDown;
+            Focusable = true;
+            Focus();
+
+            BoardControl.TileClickedOnBoard += OnTileClickedFromBoard;
+        }
+
+        private async void InitBoardPage(MatchManager.Match match)
         {
             SetBoard();
+            await BoardControl.FillBoardTiles();
             SetPlayersAvatars(match.Players.ToList());
 
             HostLogic.SetBoardPage(this);
             HostLogic.SetPlayersTurnOrder(match.Players.ToList());
             PlayerLogic.MatchBoardPage = this;
+            
             HostLogic.SendBoardToPlayers(match);
         }
 
         private void SetBoard()
         {
             BoardControl = new UserControlBoard();
-            BoardControl.GenerateBoard();
             Grid.SetColumn(BoardControl, 1);
             Grid.SetRow(BoardControl, 0);
 
@@ -161,20 +180,6 @@ namespace Forbbiden.Client.View.Games
                 {
                     ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
-            }
-        }
-
-        public void ReloadPage(BoardPage page)
-        {
-            TreasuresCaptured = page.TreasuresCaptured;
-            TreasureStack = page.TreasureStack;
-            TreasureDiscardStack = page.TreasureDiscardStack;
-            FloodStack = page.FloodStack;
-            FloodDiscardStack = page.FloodDiscardStack;
-
-            foreach(UserControlTile tile in page.BoardControl.boardGrid.Children)
-            {
-                BoardControl.SetTile(tile);
             }
         }
 

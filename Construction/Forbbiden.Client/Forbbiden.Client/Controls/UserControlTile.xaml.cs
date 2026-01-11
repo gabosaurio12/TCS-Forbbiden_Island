@@ -63,7 +63,7 @@ namespace Forbbiden.Client.Controls
             ImageFileName = tile.ImageFileName;
             BorderBrush = tile.BorderBrush;
 
-            var image = ViewUtils.GetBitmapImage(ImageFileName);
+            var image = ViewUtils.GetTileBitmapImageFromFileName(ImageFileName);
             SetImage(image);
             ResetBorder();
         }
@@ -72,6 +72,7 @@ namespace Forbbiden.Client.Controls
         {
             TreasureCard = treasureCard;
             Border = EnterBorder = DefaultWhite;
+            ImageFileName = TreasureCard.ImagePath;
             SetImage(imageBitmap);
             RefreshBorderBrush();
         }
@@ -80,6 +81,7 @@ namespace Forbbiden.Client.Controls
         {
             TreasureCard = treasureCard;
             Border = EnterBorder = RedColor;
+            ImageFileName = TreasureCard.ImagePath;
             SetImage(treasureBitmap);
             RefreshBorderBrush();
             IsTreasure = true;
@@ -89,6 +91,7 @@ namespace Forbbiden.Client.Controls
         {
             TreasureCard = treasureCard;
             Border = EnterBorder = EscapeBlue;
+            ImageFileName = TreasureCard.ImagePath;
             SetImage(treasureBitmap);
             RefreshBorderBrush();
             IsEscapeTile = true;
@@ -111,8 +114,8 @@ namespace Forbbiden.Client.Controls
 
         public void RefreshTile()
         {
-            RefreshBorderBrush();
-            SetImage(ViewUtils.GetBitmapImage(ImageFileName));
+            ResetBorder();
+            SetImage(ViewUtils.GetTileBitmapImageFromFileName(ImageFileName));
         }
 
         public void ResetBorder()

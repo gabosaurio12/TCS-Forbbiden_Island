@@ -179,6 +179,7 @@
     <Compile Include="Logic\Board\States\ShoreState.cs" />
     <Compile Include="Logic\Board\States\StandByState.cs" />
     <Compile Include="Logic\Board\States\UseCardState.cs" />
+    <Compile Include="Model\CardDto.cs" />
     <Compile Include="Model\ClientSession.cs" />
     <Compile Include="Logic\FriendsNotificationSingleton.cs" />
     <Compile Include="Logic\GameServiceCallback.cs" />

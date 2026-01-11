@@ -1,5 +1,4 @@
 ﻿using Forbbiden.Client.BoardManager;
-using Forbbiden.Client.Controls;
 using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
@@ -15,24 +14,15 @@ namespace Forbbiden.Client.Logic
     public class PlayerLogic
     {
         public static BoardPage MatchBoardPage { get; set; }
-        private static List<string> PlayersUsername = new List<string>();
+        private static readonly List<string> PlayersUsername = new List<string>();
         private static int MatchId;
 
-        protected PlayerLogic()
-        {
-            MatchNotificationsSingleton.Instance.OnBoardCreated += CreateBoardPageFromJSON;
-            MatchNotificationsSingleton.Instance.OnBoardUpdated += RefreshBoardFromJSON;
-            MatchNotificationsSingleton.Instance.OnPlayersTurn += OnTurnStarted;
-            MatchNotificationsSingleton.Instance.OnTurnFinished += OnTurnFinishedCallbackReceived;
-        }
-
-        private async Task<List<Tile>> GetBoardTilesFromRepo()
+        private static async Task<List<Tile>> GetBoardTilesFromRepo()
         {
             List<Tile> tiles = new List<Tile>();
             try
             {
                 tiles = await BoardRepository.GetBoardTiles(MatchId);
-
             }
             catch (ViewException ex)
             {
@@ -42,50 +32,47 @@ namespace Forbbiden.Client.Logic
             return tiles;
         }
 
-        public static async void CreateBoardPageFromJSON(string boardJson)
+        public static async void RefreshBoardFromJSON(string boardJson)
         {
             var auxBoardDto = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
             MatchId = auxBoardDto.MatchId;
 
-            var playerLogic = new PlayerLogic();
-            var boardTiles = await playerLogic.GetBoardTilesFromRepo();
-
-            var boardPage = BoardDtoToBoardPage(auxBoardDto.Board);
-            boardPage.BoardControl.RefreshBoardTiles(boardTiles);
-
-            PlayersUsername = auxBoardDto.PlayersUsernames.ToList();
+            var boardTiles = await GetBoardTilesFromRepo();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MatchBoardPage.ReloadPage(boardPage);
+                MatchBoardPage.TreasuresCaptured = auxBoardDto.Board.TreasureCaptured;
+                MatchBoardPage.WaterLevelCount = auxBoardDto.Board.WaterLevelCount;
+
+                MatchBoardPage.TreasureStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.TreasureStack);
+                MatchBoardPage.TreasureDiscardStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.TreasureDiscardStack);
+                MatchBoardPage.FloodStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.FloodStack);
+                MatchBoardPage.FloodDiscardStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.FloodDiscardStack);
+
+                MatchBoardPage.BoardControl.RefreshBoardTiles(boardTiles);
             });
         }
 
-        private static BoardPage BoardDtoToBoardPage(BoardPageDto board)
+        private static List<Card> ConvertCardDtoToCardList(List<CardDto> cardsDto)
         {
-            var boardControl = new UserControlBoard();
-            return new BoardPage
+            List<Card> cards = new List<Card>();
+            foreach (CardDto cardDto in cardsDto)
             {
-                TreasuresCaptured = board.TreasureCaptured,
-                WaterLevelCount = board.WaterLevelCount,
+                cards.Add(new Card()
+                {
+                    CardId = cardDto.CardId,
+                    Description = cardDto.Description,
+                    ImagePath = cardDto.ImagePath,
+                    Name = cardDto.Name,
+                    Type = cardDto.Type,
+                });
+            }
 
-                TreasureStack = board.TreasureStack,
-                TreasureDiscardStack = board.TreasureDiscardStack,
-                FloodStack = board.FloodStack,
-                FloodDiscardStack = board.FloodDiscardStack,
-
-                BoardControl = boardControl
-            };
-        }
-
-        public static void RefreshBoardFromJSON(string boardJson)
-        {
-            var auxBoard = JsonSerializer.Deserialize<BoardPage>(boardJson);
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                MatchBoardPage.ReloadPage(auxBoard);
-            });
+            return cards;
         }
 
         public static void OnTurnStarted()
@@ -100,8 +87,12 @@ namespace Forbbiden.Client.Logic
         {
             var client = new BoardManagerClient();
             var boardDto = BoardPageToDto();
-            BoardPageCallbackDto page = new BoardPageCallbackDto(
-                boardDto, MatchId, PlayersUsername.ToArray());
+            BoardPageCallbackDto page = new BoardPageCallbackDto()
+            {
+                Board = boardDto,
+                MatchId = MatchId,
+                PlayersUsernames = PlayersUsername.ToArray()
+            };
             string pageJson = HostLogic.CreateCallbackBoardPageJSON(page);
             client.SendOnTurnFinishedCallback(pageJson, PlayersUsername.ToArray());
         }
@@ -125,11 +116,29 @@ namespace Forbbiden.Client.Logic
                 TreasureCaptured = MatchBoardPage.TreasuresCaptured,
                 WaterLevelCount = MatchBoardPage.WaterLevelCount,
 
-                TreasureStack = MatchBoardPage.TreasureStack,
-                TreasureDiscardStack = MatchBoardPage.TreasureDiscardStack,
-                FloodStack = MatchBoardPage.FloodStack,
-                FloodDiscardStack = MatchBoardPage.FloodDiscardStack
+                TreasureStack = ConvertCardToCardDtoList(MatchBoardPage.TreasureStack),
+                TreasureDiscardStack = ConvertCardToCardDtoList(MatchBoardPage.TreasureDiscardStack),
+                FloodStack = ConvertCardToCardDtoList(MatchBoardPage.FloodStack),
+                FloodDiscardStack = ConvertCardToCardDtoList(MatchBoardPage.FloodDiscardStack)
             };
+        }
+
+        private static List<CardDto> ConvertCardToCardDtoList(List<Card> cards)
+        {
+            List<CardDto> cardsDto = new List<CardDto>();
+            foreach (Card card in cards)
+            {
+                cardsDto.Add(new CardDto()
+                {
+                    CardId = card.CardId,
+                    Description = card.Description,
+                    ImagePath = card.ImagePath,
+                    Name = card.Name,
+                    Type = card.Type,
+                });
+            }
+
+            return cardsDto;
         }
     }
 }

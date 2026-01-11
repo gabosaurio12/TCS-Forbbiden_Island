@@ -8,12 +8,5 @@ namespace Forbbiden.Client.Model
         public int MatchId { get; set; }
 
         public string[] PlayersUsernames { get; set; }
-
-        public BoardPageCallbackDto(BoardPageDto boardPage, int matchId, string[] usernames)
-        {
-            Board = boardPage;
-            MatchId = matchId;
-            PlayersUsernames = usernames;
-        }
     }
 }
