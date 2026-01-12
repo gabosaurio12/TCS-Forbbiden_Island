@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Forbbiden.Client.Model;
 
 namespace Forbbiden.Client
 {

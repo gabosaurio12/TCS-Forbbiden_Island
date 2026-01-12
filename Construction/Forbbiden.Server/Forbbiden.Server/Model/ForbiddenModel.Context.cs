@@ -13,6 +13,7 @@ namespace Forbbiden.Server.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
+<<<<<<< HEAD
     public partial class Forbbiden_FEIEntities : DbContext
     {
         public Forbbiden_FEIEntities()
@@ -25,6 +26,20 @@ namespace Forbbiden.Server.Model
         {
         }
 
+=======
+    public partial class Forbidden_FEIEntities : DbContext
+    {
+        public Forbidden_FEIEntities()
+            : base("name=Forbidden_FEIEntities")
+        {
+        }
+
+        public Forbidden_FEIEntities(string connectionString) 
+            : base(connectionString)
+        {
+        }
+    
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -36,12 +51,26 @@ namespace Forbbiden.Server.Model
         public virtual DbSet<Match> Match { get; set; }
         public virtual DbSet<match_cards> match_cards { get; set; }
         public virtual DbSet<match_minigames> match_minigames { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<MatchPlayers> MatchPlayers { get; set; }
+=======
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         public virtual DbSet<Minigame> Minigame { get; set; }
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<PlayerSocialmedia> PlayerSocialmedia { get; set; }
         public virtual DbSet<Tile> Tile { get; set; }
         public virtual DbSet<Token> Token { get; set; }
+<<<<<<< HEAD
+<<<<<<<< HEAD:Construction/Forbbiden.Server/Forbbiden.Server/Model/ForbiddenModel.Context.cs
         public virtual DbSet<Treasure> Treasure { get; set; }
+========
+        public virtual DbSet<Board> Board { get; set; }
+        public virtual DbSet<Match> Match { get; set; }
+        public virtual DbSet<PlayerSocialmedia> PlayerSocialmedia { get; set; }
+>>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2:Construction/Model/ForbbidenModel.Context.cs
+=======
+        public virtual DbSet<Treasure> Treasure { get; set; }
+        public virtual DbSet<MatchPlayers> MatchPlayers { get; set; }
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
     }
 }

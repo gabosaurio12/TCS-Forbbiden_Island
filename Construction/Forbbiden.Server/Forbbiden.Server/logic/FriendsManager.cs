@@ -11,8 +11,6 @@ using System.ServiceModel;
 
 namespace Forbbiden.Server.logic
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "FriendsManager" in both code and config file together.
-
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class FriendsManager : IFriendsManager
     {
@@ -26,7 +24,7 @@ namespace Forbbiden.Server.logic
         public bool AcceptFriendRequest(string senderUsername, string receiverUsername)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -95,13 +93,13 @@ namespace Forbbiden.Server.logic
 
         public bool SendFriendRequest(string senderUsername, string receiverUsername)
         {
-            bool success = false;
+            bool success = true;
 
             var (sender, receiver) = GetSenderReceiver(senderUsername, receiverUsername);
 
             if (sender.PlayerId != -1 && receiver.PlayerId != -1)
             { 
-                using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
                 {
                     Friends searchFriendRequest = new Friends();
                     try
@@ -131,6 +129,7 @@ namespace Forbbiden.Server.logic
                         }
                         catch (EntityException ex)
                         {
+                            success = false;
                             string classMethod = "FriendsManager.SendFriendRequest";
                             ExceptionHandler.HandleEntityException(ex, classMethod);
                         }
@@ -142,7 +141,7 @@ namespace Forbbiden.Server.logic
                             Status = 0
                         };
 
-                        success = FriendsNotificationManager.SendRequestCallback(friendRequestCallback, receiverUsername);
+                        FriendsNotificationManager.SendRequestCallback(friendRequestCallback, receiverUsername);
                     }
                 }
             }
@@ -154,7 +153,7 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
             
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -187,7 +186,7 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var profileClient = new ProfileManager();
                 try
@@ -208,10 +207,10 @@ namespace Forbbiden.Server.logic
                         {
                             db.Friends.Remove(friendship);
                             db.SaveChanges();
+                            success = true;
 
                             FriendsNotificationManager.SendRefreshPageCallback(new FriendRequest(), friendUsername);
 
-                            success = true;
                         }
                     }
                 }
@@ -227,7 +226,7 @@ namespace Forbbiden.Server.logic
 
         public List<FriendRequest> GetFriendRequests(string receiverUsername)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -265,7 +264,7 @@ namespace Forbbiden.Server.logic
 
         public List<Friendship> GetFriendsByID(int playerID)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var friends = new List<Friends>();
                 try

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Forbbiden.Client.view.info
+namespace Forbbiden.Client.View.info
 {
     /// <summary>
     /// Interaction logic for NotificationWindow.xaml

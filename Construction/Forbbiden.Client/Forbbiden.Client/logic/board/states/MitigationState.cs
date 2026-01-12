@@ -1,10 +1,12 @@
 ﻿using Forbbiden.Client.BoardManager;
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Repositories;
 using log4net;
 using System.ServiceModel;
 using System.Windows;
 
-namespace Forbbiden.Client.logic.board.states
+namespace Forbbiden.Client.Logic.Board.States
 {
     public class MitigationState : IBoardState
     {
@@ -24,15 +26,15 @@ namespace Forbbiden.Client.logic.board.states
             Context.Board.ShowInteractiveTiles(tiles);
         }
 
-        private void DiscardMitigationCard()
+        private async void DiscardMitigationCard()
         {
             string path = "mitigation.png";
             Card card;
             try
             {
-                card = new BoardManagerClient().GetCard(path);
+                card = await BoardRepository.GetCard(path);
             }
-            catch (FaultException<Fault> ex)
+            catch (ViewException ex)
             {
                 string methodClass = "MitigationState.DiscardMitigationCard";
                 Log.Error(methodClass, ex);

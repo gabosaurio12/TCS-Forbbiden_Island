@@ -1,13 +1,13 @@
 ﻿using Forbbiden.Client.BoardManager;
-using Forbbiden.Client.logic;
-using Forbbiden.Client.model;
+using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
-using log4net;
+using Forbbiden.Client.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -19,12 +19,9 @@ namespace Forbbiden.Client.Controls
     /// </summary>
     public partial class UserControlBoard : UserControl
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserControlBoard));
-
         public readonly int NumberOfTreasures = 4;
         private readonly string TilesImagesPath;
         private readonly string ImagesPath;
-        private readonly BoardManagerClient Client = new BoardManagerClient();
 
         public UserControlBoard()
         {
@@ -37,14 +34,13 @@ namespace Forbbiden.Client.Controls
             TilesImagesPath = System.IO.Path.Combine(
                 ImagesPath, "tiles");
 
-            GenerateBoard();
+            BuildBoard();
         }
 
-        public void GenerateBoard()
+        public async Task FillBoardTiles()
         {
-            BuildBoard();
-            SetTreasureTiles();
-            SetNonTreasureTiles();
+            await SetTreasureTiles();
+            await SetNonTreasureTiles();
         }
 
         private void BuildBoard()
@@ -106,6 +102,8 @@ namespace Forbbiden.Client.Controls
         {
             return boardGrid.Children
                 .OfType<UserControlTile>()
+                .OrderBy(t => Grid.GetRow(t))
+                .ThenBy(t => Grid.GetColumn(t))
                 .ToList();
         }
 
@@ -124,7 +122,7 @@ namespace Forbbiden.Client.Controls
                 .Where(t => t.IsFlood).ToList();
         }
 
-        private void SetTreasureTiles()
+        private async Task SetTreasureTiles()
         {
             List<UserControlTile> innerTiles = GetInnerTilesFromGrid();
             var shuffledTiles = innerTiles.OrderBy(
@@ -136,9 +134,9 @@ namespace Forbbiden.Client.Controls
                 Card treasureCard = null;
                 try
                 {
-                    treasureCard = Client.GetCard(treasureImage);
+                    treasureCard = await BoardRepository.GetCard(treasureImage);
                 }
-                catch (FaultException<Fault> ex)
+                catch (ViewException ex)
                 {
                     string classMethod = "UserControlBoard.SetTreasureTiles";
                     Log.Error(classMethod, ex);
@@ -151,48 +149,47 @@ namespace Forbbiden.Client.Controls
             }
         }
 
+        private async Task SetNonTreasureTiles()
+        {
+            List<Card> tilesCards;
+            try
+            {
+                tilesCards = await BoardRepository.GetFloodCards();
+            }
+            catch (ViewException ex)
+            {
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                return;
+            }
+            var shuffledTilesCards = MatchLogic.ShuffleCards(tilesCards.ToList());
+            List<UserControlTile> tiles = GetAllTilesFromGrid();
+            var nonTreasureTiles = tiles.Where(t => !t.IsTreasure).ToList();
+            int count = Math.Min(nonTreasureTiles.Count, shuffledTilesCards.Count);
+
+            for (int i = 0; i < count; i++)
+            {
+                AddTileImageAndCardInfo(shuffledTilesCards[i], nonTreasureTiles[i]);
+            }         
+        }
+
         private void AddTileImageAndCardInfo(Card cardTile, UserControlTile tile)
         {
-            string escapeCardName = "entrance-name";
-            if (cardTile.Name == escapeCardName)
-            {
-                tile.SetTileAsEscape();
-            }
-
             string tileImage = cardTile.ImagePath;
             string tileImagePath = System.IO.Path.Combine(TilesImagesPath, tileImage);
             var tileBitmap = ViewUtils.GetBitmapImage(tileImagePath);
 
-            tile.ImageFileName = tileImage;
-            tile.SetImage(tileBitmap);               
-        }
-
-        private void SetNonTreasureTiles()
-        {
-            List<UserControlTile> tiles = GetAllTilesFromGrid();
-            Card[] tilesCards;
-            try
+            string escapeCardName = "entrance-name";
+            if (cardTile.Name == escapeCardName)
             {
-                tilesCards = Client.GetFloodCards();
+                tile.SetTileAsEscape(tileBitmap, cardTile);
             }
-            catch (FaultException<Fault> ex)
+            else
             {
                 string classMethod = "UserControlBoard.SetNonTreasureTiles";
                 Log.Error(classMethod, ex);
                 //ViewUtils.ShowPullError(Window.GetWindow(this));
                 return;
             }
-            var shuffledTilesCards = MatchLogic.ShuffleCards(tilesCards.ToList());
-
-            int tileIndex = 0;
-            foreach (var tile in tiles)
-            {
-                if (!tile.IsTreasure)
-                {
-                    AddTileImageAndCardInfo(shuffledTilesCards[tileIndex], tile);
-                    tileIndex++;
-                }
-            }          
         }
 
         public void AddPlayerAvatar(Player player, UserControlTile tile)
@@ -203,6 +200,14 @@ namespace Forbbiden.Client.Controls
             //spawnTile.tileGrid.Children.Add(boardAvatar);
         }
 
+        public void AddPlayerWithDefaultAvatar(UserControlTile tile)
+        {
+            Ellipse boardAvatar = ViewUtils.GetDefaultAvatarEllipse();
+
+            var spawnTile = GetTile(tile.Row, tile.Col);
+            spawnTile.tileGrid.Children.Add(boardAvatar);
+        }
+
         public event EventHandler<TileClickedEventArgs> TileClickedOnBoard;
 
         private void OnTileClicked(object sender, TileClickedEventArgs e)
@@ -210,29 +215,29 @@ namespace Forbbiden.Client.Controls
             TileClickedOnBoard?.Invoke(this, e);
         }
 
-        public void SetAllTiles(List<TileDto> tiles)
+        public void RefreshBoardTiles(List<Tile> tiles)
         {
-            var currentTiles = GetAllTilesFromGrid();
-            var tileLookup = currentTiles.ToDictionary(t => (t.Row, t.Col));
-
-            foreach (var dto in tiles)
+            foreach (var tile in tiles)
             {
-                if (!tileLookup.TryGetValue((dto.Row, dto.Column), out var tile))
+                var tileToRefresh = GetTile(tile.Row, tile.Column);
+                if (tileToRefresh != null)
                 {
-                    continue;
+                    SetTileDataToUserControlTile(tile, tileToRefresh);
+                    tileToRefresh.RefreshTile();
                 }
-
-                tile.TreasureCard = dto.TreasureCard;
-                tile.IsTreasure = dto.IsTreasure;
-                tile.IsFlood = dto.IsFlood;
-                tile.IsLost = dto.IsLost;
-                tile.IsEscapeTile = dto.IsEscapeTile;
-                tile.ImageFileName = dto.ImageFileName;
-
-                var image = ViewUtils.GetBitmapImage(tile.ImageFileName);
-                tile.SetImage(image);
-                tile.ResetBorder();
             }
+        }
+
+        private void SetTileDataToUserControlTile(Tile tile, UserControlTile controlTile)
+        {
+            controlTile.Row = tile.Row;
+            controlTile.Col = tile.Column;
+            controlTile.IsFlood = tile.IsFlood;
+            controlTile.IsEscapeTile = tile.IsEscape;
+            controlTile.IsTreasure = tile.IsTreasure;
+            controlTile.IsLost = tile.IsLost;
+            controlTile.ImageFileName = tile.ImageFileName;
+            controlTile.TreasureCard = tile.TreasureCard;
         }
     }
 }

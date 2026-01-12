@@ -2,8 +2,9 @@
 using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.ProfileManager;
-using Forbbiden.Client.view.games;
+using Forbbiden.Client.View.Games;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.IO.Path;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     public partial class LobbyPage : Page
     {
@@ -46,7 +47,8 @@ namespace Forbbiden.Client.view
 
         private List<string> PreviousPlayers = new List<string>();
 
-        private readonly Dictionary<string, bool> ReadyStates = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, bool> ReadyStates = 
+            new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
         private readonly object ReadyLock = new object();
 
         private readonly string[] SlotUser = new string[4];
@@ -88,8 +90,10 @@ namespace Forbbiden.Client.view
 
             PlayersUpdatedHandler = OnPlayersUpdatedProxy;
             ChatMessageHandler = (p, m) => Dispatcher.BeginInvoke(new Action(() => ShowChatMessageFromServer(p, m)));
-            GameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => AddChatLine($"{Properties.Resources.system_prefix}: {Properties.Resources.countdown_starting}")));
-            ReadyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(new Action(() => OnReadyStateChanged(user, isReady)));
+            GameStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => AddChatLine(
+                $"{Properties.Resources.system_prefix}: {Properties.Resources.countdown_starting}")));
+            ReadyStateHandler = (user, isReady) => Dispatcher.BeginInvoke(
+                new Action(() => OnReadyStateChanged(user, isReady)));
             MatchStartingHandler = () => Dispatcher.BeginInvoke(new Action(() => OnMatchStarting()));
 
             if (Callback != null)
@@ -190,7 +194,7 @@ namespace Forbbiden.Client.view
             try
             {
                 var matchClient = new MatchManagerClient();
-                MatchManager.Match match = null;
+                Match match = null;
                 try
                 {
                     match = await Task.Run(() => matchClient.GetMatchById(MatchId));
@@ -745,7 +749,7 @@ namespace Forbbiden.Client.view
             try
             {
                 var mClient = new MatchManagerClient();
-                MatchManager.Match match = null;
+                Match match = null;
                 try
                 {
                     match = await Task.Run(() => mClient.GetMatchById(matchId));
@@ -757,8 +761,10 @@ namespace Forbbiden.Client.view
 
                 if (match != null && isLoaded)
                 {
-                    
-                    NavigationService?.Navigate(new BoardPage(match));
+                    if (ClientSession.Username == match.HostUsername)
+                        NavigationService?.Navigate(new BoardPage(match));
+                    else
+                        NavigationService?.Navigate(new BoardPage());
                 }
             }
             catch (Exception ex)

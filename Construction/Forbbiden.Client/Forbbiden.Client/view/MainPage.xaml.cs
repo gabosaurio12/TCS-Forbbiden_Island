@@ -1,18 +1,16 @@
 ﻿using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.view;
-using Forbbiden.Client.view.info;
+using Forbbiden.Client.View;
+using Forbbiden.Client.View.info;
 using log4net;
 using System;
-using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Forbbiden.Client
 {
@@ -26,11 +24,11 @@ namespace Forbbiden.Client
         public MainPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
 
             ProfileRepo = new ProfileRepository();
 
             _ = SetLogin();
-            SetBackground(background);
         }
 
         private async Task SetLogin()
@@ -39,7 +37,7 @@ namespace Forbbiden.Client
 
             if (playerId > 0)
             {
-                ProfileManager.Player currentLogin = await ProfileRepo.GetPlayerById(playerId, false);
+                ProfileManager.Player currentLogin = await ProfileRepository.GetPlayerById(playerId, false);
 
                 if (currentLogin.PlayerId > 0)
                 {
@@ -47,32 +45,12 @@ namespace Forbbiden.Client
                     await ReloadMainPage(currentLogin);
                     profileButton.Visibility = Visibility.Visible;
                     friendsButton.Visibility = Visibility.Visible;
-
-                    FriendsNotificationSingleton.Instance.Subscribe(ClientSession.Username);
                 }
             }
             else
             {
                 ClientSession.SetGuestSession();
                 logInButton.Visibility = Visibility.Visible;
-            }
-        }
-
-        private static void SetBackground(ImageBrush background)
-        {
-            DateTime currentTime = DateTime.Now;
-            string ampm = currentTime.ToString("tt", CultureInfo.InvariantCulture).ToLower();
-            if (ampm == "pm")
-            {
-                string darkBackground = "FEI MainPage3.png";
-                string projectDir = Directory.GetParent(
-                AppDomain.CurrentDomain.BaseDirectory).
-                Parent.Parent.FullName;
-                string imagesPath = Path.Combine(
-                    projectDir, "Images");
-                string backgroundPath = Path.Combine(
-                    imagesPath, darkBackground);
-                background.ImageSource = ViewUtils.GetBitmapImage(backgroundPath);
             }
         }
 
@@ -85,7 +63,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("MainPage.PlayButton_Click", ex);
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -98,7 +76,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("MainPage.SettingsButton_Click", ex);
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -117,7 +95,7 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
                 Log.Error("MainPage.ProfileButton_Click", ex);
             }
         }
@@ -130,7 +108,7 @@ namespace Forbbiden.Client
             }
             catch (Exception ex)
             {
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
                 Log.Error("MainPage.LogInButton_Click", ex);
             }
         }
@@ -145,7 +123,7 @@ namespace Forbbiden.Client
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (isConnected)
@@ -178,7 +156,7 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("MainPage.ReloadMainPage", ex);
-                ErrorsNotificationManager.HandlePageLoadError(Window.GetWindow(this));
+                ExceptionViewManager.HandlePageLoadError(Window.GetWindow(this));
             }
         }
 
@@ -199,12 +177,12 @@ namespace Forbbiden.Client
                 ProfileManager.Player updatedPlayer = null;
                 try
                 {
-                    updatedPlayer = await new ProfileRepository().GetPlayerById(
+                    updatedPlayer = await ProfileRepository.GetPlayerById(
                         player.PlayerId, false);
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (updatedPlayer != null && updatedPlayer.PlayerId != -1)
@@ -231,7 +209,7 @@ namespace Forbbiden.Client
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (result)

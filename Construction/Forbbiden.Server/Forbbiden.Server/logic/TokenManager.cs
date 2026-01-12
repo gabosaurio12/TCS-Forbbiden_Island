@@ -2,7 +2,6 @@
 using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
-using log4net;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -12,7 +11,6 @@ using System.Text;
 
 namespace Forbbiden.Server.logic
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "TokenManager" in both code and config file together.
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
 
     public class TokenManager : ITokenManager
@@ -48,7 +46,7 @@ namespace Forbbiden.Server.logic
 
         private void RemoveExistingToken(int playerId)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -72,7 +70,7 @@ namespace Forbbiden.Server.logic
             string randomTokenString = CreateRandomToken();
             bool success = false;
             RemoveExistingToken(playerId);
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 do
                 {
@@ -119,7 +117,7 @@ namespace Forbbiden.Server.logic
 
         public Contracts.Token GetToken(int playerId)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var searchToken = db.Token.FirstOrDefault(t => t.player_id == playerId);
                 if (searchToken != null)
@@ -142,7 +140,7 @@ namespace Forbbiden.Server.logic
         public bool VerifyToken(string token, int playerId)
         {
             bool isTokenCorrect = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {

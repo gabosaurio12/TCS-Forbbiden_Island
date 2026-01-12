@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Repositories;
@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     public partial class JoinGameControl : UserControl
     {

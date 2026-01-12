@@ -9,7 +9,7 @@
         Title="LoginPage" >
 
     <Page.Background>
-        <ImageBrush ImageSource="/Images/FEI MainPage3.png" Stretch="Fill"/>
+        <ImageBrush x:Name="background" ImageSource="/Images/FEIMainPageDay.png" Stretch="Fill"/>
     </Page.Background>
 
     <Viewbox Stretch="Uniform">
@@ -79,7 +79,6 @@
                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                             </CheckBox.LayoutTransform>
                         </CheckBox>
-                        <!--<Button x:Name="btnTogglePassword" Content="{x:Static p:Resources.show_password}" Width="50" Height="25" Margin="5" Click="btnTogglePassword_Click"/> -->
                     </StackPanel>
                 </StackPanel>
 

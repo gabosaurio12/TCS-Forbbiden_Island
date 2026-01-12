@@ -28,10 +28,10 @@ namespace Forbbiden.Server.utils
                         instance = new ConnectionStringSingleton();
                         DotEnv.Load();
 
-                        string forbbidenUser = Environment.GetEnvironmentVariable("FORBBIDEN_USER");
-                        string forbbidenPass = Environment.GetEnvironmentVariable("FORBBIDEN_PASS");
-                        string forbbidenHost = Environment.GetEnvironmentVariable("FORBBIDEN_HOST");
-                        string forbbidenDB = Environment.GetEnvironmentVariable("FORBBIDEN_DB");
+                        string forbbidenUser = Environment.GetEnvironmentVariable("FORBIDDEN_USER");
+                        string forbbidenPass = Environment.GetEnvironmentVariable("FORBIDDEN_PASS");
+                        string forbbidenHost = Environment.GetEnvironmentVariable("FORBIDDEN_HOST");
+                        string forbbidenDB = Environment.GetEnvironmentVariable("FORBIDDEN_DB");
 
                         string sqlConnectionString =
                             $"data source={forbbidenHost};initial catalog={forbbidenDB};user id={forbbidenUser};password={forbbidenPass};" +

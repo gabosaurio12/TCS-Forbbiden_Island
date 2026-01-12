@@ -51,7 +51,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     int hostId = db.Player
                         .Where(p => p.player_username == request.HostUsername)
@@ -68,7 +68,7 @@ namespace Forbbiden.Server.logic
                         match_difficulty = request.Difficulty,
                         match_visibility = request.Visibility,
                         host_id = hostId,
-                        created_at = DateTime.Now
+                        created_at = DateTime.Now,
                     };
 
                     db.Configuration.AutoDetectChangesEnabled = false;
@@ -136,7 +136,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     Model.Match match = null;
 
@@ -214,7 +214,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     var matches = (from m in db.Match
                                    join host in db.Player on m.host_id equals host.player_id
@@ -259,7 +259,7 @@ namespace Forbbiden.Server.logic
             Contracts.Match match = new Contracts.Match();
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     match = (from m in db.Match
                              join host in db.Player on m.host_id equals host.player_id
@@ -306,7 +306,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(connectionString))
+                using (var db = new Forbidden_FEIEntities(connectionString))
                 {
                     using (var tx = db.Database.BeginTransaction())
                     {

@@ -1,10 +1,9 @@
 ﻿using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
-using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.view.info;
+using Forbbiden.Client.View.info;
 using log4net;
 using Microsoft.Win32;
 using System;
@@ -14,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Forbbiden.Client.Logic;
 
 namespace Forbbiden.Client
 {
@@ -183,7 +183,7 @@ namespace Forbbiden.Client
                 if (!usernameValidationResults.IsValid)
                 {
                     txtBkUsername.Foreground = Brushes.Red;
-                    ErrorsNotificationManager.ShowUsernameValidationErrors(
+                    ExceptionViewManager.ShowUsernameValidationErrors(
                         usernameValidationResults.Errors, Window.GetWindow(this));
                     isValid = false;
                 }
@@ -195,7 +195,7 @@ namespace Forbbiden.Client
                 if (!emailValidationResults.IsValid)
                 {
                     txtBkEmail.Foreground = Brushes.Red;
-                    ErrorsNotificationManager.ShowEmailValidationErrors(
+                    ExceptionViewManager.ShowEmailValidationErrors(
                         emailValidationResults.Errors, Window.GetWindow(this));
                     isValid = false;
                 }
@@ -254,7 +254,7 @@ namespace Forbbiden.Client
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (!saved)
@@ -284,7 +284,7 @@ namespace Forbbiden.Client
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (refreshed != null && refreshed.PlayerId > 0)

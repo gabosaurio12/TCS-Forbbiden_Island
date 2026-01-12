@@ -1,13 +1,14 @@
-﻿using Forbbiden.Client.view.info;
+﻿using Forbbiden.Client.View.info;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
     public static class ViewUtils
     {
@@ -33,6 +34,28 @@ namespace Forbbiden.Client.logic
 
             return ellipse;
         }
+
+        public static Ellipse GetDefaultAvatarEllipse()
+        {
+            var avatarBitmap = GetDefaultAvatarBrush().ImageSource as BitmapImage;
+
+            Ellipse ellipse = new Ellipse
+            {
+                Width = 70,
+                Height = 70,
+                Stroke = Brushes.LightGray,
+                StrokeThickness = 5,
+                Margin = new Thickness(0, 0, 0, 0),
+                Fill = new ImageBrush
+                {
+                    ImageSource = avatarBitmap,
+                    Stretch = Stretch.UniformToFill
+                }
+            };
+
+            return ellipse;
+        }
+
         public static BitmapImage GetBitmapImage(string imagePath)
         {
             var bmp = new BitmapImage();
@@ -44,6 +67,52 @@ namespace Forbbiden.Client.logic
             bmp.Freeze();
 
             return bmp;
+        }
+
+        public static BitmapImage GetBitmapImageFromFileName(string imagePath)
+        {
+            string fullImagePath = System.IO.Path.Combine(GetProjectDir(), "Images",  imagePath);
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.UriSource = new Uri(fullImagePath, UriKind.Absolute);
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.EndInit();
+            bmp.Freeze();
+
+            return bmp;
+        }
+
+        public static BitmapImage GetTileBitmapImageFromFileName(string imagePath)
+        {
+            string fullImagePath = System.IO.Path.Combine(GetProjectDir(), "Images", "tiles", imagePath);
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.UriSource = new Uri(fullImagePath, UriKind.Absolute);
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.EndInit();
+            bmp.Freeze();
+
+            return bmp;
+        }
+
+        public static void SetBackground(ImageBrush background)
+        {
+            DateTime currentTime = DateTime.Now;
+            string ampm = currentTime.ToString("tt", CultureInfo.InvariantCulture).ToLower();
+            if (ampm == "pm")
+            {
+                string darkBackground = "FEIMainPageNight.png";
+                string projectDir = Directory.GetParent(
+                AppDomain.CurrentDomain.BaseDirectory).
+                Parent.Parent.FullName;
+                string imagesPath = System.IO.Path.Combine(
+                    projectDir, "Images");
+                string backgroundPath = System.IO.Path.Combine(
+                    imagesPath, darkBackground);
+                background.ImageSource = ViewUtils.GetBitmapImage(backgroundPath);
+            }
         }
 
         public static byte[] GetDecodedPixelBitmapImage(
@@ -140,6 +209,14 @@ namespace Forbbiden.Client.logic
             {
                 return null;
             }
+        }
+
+        public static ImageBrush GetDefaultAvatarBrush()
+        {
+            string projectDir = GetProjectDir();
+            string defaultAvatarPath = System.IO.Path.Combine(projectDir, "Images", "defaultAvatar.png");
+            ImageBrush defaultAvatarBrush = GetImageBrush(defaultAvatarPath);
+            return defaultAvatarBrush;
         }
 
         public static string GetProjectDir()

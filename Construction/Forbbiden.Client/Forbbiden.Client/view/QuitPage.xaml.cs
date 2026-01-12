@@ -1,17 +1,14 @@
 ﻿using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
-using Forbbiden.Client.ProfileManager;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using log4net;
-using System.Collections.Generic;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for QuitPage.xaml
@@ -23,6 +20,7 @@ namespace Forbbiden.Client.view
         public QuitPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
 
             if (ClientSession.CurrentPlayerId > 0)
             {
@@ -40,7 +38,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
         }
 

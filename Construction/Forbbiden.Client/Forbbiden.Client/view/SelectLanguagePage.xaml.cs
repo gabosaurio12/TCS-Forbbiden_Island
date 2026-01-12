@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forbbiden.Client.Logic;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,6 +13,7 @@ namespace Forbbiden.Client
         public SelectLanguagePage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
         }
         private void EnglishButton_Click(object sender, RoutedEventArgs e)
         {

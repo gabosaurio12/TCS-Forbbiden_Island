@@ -1,48 +1,78 @@
 ﻿using Forbbiden.Client.BoardManager;
-using Forbbiden.Client.Controls;
-using Forbbiden.Client.model;
-using Forbbiden.Client.view.games;
+using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.Model;
+using Forbbiden.Client.Repositories;
+using Forbbiden.Client.View.Games;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
     public class PlayerLogic
     {
         public static BoardPage MatchBoardPage { get; set; }
-        private static List<string> PlayersUsername = new List<string>();
+        private static readonly List<string> PlayersUsername = new List<string>();
+        private static int MatchId;
 
-        protected PlayerLogic()
+        private static async Task<List<Tile>> GetBoardTilesFromRepo()
         {
-            MatchNotificationsSingleton.Instance.OnBoardCreated += CreateBoardPageFromJSON;
-            MatchNotificationsSingleton.Instance.OnBoardUpdated += RefreshBoardFromJSON;
-            MatchNotificationsSingleton.Instance.OnPlayersTurn += OnTurnStarted;
-            MatchNotificationsSingleton.Instance.OnTurnFinished += OnTurnFinishedCallbackReceived;
+            List<Tile> tiles = new List<Tile>();
+            try
+            {
+                tiles = await BoardRepository.GetBoardTiles(MatchId);
+            }
+            catch (ViewException ex)
+            {
+                ExceptionViewManager.ShowViewExceptionNotification(
+                    ex, Window.GetWindow(MatchBoardPage));
+            }
+            return tiles;
         }
 
-        public static void CreateBoardPageFromJSON(string boardJson)
+        public static async void RefreshBoardFromJSON(string boardJson)
         {
-            var auxBoard = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
-            var boardPage = BoardDtoToBoardPage(auxBoard.Board);
-            MatchBoardPage = boardPage;
-            PlayersUsername = auxBoard.PlayersUsernames.ToList();
+            var auxBoardDto = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
+            MatchId = auxBoardDto.MatchId;
+
+            var boardTiles = await GetBoardTilesFromRepo();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MatchBoardPage.ReloadPage(boardPage);
+                MatchBoardPage.TreasuresCaptured = auxBoardDto.Board.TreasureCaptured;
+                MatchBoardPage.WaterLevelCount = auxBoardDto.Board.WaterLevelCount;
+
+                MatchBoardPage.TreasureStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.TreasureStack);
+                MatchBoardPage.TreasureDiscardStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.TreasureDiscardStack);
+                MatchBoardPage.FloodStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.FloodStack);
+                MatchBoardPage.FloodDiscardStack = ConvertCardDtoToCardList(
+                    auxBoardDto.Board.FloodDiscardStack);
+
+                MatchBoardPage.BoardControl.RefreshBoardTiles(boardTiles);
             });
         }
 
-        public static void RefreshBoardFromJSON(string boardJson)
+        private static List<Card> ConvertCardDtoToCardList(List<CardDto> cardsDto)
         {
-            var auxBoard = JsonSerializer.Deserialize<BoardPage>(boardJson);
-
-            Application.Current.Dispatcher.Invoke(() =>
+            List<Card> cards = new List<Card>();
+            foreach (CardDto cardDto in cardsDto)
             {
-                MatchBoardPage.ReloadPage(auxBoard);
-            });
+                cards.Add(new Card()
+                {
+                    CardId = cardDto.CardId,
+                    Description = cardDto.Description,
+                    ImagePath = cardDto.ImagePath,
+                    Name = cardDto.Name,
+                    Type = cardDto.Type,
+                });
+            }
+
+            return cards;
         }
 
         public static void OnTurnStarted()
@@ -57,8 +87,12 @@ namespace Forbbiden.Client.logic
         {
             var client = new BoardManagerClient();
             var boardDto = BoardPageToDto();
-            BoardPageCallbackDto page = new BoardPageCallbackDto(
-                boardDto, PlayersUsername.ToArray());
+            BoardPageCallbackDto page = new BoardPageCallbackDto()
+            {
+                Board = boardDto,
+                MatchId = MatchId,
+                PlayersUsernames = PlayersUsername.ToArray()
+            };
             string pageJson = HostLogic.CreateCallbackBoardPageJSON(page);
             client.SendOnTurnFinishedCallback(pageJson, PlayersUsername.ToArray());
         }
@@ -75,53 +109,36 @@ namespace Forbbiden.Client.logic
             RefreshBoardFromJSON(boardJson);
         }
 
-        private static BoardPage BoardDtoToBoardPage(BoardPageDto board)
-        {
-            var boardControl = new UserControlBoard();
-            boardControl.SetAllTiles(board.Tiles);
-
-            return new BoardPage
-            {
-                ActionsRemain = board.ActionsRemain,
-                TreasuresCaptured = board.TreasureCaptured,
-                WaterLevelCount = board.WaterLevelCount,
-
-                TreasureStack = board.TreasureStack,
-                TreasureDiscardStack = board.TreasureDiscardStack,
-                FloodStack = board.FloodStack,
-                FloodDiscardStack = board.FloodDiscardStack,
-
-                BoardControl = boardControl
-            };
-        }
-
         private static BoardPageDto BoardPageToDto()
         {
             return new BoardPageDto
             {
-                ActionsRemain = MatchBoardPage.ActionsRemain,
                 TreasureCaptured = MatchBoardPage.TreasuresCaptured,
                 WaterLevelCount = MatchBoardPage.WaterLevelCount,
 
-                TreasureStack = MatchBoardPage.TreasureStack,
-                TreasureDiscardStack = MatchBoardPage.TreasureDiscardStack,
-                FloodStack = MatchBoardPage.FloodStack,
-                FloodDiscardStack = MatchBoardPage.FloodDiscardStack,
-
-                Tiles = MatchBoardPage.BoardControl.GetAllTilesFromGrid()
-                    .Select(t => new TileDto
-                    {
-                        Row = t.Row,
-                        Column = t.Col,
-                        IsFlood = t.IsFlood,
-                        IsLost = t.IsLost,
-                        IsTreasure = t.IsTreasure,
-                        IsEscapeTile = t.IsEscapeTile,
-                        ImageFileName = t.ImageFileName,
-                        TreasureCard = t.TreasureCard
-                    })
-                    .ToList()
+                TreasureStack = ConvertCardToCardDtoList(MatchBoardPage.TreasureStack),
+                TreasureDiscardStack = ConvertCardToCardDtoList(MatchBoardPage.TreasureDiscardStack),
+                FloodStack = ConvertCardToCardDtoList(MatchBoardPage.FloodStack),
+                FloodDiscardStack = ConvertCardToCardDtoList(MatchBoardPage.FloodDiscardStack)
             };
+        }
+
+        private static List<CardDto> ConvertCardToCardDtoList(List<Card> cards)
+        {
+            List<CardDto> cardsDto = new List<CardDto>();
+            foreach (Card card in cards)
+            {
+                cardsDto.Add(new CardDto()
+                {
+                    CardId = card.CardId,
+                    Description = card.Description,
+                    ImagePath = card.ImagePath,
+                    Name = card.Name,
+                    Type = card.Type,
+                });
+            }
+
+            return cardsDto;
         }
     }
 }

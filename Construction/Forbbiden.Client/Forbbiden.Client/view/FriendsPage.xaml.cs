@@ -15,8 +15,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Collections.Generic;
+using Forbbiden.Client.Model;
+using System.IO;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for FriendsPage.xaml
@@ -29,12 +31,14 @@ namespace Forbbiden.Client.view
         public FriendsPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
 
             ProfileRepo = new ProfileRepository();
             FriendsRepo = new FriendsRepository();
 
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
             FriendsNotificationSingleton.Instance.OnRefreshPage += RefreshFriends;
+            FriendsNotificationSingleton.Instance.Subscribe(ClientSession.Username);
 
             _ = SetFriends();
             _ = SetFriendRequests();
@@ -75,7 +79,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (player.PlayerId > 0)
@@ -128,7 +132,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
             if (requests.Count > 0)
             {
@@ -158,7 +162,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (isDeleted)
@@ -191,7 +195,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (friend.PlayerId > 0)
@@ -264,7 +268,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (receiver.PlayerId > 0)
@@ -278,7 +282,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
 
                 }
 

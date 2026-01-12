@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
     internal class AudioManager : IDisposable
     {

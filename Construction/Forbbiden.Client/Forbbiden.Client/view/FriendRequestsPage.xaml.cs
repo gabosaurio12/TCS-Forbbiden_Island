@@ -1,19 +1,21 @@
 ﻿using Forbbiden.Client.Controls;
 using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Xml.Linq;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for FriendRequestsPage.xaml
@@ -27,10 +29,12 @@ namespace Forbbiden.Client.view
         public FriendRequestsPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
 
             ProfileRepo = new ProfileRepository();
             FriendsRepo = new FriendsRepository();
 
+            FriendsNotificationSingleton.Instance.Subscribe(ClientSession.Username);
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
 
             _ = SetRequests();
@@ -61,7 +65,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (requests.Count > 0)
@@ -102,7 +106,7 @@ namespace Forbbiden.Client.view
                     }
                     catch (ViewException ex)
                     {
-                        ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                        ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                         NavigationService?.Navigate(new FriendsPage());
                     }
                 }
@@ -134,7 +138,7 @@ namespace Forbbiden.Client.view
                     }
                     catch (ViewException ex)
                     {
-                        ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                        ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                         NavigationService?.Navigate(new FriendsPage());
                     }
                 }
@@ -154,11 +158,11 @@ namespace Forbbiden.Client.view
             var friend = new ProfileManager.Player();
             try
             {
-                friend = await ProfileRepo.GetPlayerById(request.SenderID, false);
+                friend = await ProfileRepository.GetPlayerById(request.SenderID, false);
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
 
                 NavigationService?.Navigate(new FriendsPage());
             }
@@ -166,12 +170,37 @@ namespace Forbbiden.Client.view
             var avatarImage = await AvatarsManager.Instance.GetAvatarBrushAsync(friend.PlayerUsername);
             requestControl.SetAvatarImage(requestControl.avatarEllipse, avatarImage);
 
+            bool downloaded = await DownloadFriendImage(avatarPath);
+            ImageBrush avatarImage;
+
+            if (!downloaded)
+            {
+                avatarImage = ViewUtils.GetDefaultAvatarBrush();
+            }
+            else
+            {
+                avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            }
+
+            requestControl.SetAvatarImage(requestControl.avatarEllipse, avatarImage);
             requestControl.SetFriendUsername(requestControl.friendUsernametxtBk, friend.PlayerUsername);
 
             requestControl.acceptBtn.Click += AcceptButton_Click;
             requestControl.rejectBtn.Click += RejectButton_Click;
 
             requestsStack.Children.Add(requestControl);
+        }
+
+        private async Task<bool> DownloadFriendImage(string avatarPath)
+        {
+            bool downloaded = false;
+            if (!File.Exists(avatarPath))
+            {
+                var bytes = await ProfileRepository.DownloadAvatar(Path.GetFileName(avatarPath));
+                downloaded = bytes.Length > 0;
+            }
+
+            return downloaded;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -206,7 +235,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 NavigationService?.Navigate(new FriendsPage());
             }
 
@@ -220,7 +249,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                     NavigationService?.Navigate(new FriendsPage());
                 }
 

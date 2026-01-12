@@ -26,7 +26,7 @@ namespace Forbbiden.Test
             testPlayer = new Player
             {
                 PlayerUsername = "testUser",
-                PlayerPassword = HashTestPass,
+                PlayerPassword = "T3st_pass",
                 PlayerEmail = "testuser@email.net"
             };
 

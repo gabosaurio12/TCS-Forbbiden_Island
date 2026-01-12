@@ -1,5 +1,5 @@
 ﻿using Forbbiden.Client.BoardManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +22,7 @@ namespace Forbbiden.Client.Controls
         public bool IsFlood { get; set; }
         public bool IsLost { get; set; }
         public bool IsEscapeTile { get; set; }
+        public string ImageFileName { get; set; }
 
         public Color DefaultWhite { get; }
         public Color EscapeBlue { get; }
@@ -29,8 +30,6 @@ namespace Forbbiden.Client.Controls
         public Color Border { get; set; }
         public Color EnterBorder { get; set; }
         public Color RedColor { get; set; }
-
-        public string ImageFileName { get; set; }
 
         public UserControlTile()
         {
@@ -64,23 +63,36 @@ namespace Forbbiden.Client.Controls
             ImageFileName = tile.ImageFileName;
             BorderBrush = tile.BorderBrush;
 
-            var image = ViewUtils.GetBitmapImage(ImageFileName);
+            var image = ViewUtils.GetTileBitmapImageFromFileName(ImageFileName);
             SetImage(image);
             ResetBorder();
+        }
+
+        public void SetTileAsNormal(BitmapImage imageBitmap, Card treasureCard)
+        {
+            TreasureCard = treasureCard;
+            Border = EnterBorder = DefaultWhite;
+            ImageFileName = TreasureCard.ImagePath;
+            SetImage(imageBitmap);
+            RefreshBorderBrush();
         }
 
         public void SetTileAsTreasure(BitmapImage treasureBitmap, Card treasureCard)
         {
             TreasureCard = treasureCard;
             Border = EnterBorder = RedColor;
+            ImageFileName = TreasureCard.ImagePath;
             SetImage(treasureBitmap);
             RefreshBorderBrush();
             IsTreasure = true;
         }
 
-        public void SetTileAsEscape()
+        public void SetTileAsEscape(BitmapImage treasureBitmap, Card treasureCard)
         {
+            TreasureCard = treasureCard;
             Border = EnterBorder = EscapeBlue;
+            ImageFileName = TreasureCard.ImagePath;
+            SetImage(treasureBitmap);
             RefreshBorderBrush();
             IsEscapeTile = true;
         }
@@ -98,6 +110,12 @@ namespace Forbbiden.Client.Controls
         public void RefreshBorderBrush()
         {
             tile.BorderBrush = new SolidColorBrush(Border);
+        }
+
+        public void RefreshTile()
+        {
+            ResetBorder();
+            SetImage(ViewUtils.GetTileBitmapImageFromFileName(ImageFileName));
         }
 
         public void ResetBorder()

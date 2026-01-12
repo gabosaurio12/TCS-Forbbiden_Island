@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.ServiceModel;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Forbbiden.Server.logic
@@ -35,7 +36,7 @@ namespace Forbbiden.Server.logic
 
             try
             {
-                using (var db = new Forbbiden_FEIEntities(ConnectionString))
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
                 {
                     var emailResult = db.Player.FirstOrDefault(p => p.player_email == email);
                     return emailResult == null;
@@ -57,7 +58,7 @@ namespace Forbbiden.Server.logic
             if (string.IsNullOrWhiteSpace(username))
                 return usernameFound;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -165,13 +166,62 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
+<<<<<<< HEAD
+=======
+        public int SignUp(Contracts.Player player)
+        {
+            int playerId = -1;
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
+            {
+                bool exists = db.Player.Any(p =>
+                    p.player_username == player.PlayerUsername ||
+                    p.player_email == player.PlayerEmail);
+
+                if (exists)
+                {
+                    playerId = -2;
+                    return playerId;
+                }
+
+                string avatar = Path.Combine(DefaultAvatarPath);
+                string normalizedPassword = player.PlayerPassword.Normalize(NormalizationForm.FormC);
+                string password = BCrypt.Net.BCrypt.HashPassword(normalizedPassword);
+                Model.Player newPlayer = new Model.Player
+                {
+                    player_username = player.PlayerUsername,
+                    player_password = password,
+                    player_email = player.PlayerEmail,
+                    player_name = "",
+                    player_avatar = avatar,
+                    player_status = 0,
+                    is_verified = 0
+                };
+                try
+                {
+                    db.Player.Add(newPlayer);
+                    db.SaveChanges();
+
+                    playerId = newPlayer.player_id;
+                    Log.Info("New player signed up");
+                }
+                catch (EntityException ex)
+                {
+                    string classMethod = "ProfileManager.SignUp ";
+                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                }
+            }
+
+            return playerId;
+        }
+
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         public Contracts.Player Login(string username, string password)
         {
             Log.Info("Logging in player");
 
             var player = new Contracts.Player { PlayerId = -1 };
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -179,7 +229,9 @@ namespace Forbbiden.Server.logic
 
                     if (searchPlayer != null)
                     {
-                        if (BCrypt.Net.BCrypt.Verify(password, searchPlayer.player_password))
+                        string normalizedPassword = password.Normalize(NormalizationForm.FormC);
+                        bool passwordIsCorrect = BCrypt.Net.BCrypt.Verify(normalizedPassword, searchPlayer.player_password);
+                        if (passwordIsCorrect)
                         {
                             player = SetPlayer(searchPlayer, false);
                         }
@@ -198,7 +250,11 @@ namespace Forbbiden.Server.logic
             return player;
         }
 
+<<<<<<< HEAD
         public int SignUp(Contracts.Player player)
+=======
+        private Contracts.Player SetPlayer(Model.Player player, bool includeFriends = true)
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         {
             int playerId = -1;
 
@@ -343,7 +399,7 @@ namespace Forbbiden.Server.logic
             Log.Info("Retrieving player by username");
 
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -376,22 +432,25 @@ namespace Forbbiden.Server.logic
         public Contracts.Player GetPlayerById(int playerId, bool includeFriends = true)
         {
             Log.Info("Retrieving player by ID");
-
             Contracts.Player player = null;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+
+            if (playerId > 0)
             {
-                try
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
                 {
-                    var playerResult = db.Player.Find(playerId);
-                    if (playerResult != null)
+                    try
                     {
-                        player = SetPlayer(playerResult, includeFriends);
+                        var playerResult = db.Player.FirstOrDefault(p => p.player_id == playerId);
+                        if (playerResult != null)
+                        {
+                            player = SetPlayer(playerResult, includeFriends);
+                        }
                     }
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.GetPlayerById ";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    catch (EntityException ex)
+                    {
+                        string classMethod = "ProfileManager.GetPlayerById ";
+                        ExceptionHandler.HandleEntityException(ex, classMethod);
+                    }
                 }
             }
 
@@ -408,7 +467,7 @@ namespace Forbbiden.Server.logic
 
         public List<Friendship> GetFriendsByID(int playerID)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var friends = new List<Friends>();
                 try
@@ -441,6 +500,58 @@ namespace Forbbiden.Server.logic
             }
         }
 
+<<<<<<< HEAD
+=======
+        private static string BuildAvatarFilePath(string username, string fileName)
+        {
+            Directory.CreateDirectory(AvatarsDir);
+
+            string extension = ".jpg";
+
+            var maybeExt = Path.GetExtension(fileName);
+            if (!string.IsNullOrEmpty(maybeExt))
+            {
+                extension = maybeExt;
+            }
+
+            var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{extension}";
+            var avatarPath = Path.Combine(AvatarsDir, safeFileName);
+
+            return avatarPath;
+        }
+
+        public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
+        {
+            if (avatarBytes == null || avatarBytes.Length == 0)
+            {
+                throw new FaultException("Avatar vacío o nulo.");
+            }
+            try
+            {
+                var fullPath = BuildAvatarFilePath(username, fileName);
+
+                string avatarsRoot = String.Concat(
+                    Path.GetFullPath(AvatarsDir),
+                    Path.DirectorySeparatorChar);
+
+                var normalizedFullPath = Path.GetFullPath(fullPath);
+
+                if (!normalizedFullPath.StartsWith(avatarsRoot, StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new FaultException("Invalid avatar path");
+                }
+
+                File.WriteAllBytes(normalizedFullPath, avatarBytes);
+                return Path.GetFileName(normalizedFullPath);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("UploadAvatar error", ex);
+                throw new FaultException("Server couldn't save the avatar.");
+            }
+        }
+
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         public byte[] GetAvatar(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
@@ -483,7 +594,11 @@ namespace Forbbiden.Server.logic
             return input;
         }
 
+<<<<<<< HEAD
         private static bool SaveUpdateChanges(Forbbiden_FEIEntities db)
+=======
+        private static bool SaveUpdateChanges(Forbidden_FEIEntities db)
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         {
             bool success = false;
             using (var transaction = db.Database.BeginTransaction())
@@ -507,11 +622,15 @@ namespace Forbbiden.Server.logic
         public bool UpdatePlayer(Contracts.Player updatedPlayer)
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
+<<<<<<< HEAD
                     var formerPlayer = db.Player.Find(updatedPlayer.PlayerId);
+=======
+                    Model.Player formerPlayer = db.Player.Find(updatedPlayer.PlayerId);
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
                     if (formerPlayer == null) return false;
 
                     formerPlayer.player_name = updatedPlayer.PlayerName;
@@ -529,9 +648,10 @@ namespace Forbbiden.Server.logic
 
                     formerPlayer.is_verified = updatedPlayer.IsVerified;
 
-                    if (ClearSocials(formerPlayer))
+                    if (ClearSocials(formerPlayer, db))
                     {
                         db.PlayerSocialmedia.AddRange(
+<<<<<<< HEAD
                             updatedPlayer.SocialMedia
                                 .Where(s => !string.IsNullOrWhiteSpace(s.SocialLink))
                                 .Select(s => new PlayerSocialmedia
@@ -540,6 +660,16 @@ namespace Forbbiden.Server.logic
                                     social_link = s.SocialLink,
                                     player_id = formerPlayer.player_id
                                 }));
+=======
+                        updatedPlayer.SocialMedia
+                        .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
+                        .Select(social => new PlayerSocialmedia
+                        {
+                            social_media_name = social.SocialMediaName,
+                            social_link = social.SocialLink,
+                            player_id = formerPlayer.player_id
+                        }));
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
                     }
 
                     success = SaveUpdateChanges(db);
@@ -552,13 +682,19 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
+<<<<<<< HEAD
         public bool ClearSocials(Model.Player player)
+=======
+        public bool ClearSocials(Model.Player player, Forbidden_FEIEntities db)
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         {
             bool success = false;
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            try
             {
-                try
+                var socials = db.PlayerSocialmedia.Where(s => s.player_id == player.player_id).ToList();
+                foreach (var social in socials)
                 {
+<<<<<<< HEAD
                     var socials = db.PlayerSocialmedia.Where(s => s.player_id == player.player_id).ToList();
                     foreach (var social in socials)
                     {
@@ -571,7 +707,17 @@ namespace Forbbiden.Server.logic
                 {
                     string classMethod = "ProfileManager.ClearSocials ";
                     ExceptionHandler.HandleEntityException(ex, classMethod);
+=======
+                    db.PlayerSocialmedia.Remove(social);
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
                 }
+                db.SaveChanges();
+                success = true;
+            }
+            catch (EntityException ex)
+            {
+                string classMethod = "ProfileManager.ClearSocials ";
+                ExceptionHandler.HandleEntityException(ex, classMethod);
             }
 
             return success;
@@ -583,7 +729,7 @@ namespace Forbbiden.Server.logic
 
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -617,7 +763,7 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var player = new Model.Player();
                 try
@@ -644,7 +790,7 @@ namespace Forbbiden.Server.logic
         {
             bool success = false;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 var player = new Model.Player();
                 try
