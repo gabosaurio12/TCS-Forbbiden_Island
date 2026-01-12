@@ -87,6 +87,12 @@ namespace Forbbiden.Client.ProfileManager {
         private Forbbiden.Client.ProfileManager.Friendship[] FriendsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GuestIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IsVerifiedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -135,6 +141,32 @@ namespace Forbbiden.Client.ProfileManager {
                 if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
                     this.FriendsField = value;
                     this.RaisePropertyChanged("Friends");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GuestId {
+            get {
+                return this.GuestIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GuestIdField, value) != true)) {
+                    this.GuestIdField = value;
+                    this.RaisePropertyChanged("GuestId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGuest {
+            get {
+                return this.IsGuestField;
+            }
+            set {
+                if ((this.IsGuestField.Equals(value) != true)) {
+                    this.IsGuestField = value;
+                    this.RaisePropertyChanged("IsGuest");
                 }
             }
         }

@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://100.101.13.68:8086/FriendsNotificationManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="2c249880-e936-42f1-8e81-34dc2ebbcdb5" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="aef5e1a9-2bd2-4ebb-9f48-81fede50120b" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="65892638-0e8c-4902-955f-db0081184758" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="2c0e8487-ae66-491d-b17a-e7b14c180ed0" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service11.wsdl" MetadataType="Wsdl" ID="63f44f9d-9b2d-4cd2-a27b-bd61ea52fbf7" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service22.xsd" MetadataType="Schema" ID="13d60536-7702-459e-ade0-0cfc7f76d071" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="service23.xsd" MetadataType="Schema" ID="1d6b160f-9432-40c3-aaa5-f1f23324d47c" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8086/FriendsNotificationManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts11.xsd" MetadataType="Schema" ID="d6320d36-85b5-4301-b333-cef29b3d2d25" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8086/FriendsNotificationManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

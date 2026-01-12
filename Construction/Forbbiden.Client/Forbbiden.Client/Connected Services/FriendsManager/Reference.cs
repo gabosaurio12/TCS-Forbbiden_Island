@@ -225,10 +225,19 @@ namespace Forbbiden.Client.FriendsManager {
         private Forbbiden.Client.FriendsManager.Friendship[] FriendsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GuestIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IsVerifiedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PlayerAvatarPathField;
+        private byte[] PlayerAvatarBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerAvatarNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlayerEmailField;
@@ -275,6 +284,32 @@ namespace Forbbiden.Client.FriendsManager {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GuestId {
+            get {
+                return this.GuestIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GuestIdField, value) != true)) {
+                    this.GuestIdField = value;
+                    this.RaisePropertyChanged("GuestId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGuest {
+            get {
+                return this.IsGuestField;
+            }
+            set {
+                if ((this.IsGuestField.Equals(value) != true)) {
+                    this.IsGuestField = value;
+                    this.RaisePropertyChanged("IsGuest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int IsVerified {
             get {
                 return this.IsVerifiedField;
@@ -288,14 +323,27 @@ namespace Forbbiden.Client.FriendsManager {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PlayerAvatarPath {
+        public byte[] PlayerAvatarBytes {
             get {
-                return this.PlayerAvatarPathField;
+                return this.PlayerAvatarBytesField;
             }
             set {
-                if ((object.ReferenceEquals(this.PlayerAvatarPathField, value) != true)) {
-                    this.PlayerAvatarPathField = value;
-                    this.RaisePropertyChanged("PlayerAvatarPath");
+                if ((object.ReferenceEquals(this.PlayerAvatarBytesField, value) != true)) {
+                    this.PlayerAvatarBytesField = value;
+                    this.RaisePropertyChanged("PlayerAvatarBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerAvatarName {
+            get {
+                return this.PlayerAvatarNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerAvatarNameField, value) != true)) {
+                    this.PlayerAvatarNameField = value;
+                    this.RaisePropertyChanged("PlayerAvatarName");
                 }
             }
         }

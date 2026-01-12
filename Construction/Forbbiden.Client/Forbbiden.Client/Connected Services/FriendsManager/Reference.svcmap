@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.1.77:8082/FriendsManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://100.101.13.68:8082/FriendsManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service2.wsdl" MetadataType="Wsdl" ID="e300fc91-8f2b-4a38-9ce7-d26f0b82716f" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8082/FriendsManager/mex" />
-    <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="17290018-49c7-4f35-a51f-3bb6b2d706fa" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8082/FriendsManager/mex" />
-    <MetadataFile FileName="service4.xsd" MetadataType="Schema" ID="c66df481-88ba-42d9-8ab3-e8e60b772430" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8082/FriendsManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts2.xsd" MetadataType="Schema" ID="f0b90761-e6f2-4658-a7a8-6dc247ba34be" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8082/FriendsManager/mex" />
+    <MetadataFile FileName="service2.wsdl" MetadataType="Wsdl" ID="ed3132be-872c-49d6-9234-8ee790da7779" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8082/FriendsManager/mex" />
+    <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="01666574-3864-4359-957a-ece21801955b" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8082/FriendsManager/mex" />
+    <MetadataFile FileName="service4.xsd" MetadataType="Schema" ID="8c4c2bce-505b-43e8-867e-ede5b04a2c2e" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8082/FriendsManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts2.xsd" MetadataType="Schema" ID="2d5bf7f1-4136-4c38-bbcd-86850ea2ce39" SourceId="1" SourceUrl="net.tcp://100.101.13.68:8082/FriendsManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -58,18 +58,10 @@ namespace Forbbiden.Client.View.Games
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
-            
-            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username); 
+            SubscribeCallbacks();
             InitAttributes();
-            BoardManagerClient boardClient = new BoardManagerClient();
-            TreasureStack = boardClient.GetTreasureCards().ToList();
-            FloodStack = boardClient.GetFloodCards().ToList();
-            TreasureDiscardStack = new List<Card>();
-            FloodDiscardStack = new List<Card>();
-
-            KeyDown += BoardPage_KeyDown;
-            Focusable = true;
-            Focus();
+            _ = InitCardsStacks();
+            InitGif();
 
             InitBoardPage(match);
             InitKeyHandlers();
@@ -78,8 +70,12 @@ namespace Forbbiden.Client.View.Games
         public BoardPage()
         {
             InitializeComponent();
-            InitGif();
+            SubscribeCallbacks();
             InitAttributes();
+            InitGif();
+
+            SetBoard();
+            InitKeyHandlers();
             PlayerLogic.MatchBoardPage = this;
         }
 
@@ -202,14 +198,17 @@ namespace Forbbiden.Client.View.Games
             MatchLogic.ResetTiles(tiles);
         }
 
-        public void RefreshAvatarTile(TileClickedEventArgs tile)
+        public async void RefreshAvatarTile(TileClickedEventArgs tile)
         {
             ResetTiles();
 
             var moveToTile = BoardControl.GetTile(tile.Row, tile.Column);
-            //Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+            var avatarBrush = await AvatarsManager.Instance.GetAvatarBrushAsync(
+                ClientSession.Username);
+            Ellipse avatar = ViewUtils.GetAvatarEllipse(
+                ViewUtils.GetBitmapImageFromBrush(avatarBrush));
             CurrentTile.ClearAvatar(); 
-            //moveToTile.AddAvatar(avatar);
+            moveToTile.AddAvatar(avatar);
             CurrentTile = moveToTile;
         }
 
