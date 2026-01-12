@@ -36,7 +36,7 @@ namespace Forbbiden.Client.logic.board.states
             {
                 string methodClass = "MitigationState.DiscardMitigationCard";
                 Log.Error(methodClass, ex);
-                ViewUtils.ShowPullError(Window.GetWindow(Context.Board));
+                //ViewUtils.ShowPullError(Window.GetWindow(Context.Board));
                 return;
             }
 

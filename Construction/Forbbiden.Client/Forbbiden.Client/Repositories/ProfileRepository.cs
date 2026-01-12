@@ -73,7 +73,7 @@ namespace Forbbiden.Client.Repositories
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
-            return result;  
+            return result;
         }
 
         public async Task<bool> SendVerificationEmail(string email, string token)
@@ -265,13 +265,12 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<string> UploadAvatar(string username, byte[] avatarBytes, string fileName)
+        public async Task<bool> UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
-            string avatarFileName;
+            bool result;
             try
             {
-                avatarFileName = await ProfileClient.UploadAvatarAsync(
-                    username, avatarBytes, fileName);
+                result = await ProfileClient.UploadAvatarAsync(username, avatarBytes, fileName);
             }
             catch (FaultException<Fault> ex)
             {
@@ -284,28 +283,28 @@ namespace Forbbiden.Client.Repositories
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
-            return avatarFileName;
+            return result;
         }
 
-        public async Task<byte[]> DownloadAvatar(string avatarFileName)
+        public async Task<AvatarResponse> GetAvatarByUsername(string username)
         {
-            byte[] avatarBytes;
+            AvatarResponse avatar;
             try
             {
-                avatarBytes = await ProfileClient.GetAvatarAsync(avatarFileName);
+                avatar = await ProfileClient.GetAvatarByUsernameAsync(username);
             }
             catch (FaultException<Fault> ex)
             {
-                Log.Error("ProfileRepository.DownloadAvatar", ex);
-                throw new ViewException(ServerErrorCodes.avatarDownloadError);
+                Log.Error("ProfileRepository.GetAvatarByUsername", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.DownloadAvatar", ex);
+                Log.Error("ProfileRepository.GetAvatarByUsername", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
 
-            return avatarBytes;
+            return avatar;
         }
     }
 }

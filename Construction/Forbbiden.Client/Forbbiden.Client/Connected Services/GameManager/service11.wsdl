@@ -13,8 +13,8 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IGameManager_JoinGame_InputMessage">
@@ -23,11 +23,17 @@
   <wsdl:message name="IGameManager_JoinGame_OutputMessage">
     <wsdl:part name="parameters" element="tns:JoinGameResponse" />
   </wsdl:message>
+  <wsdl:message name="IGameManager_JoinGame_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q1:Fault" />
+  </wsdl:message>
   <wsdl:message name="IGameManager_LeaveGame_InputMessage">
     <wsdl:part name="parameters" element="tns:LeaveGame" />
   </wsdl:message>
   <wsdl:message name="IGameManager_LeaveGame_OutputMessage">
     <wsdl:part name="parameters" element="tns:LeaveGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_LeaveGame_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q2:Fault" />
   </wsdl:message>
   <wsdl:message name="IGameManager_SendChatMessage_InputMessage">
     <wsdl:part name="parameters" element="tns:SendChatMessage" />
@@ -35,11 +41,17 @@
   <wsdl:message name="IGameManager_SendChatMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendChatMessageResponse" />
   </wsdl:message>
+  <wsdl:message name="IGameManager_SendChatMessage_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:Fault" />
+  </wsdl:message>
   <wsdl:message name="IGameManager_GetPlayers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayers" />
   </wsdl:message>
   <wsdl:message name="IGameManager_GetPlayers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_GetPlayers_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
   </wsdl:message>
   <wsdl:message name="IGameManager_SetReady_InputMessage">
     <wsdl:part name="parameters" element="tns:SetReady" />
@@ -47,17 +59,26 @@
   <wsdl:message name="IGameManager_SetReady_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetReadyResponse" />
   </wsdl:message>
+  <wsdl:message name="IGameManager_SetReady_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
+  </wsdl:message>
   <wsdl:message name="IGameManager_StartMatch_InputMessage">
     <wsdl:part name="parameters" element="tns:StartMatch" />
   </wsdl:message>
   <wsdl:message name="IGameManager_StartMatch_OutputMessage">
     <wsdl:part name="parameters" element="tns:StartMatchResponse" />
   </wsdl:message>
+  <wsdl:message name="IGameManager_StartMatch_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
+  </wsdl:message>
   <wsdl:message name="IGameManager_KickPlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:KickPlayer" />
   </wsdl:message>
   <wsdl:message name="IGameManager_KickPlayer_OutputMessage">
     <wsdl:part name="parameters" element="tns:KickPlayerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_KickPlayer_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
   </wsdl:message>
   <wsdl:message name="IGameManager_OnPlayersUpdated_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnPlayersUpdated" />
@@ -78,30 +99,37 @@
     <wsdl:operation name="JoinGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/JoinGame" message="tns:IGameManager_JoinGame_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/JoinGameResponse" message="tns:IGameManager_JoinGame_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGameManager/JoinGameFaultFault" name="FaultFault" message="tns:IGameManager_JoinGame_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="LeaveGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/LeaveGame" message="tns:IGameManager_LeaveGame_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/LeaveGameResponse" message="tns:IGameManager_LeaveGame_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGameManager/LeaveGameFaultFault" name="FaultFault" message="tns:IGameManager_LeaveGame_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendChatMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/SendChatMessage" message="tns:IGameManager_SendChatMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/SendChatMessageResponse" message="tns:IGameManager_SendChatMessage_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGameManager/SendChatMessageFaultFault" name="FaultFault" message="tns:IGameManager_SendChatMessage_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPlayers">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/GetPlayers" message="tns:IGameManager_GetPlayers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/GetPlayersResponse" message="tns:IGameManager_GetPlayers_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGameManager/GetPlayersFaultFault" name="FaultFault" message="tns:IGameManager_GetPlayers_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SetReady">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/SetReady" message="tns:IGameManager_SetReady_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/SetReadyResponse" message="tns:IGameManager_SetReady_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGameManager/SetReadyFaultFault" name="FaultFault" message="tns:IGameManager_SetReady_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="StartMatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/StartMatch" message="tns:IGameManager_StartMatch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/StartMatchResponse" message="tns:IGameManager_StartMatch_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGameManager/StartMatchFaultFault" name="FaultFault" message="tns:IGameManager_StartMatch_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="KickPlayer">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/KickPlayer" message="tns:IGameManager_KickPlayer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/KickPlayerResponse" message="tns:IGameManager_KickPlayer_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IGameManager/KickPlayerFaultFault" name="FaultFault" message="tns:IGameManager_KickPlayer_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="OnPlayersUpdated">
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/OnPlayersUpdated" message="tns:IGameManager_OnPlayersUpdated_OutputCallbackMessage" />
@@ -131,6 +159,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="LeaveGame">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/LeaveGame" style="document" />
@@ -140,6 +171,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendChatMessage">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/SendChatMessage" style="document" />
@@ -149,6 +183,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetPlayers">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/GetPlayers" style="document" />
@@ -158,6 +195,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SetReady">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/SetReady" style="document" />
@@ -167,6 +207,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="StartMatch">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/StartMatch" style="document" />
@@ -176,6 +219,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="KickPlayer">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/KickPlayer" style="document" />
@@ -185,6 +231,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="OnPlayersUpdated">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/OnPlayersUpdated" style="document" />

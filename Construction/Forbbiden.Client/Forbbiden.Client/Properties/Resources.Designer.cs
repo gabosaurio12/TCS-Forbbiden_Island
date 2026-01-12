@@ -19,7 +19,7 @@ namespace Forbbiden.Client.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -327,6 +327,24 @@ namespace Forbbiden.Client.Properties {
         public static string error_loading_matches {
             get {
                 return ResourceManager.GetString("error_loading_matches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The match was created but you could not join it, please try again later.
+        /// </summary>
+        public static string error_match_created_not_joined {
+            get {
+                return ResourceManager.GetString("error_match_created_not_joined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server is taking too long to respond, please try again later.
+        /// </summary>
+        public static string error_server_timeout {
+            get {
+                return ResourceManager.GetString("error_server_timeout", resourceCulture);
             }
         }
         
@@ -1911,6 +1929,24 @@ namespace Forbbiden.Client.Properties {
         public static string visibility_public_key {
             get {
                 return ResourceManager.GetString("visibility_public_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must be logged in to access this feature..
+        /// </summary>
+        public static string warning_login_permission {
+            get {
+                return ResourceManager.GetString("warning_login_permission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The room name exceeds the character limit and will be truncated..
+        /// </summary>
+        public static string warning_room_char_limit {
+            get {
+                return ResourceManager.GetString("warning_room_char_limit", resourceCulture);
             }
         }
         

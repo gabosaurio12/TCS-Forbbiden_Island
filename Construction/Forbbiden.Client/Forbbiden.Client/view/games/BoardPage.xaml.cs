@@ -58,8 +58,7 @@ namespace Forbbiden.Client.view.games
             InitializeComponent();
             
             MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username); 
-            InitAttributes();
-
+            //InitAttributes();
             BoardManagerClient boardClient = new BoardManagerClient();
             TreasureStack = boardClient.GetTreasureCards().ToList();
             FloodStack = boardClient.GetFloodCards().ToList();
@@ -79,8 +78,7 @@ namespace Forbbiden.Client.view.games
         {
             InitializeComponent();
             InitGif();
-            InitAttributes();
-
+            //InitAttributes();
             PlayerLogic.MatchBoardPage = this;
         }
 
@@ -175,9 +173,9 @@ namespace Forbbiden.Client.view.games
             ResetTiles();
 
             var moveToTile = BoardControl.GetTile(tile.Row, tile.Column);
-            Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+            //Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
             CurrentTile.ClearAvatar(); 
-            moveToTile.AddAvatar(avatar);
+            //moveToTile.AddAvatar(avatar);
             CurrentTile = moveToTile;
         }
 

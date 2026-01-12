@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
@@ -18,6 +18,7 @@ namespace Forbbiden.Server
         public Card()
         {
             this.match_cards = new HashSet<match_cards>();
+            this.Tile = new HashSet<Tile>();
         }
     
         public int card_id { get; set; }
@@ -28,5 +29,7 @@ namespace Forbbiden.Server
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_cards> match_cards { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tile> Tile { get; set; }
     }
 }

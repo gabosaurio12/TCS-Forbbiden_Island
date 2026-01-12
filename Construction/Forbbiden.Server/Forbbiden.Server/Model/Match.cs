@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Matches
+    public partial class Match
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Matches()
+        public Match()
         {
+            this.Board = new HashSet<Board>();
             this.match_cards = new HashSet<match_cards>();
             this.match_minigames = new HashSet<match_minigames>();
-            this.match_players = new HashSet<match_players>();
-            this.match_tiles = new HashSet<match_tiles>();
+            this.MatchPlayers = new HashSet<MatchPlayers>();
         }
     
         public int match_id { get; set; }
@@ -30,15 +30,16 @@ namespace Forbbiden.Server
         public System.DateTime created_at { get; set; }
         public string match_name { get; set; }
         public int match_capacity { get; set; }
+        public Nullable<int> board_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Board> Board { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_cards> match_cards { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_minigames> match_minigames { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<match_players> match_players { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<match_tiles> match_tiles { get; set; }
+        public virtual ICollection<MatchPlayers> MatchPlayers { get; set; }
         public virtual Player Player { get; set; }
     }
 }

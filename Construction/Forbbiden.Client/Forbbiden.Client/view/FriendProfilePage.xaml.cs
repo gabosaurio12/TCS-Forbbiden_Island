@@ -1,4 +1,6 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
+using Forbbiden.Client.ProfileManager;
 using System;
 using System.IO;
 using System.Windows;
@@ -54,18 +56,48 @@ namespace Forbbiden.Client.view
                 }
             }
 
-            if (player.PlayerAvatarPath != null)
-            {
-                string projectDir = Directory.GetParent(
-                    AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+            SetAvatar(player);
+        }
 
-                var bmp = new BitmapImage();
-                bmp.BeginInit();
-                bmp.CacheOption = BitmapCacheOption.OnLoad;
-                bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-                bmp.EndInit();
-                imgAvatar.Fill = new ImageBrush(bmp);
+        private async void SetAvatar(Player player)
+        {
+            if (player?.PlayerAvatarBytes != null && player.PlayerAvatarBytes.Length > 0)
+            {
+                var brush = ViewUtils.GetImageBrushFromBytes(player.PlayerAvatarBytes);
+                if (brush != null)
+                {
+                    imgAvatar.Fill = brush;
+                    return;
+                }
+            }
+
+            var fetched = await AvatarsManager.Instance.GetAvatarBrushAsync(player?.PlayerUsername);
+            if (fetched != null)
+            {
+                imgAvatar.Fill = fetched;
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(player?.PlayerAvatarName))
+            {
+                try
+                {
+                    string projectDir = Directory.GetParent(
+                        AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                    string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarName);
+
+                    if (File.Exists(avatarPath))
+                    {
+                        var bmp = new BitmapImage();
+                        bmp.BeginInit();
+                        bmp.CacheOption = BitmapCacheOption.OnLoad;
+                        bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
+                        bmp.EndInit();
+                        imgAvatar.Fill = new ImageBrush(bmp);
+                        return;
+                    }
+                }
+                catch { }
             }
         }
 

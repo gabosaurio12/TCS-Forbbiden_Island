@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.exceptionHandlers;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System.Data.Entity.Core;
@@ -80,7 +81,7 @@ namespace Forbbiden.Server.logic
                         var searchToken = db.Token.FirstOrDefault(t => t.token1 == randomTokenString);
                         if (searchToken == null)
                         {
-                            searchToken = new Token
+                            searchToken = new Model.Token
                             {
                                 token1 = randomTokenString,
                                 player_id = playerId

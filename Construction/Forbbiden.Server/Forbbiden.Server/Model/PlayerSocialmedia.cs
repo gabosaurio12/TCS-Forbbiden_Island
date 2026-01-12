@@ -7,16 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Token
+    public partial class PlayerSocialmedia
     {
-        public int token_id { get; set; }
-        public string token1 { get; set; }
+        public int social_media_id { get; set; }
         public Nullable<int> player_id { get; set; }
+        public string social_link { get; set; }
+        public string social_media_name { get; set; }
     
         public virtual Player Player { get; set; }
     }

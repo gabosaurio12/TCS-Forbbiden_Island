@@ -10,6 +10,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CreateMatchRequest" nillable="true" type="tns:CreateMatchRequest" />
+  <xs:complexType name="Fault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Details" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Fault" nillable="true" type="tns:Fault" />
   <xs:complexType name="JoinMatchRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="HostUsername" nillable="true" type="xs:string" />

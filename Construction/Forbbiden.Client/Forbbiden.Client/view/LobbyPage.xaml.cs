@@ -1,5 +1,6 @@
 ﻿using Forbbiden.Client.GameManager;
 using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.view.games;
@@ -343,14 +344,23 @@ namespace Forbbiden.Client.view
             }
         }
 
-        private void InitializePlayerUI()
+        private async Task InitializePlayerUI()
         {
             txtBkUser1.Text = CurrentPlayer;
-            var player = ClientSession.GetPlayer();
-            var local = ResolveLocalAvatarPath(player?.PlayerAvatarPath);
-            SetAvatar(imgAvatar1, local);
-
             AddChatLine($"{Properties.Resources.system_prefix}: {Properties.Resources.lobby_welcome}");
+
+            try
+            {
+                var brush = await AvatarsManager.Instance.GetAvatarBrushAsync(CurrentPlayer);
+                if (brush != null)
+                {
+                    imgAvatar1.Fill = brush;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warn("InitializePlayerUI avatar load failed", ex);
+            }
         }
 
         private void LoadInitialPlayers()

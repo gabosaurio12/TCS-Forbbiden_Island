@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.callbacks;
 using Forbbiden.Server.exceptionHandlers;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System.Collections.Generic;

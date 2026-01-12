@@ -38,7 +38,7 @@ namespace Forbbiden.Server.utils
                             "trustservercertificate=True;MultipleActiveResultSets=True;App=EntityFramework";
 
                         instance.ConnectionString =
-                            $"metadata=res://*/ForbbidenModel.csdl|res://*/ForbbidenModel.ssdl|res://*/ForbbidenModel.msl;" +
+                            $"metadata=res://*/Model.ForbiddenModel.csdl|res://*/Model.ForbiddenModel.ssdl|res://*/Model.ForbiddenModel.msl;" +
                             $"provider=System.Data.SqlClient;" +
                             $"provider connection string=\"{sqlConnectionString}\"";
                     }

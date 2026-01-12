@@ -7,14 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class LoginPlayer
+    public partial class Token
     {
-        public int login_player_id { get; set; }
+        public int token_id { get; set; }
+        public string token1 { get; set; }
+        public Nullable<int> player_id { get; set; }
     
         public virtual Player Player { get; set; }
     }

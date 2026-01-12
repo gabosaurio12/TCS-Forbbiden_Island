@@ -76,26 +76,48 @@ namespace Forbbiden.Client
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(player.PlayerAvatarPath))
+            LoadAvatar(player);
+        }
+
+        private async void LoadAvatar(Player player)
+        {
+            try
             {
-                string avatarPath = ResolveLocalAvatarPath(player.PlayerAvatarPath);
-                if (!string.IsNullOrEmpty(avatarPath) && File.Exists(avatarPath))
+                if (player?.PlayerAvatarBytes != null && player.PlayerAvatarBytes.Length > 0)
                 {
-                    try
+                    var brush = GetImageBrushFromBytes(player.PlayerAvatarBytes);
+                    if (brush != null)
                     {
-                        var bmp = new BitmapImage();
-                        bmp.BeginInit();
-                        bmp.CacheOption = BitmapCacheOption.OnLoad;
-                        bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-                        bmp.EndInit();
-                        imgAvatar.Fill = new ImageBrush(bmp);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Warn("No se pudo cargar avatar local: " + avatarPath, ex);
+                        imgAvatar.Fill = brush;
+                        return;
                     }
                 }
+
+                var fetched = await AvatarsManager.Instance.GetAvatarBrushAsync(player.PlayerUsername);
+                imgAvatar.Fill = fetched ?? AvatarsManager.Instance.GetAvatarBrushAsync("").Result;
             }
+            catch (Exception ex)
+            {
+                Log.Warn("No se pudo cargar avatar", ex);
+            }
+        }
+
+        private static ImageBrush GetImageBrushFromBytes(byte[] bytes)
+        {
+            try
+            {
+                using (var ms = new MemoryStream(bytes))
+                {
+                    var bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    bmp.CacheOption = BitmapCacheOption.OnLoad;
+                    bmp.StreamSource = ms;
+                    bmp.EndInit();
+                    bmp.Freeze();
+                    return new ImageBrush(bmp);
+                }
+            }
+            catch { return null; }
         }
 
         private void BtnDiscard_Click(object sender, RoutedEventArgs e)
@@ -202,7 +224,8 @@ namespace Forbbiden.Client
             }
             else
             {
-                updatedPlayer.PlayerAvatarPath = ProfilePlayer.PlayerAvatarPath;
+                updatedPlayer.PlayerAvatarBytes = ProfilePlayer.PlayerAvatarBytes;
+                updatedPlayer.PlayerAvatarName = ProfilePlayer.PlayerAvatarName;
             }
 
             await SaveProfileChanges(updatedPlayer);
@@ -212,8 +235,6 @@ namespace Forbbiden.Client
         {
             if (string.IsNullOrEmpty(UploadedAvatarOriginalPath) || string.IsNullOrEmpty(AvatarFileName))
             {
-                //string message = Properties.Resources.error_invalid_avatar;
-                //OpenNotificationError(message);
                 return;
             }
 
@@ -222,15 +243,13 @@ namespace Forbbiden.Client
                 var bytes = GetAvatarBytesResized(UploadedAvatarOriginalPath, 256, 80);
                 if (bytes == null || bytes.Length == 0)
                 {
-                    //string message = Properties.Resources.error_processing_image;
-                    //OpenNotificationError(message);
                     return;
                 }
 
-                string savedFileName = null;
+                bool saved = false;
                 try
                 {
-                    savedFileName = await ProfileRepo.UploadAvatar(
+                    saved = await ProfileRepo.UploadAvatar(
                         ProfilePlayer.PlayerUsername, bytes, AvatarFileName);
                 }
                 catch (ViewException ex)
@@ -238,43 +257,18 @@ namespace Forbbiden.Client
                     ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
-                if (string.IsNullOrWhiteSpace(savedFileName))
+                if (!saved)
                 {
-                    //OpenNotificationError(Properties.Resources.error_uploading_avatar);
                     return;
                 }
 
-                SaveAvatarCopy(savedFileName, bytes, updatedPlayer);
+                updatedPlayer.PlayerAvatarBytes = bytes;
+                updatedPlayer.PlayerAvatarName = AvatarFileName;
+                AvatarsManager.Instance.UpdateCache(ProfilePlayer.PlayerUsername, bytes);
             }
             catch (Exception ex)
             {
                 Log.Error("ProfilePage.UploadAvatar", ex);
-                //OpenNotificationError(Properties.Resources.error_processing_avatar);
-            }
-        }
-
-        private static void SaveAvatarCopy(string savedFileName, byte[] bytes, Player updatedPlayer)
-        {
-            try
-            {
-                string exeDir = AppContext.BaseDirectory;
-                string projectDir = Directory.GetParent(exeDir).Parent.Parent.FullName;
-                string localAvatarsDir = Path.Combine(projectDir, "avatars");
-                if (!Directory.Exists(localAvatarsDir))
-                {
-                    Directory.CreateDirectory(localAvatarsDir);
-                }
-
-                string localPath = Path.Combine(localAvatarsDir, savedFileName);
-                File.WriteAllBytes(localPath, bytes);
-            }
-            catch (Exception ex)
-            {
-                Log.Warn("No se pudo guardar copia local del avatar", ex);
-            }
-            finally
-            {
-                updatedPlayer.PlayerAvatarPath = savedFileName;
             }
         }
 
@@ -295,6 +289,7 @@ namespace Forbbiden.Client
 
                 if (refreshed != null && refreshed.PlayerId > 0)
                 {
+                    AvatarsManager.Instance.UpdateCache(refreshed.PlayerUsername, refreshed.PlayerAvatarBytes);
                     ClientSession.SetPlayer(refreshed);
                 }
 
@@ -348,28 +343,5 @@ namespace Forbbiden.Client
             }
         }
 
-        private static string ResolveLocalAvatarPath(string avatarPathOrFileName)
-        {
-            try
-            {
-                if (Path.IsPathRooted(avatarPathOrFileName) && File.Exists(avatarPathOrFileName))
-                    return avatarPathOrFileName;
-
-                string projectDir = ViewUtils.GetProjectDir();
-                var candidate = Path.Combine(projectDir, "avatars", avatarPathOrFileName);
-                if (File.Exists(candidate))
-                {
-                    return candidate;
-                }
-
-                if (File.Exists(avatarPathOrFileName))
-                {
-                    return avatarPathOrFileName;
-                }
-
-                return null;
-            }
-            catch { return null; }
-        }
     }
 }

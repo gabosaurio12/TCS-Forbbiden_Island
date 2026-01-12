@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Forbbiden.Server
+namespace Forbbiden.Server.Model
 {
     using System;
     using System.Collections.Generic;
@@ -19,10 +19,10 @@ namespace Forbbiden.Server
         {
             this.Friends = new HashSet<Friends>();
             this.Friends1 = new HashSet<Friends>();
-            this.match_players = new HashSet<match_players>();
-            this.player_socialmedia = new HashSet<player_socialmedia>();
-            this.Matches = new HashSet<Matches>();
+            this.Match = new HashSet<Match>();
+            this.MatchPlayers = new HashSet<MatchPlayers>();
             this.Token = new HashSet<Token>();
+            this.PlayerSocialmedia = new HashSet<PlayerSocialmedia>();
         }
     
         public int player_id { get; set; }
@@ -30,7 +30,8 @@ namespace Forbbiden.Server
         public string player_username { get; set; }
         public string player_password { get; set; }
         public string player_email { get; set; }
-        public string player_avatar { get; set; }
+        public byte[] player_avatar_file { get; set; }
+        public string player_avatar_name { get; set; }
         public Nullable<int> player_status { get; set; }
         public Nullable<int> is_verified { get; set; }
     
@@ -38,14 +39,13 @@ namespace Forbbiden.Server
         public virtual ICollection<Friends> Friends { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Friends> Friends1 { get; set; }
-        public virtual LoginPlayer LoginPlayer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<match_players> match_players { get; set; }
+        public virtual ICollection<Match> Match { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<player_socialmedia> player_socialmedia { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Matches> Matches { get; set; }
+        public virtual ICollection<MatchPlayers> MatchPlayers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Token> Token { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlayerSocialmedia> PlayerSocialmedia { get; set; }
     }
 }

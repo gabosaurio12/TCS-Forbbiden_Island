@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using Forbbiden.Server.callbacks;
 using Forbbiden.Server.exceptionHandlers;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -26,7 +27,7 @@ namespace Forbbiden.Server.logic
         {
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
-                Card card = null;
+                Model.Card card = null;
                 try
                 {
                     card = db.Card.FirstOrDefault(c => c.card_image_path == path);
@@ -66,7 +67,7 @@ namespace Forbbiden.Server.logic
         {
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
-                List<Card> cards = null;
+                List<Model.Card> cards = null;
                 try
                 {
                     cards = db.Card.Where(c => c.type == "flood").ToList();
@@ -107,7 +108,7 @@ namespace Forbbiden.Server.logic
         {
             using (var db = new Forbbiden_FEIEntities(ConnectionString))
             {
-                List<Card> cards = null;
+                List<Model.Card> cards = null;
                 try
                 {
                     cards = db.Card.Where(c => c.type == "treasure").ToList();

@@ -55,31 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="callbacks\MatchNotificationManager.cs" />
-    <Compile Include="Card.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="card_catalog.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="exceptionHandlers\ExceptionHandler.cs" />
-    <Compile Include="ForbbidenModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForbbidenModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ForbbidenModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ForbbidenModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Friends.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="logic\BoardManager.cs" />
     <Compile Include="callbacks\FriendsNotificationManager.cs" />
     <Compile Include="logic\GameManager.cs" />
@@ -87,32 +63,59 @@
     <Compile Include="logic\MatchManager.cs" />
     <Compile Include="logic\ProfileManager.cs" />
     <Compile Include="logic\TokenManager.cs" />
-    <Compile Include="LoginPlayer.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\Board.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Matches.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\Card.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="match_cards.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\ForbiddenModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForbiddenModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="match_minigames.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\ForbiddenModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="match_players.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\ForbiddenModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForbiddenModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="match_tiles.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\Friends.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Minigame.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\Match.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\MatchPlayers.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="player_socialmedia.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
+    <Compile Include="Model\match_cards.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\match_minigames.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Minigame.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Player.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PlayerSocialmedia.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tile.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Token.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Treasure.cs">
+      <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -126,15 +129,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Tile.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Token.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Treasure.cs">
-      <DependentUpon>ForbbidenModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="utils\ConnectionStringSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,12 +136,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
-    <EntityDeploy Include="ForbbidenModel.edmx">
+    <EntityDeploy Include="Model\ForbiddenModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ForbbidenModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>ForbiddenModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ForbbidenModel.edmx.diagram">
-      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
+    <None Include="Model\ForbiddenModel.edmx.diagram">
+      <DependentUpon>ForbiddenModel.edmx</DependentUpon>
     </None>
     <None Include="Properties\email.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -182,15 +176,15 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ForbbidenModel.Context.tt">
+    <Content Include="Model\ForbiddenModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
-      <LastGenOutput>ForbbidenModel.Context.cs</LastGenOutput>
+      <DependentUpon>ForbiddenModel.edmx</DependentUpon>
+      <LastGenOutput>ForbiddenModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ForbbidenModel.tt">
+    <Content Include="Model\ForbiddenModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ForbbidenModel.edmx</DependentUpon>
-      <LastGenOutput>ForbbidenModel.cs</LastGenOutput>
+      <DependentUpon>ForbiddenModel.edmx</DependentUpon>
+      <LastGenOutput>ForbiddenModel.cs</LastGenOutput>
     </Content>
     <Content Include="SignupEmailMessage.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

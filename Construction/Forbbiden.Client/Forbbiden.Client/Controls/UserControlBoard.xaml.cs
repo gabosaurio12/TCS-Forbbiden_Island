@@ -142,7 +142,7 @@ namespace Forbbiden.Client.Controls
                 {
                     string classMethod = "UserControlBoard.SetTreasureTiles";
                     Log.Error(classMethod, ex);
-                    ViewUtils.ShowPullError(Window.GetWindow(this));
+                    //ViewUtils.ShowPullError(Window.GetWindow(this));
                 }
 
                 string treasureImagePath = System.IO.Path.Combine(TilesImagesPath, treasureImage);
@@ -179,7 +179,7 @@ namespace Forbbiden.Client.Controls
             {
                 string classMethod = "UserControlBoard.SetNonTreasureTiles";
                 Log.Error(classMethod, ex);
-                ViewUtils.ShowPullError(Window.GetWindow(this));
+                //ViewUtils.ShowPullError(Window.GetWindow(this));
                 return;
             }
             var shuffledTilesCards = MatchLogic.ShuffleCards(tilesCards.ToList());
@@ -197,10 +197,10 @@ namespace Forbbiden.Client.Controls
 
         public void AddPlayerAvatar(Player player, UserControlTile tile)
         {
-            Ellipse boardAvatar = ViewUtils.GetAvatarEllipse(player.PlayerAvatarPath);
+            //Ellipse boardAvatar = ViewUtils.GetAvatarEllipse(player.PlayerAvatarPath);
 
             var spawnTile = GetTile(tile.Row, tile.Col);
-            spawnTile.tileGrid.Children.Add(boardAvatar);
+            //spawnTile.tileGrid.Children.Add(boardAvatar);
         }
 
         public event EventHandler<TileClickedEventArgs> TileClickedOnBoard;

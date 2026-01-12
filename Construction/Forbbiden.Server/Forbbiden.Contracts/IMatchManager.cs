@@ -9,23 +9,31 @@ namespace Forbbiden.Contracts
     public interface IMatchManager
     {
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         int CreateMatch(CreateMatchRequest request);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool JoinMatch(JoinMatchRequest request);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         List<Match> ListMatches();
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         Match GetMatchById(int matchId);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool DeleteMatch(int matchId);
+
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         string GetInviteCode(int matchId);
 
         [OperationContract]
+        [FaultContract(typeof(Fault))]
         bool ValidateInvite(int matchId, string inviteCode);
     }
 
@@ -73,13 +81,13 @@ namespace Forbbiden.Contracts
         public bool IsHost { get; set; }
 
         [DataMember]
-        public int Position { get; set; } 
+        public int Position { get; set; }
 
         [DataMember]
-        public byte[] AvatarBytes { get; set; } 
+        public byte[] AvatarBytes { get; set; }
 
         [DataMember]
-        public string AvatarFileName { get; set; } 
+        public string AvatarFileName { get; set; }
     }
 
 

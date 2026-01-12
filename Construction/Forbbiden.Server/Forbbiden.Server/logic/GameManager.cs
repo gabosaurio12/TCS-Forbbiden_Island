@@ -1,4 +1,5 @@
 ﻿using Forbbiden.Contracts;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 using log4net;
 using System;
@@ -385,7 +386,7 @@ namespace Forbbiden.Server.logic
                     }
                     else
                     {
-                        int minGuestId = db.match_players
+                        int minGuestId = db.MatchPlayers
                             .Where(mp => mp.match_id == mid && mp.player_id < 0)
                             .Select(mp => mp.player_id)
                             .DefaultIfEmpty(0)
@@ -393,10 +394,10 @@ namespace Forbbiden.Server.logic
                         playerId = minGuestId - 1;
                     }
 
-                    bool exists = db.match_players.Any(mp => mp.match_id == mid && mp.player_id == playerId);
+                    bool exists = db.MatchPlayers.Any(mp => mp.match_id == mid && mp.player_id == playerId);
                     if (!exists)
                     {
-                        db.match_players.Add(new match_players
+                        db.MatchPlayers.Add(new MatchPlayers
                         {
                             match_id = mid,
                             player_id = playerId
@@ -426,10 +427,10 @@ namespace Forbbiden.Server.logic
             {
                 using (var db = new Forbbiden_FEIEntities(connectionString))
                 {
-                    var rows = db.match_players.Where(mp => mp.match_id == mid && mp.player_id == playerId).ToList();
+                    var rows = db.MatchPlayers.Where(mp => mp.match_id == mid && mp.player_id == playerId).ToList();
                     if (rows.Any())
                     {
-                        db.match_players.RemoveRange(rows);
+                        db.MatchPlayers.RemoveRange(rows);
                         db.SaveChanges();
                     }
                 }

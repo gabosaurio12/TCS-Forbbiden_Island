@@ -3,6 +3,7 @@ using System.ServiceModel;
 using dotenv.net;
 using Forbbiden.Server.callbacks;
 using Forbbiden.Server.logic;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 
 namespace Forbbiden.Server
