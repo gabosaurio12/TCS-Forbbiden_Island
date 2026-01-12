@@ -63,10 +63,9 @@ namespace Forbbiden.Client
 
             Player player = GetPlayerInput();
 
-            var repository = new ProfileRepository();
             try
             {
-                player = await repository.LoginPlayer(player.PlayerUsername, player.PlayerPassword);
+                player = await ProfileRepository.LoginPlayer(player.PlayerUsername, player.PlayerPassword);
             }
             catch (ViewException ex)
             {

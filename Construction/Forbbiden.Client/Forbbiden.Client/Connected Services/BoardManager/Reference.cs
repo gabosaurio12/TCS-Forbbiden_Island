@@ -433,6 +433,115 @@ namespace Forbbiden.Client.BoardManager {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerCoordinates", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class PlayerCoordinates : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ColField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MatchIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PlayerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RowField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsernameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Col {
+            get {
+                return this.ColField;
+            }
+            set {
+                if ((this.ColField.Equals(value) != true)) {
+                    this.ColField = value;
+                    this.RaisePropertyChanged("Col");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MatchId {
+            get {
+                return this.MatchIdField;
+            }
+            set {
+                if ((this.MatchIdField.Equals(value) != true)) {
+                    this.MatchIdField = value;
+                    this.RaisePropertyChanged("MatchId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PlayerId {
+            get {
+                return this.PlayerIdField;
+            }
+            set {
+                if ((this.PlayerIdField.Equals(value) != true)) {
+                    this.PlayerIdField = value;
+                    this.RaisePropertyChanged("PlayerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Row {
+            get {
+                return this.RowField;
+            }
+            set {
+                if ((this.RowField.Equals(value) != true)) {
+                    this.RowField = value;
+                    this.RaisePropertyChanged("Row");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Username {
+            get {
+                return this.UsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
+                    this.UsernameField = value;
+                    this.RaisePropertyChanged("Username");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BoardManager.IBoardManager")]
     public interface IBoardManager {
@@ -492,6 +601,20 @@ namespace Forbbiden.Client.BoardManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetCardById", ReplyAction="http://tempuri.org/IBoardManager/GetCardByIdResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardByIdAsync(int cardId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetPlayerCoordinates", ReplyAction="http://tempuri.org/IBoardManager/GetPlayerCoordinatesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/GetPlayerCoordinatesFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.BoardManager.PlayerCoordinates GetPlayerCoordinates(int matchId, string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/GetPlayerCoordinates", ReplyAction="http://tempuri.org/IBoardManager/GetPlayerCoordinatesResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.PlayerCoordinates> GetPlayerCoordinatesAsync(int matchId, string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/UpdatePlayerCoordinates", ReplyAction="http://tempuri.org/IBoardManager/UpdatePlayerCoordinatesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/UpdatePlayerCoordinatesFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool UpdatePlayerCoordinates(Forbbiden.Client.BoardManager.PlayerCoordinates playerCoordinates);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/UpdatePlayerCoordinates", ReplyAction="http://tempuri.org/IBoardManager/UpdatePlayerCoordinatesResponse")]
+        System.Threading.Tasks.Task<bool> UpdatePlayerCoordinatesAsync(Forbbiden.Client.BoardManager.PlayerCoordinates playerCoordinates);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback", ReplyAction="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.BoardManager.Fault), Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallbackFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
@@ -611,6 +734,22 @@ namespace Forbbiden.Client.BoardManager {
         
         public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.Card> GetCardByIdAsync(int cardId) {
             return base.Channel.GetCardByIdAsync(cardId);
+        }
+        
+        public Forbbiden.Client.BoardManager.PlayerCoordinates GetPlayerCoordinates(int matchId, string username) {
+            return base.Channel.GetPlayerCoordinates(matchId, username);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.BoardManager.PlayerCoordinates> GetPlayerCoordinatesAsync(int matchId, string username) {
+            return base.Channel.GetPlayerCoordinatesAsync(matchId, username);
+        }
+        
+        public bool UpdatePlayerCoordinates(Forbbiden.Client.BoardManager.PlayerCoordinates playerCoordinates) {
+            return base.Channel.UpdatePlayerCoordinates(playerCoordinates);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdatePlayerCoordinatesAsync(Forbbiden.Client.BoardManager.PlayerCoordinates playerCoordinates) {
+            return base.Channel.UpdatePlayerCoordinatesAsync(playerCoordinates);
         }
         
         public void SendOnBoardCreatedCallback(string boardJson, string[] usernames) {

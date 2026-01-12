@@ -17,15 +17,10 @@ namespace Forbbiden.Server.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tile()
         {
-<<<<<<<< HEAD:Construction/Forbbiden.Server/Forbbiden.Server/Model/Tile.cs
-========
-            this.match_tiles = new HashSet<match_tiles>();
->>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2:Construction/Model/Tile.cs
             this.Board = new HashSet<Board>();
         }
     
         public int tile_id { get; set; }
-<<<<<<<< HEAD:Construction/Forbbiden.Server/Forbbiden.Server/Model/Tile.cs
         public int col { get; set; }
         public int row { get; set; }
         public Nullable<int> is_treasure { get; set; }
@@ -38,19 +33,5 @@ namespace Forbbiden.Server.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Board> Board { get; set; }
         public virtual Card Card { get; set; }
-========
-        public int flooded_level { get; set; }
-        public string type { get; set; }
-        public int col { get; set; }
-        public int row { get; set; }
-        public Nullable<int> isTreasure { get; set; }
-        public Nullable<int> isFlood { get; set; }
-        public Nullable<int> isEscape { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<match_tiles> match_tiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Board> Board { get; set; }
->>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2:Construction/Model/Tile.cs
     }
 }

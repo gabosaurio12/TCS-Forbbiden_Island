@@ -9,21 +9,20 @@ namespace Forbbiden.Test
     {
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(TestProfileManager));
-        private const string ClassName = "TestProfileManager - ";
+        private const string ClassName = "TestProfileManager";
         private ProfileManagerClient ProfileClient;
         private List<string> UsernamesToDelete;
-        private Player testPlayer;
-        private string HashTestPass;
+        private Player TestPlayer;
+        private string TestToken;
 
         [OneTimeSetUp]
         public async Task Setup()
         {
             ProfileClient = new ProfileManagerClient();
             UsernamesToDelete = [];
+            TestToken = "123654";
 
-            HashTestPass = BCrypt.Net.BCrypt.HashPassword("T3st_pass");
-
-            testPlayer = new Player
+            TestPlayer = new Player
             {
                 PlayerUsername = "testUser",
                 PlayerPassword = "T3st_pass",
@@ -32,8 +31,8 @@ namespace Forbbiden.Test
 
             try
             {
-                testPlayer.PlayerId = await ProfileClient.SignUpAsync(testPlayer);
-                UsernamesToDelete.Add(testPlayer.PlayerUsername);
+                TestPlayer.PlayerId = await ProfileClient.SignUpAsync(TestPlayer);
+                UsernamesToDelete.Add(TestPlayer.PlayerUsername);
             }
             catch (FaultException<Fault> ex)
             {
@@ -60,14 +59,14 @@ namespace Forbbiden.Test
         }
 
         [Test]
-        public async Task TestValidateEmailSuccess()
+        public async Task TestIsEmailAvailableSuccess()
         {
             string email = "randomEmail@email.net";
 
             try
             {
-                var result = await ProfileClient.ValidateEmailAsync(email);
-                Assert.That(result, Is.True, "result should be true");
+                var result = await ProfileClient.IsEmailAvailableAsync(email);
+                Assert.That(result, Is.True, "result should be true because is a valid email");
             }
             catch (FaultException<Fault> ex)
             {
@@ -76,30 +75,14 @@ namespace Forbbiden.Test
         }
 
         [Test]
-        public async Task TestValidateEmailInvalidEmail()
-        {
-            string email = "randomEmail.com";
-
-            try
-            {
-                var result = await ProfileClient.ValidateEmailAsync(email);
-                Assert.That(result, Is.False, "result should be false");
-            }
-            catch (FaultException<Fault> ex)
-            {
-                Log.Error(ClassName, ex);
-            }
-        }
-
-        [Test]
-        public async Task TestValidateEmailEmailBlank()
+        public async Task TestIsEmailAvailableEmailBlank()
         {
             string email = "";
 
             try
             {
-                var result = await ProfileClient.ValidateEmailAsync(email);
-                Assert.That(result, Is.False, "result should be false");
+                var result = await ProfileClient.IsEmailAvailableAsync(email);
+                Assert.That(result, Is.False, "result should be false because an empty email can't be available");
             }
             catch (FaultException<Fault> ex)
             {
@@ -108,14 +91,14 @@ namespace Forbbiden.Test
         }
 
         [Test]
-        public async Task TestValidateEmailTakenEmail()
+        public async Task TestIsEmailAvailableTakenEmail()
         {
-            string email = testPlayer.PlayerEmail;
+            string email = TestPlayer.PlayerEmail;
 
             try
             {
-                var result = await ProfileClient.ValidateEmailAsync(email);
-                Assert.That(result, Is.False, "result should be false");
+                var result = await ProfileClient.IsEmailAvailableAsync(email);
+                Assert.That(result, Is.False, "result should be false because the email is taken");
             } catch (FaultException<Fault> ex)
             {
                 Log.Error(ClassName, ex);
@@ -141,7 +124,7 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestIsUsernameAvailableTakenUsername()
         {
-            string username = testPlayer.PlayerUsername;
+            string username = TestPlayer.PlayerUsername;
 
             try
             {
@@ -171,13 +154,13 @@ namespace Forbbiden.Test
         }
 
         [Test]
-        public async Task TestSendEmailSuccess()
+        public async Task TestSendSignupEmailSuccess()
         {
             string email = "mazinger.gl@gmail.com";
 
             try
             {
-                var result = await ProfileClient.SendEmailAsync(email, testPlayer.PlayerId);
+                var result = await ProfileClient.SendSignupEmailAsync(email, TestToken);
                 Assert.That(result, Is.True, "result should be true");
             }
             catch (FaultException<Fault> ex)
@@ -187,13 +170,29 @@ namespace Forbbiden.Test
         }
 
         [Test]
-        public async Task TestSendEmailNotExist()
+        public async Task TestSendVerificationEmailSuccess()
         {
-            string email = "falseEmailTest@email.net";
+            string email = "mazinger.gl@gmail.com";
 
             try
             {
-                var result = await ProfileClient.SendEmailAsync(email, 0);
+                var result = await ProfileClient.SendVerificationEmailAsync(email, TestToken);
+                Assert.That(result, Is.True, "result should be true");
+            }
+            catch (FaultException<Fault> ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSendSignupEmailNotExist()
+        {
+            string email = "falseEmailTest@@email.net";
+
+            try
+            {
+                var result = await ProfileClient.SendSignupEmailAsync(email, TestToken);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (FaultException<Fault> ex)
@@ -203,13 +202,45 @@ namespace Forbbiden.Test
         }
 
         [Test]
-        public async Task TestSendEmailBlankEmail()
+        public async Task TestSendVerificationEmailNotExist()
+        {
+            string email = "falseEmailTest@@email.net";
+
+            try
+            {
+                var result = await ProfileClient.SendVerificationEmailAsync(email, TestToken);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (FaultException<Fault> ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSendSignupEmailBlankEmail()
         {
             string email = "";
 
             try
             {
-                var result = await ProfileClient.SendEmailAsync(email, 0);
+                var result = await ProfileClient.SendSignupEmailAsync(email, TestToken);
+                Assert.That(result, Is.False, "result should be false");
+            }
+            catch (FaultException<Fault> ex)
+            {
+                Log.Error(ClassName, ex);
+            }
+        }
+
+        [Test]
+        public async Task TestSendVerificationEmailBlankEmail()
+        {
+            string email = "";
+
+            try
+            {
+                var result = await ProfileClient.SendVerificationEmailAsync(email, TestToken);
                 Assert.That(result, Is.False, "result should be false");
             }
             catch (FaultException<Fault> ex)
@@ -224,7 +255,7 @@ namespace Forbbiden.Test
             var player = new Player
             {
                 PlayerUsername = "testPlayer",
-                PlayerPassword = HashTestPass,
+                PlayerPassword = "T3st_pass",
                 PlayerEmail = "testplayer@email.com"
             };
 
@@ -246,9 +277,9 @@ namespace Forbbiden.Test
         {
             try
             {
-                int playerId = await ProfileClient.SignUpAsync(testPlayer);
-                bool result = playerId == -1;
-                Assert.That(result, Is.True, "result should be true");
+                int playerId = await ProfileClient.SignUpAsync(TestPlayer);
+                bool result = playerId == -2;
+                Assert.That(result, Is.True, "result should be true because the player exists");
 
             }
             catch (FaultException<Fault> ex)
@@ -262,7 +293,7 @@ namespace Forbbiden.Test
         {
             try
             {
-                var player = await ProfileClient.LoginAsync(testPlayer.PlayerUsername, testPlayer.PlayerPassword);
+                var player = await ProfileClient.LoginAsync(TestPlayer.PlayerUsername, TestPlayer.PlayerPassword);
                 bool result = player.PlayerId != -1;
                 Assert.That(result, Is.True, "result should be true");
             }
@@ -386,7 +417,7 @@ namespace Forbbiden.Test
             var fakePlayer = new Player
             {
                 PlayerUsername = "falseUser",
-                PlayerPassword = HashTestPass
+                PlayerPassword = "T3st_pass"
             };
 
             try
@@ -404,7 +435,7 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestGetPlayerByUsernameSuccess()
         {
-            string username = testPlayer.PlayerUsername;
+            string username = TestPlayer.PlayerUsername;
             try
             {
                 var player = await ProfileClient.GetPlayerByUsernameAsync(username, false);
@@ -468,7 +499,7 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestGetPlayerByIdSuccess()
         {
-            int playerId = testPlayer.PlayerId;
+            int playerId = TestPlayer.PlayerId;
             try
             {
                 var player = await ProfileClient.GetPlayerByIdAsync(playerId, false);
@@ -516,11 +547,11 @@ namespace Forbbiden.Test
         [Test]
         public async Task TestUpdatePlayerSuccess()
         {
-            testPlayer.PlayerName = "Player's Name";
-            testPlayer.SocialMedia = [];
+            TestPlayer.PlayerName = "Player's Name";
+            TestPlayer.SocialMedia = [];
             try
             {
-                var result = await ProfileClient.UpdatePlayerAsync(testPlayer);
+                var result = await ProfileClient.UpdatePlayerAsync(TestPlayer);
                 Assert.That(result, Is.True, "result should be true");
             }
             catch (FaultException<Fault> ex)
@@ -535,7 +566,7 @@ namespace Forbbiden.Test
             var player = new Player
             {
                 PlayerUsername = "updateTest",
-                PlayerPassword = HashTestPass,
+                PlayerPassword = "T3st_pass",
                 PlayerEmail = "updateTest@email.net"
             };
 
@@ -544,7 +575,7 @@ namespace Forbbiden.Test
                 await ProfileClient.SignUpAsync(player);
                 UsernamesToDelete.Add(player.PlayerUsername);
 
-                player.PlayerUsername = testPlayer.PlayerUsername;
+                player.PlayerUsername = TestPlayer.PlayerUsername;
                 var result = await ProfileClient.UpdatePlayerAsync(player);
                 Assert.That(result, Is.False, "result should be false");
             }
@@ -560,7 +591,7 @@ namespace Forbbiden.Test
             var player = new Player
             {
                 PlayerUsername = "updateTestEmail",
-                PlayerPassword = HashTestPass,
+                PlayerPassword = "T3st_pass",
                 PlayerEmail = "updateTest@email.net"
             };
 
@@ -569,7 +600,7 @@ namespace Forbbiden.Test
                 await ProfileClient.SignUpAsync(player);
                 UsernamesToDelete.Add(player.PlayerUsername);
 
-                player.PlayerEmail = testPlayer.PlayerEmail;
+                player.PlayerEmail = TestPlayer.PlayerEmail;
                 var result = await ProfileClient.UpdatePlayerAsync(player);
                 Assert.That(result, Is.False, "result should be false");
             }

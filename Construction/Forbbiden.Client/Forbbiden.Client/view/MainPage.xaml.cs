@@ -4,20 +4,20 @@ using Forbbiden.Client.Logic;
 using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.View;
-using Forbbiden.Client.View.info;
+using Forbbiden.Client.View.Info;
 using log4net;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Forbbiden.Client
 {
     public partial class MainPage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainPage));
-        private readonly ProfileRepository ProfileRepo;
         public static FriendsNotificationSingleton CallbackManager { get; private set; }
         public static IFriendsManager FriendsProxy { get; private set; }
 
@@ -25,8 +25,6 @@ namespace Forbbiden.Client
         {
             InitializeComponent();
             ViewUtils.SetBackground(background);
-
-            ProfileRepo = new ProfileRepository();
 
             _ = SetLogin();
         }
@@ -119,7 +117,7 @@ namespace Forbbiden.Client
 
             try
             {
-                isConnected = await ProfileRepo.ConnectPlayer(username);
+                isConnected = await ProfileRepository.ConnectPlayer(username);
             }
             catch (ViewException ex)
             {
@@ -205,7 +203,7 @@ namespace Forbbiden.Client
             try
             {
                 var token = await tokenRepo.GenerateToken(ClientSession.CurrentPlayerId);
-                result = await ProfileRepo.SendSignupEmail(ClientSession.Email, token.TokenString);
+                result = await ProfileRepository.SendSignupEmail(ClientSession.Email, token.TokenString);
             }
             catch (ViewException ex)
             {

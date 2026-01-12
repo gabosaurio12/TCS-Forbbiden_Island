@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.View.info;
+﻿using Forbbiden.Client.View.Info;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,12 +12,8 @@ namespace Forbbiden.Client.Logic
 {
     public static class ViewUtils
     {
-        public static Ellipse GetAvatarEllipse(string avatarPath)
+        public static Ellipse GetAvatarEllipse(BitmapImage avatarBitmap)
         {
-            string projectDir = GetProjectDir();
-            string fullAvatarPath = System.IO.Path.Combine(projectDir, "avatars", avatarPath);
-            var avatarBitmap = GetBitmapImage(fullAvatarPath);
-
             Ellipse ellipse = new Ellipse
             {
                 Width = 70,
@@ -54,6 +50,13 @@ namespace Forbbiden.Client.Logic
             };
 
             return ellipse;
+        }
+
+        public static BitmapImage GetBitmapImageFromBrush(ImageBrush brush)
+        {
+            var bitmap = brush.ImageSource as BitmapImage;
+
+            return bitmap;
         }
 
         public static BitmapImage GetBitmapImage(string imagePath)
@@ -226,6 +229,14 @@ namespace Forbbiden.Client.Logic
                     Parent.Parent.FullName;
 
             return projectDir;
+        }
+
+        public static string GetAvatarsDir()
+        {
+            string projectDir = GetProjectDir();
+            string avatarsDir = System.IO.Path.Combine(projectDir, "avatars");
+
+            return avatarsDir;
         }
 
         public static T FindParent<T>(DependencyObject child) where T : DependencyObject

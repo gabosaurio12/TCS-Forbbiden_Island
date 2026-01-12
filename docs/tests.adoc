@@ -24,7 +24,7 @@
 |Resultado
 
 |PMT01
-|TestValidateEmailSuccess
+|TestIsEmailAvailableSuccess
 |Comprobar si el email ingresado tiene un formato *válido* y *no* está registrado en la base de datos
 |*Alta*
 |*PRE01*: Haber ingresado un email
@@ -34,17 +34,7 @@
 |*Pasó*
 
 |PMT02
-|TestValidateEmailInvalidEmail
-|Comprobar que no se acepten emails sin un *@*
-|*Alta*
-|*PRE01*: Haber ingresado un email
-|_randomEmail.com_
-|_False_
-|_false_
-|*Pasó*
-
-|PMT03
-|TestValidateEmailEmailBlank
+|TestIsEmailAvailableEmailBlank
 |Comprobar que no se acepte un email *vacío*
 |*Alta*
 |*PRE01*: Haber ingresado un email
@@ -53,8 +43,8 @@
 |_false_
 |*Pasó*
 
-|PMT04
-|TestValidateEmailTakenEmail
+|PMT03
+|TestIsEmailAvailableTakenEmail
 |Comprobar que no se acepte un email que ya esté *registrado*
 |*Alta*
 |*PRE01*: Haber ingresado un email +
@@ -64,7 +54,7 @@
 |_false_
 |*Pasó*
 
-|PMT05
+|PMT04
 |TestIsUsernameAvailableSuccess
 |Comprobar que el username no esté *registrado* en la base de datos
 |*Alta*
@@ -74,7 +64,7 @@
 |_true_
 |*Pasó*
 
-|PMT06
+|PMT05
 |TestIsUsernameAvailableTakenUsername
 |Comprobar que no se acepte un username *registrado* en la base de datos
 |*Alta*
@@ -84,7 +74,7 @@
 |__
 |*Pasó*
 
-|PMT07
+|PMT06
 |TestIsUsernameAvailableBlankUsername
 |Comprobar que no se acepte un username en blanco
 |*Alta*
@@ -94,8 +84,8 @@
 |__
 |*Pasó*
 
-|PMT08
-|TestSendEmailSuccess
+|PMT07
+|TestSendSignupEmailSuccess
 |Comprobar que se envíe un correo de confirmación a un email
 |*Media*
 |*PRE01*: Haber ingresado un email
@@ -104,27 +94,57 @@
 |__
 |**
 
+|PMT08
+|TestSendVerificationEmailSuccess
+|Comprobar que se envíe un correo de confirmación a un email
+|*Media*
+|*PRE01*: Haber ingresado un email
+|_mazinger.gl@gmail.com_, _123654_
+|_True_
+|__
+|**
+
 |PMT09
-|TestSendEmailNotExist
+|TestSendSignupEmailNotExist
 |Comprobar que se regrese false si se envía un correo de confirmación a un email que no existe
 |*Media*
 |*PRE01*: Haber ingresado un email
-|_testForbbiden@email.com_, 0
+|_testForbbiden@@email.com_, _123654_
 |_False_
 |__
 |**
 
 |PMT10
-|TestSendEmailBlankEmail
-|Comprobar que ocurre si se envía un correo de confirmación a un email que en blanco
+|TestSendVerificationEmailNotExist
+|Comprobar que se regrese false si se envía un correo de confirmación a un email que no existe
 |*Media*
-|*PRE01*: Haber ingresado un email en blanco
-|_""_
+|*PRE01*: Haber ingresado un email
+|_testForbbiden@@email.com_, _123654_
 |_False_
 |__
 |**
 
 |PMT11
+|TestSendSignupEmailBlankEmail
+|Comprobar que ocurre si se envía un correo de confirmación a un email en blanco
+|*Media*
+|*PRE01*: Haber ingresado un email en blanco
+|_""_, _123654_
+|_False_
+|__
+|**
+
+|PMT12
+|TestSendVerificationEmailBlankEmail
+|Comprobar que ocurre si se envía un correo de confirmación a un email blanco
+|*Media*
+|*PRE01*: Haber ingresado un email en blanco
+|_""_, _123654_
+|_False_
+|__
+|**
+
+|PMT13
 |TestSignUpSuccess
 |Comprobar que se registre correctamente un jugador
 |*Alta*
@@ -134,7 +154,7 @@
 |__
 |**
 
-|PMT12
+|PMT14
 |TestSignUpPlayerExistsThrowsEntityException
 |Comprobar que se lance una excepción si se intenta registrar un jugador que ya existe
 |*Alta*
@@ -144,7 +164,7 @@
 |__
 |**
 
-|PMT13
+|PMT15
 |TestLoginSuccess
 |Comprobar que se inicie correctamente sesión de un jugador registrado
 |*Alta*
@@ -154,7 +174,7 @@
 |__
 |**
 
-|PMT14
+|PMT16
 |TestLoginNotRegisteredPlayer
 |Comprobar que no se inicie correctamente sesión a un jugador no registrado
 |*Alta*
@@ -164,7 +184,7 @@
 |__
 |**
 
-|PMT15
+|PMT17
 |TestLoginUsernameEmpty
 |Comprobar que no se inicie correctamente sesión a un jugador con username en blanco
 |*Alta*
@@ -174,7 +194,7 @@
 |__
 |**
 
-|PMT16
+|PMT18
 |TestLoginPasswordEmpty
 |Comprobar que no se inicie correctamente sesión a un jugador con password en blanco
 |*Alta*
@@ -184,7 +204,7 @@
 |__
 |**
 
-|PMT17
+|PMT19
 |TestLoginUsernameAndPasswordEmpty
 |Comprobar que no se inicie correctamente sesión a un jugador con username y password en blanco
 |*Alta*
@@ -194,7 +214,7 @@
 |__
 |**
 
-|PMT18
+|PMT20
 |TestLoginWrongPassword
 |Comprobar que no se inicie correctamente sesión a un jugador con password en incorrecta
 |*Alta*
@@ -204,7 +224,7 @@
 |__
 |**
 
-|PMT19
+|PMT21
 |TestLoginWrongUsername
 |Comprobar que no se inicie correctamente sesión a un jugador con password correcta pero username incorrecto
 |*Alta*
@@ -214,7 +234,7 @@
 |__
 |**
 
-|PMT20
+|PMT22
 |TestGetPlayerByUsernameSuccess
 |Comprobar que si se encuentra un jugador este regrese con todos sus datos
 |*Alta*
@@ -224,7 +244,7 @@
 |__
 |**
 
-|PMT21
+|PMT23
 |TestGetPlayerByUsernameUsernameNotExists
 |Comprobar que se regrese un jugador con id -1 si se busca un username que no existe
 |*Alta*
@@ -234,7 +254,7 @@
 |__
 |**
 
-|PMT22
+|PMT24
 |TestGetPlayerByUsernameUsernameBlank
 |Comprobar que se regrese un jugador con id -1 si se busca uno con username en blanco
 |*Alta*
@@ -244,7 +264,7 @@
 |__
 |**
 
-|PMT23
+|PMT25
 |TestGetPlayerByUsernameUsernameInvalid
 |Comprobar que se regrese un jugador con id -1 si se busca uno con username inválido
 |*Alta*
@@ -254,7 +274,7 @@
 |__
 |**
 
-|PMT24
+|PMT26
 |TestGetPlayerByIdSuccess
 |Comprobar que si se encuentra un jugador este regrese con todos sus datos
 |*Alta*
@@ -264,7 +284,7 @@
 |__
 |**
 
-|PMT25
+|PMT27
 |TestGetPlayerByIdPlayerIdNonExists
 |Comprobar que se regrese un jugador con id -1 si se busca un id que no existe
 |*Alta*
@@ -274,7 +294,7 @@
 |__
 |**
 
-|PMT26
+|PMT28
 |TestGetPlayerByIdPlayerIdInvalid
 |Comprobar que se regrese un jugador con id -1 si se busca un id inválido
 |*Alta*
@@ -284,7 +304,7 @@
 |__
 |**
 
-|PMT27
+|PMT29
 |TestUpdatePlayerSuccess
 |Comprobar que se actualice un jugador
 |*Alta*
@@ -294,7 +314,7 @@
 |__
 |**
 
-|PMT28
+|PMT30
 |TestUpdatePlayerUsernameExists
 |Comprobar que no se actualice un jugador si el username ya existe
 |*Alta*
@@ -304,7 +324,7 @@
 |__
 |**
 
-|PMT29
+|PMT31
 |TestUpdatePlayerEmailExists
 |Comprobar que no se actualice un jugador si el correo ya existe
 |*Alta*
@@ -314,7 +334,7 @@
 |__
 |**
 
-|PMT30
+|PMT32
 |TestDeletePlayerByUsernameSuccess
 |Comprobar que se elimina un jugador usando su username
 |*Alta*
@@ -328,7 +348,7 @@ username = _DropPlayer_
 |__
 |**
 
-|PMT31
+|PMT33
 |TestDeletePlayerByUsernameUsernameNonExist
 |Comprobar que no se intenta eliminar un jugador con un nombre de usuario que no existe
 |*Alta*
@@ -338,7 +358,7 @@ username = _DropPlayer_
 |__
 |**
 
-|PMT32
+|PMT34
 |TestDeletePlayerByUsernameUsernameBlank
 |Comprobar que no se intenta eliminar un jugador con un nombre de usuario en blanco
 |*Alta*
@@ -348,7 +368,7 @@ username = _DropPlayer_
 |__
 |**
 
-|PMT33
+|PMT35
 |TestConnectPlayerByUsernameSuccess
 |Comprobar que se conecta a un jugador con un nombre de usuario
 |*Alta*
@@ -361,7 +381,7 @@ _PlayerPassword = "C0nnect_player"_ } +
 |__
 |**
 
-|PMT34
+|PMT36
 |TestConnectPlayerByUsernameUsernameNotExist
 |Comprobar que no se intenta conectar un jugador con un nombre de usuario que no existe
 |*Alta*
@@ -371,7 +391,7 @@ _PlayerPassword = "C0nnect_player"_ } +
 |__
 |**
 
-|PMT35
+|PMT37
 |TestConnectPlayerByUsernameUsernameBlank
 |Comprobar que no se intenta conectar un jugador con un nombre de usuario en blanco
 |*Alta*
@@ -381,7 +401,7 @@ _PlayerPassword = "C0nnect_player"_ } +
 |__
 |**
 
-|PMT36
+|PMT38
 |TestDisconnectPlayerByUsernameSuccess
 |Comprobar que se desconecta a un jugador con un nombre de usuario
 |*Alta*
@@ -391,7 +411,7 @@ _PlayerPassword = "C0nnect_player"_ } +
 |__
 |**
 
-|PMT37
+|PMT39
 |TestDisconnectPlayerByUsernameUsernameNotExist
 |Comprobar que no se intenta desconectar un jugador con un nombre de usuario que no existe
 |*Alta*
@@ -401,7 +421,7 @@ _PlayerPassword = "C0nnect_player"_ } +
 |__
 |**
 
-|PMT38
+|PMT40
 |TestConnectPlayerByUsernameUsernameBlank
 |Comprobar que no se intenta desconectar un jugador con un nombre de usuario en blanco
 |*Alta*

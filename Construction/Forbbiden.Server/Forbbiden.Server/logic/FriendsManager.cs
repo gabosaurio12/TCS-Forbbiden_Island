@@ -93,7 +93,7 @@ namespace Forbbiden.Server.logic
 
         public bool SendFriendRequest(string senderUsername, string receiverUsername)
         {
-            bool success = true;
+            bool success = false;
 
             var (sender, receiver) = GetSenderReceiver(senderUsername, receiverUsername);
 
@@ -101,11 +101,13 @@ namespace Forbbiden.Server.logic
             { 
                 using (var db = new Forbidden_FEIEntities(ConnectionString))
                 {
-                    Friends searchFriendRequest = new Friends();
+                    List<Friends> searchFriendRequest = new List<Friends>();
                     try
                     {
-                        searchFriendRequest = db.Friends.FirstOrDefault(
-                        sfr => sfr.player_id == sender.PlayerId && sfr.friend_id == receiver.PlayerId);
+                        searchFriendRequest = db.Friends
+                            .Where(sfr => sfr.player_id == sender.PlayerId && sfr.friend_id == receiver.PlayerId
+                                || sfr.player_id == receiver.PlayerId && sfr.friend_id == sender.PlayerId)
+                            .ToList();
                     }
                     catch (EntityException ex)
                     {
@@ -113,7 +115,7 @@ namespace Forbbiden.Server.logic
                         ExceptionHandler.HandleEntityException(ex, classMethod);
                     }
 
-                    if (searchFriendRequest == null)
+                    if (searchFriendRequest.Count < 1)
                     {
                         Friends friendRequest = new Friends
                         {
@@ -126,10 +128,10 @@ namespace Forbbiden.Server.logic
                         {
                             db.Friends.Add(friendRequest);
                             db.SaveChanges();
+                            success = true;
                         }
                         catch (EntityException ex)
                         {
-                            success = false;
                             string classMethod = "FriendsManager.SendFriendRequest";
                             ExceptionHandler.HandleEntityException(ex, classMethod);
                         }

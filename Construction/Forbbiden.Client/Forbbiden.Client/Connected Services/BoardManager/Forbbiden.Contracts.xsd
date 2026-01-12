@@ -51,4 +51,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfCard" nillable="true" type="tns:ArrayOfCard" />
+  <xs:complexType name="PlayerCoordinates">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Col" type="xs:int" />
+      <xs:element minOccurs="0" name="MatchId" type="xs:int" />
+      <xs:element minOccurs="0" name="PlayerId" type="xs:int" />
+      <xs:element minOccurs="0" name="Row" type="xs:int" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlayerCoordinates" nillable="true" type="tns:PlayerCoordinates" />
 </xs:schema>

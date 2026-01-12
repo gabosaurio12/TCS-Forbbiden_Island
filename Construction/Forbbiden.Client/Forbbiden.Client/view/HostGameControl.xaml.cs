@@ -1,9 +1,7 @@
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.view;
 using log4net;
 using System;
 using System.Windows;
@@ -12,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Navigation;
 using Forbbiden.Client.Model;
 
-namespace Forbbiden.Client
+namespace Forbbiden.Client.View
 {
     public partial class HostGameControl : UserControl, IDisposable
     {
@@ -235,7 +233,7 @@ namespace Forbbiden.Client
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(
+                ExceptionViewManager.ShowViewExceptionNotification(
                     ex, Window.GetWindow(this));
                 return;
             }
@@ -303,7 +301,7 @@ namespace Forbbiden.Client
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(
+                ExceptionViewManager.ShowViewExceptionNotification(
                     ex, Window.GetWindow(this));
             }
             catch (TimeoutException)

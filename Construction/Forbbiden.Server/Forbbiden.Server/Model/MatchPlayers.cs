@@ -22,6 +22,5 @@ namespace Forbbiden.Server.Model
     
         public virtual Match Match { get; set; }
         public virtual Player Player { get; set; }
-        public virtual Match Match { get; set; }
     }
 }

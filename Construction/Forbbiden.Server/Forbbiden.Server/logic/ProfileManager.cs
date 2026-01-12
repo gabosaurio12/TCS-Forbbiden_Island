@@ -87,7 +87,15 @@ namespace Forbbiden.Server.logic
             {
                 From = new MailAddress(emisor)
             };
-            message.To.Add(new MailAddress(email));
+            try
+            {
+                message.To.Add(new MailAddress(email));
+            }
+            catch (FormatException ex)
+            {
+                Log.Warn("ProfileManager.SendSignupEmail", ex);
+                return success;
+            }
             message.Subject = "Welcome to Forbbiden Island FEI Edition";
 
             string htmlBody = File.ReadAllText("SignupEmailMessage.html");
@@ -135,8 +143,16 @@ namespace Forbbiden.Server.logic
                 Subject = "Password changed",
                 IsBodyHtml = true
             };
-
-            message.To.Add(new MailAddress(email));
+            try
+            {
+                message.To.Add(new MailAddress(email));
+            }
+            catch (FormatException ex)
+            {
+                Log.Warn("ProfileManager.SendSignupEmail", ex);
+                return success;
+            }
+            message.Subject = "Password changed";
 
             string htmlBody = File.ReadAllText("VerificationEmailMessage.html")
                 .Replace("{{TOKEN}}", token);
@@ -166,55 +182,6 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-<<<<<<< HEAD
-=======
-        public int SignUp(Contracts.Player player)
-        {
-            int playerId = -1;
-            using (var db = new Forbidden_FEIEntities(ConnectionString))
-            {
-                bool exists = db.Player.Any(p =>
-                    p.player_username == player.PlayerUsername ||
-                    p.player_email == player.PlayerEmail);
-
-                if (exists)
-                {
-                    playerId = -2;
-                    return playerId;
-                }
-
-                string avatar = Path.Combine(DefaultAvatarPath);
-                string normalizedPassword = player.PlayerPassword.Normalize(NormalizationForm.FormC);
-                string password = BCrypt.Net.BCrypt.HashPassword(normalizedPassword);
-                Model.Player newPlayer = new Model.Player
-                {
-                    player_username = player.PlayerUsername,
-                    player_password = password,
-                    player_email = player.PlayerEmail,
-                    player_name = "",
-                    player_avatar = avatar,
-                    player_status = 0,
-                    is_verified = 0
-                };
-                try
-                {
-                    db.Player.Add(newPlayer);
-                    db.SaveChanges();
-
-                    playerId = newPlayer.player_id;
-                    Log.Info("New player signed up");
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.SignUp ";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
-                }
-            }
-
-            return playerId;
-        }
-
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         public Contracts.Player Login(string username, string password)
         {
             Log.Info("Logging in player");
@@ -250,15 +217,11 @@ namespace Forbbiden.Server.logic
             return player;
         }
 
-<<<<<<< HEAD
         public int SignUp(Contracts.Player player)
-=======
-        private Contracts.Player SetPlayer(Model.Player player, bool includeFriends = true)
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         {
             int playerId = -1;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 bool exists = db.Player.Any(p =>
                     p.player_username == player.PlayerUsername ||
@@ -266,13 +229,16 @@ namespace Forbbiden.Server.logic
 
                 if (exists)
                 {
-                    return playerId;
+                    return -2;
                 }
+
+                string normalizedPassord = player.PlayerPassword.Normalize(NormalizationForm.FormC);
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(normalizedPassord);
 
                 var newPlayer = new Model.Player
                 {
                     player_username = player.PlayerUsername,
-                    player_password = player.PlayerPassword,
+                    player_password = hashedPassword,
                     player_email = player.PlayerEmail,
                     player_name = string.Empty,
                     player_avatar_file = null,
@@ -298,47 +264,9 @@ namespace Forbbiden.Server.logic
             return playerId;
         }
 
-        public bool UploadAvatar(string username, byte[] avatarBytes, string fileName)
-        {
-            if (avatarBytes == null || avatarBytes.Length == 0)
-            {
-                throw new FaultException("Avatar vacío o nulo.");
-            }
-
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
-            {
-                try
-                {
-                    var player = db.Player.FirstOrDefault(p => p.player_username == username);
-                    if (player == null)
-                    {
-                        throw new FaultException("Usuario no encontrado.");
-                    }
-
-                    player.player_avatar_file = avatarBytes;
-                    player.player_avatar_name = string.IsNullOrWhiteSpace(fileName)
-                        ? DefaultAvatarName
-                        : Path.GetFileName(fileName);
-
-                    db.SaveChanges();
-                    return true;
-                }
-                catch (EntityException ex)
-                {
-                    ExceptionHandler.HandleEntityException(ex, "ProfileManager.UploadAvatar");
-                    throw new FaultException("Error de base de datos al guardar avatar.");
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("ProfileManager.UploadAvatar", ex);
-                    throw new FaultException("Server couldn't save the avatar.");
-                }
-            }
-        }
-
         public AvatarResponse GetAvatarByUsername(string username)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -500,58 +428,44 @@ namespace Forbbiden.Server.logic
             }
         }
 
-<<<<<<< HEAD
-=======
-        private static string BuildAvatarFilePath(string username, string fileName)
-        {
-            Directory.CreateDirectory(AvatarsDir);
-
-            string extension = ".jpg";
-
-            var maybeExt = Path.GetExtension(fileName);
-            if (!string.IsNullOrEmpty(maybeExt))
-            {
-                extension = maybeExt;
-            }
-
-            var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{extension}";
-            var avatarPath = Path.Combine(AvatarsDir, safeFileName);
-
-            return avatarPath;
-        }
-
-        public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
+        public bool UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
             if (avatarBytes == null || avatarBytes.Length == 0)
             {
                 throw new FaultException("Avatar vacío o nulo.");
             }
-            try
+
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
-                var fullPath = BuildAvatarFilePath(username, fileName);
-
-                string avatarsRoot = String.Concat(
-                    Path.GetFullPath(AvatarsDir),
-                    Path.DirectorySeparatorChar);
-
-                var normalizedFullPath = Path.GetFullPath(fullPath);
-
-                if (!normalizedFullPath.StartsWith(avatarsRoot, StringComparison.OrdinalIgnoreCase))
+                try
                 {
-                    throw new FaultException("Invalid avatar path");
-                }
+                    var player = db.Player.FirstOrDefault(p => p.player_username == username);
+                    if (player == null)
+                    {
+                        throw new FaultException("Usuario no encontrado.");
+                    }
 
-                File.WriteAllBytes(normalizedFullPath, avatarBytes);
-                return Path.GetFileName(normalizedFullPath);
-            }
-            catch (Exception ex)
-            {
-                Log.Error("UploadAvatar error", ex);
-                throw new FaultException("Server couldn't save the avatar.");
+                    player.player_avatar_file = avatarBytes;
+                    player.player_avatar_name = string.IsNullOrWhiteSpace(fileName)
+                        ? DefaultAvatarName
+                        : Path.GetFileName(fileName);
+
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (EntityException ex)
+                {
+                    ExceptionHandler.HandleEntityException(ex, "ProfileManager.UploadAvatar");
+                    throw new FaultException("Error de base de datos al guardar avatar.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("ProfileManager.UploadAvatar", ex);
+                    throw new FaultException("Server couldn't save the avatar.");
+                }
             }
         }
 
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         public byte[] GetAvatar(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
@@ -580,25 +494,7 @@ namespace Forbbiden.Server.logic
             return File.ReadAllBytes(fullPath);
         }
 
-
-        private static string SanitizeFileName(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return "user";
-            }
-            foreach (var c in Path.GetInvalidFileNameChars())
-            {
-                input = input.Replace(c, '_');
-            }
-            return input;
-        }
-
-<<<<<<< HEAD
-        private static bool SaveUpdateChanges(Forbbiden_FEIEntities db)
-=======
         private static bool SaveUpdateChanges(Forbidden_FEIEntities db)
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         {
             bool success = false;
             using (var transaction = db.Database.BeginTransaction())
@@ -626,11 +522,7 @@ namespace Forbbiden.Server.logic
             {
                 try
                 {
-<<<<<<< HEAD
                     var formerPlayer = db.Player.Find(updatedPlayer.PlayerId);
-=======
-                    Model.Player formerPlayer = db.Player.Find(updatedPlayer.PlayerId);
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
                     if (formerPlayer == null) return false;
 
                     formerPlayer.player_name = updatedPlayer.PlayerName;
@@ -651,7 +543,6 @@ namespace Forbbiden.Server.logic
                     if (ClearSocials(formerPlayer, db))
                     {
                         db.PlayerSocialmedia.AddRange(
-<<<<<<< HEAD
                             updatedPlayer.SocialMedia
                                 .Where(s => !string.IsNullOrWhiteSpace(s.SocialLink))
                                 .Select(s => new PlayerSocialmedia
@@ -660,16 +551,6 @@ namespace Forbbiden.Server.logic
                                     social_link = s.SocialLink,
                                     player_id = formerPlayer.player_id
                                 }));
-=======
-                        updatedPlayer.SocialMedia
-                        .Where(social => !string.IsNullOrWhiteSpace(social.SocialLink))
-                        .Select(social => new PlayerSocialmedia
-                        {
-                            social_media_name = social.SocialMediaName,
-                            social_link = social.SocialLink,
-                            player_id = formerPlayer.player_id
-                        }));
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
                     }
 
                     success = SaveUpdateChanges(db);
@@ -682,11 +563,7 @@ namespace Forbbiden.Server.logic
             return success;
         }
 
-<<<<<<< HEAD
-        public bool ClearSocials(Model.Player player)
-=======
         public bool ClearSocials(Model.Player player, Forbidden_FEIEntities db)
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
         {
             bool success = false;
             try
@@ -694,22 +571,7 @@ namespace Forbbiden.Server.logic
                 var socials = db.PlayerSocialmedia.Where(s => s.player_id == player.player_id).ToList();
                 foreach (var social in socials)
                 {
-<<<<<<< HEAD
-                    var socials = db.PlayerSocialmedia.Where(s => s.player_id == player.player_id).ToList();
-                    foreach (var social in socials)
-                    {
-                        db.PlayerSocialmedia.Remove(social);
-                    }
-                    db.SaveChanges();
-                    success = true;
-                }
-                catch (EntityException ex)
-                {
-                    string classMethod = "ProfileManager.ClearSocials ";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
-=======
                     db.PlayerSocialmedia.Remove(social);
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
                 }
                 db.SaveChanges();
                 success = true;
@@ -738,9 +600,12 @@ namespace Forbbiden.Server.logic
                     {
                         var tokens = db.Token.Where(t => t.player_id == playerToDelete.player_id).ToList();
                         var friends = db.Friends.Where(f => f.player_id == playerToDelete.player_id).ToList();
+                        var socials = db.PlayerSocialmedia.Where(
+                            sm => sm.player_id == playerToDelete.player_id).ToList();
 
                         db.Token.RemoveRange(tokens);
                         db.Friends.RemoveRange(friends);
+                        db.PlayerSocialmedia.RemoveRange(socials);
                         db.Player.Remove(playerToDelete);
                         db.SaveChanges();
 

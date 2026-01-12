@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="callbacks\MatchNotificationManager.cs" />
     <Compile Include="exceptionHandlers\ExceptionHandler.cs" />
     <Compile Include="logic\BoardManager.cs" />
@@ -112,65 +111,6 @@
     <Compile Include="Model\Tile.cs">
       <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
-=======
-    <Compile Include="Callbacks\MatchNotificationManager.cs" />
-    <Compile Include="ExceptionHandlers\ExceptionHandler.cs" />
-    <Compile Include="Logic\BoardManager.cs" />
-    <Compile Include="Callbacks\FriendsNotificationManager.cs" />
-    <Compile Include="Logic\GameManager.cs" />
-    <Compile Include="Logic\FriendsManager.cs" />
-    <Compile Include="Logic\MatchManager.cs" />
-    <Compile Include="Logic\ProfileManager.cs" />
-    <Compile Include="Logic\TokenManager.cs" />
-    <Compile Include="Model\Board.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Card.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ForbiddenModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForbiddenModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ForbiddenModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ForbiddenModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForbiddenModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Friends.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Match.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\MatchPlayers.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\match_cards.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\match_minigames.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Minigame.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Player.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PlayerSocialmedia.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Tile.cs">
-      <DependentUpon>ForbiddenModel.tt</DependentUpon>
-    </Compile>
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
     <Compile Include="Model\Token.cs">
       <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
@@ -189,11 +129,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-    <Compile Include="utils\ConnectionStringSingleton.cs" />
-=======
+    <Compile Include="Utils\BoardUtils.cs" />
     <Compile Include="Utils\ConnectionStringSingleton.cs" />
->>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
   </ItemGroup>
   <ItemGroup>
     <None Include=".env">

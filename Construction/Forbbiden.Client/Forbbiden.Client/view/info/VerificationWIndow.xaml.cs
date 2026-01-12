@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Forbbiden.Client.View.info
+namespace Forbbiden.Client.View.Info
 {
     /// <summary>
     /// Interaction logic for VerificationWIndow.xaml
@@ -53,7 +53,6 @@ namespace Forbbiden.Client.View.info
         private async Task VerifyPlayer()
         {
             Player player = new Player();
-            var profileRepository = new ProfileRepository();
 
             try
             {
@@ -69,7 +68,7 @@ namespace Forbbiden.Client.View.info
                 bool isUpdated = false;
                 try
                 {
-                    isUpdated = await profileRepository.UpdatePlayerProfile(player);
+                    isUpdated = await ProfileRepository.UpdatePlayerProfile(player);
                 }
                 catch (ViewException ex)
                 {
