@@ -1,6 +1,7 @@
 using Forbbiden.Client.Exceptions;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Model;
+using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.View.Info;
 using log4net;
@@ -142,6 +143,30 @@ namespace Forbbiden.Client.View
             await LoadMatches();
         }
 
+        private Player EnsureCurrentPlayer()
+        {
+            var current = ClientSession.GetPlayer();
+            if (current != null && current.PlayerId != -1)
+            {
+                return current; 
+            }
+
+            var guestId = Guid.NewGuid().ToString("N").Substring(0, 6);
+            var guest = new Player
+            {
+                PlayerId = 0, 
+                PlayerUsername = $"Guest-{guestId}",
+                PlayerName = $"Guest-{guestId}",
+                PlayerAvatarName = "defaultAvatar.png",
+                PlayerAvatarBytes = Array.Empty<byte>(),
+                Status = 0,
+                IsVerified = 0
+            };
+
+            ClientSession.SetPlayer(guest); 
+            return guest;
+        }
+
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(sender is Button button &&
@@ -150,9 +175,9 @@ namespace Forbbiden.Client.View
                 return;
             }
 
-            var currentPlayer = ClientSession.GetPlayer();
+            var currentPlayer = EnsureCurrentPlayer();
 
-            if (currentPlayer == null || currentPlayer.PlayerId == -1)
+            if (string.IsNullOrWhiteSpace(currentPlayer?.PlayerUsername))
             {
                 ViewUtils.OpenNotificationWindow(
                     Properties.Resources.error,

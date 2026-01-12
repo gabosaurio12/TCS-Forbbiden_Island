@@ -174,7 +174,7 @@ namespace Forbbiden.Client.View
         {
             var currentPlayer = ClientSession.GetPlayer();
 
-            if (currentPlayer == null)
+            if (currentPlayer == null || currentPlayer.PlayerId <= 0)
             {
                 ViewUtils.OpenNotificationWindow(
                     Properties.Resources.warning_title,
@@ -192,7 +192,6 @@ namespace Forbbiden.Client.View
                     Properties.Resources.missing_room_name_title,
                     Properties.Resources.missing_room_name_message,
                     Window.GetWindow(this));
-
                 return null;
             }
 
@@ -202,7 +201,6 @@ namespace Forbbiden.Client.View
                     Properties.Resources.error,
                     Properties.Resources.warning_room_char_limit,
                     Window.GetWindow(this));
-
                 return null;
             }
 

@@ -27,7 +27,6 @@ namespace Forbbiden.Client.View
         private bool isClosing = false;
         private bool isLoaded = false;
         private int countdownToken = 0;
-
         private string inviteCode;
         private bool isPrivateMatch = false;
         private bool inviteFetched = false;
@@ -78,12 +77,24 @@ namespace Forbbiden.Client.View
             UnsubscribeCallbacks();
         }
 
+        private static string EnsureCurrentPlayerName(string usernameFromJoin)
+        {
+            if (!string.IsNullOrWhiteSpace(usernameFromJoin))
+                return usernameFromJoin;
+
+            var session = ClientSession.GetPlayer();
+            if (!string.IsNullOrWhiteSpace(session?.PlayerUsername))
+                return session.PlayerUsername;
+
+            return $"Guest-{Guid.NewGuid().ToString("N").Substring(0, 6)}";
+        }
+
         public LobbyPage(int matchId, string username, GameManagerClient gameClient, GameServiceCallback callback)
         {
             InitializeComponent();
             MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username);
             MatchId = matchId;
-            CurrentPlayer = username;
+            CurrentPlayer = EnsureCurrentPlayerName(username);
             GameClient = gameClient;
             Callback = callback;
 

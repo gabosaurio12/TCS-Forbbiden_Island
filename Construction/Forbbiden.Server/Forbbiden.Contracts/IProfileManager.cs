@@ -96,6 +96,11 @@ namespace Forbbiden.Contracts
         public string PlayerAvatarName { get; set; }
 
         [DataMember]
+        public bool IsGuest { get; set; } 
+        [DataMember]
+        public string GuestId { get; set; }
+
+        [DataMember]
         public int Status { get; set; }
         [DataMember]
         public int IsVerified { get; set; }
