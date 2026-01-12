@@ -765,23 +765,23 @@
   <data name="error_avatar_download" xml:space="preserve">
     <value>Hubo un error al descargar un Avatar</value>
   </data>
- <data name="error_server_timeout" xml:space="preserve">
-	  <value>El servidor no responde, por favor inténtalo más tarde</value>
+  <data name="error_server_timeout" xml:space="preserve">
+    <value>El servidor no responde, por favor inténtalo más tarde</value>
   </data>
   <data name="error_match_created_not_joined" xml:space="preserve">
-	  <value>La partida fue creada pero no pudiste unirte a ella, por favor intenta de nuevo más tarde</value>
+    <value>La partida fue creada pero no pudiste unirte a ella, por favor intenta de nuevo más tarde</value>
   </data>
   <data name="warning_room_char_limit" xml:space="preserve">
-	  <value>El nombre de la sala no puede exceder los 20 caracteres</value>
+    <value>El nombre de la sala no puede exceder los 20 caracteres</value>
   </data>
   <data name="warning_login_permission" xml:space="preserve">
-	  <value>Debes iniciar sesión para crear una sala</value>
-  </data> 
+    <value>Debes iniciar sesión para crear una sala</value>
+  </data>
   <data name="error_sending_callback" xml:space="preserve">
-    <value>Hubo un error al sincronizar el juego con el servidor u otros jugadores</value>
+    <value>Hubo un error al sincronizar el juego con el servidor u otros jugadores.</value>
   </data>
   <data name="error_communication" xml:space="preserve">
-    <value>Hubo un error mientras al comunicarse con el servidor, intenta más tarde por favor</value>
+    <value>Hubo un error al comunicarse con el servidor, intenta más tarde por favor</value>
   </data>
   <data name="error_invalid_avatar" xml:space="preserve">
     <value>Intentaste subir un avatar inválido</value>
@@ -791,5 +791,17 @@
   </data>
   <data name="error_uploading_avatar" xml:space="preserve">
     <value>Hubo un error al subir el avatar</value>
+  </data>
+  <data name="invaild_username_email_occupied" xml:space="preserve">
+    <value>El nombre de usuario o correo electrónico que ingresaste está siendo registrado, ingresa otros por favor</value>
+  </data>
+  <data name="game_starting_title" xml:space="preserve">
+    <value>¡El juego está por comenzar!</value>
+  </data>
+  <data name="game_starting_message" xml:space="preserve">
+    <value>La partida está a punto de comenzar, préparate</value>
+  </data>
+  <data name="error_pulling_players" xml:space="preserve">
+    <value>Hubo un error al recopilar la información de los jugadores de la partida. Regresarás a la página principal</value>
   </data>
 </root>

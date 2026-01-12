@@ -17,26 +17,6 @@ namespace Forbbiden.Client
 
         public App()
         {
-            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
-            {
-                MessageBox.Show(
-                    e.ExceptionObject.ToString(),
-                    "UnhandledException",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
-            };
-
-            DispatcherUnhandledException += (s, e) =>
-            {
-                MessageBox.Show(
-                    e.Exception.ToString(),
-                    "DispatcherUnhandledException",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
-                e.Handled = true;
-            };
         }
 
         protected override void OnStartup(StartupEventArgs e)

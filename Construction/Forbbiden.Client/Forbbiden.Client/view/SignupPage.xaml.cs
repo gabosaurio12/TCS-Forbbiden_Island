@@ -3,7 +3,6 @@ using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
-using log4net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -136,8 +135,8 @@ namespace Forbbiden.Client
                 }
                 else if (playerId == -2)
                 {
-                    string title = Properties.Resources.error;
-                    string message = Properties.Resources.signup_error;
+                    string title = Properties.Resources.invalid_input;
+                    string message = Properties.Resources.invaild_username_email_occupied;
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                     _ = ProfileRepository.DeletePlayer(player.PlayerUsername);
                 }

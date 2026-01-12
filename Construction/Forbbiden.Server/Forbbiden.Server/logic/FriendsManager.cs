@@ -62,7 +62,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "FriendsManager.AcceptFriendRequest";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                 }
             }
 
@@ -85,7 +85,7 @@ namespace Forbbiden.Server.logic
             catch (EntityException ex)
             {
                 string classMethod = "FriendsManager.SendFriendRequest";
-                ExceptionHandler.HandleEntityException(ex, classMethod);
+                ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
             }
 
             return (sender, receiver);
@@ -112,7 +112,7 @@ namespace Forbbiden.Server.logic
                     catch (EntityException ex)
                     {
                         string classMethod = "FriendsManager.SendFriendRequest";
-                        ExceptionHandler.HandleEntityException(ex, classMethod);
+                        ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                     }
 
                     if (searchFriendRequest.Count < 1)
@@ -133,7 +133,7 @@ namespace Forbbiden.Server.logic
                         catch (EntityException ex)
                         {
                             string classMethod = "FriendsManager.SendFriendRequest";
-                            ExceptionHandler.HandleEntityException(ex, classMethod);
+                            ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                         }
 
                         FriendRequest friendRequestCallback = new FriendRequest
@@ -177,7 +177,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "FriendsManager.CancelFriendRequest";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                 }
             }
 
@@ -219,7 +219,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "FriendsManager.DeleteFriend";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                 }
             }
 
@@ -258,7 +258,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "FriendsManager.GetFriendRequests";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
             }
             return new List<FriendRequest>();
@@ -279,7 +279,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "FriendsManager.GetFriedsByID";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
 
                 var profileManager = new ProfileManager();

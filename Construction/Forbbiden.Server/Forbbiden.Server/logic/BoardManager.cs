@@ -52,7 +52,8 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.CreateBoard";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, 
+                        ExceptionHandler.PushingError);
                 }
             }
 
@@ -75,7 +76,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetBoard";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
             }
             return board;
@@ -102,7 +103,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.RegisterBoardTiles";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                 }
             }
 
@@ -123,7 +124,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetBoardTiles";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
 
                 return tiles;
@@ -142,7 +143,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetCard";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
 
                 Contracts.Card contractCard;
@@ -182,7 +183,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetCard";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
 
                 Contracts.Card contractCard;
@@ -222,7 +223,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetFloodCards";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
 
                 List<Contracts.Card> floodCards = null;
@@ -258,7 +259,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "BoardManager.GetTreasureCards";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
 
                 List<Contracts.Card> treasureCards = null;
@@ -316,7 +317,7 @@ namespace Forbbiden.Server.logic
             catch (EntityException ex)
             {
                 string classMethod = "BoardManager.GetPlayerCoordinates";
-                ExceptionHandler.HandleEntityException(ex, classMethod);
+                ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
             }
             return playerCoordinates;
         }
@@ -345,11 +346,11 @@ namespace Forbbiden.Server.logic
             }
             catch (DbUpdateException ex)
             {
-                ExceptionHandler.HandleDbUpdateException(ex, classMethod);
+                ExceptionHandler.HandleDbUpdateException(ex, classMethod, ExceptionHandler.PushingError);
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, classMethod);
+                ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
             }
             return coordinatesUpdated;
         }
@@ -367,7 +368,7 @@ namespace Forbbiden.Server.logic
             }
             catch (TimeoutException ex)
             {
-                ExceptionHandler.HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod, ExceptionHandler.PushingError);
             }
         }
 
@@ -384,7 +385,7 @@ namespace Forbbiden.Server.logic
             }
             catch (TimeoutException ex)
             {
-                ExceptionHandler.HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod, ExceptionHandler.PushingError);
             }
         }
 
@@ -401,7 +402,7 @@ namespace Forbbiden.Server.logic
             }
             catch (TimeoutException ex)
             {
-                ExceptionHandler.HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod, ExceptionHandler.PushingError);
             }
         }
 
@@ -418,7 +419,7 @@ namespace Forbbiden.Server.logic
             }
             catch (TimeoutException ex)
             {
-                ExceptionHandler.HandleTimeoutException(ex, classMethod);
+                ExceptionHandler.HandleTimeoutException(ex, classMethod, ExceptionHandler.PushingError);
             }
         }
     }

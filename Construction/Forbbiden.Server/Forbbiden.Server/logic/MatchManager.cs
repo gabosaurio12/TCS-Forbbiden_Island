@@ -18,7 +18,7 @@ namespace Forbbiden.Server.logic
         private readonly Dictionary<int, string> inviteCodes = new Dictionary<int, string>();
         private readonly object inviteLock = new object();
         private static readonly ILog log = LogManager.GetLogger(typeof(MatchManager));
-        private const string CLASS_NAME = "MatchManager.cs";
+        private const string ClassName = "MatchManager.cs";
         private readonly string Guest = "Guest";
         private readonly string connectionString;
         public MatchManager()
@@ -100,11 +100,11 @@ namespace Forbbiden.Server.logic
             }
             catch (DbEntityValidationException ex)
             {
-                ExceptionHandler.HandleEntityValidationException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityValidationException(ex, ClassName, ExceptionHandler.PushingError);
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName, ExceptionHandler.PushingError);
             }
 
             return matchId;
@@ -202,7 +202,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName, ExceptionHandler.PushingError);
             }
 
             return false;
@@ -249,7 +249,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName, ExceptionHandler.PullingError);
             }
             return new List<Contracts.Match>();
         }
@@ -295,7 +295,7 @@ namespace Forbbiden.Server.logic
             }
             catch (EntityException ex)
             {
-                ExceptionHandler.HandleEntityException(ex, CLASS_NAME);
+                ExceptionHandler.HandleEntityException(ex, ClassName, ExceptionHandler.PullingError);
             }
             return match;
         }

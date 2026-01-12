@@ -60,7 +60,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "TokenManager.RemoveExistingToken";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                 }
             }
         }
@@ -99,12 +99,12 @@ namespace Forbbiden.Server.logic
                     catch (DbUpdateException ex)
                     {
                         string classMethod = "TokenManager.GenerateToken";
-                        ExceptionHandler.HandleDbUpdateException(ex, classMethod);
+                        ExceptionHandler.HandleDbUpdateException(ex, classMethod, ExceptionHandler.PushingError);
                     }
                     catch (EntityException ex)
                     {
                         string classMethod = "TokenManager.GenerateToken";
-                        ExceptionHandler.HandleEntityException(ex, classMethod);
+                        ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PushingError);
                     }
                 } while (!success);
             }
@@ -155,7 +155,7 @@ namespace Forbbiden.Server.logic
                 catch (EntityException ex)
                 {
                     string classMethod = "TokenManager.VerifyToken";
-                    ExceptionHandler.HandleEntityException(ex, classMethod);
+                    ExceptionHandler.HandleEntityException(ex, classMethod, ExceptionHandler.PullingError);
                 }
             }
 
