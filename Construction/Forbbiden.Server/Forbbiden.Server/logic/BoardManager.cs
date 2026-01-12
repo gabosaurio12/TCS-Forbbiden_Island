@@ -3,10 +3,12 @@ using Forbbiden.Server.callbacks;
 using Forbbiden.Server.exceptionHandlers;
 using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
+using Forbbiden.Server.Utils;
 using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.ServiceModel;
 
@@ -67,7 +69,7 @@ namespace Forbbiden.Server.logic
                     using (var db = new Forbidden_FEIEntities(ConnectionString))
                     {
                         var boardTiles = db.Board.Where(b => b.match_id == matchId).ToList();
-                        board.Tiles = GetContractsTilesFromBoard(boardTiles, db);
+                        board.Tiles = BoardUtils.GetContractsTilesFromBoard(boardTiles, db);
                     }
                 }
                 catch (EntityException ex)
@@ -77,32 +79,6 @@ namespace Forbbiden.Server.logic
                 }
             }
             return board;
-        }
-
-        private List<Contracts.Tile> GetContractsTilesFromBoard(List<Model.Board> board, Forbidden_FEIEntities db)
-        {
-            var tilesIds = board.Select(b => b.tile_id).ToList();
-
-            var modelTiles = db.Tile.Where(t => tilesIds.Contains(t.tile_id)).ToList();
-
-            return modelTiles.Select(GetContractTile).ToList();
-        }
-
-        private Contracts.Tile GetContractTile(Model.Tile modelTile)
-        {
-            return new Contracts.Tile()
-            {
-                TileId = modelTile.tile_id,
-                Column = modelTile.col,
-                Row = modelTile.row,
-                IsFlood = modelTile.is_flood == 1,
-                IsTreasure = modelTile.is_treasure == 1,
-                IsEscape = modelTile.is_escape == 1,
-                IsLost = modelTile.is_lost == 1,
-                ImageFileName = modelTile.image_file_name,
-                TreasureCard = modelTile.treasure_card_id.HasValue ?
-                    GetCardById((int)modelTile.treasure_card_id) : null
-            };
         }
 
         public List<Contracts.Tile> RegisterBoardTiles(List<Contracts.Tile> boardTiles)
@@ -116,11 +92,11 @@ namespace Forbbiden.Server.logic
                     {
                         var modelTiles = new List<Model.Tile>();
 
-                        AddTilesToDatabase(db, modelTiles, boardTiles);
+                        BoardUtils.AddTilesToDatabase(db, modelTiles, boardTiles);
 
                         db.SaveChanges();
 
-                        contractTiles = AssignTilesIDs(modelTiles, boardTiles);
+                        contractTiles = BoardUtils.AssignTilesIDs(modelTiles, boardTiles);
                     }
                 }
                 catch (EntityException ex)
@@ -133,42 +109,6 @@ namespace Forbbiden.Server.logic
             return contractTiles;
         }
 
-        private void AddTilesToDatabase(Forbidden_FEIEntities db, List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
-        {
-            foreach (var boardTile in boardTiles)
-            {
-                Model.Tile tile = GetModelTile(boardTile);
-                modelTiles.Add(tile);
-                db.Tile.Add(tile);
-            }
-        }
-
-        private Model.Tile GetModelTile(Contracts.Tile contractsTile)
-        {
-            return new Model.Tile()
-            {
-                col = contractsTile.Column,
-                row = contractsTile.Row,
-                is_treasure = contractsTile.IsTreasure ? 1 : 0,
-                is_escape = contractsTile.IsEscape ? 1 : 0,
-                is_flood = contractsTile.IsFlood ? 1 : 0,
-                is_lost = contractsTile.IsLost ? 1 : 0,
-                image_file_name = contractsTile.ImageFileName,
-                treasure_card_id = contractsTile.TreasureCard?.CardId
-            };
-        }
-
-        private List<Contracts.Tile> AssignTilesIDs(List<Model.Tile> modelTiles, List<Contracts.Tile> boardTiles)
-        {
-            List<Contracts.Tile> contractTiles = boardTiles.ToList();
-
-            for (int i = 0; i < modelTiles.Count; i++)
-            {
-                contractTiles[i].TileId = modelTiles[i].tile_id;
-            }
-            return contractTiles;
-        }
-
         public List<Contracts.Tile> GetBoardTiles(int matchId)
         {
             using (var db = new Forbidden_FEIEntities(ConnectionString))
@@ -178,7 +118,7 @@ namespace Forbbiden.Server.logic
                 try
                 {
                     board = db.Board.Where(b => b.match_id == matchId).ToList();
-                    tiles = GetContractsTilesFromBoard(board, db);
+                    tiles = BoardUtils.GetContractsTilesFromBoard(board, db);
                 }
                 catch (EntityException ex)
                 {
@@ -338,8 +278,80 @@ namespace Forbbiden.Server.logic
                     }
                 }
 
+
                 return treasureCards;
             }
+        }
+
+        public PlayerCoordinates GetPlayerCoordinates(int matchId, string username)
+        {
+            PlayerCoordinates playerCoordinates = new PlayerCoordinates()
+            {
+                PlayerId = -1
+            };
+
+            try
+            {
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
+                {
+                    var coordinates = db.MatchPlayers
+                        .Where(mp => mp.match_id == matchId
+                            && mp.Player.player_username == username)
+                        .Select(mp => new PlayerCoordinates
+                        {
+                            PlayerId = mp.player_id,
+                            MatchId = mp.match_id,
+                            Username = username,
+                            Col = mp.col ?? -1,
+                            Row = mp.row ?? -1
+                        })
+                        .FirstOrDefault();
+
+                    if (coordinates != null)
+                    {
+                        playerCoordinates = coordinates;
+                    }
+                }
+            }
+            catch (EntityException ex)
+            {
+                string classMethod = "BoardManager.GetPlayerCoordinates";
+                ExceptionHandler.HandleEntityException(ex, classMethod);
+            }
+            return playerCoordinates;
+        }
+
+        public bool UpdatePlayerCoordinates(PlayerCoordinates playerCoordinates)
+        {
+            string classMethod = "BoardManager.UpdatePlayerCoordinates";
+            bool coordinatesUpdated = false;
+            try
+            {
+                using (var db = new Forbidden_FEIEntities(ConnectionString))
+                {
+                    var currentCoordinates = db.MatchPlayers.FirstOrDefault(
+                        mp => mp.match_id == playerCoordinates.MatchId
+                        && mp.player_id == playerCoordinates.PlayerId);
+
+                    if (currentCoordinates != null)
+                    {
+                        currentCoordinates.row = playerCoordinates.Row;
+                        currentCoordinates.col = playerCoordinates.Col;
+
+                        db.SaveChanges();
+                        coordinatesUpdated = true;
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                ExceptionHandler.HandleDbUpdateException(ex, classMethod);
+            }
+            catch (EntityException ex)
+            {
+                ExceptionHandler.HandleEntityException(ex, classMethod);
+            }
+            return coordinatesUpdated;
         }
 
         public void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)

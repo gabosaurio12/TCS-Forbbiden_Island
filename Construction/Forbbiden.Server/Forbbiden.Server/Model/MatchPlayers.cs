@@ -12,11 +12,13 @@ namespace Forbbiden.Server.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class match_players
+    public partial class MatchPlayers
     {
         public int match_players_id { get; set; }
         public int match_id { get; set; }
         public int player_id { get; set; }
+        public Nullable<int> row { get; set; }
+        public Nullable<int> col { get; set; }
     
         public virtual Match Match { get; set; }
         public virtual Player Player { get; set; }

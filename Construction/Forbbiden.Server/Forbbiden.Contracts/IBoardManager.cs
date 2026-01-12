@@ -41,6 +41,14 @@ namespace Forbbiden.Contracts
 
         [OperationContract]
         [FaultContract(typeof(Fault))]
+        PlayerCoordinates GetPlayerCoordinates(int matchId, string username);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
+        bool UpdatePlayerCoordinates(PlayerCoordinates playerCoordinates);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
         void SendOnBoardCreatedCallback(string boardJson, List<string> usernames);
         
         [OperationContract]
@@ -130,5 +138,24 @@ namespace Forbbiden.Contracts
 
         [DataMember]
         public string ImageFileName { get; set; }
+    }
+
+    [DataContract]
+    public class PlayerCoordinates
+    {
+        [DataMember]
+        public int PlayerId { get; set; }
+
+        [DataMember]
+        public int MatchId { get; set; }
+
+        [DataMember]
+        public string Username { get; set; }
+
+        [DataMember]
+        public int Col { get; set; }
+
+        [DataMember]
+        public int Row { get; set; }
     }
 }

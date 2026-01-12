@@ -20,7 +20,7 @@ namespace Forbbiden.Server.Model
             this.Board = new HashSet<Board>();
             this.match_cards = new HashSet<match_cards>();
             this.match_minigames = new HashSet<match_minigames>();
-            this.match_players = new HashSet<match_players>();
+            this.MatchPlayers = new HashSet<MatchPlayers>();
         }
     
         public int match_id { get; set; }
@@ -38,8 +38,8 @@ namespace Forbbiden.Server.Model
         public virtual ICollection<match_cards> match_cards { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_minigames> match_minigames { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<match_players> match_players { get; set; }
         public virtual Player Player { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MatchPlayers> MatchPlayers { get; set; }
     }
 }

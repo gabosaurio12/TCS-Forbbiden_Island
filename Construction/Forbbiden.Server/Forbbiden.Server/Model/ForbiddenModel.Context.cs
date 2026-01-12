@@ -16,14 +16,15 @@ namespace Forbbiden.Server.Model
     public partial class Forbidden_FEIEntities : DbContext
     {
         public Forbidden_FEIEntities()
-            : base("name=Entities")
+            : base("name=Forbidden_FEIEntities")
         {
         }
 
-        public Forbidden_FEIEntities(string connectionString)
+        public Forbidden_FEIEntities(string connectionString) 
             : base(connectionString)
         {
         }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -35,12 +36,12 @@ namespace Forbbiden.Server.Model
         public virtual DbSet<Match> Match { get; set; }
         public virtual DbSet<match_cards> match_cards { get; set; }
         public virtual DbSet<match_minigames> match_minigames { get; set; }
-        public virtual DbSet<match_players> match_players { get; set; }
         public virtual DbSet<Minigame> Minigame { get; set; }
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<PlayerSocialmedia> PlayerSocialmedia { get; set; }
         public virtual DbSet<Tile> Tile { get; set; }
         public virtual DbSet<Token> Token { get; set; }
         public virtual DbSet<Treasure> Treasure { get; set; }
+        public virtual DbSet<MatchPlayers> MatchPlayers { get; set; }
     }
 }
