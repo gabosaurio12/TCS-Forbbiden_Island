@@ -14,6 +14,43 @@ namespace FriendsManager
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class Fault : object
+    {
+        
+        private string DetailsField;
+        
+        private string ErrorField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details
+        {
+            get
+            {
+                return this.DetailsField;
+            }
+            set
+            {
+                this.DetailsField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error
+        {
+            get
+            {
+                return this.ErrorField;
+            }
+            set
+            {
+                this.ErrorField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FriendRequest", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
     public partial class FriendRequest : object
     {
@@ -331,21 +368,27 @@ namespace FriendsManager
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/SendFriendRequestResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/SendFriendRequestFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> SendFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/AcceptFriendRequestResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/AcceptFriendRequestFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> AcceptFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/CancelFriendRequest", ReplyAction="http://tempuri.org/IFriendsManager/CancelFriendRequestResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/CancelFriendRequestFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> CancelFriendRequestAsync(string senderUsername, string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteFriendResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/DeleteFriendFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> DeleteFriendAsync(string friendUsername, string playerUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendRequests", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendRequestsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/GetFriendRequestsFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<FriendsManager.FriendRequest[]> GetFriendRequestsAsync(string receiverUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/GetFriendsByID", ReplyAction="http://tempuri.org/IFriendsManager/GetFriendsByIDResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FriendsManager.Fault), Action="http://tempuri.org/IFriendsManager/GetFriendsByIDFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<FriendsManager.Friendship[]> GetFriendsByIDAsync(int playerID);
     }
     

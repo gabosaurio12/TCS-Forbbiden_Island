@@ -90,7 +90,15 @@ namespace Forbbiden.Server.logic
             {
                 From = new MailAddress(emisor)
             };
-            message.To.Add(new MailAddress(email));
+            try
+            {
+                message.To.Add(new MailAddress(email));
+            }
+            catch (FormatException ex)
+            {
+                Log.Warn("ProfileManager.SendSignupEmail", ex);
+                return success;
+            }
             message.Subject = "Welcome to Forbbiden Island FEI Edition";
 
             string htmlBody = File.ReadAllText("SignupEmailMessage.html");
@@ -134,7 +142,15 @@ namespace Forbbiden.Server.logic
             {
                 From = new MailAddress(emisor)
             };
-            message.To.Add(new MailAddress(email));
+            try
+            {
+                message.To.Add(new MailAddress(email));
+            }
+            catch (FormatException ex)
+            {
+                Log.Warn("ProfileManager.SendSignupEmail", ex);
+                return success;
+            }
             message.Subject = "Password changed";
 
             string htmlBody = File.ReadAllText("VerificationEmailMessage.html");
@@ -578,9 +594,12 @@ namespace Forbbiden.Server.logic
                     {
                         var tokens = db.Token.Where(t => t.player_id == playerToDelete.player_id).ToList();
                         var friends = db.Friends.Where(f => f.player_id == playerToDelete.player_id).ToList();
+                        var socials = db.PlayerSocialmedia.Where(
+                            sm => sm.player_id == playerToDelete.player_id).ToList();
 
                         db.Token.RemoveRange(tokens);
                         db.Friends.RemoveRange(friends);
+                        db.PlayerSocialmedia.RemoveRange(socials);
                         db.Player.Remove(playerToDelete);
                         db.SaveChanges();
 
