@@ -54,15 +54,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\MatchNotificationManager.cs" />
-    <Compile Include="ExceptionHandlers\ExceptionHandler.cs" />
-    <Compile Include="Logic\BoardManager.cs" />
-    <Compile Include="Callbacks\FriendsNotificationManager.cs" />
-    <Compile Include="Logic\GameManager.cs" />
-    <Compile Include="Logic\FriendsManager.cs" />
-    <Compile Include="Logic\MatchManager.cs" />
-    <Compile Include="Logic\ProfileManager.cs" />
-    <Compile Include="Logic\TokenManager.cs" />
+    <Compile Include="callbacks\MatchNotificationManager.cs" />
+    <Compile Include="exceptionHandlers\ExceptionHandler.cs" />
+    <Compile Include="logic\BoardManager.cs" />
+    <Compile Include="callbacks\FriendsNotificationManager.cs" />
+    <Compile Include="logic\GameManager.cs" />
+    <Compile Include="logic\FriendsManager.cs" />
+    <Compile Include="logic\MatchManager.cs" />
+    <Compile Include="logic\ProfileManager.cs" />
+    <Compile Include="logic\TokenManager.cs" />
     <Compile Include="Model\Board.cs">
       <DependentUpon>ForbiddenModel.tt</DependentUpon>
     </Compile>
@@ -129,8 +129,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Utils\BoardUtils.cs" />
+=======
+<<<<<<< HEAD
+    <Compile Include="utils\ConnectionStringSingleton.cs" />
+=======
+>>>>>>> 429943b56156232c379a3158e92a4b972fd35aae
     <Compile Include="Utils\ConnectionStringSingleton.cs" />
+>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2
   </ItemGroup>
   <ItemGroup>
     <None Include=".env">

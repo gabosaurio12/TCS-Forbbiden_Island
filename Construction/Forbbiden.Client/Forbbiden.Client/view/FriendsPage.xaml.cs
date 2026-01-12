@@ -1,6 +1,10 @@
 ﻿using Forbbiden.Client.Controls;
 using Forbbiden.Client.FriendsManager;
+using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
+using Forbbiden.Client.Repositories;
+using Forbbiden.Client.Exceptions;
+using log4net;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,8 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Input;
-using Forbbiden.Client.Repositories;
-using Forbbiden.Client.Exceptions;
 using System.Collections.Generic;
 using Forbbiden.Client.Model;
 using System.IO;
@@ -89,15 +91,35 @@ namespace Forbbiden.Client.View
                     .Where(fs => fs.Friend.Status == 0)
                     .Select(fs => fs.Friend).ToList();
 
+                var tasks = new List<Task>();
                 foreach (var friendShip in onlineFriends)
                 {
-                    AddOnlineFriend(friendShip);
+                    tasks.Add(AddOnlineFriend(friendShip));
                 }
 
                 foreach (var friendShip in offlineFriends)
                 {
-                    AddOfflineFriend(friendShip);
+                    tasks.Add(AddOfflineFriend(friendShip));
                 }
+
+                await Task.WhenAll(tasks);
+            }
+        }
+
+        private async Task<ImageBrush> GetAvatarBrushAsync(ProfileManager.Player friend)
+        {
+            try
+            {
+                if (friend?.PlayerAvatarBytes != null && friend.PlayerAvatarBytes.Length > 0)
+                {
+                    return ViewUtils.GetImageBrushFromBytes(friend.PlayerAvatarBytes);
+                }
+
+                return await AvatarsManager.Instance.GetAvatarBrushAsync(friend?.PlayerUsername);
+            }
+            catch
+            {
+                return await AvatarsManager.Instance.GetAvatarBrushAsync(friend?.PlayerUsername);
             }
         }
 
@@ -157,7 +179,7 @@ namespace Forbbiden.Client.View
                 string message = Properties.Resources.unexpected_error;
                 ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
             }
-            
+
         }
 
         private async void SeeFriendProfile(Object sender, MouseButtonEventArgs e)
@@ -182,27 +204,14 @@ namespace Forbbiden.Client.View
             }
         }
 
-        public async void AddOnlineFriend(ProfileManager.Player friend)
+        public async Task AddOnlineFriend(ProfileManager.Player friend)
         {
             var friendControl = new UserControlFriend
             {
                 ContextMenu = new ContextMenu()
             };
 
-            string projectDir = ViewUtils.GetProjectDir();
-            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
-            bool downloaded = await DownloadFriendImage(avatarPath);
-            ImageBrush avatarImage;
-
-            if (!downloaded)
-            {
-                avatarImage = ViewUtils.GetDefaultAvatarBrush();
-            }
-            else
-            {
-                avatarImage = ViewUtils.GetImageBrush(avatarPath);
-            }
-
+            var avatarImage = await GetAvatarBrushAsync(friend);
             friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
 
             friendControl.profileImage.MouseLeftButtonDown += SeeFriendProfile;
@@ -212,36 +221,11 @@ namespace Forbbiden.Client.View
             onlineStack.Children.Add(friendControl);
         }
 
-        private async Task<bool> DownloadFriendImage(string avatarPath)
-        {
-            bool downloaded = false;
-            if (!File.Exists(avatarPath))
-            {
-                var bytes = await ProfileRepository.DownloadAvatar(System.IO.Path.GetFileName(avatarPath));
-                downloaded = bytes.Length > 0;
-            }
-
-            return downloaded;
-        }
-
-        public async void AddOfflineFriend(ProfileManager.Player friend)
+        public async Task AddOfflineFriend(ProfileManager.Player friend)
         {
             var friendControl = new UserControlFriend();
 
-            string projectDir = ViewUtils.GetProjectDir();
-            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
-            bool downloaded = await DownloadFriendImage(avatarPath);
-            ImageBrush avatarImage;
-
-            if (!downloaded)
-            {
-                avatarImage = ViewUtils.GetImageBrush(avatarPath);
-            }
-            else
-            {
-                avatarImage = ViewUtils.GetImageBrush(avatarPath);
-            }
-
+            var avatarImage = await GetAvatarBrushAsync(friend);
             friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
 
             friendControl.profileImage.MouseLeftButtonDown += SeeFriendProfile;

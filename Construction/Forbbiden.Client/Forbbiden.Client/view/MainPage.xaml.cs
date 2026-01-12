@@ -42,7 +42,7 @@ namespace Forbbiden.Client
                 if (currentLogin.PlayerId > 0)
                 {
                     ClientSession.SetPlayer(currentLogin);
-                    ReloadMainPage(currentLogin);
+                    await ReloadMainPage(currentLogin);
                     profileButton.Visibility = Visibility.Visible;
                     friendsButton.Visibility = Visibility.Visible;
                 }
@@ -132,7 +132,7 @@ namespace Forbbiden.Client
             }
         }
 
-        public void ReloadMainPage(ProfileManager.Player player)
+        public async Task ReloadMainPage(ProfileManager.Player player)
         {
             try
             {
@@ -146,10 +146,11 @@ namespace Forbbiden.Client
                 }
 
                 txtBkUser.Text = player.PlayerUsername;
+                AvatarsManager.Instance.UpdateCache(player.PlayerUsername, player.PlayerAvatarBytes);
 
-                string projectDir = ViewUtils.GetProjectDir();
-                string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
-                imgAvatar.Fill = ViewUtils.GetImageBrush(avatarPath);
+                var avatarBrush = await AvatarsManager.Instance.GetAvatarBrushAsync(player.PlayerUsername);
+                imgAvatar.Fill = avatarBrush ?? new ImageBrush();
+
                 _ = ConnectPlayer(ClientSession.Username);
             }
             catch (Exception ex)
@@ -186,17 +187,17 @@ namespace Forbbiden.Client
 
                 if (updatedPlayer != null && updatedPlayer.PlayerId != -1)
                 {
-                    Dispatcher.Invoke(() =>
+                    _ = Dispatcher.Invoke(async () =>
                     {
                         ClientSession.SetPlayer(updatedPlayer);
-                        ReloadMainPage(updatedPlayer);
+                        await ReloadMainPage(updatedPlayer);
                     });
-                }                
+                }
             };
 
             verificationWindow.ShowDialog();
         }
-        
+
         private async void VerifyButtonAsync_Click(object sender, RoutedEventArgs e)
         {
             var tokenRepo = new TokenRepository();

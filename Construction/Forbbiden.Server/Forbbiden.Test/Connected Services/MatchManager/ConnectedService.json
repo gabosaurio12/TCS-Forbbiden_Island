@@ -1,0 +1,55 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "net.tcp://192.168.1.77:8083/MatchManager"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, MatchManager"
+    ],
+    "references": [
+      "BCrypt.Net-Next, {BCrypt.Net-Next, 4.0.3}",
+      "EntityFramework, {EntityFramework, 6.5.1}",
+      "EntityFramework.SqlServer, {EntityFramework, 6.5.1}",
+      "log4net, {log4net, 3.2.0}",
+      "Microsoft.Extensions.ObjectPool, {Microsoft.Extensions.ObjectPool, 8.0.10}",
+      "Microsoft.TestPlatform.CommunicationUtilities, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.TestPlatform.CoreUtilities, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Microsoft.TestPlatform.CrossPlatEngine, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.TestPlatform.PlatformAbstractions, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Microsoft.TestPlatform.Utilities, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.VisualStudio.CodeCoverage.Shim, {Microsoft.CodeCoverage, 17.8.0}",
+      "Microsoft.VisualStudio.TestPlatform.Common, {Microsoft.TestPlatform.TestHost, 17.8.0}",
+      "Microsoft.VisualStudio.TestPlatform.ObjectModel, {Microsoft.TestPlatform.ObjectModel, 17.8.0}",
+      "Microsoft.Win32.SystemEvents, {Microsoft.Win32.SystemEvents, 6.0.0}",
+      "Newtonsoft.Json, {Newtonsoft.Json, 13.0.1}",
+      "NuGet.Frameworks, {NuGet.Frameworks, 6.5.0}",
+      "nunit.framework, {NUnit, 3.14.0}",
+      "System.CodeDom, {System.CodeDom, 6.0.0}",
+      "System.ComponentModel.Annotations, {System.ComponentModel.Annotations, 5.0.0}",
+      "System.Configuration.ConfigurationManager, {System.Configuration.ConfigurationManager, 6.0.1}",
+      "System.Data.SqlClient, {System.Data.SqlClient, 4.8.6}",
+      "System.Drawing.Common, {System.Drawing.Common, 6.0.0}",
+      "System.Reflection.Metadata, {System.Reflection.Metadata, 1.6.0}",
+      "System.Security.AccessControl, {System.Security.AccessControl, 6.0.0}",
+      "System.Security.Cryptography.Pkcs, {System.Security.Cryptography.Pkcs, 8.0.1}",
+      "System.Security.Cryptography.ProtectedData, {System.Security.Cryptography.ProtectedData, 6.0.0}",
+      "System.Security.Cryptography.Xml, {System.Security.Cryptography.Xml, 8.0.2}",
+      "System.Security.Permissions, {System.Security.Permissions, 6.0.0}",
+      "System.ServiceModel, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Duplex, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Http, {System.ServiceModel.Http, 8.1.2}",
+      "System.ServiceModel.NetFramingBase, {System.ServiceModel.NetFramingBase, 8.1.2}",
+      "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 8.1.2}",
+      "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Security, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.Windows.Extensions, {System.Windows.Extensions, 6.0.0}",
+      "testhost, {Microsoft.TestPlatform.TestHost, 17.8.0}"
+    ],
+    "targetFramework": "net8.0",
+    "typeReuseMode": "All"
+  }
+}

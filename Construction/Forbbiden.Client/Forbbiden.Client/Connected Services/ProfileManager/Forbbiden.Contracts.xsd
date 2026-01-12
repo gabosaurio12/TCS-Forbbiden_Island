@@ -11,7 +11,8 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Friends" nillable="true" type="tns:ArrayOfFriendship" />
       <xs:element minOccurs="0" name="IsVerified" type="xs:int" />
-      <xs:element minOccurs="0" name="PlayerAvatarPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlayerAvatarBytes" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="PlayerAvatarName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlayerEmail" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlayerId" type="xs:int" />
       <xs:element minOccurs="0" name="PlayerName" nillable="true" type="xs:string" />
@@ -50,4 +51,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SocialMedia" nillable="true" type="tns:SocialMedia" />
+  <xs:complexType name="AvatarResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvatarBytes" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AvatarResponse" nillable="true" type="tns:AvatarResponse" />
 </xs:schema>

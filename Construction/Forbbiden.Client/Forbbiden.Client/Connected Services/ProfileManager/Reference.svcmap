@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.100.15:8081/ProfileManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.1.77:8081/ProfileManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="e7da47cf-ec2f-4c6f-8a71-111f91e6570e" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8081/ProfileManager/mex" />
-    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="566d548c-812d-4f9e-a64e-a5a48a6fb242" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8081/ProfileManager/mex" />
-    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="35c57d82-dc52-4b71-9370-53b1428f1643" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8081/ProfileManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts1.xsd" MetadataType="Schema" ID="08a20c18-57c5-4695-aa08-9a5a770c0b93" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8081/ProfileManager/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="967d1fd3-06ef-47b1-95af-e6c79249e081" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="8db9f1fe-b3a2-4b29-acdb-ee84308cb805" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="b0f0f972-0df7-4e20-beae-394f500ede79" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="0145d704-4ce3-4480-9300-12cb38621f9f" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8081/ProfileManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

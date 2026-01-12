@@ -995,3 +995,181 @@ PRE02: Estar en la casilla de escape
 |**
 
 |===
+
+=== MatchManager
+
+==== Setup
+
+===== Jugadores creados
+
+* hostPlayer [playerUsername = "hostUser", playerId = 1]
+* guestPlayer [playerUsername = "guestUser", playerId = 2]
+
+===== Partidas creadas
+
+* testMatch [matchId = 10, hostPlayerId = 1, status = "Waiting"]
+
+[cols="1,1,1,1,1,1,1,1,1"]
+|===
+|ID
+|Nombre
+|Objetivo
+|Prioridad
+|Precondiciones
+|Entradas
+|Resultados Esperados
+|Resultados Observados
+|Resultado
+
+|MMT01
+|TestCreateMatchSuccess
+|Comprobar que se cree correctamente una partida
+|*Alta*
+|*PRE01*: Haber iniciado sesión
+|_hostPlayer.PlayerId_
+|_MatchId != -1_
+|_MatchId generado_
+|*Pasó*
+
+|MMT02
+|TestCreateMatchInvalidPlayer
+|Comprobar que no se cree una partida con un jugador inválido
+|*Alta*
+|*PRE01*: Haber iniciado sesión
+|_-1_
+|_MatchId = -1_
+|_MatchId = -1_
+|*Pasó*
+
+|MMT03
+|TestJoinMatchSuccess
+|Comprobar que un jugador pueda unirse correctamente a una partida existente
+|*Alta*
+|*PRE01*: Existir una partida activa +
+*PRE02*: Jugador no unido a la partida
+|_testMatch.MatchId_ + _guestPlayer.PlayerId_
+|_True_
+|_true_
+|*Pasó*
+
+|MMT04
+|TestJoinMatchAlreadyJoined
+|Comprobar que no se permita unirse dos veces a la misma partida
+|*Alta*
+|*PRE01*: Jugador ya unido a la partida
+|_testMatch.MatchId_ + _guestPlayer.PlayerId_
+|_False_
+|_false_
+|*Pasó*
+
+|MMT05
+|TestJoinMatchFull
+|Comprobar que no se permita unirse a una partida llena
+|*Alta*
+|*PRE01*: La partida alcanzó el número máximo de jugadores
+|_testMatch.MatchId_ + _guestPlayer.PlayerId_
+|_False_
+|_false_
+|*Pasó*
+
+|MMT06
+|TestJoinMatchInvalidMatch
+|Comprobar que no se permita unirse a una partida inexistente
+|*Alta*
+|*PRE01*: Haber ingresado un ID de partida
+|_999_
+|_False_
+|_false_
+|*Pasó*
+
+|MMT07
+|TestLeaveMatchSuccess
+|Comprobar que un jugador pueda salir correctamente de una partida
+|*Media*
+|*PRE01*: Jugador unido a la partida
+|_testMatch.MatchId_ + _guestPlayer.PlayerId_
+|_True_
+|_true_
+|*Pasó*
+
+|MMT08
+|TestLeaveMatchNotJoined
+|Comprobar que no ocurra error si un jugador no unido intenta salir
+|*Media*
+|*PRE01*: Jugador no pertenece a la partida
+|_testMatch.MatchId_ + _guestPlayer.PlayerId_
+|_False_
+|_false_
+|*Pasó*
+
+|MMT09
+|TestStartMatchSuccess
+|Comprobar que el host pueda iniciar la partida
+|*Alta*
+|*PRE01*: La partida tiene el número mínimo de jugadores +
+*PRE02*: El jugador es el host
+|_testMatch.MatchId_ + _hostPlayer.PlayerId_
+|_True_
+|_true_
+|*Pasó*
+
+|MMT10
+|TestStartMatchNotHost
+|Comprobar que un jugador que no es host no pueda iniciar la partida
+|*Alta*
+|*PRE01*: Jugador no es host
+|_testMatch.MatchId_ + _guestPlayer.PlayerId_
+|_False_
+|_false_
+|*Pasó*
+
+|MMT11
+|TestStartMatchInsufficientPlayers
+|Comprobar que no se inicie una partida sin jugadores suficientes
+|*Alta*
+|*PRE01*: Partida con jugadores insuficientes
+|_testMatch.MatchId_ + _hostPlayer.PlayerId_
+|_False_
+|_false_
+|*Pasó*
+
+|MMT12
+|TestGetMatchByIdSuccess
+|Comprobar que se obtenga correctamente una partida existente
+|*Alta*
+|*PRE01*: Haber ingresado un ID de partida válido
+|_testMatch.MatchId_
+|_Match { MatchId != -1 }_
+|_Match encontrado_
+|*Pasó*
+
+|MMT13
+|TestGetMatchByIdNotExists
+|Comprobar que se regrese una partida inválida si no existe
+|*Alta*
+|*PRE01*: Haber ingresado un ID de partida
+|_999_
+|_Match { MatchId = -1 }_
+|_MatchId = -1_
+|*Pasó*
+
+|MMT14
+|TestEndMatchSuccess
+|Comprobar que una partida pueda finalizar correctamente
+|*Media*
+|*PRE01*: La partida esté en curso
+|_testMatch.MatchId_
+|_True_
+|_true_
+|*Pasó*
+
+|MMT15
+|TestEndMatchInvalidMatch
+|Comprobar que no se finalice una partida inexistente
+|*Media*
+|*PRE01*: Haber ingresado un ID inválido
+|_-1_
+|_False_
+|_false_
+|*Pasó*
+|===

@@ -138,7 +138,9 @@ namespace Forbbiden.Client.Controls
                 }
                 catch (ViewException ex)
                 {
-                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    string classMethod = "UserControlBoard.SetTreasureTiles";
+                    Log.Error(classMethod, ex);
+                    //ViewUtils.ShowPullError(Window.GetWindow(this));
                 }
 
                 string treasureImagePath = System.IO.Path.Combine(TilesImagesPath, treasureImage);
@@ -183,16 +185,19 @@ namespace Forbbiden.Client.Controls
             }
             else
             {
-                tile.SetTileAsNormal(tileBitmap, cardTile);
+                string classMethod = "UserControlBoard.SetNonTreasureTiles";
+                Log.Error(classMethod, ex);
+                //ViewUtils.ShowPullError(Window.GetWindow(this));
+                return;
             }
         }
 
         public void AddPlayerAvatar(Player player, UserControlTile tile)
         {
-            Ellipse boardAvatar = ViewUtils.GetAvatarEllipse(player.PlayerAvatarPath);
+            //Ellipse boardAvatar = ViewUtils.GetAvatarEllipse(player.PlayerAvatarPath);
 
             var spawnTile = GetTile(tile.Row, tile.Col);
-            spawnTile.tileGrid.Children.Add(boardAvatar);
+            //spawnTile.tileGrid.Children.Add(boardAvatar);
         }
 
         public void AddPlayerWithDefaultAvatar(UserControlTile tile)

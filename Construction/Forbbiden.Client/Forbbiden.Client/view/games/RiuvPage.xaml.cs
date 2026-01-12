@@ -296,12 +296,12 @@ namespace Forbbiden.Client.View.Games
                 {
                     var profileClient = new ProfileManagerClient();
                     var p = profileClient.GetPlayerByUsername(username, includeFriends: false);
-                    string avatarFile = p?.PlayerAvatarPath;
+                    //string avatarFile = p?.PlayerAvatarPath;
                     try { profileClient.Close(); } catch { profileClient.Abort(); }
 
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        SetAvatar(avatar, avatarFile);
+                        //SetAvatar(avatar, avatarFile);
                     }));
                 }
                 catch

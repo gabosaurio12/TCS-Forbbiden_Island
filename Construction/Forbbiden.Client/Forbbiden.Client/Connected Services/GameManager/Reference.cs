@@ -15,6 +15,67 @@ namespace Forbbiden.Client.GameManager {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Fault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PlayerInfo", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
     [System.SerializableAttribute()]
     public partial class PlayerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -159,42 +220,49 @@ namespace Forbbiden.Client.GameManager {
     public interface IGameManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/JoinGame", ReplyAction="http://tempuri.org/IGameManager/JoinGameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.GameManager.Fault), Action="http://tempuri.org/IGameManager/JoinGameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool JoinGame(string matchId, string playerName, byte[] avatarBytes, string avatarFileName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/JoinGame", ReplyAction="http://tempuri.org/IGameManager/JoinGameResponse")]
         System.Threading.Tasks.Task<bool> JoinGameAsync(string matchId, string playerName, byte[] avatarBytes, string avatarFileName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/LeaveGame", ReplyAction="http://tempuri.org/IGameManager/LeaveGameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.GameManager.Fault), Action="http://tempuri.org/IGameManager/LeaveGameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void LeaveGame(string matchId, string playerName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/LeaveGame", ReplyAction="http://tempuri.org/IGameManager/LeaveGameResponse")]
         System.Threading.Tasks.Task LeaveGameAsync(string matchId, string playerName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SendChatMessage", ReplyAction="http://tempuri.org/IGameManager/SendChatMessageResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.GameManager.Fault), Action="http://tempuri.org/IGameManager/SendChatMessageFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void SendChatMessage(string matchId, string playerName, string message);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SendChatMessage", ReplyAction="http://tempuri.org/IGameManager/SendChatMessageResponse")]
         System.Threading.Tasks.Task SendChatMessageAsync(string matchId, string playerName, string message);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/GetPlayers", ReplyAction="http://tempuri.org/IGameManager/GetPlayersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.GameManager.Fault), Action="http://tempuri.org/IGameManager/GetPlayersFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.GameManager.PlayerInfo[] GetPlayers(string matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/GetPlayers", ReplyAction="http://tempuri.org/IGameManager/GetPlayersResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.GameManager.PlayerInfo[]> GetPlayersAsync(string matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SetReady", ReplyAction="http://tempuri.org/IGameManager/SetReadyResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.GameManager.Fault), Action="http://tempuri.org/IGameManager/SetReadyFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void SetReady(string matchId, string username, bool ready);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/SetReady", ReplyAction="http://tempuri.org/IGameManager/SetReadyResponse")]
         System.Threading.Tasks.Task SetReadyAsync(string matchId, string username, bool ready);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/StartMatch", ReplyAction="http://tempuri.org/IGameManager/StartMatchResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.GameManager.Fault), Action="http://tempuri.org/IGameManager/StartMatchFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void StartMatch(string matchId, string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/StartMatch", ReplyAction="http://tempuri.org/IGameManager/StartMatchResponse")]
         System.Threading.Tasks.Task StartMatchAsync(string matchId, string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/KickPlayer", ReplyAction="http://tempuri.org/IGameManager/KickPlayerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.GameManager.Fault), Action="http://tempuri.org/IGameManager/KickPlayerFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         void KickPlayer(string matchId, string hostUsername, string targetUsername);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/KickPlayer", ReplyAction="http://tempuri.org/IGameManager/KickPlayerResponse")]

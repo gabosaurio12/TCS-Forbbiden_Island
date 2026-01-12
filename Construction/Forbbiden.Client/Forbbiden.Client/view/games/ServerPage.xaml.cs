@@ -65,7 +65,7 @@ namespace Forbbiden.Client.View.Games
             var player = ClientSession.GetPlayer();
             if (player != null && player.PlayerId != -1)
             {
-                SetAvatarImage(Avatar1, player.PlayerAvatarPath);
+                //SetAvatarImage(Avatar1, player.PlayerAvatarPath);
                 Name1.Text = player.PlayerUsername;
             }
         }

@@ -13,8 +13,8 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMatchManager_CreateMatch_InputMessage">
@@ -23,11 +23,17 @@
   <wsdl:message name="IMatchManager_CreateMatch_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateMatchResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_CreateMatch_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q1:Fault" />
+  </wsdl:message>
   <wsdl:message name="IMatchManager_JoinMatch_InputMessage">
     <wsdl:part name="parameters" element="tns:JoinMatch" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_JoinMatch_OutputMessage">
     <wsdl:part name="parameters" element="tns:JoinMatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_JoinMatch_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q2:Fault" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_ListMatches_InputMessage">
     <wsdl:part name="parameters" element="tns:ListMatches" />
@@ -35,11 +41,17 @@
   <wsdl:message name="IMatchManager_ListMatches_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListMatchesResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_ListMatches_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q3:Fault" />
+  </wsdl:message>
   <wsdl:message name="IMatchManager_GetMatchById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetMatchById" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_GetMatchById_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMatchByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_GetMatchById_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q4:Fault" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_DeleteMatch_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteMatch" />
@@ -47,11 +59,17 @@
   <wsdl:message name="IMatchManager_DeleteMatch_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteMatchResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_DeleteMatch_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q5:Fault" />
+  </wsdl:message>
   <wsdl:message name="IMatchManager_GetInviteCode_InputMessage">
     <wsdl:part name="parameters" element="tns:GetInviteCode" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_GetInviteCode_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetInviteCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_GetInviteCode_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q6:Fault" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_ValidateInvite_InputMessage">
     <wsdl:part name="parameters" element="tns:ValidateInvite" />
@@ -59,34 +77,44 @@
   <wsdl:message name="IMatchManager_ValidateInvite_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidateInviteResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_ValidateInvite_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q7:Fault" />
+  </wsdl:message>
   <wsdl:portType name="IMatchManager">
     <wsdl:operation name="CreateMatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/CreateMatch" message="tns:IMatchManager_CreateMatch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/CreateMatchResponse" message="tns:IMatchManager_CreateMatch_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMatchManager/CreateMatchFaultFault" name="FaultFault" message="tns:IMatchManager_CreateMatch_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="JoinMatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/JoinMatch" message="tns:IMatchManager_JoinMatch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/JoinMatchResponse" message="tns:IMatchManager_JoinMatch_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMatchManager/JoinMatchFaultFault" name="FaultFault" message="tns:IMatchManager_JoinMatch_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="ListMatches">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/ListMatches" message="tns:IMatchManager_ListMatches_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/ListMatchesResponse" message="tns:IMatchManager_ListMatches_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMatchManager/ListMatchesFaultFault" name="FaultFault" message="tns:IMatchManager_ListMatches_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetMatchById">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/GetMatchById" message="tns:IMatchManager_GetMatchById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/GetMatchByIdResponse" message="tns:IMatchManager_GetMatchById_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMatchManager/GetMatchByIdFaultFault" name="FaultFault" message="tns:IMatchManager_GetMatchById_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="DeleteMatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/DeleteMatch" message="tns:IMatchManager_DeleteMatch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/DeleteMatchResponse" message="tns:IMatchManager_DeleteMatch_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMatchManager/DeleteMatchFaultFault" name="FaultFault" message="tns:IMatchManager_DeleteMatch_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetInviteCode">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/GetInviteCode" message="tns:IMatchManager_GetInviteCode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/GetInviteCodeResponse" message="tns:IMatchManager_GetInviteCode_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMatchManager/GetInviteCodeFaultFault" name="FaultFault" message="tns:IMatchManager_GetInviteCode_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="ValidateInvite">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/ValidateInvite" message="tns:IMatchManager_ValidateInvite_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/ValidateInviteResponse" message="tns:IMatchManager_ValidateInvite_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMatchManager/ValidateInviteFaultFault" name="FaultFault" message="tns:IMatchManager_ValidateInvite_FaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IMatchManager" type="tns:IMatchManager">
@@ -101,6 +129,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="JoinMatch">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/JoinMatch" style="document" />
@@ -110,6 +141,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ListMatches">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/ListMatches" style="document" />
@@ -119,6 +153,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetMatchById">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/GetMatchById" style="document" />
@@ -128,6 +165,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DeleteMatch">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/DeleteMatch" style="document" />
@@ -137,6 +177,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetInviteCode">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/GetInviteCode" style="document" />
@@ -146,6 +189,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ValidateInvite">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/ValidateInvite" style="document" />
@@ -155,6 +201,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="MatchManager">

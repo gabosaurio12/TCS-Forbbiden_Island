@@ -121,6 +121,67 @@ namespace Forbbiden.Client.MatchManager {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class Fault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="JoinMatchRequest", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
     [System.SerializableAttribute()]
     public partial class JoinMatchRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -530,42 +591,49 @@ namespace Forbbiden.Client.MatchManager {
     public interface IMatchManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/CreateMatch", ReplyAction="http://tempuri.org/IMatchManager/CreateMatchResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.MatchManager.Fault), Action="http://tempuri.org/IMatchManager/CreateMatchFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         int CreateMatch(Forbbiden.Client.MatchManager.CreateMatchRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/CreateMatch", ReplyAction="http://tempuri.org/IMatchManager/CreateMatchResponse")]
         System.Threading.Tasks.Task<int> CreateMatchAsync(Forbbiden.Client.MatchManager.CreateMatchRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/JoinMatch", ReplyAction="http://tempuri.org/IMatchManager/JoinMatchResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.MatchManager.Fault), Action="http://tempuri.org/IMatchManager/JoinMatchFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool JoinMatch(Forbbiden.Client.MatchManager.JoinMatchRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/JoinMatch", ReplyAction="http://tempuri.org/IMatchManager/JoinMatchResponse")]
         System.Threading.Tasks.Task<bool> JoinMatchAsync(Forbbiden.Client.MatchManager.JoinMatchRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/ListMatches", ReplyAction="http://tempuri.org/IMatchManager/ListMatchesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.MatchManager.Fault), Action="http://tempuri.org/IMatchManager/ListMatchesFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.MatchManager.Match[] ListMatches();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/ListMatches", ReplyAction="http://tempuri.org/IMatchManager/ListMatchesResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.MatchManager.Match[]> ListMatchesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/GetMatchById", ReplyAction="http://tempuri.org/IMatchManager/GetMatchByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.MatchManager.Fault), Action="http://tempuri.org/IMatchManager/GetMatchByIdFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         Forbbiden.Client.MatchManager.Match GetMatchById(int matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/GetMatchById", ReplyAction="http://tempuri.org/IMatchManager/GetMatchByIdResponse")]
         System.Threading.Tasks.Task<Forbbiden.Client.MatchManager.Match> GetMatchByIdAsync(int matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/DeleteMatch", ReplyAction="http://tempuri.org/IMatchManager/DeleteMatchResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.MatchManager.Fault), Action="http://tempuri.org/IMatchManager/DeleteMatchFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool DeleteMatch(int matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/DeleteMatch", ReplyAction="http://tempuri.org/IMatchManager/DeleteMatchResponse")]
         System.Threading.Tasks.Task<bool> DeleteMatchAsync(int matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/GetInviteCode", ReplyAction="http://tempuri.org/IMatchManager/GetInviteCodeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.MatchManager.Fault), Action="http://tempuri.org/IMatchManager/GetInviteCodeFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         string GetInviteCode(int matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/GetInviteCode", ReplyAction="http://tempuri.org/IMatchManager/GetInviteCodeResponse")]
         System.Threading.Tasks.Task<string> GetInviteCodeAsync(int matchId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/ValidateInvite", ReplyAction="http://tempuri.org/IMatchManager/ValidateInviteResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.MatchManager.Fault), Action="http://tempuri.org/IMatchManager/ValidateInviteFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         bool ValidateInvite(int matchId, string inviteCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchManager/ValidateInvite", ReplyAction="http://tempuri.org/IMatchManager/ValidateInviteResponse")]
