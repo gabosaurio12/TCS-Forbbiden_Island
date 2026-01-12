@@ -765,18 +765,18 @@
   <data name="error_avatar_download" xml:space="preserve">
     <value>There was an error while downloading an Avatar</value>
   </data>
-	<data name="error_server_timeout" xml:space="preserve">
-	  <value>The server is taking too long to respond, please try again later</value>
+  <data name="error_server_timeout" xml:space="preserve">
+    <value>The server is taking too long to respond, please try again later</value>
   </data>
-	<data name="error_match_created_not_joined" xml:space="preserve">
-	  <value>The match was created but you could not join it, please try again later</value>
+  <data name="error_match_created_not_joined" xml:space="preserve">
+    <value>The match was created but you could not join it, please try again later</value>
   </data>
-	<data name="warning_room_char_limit" xml:space="preserve">
-	  <value>The room name exceeds the character limit and will be truncated.</value>
+  <data name="warning_room_char_limit" xml:space="preserve">
+    <value>The room name exceeds the character limit and will be truncated.</value>
   </data>
-    <data name="warning_login_permission" xml:space="preserve">
-	    <value>You must be logged in to access this feature.</value>
-    </data>
+  <data name="warning_login_permission" xml:space="preserve">
+    <value>You must be logged in to access this feature.</value>
+  </data>
   <data name="error_sending_callback" xml:space="preserve">
     <value>There was an error while synchronizing the game with the server or the other players</value>
   </data>
@@ -791,5 +791,17 @@
   </data>
   <data name="error_uploading_avatar" xml:space="preserve">
     <value>There was an error while uploading the avatar</value>
+  </data>
+  <data name="invaild_username_email_occupied" xml:space="preserve">
+    <value>The username or email you typed is being registered, try another one please</value>
+  </data>
+  <data name="game_starting_title" xml:space="preserve">
+    <value>Game is Starting!</value>
+  </data>
+  <data name="game_starting_message" xml:space="preserve">
+    <value>The match is about to start, get ready</value>
+  </data>
+  <data name="error_pulling_players" xml:space="preserve">
+    <value>There was an error while pulling the players of the match. You will return to the main page.</value>
   </data>
 </root>

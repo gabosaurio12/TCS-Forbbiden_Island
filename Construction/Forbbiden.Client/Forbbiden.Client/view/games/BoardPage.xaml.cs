@@ -157,8 +157,6 @@ namespace Forbbiden.Client.View.Games
             mainGrid.Children.Add(BoardControl);
         }
 
-        // *** TO-DO reconstruir con bytes el avatar *** //
-
         private async void SetPlayersAvatars(List<MatchManager.PlayerInfo> players)
         {
             var beginningTiles = MatchLogic.GetAvatarsBeginningTiles(BoardControl, players.Count);
@@ -176,6 +174,9 @@ namespace Forbbiden.Client.View.Games
                 catch (ViewException ex)
                 {
                     ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    string message = Properties.Resources.error_pulling_players;
+                    ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
+                    NavigationService?.Navigate(new MainPage());
                 }
             }
         }

@@ -367,6 +367,15 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error while pulling the players of the match. You will return to the main page..
+        /// </summary>
+        public static string error_pulling_players {
+            get {
+                return ResourceManager.GetString("error_pulling_players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error while synchronizing the game with the server or the other players.
         /// </summary>
         public static string error_sending_callback {
@@ -538,6 +547,24 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The match is about to start, get ready.
+        /// </summary>
+        public static string game_starting_message {
+            get {
+                return ResourceManager.GetString("game_starting_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game is Starting!.
+        /// </summary>
+        public static string game_starting_title {
+            get {
+                return ResourceManager.GetString("game_starting_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RIUV LOGIN.
         /// </summary>
         public static string gameTutorial_ControlsHeader {
@@ -687,6 +714,15 @@ namespace Forbbiden.Client.Properties {
         public static string info_title {
             get {
                 return ResourceManager.GetString("info_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The username or email you typed is being registered, try another one please.
+        /// </summary>
+        public static string invaild_username_email_occupied {
+            get {
+                return ResourceManager.GetString("invaild_username_email_occupied", resourceCulture);
             }
         }
         

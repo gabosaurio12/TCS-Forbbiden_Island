@@ -30,6 +30,11 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.IsEmailAvailable", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.IsEmailAvailable", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
+            }
 
             return result;
         }
@@ -51,6 +56,11 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.IsUsernameAvailable", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.IsUsernameAvailable", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
+            }
 
             return result;
         }
@@ -69,8 +79,13 @@ namespace Forbbiden.Client.Repositories
             }
             catch (TimeoutException ex)
             {
-                Log.Error("ProfileRepository.IsEmailAvailable", ex);
+                Log.Error("ProfileRepository.SendSignupEmail", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.SendSignupEmail", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return result;
@@ -93,6 +108,11 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.SendVerificationEmail", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.SendVerificationEmail", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
+            }
 
             return result;
         }
@@ -109,10 +129,20 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.SignupPlayer", ex);
                 throw new ViewException(ServerErrorCodes.pushingDataError);
             }
+            catch (FaultException ex)
+            {
+                Log.Error("ProfileRepository.SignupPlayer", ex);
+                throw new ViewException(ServerErrorCodes.pushingDataError);
+            }
             catch (TimeoutException ex)
             {
                 Log.Error("ProfileRepository.SignupPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.SignupPlayer", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return playerId;
@@ -161,6 +191,11 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.GetPlayerByUsername", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.GetPlayerByUsername", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
+            }
 
             return player;
         }
@@ -181,6 +216,11 @@ namespace Forbbiden.Client.Repositories
             {
                 Log.Error("ProfileRepository.GetPlayerById", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.GetPlayerById", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return player;
@@ -203,6 +243,11 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.UpdatePlayerProfile", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.UpdatePlayerProfile", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
+            }
 
             return result;
         }
@@ -223,6 +268,11 @@ namespace Forbbiden.Client.Repositories
             {
                 Log.Error("ProfileRepository.DeletePlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.DeletePlayer", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return result;
@@ -245,6 +295,11 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.ConnectPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.ConnectPlayer", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
+            }
 
             return result;
         }
@@ -265,6 +320,11 @@ namespace Forbbiden.Client.Repositories
             {
                 Log.Error("ProfileRepository.DisconnectPlayer", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.DisconnectPlayer", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return result;
@@ -287,6 +347,11 @@ namespace Forbbiden.Client.Repositories
                 Log.Error("ProfileRepository.UploadAvatar", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
             }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.UploadAvatar", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
+            }
 
             return result;
         }
@@ -307,6 +372,11 @@ namespace Forbbiden.Client.Repositories
             {
                 Log.Error("ProfileRepository.GetAvatarByUsername", ex);
                 throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error("ProfileRepository.GetAvatarByUsername", ex);
+                throw new ViewException(ServerErrorCodes.communicationError);
             }
 
             return avatar;

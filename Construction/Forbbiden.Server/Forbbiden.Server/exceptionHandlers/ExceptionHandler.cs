@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Contracts;
 using log4net;
 using System;
+using System.Data.Common;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -11,55 +12,68 @@ namespace Forbbiden.Server.exceptionHandlers
 {
     public static class ExceptionHandler
     {
+        public static readonly string SqlMessage = "Db Source Error";
+        public static readonly string PullingError = "Pulling info from datatabase Error";
+        public static readonly string PushingError = "Pushing info to datatabase Error";
+        public static readonly string EmailError = "Sending email error";
+
+        private const string DBError = "DatabaseError";
+        private const string EntityError = "EntityError";
+        private const string CommunicationError = "CommunicationError";
+        private const string TimeoutError = "TimeoutError";
+        private const string UnexpectedError = "UnexpectedError";
+        private const string SmtpError = "SMTPError";
+
         private static readonly ILog Log = LogManager.GetLogger(typeof(ExceptionHandler));
 
-        public static void HandleEntityException(EntityException ex, string classMethod)
+        public static void HandleEntityException(EntityException ex, string classMethod, string message)
         {
             Log.Error(classMethod, ex);
-            string error = "Database Error";
-            ThrowFault(error, ex.Message);
+            ThrowFault(EntityError, message);
         }
 
-        public static void HandleDbUpdateException(DbUpdateException ex, string classMethod)
+        public static void HandleDBException(DbException ex, string classMethod, string message)
         {
             Log.Error(classMethod, ex);
-            string error = "Database Error";
-            ThrowFault(error, ex.Message);
+            ThrowFault(DBError, message);
         }
 
-        public static void HandleEntityValidationException(DbEntityValidationException ex, string classMethod)
+        public static void HandleDbUpdateException(DbUpdateException ex, string classMethod, string message)
         {
             Log.Error(classMethod, ex);
-            string error = "Database Validation Error";
-            ThrowFault(error, ex.Message);
+            ThrowFault(EntityError, message);
         }
 
-        public static void HandleCommunicationException(CommunicationException ex, string classMethod)
+        public static void HandleEntityValidationException(DbEntityValidationException ex,
+            string classMethod, string message)
         {
             Log.Error(classMethod, ex);
-            string error = "Communication Error";
-            ThrowFault(error, ex.Message);
+            ThrowFault(EntityError, message);
         }
 
-        public static void HandleTimeoutException(TimeoutException ex, string classMethod)
+        public static void HandleCommunicationException(CommunicationException ex,
+            string classMethod, string message)
         {
             Log.Error(classMethod, ex);
-            string error = "Timeout Error";
-            ThrowFault(error, ex.Message);
+            ThrowFault(CommunicationError, message);
         }
 
-        public static void HandleException(Exception ex, string classMethod)
+        public static void HandleTimeoutException(TimeoutException ex, string classMethod, string message)
         {
             Log.Error(classMethod, ex);
-            string error = "Error";
-            ThrowFault(error, ex.Message);
+            ThrowFault(TimeoutError, message);
         }
 
-        public static void HandleSmtpException(SmtpException ex, string classMethod)
+        public static void HandleException(Exception ex, string classMethod, string message)
         {
             Log.Error(classMethod, ex);
-            string error = "SMTP Error";
-            ThrowFault(error, ex.Message);
+            ThrowFault(UnexpectedError, message);
+        }
+
+        public static void HandleSmtpException(SmtpException ex, string classMethod, string message)
+        {
+            Log.Error(classMethod, ex);
+            ThrowFault(SmtpError, message);
         }
 
         private static void ThrowFault(string error, string details)
@@ -70,10 +84,8 @@ namespace Forbbiden.Server.exceptionHandlers
                 Details = details
             };
 
-            string entityError = "Exception";
-
-            throw new FaultException<Fault>(fault,
-                new FaultReason(entityError));
+            throw new FaultException<Fault>(fault, 
+                new FaultReason(fault.Details));
         }
     }
 }

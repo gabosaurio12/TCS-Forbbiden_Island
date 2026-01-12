@@ -130,13 +130,6 @@ namespace Forbbiden.Client.View
             };
         }
 
-        private void ShowGameStartingNotification()
-        {
-            /*string title = Properties.Resources.game_starting_title;
-            string message = Properties.Resources.game_starting_message;
-            ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));*/
-        }
-
         private void SubscribeCallbacks()
         {
             Callback.PlayersUpdated += PlayersUpdatedHandler;
