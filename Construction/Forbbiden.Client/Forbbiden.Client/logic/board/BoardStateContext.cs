@@ -40,7 +40,7 @@ namespace Forbbiden.Client.Logic.Board
         {
             Board.ResetTiles();
             Board.EndTurn();
-            PlayerLogic.SendTurnFinishedCallback(Board);
+            PlayerLogic.SendTurnFinishedCallback();
             SetState(new StandByState(this));
         }
     }

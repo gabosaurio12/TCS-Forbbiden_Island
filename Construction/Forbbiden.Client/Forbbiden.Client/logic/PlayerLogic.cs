@@ -15,7 +15,8 @@ namespace Forbbiden.Client.Logic
     {
         public static BoardPage MatchBoardPage { get; set; }
         private static readonly List<string> PlayersUsernames = new List<string>();
-        private static int MatchId;
+        public static int MatchId;
+        private static string HostUsername;
 
         private static async Task<List<Tile>> GetBoardTilesFromRepo()
         {
@@ -47,6 +48,9 @@ namespace Forbbiden.Client.Logic
         {
             var auxBoardDto = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
             MatchId = auxBoardDto.MatchId;
+            var match = await new MatchRepository().GetMatchById(MatchId);
+            HostUsername = match.HostUsername;
+
             SetPlayersUsername(auxBoardDto.PlayersUsernames);
 
             var boardTiles = await GetBoardTilesFromRepo();
@@ -65,14 +69,18 @@ namespace Forbbiden.Client.Logic
                 MatchBoardPage.FloodDiscardStack = ConvertCardDtoToCardList(
                     auxBoardDto.Board.FloodDiscardStack);
 
-                MatchBoardPage.BoardControl.RefreshBoardTiles(boardTiles);
+                await MatchBoardPage.BoardControl.RefreshBoardTiles(boardTiles);
+                MatchBoardPage.BoardControl.ClearAllTilesAvatars();
                 await RefreshAvatars();
             });
         }
 
         private static async Task RefreshAvatars()
         {
-            foreach (var playerUsername in PlayersUsernames)
+            await RefreshSelfAvatar();
+            var playersUsernamesWithoutHosts = PlayersUsernames.ToList();
+            playersUsernamesWithoutHosts.Remove(HostUsername);
+            foreach (var playerUsername in playersUsernamesWithoutHosts)
             {
                 try
                 {
@@ -93,8 +101,28 @@ namespace Forbbiden.Client.Logic
                     ExceptionViewManager.ShowViewExceptionNotification(
                         ex, Window.GetWindow(MatchBoardPage));
                 }
+            }
+        }
 
-                
+        private static async Task RefreshSelfAvatar()
+        {
+            try
+            {
+                var coordinates = await BoardRepository.GetPlayerCoordinates(
+                    MatchId, ClientSession.Username);
+
+                if (coordinates.PlayerId != -1)
+                {
+                    var tile = MatchBoardPage.BoardControl.GetTile(
+                        coordinates.Row, coordinates.Col);
+                    MatchBoardPage.CurrentTile = tile;
+                    MatchBoardPage.BoardControl.AddPlayerAvatar(ClientSession.GetPlayer(), tile);
+                }
+            }
+            catch (ViewException ex)
+            {
+                ExceptionViewManager.ShowViewExceptionNotification(
+                    ex, Window.GetWindow(MatchBoardPage));
             }
         }
 
@@ -124,7 +152,12 @@ namespace Forbbiden.Client.Logic
             ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(MatchBoardPage));
         }
 
-        public static void SendTurnFinishedCallback(BoardPage boardPage)
+        public static void SendUpdateBoardCallback()
+        {
+
+        }
+
+        public static void SendTurnFinishedCallback()
         {
             var client = new BoardManagerClient();
             var boardDto = BoardPageToDto();
@@ -134,8 +167,10 @@ namespace Forbbiden.Client.Logic
                 MatchId = MatchId,
                 PlayersUsernames = PlayersUsernames.ToArray()
             };
+            var usernames = PlayersUsernames.ToList();
+            usernames.Remove(ClientSession.Username);
             string pageJson = HostLogic.CreateCallbackBoardPageJSON(page);
-            client.SendOnTurnFinishedCallback(pageJson, PlayersUsernames.ToArray());
+            client.SendOnTurnFinishedCallback(pageJson, usernames.ToArray());
         }
 
         public static void OnTurnFinishedCallbackReceived(string boardJson)

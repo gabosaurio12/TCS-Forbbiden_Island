@@ -47,7 +47,7 @@ namespace Forbbiden.Client.Logic.Board.States
         public void OnEndTurnClicked()
         {
             Context.Board.EndTurn();
-            PlayerLogic.SendTurnFinishedCallback(Context.Board);
+            PlayerLogic.SendTurnFinishedCallback();
             Context.SetState(new StandByState(Context));
         }
 

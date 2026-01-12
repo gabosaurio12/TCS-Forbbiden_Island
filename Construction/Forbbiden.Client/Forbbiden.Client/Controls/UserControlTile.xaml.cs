@@ -1,6 +1,7 @@
 ﻿using Forbbiden.Client.BoardManager;
 using Forbbiden.Client.Logic;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -188,8 +189,14 @@ namespace Forbbiden.Client.Controls
 
         public void ClearAvatar()
         {
-            var avatar = tileGrid.Children[1];
-            tileGrid.Children.Remove(avatar);
+            var avatars = tileGrid.Children
+                .OfType<Ellipse>()
+                .ToList();
+
+            foreach (var avatar in avatars)
+            {
+                tileGrid.Children.Remove(avatar);
+            }
         }
 
         private void ColorStroke_MouseEnter(object sender, MouseEventArgs e)

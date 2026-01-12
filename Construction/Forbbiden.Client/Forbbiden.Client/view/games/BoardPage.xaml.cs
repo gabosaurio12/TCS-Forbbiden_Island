@@ -5,12 +5,12 @@ using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Board;
 using Forbbiden.Client.Logic.Board.States;
 using Forbbiden.Client.Model;
+using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.View.Info;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -135,7 +135,7 @@ namespace Forbbiden.Client.View.Games
         {
             SetBoard();
             await BoardControl.FillBoardTiles();
-            SetPlayersAvatars(match.Players.ToList());
+            SetPlayersAvatars(match.Players.ToList(), match.MatchId);
 
             HostLogic.SetBoardPage(this);
             HostLogic.SetPlayersTurnOrder(match.Players.ToList());
@@ -153,28 +153,45 @@ namespace Forbbiden.Client.View.Games
             mainGrid.Children.Add(BoardControl);
         }
 
-        private async void SetPlayersAvatars(List<MatchManager.PlayerInfo> players)
+        private async void SetPlayersAvatars(List<MatchManager.PlayerInfo> players, int matchId)
         {
             var beginningTiles = MatchLogic.GetAvatarsBeginningTiles(BoardControl, players.Count);
 
             CurrentTile = beginningTiles[0];
             BoardControl.AddPlayerAvatar(ClientSession.GetPlayer(), CurrentTile);
 
-            for (int i = 1; i < players.Count; i++)
+            try
             {
-                try
+                await BoardRepository.UpdatePlayerCoordinates(
+                    SetCoordinates(ClientSession.GetPlayer(), matchId, CurrentTile));
+                for (int i = 1; i < players.Count; i++)
                 {
+                
                     var player = await ProfileRepository.GetPlayerById(players[i].PlayerId, false);
+                    await BoardRepository.UpdatePlayerCoordinates(
+                        SetCoordinates(player, matchId, beginningTiles[i]));
                     BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
                 }
-                catch (ViewException ex)
-                {
-                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
-                    string message = Properties.Resources.error_pulling_players;
-                    ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
-                    NavigationService?.Navigate(new MainPage());
-                }
             }
+            catch (ViewException ex)
+                {
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                string message = Properties.Resources.error_pulling_players;
+                ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
+                NavigationService?.Navigate(new MainPage());
+            }
+        }
+
+        private PlayerCoordinates SetCoordinates(Player player, int matchId, UserControlTile tile)
+        {
+            return new PlayerCoordinates()
+            {
+                MatchId = matchId,
+                PlayerId = player.PlayerId,
+                Username = player.PlayerUsername,
+                Row = tile.Row,
+                Col = tile.Col
+            };
         }
 
         public void NotifyNoActionsRemain()
@@ -203,6 +220,12 @@ namespace Forbbiden.Client.View.Games
             ResetTiles();
 
             var moveToTile = BoardControl.GetTile(tile.Row, tile.Column);
+            if (moveToTile != null)
+            {
+                var coordinates = SetCoordinates(ClientSession
+                    .GetPlayer(), PlayerLogic.MatchId, moveToTile);
+                _ = await BoardRepository.UpdatePlayerCoordinates(coordinates);
+            }
             var avatarBrush = await AvatarsManager.Instance.GetAvatarBrushAsync(
                 ClientSession.Username);
             Ellipse avatar = ViewUtils.GetAvatarEllipse(
@@ -220,6 +243,7 @@ namespace Forbbiden.Client.View.Games
                 var actionImage = actionsRemainingStack.Children[ActionsRemain];
                 actionImage.Visibility = Visibility.Hidden;
             }
+            PlayerLogic.SendUpdateBoardCallback();
         }
 
         private void Move_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

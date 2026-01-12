@@ -197,6 +197,14 @@ namespace Forbbiden.Client.Controls
             spawnTile.tileGrid.Children.Add(boardAvatar);
         }
 
+        public void ClearAllTilesAvatars()
+        {
+            foreach (var tile in GetAllTilesFromGrid())
+            {
+                tile.ClearAvatar();
+            }
+        }
+
         public void AddPlayerWithDefaultAvatar(UserControlTile tile)
         {
             Ellipse boardAvatar = ViewUtils.GetDefaultAvatarEllipse();
@@ -212,7 +220,7 @@ namespace Forbbiden.Client.Controls
             TileClickedOnBoard?.Invoke(this, e);
         }
 
-        public void RefreshBoardTiles(List<Tile> tiles)
+        public async Task RefreshBoardTiles(List<Tile> tiles)
         {
             foreach (var tile in tiles)
             {
@@ -223,6 +231,9 @@ namespace Forbbiden.Client.Controls
                     tileToRefresh.RefreshTile();
                 }
             }
+
+            await Application.Current.Dispatcher.InvokeAsync(
+                () => { }, System.Windows.Threading.DispatcherPriority.Render);
         }
 
         private void SetTileDataToUserControlTile(Tile tile, UserControlTile controlTile)
