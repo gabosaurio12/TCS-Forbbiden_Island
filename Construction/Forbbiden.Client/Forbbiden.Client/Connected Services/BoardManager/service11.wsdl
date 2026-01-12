@@ -90,6 +90,24 @@
   <wsdl:message name="IBoardManager_GetCardById_FaultFault_FaultMessage">
     <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q8:Fault" />
   </wsdl:message>
+  <wsdl:message name="IBoardManager_GetPlayerCoordinates_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCoordinates" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetPlayerCoordinates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayerCoordinatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_GetPlayerCoordinates_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_UpdatePlayerCoordinates_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerCoordinates" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_UpdatePlayerCoordinates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerCoordinatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoardManager_UpdatePlayerCoordinates_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
+  </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallback" />
   </wsdl:message>
@@ -97,7 +115,7 @@
     <wsdl:part name="parameters" element="tns:SendOnBoardCreatedCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardCreatedCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q9:Fault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallback" />
@@ -106,7 +124,7 @@
     <wsdl:part name="parameters" element="tns:SendOnBoardUpdatedCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnBoardUpdatedCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q10:Fault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q12:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallback" />
@@ -115,7 +133,7 @@
     <wsdl:part name="parameters" element="tns:SendOnPlayersTurnCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnPlayersTurnCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q11:Fault" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q13:Fault" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_InputMessage">
     <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallback" />
@@ -124,7 +142,7 @@
     <wsdl:part name="parameters" element="tns:SendOnTurnFinishedCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IBoardManager_SendOnTurnFinishedCallback_FaultFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q12:Fault" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q14:Fault" />
   </wsdl:message>
   <wsdl:portType name="IBoardManager">
     <wsdl:operation name="CreateBoard">
@@ -166,6 +184,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetCardById" message="tns:IBoardManager_GetCardById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetCardByIdResponse" message="tns:IBoardManager_GetCardById_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetCardByIdFaultFault" name="FaultFault" message="tns:IBoardManager_GetCardById_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCoordinates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/GetPlayerCoordinates" message="tns:IBoardManager_GetPlayerCoordinates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/GetPlayerCoordinatesResponse" message="tns:IBoardManager_GetPlayerCoordinates_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/GetPlayerCoordinatesFaultFault" name="FaultFault" message="tns:IBoardManager_GetPlayerCoordinates_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerCoordinates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/UpdatePlayerCoordinates" message="tns:IBoardManager_UpdatePlayerCoordinates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoardManager/UpdatePlayerCoordinatesResponse" message="tns:IBoardManager_UpdatePlayerCoordinates_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IBoardManager/UpdatePlayerCoordinatesFaultFault" name="FaultFault" message="tns:IBoardManager_UpdatePlayerCoordinates_FaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendOnBoardCreatedCallback">
       <wsdl:input wsaw:Action="http://tempuri.org/IBoardManager/SendOnBoardCreatedCallback" message="tns:IBoardManager_SendOnBoardCreatedCallback_InputMessage" />
@@ -278,6 +306,30 @@
     </wsdl:operation>
     <wsdl:operation name="GetCardById">
       <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetCardById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerCoordinates">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/GetPlayerCoordinates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerCoordinates">
+      <soap12:operation soapAction="http://tempuri.org/IBoardManager/UpdatePlayerCoordinates" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

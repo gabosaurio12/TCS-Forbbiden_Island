@@ -155,6 +155,46 @@ namespace Forbbiden.Client.Repositories
             return card;
         }
 
+        public static async Task<PlayerCoordinates> GetPlayerCoordinates(int matchId, string playerUsername)
+        {
+            PlayerCoordinates playerCoordinates;
+            try
+            {
+                playerCoordinates = await BoardClient.GetPlayerCoordinatesAsync(matchId, playerUsername);
+            }
+            catch (FaultException<Fault> ex)
+            {
+                Log.Error("BoardRepository.GetPlayerCoordinates", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error("BoardRepository.GetPlayerCoordinates", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            return playerCoordinates;
+        }
+
+        public static async Task<bool> UpdatePlayerCoordinates(PlayerCoordinates playerCoordinates)
+        {
+            bool coordinatesUpdated;
+            try
+            {
+                coordinatesUpdated = await BoardClient.UpdatePlayerCoordinatesAsync(playerCoordinates);
+            }
+            catch (FaultException<Fault> ex)
+            {
+                Log.Error("BoardRepository.UpdatePlayerCoordinates", ex);
+                throw new ViewException(ServerErrorCodes.pullingDataError);
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error("BoardRepository.UpdatePlayerCoordinates", ex);
+                throw new ViewException(ServerErrorCodes.timeoutError);
+            }
+            return coordinatesUpdated;
+        }
+
         public static async void SendOnBoardCreatedCallback(string boardJson, List<string> usernames)
         {
             try

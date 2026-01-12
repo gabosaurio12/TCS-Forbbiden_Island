@@ -14,7 +14,7 @@ namespace Forbbiden.Client.Logic
     public class PlayerLogic
     {
         public static BoardPage MatchBoardPage { get; set; }
-        private static readonly List<string> PlayersUsername = new List<string>();
+        private static readonly List<string> PlayersUsernames = new List<string>();
         private static int MatchId;
 
         private static async Task<List<Tile>> GetBoardTilesFromRepo()
@@ -32,14 +32,26 @@ namespace Forbbiden.Client.Logic
             return tiles;
         }
 
+        private static void SetPlayersUsername(string[] usernames)
+        {
+            for (int i = 0; i < usernames.Length; i++)
+            {
+                if (usernames[i] != ClientSession.Username)
+                {
+                    PlayersUsernames.Add(usernames[i]);
+                }
+            }
+        }
+
         public static async void RefreshBoardFromJSON(string boardJson)
         {
             var auxBoardDto = JsonSerializer.Deserialize<BoardPageCallbackDto>(boardJson);
             MatchId = auxBoardDto.MatchId;
+            SetPlayersUsername(auxBoardDto.PlayersUsernames);
 
             var boardTiles = await GetBoardTilesFromRepo();
 
-            Application.Current.Dispatcher.Invoke(() =>
+            await Application.Current.Dispatcher.Invoke(async () =>
             {
                 MatchBoardPage.TreasuresCaptured = auxBoardDto.Board.TreasureCaptured;
                 MatchBoardPage.WaterLevelCount = auxBoardDto.Board.WaterLevelCount;
@@ -54,7 +66,36 @@ namespace Forbbiden.Client.Logic
                     auxBoardDto.Board.FloodDiscardStack);
 
                 MatchBoardPage.BoardControl.RefreshBoardTiles(boardTiles);
+                await RefreshAvatars();
             });
+        }
+
+        private static async Task RefreshAvatars()
+        {
+            foreach (var playerUsername in PlayersUsernames)
+            {
+                try
+                {
+                    var coordinates = await BoardRepository.GetPlayerCoordinates(
+                        MatchId, playerUsername);
+
+                    if (coordinates.PlayerId != -1)
+                    {
+                        var tile = MatchBoardPage.BoardControl.GetTile(
+                            coordinates.Row, coordinates.Col);
+                        var player = await ProfileRepository.GetPlayerById(
+                            coordinates.PlayerId, false);
+                        MatchBoardPage.BoardControl.AddPlayerAvatar(player, tile);
+                    }
+                }
+                catch (ViewException ex)
+                {
+                    ExceptionViewManager.ShowViewExceptionNotification(
+                        ex, Window.GetWindow(MatchBoardPage));
+                }
+
+                
+            }
         }
 
         private static List<Card> ConvertCardDtoToCardList(List<CardDto> cardsDto)
@@ -91,10 +132,10 @@ namespace Forbbiden.Client.Logic
             {
                 Board = boardDto,
                 MatchId = MatchId,
-                PlayersUsernames = PlayersUsername.ToArray()
+                PlayersUsernames = PlayersUsernames.ToArray()
             };
             string pageJson = HostLogic.CreateCallbackBoardPageJSON(page);
-            client.SendOnTurnFinishedCallback(pageJson, PlayersUsername.ToArray());
+            client.SendOnTurnFinishedCallback(pageJson, PlayersUsernames.ToArray());
         }
 
         public static void OnTurnFinishedCallbackReceived(string boardJson)

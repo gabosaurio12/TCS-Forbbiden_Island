@@ -167,6 +167,14 @@ namespace Forbbiden.Client.Logic
             return projectDir;
         }
 
+        public static string GetAvatarsDir()
+        {
+            string projectDir = GetProjectDir();
+            string avatarsDir = System.IO.Path.Combine(projectDir, "avatars");
+
+            return avatarsDir;
+        }
+
         public static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             DependencyObject parent = VisualTreeHelper.GetParent(child);

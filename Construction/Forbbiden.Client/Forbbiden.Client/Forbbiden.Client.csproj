@@ -322,6 +322,9 @@
     <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Card.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.PlayerCoordinates.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\BoardManager\Forbbiden.Client.BoardManager.Tile.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

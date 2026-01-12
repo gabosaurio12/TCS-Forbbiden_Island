@@ -15,6 +15,9 @@ namespace Forbbiden.Client.View
         {
             InitializeComponent();
 
+            Console.WriteLine("Proyecto: " + ViewUtils.GetProjectDir());
+            Console.WriteLine("Avatars: " + ViewUtils.GetAvatarsDir());
+
             var currentCulture = CultureInfo.CurrentUICulture;
 
             Properties.Settings.Default.languageCode = currentCulture.Name;

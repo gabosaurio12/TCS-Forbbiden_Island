@@ -129,6 +129,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Utils\BoardUtils.cs" />
     <Compile Include="Utils\ConnectionStringSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
