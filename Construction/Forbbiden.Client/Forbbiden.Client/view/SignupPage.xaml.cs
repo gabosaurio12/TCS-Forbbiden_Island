@@ -1,11 +1,9 @@
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.TokenManager;
-using Forbbiden.Client.view.info;
+using log4net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,12 +17,11 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class SignupPage : Page
     {
-        private readonly ProfileRepository ProfileRepo;
+        private readonly ProfileRepository ProfileRepo = new ProfileRepository();
         public SignupPage()
         {
             InitializeComponent();
-
-            ProfileRepo = new ProfileRepository();
+            ViewUtils.SetBackground(background);
         }
 
         private static void TurnTextBlockRed(TextBlock textBlock)
@@ -47,7 +44,7 @@ namespace Forbbiden.Client
             if (!usernameValidationResults.IsValid)
             {
                 TurnTextBlockRed(txtBkUsername);
-                ErrorsNotificationManager.ShowUsernameValidationErrors(
+                ExceptionViewManager.ShowUsernameValidationErrors(
                     usernameValidationResults.Errors, Window.GetWindow(this));
                 isValid = false;
             }
@@ -56,7 +53,7 @@ namespace Forbbiden.Client
             if (!emailValidationResults.IsValid)
             {
                 TurnTextBlockRed(txtBkEmail);
-                ErrorsNotificationManager.ShowEmailValidationErrors(
+                ExceptionViewManager.ShowEmailValidationErrors(
                     emailValidationResults.Errors, Window.GetWindow(this));
                 isValid = false;
             }
@@ -65,7 +62,7 @@ namespace Forbbiden.Client
             if (!passwordValidationResults.IsValid)
             {
                 TurnTextBlockRed(txtBkPassword);
-                ErrorsNotificationManager.ShowPasswordValidationErrors(
+                ExceptionViewManager.ShowPasswordValidationErrors(
                     passwordValidationResults.Errors, Window.GetWindow(this));
                 isValid = false;
             }
@@ -100,7 +97,7 @@ namespace Forbbiden.Client
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
             }
 
@@ -114,14 +111,13 @@ namespace Forbbiden.Client
 
             var player = new Player
             {
-                PlayerUsername = txtBxUsername.Text,
-                PlayerEmail = txtBxEmail.Text,
-                PlayerPassword = txtBxPassword.Text
+                PlayerUsername = txtBxUsername.Text.Trim(),
+                PlayerEmail = txtBxEmail.Text.Trim(),
+                PlayerPassword = txtBxPassword.Text.Trim()
             };
 
             if (await ValidatePlayer(player))
             {
-                player.PlayerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
                 int playerId = -1;
                 try
                 {
@@ -129,7 +125,7 @@ namespace Forbbiden.Client
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (playerId != -1)
@@ -139,7 +135,7 @@ namespace Forbbiden.Client
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
                     NavigationService?.Navigate(new LoginPage());
                 }
-                else
+                else if (playerId == -2)
                 {
                     string title = Properties.Resources.error;
                     string message = Properties.Resources.signup_error;

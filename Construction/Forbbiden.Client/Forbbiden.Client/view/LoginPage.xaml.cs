@@ -1,9 +1,8 @@
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
-using log4net;
 using System;
 using System.IO;
 using System.Windows;
@@ -18,11 +17,11 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class LoginPage : Page
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(LoginPage));
         private bool PasswordVisible = false;
         public LoginPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
         }
 
         private static void ResetFields(TextBlock txtBkUser, TextBlock txtBkPassword, TextBlock txtBkBoss)
@@ -71,8 +70,8 @@ namespace Forbbiden.Client
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(
-                    ex, ViewUtils.FindParent<Window>(this));
+                ExceptionViewManager.ShowViewExceptionNotification(
+                    ex, Window.GetWindow(this));
             }
 
             if (player.PlayerId > 0)
@@ -82,7 +81,6 @@ namespace Forbbiden.Client
                 Properties.PlayerSettings.Default.Save();
 
                 NavigationService?.Navigate(new MainPage());
-                Log.Info("Player logged in.");
             }
             else if (player.PlayerId == -1)
             {
@@ -102,13 +100,13 @@ namespace Forbbiden.Client
 
             if (!PasswordVisible)
             {
-                string darkBossPath = Path.Combine(projectPath, "Images", "bossdark.png");
-                bossImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(darkBossPath));
-
                 txtBxPasswordVisible.Text = pwdBxPassword.Password;
                 txtBxPasswordVisible.Visibility = Visibility.Visible;
                 pwdBxPassword.Visibility = Visibility.Collapsed;
                 PasswordVisible = true;
+                
+                string darkBossPath = Path.Combine(projectPath, "Images", "bossdark.png");
+                bossImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(darkBossPath));
             }
             else
             {

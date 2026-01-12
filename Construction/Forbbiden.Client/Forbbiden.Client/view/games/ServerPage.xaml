@@ -1,4 +1,4 @@
-﻿<Page x:Class="Forbbiden.Client.view.games.ServerPage"
+﻿<Page x:Class="Forbbiden.Client.View.Games.ServerPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="ServerPage">

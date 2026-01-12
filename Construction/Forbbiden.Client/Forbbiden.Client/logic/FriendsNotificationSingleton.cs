@@ -4,7 +4,7 @@ using System;
 using System.ServiceModel;
 using System.Windows;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
     public class FriendsNotificationSingleton : IFriendsNotificationManagerCallback
     {

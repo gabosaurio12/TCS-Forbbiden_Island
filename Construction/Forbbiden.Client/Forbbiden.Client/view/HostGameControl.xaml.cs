@@ -1,8 +1,8 @@
 ﻿using Forbbiden.Client.GameManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
-using Forbbiden.Client.view.info;
-using Forbbiden.Client.view;
+using Forbbiden.Client.View.info;
+using Forbbiden.Client.View;
 using log4net;
 using System;
 using System.ServiceModel;
@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Forbbiden.Client.Model;
 
 namespace Forbbiden.Client
 {
@@ -236,7 +237,6 @@ namespace Forbbiden.Client
 
         private void PublicToggle_Checked(object sender, RoutedEventArgs e)
         {
-            throw new NotSupportedException();
         }
     }
 }

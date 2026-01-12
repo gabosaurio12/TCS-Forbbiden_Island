@@ -1,6 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
 
-namespace Forbbiden.Client.logic.board.states
+namespace Forbbiden.Client.Logic.Board.States
 {
     public class MoveState : IBoardState
     {

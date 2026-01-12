@@ -765,4 +765,19 @@
   <data name="error_avatar_download" xml:space="preserve">
     <value>Hubo un error al descargar un Avatar</value>
   </data>
+  <data name="error_sending_callback" xml:space="preserve">
+    <value>Hubo un error al sincronizar el juego con el servidor u otros jugadores</value>
+  </data>
+  <data name="error_communication" xml:space="preserve">
+    <value>Hubo un error mientras al comunicarse con el servidor, intenta más tarde por favor</value>
+  </data>
+  <data name="error_invalid_avatar" xml:space="preserve">
+    <value>Intentaste subir un avatar inválido</value>
+  </data>
+  <data name="error_processing_image" xml:space="preserve">
+    <value>Hubo un error al procesar la imagen</value>
+  </data>
+  <data name="error_uploading_avatar" xml:space="preserve">
+    <value>Hubo un error al subir el avatar</value>
+  </data>
 </root>

@@ -1,5 +1,4 @@
 ﻿using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
@@ -8,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Forbbiden.Client.view.info
+namespace Forbbiden.Client.View.info
 {
     /// <summary>
     /// Interaction logic for VerificationWIndow.xaml
@@ -17,7 +16,7 @@ namespace Forbbiden.Client.view.info
     {
         private readonly int PlayerID;
         public event Action OnVerified;
-        private bool IsPasswordChange;
+        private readonly bool IsPasswordChange;
 
         public VerificationWindow()
         {
@@ -58,11 +57,11 @@ namespace Forbbiden.Client.view.info
 
             try
             {
-                player = await profileRepository.GetPlayerById(PlayerID, false);
+                player = await ProfileRepository.GetPlayerById(PlayerID, false);
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
             if (player.PlayerId != -1)
             {
@@ -74,7 +73,7 @@ namespace Forbbiden.Client.view.info
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
                 if (isUpdated)
                 {

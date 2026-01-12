@@ -25,8 +25,8 @@
     <MetadataFile FileName="service11.wsdl" MetadataType="Wsdl" ID="41e0d2f2-b216-42e2-a581-060b7c750b06" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
     <MetadataFile FileName="service22.xsd" MetadataType="Schema" ID="f82aae96-47ff-42ba-929c-6b7e46be56b7" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
     <MetadataFile FileName="service23.xsd" MetadataType="Schema" ID="1b468449-ec0b-4a09-a1c8-3b54845f76e6" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
-    <MetadataFile FileName="Arrays11.xsd" MetadataType="Schema" ID="4c429adb-d711-4b2b-9541-2d270f43dc7b" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
     <MetadataFile FileName="Forbbiden.Contracts11.xsd" MetadataType="Schema" ID="c5b5744d-8b7a-4995-86ee-84e4947f2b2a" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
+    <MetadataFile FileName="Arrays11.xsd" MetadataType="Schema" ID="4c429adb-d711-4b2b-9541-2d270f43dc7b" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

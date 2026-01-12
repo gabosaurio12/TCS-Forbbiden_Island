@@ -3,6 +3,7 @@ using System.ServiceModel;
 using dotenv.net;
 using Forbbiden.Server.callbacks;
 using Forbbiden.Server.logic;
+using Forbbiden.Server.Model;
 using Forbbiden.Server.utils;
 
 namespace Forbbiden.Server
@@ -45,7 +46,7 @@ namespace Forbbiden.Server
                 try
                 {
                     string connectionString = ConnectionStringSingleton.GetInstance().ConnectionString;
-                    using (var db = new Forbbiden_FEIEntities(connectionString))
+                    using (var db = new Forbidden_FEIEntities(connectionString))
                     {
                         db.Database.Connection.Open();
                         Console.WriteLine("Conexión a la base de datos exitosa.");

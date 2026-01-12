@@ -1,7 +1,7 @@
 ﻿using Forbbiden.Client.BoardManager;
 using System.Windows;
 
-namespace Forbbiden.Client.logic.board.states
+namespace Forbbiden.Client.Logic.Board.States
 {
     public class StandByState : IBoardState
     {

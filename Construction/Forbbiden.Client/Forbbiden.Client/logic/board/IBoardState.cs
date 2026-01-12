@@ -1,6 +1,6 @@
 ﻿using Forbbiden.Client.BoardManager;
 
-namespace Forbbiden.Client.logic.board
+namespace Forbbiden.Client.Logic.Board
 {
     public interface IBoardState
     {

@@ -1,10 +1,9 @@
 ﻿using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
-using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.view.info;
+using Forbbiden.Client.View.info;
 using log4net;
 using Microsoft.Win32;
 using System;
@@ -14,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Forbbiden.Client.Logic;
 
 namespace Forbbiden.Client
 {
@@ -161,7 +161,7 @@ namespace Forbbiden.Client
                 if (!usernameValidationResults.IsValid)
                 {
                     txtBkUsername.Foreground = Brushes.Red;
-                    ErrorsNotificationManager.ShowUsernameValidationErrors(
+                    ExceptionViewManager.ShowUsernameValidationErrors(
                         usernameValidationResults.Errors, Window.GetWindow(this));
                     isValid = false;
                 }
@@ -173,7 +173,7 @@ namespace Forbbiden.Client
                 if (!emailValidationResults.IsValid)
                 {
                     txtBkEmail.Foreground = Brushes.Red;
-                    ErrorsNotificationManager.ShowEmailValidationErrors(
+                    ExceptionViewManager.ShowEmailValidationErrors(
                         emailValidationResults.Errors, Window.GetWindow(this));
                     isValid = false;
                 }
@@ -212,8 +212,8 @@ namespace Forbbiden.Client
         {
             if (string.IsNullOrEmpty(UploadedAvatarOriginalPath) || string.IsNullOrEmpty(AvatarFileName))
             {
-                //string message = Properties.Resources.error_invalid_avatar;
-                //OpenNotificationError(message);
+                string message = Properties.Resources.error_invalid_avatar;
+                ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
                 return;
             }
 
@@ -222,8 +222,8 @@ namespace Forbbiden.Client
                 var bytes = GetAvatarBytesResized(UploadedAvatarOriginalPath, 256, 80);
                 if (bytes == null || bytes.Length == 0)
                 {
-                    //string message = Properties.Resources.error_processing_image;
-                    //OpenNotificationError(message);
+                    string message = Properties.Resources.error_processing_image;
+                    ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
                     return;
                 }
 
@@ -235,12 +235,13 @@ namespace Forbbiden.Client
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (string.IsNullOrWhiteSpace(savedFileName))
                 {
-                    //OpenNotificationError(Properties.Resources.error_uploading_avatar);
+                    string message = Properties.Resources.error_uploading_avatar;
+                    ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
                     return;
                 }
 
@@ -249,7 +250,8 @@ namespace Forbbiden.Client
             catch (Exception ex)
             {
                 Log.Error("ProfilePage.UploadAvatar", ex);
-                //OpenNotificationError(Properties.Resources.error_processing_avatar);
+                string message = Properties.Resources.error_processing_image;
+                ExceptionViewManager.ShowErrorNotification(message, Window.GetWindow(this));
             }
         }
 
@@ -290,7 +292,7 @@ namespace Forbbiden.Client
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (refreshed != null && refreshed.PlayerId > 0)

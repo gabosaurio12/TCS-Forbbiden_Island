@@ -1,6 +1,6 @@
 ﻿using Forbbiden.Client.Controls;
 using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.logic;
+using Forbbiden.Client.Logic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +12,11 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.Logic;
 using System.Collections.Generic;
+using Forbbiden.Client.Model;
+using System.IO;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for FriendsPage.xaml
@@ -28,12 +29,14 @@ namespace Forbbiden.Client.view
         public FriendsPage()
         {
             InitializeComponent();
+            ViewUtils.SetBackground(background);
 
             ProfileRepo = new ProfileRepository();
             FriendsRepo = new FriendsRepository();
 
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
             FriendsNotificationSingleton.Instance.OnRefreshPage += RefreshFriends;
+            FriendsNotificationSingleton.Instance.Subscribe(ClientSession.Username);
 
             _ = SetFriends();
             _ = SetFriendRequests();
@@ -74,7 +77,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (player.PlayerId > 0)
@@ -107,7 +110,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
             if (requests.Count > 0)
             {
@@ -137,7 +140,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
                 }
 
                 if (isDeleted)
@@ -170,7 +173,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (friend.PlayerId > 0)
@@ -179,7 +182,7 @@ namespace Forbbiden.Client.view
             }
         }
 
-        public void AddOnlineFriend(ProfileManager.Player friend)
+        public async void AddOnlineFriend(ProfileManager.Player friend)
         {
             var friendControl = new UserControlFriend
             {
@@ -188,7 +191,18 @@ namespace Forbbiden.Client.view
 
             string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
-            ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            bool downloaded = await DownloadFriendImage(avatarPath);
+            ImageBrush avatarImage;
+
+            if (!downloaded)
+            {
+                avatarImage = ViewUtils.GetDefaultAvatarBrush();
+            }
+            else
+            {
+                avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            }
+
             friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
 
             friendControl.profileImage.MouseLeftButtonDown += SeeFriendProfile;
@@ -198,13 +212,36 @@ namespace Forbbiden.Client.view
             onlineStack.Children.Add(friendControl);
         }
 
-        public void AddOfflineFriend(ProfileManager.Player friend)
+        private async Task<bool> DownloadFriendImage(string avatarPath)
+        {
+            bool downloaded = false;
+            if (!File.Exists(avatarPath))
+            {
+                var bytes = await ProfileRepository.DownloadAvatar(System.IO.Path.GetFileName(avatarPath));
+                downloaded = bytes.Length > 0;
+            }
+
+            return downloaded;
+        }
+
+        public async void AddOfflineFriend(ProfileManager.Player friend)
         {
             var friendControl = new UserControlFriend();
 
             string projectDir = ViewUtils.GetProjectDir();
             string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
-            ImageBrush avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            bool downloaded = await DownloadFriendImage(avatarPath);
+            ImageBrush avatarImage;
+
+            if (!downloaded)
+            {
+                avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            }
+            else
+            {
+                avatarImage = ViewUtils.GetImageBrush(avatarPath);
+            }
+
             friendControl.SetAvatarImage(friendControl.avatarEllipse, avatarImage);
 
             friendControl.profileImage.MouseLeftButtonDown += SeeFriendProfile;
@@ -247,7 +284,7 @@ namespace Forbbiden.Client.view
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
             }
 
             if (receiver.PlayerId > 0)
@@ -261,7 +298,7 @@ namespace Forbbiden.Client.view
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
+                    ExceptionViewManager.ShowViewExceptionNotification(ex, Window.GetWindow(this));
 
                 }
 

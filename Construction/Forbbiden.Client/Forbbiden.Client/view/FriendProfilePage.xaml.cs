@@ -1,13 +1,15 @@
-﻿using Forbbiden.Client.ProfileManager;
+﻿using Forbbiden.Client.Logic;
+using Forbbiden.Client.ProfileManager;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
-namespace Forbbiden.Client.view
+namespace Forbbiden.Client.View
 {
     /// <summary>
     /// Interaction logic for FriendProfilePage.xaml
@@ -54,18 +56,25 @@ namespace Forbbiden.Client.view
                 }
             }
 
-            if (player.PlayerAvatarPath != null)
+            if (player.PlayerAvatarPath != "defaultAvatar.png")
             {
                 string projectDir = Directory.GetParent(
                     AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                string avatarPath = System.IO.Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
+                string avatarPath = Path.Combine(projectDir, "avatars", player.PlayerAvatarPath);
 
-                var bmp = new BitmapImage();
-                bmp.BeginInit();
-                bmp.CacheOption = BitmapCacheOption.OnLoad;
-                bmp.UriSource = new Uri(avatarPath, UriKind.Absolute);
-                bmp.EndInit();
-                imgAvatar.Fill = new ImageBrush(bmp);
+                if (!File.Exists(avatarPath))
+                {
+                    avatarPath = Path.Combine(projectDir, "Images", "defaultAvatar.png");
+                }
+
+                var avatar = ViewUtils.GetImageBrush(avatarPath);
+
+                imgAvatar.Fill = avatar;
+            }
+            else
+            {
+                var avatar = ViewUtils.GetDefaultAvatarBrush();
+                imgAvatar.Fill = avatar;
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using Forbbiden.Client.view;
+﻿using Forbbiden.Client.View;
 using log4net;
 using System;
 using System.Windows;

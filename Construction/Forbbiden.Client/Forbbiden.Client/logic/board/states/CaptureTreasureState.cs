@@ -1,12 +1,8 @@
 ﻿using Forbbiden.Client.BoardManager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Forbbiden.Client.logic.board.states
+namespace Forbbiden.Client.Logic.Board.States
 {
     internal class CaptureTreasureState : IBoardState
     {

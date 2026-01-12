@@ -2,7 +2,7 @@
 using System.Windows;
 using Forbbiden.Client.GameManager;
 
-namespace Forbbiden.Client.logic
+namespace Forbbiden.Client.Logic
 {
 
     public class GameServiceCallback : IGameManagerCallback
