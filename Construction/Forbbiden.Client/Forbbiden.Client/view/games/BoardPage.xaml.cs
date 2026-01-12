@@ -58,18 +58,10 @@ namespace Forbbiden.Client.View.Games
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
-            
-            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username); 
+            SubscribeCallbacks();
             InitAttributes();
-            BoardManagerClient boardClient = new BoardManagerClient();
-            TreasureStack = boardClient.GetTreasureCards().ToList();
-            FloodStack = boardClient.GetFloodCards().ToList();
-            TreasureDiscardStack = new List<Card>();
-            FloodDiscardStack = new List<Card>();
-
-            KeyDown += BoardPage_KeyDown;
-            Focusable = true;
-            Focus();
+            _ = InitCardsStacks();
+            InitGif();
 
             InitBoardPage(match);
             InitKeyHandlers();
@@ -78,8 +70,12 @@ namespace Forbbiden.Client.View.Games
         public BoardPage()
         {
             InitializeComponent();
-            InitGif();
+            SubscribeCallbacks();
             InitAttributes();
+            InitGif();
+
+            SetBoard();
+            InitKeyHandlers();
             PlayerLogic.MatchBoardPage = this;
         }
 

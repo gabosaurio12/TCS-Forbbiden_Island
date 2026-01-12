@@ -42,7 +42,6 @@ namespace Forbbiden.Client.Logic
             {
                 usernames.Add(player.PlayerUsername);
             }
-            usernames.Remove(ClientSession.Username);
 
             return usernames.ToArray();
         }
@@ -62,6 +61,7 @@ namespace Forbbiden.Client.Logic
                         MatchId = matchInfo.MatchId,
                         PlayersUsernames = usernames
                     };
+                    usernames.ToList().Remove(ClientSession.Username);
 
                     string boardJson = CreateCallbackBoardPageJSON(callbackPage);
                     BoardRepository.SendOnBoardCreatedCallback(boardJson, usernames.ToList());

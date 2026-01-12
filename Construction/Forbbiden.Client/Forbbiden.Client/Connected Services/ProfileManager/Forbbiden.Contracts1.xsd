@@ -10,6 +10,8 @@
   <xs:complexType name="Player">
     <xs:sequence>
       <xs:element minOccurs="0" name="Friends" nillable="true" type="tns:ArrayOfFriendship" />
+      <xs:element minOccurs="0" name="GuestId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsVerified" type="xs:int" />
       <xs:element minOccurs="0" name="PlayerAvatarBytes" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="PlayerAvatarName" nillable="true" type="xs:string" />

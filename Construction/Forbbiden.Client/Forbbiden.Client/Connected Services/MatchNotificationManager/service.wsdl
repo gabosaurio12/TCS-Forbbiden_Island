@@ -111,9 +111,9 @@
   </wsdl:binding>
   <wsdl:service name="MatchNotificationManager">
     <wsdl:port name="NetTcpBinding_IMatchNotificationManager" binding="tns:NetTcpBinding_IMatchNotificationManager">
-      <soap12:address location="net.tcp://192.168.100.15:8087/MatchNotificationManager" />
+      <soap12:address location="net.tcp://100.101.13.68:8087/MatchNotificationManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.15:8087/MatchNotificationManager</wsa10:Address>
+        <wsa10:Address>net.tcp://100.101.13.68:8087/MatchNotificationManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>
