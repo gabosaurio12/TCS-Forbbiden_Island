@@ -145,9 +145,70 @@ namespace Forbbiden.Client.Logic
 
         public static ImageBrush GetImageBrush(string avatarPath)
         {
-            ImageBrush avatarImage = new ImageBrush(new BitmapImage(new Uri(avatarPath)));
+            try
+            {
+                if (string.IsNullOrWhiteSpace(avatarPath) || !File.Exists(avatarPath))
+                {
+                    return new ImageBrush();
+                }
 
-            return avatarImage;
+                byte[] bytes;
+                using (var fs = new FileStream(
+                    avatarPath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        fs.CopyTo(ms);
+                        bytes = ms.ToArray();
+                    }
+                }
+
+                using (var ms = new MemoryStream(bytes))
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = ms;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+
+                    var brush = new ImageBrush(bitmap);
+                    brush.Freeze();
+
+                    return brush;
+                }
+            }
+            catch
+            {
+                return new ImageBrush();
+            }
+        }
+
+
+        public static ImageBrush GetImageBrushFromBytes(byte[] bytes)
+        {
+            if (bytes == null || bytes.Length == 0) return null;
+
+            try
+            {
+                using (var ms = new MemoryStream(bytes))
+                {
+                    var bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    bmp.CacheOption = BitmapCacheOption.OnLoad;
+                    bmp.StreamSource = ms;
+                    bmp.EndInit();
+                    bmp.Freeze();
+                    return new ImageBrush(bmp);
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static ImageBrush GetDefaultAvatarBrush()

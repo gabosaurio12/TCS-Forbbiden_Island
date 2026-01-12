@@ -57,10 +57,18 @@ namespace Forbbiden.Client.View.Games
         public BoardPage(MatchManager.Match match)
         {
             InitializeComponent();
-            SubscribeCallbacks();
-            InitAttributes();
-            _ = InitCardsStacks();
-            InitGif();
+            
+            MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username); 
+            //InitAttributes();
+            BoardManagerClient boardClient = new BoardManagerClient();
+            TreasureStack = boardClient.GetTreasureCards().ToList();
+            FloodStack = boardClient.GetFloodCards().ToList();
+            TreasureDiscardStack = new List<Card>();
+            FloodDiscardStack = new List<Card>();
+
+            KeyDown += BoardPage_KeyDown;
+            Focusable = true;
+            Focus();
 
             InitBoardPage(match);
             InitKeyHandlers();
@@ -69,12 +77,8 @@ namespace Forbbiden.Client.View.Games
         public BoardPage()
         {
             InitializeComponent();
-            SubscribeCallbacks();
-            InitAttributes();
             InitGif();
-
-            SetBoard();
-            InitKeyHandlers();
+            //InitAttributes();
             PlayerLogic.MatchBoardPage = this;
         }
 
@@ -209,9 +213,9 @@ namespace Forbbiden.Client.View.Games
             ResetTiles();
 
             var moveToTile = BoardControl.GetTile(tile.Row, tile.Column);
-            Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+            //Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
             CurrentTile.ClearAvatar(); 
-            moveToTile.AddAvatar(avatar);
+            //moveToTile.AddAvatar(avatar);
             CurrentTile = moveToTile;
         }
 

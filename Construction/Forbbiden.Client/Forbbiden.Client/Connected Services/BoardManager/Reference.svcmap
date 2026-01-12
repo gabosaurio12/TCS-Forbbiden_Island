@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.100.15:8084/BoardManager/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.1.77:8084/BoardManager/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service11.wsdl" MetadataType="Wsdl" ID="41e0d2f2-b216-42e2-a581-060b7c750b06" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
-    <MetadataFile FileName="service22.xsd" MetadataType="Schema" ID="f82aae96-47ff-42ba-929c-6b7e46be56b7" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
-    <MetadataFile FileName="service23.xsd" MetadataType="Schema" ID="1b468449-ec0b-4a09-a1c8-3b54845f76e6" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
-    <MetadataFile FileName="Forbbiden.Contracts11.xsd" MetadataType="Schema" ID="c5b5744d-8b7a-4995-86ee-84e4947f2b2a" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
-    <MetadataFile FileName="Arrays11.xsd" MetadataType="Schema" ID="4c429adb-d711-4b2b-9541-2d270f43dc7b" SourceId="1" SourceUrl="net.tcp://192.168.100.15:8084/BoardManager/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="98acb586-6bd5-4e0a-a323-395cce23e7e8" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b871cf5c-962d-4874-92dc-64ca2bd44999" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="33701f48-4622-4815-a168-6db1c2b8413b" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="8740a150-3ec0-4d94-9842-8247d6ee0386" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
+    <MetadataFile FileName="Forbbiden.Contracts.xsd" MetadataType="Schema" ID="0e22cff3-32ed-4a6a-951b-bed91ca5ebfe" SourceId="1" SourceUrl="net.tcp://192.168.1.77:8084/BoardManager/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

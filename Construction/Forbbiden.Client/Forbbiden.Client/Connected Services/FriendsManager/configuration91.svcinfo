@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="XLsjvVeJNC+029YjPFomuWJInzVt0k1lW1NUW/8Dkq8=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="LcJF43ThrMHoU2/BCOoA0bi70oYo811zGFdwSTrt/3Y=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="NetTcpBinding_IFriendsManager1">
       <properties>
@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetTcpBinding_IFriendsManager" contract="FriendsManager.IFriendsManager" bindingType="netTcpBinding" address="net.tcp://192.168.100.15:8082/FriendsManager" bindingConfiguration="NetTcpBinding_IFriendsManager1">
+    <endpoint name="NetTcpBinding_IFriendsManager" contract="FriendsManager.IFriendsManager" bindingType="netTcpBinding" address="net.tcp://192.168.1.77:8082/FriendsManager" bindingConfiguration="NetTcpBinding_IFriendsManager1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://192.168.100.15:8082/FriendsManager</serializedValue>
+          <serializedValue>net.tcp://192.168.1.77:8082/FriendsManager</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

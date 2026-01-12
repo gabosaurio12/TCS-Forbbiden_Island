@@ -125,17 +125,29 @@
   <wsdl:message name="IProfileManager_DisconnectPlayerByUsername_FaultFault_FaultMessage">
     <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q12:Fault" />
   </wsdl:message>
+  <wsdl:message name="IProfileManager_GetAvatar_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvatar" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_GetAvatar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvatarResponse" />
+  </wsdl:message>
   <wsdl:message name="IProfileManager_UploadAvatar_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadAvatar" />
   </wsdl:message>
   <wsdl:message name="IProfileManager_UploadAvatar_OutputMessage">
     <wsdl:part name="parameters" element="tns:UploadAvatarResponse" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_GetAvatar_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAvatar" />
+  <wsdl:message name="IProfileManager_UploadAvatar_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q13:Fault" />
   </wsdl:message>
-  <wsdl:message name="IProfileManager_GetAvatar_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAvatarResponse" />
+  <wsdl:message name="IProfileManager_GetAvatarByUsername_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvatarByUsername" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_GetAvatarByUsername_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvatarByUsernameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProfileManager_GetAvatarByUsername_FaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" name="detail" element="q14:Fault" />
   </wsdl:message>
   <wsdl:portType name="IProfileManager">
     <wsdl:operation name="IsEmailAvailable">
@@ -198,13 +210,19 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse" message="tns:IProfileManager_DisconnectPlayerByUsername_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameFaultFault" name="FaultFault" message="tns:IProfileManager_DisconnectPlayerByUsername_FaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UploadAvatar">
-      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/UploadAvatar" message="tns:IProfileManager_UploadAvatar_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/UploadAvatarResponse" message="tns:IProfileManager_UploadAvatar_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetAvatar">
       <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/GetAvatar" message="tns:IProfileManager_GetAvatar_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/GetAvatarResponse" message="tns:IProfileManager_GetAvatar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAvatar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/UploadAvatar" message="tns:IProfileManager_UploadAvatar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/UploadAvatarResponse" message="tns:IProfileManager_UploadAvatar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/UploadAvatarFaultFault" name="FaultFault" message="tns:IProfileManager_UploadAvatar_FaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvatarByUsername">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileManager/GetAvatarByUsername" message="tns:IProfileManager_GetAvatarByUsername_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileManager/GetAvatarByUsernameResponse" message="tns:IProfileManager_GetAvatarByUsername_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IProfileManager/GetAvatarByUsernameFaultFault" name="FaultFault" message="tns:IProfileManager_GetAvatarByUsername_FaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IProfileManager" type="tns:IProfileManager">
@@ -355,15 +373,6 @@
         <soap12:fault use="literal" name="FaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="UploadAvatar">
-      <soap12:operation soapAction="http://tempuri.org/IProfileManager/UploadAvatar" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetAvatar">
       <soap12:operation soapAction="http://tempuri.org/IProfileManager/GetAvatar" style="document" />
       <wsdl:input>
@@ -373,12 +382,36 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UploadAvatar">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/UploadAvatar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvatarByUsername">
+      <soap12:operation soapAction="http://tempuri.org/IProfileManager/GetAvatarByUsername" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultFault">
+        <soap12:fault use="literal" name="FaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ProfileManager">
     <wsdl:port name="NetTcpBinding_IProfileManager" binding="tns:NetTcpBinding_IProfileManager">
-      <soap12:address location="net.tcp://192.168.100.15:8081/ProfileManager" />
+      <soap12:address location="net.tcp://192.168.1.77:8081/ProfileManager" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.15:8081/ProfileManager</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.1.77:8081/ProfileManager</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

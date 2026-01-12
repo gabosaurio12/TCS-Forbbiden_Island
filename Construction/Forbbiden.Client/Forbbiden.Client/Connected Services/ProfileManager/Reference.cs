@@ -90,7 +90,10 @@ namespace Forbbiden.Client.ProfileManager {
         private int IsVerifiedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PlayerAvatarPathField;
+        private byte[] PlayerAvatarBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerAvatarNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlayerEmailField;
@@ -150,14 +153,27 @@ namespace Forbbiden.Client.ProfileManager {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PlayerAvatarPath {
+        public byte[] PlayerAvatarBytes {
             get {
-                return this.PlayerAvatarPathField;
+                return this.PlayerAvatarBytesField;
             }
             set {
-                if ((object.ReferenceEquals(this.PlayerAvatarPathField, value) != true)) {
-                    this.PlayerAvatarPathField = value;
-                    this.RaisePropertyChanged("PlayerAvatarPath");
+                if ((object.ReferenceEquals(this.PlayerAvatarBytesField, value) != true)) {
+                    this.PlayerAvatarBytesField = value;
+                    this.RaisePropertyChanged("PlayerAvatarBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerAvatarName {
+            get {
+                return this.PlayerAvatarNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerAvatarNameField, value) != true)) {
+                    this.PlayerAvatarNameField = value;
+                    this.RaisePropertyChanged("PlayerAvatarName");
                 }
             }
         }
@@ -417,6 +433,67 @@ namespace Forbbiden.Client.ProfileManager {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AvatarResponse", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    [System.SerializableAttribute()]
+    public partial class AvatarResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] AvatarBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] AvatarBytes {
+            get {
+                return this.AvatarBytesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AvatarBytesField, value) != true)) {
+                    this.AvatarBytesField = value;
+                    this.RaisePropertyChanged("AvatarBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileName {
+            get {
+                return this.FileNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileNameField, value) != true)) {
+                    this.FileNameField = value;
+                    this.RaisePropertyChanged("FileName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ProfileManager.IProfileManager")]
     public interface IProfileManager {
@@ -505,17 +582,25 @@ namespace Forbbiden.Client.ProfileManager {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsername", ReplyAction="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameResponse")]
         System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
-        string UploadAvatar(string username, byte[] avatarBytes, string fileName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
-        System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatar", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarResponse")]
         byte[] GetAvatar(string fileName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatar", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarResponse")]
         System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/UploadAvatarFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        bool UploadAvatar(string username, byte[] avatarBytes, string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
+        System.Threading.Tasks.Task<bool> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatarByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarByUsernameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Forbbiden.Client.ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/GetAvatarByUsernameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        Forbbiden.Client.ProfileManager.AvatarResponse GetAvatarByUsername(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatarByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarByUsernameResponse")]
+        System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.AvatarResponse> GetAvatarByUsernameAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -641,20 +726,28 @@ namespace Forbbiden.Client.ProfileManager {
             return base.Channel.DisconnectPlayerByUsernameAsync(username);
         }
         
-        public string UploadAvatar(string username, byte[] avatarBytes, string fileName) {
-            return base.Channel.UploadAvatar(username, avatarBytes, fileName);
-        }
-        
-        public System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName) {
-            return base.Channel.UploadAvatarAsync(username, avatarBytes, fileName);
-        }
-        
         public byte[] GetAvatar(string fileName) {
             return base.Channel.GetAvatar(fileName);
         }
         
         public System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName) {
             return base.Channel.GetAvatarAsync(fileName);
+        }
+        
+        public bool UploadAvatar(string username, byte[] avatarBytes, string fileName) {
+            return base.Channel.UploadAvatar(username, avatarBytes, fileName);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName) {
+            return base.Channel.UploadAvatarAsync(username, avatarBytes, fileName);
+        }
+        
+        public Forbbiden.Client.ProfileManager.AvatarResponse GetAvatarByUsername(string username) {
+            return base.Channel.GetAvatarByUsername(username);
+        }
+        
+        public System.Threading.Tasks.Task<Forbbiden.Client.ProfileManager.AvatarResponse> GetAvatarByUsernameAsync(string username) {
+            return base.Channel.GetAvatarByUsernameAsync(username);
         }
     }
 }

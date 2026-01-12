@@ -167,8 +167,8 @@ namespace Forbbiden.Client.View
                 NavigationService?.Navigate(new FriendsPage());
             }
 
-            string projectDir = ViewUtils.GetProjectDir();
-            string avatarPath = System.IO.Path.Combine(projectDir, "avatars", friend.PlayerAvatarPath);
+            var avatarImage = await AvatarsManager.Instance.GetAvatarBrushAsync(friend.PlayerUsername);
+            requestControl.SetAvatarImage(requestControl.avatarEllipse, avatarImage);
 
             bool downloaded = await DownloadFriendImage(avatarPath);
             ImageBrush avatarImage;

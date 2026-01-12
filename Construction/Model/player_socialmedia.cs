@@ -12,9 +12,9 @@ namespace Forbbiden.Server.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class player_socialmedia
+    public partial class PlayerSocialmedia
     {
-        public int social_media { get; set; }
+        public int social_media_id { get; set; }
         public Nullable<int> player_id { get; set; }
         public string social_link { get; set; }
         public string social_media_name { get; set; }

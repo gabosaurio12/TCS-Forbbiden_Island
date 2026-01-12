@@ -1,12 +1,11 @@
-﻿using Forbbiden.Client.GameManager;
+using Forbbiden.Client.Exceptions;
+using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
-using Forbbiden.Client.View.info;
-using Forbbiden.Client.View;
+using Forbbiden.Client.Repositories;
+using Forbbiden.Client.view;
 using log4net;
 using System;
-using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,17 +14,25 @@ using Forbbiden.Client.Model;
 
 namespace Forbbiden.Client
 {
-    public partial class HostGameControl : UserControl
+    public partial class HostGameControl : UserControl, IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(HostGameControl));
-        private string selectedDifficulty = "Normal";
-        private string selectedVisibility = "Public";
-        private int selectedCapacity = 4;
+
+        private readonly MatchRepository matchRepository;
+        private GameRepository gameRepository;
+        private GameServiceCallback gameCallback;
+
+        private string selectedDifficulty;
+        private string selectedVisibility;
+        private int selectedCapacity;
 
         public HostGameControl()
         {
             InitializeComponent();
-            this.Loaded += HostGameControl_Loaded;
+
+            matchRepository = new MatchRepository();
+
+            Loaded += HostGameControl_Loaded;
         }
 
         private void HostGameControl_Loaded(object sender, RoutedEventArgs e)
@@ -36,14 +43,36 @@ namespace Forbbiden.Client
                 selectedVisibility = "Public";
                 selectedCapacity = 4;
 
-                if (PlayerComboBox != null) PlayerComboBox.SelectedIndex = 2; 
+                if (PlayerComboBox != null)
+                {
+                    PlayerComboBox.SelectedIndex = 2;
+                }
 
-                if (NormalButton != null) NormalButton.Background = Brushes.LightGreen;
-                if (HardButton != null) HardButton.Background = Brushes.LightGray;
-                if (NormalMessage != null) NormalMessage.Visibility = Visibility.Visible;
-                if (HardMessage != null) HardMessage.Visibility = Visibility.Collapsed;
+                if (NormalButton != null)
+                {
+                    NormalButton.Background = Brushes.LightGreen;
+                }
 
-                if (PublicToggle != null) PublicToggle.IsChecked = true;
+                if (HardButton != null)
+                {
+                    HardButton.Background = Brushes.LightGray;
+                }
+
+                if (NormalMessage != null)
+                {
+                    NormalMessage.Visibility = Visibility.Visible;
+                }
+
+                if (HardMessage != null)
+                {
+                    HardMessage.Visibility = Visibility.Collapsed;
+                }
+
+                if (PublicToggle != null)
+                {
+                    PublicToggle.IsChecked = true;
+                }
+
                 UpdateVisibilityText(true);
             }
             catch (Exception ex)
@@ -56,183 +85,248 @@ namespace Forbbiden.Client
         {
             if (PublicMessage != null)
             {
-                PublicMessage.Visibility = isPublic ? Visibility.Visible : Visibility.Collapsed;
+                PublicMessage.Visibility = isPublic
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
             }
+
             if (PrivateMessage != null)
             {
-                PrivateMessage.Visibility = isPublic ? Visibility.Collapsed : Visibility.Visible;
+                PrivateMessage.Visibility = isPublic
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
             }
         }
 
         private void PlayerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PlayerComboBox?.SelectedItem is ComboBoxItem item
-                && int.TryParse(item.Content?.ToString(), out int val))
+            if (PlayerComboBox?.SelectedItem is ComboBoxItem item &&
+                int.TryParse(item.Content?.ToString(), out int capacity))
             {
-                selectedCapacity = Math.Max(2, Math.Min(4, val));
+                selectedCapacity = Math.Max(2, Math.Min(4, capacity));
             }
         }
 
         private void NormalButton_Click(object sender, RoutedEventArgs e)
         {
             selectedDifficulty = "Normal";
-            if (NormalButton != null) NormalButton.Background = Brushes.LightGreen;
-            if (HardButton != null) HardButton.Background = Brushes.LightGray;
-            if (NormalMessage != null) NormalMessage.Visibility = Visibility.Visible;
-            if (HardMessage != null) HardMessage.Visibility = Visibility.Collapsed;
+
+            if (NormalButton != null)
+            {
+                NormalButton.Background = Brushes.LightGreen;
+            }
+
+            if (HardButton != null)
+            {
+                HardButton.Background = Brushes.LightGray;
+            }
+
+            if (NormalMessage != null)
+            {
+                NormalMessage.Visibility = Visibility.Visible;
+            }
+
+            if (HardMessage != null)
+            {
+                HardMessage.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void HardButton_Click(object sender, RoutedEventArgs e)
         {
             selectedDifficulty = "Hard";
-            if (HardButton != null) HardButton.Background = Brushes.LightCoral;
-            if (NormalButton != null) NormalButton.Background = Brushes.LightGray;
-            if (HardMessage != null) HardMessage.Visibility = Visibility.Visible;
-            if (NormalMessage != null) NormalMessage.Visibility = Visibility.Collapsed;
+
+            if (HardButton != null)
+            {
+                HardButton.Background = Brushes.LightCoral;
+            }
+
+            if (NormalButton != null)
+            {
+                NormalButton.Background = Brushes.LightGray;
+            }
+
+            if (HardMessage != null)
+            {
+                HardMessage.Visibility = Visibility.Visible;
+            }
+
+            if (NormalMessage != null)
+            {
+                NormalMessage.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void PublicToggle_Click(object sender, RoutedEventArgs e)
         {
-            bool isPublic = (bool)PublicToggle.IsChecked;
-            selectedVisibility = isPublic ? "Public" : "Private";
+            bool isPublic = PublicToggle.IsChecked == true;
+
+            selectedVisibility = isPublic
+                ? "Public"
+                : "Private";
+
             UpdateVisibilityText(isPublic);
 
-            PublicToggle.Background = isPublic ? Brushes.LightBlue : Brushes.LightCoral;
+            PublicToggle.Background = isPublic
+                ? Brushes.LightBlue
+                : Brushes.LightCoral;
         }
 
-        private CreateMatchRequest GetMatchRequest(MatchManagerClient matchClient)
+        private CreateMatchRequest BuildMatchRequest()
         {
             var currentPlayer = ClientSession.GetPlayer();
+
             if (currentPlayer == null)
             {
-                //ShowWarningNotification(Properties.Resources.warning_login_permission);
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.warning_title,
+                    Properties.Resources.warning_login_permission,
+                    Window.GetWindow(this));
+
                 return null;
             }
 
-            string username = currentPlayer.PlayerUsername;
+            string roomName = txtRoomName?.Text?.Trim();
 
-            var roomName = txtRoomName?.Text?.Trim();
-            if (!string.IsNullOrEmpty(roomName) && roomName.Length > 20)
+            if (string.IsNullOrWhiteSpace(roomName))
             {
-                //ShowWarningNotification(Properties.Resources.warning_room_char_limit);
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.missing_room_name_title,
+                    Properties.Resources.missing_room_name_message,
+                    Window.GetWindow(this));
+
                 return null;
             }
 
-            var request = new CreateMatchRequest
+            if (roomName.Length > 20)
             {
-                HostUsername = username,
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.error,
+                    Properties.Resources.warning_room_char_limit,
+                    Window.GetWindow(this));
+
+                return null;
+            }
+
+            return new CreateMatchRequest
+            {
+                HostUsername = currentPlayer.PlayerUsername,
                 Difficulty = selectedDifficulty,
                 Visibility = selectedVisibility,
-                MatchName = string.IsNullOrEmpty(roomName) ? null : roomName,
+                MatchName = roomName,
                 Capacity = selectedCapacity
             };
-
-            return request;
         }
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            var matchClient = new MatchManagerClient();
+            CreateMatchRequest request = BuildMatchRequest();
+
+            if (request == null)
+            {
+                return;
+            }
+
+            int matchId;
 
             try
             {
-                var request = GetMatchRequest(matchClient);
-                if (request == null)
-                {
-                    MessageBox.Show("Debes iniciar sesión antes de crear una partida.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+                matchId = await matchRepository.CreateMatch(request);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(
+                    ex, Window.GetWindow(this));
+                return;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("CreateMatch error", ex);
 
-                string username = ClientSession.Username;
-                var roomName = txtRoomName?.Text?.Trim();
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.error,
+                    Properties.Resources.unexpected_error,
+                    Window.GetWindow(this));
 
-                if (string.IsNullOrWhiteSpace(roomName))
-                {
-                    var wnd = new NotificationWindow(
-                        Properties.Resources.missing_room_name_title,
-                        Properties.Resources.missing_room_name_message);
-                    wnd.Owner = Window.GetWindow(this);
-                    wnd.ShowDialog();
-                    return;
-                }
+                return;
+            }
 
-                if (roomName.Length > 20)
-                {
-                    MessageBox.Show("El nombre de la sala debe tener como máximo 20 caracteres.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+            if (matchId <= 0)
+            {
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.error,
+                    Properties.Resources.error_match_created_not_joined,
+                    Window.GetWindow(this));
 
-                /*var request = new CreateMatchRequest
-                {
-                    HostUsername = username,
-                    Difficulty = selectedDifficulty,
-                    Visibility = selectedVisibility,
-                    MatchName = roomName,
-                    Capacity = selectedCapacity
-                };*/
+                return;
+            }
 
-                int matchId;
-                try
-                {
-                    matchId = await Task.Run(() => matchClient.CreateMatch(request));
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("CreateMatch error", ex);
-                    MessageBox.Show("No se pudo crear la partida: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+            var currentPlayer = ClientSession.GetPlayer();
+            string username = currentPlayer?.PlayerUsername ?? ClientSession.Username;
+            string avatarFileName = currentPlayer?.PlayerAvatarName;
+            byte[] avatarBytes = currentPlayer?.PlayerAvatarBytes;
 
-                if (matchId <= 0)
-                {
-                    MessageBox.Show("No se pudo crear la partida.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+            if ((avatarBytes == null || avatarBytes.Length == 0) && !string.IsNullOrWhiteSpace(username))
+            {
+                avatarBytes = await AvatarsManager.Instance.GetAvatarBytesAsync(username);
+            }
 
+            try
+            {
+                gameCallback = new GameServiceCallback();
+                gameRepository = new GameRepository(gameCallback);
 
-                string avatarFileName = null;
-                var currentPlayer = ClientSession.GetPlayer();
-                    
-                var avatarPath = currentPlayer?.PlayerAvatarPath;
-                if (!string.IsNullOrEmpty(avatarPath))
-                {
-                    avatarFileName = System.IO.Path.GetFileName(avatarPath);
-                }
-
-                var callback = new GameServiceCallback();
-                var context = new InstanceContext(callback);
-                var gameClient = new GameManagerClient(context);
-
-                bool joined = await gameClient.JoinGameAsync(matchId.ToString(), username, null, avatarFileName);
+                bool joined = await gameRepository.JoinGame(
+                    matchId.ToString(),
+                    username,
+                    avatarBytes,
+                    avatarFileName);
 
                 if (!joined)
                 {
-                    string title = Properties.Resources.error;
-                    //string message = Properties.Resources.error_match_created_not_joined;
-                    //ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                    ViewUtils.OpenNotificationWindow(
+                        Properties.Resources.error,
+                        Properties.Resources.error_match_created_not_joined,
+                        Window.GetWindow(this));
+
                     return;
                 }
 
-                var lobbyPage = new LobbyPage(matchId, username, gameClient, callback);
-                NavigationService.GetNavigationService(this)?.Navigate(lobbyPage);
+                var lobbyPage = new LobbyPage(
+                    matchId,
+                    username,
+                    gameRepository.Client,
+                    gameCallback);
+
+                NavigationService.GetNavigationService(this)
+                    ?.Navigate(lobbyPage);
+            }
+            catch (ViewException ex)
+            {
+                ErrorsNotificationManager.ShowViewExceptionNotification(
+                    ex, Window.GetWindow(this));
             }
             catch (TimeoutException)
             {
-                string title = Properties.Resources.error;
-                //string message = Properties.Resources.error_server_timeout;
-                //ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.error,
+                    Properties.Resources.error_server_timeout,
+                    Window.GetWindow(this));
             }
             catch (Exception ex)
             {
                 Log.Error("HostGameControl.PlayButton_Click", ex);
-                string title = Properties.Resources.error;
-                string message = Properties.Resources.unexpected_error;
-                ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
+
+                ViewUtils.OpenNotificationWindow(
+                    Properties.Resources.error,
+                    Properties.Resources.unexpected_error,
+                    Window.GetWindow(this));
             }
-            finally
-            {
-                JoinGameControl.CloseMatchClient(matchClient);
-            }
+        }
+
+        public void Dispose()
+        {
+            gameRepository?.Dispose();
         }
 
         private void PublicToggle_Checked(object sender, RoutedEventArgs e)

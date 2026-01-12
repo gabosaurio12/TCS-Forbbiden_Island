@@ -174,6 +174,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetAvatar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAvatarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAvatarResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="UploadAvatar">
     <xs:complexType>
       <xs:sequence>
@@ -186,21 +200,21 @@
   <xs:element name="UploadAvatarResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="UploadAvatarResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="UploadAvatarResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAvatar">
+  <xs:element name="GetAvatarByUsername">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAvatarResponse">
+  <xs:element name="GetAvatarByUsernameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="GetAvatarResult" nillable="true" type="xs:base64Binary" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts" minOccurs="0" name="GetAvatarByUsernameResult" nillable="true" type="q6:AvatarResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

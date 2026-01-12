@@ -56,10 +56,24 @@ namespace Forbbiden.Contracts
         bool DisconnectPlayerByUsername(string username);
 
         [OperationContract]
-        string UploadAvatar(string username, byte[] avatarBytes, string fileName);
+        byte[] GetAvatar(string fileName);
 
         [OperationContract]
-        byte[] GetAvatar(string fileName);
+        [FaultContract(typeof(Fault))]
+        bool UploadAvatar(string username, byte[] avatarBytes, string fileName);
+
+        [OperationContract]
+        [FaultContract(typeof(Fault))]
+        AvatarResponse GetAvatarByUsername(string username);
+    }
+
+    [DataContract]
+    public class AvatarResponse
+    {
+        [DataMember]
+        public byte[] AvatarBytes { get; set; }
+        [DataMember]
+        public string FileName { get; set; }
     }
 
     [DataContract]
@@ -75,8 +89,12 @@ namespace Forbbiden.Contracts
         public string PlayerPassword { get; set; }
         [DataMember]
         public string PlayerEmail { get; set; }
+
         [DataMember]
-        public string PlayerAvatarPath { get; set; }
+        public byte[] PlayerAvatarBytes { get; set; }
+        [DataMember]
+        public string PlayerAvatarName { get; set; }
+
         [DataMember]
         public int Status { get; set; }
         [DataMember]

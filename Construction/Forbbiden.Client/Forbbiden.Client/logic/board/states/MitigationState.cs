@@ -36,8 +36,9 @@ namespace Forbbiden.Client.Logic.Board.States
             }
             catch (ViewException ex)
             {
-                ExceptionViewManager.ShowViewExceptionNotification(
-                    ex, Window.GetWindow(Context.Board));
+                string methodClass = "MitigationState.DiscardMitigationCard";
+                Log.Error(methodClass, ex);
+                //ViewUtils.ShowPullError(Window.GetWindow(Context.Board));
                 return;
             }
 
