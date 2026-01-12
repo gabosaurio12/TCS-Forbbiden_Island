@@ -198,14 +198,17 @@ namespace Forbbiden.Client.View.Games
             MatchLogic.ResetTiles(tiles);
         }
 
-        public void RefreshAvatarTile(TileClickedEventArgs tile)
+        public async void RefreshAvatarTile(TileClickedEventArgs tile)
         {
             ResetTiles();
 
             var moveToTile = BoardControl.GetTile(tile.Row, tile.Column);
-            //Ellipse avatar = ViewUtils.GetAvatarEllipse(ClientSession.AvatarPath);
+            var avatarBrush = await AvatarsManager.Instance.GetAvatarBrushAsync(
+                ClientSession.Username);
+            Ellipse avatar = ViewUtils.GetAvatarEllipse(
+                ViewUtils.GetBitmapImageFromBrush(avatarBrush));
             CurrentTile.ClearAvatar(); 
-            //moveToTile.AddAvatar(avatar);
+            moveToTile.AddAvatar(avatar);
             CurrentTile = moveToTile;
         }
 
