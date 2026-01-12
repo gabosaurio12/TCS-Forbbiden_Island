@@ -20,10 +20,5 @@ namespace Forbbiden.Server.Model
     
         public virtual Match Match { get; set; }
         public virtual Minigame Minigame { get; set; }
-<<<<<<<< HEAD:Construction/Forbbiden.Server/Forbbiden.Server/Model/match_minigames.cs
-========
-        public virtual Matches Matches { get; set; }
-        public virtual Match Match { get; set; }
->>>>>>>> fd07bbe994b3fa18d6f9a6a6e6e4a3f26fd5f8f2:Construction/Model/match_minigames.cs
     }
 }

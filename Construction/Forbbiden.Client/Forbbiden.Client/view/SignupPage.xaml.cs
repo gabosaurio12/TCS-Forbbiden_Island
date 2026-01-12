@@ -17,7 +17,6 @@ namespace Forbbiden.Client
     /// </summary>
     public partial class SignupPage : Page
     {
-        private readonly ProfileRepository ProfileRepo = new ProfileRepository();
         public SignupPage()
         {
             InitializeComponent();
@@ -79,7 +78,7 @@ namespace Forbbiden.Client
             {
                 try
                 {
-                    if (!await ProfileRepo.IsUsernameAvailable(player.PlayerUsername))
+                    if (!await ProfileRepository.IsUsernameAvailable(player.PlayerUsername))
                     {
                         string message = Properties.Resources.signup_username_already_used;
                         ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
@@ -87,7 +86,7 @@ namespace Forbbiden.Client
                         isValid = false;
                     }
 
-                    if (!await ProfileRepo.IsEmailAvailable(player.PlayerEmail))
+                    if (!await ProfileRepository.IsEmailAvailable(player.PlayerEmail))
                     {
                         string message = Properties.Resources.invalid_email_not_available;
                         ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
@@ -121,7 +120,7 @@ namespace Forbbiden.Client
                 int playerId = -1;
                 try
                 {
-                    playerId = await ProfileRepo.SignupPlayer(player);
+                    playerId = await ProfileRepository.SignupPlayer(player);
                 }
                 catch (ViewException ex)
                 {
@@ -140,7 +139,7 @@ namespace Forbbiden.Client
                     string title = Properties.Resources.error;
                     string message = Properties.Resources.signup_error;
                     ViewUtils.OpenNotificationWindow(title, message, Window.GetWindow(this));
-                    _ = ProfileRepo.DeletePlayer(player.PlayerUsername);
+                    _ = ProfileRepository.DeletePlayer(player.PlayerUsername);
                 }
             }
             else

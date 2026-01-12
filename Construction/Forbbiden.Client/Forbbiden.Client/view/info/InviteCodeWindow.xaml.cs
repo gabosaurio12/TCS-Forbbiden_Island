@@ -1,7 +1,7 @@
 ﻿using Forbbiden.Client.Logic;
 using System.Windows;
 
-namespace Forbbiden.Client.View.info
+namespace Forbbiden.Client.View.Info
 {
     public partial class InviteCodeWindow : Window
     {

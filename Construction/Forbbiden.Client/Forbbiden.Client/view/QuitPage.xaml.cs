@@ -30,11 +30,10 @@ namespace Forbbiden.Client.View
 
         private async Task DisconnectPlayer(string username)
         {
-            var repository = new ProfileRepository();
 
             try
             {
-                await repository.DisconnectPlayer(username);
+                await ProfileRepository.DisconnectPlayer(username);
             }
             catch (ViewException ex)
             {

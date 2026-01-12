@@ -1,4 +1,3 @@
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.ProfileManager;
 using System;

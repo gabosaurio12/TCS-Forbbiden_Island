@@ -6,14 +6,11 @@ using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Xml.Linq;
 
 namespace Forbbiden.Client.View
 {
@@ -22,17 +19,12 @@ namespace Forbbiden.Client.View
     /// </summary>
     public partial class FriendRequestsPage : Page
     {
-        private readonly ProfileRepository ProfileRepo;
-        private readonly FriendsRepository FriendsRepo;
         private readonly string ErrorTitle = Properties.Resources.error;
 
         public FriendRequestsPage()
         {
             InitializeComponent();
             ViewUtils.SetBackground(background);
-
-            ProfileRepo = new ProfileRepository();
-            FriendsRepo = new FriendsRepository();
 
             FriendsNotificationSingleton.Instance.Subscribe(ClientSession.Username);
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
@@ -61,7 +53,7 @@ namespace Forbbiden.Client.View
                 var requests = new List<FriendRequest>();
                 try
                 {
-                    requests = await FriendsRepo.GetFriendRequests(ClientSession.Username);
+                    requests = await FriendsRepository.GetFriendRequests(ClientSession.Username);
                 }
                 catch (ViewException ex)
                 {
@@ -100,7 +92,7 @@ namespace Forbbiden.Client.View
                 {
                     try
                     {
-                        await FriendsRepo
+                        await FriendsRepository
                             .AcceptFriendRequest(senderUsername, receiver.PlayerUsername);
                         RemoveRequestStack(requestsStack, requestControl);
                     }
@@ -133,7 +125,7 @@ namespace Forbbiden.Client.View
                 {
                     try
                     {
-                        await FriendsRepo.CancelFriendRequest(senderUsername, receiver.PlayerUsername);
+                        await FriendsRepository.CancelFriendRequest(senderUsername, receiver.PlayerUsername);
                         RemoveRequestStack(requestsStack, requestControl);
                     }
                     catch (ViewException ex)
@@ -170,37 +162,14 @@ namespace Forbbiden.Client.View
             var avatarImage = await AvatarsManager.Instance.GetAvatarBrushAsync(friend.PlayerUsername);
             requestControl.SetAvatarImage(requestControl.avatarEllipse, avatarImage);
 
-            bool downloaded = await DownloadFriendImage(avatarPath);
-            ImageBrush avatarImage;
-
-            if (!downloaded)
-            {
-                avatarImage = ViewUtils.GetDefaultAvatarBrush();
-            }
-            else
-            {
-                avatarImage = ViewUtils.GetImageBrush(avatarPath);
-            }
-
             requestControl.SetAvatarImage(requestControl.avatarEllipse, avatarImage);
-            requestControl.SetFriendUsername(requestControl.friendUsernametxtBk, friend.PlayerUsername);
+            requestControl.SetFriendUsername(
+                requestControl.friendUsernametxtBk, friend.PlayerUsername);
 
             requestControl.acceptBtn.Click += AcceptButton_Click;
             requestControl.rejectBtn.Click += RejectButton_Click;
 
             requestsStack.Children.Add(requestControl);
-        }
-
-        private async Task<bool> DownloadFriendImage(string avatarPath)
-        {
-            bool downloaded = false;
-            if (!File.Exists(avatarPath))
-            {
-                var bytes = await ProfileRepository.DownloadAvatar(Path.GetFileName(avatarPath));
-                downloaded = bytes.Length > 0;
-            }
-
-            return downloaded;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -231,7 +200,7 @@ namespace Forbbiden.Client.View
             var searchPlayer = new ProfileManager.Player();
             try
             {
-                searchPlayer = await ProfileRepo.GetPlayerByUsername(friendUsername, false);
+                searchPlayer = await ProfileRepository.GetPlayerByUsername(friendUsername, false);
             }
             catch (ViewException ex)
             {
@@ -244,7 +213,7 @@ namespace Forbbiden.Client.View
                 var requestStatus = false;
                 try
                 {
-                    requestStatus = await FriendsRepo.SendFriendRequest(
+                    requestStatus = await FriendsRepository.SendFriendRequest(
                         ClientSession.Username, searchPlayer.PlayerUsername);
                 }
                 catch (ViewException ex)

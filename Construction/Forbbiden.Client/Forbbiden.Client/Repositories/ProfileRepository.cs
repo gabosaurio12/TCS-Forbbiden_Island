@@ -13,7 +13,7 @@ namespace Forbbiden.Client.Repositories
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileRepository));
         private static readonly ProfileManagerClient ProfileClient = new ProfileManagerClient();
 
-        public async Task<bool> IsEmailAvailable(string email)
+        public static async Task<bool> IsEmailAvailable(string email)
         {
             bool result;
             try
@@ -34,7 +34,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> IsUsernameAvailable(string username)
+        public static async Task<bool> IsUsernameAvailable(string username)
         {
             bool result;
             try
@@ -55,7 +55,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> SendSignupEmail(string email, string token)
+        public static async Task<bool> SendSignupEmail(string email, string token)
         {
             bool result;
             try
@@ -76,7 +76,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> SendVerificationEmail(string email, string token)
+        public static async Task<bool> SendVerificationEmail(string email, string token)
         {
             bool result;
             try
@@ -97,7 +97,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<int> SignupPlayer(Player player)
+        public static async Task<int> SignupPlayer(Player player)
         {
             int playerId;
             try
@@ -118,7 +118,7 @@ namespace Forbbiden.Client.Repositories
             return playerId;
         }
 
-        public async Task<Player> LoginPlayer(string username, string password)
+        public static async Task<Player> LoginPlayer(string username, string password)
         {
             Player player;
             try
@@ -144,7 +144,7 @@ namespace Forbbiden.Client.Repositories
             return player;
         }
 
-        public async Task<Player> GetPlayerByUsername(string username, bool includeFriends)
+        public static async Task<Player> GetPlayerByUsername(string username, bool includeFriends)
         {
             Player player;
             try
@@ -186,7 +186,7 @@ namespace Forbbiden.Client.Repositories
             return player;
         }
 
-        public async Task<bool> UpdatePlayerProfile(Player player)
+        public static async Task<bool> UpdatePlayerProfile(Player player)
         {
             bool result;
             try
@@ -207,7 +207,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> DeletePlayer(string username)
+        public static async Task<bool> DeletePlayer(string username)
         {
             bool result;
             try
@@ -228,7 +228,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> ConnectPlayer(string username)
+        public static async Task<bool> ConnectPlayer(string username)
         {
             bool result;
             try
@@ -249,7 +249,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> DisconnectPlayer(string username)
+        public static async Task<bool> DisconnectPlayer(string username)
         {
             bool result;
             try
@@ -270,7 +270,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> UploadAvatar(string username, byte[] avatarBytes, string fileName)
+        public static async Task<bool> UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
             bool result;
             try
@@ -291,7 +291,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<AvatarResponse> GetAvatarByUsername(string username)
+        public static async Task<AvatarResponse> GetAvatarByUsername(string username)
         {
             AvatarResponse avatar;
             try

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace Forbbiden.Client.View.info
+namespace Forbbiden.Client.View.Info
 {
     /// <summary>
     /// Interaction logic for NotificationCardExceedWindow.xaml

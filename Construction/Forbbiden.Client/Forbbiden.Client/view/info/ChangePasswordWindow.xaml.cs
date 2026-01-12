@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Forbbiden.Client.View.info
+namespace Forbbiden.Client.View.Info
 {
     /// <summary>
     /// Interaction logic for ChangePasswordPage.xaml
@@ -23,8 +23,7 @@ namespace Forbbiden.Client.View.info
         {
             var tokenRepo = new TokenRepository();
             var token = await tokenRepo.GenerateToken(ClientSession.CurrentPlayerId);
-            var profileRepo = new ProfileRepository();
-            var result = await profileRepo.SendVerificationEmail(ClientSession.Email, token.TokenString);
+            var result = await ProfileRepository.SendVerificationEmail(ClientSession.Email, token.TokenString);
 
             if (result)
             {

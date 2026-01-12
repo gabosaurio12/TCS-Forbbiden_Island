@@ -1,8 +1,8 @@
 using Forbbiden.Client.Exceptions;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
+using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.view.info;
+using Forbbiden.Client.View.Info;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -104,7 +104,7 @@ namespace Forbbiden.Client.View
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(
+                ExceptionViewManager.ShowViewExceptionNotification(
                     ex, Window.GetWindow(this));
             }
             catch (Exception ex)
@@ -201,7 +201,7 @@ namespace Forbbiden.Client.View
                 }
                 catch (ViewException ex)
                 {
-                    ErrorsNotificationManager.ShowViewExceptionNotification(
+                    ExceptionViewManager.ShowViewExceptionNotification(
                         ex, Window.GetWindow(this));
                     return;
                 }
@@ -266,7 +266,7 @@ namespace Forbbiden.Client.View
             }
             catch (ViewException ex)
             {
-                ErrorsNotificationManager.ShowViewExceptionNotification(
+                ExceptionViewManager.ShowViewExceptionNotification(
                     ex, Window.GetWindow(this));
             }
             catch (TimeoutException)

@@ -6,7 +6,7 @@ using Forbbiden.Client.Logic.Board;
 using Forbbiden.Client.Logic.Board.States;
 using Forbbiden.Client.Model;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.View.info;
+using Forbbiden.Client.View.Info;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ namespace Forbbiden.Client.View.Games
             InitializeComponent();
             
             MatchNotificationsSingleton.Instance.Subscribe(ClientSession.Username); 
-            //InitAttributes();
+            InitAttributes();
             BoardManagerClient boardClient = new BoardManagerClient();
             TreasureStack = boardClient.GetTreasureCards().ToList();
             FloodStack = boardClient.GetFloodCards().ToList();
@@ -79,7 +79,7 @@ namespace Forbbiden.Client.View.Games
         {
             InitializeComponent();
             InitGif();
-            //InitAttributes();
+            InitAttributes();
             PlayerLogic.MatchBoardPage = this;
         }
 
@@ -171,15 +171,7 @@ namespace Forbbiden.Client.View.Games
                 try
                 {
                     var player = await ProfileRepository.GetPlayerById(players[i].PlayerId, false);
-                    var avatarBytes = await ProfileRepository.DownloadAvatar(player.PlayerAvatarPath);
-                    if (avatarBytes.Length > 0)
-                    {
-                        BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
-                    }
-                    else
-                    {
-                        BoardControl.AddPlayerWithDefaultAvatar(beginningTiles[i]);
-                    }
+                    BoardControl.AddPlayerAvatar(player, beginningTiles[i]);
                 }
                 catch (ViewException ex)
                 {

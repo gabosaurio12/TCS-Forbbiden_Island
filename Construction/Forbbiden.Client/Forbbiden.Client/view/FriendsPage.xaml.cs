@@ -1,6 +1,5 @@
 ﻿using Forbbiden.Client.Controls;
 using Forbbiden.Client.FriendsManager;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.Repositories;
 using Forbbiden.Client.Exceptions;
@@ -25,16 +24,10 @@ namespace Forbbiden.Client.View
     /// </summary>
     public partial class FriendsPage : Page
     {
-        private readonly ProfileRepository ProfileRepo;
-        private readonly FriendsRepository FriendsRepo;
-
         public FriendsPage()
         {
             InitializeComponent();
             ViewUtils.SetBackground(background);
-
-            ProfileRepo = new ProfileRepository();
-            FriendsRepo = new FriendsRepository();
 
             FriendsNotificationSingleton.Instance.OnNewFriendRequest += OnFriendRequestReceived;
             FriendsNotificationSingleton.Instance.OnRefreshPage += RefreshFriends;
@@ -75,7 +68,7 @@ namespace Forbbiden.Client.View
             ProfileManager.Player player = new ProfileManager.Player();
             try
             {
-                player = await ProfileRepo.GetPlayerByUsername(ClientSession.Username, true);
+                player = await ProfileRepository.GetPlayerByUsername(ClientSession.Username, true);
             }
             catch (ViewException ex)
             {
@@ -128,7 +121,7 @@ namespace Forbbiden.Client.View
             List<FriendRequest> requests = new List<FriendRequest>();
             try
             {
-                requests = await FriendsRepo.GetFriendRequests(ClientSession.Username);
+                requests = await FriendsRepository.GetFriendRequests(ClientSession.Username);
             }
             catch (ViewException ex)
             {
@@ -158,7 +151,7 @@ namespace Forbbiden.Client.View
 
                 try
                 {
-                    isDeleted = await FriendsRepo.DeleteFriend(friendUsername, ClientSession.Username);
+                    isDeleted = await FriendsRepository.DeleteFriend(friendUsername, ClientSession.Username);
                 }
                 catch (ViewException ex)
                 {
@@ -191,7 +184,7 @@ namespace Forbbiden.Client.View
             ProfileManager.Player friend = new ProfileManager.Player();
             try
             {
-                friend = await ProfileRepo.GetPlayerByUsername(friendUsername, false);
+                friend = await ProfileRepository.GetPlayerByUsername(friendUsername, false);
             }
             catch (ViewException ex)
             {
@@ -264,7 +257,7 @@ namespace Forbbiden.Client.View
 
             try
             {
-                receiver = await ProfileRepo.GetPlayerByUsername(receiverUsername, true);
+                receiver = await ProfileRepository.GetPlayerByUsername(receiverUsername, true);
             }
             catch (ViewException ex)
             {
@@ -277,7 +270,7 @@ namespace Forbbiden.Client.View
 
                 try
                 {
-                    requestStatus = await FriendsRepo.SendFriendRequest(
+                    requestStatus = await FriendsRepository.SendFriendRequest(
                         ClientSession.Username, receiver.PlayerUsername);
                 }
                 catch (ViewException ex)

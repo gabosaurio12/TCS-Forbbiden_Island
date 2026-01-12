@@ -19,7 +19,7 @@ namespace Forbbiden.Client.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -354,6 +354,10 @@ namespace Forbbiden.Client.Properties {
         public static string error_match_created_not_joined {
             get {
                 return ResourceManager.GetString("error_match_created_not_joined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error while processing the image.
         /// </summary>
         public static string error_processing_image {
@@ -363,16 +367,20 @@ namespace Forbbiden.Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The server is taking too long to respond, please try again later.
-        /// </summary>
-        public static string error_server_timeout {
-            get {
-                return ResourceManager.GetString("error_server_timeout", resourceCulture);
         ///   Looks up a localized string similar to There was an error while synchronizing the game with the server or the other players.
         /// </summary>
         public static string error_sending_callback {
             get {
                 return ResourceManager.GetString("error_sending_callback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server is taking too long to respond, please try again later.
+        /// </summary>
+        public static string error_server_timeout {
+            get {
+                return ResourceManager.GetString("error_server_timeout", resourceCulture);
             }
         }
         

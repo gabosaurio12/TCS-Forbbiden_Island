@@ -1,5 +1,4 @@
 ﻿using Forbbiden.Client.GameManager;
-using Forbbiden.Client.logic;
 using Forbbiden.Client.Logic;
 using Forbbiden.Client.MatchManager;
 using Forbbiden.Client.Model;
@@ -105,7 +104,7 @@ namespace Forbbiden.Client.View
             this.Loaded += LobbyPage_Loaded;
             this.Unloaded += LobbyPage_Unloaded;
 
-            InitializePlayerUI();
+            _ =InitializePlayerUI();
             _ = LoadMatchInfoAsync();
             LoadInitialPlayers();
             StartClock();

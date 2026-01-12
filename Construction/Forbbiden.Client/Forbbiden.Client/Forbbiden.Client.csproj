@@ -215,7 +215,6 @@
     <Compile Include="Repositories\GameRepository.cs" />
     <Compile Include="Repositories\MatchRepository.cs" />
     <Compile Include="Repositories\BoardRepository.cs" />
-    <Compile Include="Repositories\FriendsRepository.cs" />
     <Compile Include="Repositories\ProfileRepository.cs" />
     <Compile Include="Repositories\TokenRepository.cs" />
     <Compile Include="Settings.cs" />

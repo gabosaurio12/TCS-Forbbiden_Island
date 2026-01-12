@@ -3,7 +3,7 @@ using Forbbiden.Client.Model;
 using Forbbiden.Client.Logic.Validations;
 using Forbbiden.Client.ProfileManager;
 using Forbbiden.Client.Repositories;
-using Forbbiden.Client.View.info;
+using Forbbiden.Client.View.Info;
 using log4net;
 using Microsoft.Win32;
 using System;
@@ -23,7 +23,6 @@ namespace Forbbiden.Client
     public partial class ProfilePage : Page
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProfilePage));
-        private readonly ProfileRepository ProfileRepo;
 
         private readonly Player ProfilePlayer;
         private string UploadedAvatarOriginalPath;
@@ -34,15 +33,11 @@ namespace Forbbiden.Client
         public ProfilePage()
         {
             InitializeComponent();
-
-            ProfileRepo = new ProfileRepository();
         }
 
         public ProfilePage(Player player)
         {
             InitializeComponent();
-
-            ProfileRepo = new ProfileRepository();
 
             ProfilePlayer = player;
             txtBxUsername.Text = player.PlayerUsername;
@@ -249,7 +244,7 @@ namespace Forbbiden.Client
                 bool saved = false;
                 try
                 {
-                    saved = await ProfileRepo.UploadAvatar(
+                    saved = await ProfileRepository.UploadAvatar(
                         ProfilePlayer.PlayerUsername, bytes, AvatarFileName);
                 }
                 catch (ViewException ex)
@@ -274,12 +269,12 @@ namespace Forbbiden.Client
 
         private async Task SaveProfileChanges(Player updatedPlayer)
         {
-            if (await ProfileRepo.UpdatePlayerProfile(updatedPlayer))
+            if (await ProfileRepository.UpdatePlayerProfile(updatedPlayer))
             {
                 Player refreshed = null;
                 try
                 {
-                    refreshed = await ProfileRepo
+                    refreshed = await ProfileRepository
                         .GetPlayerByUsername(updatedPlayer.PlayerUsername, true);
                 }
                 catch (ViewException ex)

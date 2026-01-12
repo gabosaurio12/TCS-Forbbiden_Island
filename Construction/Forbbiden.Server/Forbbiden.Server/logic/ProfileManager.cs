@@ -221,7 +221,7 @@ namespace Forbbiden.Server.logic
         {
             int playerId = -1;
 
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 bool exists = db.Player.Any(p =>
                     p.player_username == player.PlayerUsername ||
@@ -229,13 +229,16 @@ namespace Forbbiden.Server.logic
 
                 if (exists)
                 {
-                    return playerId;
+                    return -2;
                 }
+
+                string normalizedPassord = player.PlayerPassword.Normalize(NormalizationForm.FormC);
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(normalizedPassord);
 
                 var newPlayer = new Model.Player
                 {
                     player_username = player.PlayerUsername,
-                    player_password = player.PlayerPassword,
+                    player_password = hashedPassword,
                     player_email = player.PlayerEmail,
                     player_name = string.Empty,
                     player_avatar_file = null,
@@ -261,47 +264,9 @@ namespace Forbbiden.Server.logic
             return playerId;
         }
 
-        public bool UploadAvatar(string username, byte[] avatarBytes, string fileName)
-        {
-            if (avatarBytes == null || avatarBytes.Length == 0)
-            {
-                throw new FaultException("Avatar vacío o nulo.");
-            }
-
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
-            {
-                try
-                {
-                    var player = db.Player.FirstOrDefault(p => p.player_username == username);
-                    if (player == null)
-                    {
-                        throw new FaultException("Usuario no encontrado.");
-                    }
-
-                    player.player_avatar_file = avatarBytes;
-                    player.player_avatar_name = string.IsNullOrWhiteSpace(fileName)
-                        ? DefaultAvatarName
-                        : Path.GetFileName(fileName);
-
-                    db.SaveChanges();
-                    return true;
-                }
-                catch (EntityException ex)
-                {
-                    ExceptionHandler.HandleEntityException(ex, "ProfileManager.UploadAvatar");
-                    throw new FaultException("Error de base de datos al guardar avatar.");
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("ProfileManager.UploadAvatar", ex);
-                    throw new FaultException("Server couldn't save the avatar.");
-                }
-            }
-        }
-
         public AvatarResponse GetAvatarByUsername(string username)
         {
-            using (var db = new Forbbiden_FEIEntities(ConnectionString))
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
                 try
                 {
@@ -463,52 +428,41 @@ namespace Forbbiden.Server.logic
             }
         }
 
-        private static string BuildAvatarFilePath(string username, string fileName)
-        {
-            Directory.CreateDirectory(AvatarsDir);
-
-            string extension = ".jpg";
-
-            var maybeExt = Path.GetExtension(fileName);
-            if (!string.IsNullOrEmpty(maybeExt))
-            {
-                extension = maybeExt;
-            }
-
-            var safeFileName = $"{SanitizeFileName(username)}_{Guid.NewGuid():N}{extension}";
-            var avatarPath = Path.Combine(AvatarsDir, safeFileName);
-
-            return avatarPath;
-        }
-
-        public string UploadAvatar(string username, byte[] avatarBytes, string fileName)
+        public bool UploadAvatar(string username, byte[] avatarBytes, string fileName)
         {
             if (avatarBytes == null || avatarBytes.Length == 0)
             {
                 throw new FaultException("Avatar vacío o nulo.");
             }
-            try
+
+            using (var db = new Forbidden_FEIEntities(ConnectionString))
             {
-                var fullPath = BuildAvatarFilePath(username, fileName);
-
-                string avatarsRoot = String.Concat(
-                    Path.GetFullPath(AvatarsDir),
-                    Path.DirectorySeparatorChar);
-
-                var normalizedFullPath = Path.GetFullPath(fullPath);
-
-                if (!normalizedFullPath.StartsWith(avatarsRoot, StringComparison.OrdinalIgnoreCase))
+                try
                 {
-                    throw new FaultException("Invalid avatar path");
-                }
+                    var player = db.Player.FirstOrDefault(p => p.player_username == username);
+                    if (player == null)
+                    {
+                        throw new FaultException("Usuario no encontrado.");
+                    }
 
-                File.WriteAllBytes(normalizedFullPath, avatarBytes);
-                return Path.GetFileName(normalizedFullPath);
-            }
-            catch (Exception ex)
-            {
-                Log.Error("UploadAvatar error", ex);
-                throw new FaultException("Server couldn't save the avatar.");
+                    player.player_avatar_file = avatarBytes;
+                    player.player_avatar_name = string.IsNullOrWhiteSpace(fileName)
+                        ? DefaultAvatarName
+                        : Path.GetFileName(fileName);
+
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (EntityException ex)
+                {
+                    ExceptionHandler.HandleEntityException(ex, "ProfileManager.UploadAvatar");
+                    throw new FaultException("Error de base de datos al guardar avatar.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("ProfileManager.UploadAvatar", ex);
+                    throw new FaultException("Server couldn't save the avatar.");
+                }
             }
         }
 
@@ -540,21 +494,7 @@ namespace Forbbiden.Server.logic
             return File.ReadAllBytes(fullPath);
         }
 
-
-        private static string SanitizeFileName(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return "user";
-            }
-            foreach (var c in Path.GetInvalidFileNameChars())
-            {
-                input = input.Replace(c, '_');
-            }
-            return input;
-        }
-
-        private static bool SaveUpdateChanges(Forbbiden_FEIEntities db)
+        private static bool SaveUpdateChanges(Forbidden_FEIEntities db)
         {
             bool success = false;
             using (var transaction = db.Database.BeginTransaction())

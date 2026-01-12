@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Forbbiden.Client.Repositories
 {
-    
+
     public class FriendsRepository
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(FriendsRepository));
-        private readonly FriendsManagerClient FriendsClient = new FriendsManagerClient();
+        private static readonly FriendsManagerClient FriendsClient = new FriendsManagerClient();
 
-        public async Task<bool> SendFriendRequest(string senderUsername, string receiverUsername)
+        public static async Task<bool> SendFriendRequest(string senderUsername, string receiverUsername)
         {
             bool result = false;
             try
@@ -42,7 +42,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> AcceptFriendRequest(string senderUsername, string receiverUsername)
+        public static async Task<bool> AcceptFriendRequest(string senderUsername, string receiverUsername)
         {
             bool result;
             try
@@ -63,7 +63,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> CancelFriendRequest(string senderUsername, string receiverUsername)
+        public static async Task<bool> CancelFriendRequest(string senderUsername, string receiverUsername)
         {
             bool result;
             try
@@ -84,7 +84,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<bool> DeleteFriend(string friendUsername, string playerUsername)
+        public static async Task<bool> DeleteFriend(string friendUsername, string playerUsername)
         {
             bool result;
             try
@@ -105,7 +105,7 @@ namespace Forbbiden.Client.Repositories
             return result;
         }
 
-        public async Task<List<FriendRequest>> GetFriendRequests(string receiverUsername)
+        public static async Task<List<FriendRequest>> GetFriendRequests(string receiverUsername)
         {
             FriendRequest[] result;
             try
@@ -125,7 +125,7 @@ namespace Forbbiden.Client.Repositories
             return result.ToList();
         }
 
-        public async Task<List<FriendsManager.Friendship>> GetFriendsByID(int playerID)
+        public static async Task<List<FriendsManager.Friendship>> GetFriendsByID(int playerID)
         {
             FriendsManager.Friendship[] result;
             try

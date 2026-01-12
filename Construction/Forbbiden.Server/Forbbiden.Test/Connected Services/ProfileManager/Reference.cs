@@ -59,7 +59,9 @@ namespace ProfileManager
         
         private int IsVerifiedField;
         
-        private string PlayerAvatarPathField;
+        private byte[] PlayerAvatarBytesField;
+        
+        private string PlayerAvatarNameField;
         
         private string PlayerEmailField;
         
@@ -102,15 +104,28 @@ namespace ProfileManager
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PlayerAvatarPath
+        public byte[] PlayerAvatarBytes
         {
             get
             {
-                return this.PlayerAvatarPathField;
+                return this.PlayerAvatarBytesField;
             }
             set
             {
-                this.PlayerAvatarPathField = value;
+                this.PlayerAvatarBytesField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerAvatarName
+        {
+            get
+            {
+                return this.PlayerAvatarNameField;
+            }
+            set
+            {
+                this.PlayerAvatarNameField = value;
             }
         }
         
@@ -310,6 +325,43 @@ namespace ProfileManager
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AvatarResponse", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+    public partial class AvatarResponse : object
+    {
+        
+        private byte[] AvatarBytesField;
+        
+        private string FileNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] AvatarBytes
+        {
+            get
+            {
+                return this.AvatarBytesField;
+            }
+            set
+            {
+                this.AvatarBytesField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileName
+        {
+            get
+            {
+                return this.FileNameField;
+            }
+            set
+            {
+                this.FileNameField = value;
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ProfileManager.IProfileManager")]
     public interface IProfileManager
@@ -363,11 +415,16 @@ namespace ProfileManager
         [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/DisconnectPlayerByUsernameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
         System.Threading.Tasks.Task<bool> DisconnectPlayerByUsernameAsync(string username);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
-        System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatar", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarResponse")]
         System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/UploadAvatar", ReplyAction="http://tempuri.org/IProfileManager/UploadAvatarResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/UploadAvatarFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        System.Threading.Tasks.Task<bool> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileManager/GetAvatarByUsername", ReplyAction="http://tempuri.org/IProfileManager/GetAvatarByUsernameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProfileManager.Fault), Action="http://tempuri.org/IProfileManager/GetAvatarByUsernameFaultFault", Name="Fault", Namespace="http://schemas.datacontract.org/2004/07/Forbbiden.Contracts")]
+        System.Threading.Tasks.Task<ProfileManager.AvatarResponse> GetAvatarByUsernameAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -480,14 +537,19 @@ namespace ProfileManager
             return base.Channel.DisconnectPlayerByUsernameAsync(username);
         }
         
-        public System.Threading.Tasks.Task<string> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName)
+        public System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName)
+        {
+            return base.Channel.GetAvatarAsync(fileName);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UploadAvatarAsync(string username, byte[] avatarBytes, string fileName)
         {
             return base.Channel.UploadAvatarAsync(username, avatarBytes, fileName);
         }
         
-        public System.Threading.Tasks.Task<byte[]> GetAvatarAsync(string fileName)
+        public System.Threading.Tasks.Task<ProfileManager.AvatarResponse> GetAvatarByUsernameAsync(string username)
         {
-            return base.Channel.GetAvatarAsync(fileName);
+            return base.Channel.GetAvatarByUsernameAsync(username);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

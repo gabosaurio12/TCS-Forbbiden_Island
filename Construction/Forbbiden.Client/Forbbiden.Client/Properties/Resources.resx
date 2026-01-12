@@ -774,8 +774,9 @@
 	<data name="warning_room_char_limit" xml:space="preserve">
 	  <value>The room name exceeds the character limit and will be truncated.</value>
   </data>
-	<data name="warning_login_permission" xml:space="preserve">
-	  <value>You must be logged in to access this feature.</value>
+    <data name="warning_login_permission" xml:space="preserve">
+	    <value>You must be logged in to access this feature.</value>
+    </data>
   <data name="error_sending_callback" xml:space="preserve">
     <value>There was an error while synchronizing the game with the server or the other players</value>
   </data>

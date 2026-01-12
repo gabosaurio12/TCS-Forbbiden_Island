@@ -1,5 +1,4 @@
-﻿using Forbbiden.Client.logic;
-using Forbbiden.Client.Repositories;
+﻿using Forbbiden.Client.Repositories;
 using log4net;
 using System;
 using System.Collections.Concurrent;
@@ -11,13 +10,12 @@ using System.Windows.Media.Imaging;
 
 namespace Forbbiden.Client.Logic
 {
-    internal class AvatarsManager
+    public class AvatarsManager
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(AvatarsManager));
         private static readonly Lazy<AvatarsManager> InstanceLazy =
             new Lazy<AvatarsManager>(() => new AvatarsManager());
 
-        private readonly ProfileRepository ProfileRepository = new ProfileRepository();
         private readonly ConcurrentDictionary<string, byte[]> MemoryCache =
             new ConcurrentDictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
         private readonly ConcurrentDictionary<string, SemaphoreSlim> Locks =
